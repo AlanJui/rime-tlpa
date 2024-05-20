@@ -1,0 +1,653 @@
+# Rime schema
+# encoding: utf-8
+---
+schema:
+  schema_id: TLPA_Sip_Ngoo_Im
+  name: 河洛話-十五音
+  version: "v0.0.0.1"
+  author:
+    - 居正中
+  description: |
+    屬「台羅拚音」輸入法；輸入時，將顯示：（1）方音符號；（2）
+    台羅拚音；及（3）《雅俗通》(Ngée-sio̍k-tong) 十五音標音。
+    輸入法使用的「漢字庫」，源自《萌台語漢字庫》採：「台羅拚音」。
+  dependencies:
+    - luna_pinyin
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, 西文]
+  - name: full_shape
+    states: [半形, 全形]
+  - name: simplification
+    states: [漢字, 汉字]
+  - name: ascii_punct
+    states: [，。, ，．]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+    - reverse_lookup_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba12345678[90:\/]
+  delimiter: " '"
+  # use_space: true
+  algebra:
+    # 去掉聲調
+    - derive/[1-8]//
+    # 零聲母處理
+    - derive/Ø//
+    # 通配
+    # - derive/c/ts/
+    - derive/ou/oo/
+    - derive/e(ng|k)/i$1/
+    - derive/ei/e/
+    # 鼻化韻處理
+    - derive/([^u])enn/$1een
+    - xform/b(.+)nn/m$1/
+    - xform/l(.+)nn/n$1/
+    - xform/g(.+)nn/ng$1/
+    - derive/([^blg])(.+)nn/$1$2/
+    # 聲母簡拼
+    - abbrev/^([lpktcjsqbghmn])([^hsg]).+$/$1/
+    - abbrev/^(ph).+$/$1/
+    - abbrev/^(th).+$/$1/
+    - abbrev/^(kh).+$/$1/
+    - abbrev/^(ng).+$/$1/
+    # - abbrev/^(ch).+$/$1/
+    # - abbrev/^(ts).+$/$1/
+    # - abbrev/^(tsh).+$/$1/
+    # ===========================================
+    # 我增加的變更
+    # ===========================================
+    # - derive/tsh/c/
+    # - derive/ts/z/
+    # - derive/tsh/chh/
+    # - derive/ts/ch/
+    #------------------------------------------------------
+    # - abbrev/^(ts).+$/$1/
+    # - abbrev/^(tsh).+$/$1/
+    # - abbrev/^(z).+$/$1/
+    # - abbrev/^(c).+$/$1/
+    # - abbrev/^(ch).+$/$1/
+    # - abbrev/^(chh).+$/$1/
+
+translator:
+  dictionary: TLPA_Sip_Ngoo_Im
+  spelling_hints: 5
+  comment_format:
+    # - derive/^([aeiou])/q$1/
+    #======================================
+    - derive/^([aeiou])/ø$1/
+    - xform/^([a-zø]+\d)$/$1;$1/
+    #======================================
+    - xform/;p(?!h)/〖邊;/
+    - xform/;ph/〖頗;/
+    - xform/;m/〖毛;/
+    - xform/;b/〖門;/
+
+    - xform/;t(?!h)/〖地;/
+    - xform/;th/〖他;/
+    - xform/;n(?!g)/〖耐;/
+    - xform/;l/〖柳;/
+
+    - xform/;c(?!h)/〖曾;/
+    - xform/;ch/〖出;/
+    - xform/;s/〖時;/
+    - xform/;j/〖入;/
+
+    - xform/;k(?!h)/〖求;/
+    - xform/;kh/〖去;/
+    - xform/;ng/〖雅;/
+    - xform/;g/〖語;/
+
+    - xform/;h/〖喜;/
+    # - xform/;q/〖英;/
+    - xform/;ø/〖英;/
+    #------------------------------------------------------
+    - xform/;u(n|t)(\d)/君;$2/
+    - xform/;ia(n|t)(\d)/堅;$2/
+    - xform/;i(m|p)/金;/
+    - xform/;ui(h?)(\d)/規;$2/
+    - xform/;ee(h?)/嘉;/
+    - xform/;a(n|t)(\d)/干;$2/
+    - xform/;o(ng|k)/公;/
+    - xform/;uai(h?)/乖;$2/
+    - xform/;e(ng|k)/經;/
+    - xform/;i(ng|k)/經;/
+    - xform/;ua(n|t)(\d)/觀;$2/
+    # - xform/;ou(h?)(\d)/沽;$2/
+    - xform/;iau(h?)(\d)/嬌;$2/
+    - xform/;ei/稽;/
+    - xform/;io(ng|k)/恭;/
+    # - xform/;o(h?)(\d)/高;$2/
+    - xform/;ai(\d)/皆;$1/
+    - xform/;i(n|t)(\d)/巾;$2/
+    - xform/;ia(ng|k)/姜;/
+    - xform/;a(m|p)/甘;/
+    - xform/;ua(h?)(\d)/瓜;$2/
+    - xform/;a(ng|k)/江;/
+    - xform/;ia(m|p)/兼;/
+    - xform/;au(h?)(\d)/交;$2/
+    - xform/;ia(h?)(\d)/迦;$2/
+    - xform/;ue(h?)(\d)/檜;$2/
+    - xform/;ann(h?)/監;/
+    - xform/;u(h?)(\d)/艍;$2/
+    - xform/;a(h?)(\d)/膠;$2/
+    - xform/;i(h?)(\d)/居;$2/
+    - xform/;iu(\d)/丩;$1/
+    - xform/;enn(h?)/更;/
+    - xform/;inn(h?)/梔;/
+    - xform/;iann/驚;/
+    - xform/;uann/官;/
+    - xform/;e(h?)(\d)/伽;$2/
+    - xform/;ainn(h?)/閒;/
+    # - xform/;ounn/姑;/
+    - xform/;uenn/糜;/
+    - xform/;iaunn(h?)/嘄;/
+    - xform/;o(m|p)/箴;/
+    - xform/;aunn/爻;/
+    # - xform/;onn(h?)/扛;/
+    - xform/;iunn/牛;/
+    #======================================
+    - xform/;io/茄;/
+    - xform/;ng/鋼;/
+    - xform/;oo(h?)(\d)/沽;$2/
+    - xform/;o(h?)(\d)/高;$2/
+    # - xform/;oonn/姑;/
+    - xform/;ounn/姑;/
+    - xform/;onn(h?)/扛;/
+    #======================================
+    - xform/;1/一〗/ # 陰平
+    - xform/;2/二〗/ # 陰上
+    - xform/;3/三〗/ # 陰去
+    - xform/;4/四〗/ # 陰入
+    - xform/;5/五〗/ # 陽平
+    - xform/;6/六〗/ # 陽上
+    - xform/;7/七〗/ # 陽去
+    - xform/;8/八〗/ # 陽入
+    #======================================================
+    # 顯示「方音符號」的聲母
+    #======================================================
+    - xform/^ch/ㄘ/
+    - xform/^c(?!h)/ㄗ/
+    #------------------------------------------------------
+    - xform/^p(?!h)/ㄅ/
+    - xform/^ph/ㄆ/
+    - xform/^m/ㄇ/
+    - xform/^b/ㆠ/
+    #------------------------------------------------------
+    - xform/^t(?!h)/ㄉ/
+    - xform/^th/ㄊ/
+    - xform/^n(?!g)/ㄋ/
+    - xform/^l/ㄌ/
+    #------------------------------------------------------
+    - xform/^k(?!h)/ㄍ/
+    - xform/^kh/ㄎ/
+    - xform/^h/ㄏ/
+    - xform/^g/ㆣ/
+    - xform/^ng/ㄫ/
+    #------------------------------------------------------
+    # - xform/^ts(?!h)/ㄗ/
+    # - xform/^tsh/ㄘ/
+    # - xform/^s/ㄙ/
+    # - xform/^j/ㆡ/
+    - xform/s/ㄙ/
+    - xform/j/ㆡ/
+    #======================================================
+    # 自「雅俗通十五音」轉化而得的韻母
+    #======================================================
+    - xform/iang/ㄧㄤ/ # 姜
+    - xform/iak/ㄧㄚㆻ/ # 姜
+    - xform/iong/ㄧㆲ/ # 恭
+    - xform/iok/ㄧㆦㆻ/ # 恭
+    - xform/ing/ㄧㄥ/ # 經
+    - xform/ik/ㄧㆻ/ # 經
+    - xform/iam/ㄧㆰ/ # 兼
+    - xform/iap/ㄧㄚㆴ/ # 兼
+    - xform/ian/ㄧㄢ/ # 堅
+    - xform/iat/ㄧㄚㆵ/ # 堅
+    - xform/iann/ㄧㆩ/ # 驚
+    - xform/iau/ㄧㄠ/ # 嬌
+    - xform/iauh/ㄧㄠㆷ/ # 嬌
+    - xform/iaunn/ㄧㆯ/ # 嘄
+    - xform/iaunnh/ㄧㆯㆷ/ # 嘄
+    - xform/ia(?!n)/ㄧㄚ/ # 迦
+    - xform/iah/ㄧㄚㆷ/ # 迦
+    - xform/im/ㄧㆬ/ # 金
+    - xform/ip/一ㆴ/ # 金
+    - xform/in/ㄧㄣ/ # 巾
+    - xform/it/ㄧㆵ/ # 巾
+    - xform/io/ㄧㄜ/ # 茄
+    - xform/ioh/ㄧㄜㆷ/ # 茄
+    - xform/ionn/ㄧㆧ/ # 薑
+    - xform/iu/ㄧㄨ/ # 丩
+    - xform/iunn/ㄧㆫ/ # 牛
+    #------------------------------------------------------
+    - xform/ai/ㄞ/ # 皆
+    - xform/ainn/ㆮ/ # 閒
+    - xform/am/ㆰ/ # 甘
+    - xform/ap/ㄚㆴ/ # 甘
+    - xform/an(?!g)/ㄢ/ # 干
+    - xform/at/ㄚㆵ/ # 干
+    - xform/ang/ㄤ/ # 江
+    - xform/ak/ㄚㆻ/ # 江
+    - xform/au/ㄠ/ # 交
+    - xform/auh/ㄠㆷ/ # 交
+    - xform/aunn/ㆯ/ # 爻
+    #------------------------------------------------------
+    - xform/ong/ㆲ/ # 公
+    - xform/ok/ㆦㆻ/ # 公
+    - xform/om/ㆱ/ # 箴
+    - xform/op/ㆦㆴ/ # 箴
+    #------------------------------------------------------
+    - xform/uang/ㄨㄤ/ # 光
+    - xform/uak/ㄨㄚㆻ/ # 光
+    - xform/uai/ㄨㄞ/ # 乖
+    - xform/uaih/ㄨㄞㆷ/ # 乖
+    - xform/uann/ㄨㆩ/ # 官
+    - xform/uainn/ㄨㆮ/ # 閂
+    - xform/uainnh/ㄨㆮㆷ/ # 閂
+    - xform/uan/ㄨㄢ/ # 觀
+    - xform/uat/ㄨㄚㆵ/ # 觀
+    - xform/ua/ㄨㄚ/ # 瓜
+    - xform/uah/ㄨㄚㆷ/ # 瓜
+    #------------------------------------------------------
+    - xform/ue/ㄨㆤ/ # 檜
+    - xform/ueh/ㄨㆤㆷ/ # 檜
+    - xform/uenn/ㄨㆥ/ # 糜
+    - xform/ui/ㄨㄧ/ # 規
+    - xform/uinn/ㄨㆪ/ # 褌
+    - xform/un/ㄨㄣ/ # 君
+    - xform/ut/ㄨㆵ/ # 君
+    #------------------------------------------------------
+    - xform/a/ㄚ/ # 膠
+    - xform/ah/ㄚㆷ/ # 膠
+    - xform/ann/ㆩ/ # 監
+    - xform/annh/ㆩㆷ/ # 監
+
+    - xform/e/ㆤ/ # 伽
+    - xform/eh/ㆤㆷ/ # 伽
+    - xform/enn/ㆥ/ # 更
+    - xform/ennh/ㆥㆷ/ # 更
+    - xform/ee/ㄝ/ # 嘉
+    - xform/eeh/ㄝㆷ/ # 嘉
+    - xform/ei/ㄟ/ # 稽
+
+    - xform/i/ㄧ/ # 居
+    - xform/ih/ㄧㆷ/ # 居
+    - xform/inn/ㆪ/ # 梔
+    - xform/innh/ㆪㆷ/ # 梔
+
+    - xform/u/ㄨ/ # 艍
+    - xform/uh/ㄨㆷ/ # 艍
+
+    - xform/oo/ㆦ/ # 沽
+    - xform/ou/ㆦ/ # 沽
+    - xform/ounn/ㆧ/ # 姑
+    - xform/oonn/ㆧ/ # 姑
+    - xform/onn/ㆧ/ # 姑
+
+    - xform/o/ㄜ/ # 高
+    - xform/oh/ㄜㆷ/ # 高
+    # - xform/onn/ㆧ/  # 扛
+    # - xform/onnh/ㆧㆷ/  # 扛
+    #======================================================
+    # 韻化輔音
+    #======================================================
+    - xform/m/ㆬ/ # 姆
+    - xform/ng/ㆭ/ # 鋼
+    - xform/n(?!h)/ㄣ/
+    #======================================================
+    # 鼻音
+    #======================================================
+    - xform/nn/N/
+    - xform/N((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㆤ|ㄞ|ㄠ))/$1N/
+    - xform/ㄧN/ㆪ/
+    - xform/ㄨN/ㆫ/
+    - xform/ㄚN/ㆩ/
+    - xform/ㆦN/ㆧ/
+    - xform/ㆤN/ㆥ/
+    - xform/ㄞN/ㆮ/
+    - xform/ㄠN/ㆯ/
+
+    - xform/ㄧㄢㄣ/ㄧㆩ/ # 驚
+    #======================================================
+    # 校調
+    #======================================================
+    - xform/ㄜㄜ/ㆦ/
+    # 調整 ㄗ ㄘ ㄙ ㆡ 轉 ㄐ ㄑ ㄒ ㆢ
+    - xform/ㄗㄧ/ㄐㄧ/
+    - xform/ㄘㄧ/ㄑㄧ/
+    - xform/ㄙㄧ/ㄒㄧ/
+    - xform/ㆡㄧ/ㆢㄧ/
+    #======================================================
+    # 入聲
+    #======================================================
+    - xform/p8/ㆴ̇/
+    - xform/t8/ㆵ̇/
+    - xform/k8/ㆻ̇
+    - xform/h8/ㆷ̇/
+
+    - xform/p/ㆴ/
+    - xform/t/ㆵ/
+    - xform/k/ㆻ/
+    - xform/h/ㆷ/
+
+    # ok 指 ook
+    - xform/ㄜ([ ㆴ ㆵ ㆻ ㆷ])/ㆦ$1/
+    #======================================================
+    # 聲調
+    #======================================================
+    - "xform 1 ˉ" #1
+    - "xform 2 ˋ" #2
+    - "xform 3 ˪" #3
+    - "xform 4  " #4
+    - "xform 5 ˊ" #5
+    # - 'xform 6  ̌'    #6
+    - "xform 7 ˫" #7
+    - "xform 8 ˙" #8
+  preedit_format:
+    # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
+    # - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$3$2/
+    # - xform/([aeo])([iueo])([1234578])/$1$3$2/
+    - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$3$2/
+    - xform/([aeo])([iueo])([12345678])/$1$3$2/
+    # 一聲調：陰平調
+    - "xform a1 a"
+    - "xform e1 e"
+    - "xform i1 i"
+    - "xform o1 o"
+    - "xform u1 u"
+    - "xform m1 m"
+    - "xform ng1 ng"
+    # 二聲調：陰上調
+    - "xform a2 á"
+    - "xform e2 é"
+    - "xform i2 í"
+    - "xform o2 ó"
+    - "xform u2 ú"
+    - "xform m2 ḿ"
+    - "xform ng2 ńg"
+    # 三聲調：陰去調
+    - "xform a3 à"
+    - "xform e3 è"
+    - "xform i3 ì"
+    - "xform o3 ò"
+    - "xform u3 ù"
+    - "xform m3 m̀"
+    - "xform ng3 ǹg"
+    # 五聲調：陽平調
+    - "xform a5 â"
+    - "xform e5 ê"
+    - "xform i5 î"
+    - "xform o5 ô"
+    - "xform u5 û"
+    - "xform m5 m̂"
+    - "xform ng5 n̂g"
+    # 六聲調：陽上調
+    - "xform a6 ǎ"
+    - "xform e6 ě"
+    - "xform i6 ǐ"
+    - "xform o6 ǒ"
+    - "xform u6 ǔ"
+    - "xform m6 m̌"
+    - "xform ng6 ňg"
+    # 七聲調：陽去調
+    - "xform a7 ā"
+    - "xform e7 ē"
+    - "xform i7 ī"
+    - "xform o7 ō"
+    - "xform u7 ū"
+    - "xform m7 m̄"
+    - "xform ng7 n̄g"
+    # 四聲調：陰入調
+    - "xform a4 a"
+    - "xform e4 e"
+    - "xform i4 i"
+    - "xform u4 u"
+    - "xform o4 o"
+    - "xform m4 m"
+    - "xform ng4 ng"
+    # 八聲調：陽入調
+    - "xform a8 a̍"
+    - "xform e8 e̍"
+    - "xform i8 i̍"
+    - "xform u8 u̍"
+    - "xform o8 o̍"
+    - "xform m8 m̍"
+    - "xform ng8 n̍g"
+    # 鼻化符號顯示成上標
+    - xform/nn(h?)(\d|\>)/ⁿ$1$2/
+
+reverse_lookup:
+  dictionary: luna_pinyin
+  prefix: "`"
+  suffix: "'"
+  tips: 〔漢語拼音〕
+  preedit_format:
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+  comment_format:
+    #======================================================
+    - derive/^([aeiou])/ø$1/
+    - xform/^([a-zø]+\d)$/$1;$1/
+    #------------------------------------------------------
+    - xform/;ts(?!h)/\[曾;/
+    - xform/;tsh/\[出;/
+    #======================================================
+    - xform/([a-z]+\d)/$1;$1/
+    - xform/;l/\[柳;/
+    - xform/;p(?!h)/\[邊;/
+    - xform/;k(?!h)/\[求;/
+    - xform/;kh/\[氣;/
+    - xform/;t(?!h)/\[地;/
+    - xform/;ph/\[頗;/
+    - xform/;th/\[他;/
+    # - xform/;c(?!h)/\[曾;/
+    - xform/;j/\[入;/
+    - xform/;s/\[時;/
+    # - xform/;q/\[英;/
+    - xform/;b/\[文;/
+    - xform/;g/\[語;/
+    # - xform/;ch/\[出;/
+    - xform/;h/\[喜;/
+    - xform/;u(n|t)(\d)/君;$2/
+    - xform/;ia(n|t)(\d)/堅;$2/
+    - xform/;i(m|p)/金;/
+    - xform/;ui(h?)(\d)/規;$2/
+    - xform/;ee(h?)/嘉;/
+    - xform/;a(n|t)(\d)/干;$2/
+    - xform/;o(ng|k)/公;/
+    - xform/;uai(h?)/乖;$2/
+    - xform/;e(ng|k)/經;/
+    - xform/;ua(n|t)(\d)/觀;$2/
+    # - xform/;ou(h?)(\d)/沽;$2/
+    - xform/;iau(h?)(\d)/嬌;$2/
+    - xform/;ei/稽;/
+    - xform/;io(ng|k)/恭;/
+    # - xform/;o(h?)(\d)/高;$2/
+    - xform/;ai(\d)/皆;$1/
+    - xform/;i(n|t)(\d)/巾;$2/
+    - xform/;ia(ng|k)/姜;/
+    - xform/;a(m|p)/甘;/
+    - xform/;ua(h?)(\d)/瓜;$2/
+    - xform/;a(ng|k)/江;/
+    - xform/;ia(m|p)/兼;/
+    - xform/;au(h?)(\d)/交;$2/
+    - xform/;ia(h?)(\d)/迦;$2/
+    - xform/;ue(h?)(\d)/檜;$2/
+    - xform/;ann(h?)/監;/
+    - xform/;u(h?)(\d)/艍;$2/
+    - xform/;a(h?)(\d)/膠;$2/
+    - xform/;i(h?)(\d)/居;$2/
+    - xform/;iu(\d)/丩;$1/
+    - xform/;enn(h?)/更;/
+    - xform/;inn(h?)/梔;/
+    - xform/;iann/驚;/
+    - xform/;uann/官;/
+    - xform/;e(h?)(\d)/伽;$2/
+    - xform/;ainn(h?)/閒;/
+    # - xform/;ounn/姑;/
+    - xform/;uenn/糜;/
+    - xform/;iaunn(h?)/嘄;/
+    - xform/;o(m|p)/箴;/
+    - xform/;aunn/爻;/
+    # - xform/;onn(h?)/扛;/
+    - xform/;iunn/牛;/
+    #======================================
+    - xform/;oo(h?)(\d)/沽;$2/
+    - xform/;o(h?)(\d)/高;$2/
+    # - xform/;oonn/姑;/
+    - xform/;ounn/姑;/
+    - xform/;onn(h?)/扛;/
+    #======================================
+    - xform/;1/一\]/ # 陰平
+    - xform/;2/二\]/ # 陰上
+    - xform/;3/三\]/ # 陰去
+    - xform/;4/四\]/ # 陰入
+    - xform/;5/五\]/ # 陽平
+    - xform/;6/六\]/ # 陽上
+    - xform/;7/七\]/ # 陽去
+    - xform/;8/八\]/ # 陽入
+    #======================================
+    # 羅馬拼音字母轉寫
+    #======================================
+    - xform/Ø//
+    # - xform/c/ts/
+    # 「更」韻
+    - xform/(^u)enn/$1eenn/
+    # 「文」「柳」「語」鼻化韻
+    - xform/b([aeiou]+)nn/m$1/
+    - xform/l([aeiou]+)nn/n$1/
+    - xform/g([aeiou]+)nn/ng$1/
+    #------------------------------------------------------
+    # 標調
+    - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$3$2/
+    - xform/([aeo])([iueo])([1234578])/$1$3$2/
+    #------------------------------------------------------
+    - "xform a1 a"
+    - "xform a2 á"
+    - "xform a3 à"
+    - "xform a4 a"
+    - "xform a5 â"
+    - "xform a6 ǎ"
+    - "xform a7 ā"
+    - "xform a8 a̍"
+    #------------------------------------------------------
+    - "xform e1 e"
+    - "xform e2 é"
+    - "xform e3 è"
+    - "xform e4 e"
+    - "xform e5 ê"
+    - "xform e6 ě"
+    - "xform e7 ē"
+    - "xform e8 e̍"
+    #------------------------------------------------------
+    - "xform i1 i"
+    - "xform i2 í"
+    - "xform i3 ì"
+    - "xform i4 i"
+    - "xform i5 î"
+    - "xform i6 ǐ"
+    - "xform i7 ī"
+    - "xform i8 i̍"
+    #------------------------------------------------------
+    - "xform o1 o"
+    - "xform o2 ó"
+    - "xform o3 ò"
+    - "xform o4 o"
+    - "xform o5 ô"
+    - "xform o6 ǒ"
+    - "xform o7 ō"
+    - "xform o8 o̍"
+    #------------------------------------------------------
+    - "xform u1 u"
+    - "xform u2 ú"
+    - "xform u3 ù"
+    - "xform u4 u"
+    - "xform u5 û"
+    - "xform u6 ǔ"
+    - "xform u7 ū"
+    - "xform u8 u̍"
+    #------------------------------------------------------
+    #   鼻化符號顯示成上標
+    - xform/nn(h?)(\d|\>)/ⁿ$1$2/
+
+menu:
+  alternative_select_labels: [①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨] # 修改候選標籤
+  # alternative_select_keys: ABCDEFGHI #如編碼字符佔用數字鍵則須另設選字鍵
+  page_size: 5 # 每頁選單顯示之項目數
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { accept: comma, send: Up, when: has_menu } # 選下一個字
+    - { accept: period, send: Down, when: has_menu } # 選上一個字
+    - { accept: minus, send: Page_Up, when: has_menu } # 換上一個選單
+    - { accept: equal, send: Page_Down, when: has_menu } # 換下一個選單
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+
+editor:
+  bindings:
+    Return: commit_raw_input # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text # 上屏顯示的輸入：lâu
+    Shift+Return: commit_comment # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+
+punctuator:
+  import_preset: symbols
+  # half_shape:
+  #   "'": {pair: ["「", "」"]} #第一次按是「，第二次是」
+  #   "(": ["〔", "［"] #彈出選單
+  #   .: {commit: "。"} #無選單，直接上屛。優先級最高
+
+recognizer:
+  import_preset: default
+  patterns:
+    punct: "^/([0-9]0?|[A-Za-z]+)$"
+    reverse_lookup: "`[a-z]*'?$"
+
+style:
+  display_tray_icon: false
+  font_face: "Noto Sans TC, Noto Serif TC, tshiuthau-oo-taigi, Fira-Sans"
+  font_point: 36
+  fullscreen: false
+  # horizontal: true
+  horizontal: false
+  inline_preedit: false
+  layout:
+    border_width: 3
+    candidate_spacing: 5
+    hilite_padding: 2
+    hilite_spacing: 4
+    margin_x: 12
+    margin_y: 6
+    min_height: 0
+    min_width: 160
+    round_corner: 4
+    t Signs:q    spacing: 10
