@@ -14,12 +14,10 @@
 
 1. **安裝 [RIME](http://rime.im)**；
 
-
 2. **下載 [rime-taigi](https://github.com/AlanJui/rime-taigi/releases) 壓縮包檔案**；
 
-
 3. **設定 RIME 使用者設定檔 (`default.custom.yaml`)**；
-   
+
    各作業系統的 RIME 使用者設定檔，存放 `目錄路徑（資料夾）`：
 
    - 鼠鬚管：`~/Library/Rime/`(macOS)
@@ -27,7 +25,6 @@
    - 小狼毫：`"%APPDATA%\Rime"`(Windows)
 
    - 中州韻：`~/.config/ibus/rime/`(如：Ubuntu, ArchLinux，採用 Gnome 桌面＋ ibus 輸入作業平台)
-
 
 4. **重新部署 RIME 輸入法**：將作業系統使用中的輸入法，先切換成 RIME，再執行 RIME
    輸入法中的「重新部署」指令。
@@ -48,7 +45,9 @@
 |  7   | 陽入 (ā)  |    -     |  洞  | tōng     | tong-    |
 |  8   | 陽去 (a̍h) |    '     |  毒  | to̍k      | tok'     |
 
-![鍵盤](./docs/static/img/keyboard.png)
+![注音符號鍵盤](./docs/static/img/keyboard.png)
+
+![聲調鍵盤](./docs/static/img/keyboard2.png)
 
 ## 字形
 

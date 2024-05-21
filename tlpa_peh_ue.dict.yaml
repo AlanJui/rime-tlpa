@@ -165,7 +165,7 @@ use_preset_vocabulary: false
 閘	cah8
 鍘	cah8
 差	cha1
-叉	cha1	
+叉	cha1
 吵	cha2
 炒	cha2
 插	chah4
@@ -3142,7 +3142,7 @@ use_preset_vocabulary: false
 敢著	kiam tioh
 感謝	kam sia
 感恩	kam ern
-感恩戴德	kam ern tai tik 
+感恩戴德	kam ern tai tik
 感動	kam tong
 感心	kam sim
 感情	kam cing
@@ -8211,7 +8211,7 @@ use_preset_vocabulary: false
 章	cIang1	10
 彰	cIang1
 漳	cIang1	10
-漳	ciang1	10 
+漳	ciang1	10
 漳	cing1#泉
 障	cIang1
 樟	cIang1
@@ -8518,7 +8518,7 @@ use_preset_vocabulary: false
 漳南	ciang lam
 漳廈	ciang ha
 漳泉	ciang cuan
-漳州	cing ciu#泉 
+漳州	cing ciu#泉
 將來	cIang lai
 將領	cIang nia
 將令	cIang ling
@@ -8738,7 +8738,7 @@ use_preset_vocabulary: false
 上述	sIang sut
 上昇	sIang sing
 上台	sIang tai
-上課	sIang kho 
+上課	sIang kho
 尚未	sIang bi
 尚文	sIang bun
 尚武	sIang bu
@@ -13957,7 +13957,7 @@ use_preset_vocabulary: false
 染頭毛	ni thau mng
 染頭毛	ni thau moo
 染頭鬃	ni thau cang
-染料	ni liau 
+染料	ni liau
 染布	ni poo
 睰光	nih kuInn
 睰目	nih bak
@@ -18609,7 +18609,7 @@ use_preset_vocabulary: false
 規副	kui hu
 規打	kui tann
 規虯	kui khiu
-規箍	kui khoo 
+規箍	kui khoo
 規節	kui cat
 規捾	kui kuann
 規批	kui phue
@@ -18694,7 +18694,7 @@ use_preset_vocabulary: false
 規頭面汗	kui thau bin kuann
 規頭面塗	kui thau bin thoo
 規手	kui chiu
-規喙	kui chui	
+規喙	kui chui
 歸尾	kui ber
 歸倚	kui ua
 歸順	kui sun
@@ -19587,7 +19587,7 @@ use_preset_vocabulary: false
 瑞氣千條	sui khi chian tiau
 遂願	sui guan
 ##	uinn/uinnh
-快	khuinn3	1%	
+快	khuinn3	1%
 蜢	muih4
 快活	khuinn uah
 快活	khuann uah
@@ -19998,7 +19998,7 @@ use_preset_vocabulary: false
 諸	cir1
 煮	cir2	10
 咀	cir2
-薯	cir5	
+薯	cir5
 蜍	cir5
 沮	cir6
 蛆	chir1
@@ -20975,7 +20975,7 @@ use_preset_vocabulary: false
 跂	ker2
 果	ker2	5%
 粿	ker2
-過	ker3	10	
+過	ker3	10
 髻	ker3
 鱖	ker3
 郭	kerh4
@@ -27447,16 +27447,16 @@ use_preset_vocabulary: false
 鑄	cu3
 柱	cu6
 住	cu7
-苴	cu7	
+苴	cu7
 趨	chu1
-樞	chu1	
+樞	chu1
 厝	chu3
 趣	chu3
 焠	chuh4
 澍	chu6
-跙	chu6	
+跙	chu6
 愈	ju2	10
-愈	ji2	#漳音文讀 
+愈	ji2	#漳音文讀
 裕	ju7
 輸	su1	10
 軀	su1
@@ -28197,61 +28197,61 @@ use_preset_vocabulary: false
 羽	U2
 雨	U2
 禹	U2
-盂	U5	
-竽	U5	
-雩	U5	
-#逾	U5	
-覦	U5	
-#渝	U5	
-#瑜	U5	
-#榆	U5	
-臾	U5	
-諛	U5	
-芋	U7	
-縷	lU2	
-屢	lU2	
-褸	lU2	
-俱	kU1	
-具	kU7	
-懼	kU7	
-區	khU1	
-軀	khU1	
-驅	khU1	
-嶇	khU1	
-瞿	khU5	
-虞	gU5	
-娛	gU5	
-愚	gU5	
-隅	gU5	
+盂	U5
+竽	U5
+雩	U5
+#逾	U5
+覦	U5
+#渝	U5
+#瑜	U5
+#榆	U5
+臾	U5
+諛	U5
+芋	U7
+縷	lU2
+屢	lU2
+褸	lU2
+俱	kU1
+具	kU7
+懼	kU7
+區	khU1
+軀	khU1
+驅	khU1
+嶇	khU1
+瞿	khU5
+虞	gU5
+娛	gU5
+愚	gU5
+隅	gU5
 遇	gU7	10
-寓	gU7	
-吁	hU1	
-栩	hU2	
-詡	hU2	
-聚	cU6	
-趨	chU1	
-取	chU2	
-娶	chU2		
-乳	jU2	
-庾	jU2	
-儒	jU5	
-俞	jU5		
-蠕	jU5	
-瑜	jU5	
-愉	jU5	
-渝	jU5	
-逾	jU5	
-孺	jU5	
-濡	jU5	
-榆	jU5	
-諭	jU7	
-喻	jU7	
+寓	gU7
+吁	hU1
+栩	hU2
+詡	hU2
+聚	cU6
+趨	chU1
+取	chU2
+娶	chU2
+乳	jU2
+庾	jU2
+儒	jU5
+俞	jU5
+蠕	jU5
+瑜	jU5
+愉	jU5
+渝	jU5
+逾	jU5
+孺	jU5
+濡	jU5
+榆	jU5
+諭	jU7
+喻	jU7
 輸	sU1	10
 需	sU1	10
 須	sU1	10
-鬚	sU1	
-璽	sU2	
-署	sU2	
+鬚	sU1
+璽	sU2
+署	sU2
 徙	sU2	5%
 樹	sU7	5%
 豎	sU7	10
