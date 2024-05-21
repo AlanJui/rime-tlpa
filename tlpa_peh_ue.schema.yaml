@@ -1,20 +1,16 @@
 # Rime schema
 # vim: set sw=2 sts=2 et:
 # encoding: utf-8
----
-schema:
-  schema_id: TLPA_Kong_Un
-  name: 河洛廣韻
-  version: "v0.0.0.1"
-  author: 居正中
-  description: TLPA 河洛話輸入法
 
-switches:
-  - name: ascii_mode
-    reset: 0
-    states: [中文, 西文]
-  - name: full_shape
-    states: [半角, 全角]
+schema:
+  schema_id: tlpa_peh_ue
+  name: 河洛白話
+  version: "0.0.0.1"
+  author:
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    河洛話白話音
+    採用「TLPA標音方案」
 
 engine:
   processors:
@@ -56,7 +52,7 @@ speller:
     - 'xlit 12345678 [/\]90-;'
 
 translator:
-  dictionary: TLPA_Kong_Un
+  dictionary: tlpa_peh_ue
   prism: blg_taipak
   preedit_format:
     - 'xform ([aeiou])(r?m?n*h?g?p?t?k?)([\[/\\\]90\-;]) $1$3$2'
@@ -139,7 +135,7 @@ recognizer:
 
 style:
   display_tray_icon: false
-  font_face: "Noto Serif TC, tshiuthau-oo-taigi, Fira-Sans"
+  font_face: "KangXi Font Full Version, Noto Serif TC, tshiuthau-oo-taigi, Fira-Sans"
   font_point: 24
   fullscreen: false
   horizontal: true
