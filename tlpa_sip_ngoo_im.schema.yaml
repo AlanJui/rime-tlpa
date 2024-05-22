@@ -338,20 +338,4 @@ recognizer:
     reverse_lookup: "`[a-z]*'?$"
 
 style:
-  display_tray_icon: false
-  font_face: "FSung-F, PMingliU, Fira-Sans"
-  font_point: 28
-  fullscreen: false
   horizontal: false
-  inline_preedit: false
-  layout:
-    border_width: 3
-    candidate_spacing: 5
-    hilite_padding: 2
-    hilite_spacing: 4
-    margin_x: 12
-    margin_y: 6
-    min_height: 0
-    min_width: 160
-    round_corner: 4
-    t Signs:q    spacing: 10

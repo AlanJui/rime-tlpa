@@ -133,21 +133,21 @@ recognizer:
   patterns:
     reverse_lookup: "`[a-z]*$"
 
-style:
-  display_tray_icon: false
-  font_face: "KangXi Font Full Version, Noto Serif TC, tshiuthau-oo-taigi, Fira-Sans"
-  font_point: 24
-  fullscreen: false
-  horizontal: true
-  inline_preedit: false
-  layout:
-    border_width: 3
-    candidate_spacing: 5
-    hilite_padding: 2
-    hilite_spacing: 4
-    margin_x: 12
-    margin_y: 6
-    min_height: 0
-    min_width: 160
-    round_corner: 4
-    spacing: 10
+# style:
+#   display_tray_icon: false
+#   font_face: "KangXi Font Full Version, Noto Serif TC, tshiuthau-oo-taigi, Fira-Sans"
+#   font_point: 24
+#   fullscreen: false
+#   horizontal: true
+#   inline_preedit: false
+#   layout:
+#     border_width: 3
+#     candidate_spacing: 5
+#     hilite_padding: 2
+#     hilite_spacing: 4
+#     margin_x: 12
+#     margin_y: 6
+#     min_height: 0
+#     min_width: 160
+#     round_corner: 4
+#     spacing: 10

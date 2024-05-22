@@ -6,8 +6,8 @@ name: tlpa_bun_thok
 version: "v0.0.0.1"
 sort: by_weight
 use_preset_vocabulary: true
-import_tables:
-  - tlpa_beh_ue
+# import_tables:
+#   - tlpa_beh_ue
 ...
 #   單字
 縮	lun1	0.00
@@ -3644,6 +3644,7 @@ import_tables:
 栻	sik4	0.00
 奭	sik4	0.00
 襫	sik4	0.00
+軾	sik4	0.60
 億	Øik4	0.00
 𠐥	Øik4	0.00
 益	Øik4	0.00
