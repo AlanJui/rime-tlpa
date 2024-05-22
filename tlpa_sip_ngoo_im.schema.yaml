@@ -82,7 +82,7 @@ translator:
   spelling_hints: 5
   preedit_format:
   comment_format:
-    - xform/^([a-z]+\d)$/$1;$1/
+    - xform/^([a-zØ]+\d)$/$1;$1/
     - xform/;l/\[柳;/
     - xform/;p(?!h)/\[邊;/
     - xform/;k(?!h)/\[求;/
