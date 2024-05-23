@@ -7,12 +7,12 @@ customization:
 patch:
   schema_list:
     - {schema: ngsth_bun}
+    - {schema: tlpa_peh_ue}
     - {schema: tlpa_hong_im_kb}
     - {schema: tlpa_hong_im}
+    - {schema: tlpa_cu_im}
     - {schema: tlpa_sip_ngoo_im}
-    - {schema: tlpa_peh_ue}
     - {schema: tlpa_kong_un}
     - {schema: luna_pinyin_tw}
-    - {schema: tlpa_sip_ngoo_im}
     - {schema: taigi_tps}
 
