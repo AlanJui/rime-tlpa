@@ -42,6 +42,10 @@
 
 ![聲調鍵盤](./docs/static/img/keyboard2.png)
 
+### 河洛注音
+
+![方音符號鍵盤](./docs/static/img/keyboard.png)
+
 ## 字形
 
 以下建議使用之字形，均為開源、免費字形：
