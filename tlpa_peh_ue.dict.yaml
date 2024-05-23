@@ -8,6 +8,9 @@ name: tlpa_peh_ue
 version: "0.0.0.1"
 sort: by_weight
 use_preset_vocabulary: false
+import_tables:
+ - tlpa_ciann_ji
+ - tlpa_su
 ...
 ##	a/ah
 啊	a0

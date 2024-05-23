@@ -1,0 +1,84 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 漢字詞庫
+#
+---
+name: tlpa_ciann_ji
+version: "v0.0.0.1"
+sort: by_weight
+use_preset_vocabulary: false
+...
+#   詞彙
+一寡	cit8 kua2	5%		一些
+一霎仔久	cit8 sap4 a2 ku2	5%		指極短的時間內
+一點仔	cit8 tiam2 a2	5%		一點點
+又佫	iu7 koh4	5%		又再
+干焦	kan1 na1	5%		僅只
+毋但	m7 na7	5%		不僅（反義詞：干焦）
+才知	ciah4 cai1	5%		這才知道
+才會	ciah4 e7
+中晝	tiong1 tau3	5%		中午，午時
+予人知影	hoo7 lang5 cai1 iann2
+今也	cim2 ma2	5%		現在，有人稱：這馬
+今也	cim2 a2	5%		現在，有人稱：這馬
+今仔日	kin1 a2 jit8	5%		今日、今天
+少󠇡寡	cio2 khua2	5%		一點點、一些些
+尤其	iu5 ki5	5%		特別是⋯⋯
+歹過	phainn2 kue3
+毋才	m7 ciah1	5%		所以才⋯⋯
+毋好閣忍	m7 ho2 koh4 jim2	5%		不宜再忍
+毋知	m7 cai1	5%		不知道
+毋捌	m7 bat4	5%		不曾過
+毋通	m7 thang1	5%		不可以
+去叼	khi2 toh4	5%		去那裡
+喘大氣	chuan2 tua7 khui3
+僥倖	hiau1 hing7	hiau-hīng hiâu-hīng
+安爾	an2 ni1	án-ni
+叫是	kio3 si7	kiò-sī
+却是	khiok4 si7	khiok-sī（以為／卻是）
+掠準	liah8 cun2	lia̍h-cún（以為）
+料做	liau7 co3	liāu-cò
+菁兒叢	chenn1 a2 cang5	chenn-á-câng
+青仔欉	chenn1 a2 cang5	chenn-á-câng
+上姝	siong7 sui2	siōng-súi
+懸踏鞋	kuan5 tah8 e5	kuân-ta̍h-ê
+會使	e7 sai2	ē-sái
+敢安爾	kam2 an1 ni2	kám-an-ní
+這兒等	ce1 a1 tan2	ce-a-tán
+順續	sun7 sua3	sūn-suà
+順勢	sun7 si3	sūn-sì/sūn-sè
+腹肚枵	pak4 too2 iau1	pak-tóo-iau
+晏安	uann3 an1	uànn-an
+暗時	am3 si5	àm-sî
+暗暝	am3 me5	àm-mê
+討打󠇡	tho3 phah4	thó-tánn/phah
+欠拍	khiam3 phah4	khiàm-phah
+漏勾	lau3 kau1	làu-kau（漏掉）
+擉過	tiak8 kue3	tia̍k-kuè（算盤擉過桱）
+欠人譑	khiam3 lang5 kiau7	khiàm-lâng-kiāu（欠罵）
+定定	tiann7 tiann7	tiānn-tiānn（時常）
+逐家	tak8 ke1	ta̍k-ke（大家）
+綴	tue3	tuè/cuè（接連）
+綴	cue3	tuè/cuè（接連）
+規夜	kui1 ia7	kui-iā（整夜）
+圈	khoo1	（箍）
+圓圈	inn5 khoo1	înn-khoo
+加五圈	ke1 goo7 khoo1	ke-gōo-khoo
+大圈呆	tua7 khoo1 tai1	tuā-khoo-tai
+莫細膩	mai3 se3 ji7	mài-sè-jī（別客氣）
+即馬	cik4 ma2
+這站	cit4 cam7	cit-cām
+提掉	theh8 tiau7	the̍h-tiāu
+𣍐曉	be7 hiau2
+𣍐曉	bue7 hiau2	10%
+袂曉	be7 hiau2	1%	bē-hiáu（不會）
+秤採	chiann2 chai5	chiánn-châi（隨便	請對方決定，民間廣為流行之後，衍生隨你便之意；有用「請裁」）
+斬截	cam7 cat4	cām-cat
+𪁎趒	chio1 tio5	chio-tiô（囂張）
+不輸	be7 su1	10%	好像
+一个	cit8 e5		一個.    iukoh
+加加好	koh4 khah4 ho2	10%	更好
+哩哩落落	li li lak4 lak4	10%	零零落落
+喑喑噁噁	inn3 inn3 onn3 onn3	10%	講話鼻音重，聲音又含糊不清
+喙角全泡	chui2 kak4 cuan5 pho1	10%	說話天花亂墜
