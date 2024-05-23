@@ -1,6 +1,6 @@
 # 河洛白話音
 
-(臺灣語言音標方案)[https://zh.wikipedia.org/zh-tw/%E8%87%BA%E7%81%A3%E8%AA%9E%E8%A8%80%E9%9F%B3%E6%A8%99%E6%96%B9%E6%A1%88]
+[臺灣語言音標方案](https://zh.wikipedia.org/zh-tw/%E8%87%BA%E7%81%A3%E8%AA%9E%E8%A8%80%E9%9F%B3%E6%A8%99%E6%96%B9%E6%A1%88)
 （英語：Taiwan Language Phonetic Alphabet，TLPA，讀作Thoo-lú-pah）
 是台灣語文學會於1991年期間針對臺灣語言所制定的音標系統，內含臺灣閩南語音標系統、
 臺灣客家語音標系統、臺灣原住民語音標系統等三套系統。
