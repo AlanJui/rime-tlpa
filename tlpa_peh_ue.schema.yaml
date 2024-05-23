@@ -83,16 +83,6 @@ speller:
 translator:
   dictionary: tlpa_peh_ue
   spelling_hints: 5
-  comment_format:
-    # 標調號
-    - "xform 1 ¹"
-    - "xform 2 ²"
-    - "xform 3 ³"
-    - "xform 4 ⁴"
-    - "xform 5 ⁵"
-    - "xform 6 ⁶"
-    - "xform 7 ⁷"
-    - "xform 8 ⁸"
   preedit_format:
     #======================================================
     # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
