@@ -20,7 +20,7 @@ schema:
 switches:
   - name: ascii_mode
     reset: 0
-    states: [台文, ABC]
+    states: [漢文, ABC]
   - name: full_shape
     reset: 0
     states: [半形, 全形]
@@ -55,8 +55,6 @@ speller:
   initials: abcdefghijklmnopqrstuvwxyz
   delimiter: " '"
   algebra:
-    # 去掉聲調
-    # - derive/[1-8]//
     # 零聲母處理
     - derive/q//
     - derive/Ø//
@@ -82,16 +80,6 @@ speller:
     #==========================================
     - derive/^([Øa-z]+)\d$/$1/
     - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
-    - 'xlit 12345678 [/\]90-;'
-    # 標調號
-    - "xform 1 ¹"
-    - "xform 2 ²"
-    - "xform 3 ³"
-    - "xform 4 ⁴"
-    - "xform 5 ⁵"
-    - "xform 6 ⁶"
-    - "xform 7 ⁷"
-    - "xform 8 ⁸"
 
 translator:
   dictionary: tlpa_peh_ue
@@ -113,32 +101,37 @@ translator:
     #======================================
     - derive/^([aeiou])/ø$1/
     - xform/^([a-zø]+\d)$/$1;$1/
-    #------------------------------------------------------
-    - xform/;n(?!g)/〖柳;/
-    - xform/;ng/〖語;/
-    - xform/;m/〖文;/
-    - xform/;ts(?!h)/〖曾;/
-    - xform/;tsh/〖出;/
-    # - xform/;z(?!h)/〖曾;/
-    # - xform/;c/〖出;/
     #======================================
-    - xform/;l/〖柳;/
-    - xform/;p(?!h)/〖邊;/
-    - xform/;k(?!h)/〖求;/
-    - xform/;kh/〖去;/
-    - xform/;t(?!h)/〖地;/
-    - xform/;ph/〖頗;/
-    - xform/;th/〖他;/
-    # - xform/;c(?!h)/〖曾;/
-    - xform/;j/〖入;/
-    - xform/;s/〖時;/
-    # - xform/;q/〖英;/
-    - xform/;ø/〖英;/
-    - xform/;b/〖文;/
-    - xform/;g/〖語;/
-    # - xform/;ch/〖出;/
-    - xform/;h/〖喜;/
-    #------------------------------------------------------
+    # 聲母
+    #======================================
+    # 唇音(不送氣音/送氣音/濁音/鼻音)
+    - xform/;p(?!h)/\【邊;/
+    - xform/;ph/\【頗;/
+    - xform/;b/\【門;/
+    - xform/;m/\【毛;/
+    # 舌尖音
+    - xform/;t(?!h)/\【地;/
+    - xform/;th/\【他;/
+    - xform/;n(?!g)/\【耐;/
+    - xform/;l/\【柳;/
+    # 舌齒音
+    - xform/;c(?!h)/\【曾;/
+    - xform/;ch/\【出;/
+    - xform/;j/\【入;/
+    - xform/;s/\【時;/
+    # 舌根音
+    - xform/;k(?!h)/\【求;/
+    - xform/;kh/\【氣;/
+    - xform/;g/\【語;/
+    - xform/;ng/\【雅;/
+    # 喉音
+    - xform/;h/\【喜;/
+    # 無聲母
+    - xform/;Ø/\【英;/
+    - xform/;q/\【英;/
+    #======================================
+    # 韻母
+    #======================================
     - xform/;u(n|t)(\d)/君;$2/
     - xform/;ia(n|t)(\d)/堅;$2/
     - xform/;i(m|p)/金;/
@@ -192,22 +185,17 @@ translator:
     - xform/;ounn/姑;/
     - xform/;onn(h?)/扛;/
     #======================================
-    - xform/;1/一〗/    # 陰平
-    - xform/;2/二〗/    # 陰上
-    - xform/;3/三〗/    # 陰去
-    - xform/;4/四〗/    # 陰入
-    - xform/;5/五〗/    # 陽平
-    - xform/;6/六〗/    # 陽上
-    - xform/;7/七〗/    # 陽去
-    - xform/;8/八〗/    # 陽入
+    - xform/;1/一】/    # 陰平
+    - xform/;2/二】/    # 陰上
+    - xform/;3/三】/    # 陰去
+    - xform/;4/四】/    # 陰入
+    - xform/;5/五】/    # 陽平
+    - xform/;6/六】/    # 陽上
+    - xform/;7/七】/    # 陽去
+    - xform/;8/八】/    # 陽入
     #======================================================
     # 顯示「方音符號」的聲母
     #======================================================
-    # - xform/^c/ㄘ/
-    # - xform/^z/ㄗ/
-    - xform/^tsh/ㄘ/
-    - xform/^ts(?!h)/ㄗ/
-    #------------------------------------------------------
     - xform/^p(?!h)/ㄅ/
     - xform/^ph/ㄆ/
     - xform/^m/ㄇ/
@@ -224,10 +212,8 @@ translator:
     - xform/^g/ㆣ/
     - xform/^ng/ㄫ/
     #------------------------------------------------------
-    # - xform/^ts(?!h)/ㄗ/
-    # - xform/^tsh/ㄘ/
-    # - xform/^s/ㄙ/
-    # - xform/^j/ㆡ/
+    - xform/^ch/ㄘ/
+    - xform/^c(?!h)/ㄗ/
     - xform/s/ㄙ/
     - xform/j/ㆡ/
     #======================================================
@@ -346,7 +332,6 @@ translator:
     - xform/ㆤN/ㆥ/
     - xform/ㄞN/ㆮ/
     - xform/ㄠN/ㆯ/
-
     - xform/ㄧㄢㄣ/ㄧㆩ/  # 驚
     #======================================================
     # 校調
@@ -360,16 +345,16 @@ translator:
     #======================================================
     # 入聲
     #======================================================
+    # 下入聲
     - xform/p8/ㆴ̇/
     - xform/t8/ㆵ̇/
     - xform/k8/ㆻ̇
     - xform/h8/ㆷ̇/
-
+    # 上入聲
     - xform/p/ㆴ/
     - xform/t/ㆵ/
     - xform/k/ㆻ/
     - xform/h/ㆷ/
-
     # ok 指 ook
     - xform/ㄜ([ ㆴ ㆵ ㆻ ㆷ])/ㆦ$1/
     #======================================================
@@ -404,3 +389,41 @@ recognizer:
 
 style:
   horizontal: false
+
+key_binder:
+  import_preset: default
+  bindings:
+    # - { accept: minus, send: Page_Up, when: has_menu }    # 換上一個選單
+    # - { accept: equal, send: Page_Down, when: has_menu }  # 換下一個選單
+    - { accept: comma, send: Up, when: has_menu }         # 選下一個字
+    - { accept: period, send: Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    - { accept: "Control+g", send: space, when: composing }
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    - { when: has_menu, accept: "Control+2", send: "B" }
+    - { when: has_menu, accept: "Control+3", send: "C" }
+    - { when: has_menu, accept: "Control+4", send: "D" }
+    - { when: has_menu, accept: "Control+5", send: "E" }
+    #---------------------------------------------------
+    - { when: composing, accept: "Control+1", send: "1" }
+    - { when: composing, accept: "Control+2", send: "2" }
+    - { when: composing, accept: "Control+3", send: "3" }
+    - { when: composing, accept: "Control+4", send: "4" }
+    - { when: composing, accept: "Control+5", send: "5" }
+    - { when: composing, accept: "Control+6", send: "6" }
+    - { when: composing, accept: "Control+7", send: "7" }
+    - { when: composing, accept: "Control+8", send: "8" }
+    #---------------------------------------------------
+
+editor:
+  bindings:
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
+
