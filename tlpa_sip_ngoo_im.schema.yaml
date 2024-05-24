@@ -378,6 +378,10 @@ key_binder:
 editor:
   bindings:
     space: commit                       # 選擇「備選漢字」
-    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
+    Return: commit_script_text          # 輸出顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 輸出候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Return: commit_raw_input    # 輸出原始的輸入：lau5
+    # Control+Return: commit_composition    # 輸出漢字與TLPA拚音：劉 [lau⁵]
+  formats:
+    - pattern: "^.*$"
+      text: "{commit_composition} [{commit_script_text}]"

@@ -8,6 +8,7 @@ patch:
   schema_list:
     - {schema: ngsth_bun}
     - {schema: tlpa_peh_ue}
+    - {schema: tlpa_peh_ue_combo}
     - {schema: tlpa_hong_im_kb}
     - {schema: tlpa_hong_im}
     - {schema: tlpa_cu_im}
