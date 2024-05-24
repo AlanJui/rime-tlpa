@@ -48,69 +48,86 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: zyxwvutsrqponmlkjihgfedcba
+  # alphabet: zyxwvutsrqponmlkjihgfedcba
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~[/\]90-;'
+  initials: abcdefghijklmnopqrstuvwxyz
   delimiter: " '"
   algebra:
     #   去掉聲調
-    - derive/[1-8]//
+    # - derive/[1-8]//
     #   零聲母處理
     - derive/q//
     - derive/Ø//
     #   通配
-    - derive/c/ts/
+    # - derive/c/ts/
     - derive/ou/oo/
     - derive/e(ng|k)/i$1/
     - derive/ei/e/
-    #   鼻化韻處理
-    - derive/([^u])enn/$1eenn/
-    - xform/b(.+)nn/m$1/
-    - xform/l(.+)nn/n$1/
-    - xform/g(.+)nn/ng$1/
-    - derive/([^blg])(.+)nn/$1$2/
-    #   聲母簡拼
-    - abbrev/^([lpktcjsqbghmn])([^hsg]).+$/$1/
-    - abbrev/^(ph).+$/$1/
-    - abbrev/^(th).+$/$1/
-    - abbrev/^(kh).+$/$1/
-    - abbrev/^(ng).+$/$1/
-    - abbrev/^(ch).+$/$1/
-    - abbrev/^(ts).+$/$1/
-    - abbrev/^(tsh).+$/$1/
+    # #   鼻化韻處理
+    # - derive/([^u])enn/$1eenn/
+    # - xform/b(.+)nn/m$1/
+    # - xform/l(.+)nn/n$1/
+    # - xform/g(.+)nn/ng$1/
+    # - derive/([^blg])(.+)nn/$1$2/
+    # #   聲母簡拼
+    # - abbrev/^([lpktcjsqbghmn])([^hsg]).+$/$1/
+    # - abbrev/^(ph).+$/$1/
+    # - abbrev/^(th).+$/$1/
+    # - abbrev/^(kh).+$/$1/
+    # - abbrev/^(ng).+$/$1/
+    # - abbrev/^(ch).+$/$1/
+    # - abbrev/^(ts).+$/$1/
+    # - abbrev/^(tsh).+$/$1/
+    #==========================================
+    - derive/^([Øa-z]+)\d$/$1/
+    - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
+    - xlit|12345678|[/\]90-;|
 
 translator:
-  dictionary: tlpa_bun_thok
+  # dictionary: tlpa_bun_thok
+  dictionary: tlpa_sip_ngoo_im
   spelling_hints: 5
   preedit_format:
+    #======================================================
+    # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
+    #======================================================
+    - xlit|[/\]90-;|¹²³⁴⁵⁶⁷⁸|
+    - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$2$3/
+    - xform/([aeo])([iueo])([12345678])/$1$2$3/
+    #======================================================
+    # 鼻化符號顯示成上標
+    #======================================================
+    - xform/nn(h?)(\d|\>)/$1ⁿ$2/
   comment_format:
     - xform/^([a-zØ]+\d)$/$1;$1/
     #==================================
     # 聲母
     #==================================
     # 唇音(不送氣音/送氣音/濁音/鼻音)
-    - xform/;p(?!h)/\[邊;/
-    - xform/;ph/\[頗;/
-    - xform/;b/\[門;/
-    - xform/;m/\[毛;/
+    - xform/;p(?!h)/【邊;/
+    - xform/;ph/【頗;/
+    - xform/;b/【門;/
+    - xform/;m/【毛;/
     # 舌尖音
-    - xform/;t(?!h)/\[地;/
-    - xform/;th/\[他;/
-    - xform/;n(?!g)/\[耐;/
-    - xform/;l/\[柳;/
+    - xform/;t(?!h)/【地;/
+    - xform/;th/【他;/
+    - xform/;n(?!g)/【耐;/
+    - xform/;l/【柳;/
     # 舌齒音
-    - xform/;c(?!h)/\[曾;/
-    - xform/;ch/\[出;/
-    - xform/;j/\[入;/
-    - xform/;s/\[時;/
+    - xform/;c(?!h)/【曾;/
+    - xform/;ch/【出;/
+    - xform/;j/【入;/
+    - xform/;s/【時;/
     # 舌根音
-    - xform/;k(?!h)/\[求;/
-    - xform/;kh/\[氣;/
-    - xform/;g/\[語;/
-    - xform/;ng/\[雅;/
+    - xform/;k(?!h)/【求;/
+    - xform/;kh/【氣;/
+    - xform/;g/【語;/
+    - xform/;ng/【雅;/
     # 喉音
-    - xform/;h/\[喜;/
+    - xform/;h/【喜;/
     # 無聲母
-    - xform/;Ø/\[英;/
-    - xform/;q/\[英;/
+    - xform/;Ø/【英;/
+    - xform/;q/【英;/
     #==================================
     # 韻母
     #==================================
@@ -124,7 +141,7 @@ translator:
     - xform/;uai(h?)/乖;$2/
     - xform/;e(ng|k)/經;/
     - xform/;ua(n|t)(\d)/觀;$2/
-    - xform/;ou(h?)(\d)/沽;$2/
+    - xform/;oo(h?)(\d)/沽;$2/
     - xform/;iau(h?)(\d)/嬌;$2/
     - xform/;ei/稽;/
     - xform/;io(ng|k)/恭;/
@@ -160,22 +177,31 @@ translator:
     #==================================
     # 聲調
     #==================================
-    - xform/;1/上平\]/
-    - xform/;2/上上\]/
-    - xform/;3/上去\]/
-    - xform/;4/上入\]/
-    - xform/;5/下平\]/
-    - xform/;7/下去\]/
-    - xform/;8/下入\]/
-    #   以下爲羅馬字轉寫
-    #- xform/q//
-    #- xform/c/ts/
-    #   「更」韻
+    - xform/;1/上平】/
+    - xform/;2/上上】/
+    - xform/;3/上去】/
+    - xform/;4/上入】/
+    - xform/;5/下平】/
+    - xform/;7/下去】/
+    - xform/;8/下入】/
+    #=================================================
+    # 「更」韻
     - xform/([^u])enn/$1eenn/
-    #   「門」「柳」「語」鼻化韻
-    - xform/b([aeiou]+)nn/m$1/
-    - xform/l([aeiou]+)nn/n$1/
-    - xform/g([aeiou]+)nn/ng$1/
+    #=================================================
+    # 原`十五音` 的 `聲母` 有鼻化韻：
+    # - 柳：l ==> n
+    # - 門：b ==> m
+    # - 語：g ==> ng
+    # 改成 `十八音` ：
+    # - 耐：n
+    # - 毛：m
+    # - 雅：ng
+    # 則十五音鼻化韻的處理可略去。
+    #=================================================
+    # - xform/l([aeiou]+)nn/n$1/
+    # - xform/b([aeiou]+)nn/m$1/
+    # - xform/g([aeiou]+)nn/ng$1/
+    #=================================================
     #   標調
     - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$2$3/
     - xform/([aeo])([iueo])([1234578])/$1$2$3/
@@ -328,3 +354,30 @@ recognizer:
 
 style:
   horizontal: false
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    # 翻頁
+    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+
+editor:
+  bindings:
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
