@@ -63,107 +63,26 @@ speller:
     - derive/ou/oo/
     - derive/e(ng|k)/i$1/
     - derive/ei/e/
-    # 鼻化韻處理
-    - derive/([^u])enn/$1eenn/
-    - xform/b(.+)nn/m$1/
-    - xform/l(.+)nn/n$1/
-    - xform/g(.+)nn/ng$1/
-    - derive/([^blg])(.+)nn/$1$2/
-    # 聲母簡拼
-    - abbrev/^([lpktcjsqbghmn])([^hsg]).+$/$1/
-    - abbrev/^(ph).+$/$1/
-    - abbrev/^(th).+$/$1/
-    - abbrev/^(kh).+$/$1/
-    - abbrev/^(ng).+$/$1/
-    - abbrev/^(ts).+$/$1/
-    - abbrev/^(tsh).+$/$1/
     #==========================================
     - derive/^([Øa-z]+)\d$/$1/
     - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
     - 'xlit 12345678 [/\]90-;'
-    # 標調號
-    - "xform 1 ¹"
-    - "xform 2 ²"
-    - "xform 3 ³"
-    - "xform 4 ⁴"
-    - "xform 5 ⁵"
-    - "xform 6 ⁶"
-    - "xform 7 ⁷"
-    - "xform 8 ⁸"
 
 translator:
   dictionary: tlpa_kong_un
-  # prism: blg_taipak
+  spelling_hints: 5
   preedit_format:
-    - 'xform ([aeiou])(r?m?n*h?g?p?t?k?)([\[/\\\]90\-;]) $1$3$2'
-    - 'xform ([aeo])([iueo])([\[/\\\]90\-;]) $1$3$2'
-    - 'xform a\[ a'
-    - 'xform e\[ e'
-    - 'xform i\[ i'
-    - 'xform u\[ u'
-    - 'xform o\[ o'
-    - 'xform m\[ m'
-    - 'xform ng\[ ng'
-    - "xform a/ á"
-    - "xform e/ é"
-    - "xform i/ í"
-    - "xform u/ ú"
-    - "xform o/ ó"
-    - "xform m/ ḿ"
-    - "xform ng/ ńg"
-    - 'xform a\\ à'
-    - 'xform e\\ è'
-    - 'xform i\\ ì'
-    - 'xform u\\ ù'
-    - 'xform o\\ ò'
-    - 'xform ng\\ ǹg'
-    - 'xform a\] a'
-    - 'xform e\] e'
-    - 'xform i\] i'
-    - 'xform u\] u'
-    - 'xform o\] o'
-    - 'xform mh\] mh'
-    - 'xform ngh\] ngh'
-    - "xform a9 â"
-    - "xform e9 ê"
-    - "xform i9 î"
-    - "xform u9 û"
-    - "xform o9 ô"
-    - "xform m9 m̂"
-    - "xform ng9 n̂g"
-    - "xform a0 ǎ"
-    - "xform e0 ě"
-    - "xform i0 ǐ"
-    - "xform u0 ǔ"
-    - "xform o0 ǒ"
-    - "xform ng0 ňg"
-    - "xform a- ā"
-    - "xform e- ē"
-    - "xform i- ī"
-    - "xform u- ū"
-    - "xform o- ō"
-    - "xform m- m̄"
-    - "xform ng- n̄g"
-    - "xform a; a̍"
-    - "xform e; e̍"
-    - "xform i; i̍"
-    - "xform u; u̍"
-    - "xform o; o̍"
-    - "xform mh; m̍h"
-    - "xform ngh; n̍gh"
-  comment_format:
-    - 'xform ([aeiou])(r?m?n*h?g?p?t?k?)([\[/\\\]90\-;]) $1$2$3'
-    - 'xform ([aeo])([iueo])([\[/\\\]90\-;]) $1$2$3'
     #======================================================
     # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
     #======================================================
-    - xlit|[/\]90-;|¹²³⁴⁵⁶⁷⁸|
-    # - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$2$3/
-    # - xform/([aeo])([iueo])([12345678])/$1$2$3/
+    - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$2$3/
+    - xform/([aeo])([iueo])([12345678])/$1$2$3/
     #======================================================
     # 鼻化符號顯示成上標
     #======================================================
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
+    #======================================================
+    - xlit|[/\]90-;|¹²³⁴⁵⁶⁷⁸|
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -182,3 +101,31 @@ recognizer:
 
 style:
   horizontal: false
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    # 翻頁
+    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+
+editor:
+  bindings:
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
+
