@@ -394,31 +394,21 @@ style:
 key_binder:
   import_preset: default
   bindings:
-    # - { accept: minus, send: Page_Up, when: has_menu }    # 換上一個選單
-    # - { accept: equal, send: Page_Down, when: has_menu }  # 換下一個選單
-    - { accept: comma, send: Up, when: has_menu }         # 選下一個字
-    - { accept: period, send: Down, when: has_menu }      # 選上一個字
+    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    # 翻頁
+    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
     - { accept: "Control+p", send: Page_Up, when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
-    - { accept: "Control+g", send: space, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
     #---------------------------------------------------
     - { when: has_menu, accept: "Control+h", send: Page_Up }
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
-    - { when: has_menu, accept: "Control+2", send: "B" }
-    - { when: has_menu, accept: "Control+3", send: "C" }
-    - { when: has_menu, accept: "Control+4", send: "D" }
-    - { when: has_menu, accept: "Control+5", send: "E" }
-    #---------------------------------------------------
-    - { when: composing, accept: "Control+1", send: "1" }
-    - { when: composing, accept: "Control+2", send: "2" }
-    - { when: composing, accept: "Control+3", send: "3" }
-    - { when: composing, accept: "Control+4", send: "4" }
-    - { when: composing, accept: "Control+5", send: "5" }
-    - { when: composing, accept: "Control+6", send: "6" }
-    - { when: composing, accept: "Control+7", send: "7" }
-    - { when: composing, accept: "Control+8", send: "8" }
     #---------------------------------------------------
 
 editor:
@@ -427,4 +417,3 @@ editor:
     Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
-

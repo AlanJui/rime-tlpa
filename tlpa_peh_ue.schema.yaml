@@ -84,12 +84,6 @@ reverse_lookup:
 punctuator:
   import_preset: default
 
-key_binder:
-  import_preset: default
-  bindings:
-    - { when: has_menu, accept: minus, send: minus } # 第7調
-    - { when: paging, accept: minus, send: Page_Up }
-
 recognizer:
   import_preset: default
   patterns:
@@ -97,3 +91,30 @@ recognizer:
 
 style:
   horizontal: false
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    # 翻頁
+    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+
+editor:
+  bindings:
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
