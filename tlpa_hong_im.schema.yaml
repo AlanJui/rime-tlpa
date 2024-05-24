@@ -115,7 +115,7 @@ speller:
     - xlit|pPmbtTndkKhjJSgqzcCsiuBaoøMIeUYLDQGN123570|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657|
 
 translator:
-  dictionary: tlpa_cu_im
+  dictionary: tlpa_hong_im_fu_ho
   prism: tlpa_hong_im
   spelling_hints: 3
   comment_format:

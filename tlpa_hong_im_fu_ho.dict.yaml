@@ -1,7 +1,7 @@
 # Rime dictionary
 # encoding: utf-8
 ---
-name: tlpa_cu_im
+name: tlpa_hong_im_fu_ho
 version: "0.0.0.1"
 sort: by_weight
 use_preset_vocabulary: false

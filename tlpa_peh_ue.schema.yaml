@@ -44,41 +44,19 @@ speller:
   algebra:
     # 去掉聲調
     # - derive/[1-8]//
+    # - derive/q//
     # 零聲母處理
-    - derive/q//
     - derive/Ø//
     # 通配
     - derive/ts/c/
     - derive/ou/oo/
     - derive/e(ng|k)/i$1/
     - derive/ei/e/
-    # 鼻化韻處理
-    - derive/([^u])enn/$1eenn/
-    - xform/b(.+)nn/m$1/
-    - xform/l(.+)nn/n$1/
-    - xform/g(.+)nn/ng$1/
-    - derive/([^blg])(.+)nn/$1$2/
-    # 聲母簡拼
-    - abbrev/^([lpktcjsqbghmn])([^hsg]).+$/$1/
-    - abbrev/^(ph).+$/$1/
-    - abbrev/^(th).+$/$1/
-    - abbrev/^(kh).+$/$1/
-    - abbrev/^(ng).+$/$1/
-    - abbrev/^(ts).+$/$1/
-    - abbrev/^(tsh).+$/$1/
+    - derive/ee/e/
     #==========================================
     - derive/^([Øa-z]+)\d$/$1/
     - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
     - 'xlit 12345678 [/\]90-;'
-    # 標調號
-    - "xform 1 ¹"
-    - "xform 2 ²"
-    - "xform 3 ³"
-    - "xform 4 ⁴"
-    - "xform 5 ⁵"
-    - "xform 6 ⁶"
-    - "xform 7 ⁷"
-    - "xform 8 ⁸"
 
 translator:
   dictionary: tlpa_peh_ue
@@ -87,13 +65,14 @@ translator:
     #======================================================
     # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
     #======================================================
-    - xlit|[/\]90-;|¹²³⁴⁵⁶⁷⁸|
     - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$2$3/
     - xform/([aeo])([iueo])([12345678])/$1$2$3/
     #======================================================
     # 鼻化符號顯示成上標
     #======================================================
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
+    #======================================================
+    - xlit|[/\]90-;|¹²³⁴⁵⁶⁷⁸|
 
 reverse_lookup:
   dictionary: luna_pinyin

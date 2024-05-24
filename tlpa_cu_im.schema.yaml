@@ -99,7 +99,8 @@ translator:
   comment_format:
     # - derive/^([aeiou])/q$1/
     #======================================
-    - derive/^([aeiou])/ø$1/
+    # - derive/^([aeiou])/ø$1/
+    # - derive/^ng/ø$1/
     - xform/^([a-zø]+\d)$/$1;$1/
     #======================================
     # 聲母
@@ -365,7 +366,7 @@ translator:
     - 'xform 3 ˪'    #3
     - 'xform 4  '    #4
     - 'xform 5 ˊ'    #5
-    # - 'xform 6  ̌'    #6
+    - 'xform 6 ˋ'    #2
     - 'xform 7 ˫'    #7
     - 'xform 8 ˙'    #8
 

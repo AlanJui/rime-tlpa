@@ -5,7 +5,7 @@
 #
 ---
 name: tlpa_peh_ue
-version: "0.0.0.1"
+version: "0.0.0.2"
 sort: by_weight
 use_preset_vocabulary: false
 import_tables:
@@ -13,15 +13,15 @@ import_tables:
  - tlpa_su
 ...
 ##	a/ah
-啊	a0
+啊	Øa0
 啊	ah0
 矣	ah0
-阿	a1	10
-鴉	a1
-亞	a1
-腌	a1
-仔	a2	10
-啞	a2
+阿	Øa1	10
+鴉	Øa1
+亞	Øa1
+腌	Øa1
+仔	Øa2	10
+啞	Øa2
 鴨	ah4
 押	ah4
 壓	ah4	1%
@@ -218,7 +218,7 @@ import_tables:
 亞運會	a un hue
 亞軍	a kun
 亞鉛	a ian
-啞口無言	a khiO bu gian
+啞口無言	a khio bu gian
 啞鈴	a ling
 啊無	ah bo
 啊若無	ah na bo
@@ -233,7 +233,7 @@ import_tables:
 鴨鯗	ah siunn
 鴨肉	ah hik
 鴨肉	ah bah
-鴨卵	ah nuI
+鴨卵	ah nui
 鴨胘	ah kian
 鴨心	ah sim
 鴨料	ah liau
@@ -321,7 +321,7 @@ import_tables:
 拋網	phua bang
 拋車輪	pha chia lin
 拋船	pha cun
-拋魚	pha hIR
+拋魚	pha hir
 拋荒	pha hng
 拋碇	pha tiann
 拋車輪	pha chia lin
@@ -330,7 +330,7 @@ import_tables:
 拍醒	phah chenn
 拍銃	phah ching
 拍無	phah bo
-拍無去	phah bo khIR
+拍無去	phah bo khir
 拍呃	phah Erh
 拍肉	phah hik
 拍字	phah ji
@@ -344,7 +344,7 @@ import_tables:
 拍賣	phah bere
 拍某	phah boo
 拍囝
-拍尻川	phah kha chuInn
+拍尻川	phah kha chuinn
 拍咳啾	phah at chiu
 拍咳啾	phah ka chiunn
 拍結	phah kat
@@ -356,10 +356,10 @@ import_tables:
 拍噗仔	phah phok a
 拍戲	phah hi
 拍攝	phah liap
-拍算	phah suInn
+拍算	phah suinn
 拍損	phah sng
 拍鐵	phah thih
-拍斷	phah tuInn
+拍斷	phah tuinn
 拍手	phah chiu
 拍手銃	phah chiu ching
 拍衰	phah sue
@@ -377,7 +377,7 @@ import_tables:
 拍驚	phah kiann
 拍罵	phah ma
 拍罵	phah mee
-拍麻雀	phah ba chIak
+拍麻雀	phah ba chiak
 拍牌仔	phah pai a
 拍敗	phah pai
 拍包	phah pau
@@ -390,13 +390,13 @@ import_tables:
 肉色	bah sik
 肉骨	bah kut
 肉骨茶	bah kut tee
-麻雀	ba chIak
+麻雀	ba chiak
 麻煩	ba huan
 麻藥	ba ioh
 麻醉	ba cui
 麻麻	ba ba
 麻痺	ba pi
-麻去	ba khIR
+麻去	ba khir
 麻微	ba bui
 貓仔	ba a
 峇峇	ba ba
@@ -434,7 +434,7 @@ import_tables:
 詫異	tha i
 拉涼	la liang
 拉涼	lah liang
-拉閒	la aInn
+拉閒	la ainn
 拉圇	la lun
 拉丁	la ting
 拉丁語	la ting gir
@@ -444,7 +444,7 @@ import_tables:
 喇天	la thian
 膋儳	la sam
 抐舌	la cih
-抐豬屎	la tIR sai
+抐豬屎	la tir sai
 曆日	lah jit
 蠟燭	lah cik
 蠟燭淚	lah cik lui
@@ -472,10 +472,10 @@ import_tables:
 加添	ka thiam
 加油	ka iu
 加油站	ka iu cam
-加強	ka kIang
+加強	ka kiang
 加以	ka i
 加盟	ka bing
-家長	ka tIang
+家長	ka tiang
 家長	kee tiunn
 家教	ka kau
 家法	ka huat
@@ -489,7 +489,7 @@ import_tables:
 家政	ka cing
 家族	ka cok
 家業	ka giap
-家鄉	ka hIang
+家鄉	ka hiang
 家父	ka hu
 家禽	ka khim
 家境	ka king
@@ -502,7 +502,7 @@ import_tables:
 家書	ka sir
 家門不幸	ka bun put hing
 嘉賓	ka pin
-嘉獎	ka cIang
+嘉獎	ka ciang
 嘉偶
 嘉年華	ka lian hua
 佳人	ka jin
@@ -519,7 +519,7 @@ import_tables:
 鉸刀剪	ka to cian
 鉸剪	ka cian
 鉸剪	ka jian
-鉸斷	ka tuInn
+鉸斷	ka tuinn
 膠水	ka cui
 膠州	ka ciu
 膠州灣	ka ciu uan
@@ -562,7 +562,7 @@ import_tables:
 駕照	ka ciau
 甲子	kah ci
 甲乙	kah it
-甲魚	kah hIR
+甲魚	kah hir
 甲等	kah ting
 甲等	kah terng
 佮意	kah i
@@ -599,17 +599,17 @@ import_tables:
 跤頭腕	kha thau uann
 跤蹠	kha chioh
 跤棧	kha can
-尻川	kha chuInn
-尻川縫	kha chuInn phang
-尻川後	kha chuInn au
-尻川䫌	kha chuInn phue
-尻川爿	kha chng paInn
+尻川	kha chuinn
+尻川縫	kha chuinn phang
+尻川後	kha chuinn au
+尻川䫌	kha chuinn phue
+尻川爿	kha chng painn
 奇數	khia soo
 奇數	kha soo
 巧物	kha2 mngh8
 巧物	kha2 mih8
 巧合	kha2 hap8
-敲門	kha muI
+敲門	kha mui
 敲電話	kha3 tian uee
 較好	khah ho
 較濟	khah cere
@@ -617,7 +617,7 @@ import_tables:
 較大	khah tua
 較細	khah sere
 較加	khah kee
-較去	khah khIR
+較去	khah khir
 較緊	khah kin
 較久	khah ku
 較晏	khah uann
@@ -632,7 +632,7 @@ import_tables:
 較贏	khah iann
 卡片	khah phinn
 卡車	khah chia
-闔門	khah muI
+闔門	khah mui
 籗仔	khah a
 孝衫	ha sann
 孝杖	ha thng
@@ -658,9 +658,9 @@ import_tables:
 下載	ha cai
 廈大	ha tua
 廈大	ha tai
-廈漳泉	ha cIang cuan
+廈漳泉	ha ciang cuan
 廈泉	ha cuan
-廈漳	ha cIang
+廈漳	ha ciang
 夏日	ha jit
 夏季	ha kui
 夏娃	ha ua
@@ -698,7 +698,7 @@ import_tables:
 查埔囝	ta poo kann
 早起	ca khi
 早起	cai khi
-早頓	ca tuInn
+早頓	ca tuinn
 早暗	ca am
 早晏	ca uann
 早慢	ca ban
@@ -719,7 +719,7 @@ import_tables:
 扎氣	cah khui
 昨日	ca jit
 昨暗	ca am
-昨昏	ca huInn
+昨昏	ca huinn
 昨暝	ca mee
 昨早起	ca ca khi
 昨早起	ca cai khi
@@ -756,8 +756,8 @@ import_tables:
 柴草	cha chau
 柴屐	cha kiah
 柴屐	cha kah
-柴魚	cha hIR
-柴門	cha muI
+柴魚	cha hir
+柴門	cha mui
 柴桶	cha thang
 柴刀	cha to
 柴油	cha iu
@@ -768,12 +768,12 @@ import_tables:
 捎錢	sann cinn
 捎食	sa ciah
 捎掠	sa liah
-沙場	sa tIang
+沙場	sa tiang
 沙發	sa huat
 沙發椅	sa huat i
 灑脫	sa thuat
-煠卵	sah nuI
-煠雞卵	sah kere nuI
+煠卵	sah nui
+煠雞卵	sah kere nui
 煠熟	sah sik
 ##	ai/aih
 哀	ai1
@@ -964,7 +964,7 @@ import_tables:
 哀求	ai kiu
 哀怨	ai uan
 哀嘆	ai than
-哀傷	ai sIang
+哀傷	ai siang
 哀家	ai ka
 哀聲	ai siann
 哀痛	ai thong
@@ -983,7 +983,7 @@ import_tables:
 愛惜	ai sioh
 愛插	ai chap
 愛戴	ai tai
-隘門	ai muI
+隘門	ai mui
 曖昧	ai mue
 擺布	pai poo
 擺脫	pai thuat
@@ -1141,7 +1141,7 @@ import_tables:
 臺灣話	tai uan uee
 臺海	tai hai
 臺胞	tai pau
-臺商	tai sIang
+臺商	tai siang
 臺羅	tai lo
 臺語	tai gir
 怠慢	tai ban
@@ -1169,17 +1169,17 @@ import_tables:
 大方	tai hong
 大便	tai pian
 大氣	tai khi
-大量	tai lIang
+大量	tai liang
 大不了	tai put liau
 大部份
 大多數
 大使	tai sai
-大丈夫	tai tIang hu
+大丈夫	tai tiang hu
 大道公	tai to kong
 大會	tai hue
-大約	tai Iak
+大約	tai iak
 大概	tai khai
-大略	tai lIak
+大略	tai liak
 大陸	tai liok
 大陸儂	tai liok lang
 大王	tai ong
@@ -1190,7 +1190,7 @@ import_tables:
 大戰	tai cian
 大自然	tai cur jian
 大逆不道	tai gik put to
-大逆不道	tai gik put toO
+大逆不道	tai gik put too
 大阅	tai iat
 大師	tai sur
 大勢	tai si
@@ -1210,28 +1210,28 @@ import_tables:
 太廟	thai bio
 太歲	thai sue
 太子	thai cur
-太后	thai hiO
-太后	thai hIO
+太后	thai hio
+太后	thai hio
 太原	thai guan
 太傅	thai hu
 太爺	thai ia
 太醫	thai i
 太監	thai kam
 太陰	thai im
-太陽	thai Iang
+太陽	thai iang
 太極	thai kik
 太極拳	thai kik kun
 太空	thai khong
 太白星	thai pik chenn
-太上老君	thai sIang noo kun
+太上老君	thai siang noo kun
 太太	thai thai
 太保	thai po
 泰山	thai san
-泰然自若	thai jian cur jIak
+泰然自若	thai jian cur jiak
 態度	thai too
 刣儂	thai lang
 刣儂放火	thai lang pang her
-刣豬	thai tIR
+刣豬	thai tir
 刣雞	thai kere
 刣鴨	thai ah
 刣死	thai si
@@ -1241,7 +1241,7 @@ import_tables:
 待遇	thai gu
 待罪	thai cue
 待命	thai bing
-來去	lai khIR
+來去	lai khir
 來歷	lai lik
 來臨	lai lim
 來賓	lai pin
@@ -1269,7 +1269,7 @@ import_tables:
 內公	lai kong
 內媽	lai ma
 內孫	lai sun
-內傷	lai sIang
+內傷	lai siang
 內山	lai suann
 內地	lai tere
 內才	lai cai
@@ -1296,7 +1296,7 @@ import_tables:
 解析	kai sik
 解放	kai hong
 解救	kai kiu
-解約	kai Iak
+解約	kai iak
 解剖	kai phio
 解體	kai the
 解脫	kai thuat
@@ -1318,7 +1318,7 @@ import_tables:
 改造	kai co
 改革	kai kik
 改正	kai cing
-改良	kai lIang
+改良	kai liang
 改版	kai pan
 改善	kai sian
 改途	kai too
@@ -1364,7 +1364,7 @@ import_tables:
 開辦	khai pan
 開銷	khai siau
 開通	khai thong
-開張	khai tIang
+開張	khai tiang
 開播	khai po
 開播	khai poo
 開設	khai siat
@@ -1406,7 +1406,7 @@ import_tables:
 海蛇	hai cua
 海湧	hai ing
 海外	hai gua
-海魚	hai hIR
+海魚	hai hir
 海風	hai huang
 海風	hai hong
 海口	hai khau
@@ -1423,7 +1423,7 @@ import_tables:
 海海	hai hai
 海峽	hai kiap
 海龍王	hai ling ong
-海量	hai lIang
+海量	hai liang
 海綿	hai mi
 海埔	hai poo
 海沙埔	hai sua poo
@@ -1443,8 +1443,8 @@ import_tables:
 海協會	hai hiap hue
 海基會	hai ki hue
 海內外	hai lai gua
-海上	hai sIang
-海上絲綢之路	hai sIang si tiu ci loo
+海上	hai siang
+海上絲綢之路	hai siang si tiu ci loo
 海市蜃樓	hai ci sin lau
 海王星	hai ong chenn
 海灘	hai thuann
@@ -1456,7 +1456,7 @@ import_tables:
 海盜
 海瓜子	hai kuee ci
 海跤	hai kha
-海寇	hai khiO
+海寇	hai khio
 海枯石爛	hai khoo sik lan
 海闊天空	hai khuat thian khong
 海浪	hai long
@@ -1466,22 +1466,22 @@ import_tables:
 海線	hai suann
 海葬	hai cong
 諧音	hai im
-械鬥	hai tiO
+械鬥	hai tio
 孩童	hai tong
 骸骨	hai kut
 亥時	hai si
 駭然	hai jian
 駭人聽聞	hai jin thing bun
-害害去	hai hai khIR
+害害去	hai hai khir
 害囉	hai loo
 害儂	hai lang
 害蟲	hai thang
 害死儂	hai si lang
 害了了	hai liau liau
-害去	hai khIR
+害去	hai khir
 害處	hai chir
 害人不淺	hai jin put chian
-邂逅	hai hiO
+邂逅	hai hio
 知影	cai iann
 知勢	cai se
 知苦	cai khoo
@@ -1565,7 +1565,7 @@ import_tables:
 差遣	chai khian
 猜迷	chai be
 猜疑	chai gi
-猜想	chai sIang
+猜想	chai siang
 彩色	chai sik
 彩旗	chai ki
 彩色筆	chai sik pit
@@ -1573,12 +1573,12 @@ import_tables:
 彩頭	chai thau
 彩繪	chai hue
 彩券	chai kuan
-彩券	chai kuInn
+彩券	chai kuinn
 彩票	chai phio
 彩妝	chai cong
 採花	chai huee
 採蜜	chai bit
-採購	chai kiO
+採購	chai kio
 採集	chai cip
 採貨	chai her
 採訪	chai hong
@@ -1623,7 +1623,7 @@ import_tables:
 師兮	sai e
 司奶	sai nai
 西方	sai hng
-西爿	sai paInn
+西爿	sai painn
 西區
 西角	sai kak
 西南	sai lam
@@ -1834,7 +1834,7 @@ import_tables:
 後世	au si
 後世儂	au si lang
 後進	au cin
-後門	au muI
+後門	au mui
 後擺	au pai
 後輾
 後任	au jim
@@ -1896,7 +1896,7 @@ import_tables:
 鬥相贊	tau sio can
 鬥跤手	tau kha chiu
 鬥伴	tau phuann
-鬥無閒	tau bo aInn
+鬥無閒	tau bo ainn
 鬥鬧熱	tau lau jiat
 鬥鬧熱	tau nau jiat
 鬥空	tau khang
@@ -1958,7 +1958,7 @@ import_tables:
 偷講	thau kang
 偷囥	thau khng
 偷掠	thau liah
-偷問	thau muI
+偷問	thau mui
 偷搣	thau mee
 偷換	thau uann
 偷瞻	thau ciam
@@ -1975,7 +1975,7 @@ import_tables:
 透早	thau ca
 透日鬥中	thau jit tau tiong
 透水	thau cui
-透光	thau kuInn
+透光	thau kuinn
 透透	thau thau
 透底	thau tere
 透徹	thau thiat
@@ -1996,7 +1996,7 @@ import_tables:
 頭路	thau loo
 頭目	thau bak
 頭面	thau bin
-頭前	thau caInn
+頭前	thau cainn
 頭名	thau mia
 頭个	thau e
 頭下	thau ee
@@ -2006,7 +2006,7 @@ import_tables:
 頭頁	thau iah
 頭拄仔	thau tu a
 頭站仔	thau cam a
-頭先	thau saInn
+頭先	thau sainn
 頭下仔	thau ee a
 頭陣仔	thau cun a
 頭過	thau ker
@@ -2019,7 +2019,7 @@ import_tables:
 頭一項	thau cit hang
 頭頭	thau thau
 頭頭仔	thau thau a
-頭起先	thau khi saInn
+頭起先	thau khi sainn
 頭開始	thau khai si
 頭兮	thau e
 頭銜	thau ham
@@ -2075,7 +2075,7 @@ import_tables:
 流鼻血
 流目屎	lau bak sai
 流凊汗	lau chin kuann
-流瘍	lau sIang
+流瘍	lau siang
 留任	lau jim
 留話	lau uee
 劉伯溫	lau phik un
@@ -2084,7 +2084,7 @@ import_tables:
 老歲仔	lau her a
 老奸	lau kan
 老猴	lau kau
-老去	lau khIR
+老去	lau khir
 老硞硞	lau khok khok
 老翁某	lau ang boo
 老父	lau pee
@@ -2129,8 +2129,8 @@ import_tables:
 交結	kau kiat
 交往	kau ong
 交流	kau liu
-交響樂	kau hIang gak
-交響曲	kau hIang khik
+交響樂	kau hiang gak
+交響曲	kau hiang khik
 交貨	kau her
 交錢	kau cinn
 交會	kau hue
@@ -2142,7 +2142,7 @@ import_tables:
 勾引	kau in
 勾結	kau kiat
 郊外	kau gua
-郊區	kau khU
+郊區	kau khu
 郊遊	kau iu
 蛟龍	kau liong
 狗仔	kau a
@@ -2157,7 +2157,7 @@ import_tables:
 九棧塔	kau can thah
 九十	kau cap
 九百
-九千	kau chaInn
+九千	kau chainn
 九萬	kau ban
 九億	kau ik
 垢圿	kau kereh
@@ -2192,7 +2192,7 @@ import_tables:
 教化	kau hua
 教法	kau huat
 教訓	kau hun
-教養	kau Iang
+教養	kau iang
 教官	kau kuann
 教派	kau phai
 教廷	kau ting
@@ -2261,10 +2261,10 @@ import_tables:
 校方	hau hong
 校工	hau kang
 校舍	hau sia
-校區	hau khU
+校區	hau khu
 校友	hau iu
 校慶	hau khing
-校園	hau huInn
+校園	hau huinn
 鱟勺	hau siah
 鱟桸	hau hia
 候儂	hau lang
@@ -2297,7 +2297,7 @@ import_tables:
 走音	cau im
 走狗	cau kau
 走開	cau khui
-走去	cau khIR
+走去	cau khir
 走閃	cau siam
 走揣	cau cher
 走私	cau sur
@@ -2311,7 +2311,7 @@ import_tables:
 走馬燈	cau bee ting
 走透透	cau thau thau
 走東走西	cau tang cau sai
-走頭前	cau thau caInn
+走頭前	cau thau cainn
 走後壁	cau au piah
 走邊頭	cau pinn thau
 走起	cau khi
@@ -2345,7 +2345,7 @@ import_tables:
 鈔票	chau phio
 草木	chau bak
 草藥	chau ioh
-草寇	chau khiO
+草寇	chau khio
 草梅	chau mue
 草鞋	chau uee
 草包	chau pau
@@ -2370,18 +2370,18 @@ import_tables:
 臭跤	chau kha
 臭跤液味	chau kha sioh bi
 臭溝仔	chau kau a
-臭尻川	chau kha chuInn
-臭去	chau khIR
+臭尻川	chau kha chuinn
+臭去	chau khir
 臭骨	chau kut
 臭奶呆
 臭名聲	chau mia siann
 臭腹內	chau pak lai
 臭汗鉎味	chau kuann san bi
-臭汗酸味	chau kuann suInn bi
+臭汗酸味	chau kuann suinn bi
 臭囝
-臭酸	chau suInn
-臭酸味	chau suInn bi
-臭酸步	chau suInn poo
+臭酸	chau suinn
+臭酸味	chau suinn bi
+臭酸步	chau suinn poo
 臭焦	chau ta
 臭焦味	chau ta bi
 臭頭	chau thau
@@ -2479,11 +2479,11 @@ import_tables:
 冇數	phann siau
 冇手	phann chiu
 冇談	phann tam
-馬上	ma sIang
+馬上	ma siang
 馬鈴薯	ma ling cir
 馬絹	ma kin
 馬到成功	ma to sing kong
-馬到成功	ma toO sing kong
+馬到成功	ma too sing kong
 嬤仔	ma a
 媽祖	ma coo
 媽仔	ma a
@@ -2514,7 +2514,7 @@ import_tables:
 擔仔	tann a
 擔仔麵	tann a mi
 擔頭	tann thau
-他鄉	thann hIang
+他鄉	thann hiang
 他人	thann jin
 他殺	thann sat
 哪會	na ere
@@ -2574,7 +2574,7 @@ import_tables:
 雅興	nga hing
 雅俗	nga siok
 雅致	nga ti
-三頓	sann tuInn
+三頓	sann tuinn
 三角	sann kak
 三更半暝	sann kenn puann mee
 三跤貓	sann kha niau
@@ -2582,12 +2582,12 @@ import_tables:
 三輪車
 三長兩短	sann tng nng tEr
 三長兩短	sann tng noo tEr
-三除四扣	sann tir si khiO
+三除四扣	sann tir si khio
 三除四扣	sann tir si khau
 三叉路口	sann chee loo khau
 三十	sann cap
 三百
-三千	sann chaInn
+三千	sann chainn
 三萬	sann ban
 三億	sann ik
 相失
@@ -2641,7 +2641,7 @@ import_tables:
 相爭	sann cenn
 相食穿	sann ciah cing
 相招	sann cio
-相借問	sann cioh muI
+相借問	sann cioh mui
 相駛	sann sai
 相扴	sann keeh
 相倚	sann ua
@@ -2658,7 +2658,7 @@ import_tables:
 相爭	sio cenn
 相食穿	sio ciah cing
 相招	sio cio
-相借問	sio cioh muI
+相借問	sio cioh mui
 相駛	sio sai
 相扴	sio keeh
 相倚	sio ua
@@ -2697,75 +2697,75 @@ import_tables:
 哼哼呻	hainn hainn chan
 怎樣	cainn iunn
 怎樣	cuann iunn
-##	aInn/aInnh
-閒	aInn5
-反	paInn2
-爿	paInn5
-店	taInn3	10
-橂	taInn7
-蓮	naI5	1%
-荔	naI7
-間	kaInn1
-肩	kaInn1
-揀	kaInn2
-襇	kaInn2
-筧	kaInn2
-研	ngaI2
-眼	ngaI2	1%
-還	haInn5
-貺	haInn7
-莧	haInn7
-指	caInn2	5%
-前	caInn5
-千	chaInn1
-筅	chaInn2
-先	saInn1
-閒工	aInn kang
-閒時	aInn si
-閒閒	aInn aInn
-閒閒無代誌	aInn aInn bo tai ci
-反來反去	paInn lai paInn khIR
-反倒吊	paInn to tiau
-反肚	paInn too
-反覆	paInn phak
+##	ainn/ainnh
+閒	ainn5
+反	painn2
+爿	painn5
+店	tainn3	10
+橂	tainn7
+蓮	nai5	1%
+荔	nai7
+間	kainn1
+肩	kainn1
+揀	kainn2
+襇	kainn2
+筧	kainn2
+研	ngai2
+眼	ngai2	1%
+還	hainn5
+貺	hainn7
+莧	hainn7
+指	cainn2	5%
+前	cainn5
+千	chainn1
+筅	chainn2
+先	sainn1
+閒工	ainn kang
+閒時	ainn si
+閒閒	ainn ainn
+閒閒無代誌	ainn ainn bo tai ci
+反來反去	painn lai painn khir
+反倒吊	painn to tiau
+反肚	painn too
+反覆	painn phak
 買櫝還珠	mai tok huan cu
 店仔
 店仔口
 店門
 店面
-橂空空	taInn khong khong
-橂硞硞	taInn khok khok
-橂篤	taInn tauh
-蓮花	naI hue
-肩頭	kaInn thau
-肩胛	kaInn kah
-肩胛頭	kaInn kah thau
-揀食	kaInn ciah
-揀菜	kaInn chai
-揀東揀西	kaInn tang kaInn sai
-研缽	ngaI puah
-研槌	ngaI thui
-研槽	ngaI co
+橂空空	tainn khong khong
+橂硞硞	tainn khok khok
+橂篤	tainn tauh
+蓮花	nai hue
+肩頭	kainn thau
+肩胛	kainn kah
+肩胛頭	kainn kah thau
+揀食	kainn ciah
+揀菜	kainn chai
+揀東揀西	kainn tang kainn sai
+研缽	ngai puah
+研槌	ngai thui
+研槽	ngai co
 還錢
 還儂
-還數	haInn siau
+還數	hainn siau
 還數	huan siau
-貺儂	haInn lang
-莧菜	haInn chai
-前面	caInn bin
-前後	caInn au
-前日	caInn jit
-前暗	caInn am
-前世儂	caInn si lang
-前儂	caInn lang
+貺儂	hainn lang
+莧菜	hainn chai
+前面	cainn bin
+前後	cainn au
+前日	cainn jit
+前暗	cainn am
+前世儂	cainn si lang
+前儂	cainn lang
 千千	chian chian
 千拄千	chian tu chian
-千萬	chaInn ban
-千千萬	chaInn chaInn ban
-千千萬萬	chaInn chaInn ban ban
-千外	chaInn gua
-千年	chaInn ni
-筅塵	chaInn thun
+千萬	chainn ban
+千千萬	chainn chainn ban
+千千萬萬	chainn chainn ban ban
+千外	chainn gua
+千年	chainn ni
+筅塵	chainn thun
 ##	aunn/aunnh
 茅	mau5
 矛	mau5
@@ -2942,7 +2942,7 @@ import_tables:
 腌臢種
 腌臢種物
 鵪鶉	am sun
-鵪鶉卵	am sun nuI
+鵪鶉卵	am sun nui
 泔糜	am ber
 泔糜	am mue
 泔糜	am muai
@@ -2962,17 +2962,17 @@ import_tables:
 暗訪	am hong
 暗夜	am ia
 暗計	am ke
-暗間	am kaInn
+暗間	am kainn
 暗器	am khi
 暗念	am liam
-暗頓	am tuInn
+暗頓	am tuinn
 暗步	am poo
 暗殺	am sat
 暗室	am sik
 暗時	am si
 暗示	am si
 暗淡	am tam
-暗算	am suInn
+暗算	am suinn
 暗頭	am thau
 暗頭仔	am thau a
 暗中	am tiong
@@ -3001,7 +3001,7 @@ import_tables:
 擔帶	tam tai
 擔當	tam tng
 沾著	tam tioh
-膽量	tam lIang
+膽量	tam liang
 膽識	tam sik
 頕頭	tam thau
 答案	tap an
@@ -3072,10 +3072,10 @@ import_tables:
 垃圾
 湳田	lam chan
 南方	lam hng
-南爿	lam paInn
+南爿	lam painn
 南北	lam pak
 南洋	lam iunn
-南門	lam muI
+南門	lam mui
 南蠻	lam ban
 南風	lam huang
 南風天	lam huang thinn
@@ -3087,7 +3087,7 @@ import_tables:
 南戲	lam hi
 南部	lam poo
 南天門	lam thian bun
-南區	lam khU
+南區	lam khu
 男女	lam lir
 男女	lam lu	#俗
 男子	lam cur
@@ -3157,8 +3157,8 @@ import_tables:
 感激	kam kik
 感覺	kam kak
 感慨	kam khai
-感想	kam sIang
-感傷	kam sIang
+感想	kam siang
+感傷	kam siang
 感嘆	kam than
 感冒	kam moo
 感著	kam tioh
@@ -3179,14 +3179,14 @@ import_tables:
 監聽	kam thiann
 贛江	kam kang
 贛語	kam gir
-鑑賞	kam sIang
+鑑賞	kam siang
 鑑定	kam ting
 佮囝	kap kiann
 佮囝	kap kann
 佮我	kap gua
 佮我	kah gua
-佮汝	kap lIR
-佮汝	kah lIR
+佮汝	kap lir
+佮汝	kah lir
 佮伊	kap i
 佮伊	kah i
 甲版	kap pan
@@ -3224,24 +3224,24 @@ import_tables:
 癌症	gam cing
 蚶蚶	ham ham
 蚶目	ham bak
-酣暢	ham thIang
-憨厚	ham hIo
+酣暢	ham thiang
+憨厚	ham hio
 憨笑	ham chio
 譀譀	ham ham
 譀譀代	ham ham tai
 䫲浡	ham phuh
 顑腫	ham cing
-翕相	hap sIang
-翕相	hip sIang
-翕相機	hap sIang ki
-翕相機	hip sIang ki
-含口算	ham khau suInn
+翕相	hap siang
+翕相	hip siang
+翕相機	hap siang ki
+翕相機	hip siang ki
+含口算	ham khau suinn
 含恨	ham hern
 含糊	ham hoo
 含淚	ham lui
 含意	ham i
 含義	ham gi
-含量	ham lIang
+含量	ham liang
 含笑	ham siau
 含冤	ham uan
 含蓄	ham thiok
@@ -3253,7 +3253,7 @@ import_tables:
 函數	ham soo
 函授	ham siu
 函件	ham kiann
-涵養	ham Iang
+涵養	ham iang
 陷眠	ham bin
 陷害	ham hai
 陷入	ham jip
@@ -3261,17 +3261,17 @@ import_tables:
 陷阱	ham cenn
 撼動	ham tong
 合作	hap cok
-合謀	hap biO
+合謀	hap bio
 合葬	hap cong
 合奏	hap cau
 合做堆	hap cue tui
 合做堆	hap co tui
 合資	hap cur
-合掌	hap cIang
+合掌	hap ciang
 合夥	hap her
 合法	hap huat
 合桌	hap toh
-合約	hap Iak
+合約	hap iak
 合意	hap i
 合計	hap ke
 合金	hap kim
@@ -3281,7 +3281,7 @@ import_tables:
 合辦	hap pan
 合併	hap ping
 合成	hap sing
-合算	hap suInn
+合算	hap suinn
 合體	hap the
 合手	hap chiu
 合力	hap lik
@@ -3316,7 +3316,7 @@ import_tables:
 十二生相	cap ji senn siunn
 十喙五舌	cap chui goo cih
 十頭八日	cap thau pereh jit
-十喙九尻川	cap chui kau kha chuInn
+十喙九尻川	cap chui kau kha chuinn
 十頭半個月	cap thau puann ko gerh
 十一	cap it
 十二	cap ji
@@ -3349,7 +3349,7 @@ import_tables:
 參加	cham ka
 參軍	cham kun
 參賽	cham sai
-參謀	cham biO
+參謀	cham bio
 參政	cham cing
 參政院	cham cing inn
 參照	cham ciau
@@ -3362,7 +3362,7 @@ import_tables:
 參觀	cham kuan
 參拜	cham pai
 參禪	cham sian
-參詳	cham sIang
+參詳	cham siang
 參訪	cham hong
 參見	cham kian
 參數	cham soo
@@ -3405,8 +3405,8 @@ import_tables:
 三界	sam kai
 三教九流	sam kau kiu liu
 三江五湖	sam kang ngoo oo
-三心兩意	sam sim lIang i
-三跪九叩	sam kui kiu khiO
+三心兩意	sam sim liang i
+三跪九叩	sam kui kiu khio
 三軍	sam kun
 三寶殿	sam po tian
 三不五時	sam put goo si
@@ -3654,7 +3654,7 @@ import_tables:
 安胎	an thai
 安份	an hun
 安份守己	an hun siu ki
-安養	an Iang
+安養	an iang
 安然	an jian
 安寧	an ling
 安樂	an lok
@@ -3670,7 +3670,7 @@ import_tables:
 安搭	an tah
 安宅	an theeh
 安土	an thoo
-安詳	an sIang
+安詳	an siang
 安定	an ting
 俺公	an kong
 俺嬤	an ma
@@ -3689,7 +3689,7 @@ import_tables:
 按脈	an meeh
 按摩	an moo
 按兵不動	an ping put tong
-按算	an suInn
+按算	an suinn
 按照	an ciau
 按鍵	an kian
 按鈕	an liu
@@ -3699,8 +3699,8 @@ import_tables:
 案底	an tere
 案例	an le
 遏折	an cih
-遏斷	at tuInn
-揠苗助長	at biau coo tIang
+遏斷	at tuinn
+揠苗助長	at biau coo tiang
 班級	pan khip
 班級	pan kip
 班長	pan tiunn
@@ -3709,7 +3709,7 @@ import_tables:
 斑紋	pan bun
 斑馬線	pan bee suann
 斑馬線	pan ma suann
-頒獎	pan cIang
+頒獎	pan ciang
 頒布	pan poo
 頒發	pan huat
 板仔	pan a
@@ -3722,7 +3722,7 @@ import_tables:
 八仙	pat sian
 八仙桌	pat sian to
 八仙過海	pat sian ker hai
-八家將	pat ka cIang
+八家將	pat ka ciang
 八方	pat hong
 八音	pat im
 八卦	pat kua
@@ -3797,7 +3797,7 @@ import_tables:
 萬般	ban puann
 萬世	ban se
 萬不得已	ban put tik i
-萬壽無疆	ban siu bu kIang
+萬壽無疆	ban siu bu kiang
 萬歲	ban sue
 萬萬歲	ban ban sue
 萬歲爺	ban sue ia
@@ -3946,7 +3946,7 @@ import_tables:
 干樂	kan lok
 乾杯	kan pue
 乾果	kan ko
-乾果	kan koO
+乾果	kan koo
 奸臣	kan sin
 奸詐	kan ca
 奸詐鬼	kan ca kui
@@ -3954,13 +3954,13 @@ import_tables:
 奸巧	kan khiau
 奸詭	kan kui
 奸細	kan se
-奸商	kan sIang
+奸商	kan siang
 奸招	kan ciau
 奸人	kan jin
 奸雄	kan hiong
 矸仔	kan a
 矸仔蓋	kan a kua
-肝腸寸斷	kan tIang chun tuan
+肝腸寸斷	kan tiang chun tuan
 姦淫	kan im
 姦情	kan cing
 簡單	kan tan
@@ -3970,8 +3970,8 @@ import_tables:
 簡潔	kan kiat
 簡化	kan hua
 簡化字	kan hua ji
-簡約	kan Iak
-簡略	kan lIak
+簡約	kan iak
+簡略	kan liak
 簡便	kan pian
 簡筆	kan pit
 簡寫	kan sia
@@ -3980,7 +3980,7 @@ import_tables:
 簡體	kan the
 簡體字	kan the ji
 簡稱	kan ching
-簡章	kan cIang
+簡章	kan ciang
 柬帖	kan thiap
 幹部	kan poo
 幹事	kan sur
@@ -4024,7 +4024,7 @@ import_tables:
 看守所	khan siu soo
 克苦	khat khoo
 克根	khat kern
-𣁳飯	khat puInn
+𣁳飯	khat puinn
 𣁳菜	khat chai
 𣁳湯	khat thng
 𣁳仔	khat a
@@ -4068,28 +4068,28 @@ import_tables:
 限時限刻	han si han khik
 限制	han ce
 限期	han ki
-限量	han lIang
+限量	han liang
 限日	han jit
 限定	han ting
 限度	han too
 限乏	han hat
 汗顏	han gan
 汗馬功勞	han ma kong lo
-汗馬功勞	han ma kong loO
+汗馬功勞	han ma kong loo
 捍衛	han ue
 翰林	han lim
 翰林院	han lim inn
 乏乏	hat hat
 贊助	can coo
 贊助方	can coo hong
-贊助商	can coo sIang
+贊助商	can coo siang
 贊成	can sing
 贊頌	can siong
 贊同	can tong
 贊聲	can siann
-讚賞	can sIang
+讚賞	can siang
 讚美	can bi
-讚揚	can Iang
+讚揚	can iang
 讚嘆	can than
 節撙	cat cun
 節用	cat ing
@@ -4108,7 +4108,7 @@ import_tables:
 殘花敗柳	can hua pai liu
 殘骸	can hai
 殘留	can liu
-殘障	can cIang
+殘障	can ciang
 殘酷	can khok
 實鼻	cat phi
 實鼻	cat phinn
@@ -4118,12 +4118,12 @@ import_tables:
 餐廳	chan thiann
 餐點	cham tiam
 餐會	chan hue
-孱弱	chan jIak
+孱弱	chan jiak
 襯衫	chan sann
 燦爛	chan lan
 擦捒	chat sak
 察覺	chat kak
-田園	chan huInn
+田園	chan huinn
 田洋	chan iunn
 田頭角尾	chan thau kak ber
 田庄	chan cng
@@ -4170,7 +4170,7 @@ import_tables:
 產婆	san po
 產能	san ling
 產能	san lerng
-產量	san lIang
+產量	san liang
 散文	san bun
 散記	san ki
 散曲	san khik
@@ -4181,7 +4181,7 @@ import_tables:
 㾪卑巴	san pi pa
 㾪肢肢	san ki ki
 㾪肢猴骨	san ki kau kut
-㾪數肥算盤	san siau pui suInn puann
+㾪數肥算盤	san siau pui suinn puann
 㾪肉	san bah
 散步	san poo
 散布	san poo
@@ -4197,7 +4197,7 @@ import_tables:
 殺生	sat sing
 殺生	sat serng
 殺害	sat hai
-殺身取義	sat sin chU gi
+殺身取義	sat sin chu gi
 塞鼻	sat phi
 塞鼻	sat phinn
 蝨母
@@ -4448,12 +4448,12 @@ import_tables:
 北風	pak huang
 北風	pak hong
 北管	pak kuan
-北門	pak muI
-北爿	pak paInn
+北門	pak mui
+北爿	pak painn
 北斗	pak tau
 北斗星	pak tau chinn
 北部	pak poo
-北區	pak khU
+北區	pak khu
 北面	pak bin
 腹肚	pak too
 腹肚枵	pak too iau
@@ -4463,8 +4463,8 @@ import_tables:
 剝殼	pak khak
 剝削	pak siah
 駁斥	pak chik
-房間	pang kaInn
-房門	pang muI
+房間	pang kainn
+房門	pang mui
 房頭	pang thau
 房屋	pang ok
 房市	pang chi
@@ -4494,8 +4494,8 @@ import_tables:
 捀水	phang cui
 捀場	phang tiunn
 捀來	phang lai
-捀去	phang khIR
-捀捀去	phang phang khIR
+捀去	phang khir
+捀捀去	phang phang khir
 帆布	phang poo
 帆船	phang cun
 曝日	phak jit
@@ -4533,7 +4533,7 @@ import_tables:
 目頭	bak thau
 目箍	bak khoo
 目眉	bak bai
-目前	bak caInn
+目前	bak cainn
 目後	bak au
 目針
 目皮	bak pher
@@ -4564,8 +4564,8 @@ import_tables:
 墨斗	bak tau
 墨斗仔	bak tau a
 東方	tang hng
-東爿	tang paInn
-東區	tang khU
+東爿	tang painn
+東區	tang khu
 東部	tang poo
 東北	tang pak
 東北風	tang pak huang
@@ -4600,13 +4600,13 @@ import_tables:
 同學
 同姒	tang sai
 同伴	tang phuann
-同門	tang muI
+同門	tang mui
 同時	tang si
 同齊	tang cere
 童乩	tang ki
 銅線	tang suann
 銅錢	tang cinn
-銅像	tang sIang
+銅像	tang siang
 銅管	tang kong
 銅牌	tang pai
 銅牁	tang kua
@@ -4615,14 +4615,14 @@ import_tables:
 動工	tang kang
 動筆	tang pit
 動土	tang thoo
-動箸	tang tIR
-重量	tang lIang
+動箸	tang tir
+重量	tang liang
 重眠	tang bin
 重手	tang chiu
 重罪	tang cue
 重刑	tang hing
 重藥	tang ioh
-重傷	tang sIang
+重傷	tang siang
 重病	tang penn
 重耳	tang hi
 重耳	tang hinn
@@ -4641,7 +4641,7 @@ import_tables:
 逐字	tak ji
 通風	thang huang
 通風	thang hong
-通光	thang kuInn
+通光	thang kuinn
 通好	thang ho
 通毋	thang m
 通毋通	thang m thang
@@ -4650,7 +4650,7 @@ import_tables:
 窗仔口	thang a khau
 窗仔布	thang a poo
 窗仔框	thang a khing
-窗仔門	thang a muI
+窗仔門	thang a mui
 窗簾	thang ni
 窗簾	thang liam
 桶仔	thang a
@@ -4688,7 +4688,7 @@ import_tables:
 六个	lak e
 六十	lak cap
 六百
-六千	lak chaInn
+六千	lak chainn
 六萬	lak ban
 六億	lak ik
 六月雪	lak gerh sErh
@@ -4719,11 +4719,11 @@ import_tables:
 工頭	kang thau
 工業	kang giap
 工儂	kang lang
-工具	kang kU
+工具	kang ku
 工期	kang ki
 工地	kang tere
-工商	kang sIang
-工商界	kang sIang kai
+工商	kang siang
+工商界	kang siang kai
 工讀生	kang thak sing
 工讀生	kang thak serng
 工課	kang kher
@@ -4753,7 +4753,7 @@ import_tables:
 港口	kang khau
 港墘	kang kinn
 港路	kang loo
-港區	kang khU
+港區	kang khu
 港灣	kang uan
 港都	kang too
 降價	kang kee
@@ -4778,12 +4778,12 @@ import_tables:
 共儂	ka lang
 共無法	kang bo huat
 共我無法	kang gua bo huat
-共汝無法	kang lIR bo huat
+共汝無法	kang lir bo huat
 共伊無法	kang i bo huat
 共我	kang gua
 共我	ka gua
-共汝	kang lIR
-共汝	ka lIR
+共汝	kang lir
+共汝	ka lir
 共伊	kang i
 共伊	ka i
 共這	kang ce
@@ -4798,7 +4798,7 @@ import_tables:
 仝音	kang im
 捔捒	kak sak
 空縫	khang phang
-空間	khang khaInn
+空間	khang khainn
 空虛	khang hir
 空殼	khang khak
 空空	khang khang
@@ -4832,15 +4832,15 @@ import_tables:
 樂曲	gak khik
 樂團	gak thuan
 樂手	gak chiu
-樂章	gak cIang
+樂章	gak ciang
 樂壇	gak tuann
 獄官	gak kuann
 獄卒	gak cut
 岳父	gak hu
-岳母	gak biO
-岳母	gak bIO
+岳母	gak bio
+岳母	gak bio
 烘火	hang her
-烘魚	hang hIR
+烘魚	hang hir
 烘燒	hang sio
 烘爐	hang loo
 烘焦	hang ta
@@ -4931,7 +4931,7 @@ import_tables:
 鑿破	chak phua
 鑿死	chak si
 鑿鑿	chak chak
-鬆軟	sang nuI
+鬆軟	sang nui
 鬆鬆	sang sang
 送親	sang chin
 送葬	sang cong
@@ -5106,7 +5106,7 @@ import_tables:
 野凊	ia chin
 野凝	ia gan
 野冰	ia ping
-野懸	ia kuAinn
+野懸	ia kuainn
 野低	ia kee
 也許	ia hir
 冶金	ia kim
@@ -5205,11 +5205,11 @@ import_tables:
 拆䉔	thiah chuann
 掠走	liah cau
 掠賊	liah chat
-掠去	liah khIR
+掠去	liah khir
 掠筊	liah kiau
 掠準	liah cun
 掠叫	liah kio
-掠魚	liah hIR
+掠魚	liah hir
 掠妖	liah iau
 掠影	liah iann
 掠猴	liah kau
@@ -5298,20 +5298,20 @@ import_tables:
 遮少	cuah cio
 隻仔	ciah a
 隻仔岫	ciah a siu
-隻仔卵	ciah a nuI
+隻仔卵	ciah a nui
 食食	ciah sit
 食早起	ciah ca khi
 食早起	ciah cai khi
 食早起	ciah cai
 食日晝	ciah jit tau
 食暗	ciah am
-食飯	ciah puInn
+食飯	ciah puinn
 食糜	ciah ber
 食糜	ciah mue
 食糜	ciah muai
 食麵	ciah mi
 食菜	ciah chai
-食魚	ciah hIR
+食魚	ciah hir
 食肉	ciah hik
 食拍抨	ciah phah phiann
 食無	ciah bo
@@ -5343,7 +5343,7 @@ import_tables:
 車頭	chia thau
 車身	chia sin
 車尾	chia ber
-車門	chia muI
+車門	chia mui
 車窗	chia thang
 車燈	chia ting
 車廂	chia siunn
@@ -5376,8 +5376,8 @@ import_tables:
 車禍	chia hoo
 車況	chia hong
 車庫	chia khoo
-車輛	chia lIang
-車商	chia sIang
+車輛	chia liang
+車商	chia siang
 車體	chia the
 車展	chia tian
 車道
@@ -5435,7 +5435,7 @@ import_tables:
 捨命	sia mia
 捨身	sia sin
 捨本逐末	sia pun tiok buat
-捨身取義	sia sin chU gi
+捨身取義	sia sin chu gi
 赦罪	sia cue
 赦免	sia bian
 卸敗	sia pai
@@ -5454,13 +5454,13 @@ import_tables:
 邪火	sia her
 邪念	sia liam
 邪道
-斜陽	sia Iang
+斜陽	sia iang
 斜視	sia si
 社會	sia hue
 社長	sia tiunn
 社稷	sia cik
 社員	sia uan
-社區	sia khU
+社區	sia khu
 社交	sia kau
 社團	sia thuan
 社論	sia lun
@@ -5474,7 +5474,7 @@ import_tables:
 謝意	sia i
 謝天公	sia thinn kong
 射箭	sia cinn
-射門	sia muI
+射門	sia mui
 射程
 麝香	sia hiunn
 勺仔	siah a
@@ -5679,7 +5679,7 @@ import_tables:
 妖嬈	iau jiau
 邀請	iau chiann
 邀功	iau kong
-邀約	iau Iak
+邀約	iau iak
 夭壽	iau siu
 夭折	iau ciat
 窈窕	iau thiau
@@ -5692,13 +5692,13 @@ import_tables:
 要談	iau tam
 要素	iau soo
 遙遠	iau uan
-遙想	iau sIang
+遙想	iau siang
 遙控	iau khong
 謠言	iau gian
 謠傳	iau tuan
 謠傳	iau thuan
 瑤池	iau ti
-耀武揚威	iau bu Iang ui
+耀武揚威	iau bu iang ui
 標準	piau cun
 標致	piau ti
 標註	piau cu
@@ -5712,7 +5712,7 @@ import_tables:
 表示	piau si
 表現	piau hian
 表面	piau bin
-表彰	piau cIang
+表彰	piau ciang
 表親	piau chin
 表兮	piau e
 表白	piau peeh
@@ -5730,17 +5730,17 @@ import_tables:
 表小妹	piau sio mue
 婊仔	piau a
 婊囝
-婊間	piau kaInn
+婊間	piau kainn
 標頭	phiau thau
 飄撇	phiau phiat
 飄逸	phiau it
-飄揚	phiau Iang
+飄揚	phiau iang
 漂流	phiau liu
 漂泊	phiau pok
 漂浪	phiau long
 漂洋過海	phiau iunn ker hai
 嫖客	phiau kheeh
-嫖娼	phiau chIang
+嫖娼	phiau chiang
 秒鐘	biau cing
 渺渺	biau biau
 渺茫	biau bong
@@ -5752,20 +5752,20 @@ import_tables:
 描寫	biau sia
 妙計	biau ke
 妙齡	biau ling
-妙想	biau sIang
+妙想	biau siang
 妙方	biau hng
 妙計	miau ke
 妙齡	miau ling
-妙想	miau sIang
+妙想	miau siang
 妙方	miau hng
 刁難	tiau lan
 刁蠻	tiau ban
 雕刻	tiau khik
-雕像	tiau sIang
+雕像	tiau siang
 雕塑	tiau sok
 雕琢	tiau tok
 雕花	tiau huee
-朝陽	tiau Iang
+朝陽	tiau iang
 朝朝暮暮	tiau tiau boo boo
 貂皮	tiau pher
 吊鼎	tiau tiann
@@ -5802,7 +5802,7 @@ import_tables:
 調派	tiau phai
 調遣	tiau khian
 調換	tiau uann
-調養	tiau Iang
+調養	tiau iang
 調解	tiau kai
 調查	tiau ca
 調整	tiau cing
@@ -5862,11 +5862,11 @@ import_tables:
 撩柴	liau cha
 撩布	liau poo
 撩開	liau khui
-撩斷	liau tuInn
+撩斷	liau tuinn
 料理	liau li
 料著	liau tioh
-料想	liau sIang
-料算	liau suInn
+料想	liau siang
+料算	liau suinn
 繚索	liau soh
 嬌嬈	kiau jiau
 驕傲
@@ -5880,24 +5880,24 @@ import_tables:
 繳文	kiau bun
 筊桌	kiau toh
 筊錢	kiau cinn
-筊間	kiau kaInn
+筊間	kiau kainn
 筊跤	kiau kha
-筊本	kiau puInn
+筊本	kiau puinn
 筊鬼	kiau kui
 皎潔	kiau kiat
 矯正	kiau cing
 矯枉過正	kiau ong ko cing
-矯枉過正	kiau ong koO cing
+矯枉過正	kiau ong koo cing
 僑胞	kiau pau
 僑生	kiau sing
 僑生	kiau serng
 僑民	kiau bin
-僑商	kiau sIang
-僑鄉	kiau hIang
+僑商	kiau siang
+僑鄉	kiau hiang
 曲曲	khiau khiau
 曲跤	khiau kha
 曲痀	khiau ku
-曲去	khiau khIR
+曲去	khiau khir
 巧神	khiau sin
 巧潲	khiau siau
 巧利	khiau lai
@@ -5924,8 +5924,8 @@ import_tables:
 鳥喙	ciau chui
 鳥隻	ciau ciah
 鳥籠	ciau lang
-鳥卵	ciau nuI
-鳥仔卵	ciau a nuI
+鳥卵	ciau nui
+鳥仔卵	ciau a nui
 鳥類	ciau lui
 鳥銃	ciau ching
 沼澤	ciau　tik
@@ -5940,19 +5940,19 @@ import_tables:
 照期	ciau ki
 照顧	ciau koo
 照辦	ciau pan
-照算	ciau suInn
+照算	ciau suinn
 照起工	ciau khi kang
 照實	ciau sit
 照頭	ciau thau
 照講	ciau kong
 照講	ciau kang
 照說	ciau serh
-照常	ciau sIang
+照常	ciau siang
 照護	ciau hoo
 詔書	ciau sir
 褿褿
-褿全	ciau cuInn
-褿全	cau cuInn
+褿全	ciau cuinn
+褿全	cau cuinn
 褿便
 褿勻
 褿到
@@ -6009,7 +6009,7 @@ import_tables:
 消化	siau hua
 消費	siau hui
 消極	siau kik
-消去	siau khIR
+消去	siau khir
 消除	siau tir
 消風	siau huang
 消風	siau hong
@@ -6023,11 +6023,11 @@ import_tables:
 宵禁	siau kim
 銷路	siau loo
 銷售	siau siu
-銷量	siau lIang
+銷量	siau liang
 銷魂	siau hun
 蕭條	siau tiau
 逍遙	siau iau
-瀟湘	siau sIang
+瀟湘	siau siang
 瀟灑	siau sa
 硝煙	siau ian
 痟兮	siau e
@@ -6057,7 +6057,7 @@ import_tables:
 少女	siau lir
 少女	siau lu	#俗
 少校	siau hau
-少將	siau cIang
+少將	siau ciang
 ##	iann/iannh
 纓	iann1
 影	iann2
@@ -6166,10 +6166,10 @@ import_tables:
 骿支骨	phiann ki kut
 平錢	phiann cinn
 平倒來	phiann to lai
-平本	phenn puInn
+平本	phenn puinn
 平錢	phenn cinn
 平倒來	phenn to lai
-平本	phenn puInn
+平本	phenn puinn
 名聲	mia siann
 名字	mia ji
 名姓	mia senn
@@ -6272,9 +6272,9 @@ import_tables:
 行了後	kiann liau au
 行棋	kiann ki
 行船	kiann cun
-行入去	kiann jip khIR
+行入去	kiann jip khir
 行出來	kiann chut lai
-行去	kiann khIR
+行去	kiann khir
 行拳	kiann kun
 行禮	kiann le
 行時	kiann si
@@ -6303,7 +6303,7 @@ import_tables:
 兄弟姊妹	hiann ti ci mue
 顯目	hiann bak
 向向	hiann hiann
-向落去	hiann loh khIR
+向落去	hiann loh khir
 挔衫	hiannh sann
 燃水	hiann cui
 燃柴	hiann cha
@@ -6324,11 +6324,11 @@ import_tables:
 正月正日	ciann gerh ciann jit
 正月正頭	ciann gerh ciann thau
 䭕水	ciann cui
-䭕水魚	ciann cui hIR
+䭕水魚	ciann cui hir
 正面	ciann bin
 正手	ciann chiu
-正爿	ciann paInn
-正手爿	ciann chiu paInn
+正爿	ciann painn
+正手爿	ciann chiu painn
 正正	ciann ciann
 正額	ciann giah
 正業	ciann giap
@@ -6343,11 +6343,11 @@ import_tables:
 正齒	ciann khi
 正路	ciann loo
 正名	ciann mia
-正門	ciann muI
+正門	ciann mui
 正版	ciann pan
 正派	ciann phai
 正位	ciann ui
-正頓	ciann tuInn
+正頓	ciann tuinn
 正本	ciann pun
 正金	ciann kim
 誠夠	ciann kau
@@ -6371,7 +6371,7 @@ import_tables:
 誠凊	ciann chin
 誠凝	ciann gan
 誠冰	ciann ping
-誠懸	ciann kuAinn
+誠懸	ciann kuainn
 誠低	ciann kee
 誠𠢕	ciann gau
 誠實	ciann sit
@@ -6388,7 +6388,7 @@ import_tables:
 請客	chiann kheeh
 請儂客	chiann lang kheeh
 請桌	chiann toh
-請問	chiann muI
+請問	chiann mui
 請坐	chiann cEr
 請儂	chiann lang
 請神	chiann sin
@@ -6401,11 +6401,11 @@ import_tables:
 倩工	chiann kang
 倩兮	chiann e
 倩儂	chiann lang
-晟養	chiann Iang
+晟養	chiann iang
 聲說	siann serh
 聲音	siann im
 聲嗽	siann sau
-聲量	siann lIang
+聲量	siann liang
 聲尾	siann ber
 聲帶	siann tua
 聲聲句句	siann siann ku ku
@@ -6430,7 +6430,7 @@ import_tables:
 城邑	siann ip
 城郭	siann kok
 城樓	siann lau
-城門	siann muI
+城門	siann mui
 城牆	siann chiunn
 城池	siann ti
 唌儂	siann lang
@@ -6447,7 +6447,7 @@ import_tables:
 貓仔面	niau a bin
 貓母
 貓公	niau kong
-貓貓相	niau niau sIang
+貓貓相	niau niau siang
 貓貓看	niau niau khuann
 鳥獸	niau siu
 鳥鼠	niau chir
@@ -6619,7 +6619,7 @@ import_tables:
 涉	siap8
 閹割	iam kuah
 閹雞	iam kere
-閹豬	iam tIR
+閹豬	iam tir
 掩護	iam hoo
 厭惡	iam oo
 厭惡	iam onn
@@ -6664,14 +6664,14 @@ import_tables:
 忝死	thiam si
 帖仔	thiap a
 貼錢	thiap cinn
-貼本	thiap puInn
+貼本	thiap puinn
 貼本	thiap pun
 貼吧	thiap pa
 填捒	thiam sak
 填海	thiam hai
-填本	thiam puInn
+填本	thiam puinn
 填本	thiam pun
-疊懸	thiap kuAinn
+疊懸	thiap kuainn
 疊環	thiap khuan
 疊盤	thiap puann
 攝影	liap iann
@@ -6708,11 +6708,11 @@ import_tables:
 減少	kiam cio
 減食	kiam ciah
 減用	kiam ing
-減去	kiam khIR
+減去	kiam khir
 減輕	kiam khin
 減速	kiam sok
 減省	kiam sing
-減弱	kiam jIak
+減弱	kiam jiak
 減肥	kiam pui
 減產	kiam san
 減稅	kiam ser
@@ -6747,14 +6747,14 @@ import_tables:
 劫犯	kiap huan
 劫機	kiap ki
 鹹䭕	kiam ciann
-鹹鴨卵	kiam ah nuI
+鹹鴨卵	kiam ah nui
 鹹糜	kiam ber
 鹹糜	kiam mue
 鹹糜	kiam muai
-鹹飯	kiam puInn
+鹹飯	kiam puinn
 鹹菜	kiam chai
 鹹水	kiam cui
-鹹魚	kiam hIR
+鹹魚	kiam hir
 鹹澀	kiam siap
 鹹粿	kiam ker
 鹹淡	kiam tann
@@ -6790,7 +6790,7 @@ import_tables:
 嚴謹	giam kin
 嚴峻	giam cun
 驗屍	giam si
-驗傷	giam sIang
+驗傷	giam siang
 驗身	giam sin
 驗血	giam huih
 驗證	giam cing
@@ -6823,9 +6823,9 @@ import_tables:
 協辦	hiap pan
 協同	hiap tong
 協奏曲	hiap cau khik
-協約	hiap Iak
+協約	hiap iak
 協調	hiap tiau
-協商	hiap sIang
+協商	hiap siang
 協定	hiap ting
 狹義	hiap gi
 尖喙	ciam chui
@@ -6834,7 +6834,7 @@ import_tables:
 尖鼻
 尖跤幼手	ciam kha iu chiu
 尖刀	ciam to
-尖鑽	ciam cuInn
+尖鑽	ciam cuinn
 尖括弧	ciam kuat oo
 針車
 針法
@@ -6894,7 +6894,7 @@ import_tables:
 簽名	chiam mia
 簽字	chiam ji
 簽仔	chiam a
-簽約	chiam Iak
+簽約	chiam iak
 簽到
 簽署	chiam su
 簽訂	chiam ting
@@ -6905,7 +6905,7 @@ import_tables:
 攕仔	chiam a
 僭位	chiam ui
 僭話	chiam uee
-竊取	chiap chU
+竊取	chiap chu
 竊盜
 橙汁
 染指	jiam ci
@@ -6933,8 +6933,8 @@ import_tables:
 卌九	siap kau
 攝影	siap iann
 攝政	siap cing
-攝取	siap chU
-贍養	siam Iang
+攝取	siap chu
+贍養	siam iang
 涉獵	siap liap
 涉及	siap kip
 ##	ian/iat
@@ -7270,7 +7270,7 @@ import_tables:
 擛手	iat chiu
 邊緣	pian ian
 邊塞	pian sai
-邊疆	pian kIang
+邊疆	pian kiang
 邊際	pian ce
 邊界	pian kai
 邊關	pian kuan
@@ -7281,7 +7281,7 @@ import_tables:
 編號	pian ho
 編碼	pian bee
 編譯	pian ik
-編劇	pian kIak
+編劇	pian kiak
 編排	pian pai
 編制	pian ce
 編織	pian cit
@@ -7392,7 +7392,7 @@ import_tables:
 免費	bian hui
 免疫	bian ik
 免除	bian tir
-勉強	bian kIang
+勉強	bian kiang
 勉勵	bian le
 綿延	bian ian
 面會	bian hue
@@ -7510,8 +7510,8 @@ import_tables:
 天皇	thian hong
 天王	thian ong
 天王星	thian ong chenn
-天后	thian hiO
-天后	thian hIO
+天后	thian hio
+天后	thian hio
 天賦	thian hu
 天然	thian jian
 天狗	thian kau
@@ -7523,14 +7523,14 @@ import_tables:
 天主	thian cu
 天誅地滅	thian tu te biat
 天理	thian li
-天良	thian lIang
+天良	thian liang
 天女	thian lir
 天羅地網	thian lo te bong
 天倫	thian lun
 天文	thian bun
 天文學	thian bun hak
 天文學家	thian bun hak ka
-天兵天將	thian ping thian cIang
+天兵天將	thian ping thian ciang
 天平	thian ping
 天性	thian sing
 天生一對	thian sing it tui
@@ -7545,7 +7545,7 @@ import_tables:
 天條	thian tiau
 天竺	thian tiok
 天道	thian to
-天道	thian toO
+天道	thian too
 天堂	thian tong
 天威	thian ui
 天宇	thian u
@@ -7582,7 +7582,7 @@ import_tables:
 連日	lian jit
 連結	lian kiat
 連貫	lian kuan
-連續劇	lian siok kIak
+連續劇	lian siok kiak
 連線	lian suann
 連署	lian su
 連名	lian mia
@@ -7595,7 +7595,7 @@ import_tables:
 聯邦	lian pang
 聯邦制	lian pang ce
 聯合國	lian hap kok
-聯想	lian sIang
+聯想	lian siang
 聯隊	lian tui
 聯絡	lian lok
 聯繫	lian he
@@ -7622,7 +7622,7 @@ import_tables:
 煉丹	lian tan
 煉獄	lian gak
 列國	liat kok
-列強	liat kIang
+列強	liat kiang
 列位	liat ui
 列傳	liat tuan
 列車	liat chia
@@ -7631,7 +7631,7 @@ import_tables:
 列席	liat sik
 列席	liat sit
 列出	liat chut
-堅強	kian kIang
+堅強	kian kiang
 堅固	kian koo
 堅凍	kian tang
 堅心	kian sim
@@ -7652,7 +7652,7 @@ import_tables:
 見識	kian sik
 見笑	kian siau
 見習	kian sip
-見長	kian tIang
+見長	kian tiang
 見證	kian cing
 建設	kian siat
 建議	kian gi
@@ -7664,11 +7664,11 @@ import_tables:
 建置	kian ti
 建材	kian cai
 建言	kian gian
-建構	kian kiO
+建構	kian kio
 毽子	kian ci
 結束	kiat sok
 結果	kiat ko
-結果	kiat koO
+結果	kiat koo
 結案	kiat an
 結尾	kiat ber
 結盟	kiat bing
@@ -7680,10 +7680,10 @@ import_tables:
 結婚	kiat hun
 結合	kiat hap
 結髮	kiat huat
-結約	kiat Iak
+結約	kiat iak
 結交	kiat kau
 結局	kiat kiok
-結構	kiat kiO
+結構	kiat kio
 結仇	kiat siu
 結冰	kiat ping
 結實	kiat sit
@@ -7691,18 +7691,18 @@ import_tables:
 結黨	kiat tong
 結派	kiat phai
 結論	kiat lun
-結算	kiat suInn
+結算	kiat suinn
 結子	kiat ci
 結冤	kiat uan
 結怨	kiat uan
 結業	kiat giap
 結石	kiat cioh
 吉凶	kiat hiong
-吉人天相	kiat jin thian sIang
+吉人天相	kiat jin thian siang
 吉日	kiat jit
 吉慶	kiat khing
 吉兆	kiat tiau
-吉祥	kiat sIang
+吉祥	kiat siang
 吉普車	kiat phoo chia
 吉普賽	kiat phoo sai
 孑然一身	kiat jian it sin
@@ -7723,7 +7723,7 @@ import_tables:
 傑作	kiat cok
 竭盡全力	kiat cin cuan lik
 竭誠	kiat sing
-牽強	khian kIang
+牽強	khian kiang
 遣送	khian sang
 遣派	khian phai
 遣回	khian hue
@@ -7762,7 +7762,7 @@ import_tables:
 言辭	gian sur
 孽潲	giat siau
 孽子	giat cur
-孽障	giat cIang
+孽障	giat ciang
 孽種	giat cing
 孽畜	giat thiok
 孽緣	giat ian
@@ -7793,7 +7793,7 @@ import_tables:
 血脈	hiat beeh
 賢明	hian bing
 賢惠	hian hui
-賢良	hian lIang
+賢良	hian liang
 懸疑	hian gi
 玄武	hian bu
 絃仔	hian a
@@ -7812,7 +7812,7 @@ import_tables:
 現貨	hian her
 現狀	hian cong
 現世	hian se
-現象	hian sIang
+現象	hian siang
 現代	hian tai
 現實	hian sit
 現場	hian tiunn
@@ -7833,7 +7833,7 @@ import_tables:
 戰報	cian po
 戰場	cian tiunn
 戰馬	cian bee
-戰鬥	cian tiO
+戰鬥	cian tio
 戰船	cian cun
 戰役	cian ik
 戰亂	cian luan
@@ -7842,9 +7842,9 @@ import_tables:
 戰車	cian chia
 戰況	cian hong
 戰火	cian her
-戰略	cian lIak
+戰略	cian liak
 戰神	cian sin
-戰區	cian khU
+戰區	cian khu
 戰機	cian ki
 戰事	cian sur
 戰士	cian sur
@@ -7855,17 +7855,17 @@ import_tables:
 節操	ciat cho
 節操	ciat choo
 節哀	ciat ai
-節約	ciat Iak
+節約	ciat iak
 節省	ciat sing
 節日	ciat jit
 節育	ciat iok
 節扎	ciat cat
 節奏	ciat cau
-節奏	ciat ciO
+節奏	ciat cio
 節能	ciat ling
 節能	ciat lerng
 折服	ciat hok
-折扣	ciat khiO
+折扣	ciat khio
 折衷	ciat thiong
 折磨	ciat bua
 折舊	ciat ku
@@ -7934,7 +7934,7 @@ import_tables:
 闡述	chian sut
 闡明	chian bing
 茜草	chian chau
-切斷	chiat tuInn
+切斷	chiat tuinn
 切除	chiat tir
 切換	chiat uann
 切割	chiat kuah
@@ -7957,7 +7957,7 @@ import_tables:
 熱愛	jiat ai
 熱舞	jiat bu
 熱火	jiat her
-熱量	jiat lIang
+熱量	jiat liang
 熱戀	jiat luan
 熱誠	jiat sing
 熱線	jiat suann
@@ -7980,10 +7980,10 @@ import_tables:
 仙女	sian lu	#俗
 仙居	sian kir
 仙丹	sian tan
-仙人掌	sian jin cIang
+仙人掌	sian jin ciang
 先人	sian jin
-先斬後奏	sian cam hiO cau
-先斬後奏	sian cam hIO cau
+先斬後奏	sian cam hio cau
+先斬後奏	sian cam hio cau
 先進	sian cin
 先祖	sian coo
 先賢	sian hian
@@ -8015,7 +8015,7 @@ import_tables:
 設備	siat pi
 設便	siat pian
 設便便	siat pian pian
-設想	siat sIang
+設想	siat siang
 設使	siat sur
 設置	siat ti
 設施	siat si
@@ -8028,11 +8028,11 @@ import_tables:
 禪學	sian hak
 禪師	sian sur
 嬋娟	sian kuan
-善良	sian lIang
+善良	sian liang
 善終	sian ciong
 善行	sian hing
-善後	sian hiO
-善後	sian hIO
+善後	sian hio
+善後	sian hio
 善人	sian jin
 善果
 善惡	sian ok
@@ -8044,7 +8044,7 @@ import_tables:
 𤺪儂	sian lang
 𤺪𤺪		sian sian
 單于	sian ir
-禪讓	sian jIang
+禪讓	sian jiang
 ##	iang/iak
 偝	iang7
 偝	iannh8	#泉
@@ -8105,8 +8105,8 @@ import_tables:
 雙層
 雙面刀鬼
 雙語
-雙爿邊	siang paInn pinn
-雙爿邊	sang paInn pinn
+雙爿邊	siang painn pinn
+雙爿邊	sang painn pinn
 雙方	siang hong
 雙方	sang hong
 雙字姓	siang ji senn
@@ -8123,8 +8123,8 @@ import_tables:
 雙重	sang ting
 雙叉	siang chee
 雙叉	sang chee
-雙向	siang hIang
-雙向	sang hIang
+雙向	siang hiang
+雙向	sang hiang
 雙唇	sang tun
 雙唇	siang tun
 侗个
@@ -8135,384 +8135,384 @@ import_tables:
 侗款	sang khuan
 侗號	siang ho
 侗款	siang khuan
-##	Iang/Iak
-央	Iang1	10
-鴦	Iang1
-秧	Iang1
-殃	Iang1
-泱	Iang1
-鞅	Iang1
-養	Iang2	10
-癢	Iang2	5%
-氧	Iang2	10
-約	Iak4
-陽	Iang5	10
-羊	Iang5	5%
-楊	Iang5	5%
-洋	Iang5	5%
-揚	Iang5	10
-恙	Iang7
-漾	Iang7
-樣	Iang7	5%
-躍	Iak8
-藥	Iak8	5%
-鑰	Iak8
-張	tIang1
-長	tIang2
-漲	tIang3
-長	tIang3
-脹	tIang3
-帳	tIang3
-長	tIang5
-場	tIang5	0%
-腸	tIang5
-丈	tIang6
-杖	tIang6
-仗	tIang6
-仗	tIang7
-暢	thIang3	5%
-兩	lIang2	10
-輛	lIang2
-魉	lIang2
-娘	lIang5	5%
-量	lIang5	10
-良	lIang5	10
-涼	lIang5	10
-糧	lIang5
-樑	lIang5
-粱	lIang5
-量	lIang7
-諒	lIang7	10
-亮	lIang7	10
-釀	lIang7
-略	lIak8
-掠	lIak8
-薑	kIang1	5%
-僵	kIang1
-疆	kIang1
-強	kIang2
-腳	kIak4
-強	kIang5	10
-強	kIang6
-劇	kIak8
-姜	khIang1
-羌	khIang1
-殭	khIang1
-腔	khIang1
-卻	khIak4
-仰	gIang2
-香	hIang1
-鄉	hIang1
-薌	hIang1
-享	hIang2
-響	hIang2
-饗	hIang2
-餉	hIang2
-向	hIang3
-嚮	hIang3
-將	cIang1	10
-章	cIang1	10
-彰	cIang1
-漳	cIang1	10
+##	iang/iak
+央	iang1	10
+鴦	iang1
+秧	iang1
+殃	iang1
+泱	iang1
+鞅	iang1
+養	iang2	10
+癢	iang2	5%
+氧	iang2	10
+約	iak4
+陽	iang5	10
+羊	iang5	5%
+楊	iang5	5%
+洋	iang5	5%
+揚	iang5	10
+恙	iang7
+漾	iang7
+樣	iang7	5%
+躍	iak8
+藥	iak8	5%
+鑰	iak8
+張	tiang1
+長	tiang2
+漲	tiang3
+長	tiang3
+脹	tiang3
+帳	tiang3
+長	tiang5
+場	tiang5	0%
+腸	tiang5
+丈	tiang6
+杖	tiang6
+仗	tiang6
+仗	tiang7
+暢	thiang3	5%
+兩	liang2	10
+輛	liang2
+魉	liang2
+娘	liang5	5%
+量	liang5	10
+良	liang5	10
+涼	liang5	10
+糧	liang5
+樑	liang5
+粱	liang5
+量	liang7
+諒	liang7	10
+亮	liang7	10
+釀	liang7
+略	liak8
+掠	liak8
+薑	kiang1	5%
+僵	kiang1
+疆	kiang1
+強	kiang2
+腳	kiak4
+強	kiang5	10
+強	kiang6
+劇	kiak8
+姜	khiang1
+羌	khiang1
+殭	khiang1
+腔	khiang1
+卻	khiak4
+仰	giang2
+香	hiang1
+鄉	hiang1
+薌	hiang1
+享	hiang2
+響	hiang2
+饗	hiang2
+餉	hiang2
+向	hiang3
+嚮	hiang3
+將	ciang1	10
+章	ciang1	10
+彰	ciang1
+漳	ciang1	10
 漳	ciang1	10
 漳	cing1#泉
-障	cIang1
-樟	cIang1
-漿	cIang1
-獎	cIang2
-掌	cIang2	10
-將	cIang3
-爵	cIak4
-狀	cIang7
-嚼	cIak8
-昌	chIang1
-娼	chIang1
-猖	chIang1
-搶	chIang2	0%
-惝	chIang2
-唱	chIang3
-倡	chIang3
-雀	chIak4
-鵲	chIak4
-綽	chIak4
-牆	chIang5
-嬙	chIang5
-踔	chIak8
-嚷	jIang2
-壤	jIang2
-瓤	jIang5
-讓	jIang7
-弱	jIak8
-若	jIak8
-箬	jIak8
-傷	sIang1
-相	sIang1	5%
-箱	sIang1
-商	sIang1
-襄	sIang1
-鑲	sIang1
-湘	sIang1
-殤	sIang1
-想	sIang2	10
-賞	sIang2
-償	sIang2
-相	sIang3	5%
-常	sIang5	10
-詳	sIang5	10
-祥	sIang5
-瘍	sIang5
-裳	sIang5
-嫦	sIang5
-嘗	sIang5
-翔	sIang5
-上	sIang6
-相	sIang6	5%
-像	sIang6
-象	sIang6
-橡	sIang6
-上	sIang7	10
-尚	sIang7
-央求	Iang kiu
-央視	Iang si
-央教	Iang kah
-央三託四	Iang sann thok si
-央託	Iang thok
-養殖	Iang sit
-養子	Iang cur
-養父	Iang hu
-養育	Iang iok
-養家	Iang ka
-養廉	Iang liam
-養老	Iang noo
-養老	Iang lo
-養女	Iang lir
-養女	Iang lu	#俗
-養兵	Iang ping
-養病	Iang penn
-養生	Iang sing
-養生	Iang serng
-養成	Iang sing
-養生池	Iang sing ti
-養生池	Iang serng ti
-養贍	Iang siam
-養神	Iang sin
-養份	Iang hun
-養正	Iang cing
-氧氣	Iang khi
-氧化	Iang hua
-約會	Iak hue
-約日	Iak jit
-約期	Iak ki
-約其略	Iak ki lIak
-約略	Iak lIak
-約量	Iak lIang
-約時	Iak si
-約束	Iak sok
-約診	Iak cin
-約定	Iak ting
-約談	Iak tam
-陽間	Iang kan
-陽物	Iang but
-陽春	Iang chun
-陽奉陰違	Iang hong im ui
-陽字	Iang ji
-陽氣	Iang khi
-陽具	Iang kU
-陽曆	Iang lik
-陽壽	Iang siu
-陽台	Iang tai
-長者	tIang cia
-長子	tIang cur
-長額	tIang giah
-長幼	tIang iu
-長男	tIang lam
-長老	tIang noo
-長女	tIang lir
-長輩	tIang pue
-長成	tIang sing
-長大	tIang tai
-長別	tIang piat
-長生	tIang sing
-長生不老	tIang sing put noo
-長生不老	tIang sing put lo
-長生	tIang serng
-長生不老	tIang serng put noo
-長壽	tIang siu
-長官	tIang kuann
-長遠	tIang uan
-漲幅	tIang hok
-漲水	tIang cui
-漲大水	tIang tua cui
-漲滿	tIang mua
-脹心	tIang sim
-脹心肝	tIang sim kuann
-脹心脹肝	tIang sim tIang kuann
-脹恨	tIang hern
-脹心萬恨	tIang sim ban hern
-脹膽	tIang tann
-脹膽	tIang tann
-脹大	tIang tua
-脹肚	tIang too
-丈夫	tIang hu
-丈量	tIang lIang
-丈地	tIang tere
-杖刑	tIang hing
-暢飲	thIang im
-暢快	thIang khuai
-暢古	thIang koo
-暢樂	thIang lok
-兩親	lIang chin
-兩全	lIang cuan
-兩立	lIang lip
-兩眼	lIang gan
-兩儀	lIang gi
-兩極	lIang kik
-兩願	lIang guan
-兩誤	lIang goo
-兩誤	lIang ngoo
-兩意	lIang i
-兩用	lIang iong
-兩間	lIang kan
-兩交含	lIang kau kann
-兩兼	lIang kiam
-兩入	lIang jip
-兩面	lIang bin
-兩路	lIang loo
-兩覆開笑	lIang phak khui chio
-兩榜	lIang pong
-兩旁	lIang pong
-兩頭含	lIang thau kann
-兩端	lIang tuan
-兩斷	lIang tuan
-兩拄償	lIang tu sIang
-兩跤騎	lIang kha khia
-兩跤行	lIang kha kiann
-兩棲	lIang che
-兩者	lIang cia
-兩造	lIang co
-兩岸	lIang gan
-兩方	lIang hong
-兩光	lIang kong
-兩難	lIang lan
-兩敗俱傷	lIang pai kU sIang
-兩廣	lIang kong
-兩廊	lIang long
-量入為出	lIang jip ui chut
-量約	lIang Iak
-量其約	lIang ki Iak
-量必	lIang pit
-量想	lIang sIang
-量測	lIang chik
-量詞	lIang sir
-良民	lIang bin
-良醫	lIang i
-良藥	lIang ioh
-良緣	lIang ian
-良友	lIang iu
-良人	lIang jin
-良善	lIang sian
-良心	lIang sim
-良辰	lIang sin
-良知	lIang ti
-良好	lIang ho
-良性	lIang sing
-樑上君子	lIang sIang kun cur
-諒情	lIang cing
-諒解	lIang kai
-略知	lIak ti
-略知一二	lIak ti it ji
-略微	lIak bi
-掠奪	lIak tuat
-殭屍	kIang si
-殭屍	khIang si
-疆界	kIang kai
-強壯	kIang cong
-強調	kIang tiau
-強制	kIang ce
-強押	kIang ah
-強強	kIang kIang
-強欲	kIang berh
+障	ciang1
+樟	ciang1
+漿	ciang1
+獎	ciang2
+掌	ciang2	10
+將	ciang3
+爵	ciak4
+狀	ciang7
+嚼	ciak8
+昌	chiang1
+娼	chiang1
+猖	chiang1
+搶	chiang2	0%
+惝	chiang2
+唱	chiang3
+倡	chiang3
+雀	chiak4
+鵲	chiak4
+綽	chiak4
+牆	chiang5
+嬙	chiang5
+踔	chiak8
+嚷	jiang2
+壤	jiang2
+瓤	jiang5
+讓	jiang7
+弱	jiak8
+若	jiak8
+箬	jiak8
+傷	siang1
+相	siang1	5%
+箱	siang1
+商	siang1
+襄	siang1
+鑲	siang1
+湘	siang1
+殤	siang1
+想	siang2	10
+賞	siang2
+償	siang2
+相	siang3	5%
+常	siang5	10
+詳	siang5	10
+祥	siang5
+瘍	siang5
+裳	siang5
+嫦	siang5
+嘗	siang5
+翔	siang5
+上	siang6
+相	siang6	5%
+像	siang6
+象	siang6
+橡	siang6
+上	siang7	10
+尚	siang7
+央求	iang kiu
+央視	iang si
+央教	iang kah
+央三託四	iang sann thok si
+央託	iang thok
+養殖	iang sit
+養子	iang cur
+養父	iang hu
+養育	iang iok
+養家	iang ka
+養廉	iang liam
+養老	iang noo
+養老	iang lo
+養女	iang lir
+養女	iang lu	#俗
+養兵	iang ping
+養病	iang penn
+養生	iang sing
+養生	iang serng
+養成	iang sing
+養生池	iang sing ti
+養生池	iang serng ti
+養贍	iang siam
+養神	iang sin
+養份	iang hun
+養正	iang cing
+氧氣	iang khi
+氧化	iang hua
+約會	iak hue
+約日	iak jit
+約期	iak ki
+約其略	iak ki liak
+約略	iak liak
+約量	iak liang
+約時	iak si
+約束	iak sok
+約診	iak cin
+約定	iak ting
+約談	iak tam
+陽間	iang kan
+陽物	iang but
+陽春	iang chun
+陽奉陰違	iang hong im ui
+陽字	iang ji
+陽氣	iang khi
+陽具	iang ku
+陽曆	iang lik
+陽壽	iang siu
+陽台	iang tai
+長者	tiang cia
+長子	tiang cur
+長額	tiang giah
+長幼	tiang iu
+長男	tiang lam
+長老	tiang noo
+長女	tiang lir
+長輩	tiang pue
+長成	tiang sing
+長大	tiang tai
+長別	tiang piat
+長生	tiang sing
+長生不老	tiang sing put noo
+長生不老	tiang sing put lo
+長生	tiang serng
+長生不老	tiang serng put noo
+長壽	tiang siu
+長官	tiang kuann
+長遠	tiang uan
+漲幅	tiang hok
+漲水	tiang cui
+漲大水	tiang tua cui
+漲滿	tiang mua
+脹心	tiang sim
+脹心肝	tiang sim kuann
+脹心脹肝	tiang sim tiang kuann
+脹恨	tiang hern
+脹心萬恨	tiang sim ban hern
+脹膽	tiang tann
+脹膽	tiang tann
+脹大	tiang tua
+脹肚	tiang too
+丈夫	tiang hu
+丈量	tiang liang
+丈地	tiang tere
+杖刑	tiang hing
+暢飲	thiang im
+暢快	thiang khuai
+暢古	thiang koo
+暢樂	thiang lok
+兩親	liang chin
+兩全	liang cuan
+兩立	liang lip
+兩眼	liang gan
+兩儀	liang gi
+兩極	liang kik
+兩願	liang guan
+兩誤	liang goo
+兩誤	liang ngoo
+兩意	liang i
+兩用	liang iong
+兩間	liang kan
+兩交含	liang kau kann
+兩兼	liang kiam
+兩入	liang jip
+兩面	liang bin
+兩路	liang loo
+兩覆開笑	liang phak khui chio
+兩榜	liang pong
+兩旁	liang pong
+兩頭含	liang thau kann
+兩端	liang tuan
+兩斷	liang tuan
+兩拄償	liang tu siang
+兩跤騎	liang kha khia
+兩跤行	liang kha kiann
+兩棲	liang che
+兩者	liang cia
+兩造	liang co
+兩岸	liang gan
+兩方	liang hong
+兩光	liang kong
+兩難	liang lan
+兩敗俱傷	liang pai ku siang
+兩廣	liang kong
+兩廊	liang long
+量入為出	liang jip ui chut
+量約	liang iak
+量其約	liang ki iak
+量必	liang pit
+量想	liang siang
+量測	liang chik
+量詞	liang sir
+良民	liang bin
+良醫	liang i
+良藥	liang ioh
+良緣	liang ian
+良友	liang iu
+良人	liang jin
+良善	liang sian
+良心	liang sim
+良辰	liang sin
+良知	liang ti
+良好	liang ho
+良性	liang sing
+樑上君子	liang siang kun cur
+諒情	liang cing
+諒解	liang kai
+略知	liak ti
+略知一二	liak ti it ji
+略微	liak bi
+掠奪	liak tuat
+殭屍	kiang si
+殭屍	khiang si
+疆界	kiang kai
+強壯	kiang cong
+強調	kiang tiau
+強制	kiang ce
+強押	kiang ah
+強強	kiang kiang
+強欲	kiang berh
 強盜
-強摃	kIang kong
-強辯	kIang pian
-強大	kIang tua
-強化	kIang hua
-強求	kIang kiu
-強行	kIang hing
-強姦	kIang kan
-強度	kIang too
-強迫	kIang pik
-強烈	kIang liat
-強勢	kIang se
+強摃	kiang kong
+強辯	kiang pian
+強大	kiang tua
+強化	kiang hua
+強求	kiang kiu
+強行	kiang hing
+強姦	kiang kan
+強度	kiang too
+強迫	kiang pik
+強烈	kiang liat
+強勢	kiang se
 強暴
-強調	kIang tiau
-強權	kIang kuan
-強權	kIang khuan
-強壓	kIang ap
-強搶	kIang chiunn
-強佔	kIang ciam
-強弱	kIang jIak
-強教	kIang kah
-強乞	kIang khit
-強健	kIang kian
-強國	kIang kok
-強硬	kIang ngee
-強房	kIang pang
-強敵	kIang tik
-強討	kIang tho
-強屈	kIang khut
-劇場	kIak tiunn
-劇本	kIak pun
-劇情	kIak cing
-劇烈	kIak liat
-劇院	kIak inn
-劇團	kIak thuan
-仰望	gIang bong
-仰慕	gIang boo
-香港跤	hIang kang kha
-香料	hIang liau
-鄉親	hIang chin
-鄉村	hIang chun
-鄉村	hIang chuan
-鄉賢	hIang hian
-鄉紳	hIang sin
-鄉談	hIang tam
-鄉愁	hIang chiu
-鄉土	hIang thoo
-薌劇	hIang kIak
-享福	hIang hok
-享年	hIang lian
-享樂	hIang lok
-享受	hIang siu
-享有	hIang iu
-享用	hIang ing
-響應	hIang ing
-響亮	hIang lIang
-響起	hIang khi
-向前	hIang caInn
-向時	hIang si
-向善	hIang sian
-向來	hIang lai
-向後	hIang au
-向上	hIang sIang
-向東	hIang tang
-向西	hIang sai
-向南	hIang lam
-向北	hIang pak
-向日	hIang jit
-章程	cIang thing
-章程	cIang ting
-章節	cIang cat
-章法	cIang huat
-彰顯	cIang hian
-漳州	cIang ciu
-漳州話	cIang ciu uee
-漳州腔	cIang ciu khiunn
-漳腔	cIang khiunn
-漳北	cIang pak
-漳南	cIang lam
-漳廈	cIang ha
-漳泉	cIang cuan
+強調	kiang tiau
+強權	kiang kuan
+強權	kiang khuan
+強壓	kiang ap
+強搶	kiang chiunn
+強佔	kiang ciam
+強弱	kiang jiak
+強教	kiang kah
+強乞	kiang khit
+強健	kiang kian
+強國	kiang kok
+強硬	kiang ngee
+強房	kiang pang
+強敵	kiang tik
+強討	kiang tho
+強屈	kiang khut
+劇場	kiak tiunn
+劇本	kiak pun
+劇情	kiak cing
+劇烈	kiak liat
+劇院	kiak inn
+劇團	kiak thuan
+仰望	giang bong
+仰慕	giang boo
+香港跤	hiang kang kha
+香料	hiang liau
+鄉親	hiang chin
+鄉村	hiang chun
+鄉村	hiang chuan
+鄉賢	hiang hian
+鄉紳	hiang sin
+鄉談	hiang tam
+鄉愁	hiang chiu
+鄉土	hiang thoo
+薌劇	hiang kiak
+享福	hiang hok
+享年	hiang lian
+享樂	hiang lok
+享受	hiang siu
+享有	hiang iu
+享用	hiang ing
+響應	hiang ing
+響亮	hiang liang
+響起	hiang khi
+向前	hiang cainn
+向時	hiang si
+向善	hiang sian
+向來	hiang lai
+向後	hiang au
+向上	hiang siang
+向東	hiang tang
+向西	hiang sai
+向南	hiang lam
+向北	hiang pak
+向日	hiang jit
+章程	ciang thing
+章程	ciang ting
+章節	ciang cat
+章法	ciang huat
+彰顯	ciang hian
+漳州	ciang ciu
+漳州話	ciang ciu uee
+漳州腔	ciang ciu khiunn
+漳腔	ciang khiunn
+漳北	ciang pak
+漳南	ciang lam
+漳廈	ciang ha
+漳泉	ciang cuan
 漳州	ciang ciu
 漳州話	ciang ciu uee
 漳州腔	ciang ciu khiunn
@@ -8522,230 +8522,230 @@ import_tables:
 漳廈	ciang ha
 漳泉	ciang cuan
 漳州	cing ciu#泉
-將來	cIang lai
-將領	cIang nia
-將令	cIang ling
-將相	cIang sIang
-將帥	cIang sue
-將士	cIang sur
-將近	cIang kern
-將就	cIang ciu
-將軍	cIang kun
-將心比心	cIang sim pi sim
-將信將疑	cIang sin cIang gi
-將才	cIang cai
-障礙	cIang gai
+將來	ciang lai
+將領	ciang nia
+將令	ciang ling
+將相	ciang siang
+將帥	ciang sue
+將士	ciang sur
+將近	ciang kern
+將就	ciang ciu
+將軍	ciang kun
+將心比心	ciang sim pi sim
+將信將疑	ciang sin ciang gi
+將才	ciang cai
+障礙	ciang gai
 獎狀
-獎金	cIang kim
-獎勵	cIang le
-獎品	cIang phin
-獎學金	cIang hak kim
-獎賞	cIang siunn
-獎助	cIang coo
-獎牌	cIang pai
-獎券	cIang kuan
-獎券	cIang kuInn
-獎項	cIang hang
-掌管	cIang kuan
-掌權	cIang kuan
-掌權	cIang khuan
-掌握	cIang ak
-掌控	cIang khong
-掌櫃	cIang kui
-掌心	cIang sim
-掌聲	cIang siann
-爵士	cIak sur
-爵爺	cIak ia
-爵位	cIak ui
-狀元	cIang guan
-狀元紅	cIang guan hong
-狀元餅	cIang guan piann
-狀元地	cIang guan te
-狀元抽	cIang guan thiu
-狀元籌	cIang guan tiu
-昌盛	chIang sing
-娼妓	chIang ki
-猖狂	chIang kong
-倡議	chIang gi
+獎金	ciang kim
+獎勵	ciang le
+獎品	ciang phin
+獎學金	ciang hak kim
+獎賞	ciang siunn
+獎助	ciang coo
+獎牌	ciang pai
+獎券	ciang kuan
+獎券	ciang kuinn
+獎項	ciang hang
+掌管	ciang kuan
+掌權	ciang kuan
+掌權	ciang khuan
+掌握	ciang ak
+掌控	ciang khong
+掌櫃	ciang kui
+掌心	ciang sim
+掌聲	ciang siann
+爵士	ciak sur
+爵爺	ciak ia
+爵位	ciak ui
+狀元	ciang guan
+狀元紅	ciang guan hong
+狀元餅	ciang guan piann
+狀元地	ciang guan te
+狀元抽	ciang guan thiu
+狀元籌	ciang guan tiu
+昌盛	chiang sing
+娼妓	chiang ki
+猖狂	chiang kong
+倡議	chiang gi
 綽號	chiok ho
-弱冠	jIak kuan
-弱點	jIak tiam
-弱勢	jIak se
-弱者	jIak cia
-弱智	jIak ti
-傷心	sIang sim
-傷喙口	sIang chui khau
-傷食	sIang sit
-傷跡	sIang jiah
-傷本	sIang pun
-傷重	sIang tiong
+弱冠	jiak kuan
+弱點	jiak tiam
+弱勢	jiak se
+弱者	jiak cia
+弱智	jiak ti
+傷心	siang sim
+傷喙口	siang chui khau
+傷食	siang sit
+傷跡	siang jiah
+傷本	siang pun
+傷重	siang tiong
 傷重	siong tiong	#漳
-傷財	sIang cai
-傷情	sIang cing
-傷害	sIang hai
-傷寒	sIang han
-傷風	sIang hong
-傷痕	sIang hern
-傷悲	sIang pi
-傷暑	sIang sir
-傷著	sIang tioh
-傷口	sIang khau
-傷天害理	sIang thian hai li
-傷風敗俗	sIang hong pai siok
-傷亡	sIang bong
-傷疼	sIang thiann
-傷者	sIang cia
-傷勢	sIang se
-商務	sIang bu
-商船	sIang cun
-商議	sIang gi
-商業	sIang giap
-商行	sIang hang
-商號	sIang ho
-商法	sIang huat
-商會	sIang hue
-商人	sIang jin
-商家	sIang ka
-商界	sIang kai
-商賈	sIang koo
-商量	sIang lIang
-商品	sIang phin
-商事	sIang sur
+傷財	siang cai
+傷情	siang cing
+傷害	siang hai
+傷寒	siang han
+傷風	siang hong
+傷痕	siang hern
+傷悲	siang pi
+傷暑	siang sir
+傷著	siang tioh
+傷口	siang khau
+傷天害理	siang thian hai li
+傷風敗俗	siang hong pai siok
+傷亡	siang bong
+傷疼	siang thiann
+傷者	siang cia
+傷勢	siang se
+商務	siang bu
+商船	siang cun
+商議	siang gi
+商業	siang giap
+商行	siang hang
+商號	siang ho
+商法	siang huat
+商會	siang hue
+商人	siang jin
+商家	siang ka
+商界	siang kai
+商賈	siang koo
+商量	siang liang
+商品	siang phin
+商事	siang sur
 商店
-商場	sIang tiunn
-商展	sIang tian
-商標	sIang piau
-商城	sIang siann
-想像	sIang sIang
-想像力	sIang sIang lik
-賞玩	sIang guan
-賞月	sIang guat
-賞罰	sIang huat
-賞金	sIang kim
-賞賜	sIang sur
-償還	sIang huan
-償命	sIang mia
-常務	sIang bu
-常用	sIang ing
-常規	sIang kui
-常年	sIang ni
-常識	sIang sik
-常設	sIang siat
-常常	sIang sIang
-常在	sIang cai
-詳解	sIang kai
-詳細	sIang se
-詳情	sIang cing
-詳盡	sIang cin
-祥雲	sIang hun
-祥瑞	sIang sui
-祥和	sIang ho
+商場	siang tiunn
+商展	siang tian
+商標	siang piau
+商城	siang siann
+想像	siang siang
+想像力	siang siang lik
+賞玩	siang guan
+賞月	siang guat
+賞罰	siang huat
+賞金	siang kim
+賞賜	siang sur
+償還	siang huan
+償命	siang mia
+常務	siang bu
+常用	siang ing
+常規	siang kui
+常年	siang ni
+常識	siang sik
+常設	siang siat
+常常	siang siang
+常在	siang cai
+詳解	siang kai
+詳細	siang se
+詳情	siang cing
+詳盡	siang cin
+祥雲	siang hun
+祥瑞	siang sui
+祥和	siang ho
 嫦娥
-相空	sIang khang
-相公	sIang kong
-相簿	sIang phoo
-相識	sIang sik
-相機	sIang ki
-相框	sIang khing
-相冊	sIang cheeh
-相底	sIang tere
-相卷	sIang kuInn
-相片	sIang phinn
-相命	sIang mia
-相國	sIang kok
-相厝宅	sIang chu theeh
-相爺	sIang ia
-相貌	sIang mau
-相命仙	sIang mia sian
-相命先	sIang mia sian
-相命師	sIang mia sur
-相似	sIang sur
-相愛	sIang ai
-相關	sIang kuan
-相就	sIang ciu
-相遇	sIang gu
-相好	sIang ho
-相會	sIang hue
-相逢	sIang hong
-相符	sIang hu
-相反	sIang huan
-相依	sIang i
-相干	sIang kan
-相剋	sIang khik
-相兼	sIang kiam
-相近	sIang kern
-相連	sIang lian
-相配	sIang phue
-相別	sIang piat
-相識	sIang sik
-相承	sIang sing
-相信	sIang sin
-相比	sIang pi
-相隨	sIang sui
-相傳	sIang tuan
-相通	sIang thong
-相知	sIang ti
-相當	sIang tong
-相當於	sIang tong ir
-相互	sIang hoo
-相靜靜	sIang cing cing
-象徵	sIang cing
-象形	sIang hing
-上蓋	sIang kai
-上游	sIang iu
-上層	sIang can
-上等	sIang ting
-上等	sIang terng
-上策	sIang chik
-上冊	sIang cheeh
-上篇	sIang phinn
-上元	sIang guan
-上元圓	sIang guan inn
-上早	sIang ca
-上尾	sIang ber
-上頭先	sIang thau saInn
-上後壁	sIang au piah
-上情	sIang cing
-上進	sIang cin
-上少	sIang cio
-上下	sIang ha
-上濟	sIang cere
-上弦	sIang hian
-上好	sIang ho
-上意	sIang i
-上諭	sIang ju
-上加	sIang kee
-上客	sIang kheeh
-上吉	sIang kiat
-上級	sIang khip
-上級	sIang kip
-上古	sIang koo
-上流	sIang liu
-上午	sIang ngoo
-上司	sIang si
-上聲	sIang siann
-上書	sIang sir
-上旬	sIang sun
-上大人	sIang tai jin
-上帝	sIang te
-上帝爺	sIang te ia
-上帝公	sIang te kong
-上帝公生	sIang te kong senn
-上大	sIang tua
-上細	sIang sere
-上位	sIang ui
-上訴	sIang soo
-上緊	sIang kin
-上慢	sIang ban
-上路	sIang loo
-上述	sIang sut
-上昇	sIang sing
-上台	sIang tai
-上課	sIang kho
-尚未	sIang bi
-尚文	sIang bun
-尚武	sIang bu
-尚且	sIang chiann
+相空	siang khang
+相公	siang kong
+相簿	siang phoo
+相識	siang sik
+相機	siang ki
+相框	siang khing
+相冊	siang cheeh
+相底	siang tere
+相卷	siang kuinn
+相片	siang phinn
+相命	siang mia
+相國	siang kok
+相厝宅	siang chu theeh
+相爺	siang ia
+相貌	siang mau
+相命仙	siang mia sian
+相命先	siang mia sian
+相命師	siang mia sur
+相似	siang sur
+相愛	siang ai
+相關	siang kuan
+相就	siang ciu
+相遇	siang gu
+相好	siang ho
+相會	siang hue
+相逢	siang hong
+相符	siang hu
+相反	siang huan
+相依	siang i
+相干	siang kan
+相剋	siang khik
+相兼	siang kiam
+相近	siang kern
+相連	siang lian
+相配	siang phue
+相別	siang piat
+相識	siang sik
+相承	siang sing
+相信	siang sin
+相比	siang pi
+相隨	siang sui
+相傳	siang tuan
+相通	siang thong
+相知	siang ti
+相當	siang tong
+相當於	siang tong ir
+相互	siang hoo
+相靜靜	siang cing cing
+象徵	siang cing
+象形	siang hing
+上蓋	siang kai
+上游	siang iu
+上層	siang can
+上等	siang ting
+上等	siang terng
+上策	siang chik
+上冊	siang cheeh
+上篇	siang phinn
+上元	siang guan
+上元圓	siang guan inn
+上早	siang ca
+上尾	siang ber
+上頭先	siang thau sainn
+上後壁	siang au piah
+上情	siang cing
+上進	siang cin
+上少	siang cio
+上下	siang ha
+上濟	siang cere
+上弦	siang hian
+上好	siang ho
+上意	siang i
+上諭	siang ju
+上加	siang kee
+上客	siang kheeh
+上吉	siang kiat
+上級	siang khip
+上級	siang kip
+上古	siang koo
+上流	siang liu
+上午	siang ngoo
+上司	siang si
+上聲	siang siann
+上書	siang sir
+上旬	siang sun
+上大人	siang tai jin
+上帝	siang te
+上帝爺	siang te ia
+上帝公	siang te kong
+上帝公生	siang te kong senn
+上大	siang tua
+上細	siang sere
+上位	siang ui
+上訴	siang soo
+上緊	siang kin
+上慢	siang ban
+上路	siang loo
+上述	siang sut
+上昇	siang sing
+上台	siang tai
+上課	siang kho
+尚未	siang bi
+尚文	siang bun
+尚武	siang bu
+尚且	siang chiann
 ##	ua/uah
 蛙	ua1
 娃	ua1
@@ -8852,7 +8852,7 @@ import_tables:
 倚海	ua hai
 倚山	ua suann
 倚靠	ua kho
-倚靠	ua khoO
+倚靠	ua khoo
 倚近	ua kern
 倚年	ua ni
 倚壁	ua piah
@@ -8890,7 +8890,7 @@ import_tables:
 跋卦	puah kua
 跋桮	puah pue
 跋牌仔	puah pai a
-跋麻雀	puah ba chIak
+跋麻雀	puah ba chiak
 破媌	phua ba
 破柴	phua cha
 破厝	phua chu
@@ -8968,7 +8968,7 @@ import_tables:
 大聲八說	tua siann pereh serh
 大房	tua pang
 大个	tua e
-大爿	tua paInn
+大爿	tua painn
 大細	tua sere
 大細目	tua sere bak
 大細心	tua sue sim
@@ -8998,7 +8998,7 @@ import_tables:
 大戶	tua hoo
 大火	tua her
 大樓	tua lau
-大門	tua muI
+大門	tua mui
 大麻	tua mua
 大炮	tua phau
 大本營	tua pun iann
@@ -9007,7 +9007,7 @@ import_tables:
 大風	tua huang
 大風	tua hong
 大張	tua tiunn
-大間	tua kaInn
+大間	tua kainn
 大歹命	tua phai mia
 大歹命	tua phainn mia
 大昨日	tua coh jit
@@ -9047,7 +9047,7 @@ import_tables:
 歌舞	kua bu
 歌謠	kua iau
 歌迷	kua be
-歌劇	kua kIak
+歌劇	kua kiak
 歌聲	kua siann
 歌壇	kua tuann
 歌星	kua chenn
@@ -9068,7 +9068,7 @@ import_tables:
 掛礙	kua gai
 掛心	kua sim
 掛心	khua sim
-掛斷	kua tuInn
+掛斷	kua tuinn
 掛煩	kua huan
 掛紅	kua ang
 掛孝	kua ha
@@ -9077,7 +9077,7 @@ import_tables:
 掛燈	kua ting
 掛目鏡	kua bak kiann
 掛招牌	kua ciau pai
-卦象	kua sIang
+卦象	kua siang
 掛腸掛肚	kua tng kua too
 割喉無血	kuah au bo huih
 割肉	kuah hik
@@ -9087,7 +9087,7 @@ import_tables:
 割香	kuah hiunn
 割喉	kuah au
 割包	kuah pau
-割斷	kuah tuInn
+割斷	kuah tuinn
 割破	kuah phua
 割捒	kuah sak
 割捨	kuah sia
@@ -9136,7 +9136,7 @@ import_tables:
 外國語	gua kok gir
 外語	gua gir
 外表	gua piau
-外商	gua sIang
+外商	gua siang
 外孫	gua sun
 外套	gua tho
 外家	gua kee
@@ -9145,17 +9145,17 @@ import_tables:
 外位	gua ui
 外文	gua bun
 外形	gua hing
-外向	gua hIang
+外向	gua hiang
 外匯	gua hue
 外殼	gua khak
 外來	gua lai
 外力	gua lik
 外勞	gua lo
-外勞	gua loO
+外勞	gua loo
 外包	gua pau
-外貿	gua biO
+外貿	gua bio
 外銷	gua siau
-外傷	gua sIang
+外傷	gua siang
 外部	gua poo
 外地	gua tere
 外在	gua cai
@@ -9259,11 +9259,11 @@ import_tables:
 徙厝	sua chu
 徙步	sua poo
 徙栽	sua cai
-紲落去	sua loh khIR
+紲落去	sua loh khir
 紲手	sua chiu
 紲尾	sua ber
-煞去	suah khIR
-煞煞去	suah suah khIR
+煞去	suah khir
+煞煞去	suah suah khir
 煞心	suah sim
 煞尾	suah ber
 撒鹽	suah iam
@@ -9311,7 +9311,7 @@ import_tables:
 快車	khuai chia
 快感	khuai kam
 快速	khuai sok
-快門	khuai muI
+快門	khuai mui
 快運	khuai un
 快送	khuai sang
 快遞	khuai te
@@ -9412,7 +9412,7 @@ import_tables:
 傘	suann3
 散	suann3
 汕	suann3
-碗箸	uann tIR
+碗箸	uann tir
 碗糕	uann ko
 碗公	uann kong
 碗斗	uann tau
@@ -9432,7 +9432,7 @@ import_tables:
 換位	uann ui
 換帖	uann thiap
 換準	uann cun
-換轉	uann tuInn
+換轉	uann tuinn
 換做	uann cue
 換做	uann co
 換手	uann chiu
@@ -9445,7 +9445,7 @@ import_tables:
 搬話	puann uee
 搬請	puann chiann
 搬徙	puann sua
-半爿	puann paInn
+半爿	puann painn
 半个	puann e
 半項	puann hang
 半死	puann si
@@ -9468,8 +9468,8 @@ import_tables:
 半點鐘	puann tiam cing
 半條命	puann tiau mia
 半中央	puann tiong ng
-半剸	puann tuInn
-半中而剸	puann tiong ji tuInn
+半剸	puann tuinn
+半中而剸	puann tiong ji tuinn
 半工	puann kang
 半價	puann kee
 半世儂	puann si lang
@@ -9522,7 +9522,7 @@ import_tables:
 麻衫	mua sann
 麻袋	mua tEr
 麻糍	mua ci
-鰻魚	mua hIR
+鰻魚	mua hir
 鰻仔	mua a
 瞞騙	mua phian
 明年	mua ni
@@ -9530,7 +9530,7 @@ import_tables:
 彈琴	tuann khim
 彈奏	tuann cau
 檀香	tuann hiunn
-檀香	tan hIang
+檀香	tan hiang
 段落	tuann loh
 攤仔	thuann a
 攤販	thuann huan
@@ -9545,7 +9545,7 @@ import_tables:
 攔阻	nua coo
 攔路	nua loo
 瀾垂	nua se
-爛去	nua khIR
+爛去	nua khir
 爛糊糊	nua koo koo
 爛塗	nua thoo
 官職	kuann cit
@@ -9613,8 +9613,8 @@ import_tables:
 煎藥仔	cuann ioh a
 榨油	cuann iu
 泉水	cuann cui
-閂門	chuann muI
-閂門閂戶	chuann muI chuann hoo
+閂門	chuann mui
+閂門閂戶	chuann mui chuann hoo
 山頭	suann thau
 山頂	suann ting
 山跤	suann kha
@@ -9629,7 +9629,7 @@ import_tables:
 山腰	suann io
 山勢	suann se
 山賊	suann chat
-山區	suann khU
+山區	suann khu
 山路	suann loo
 山坡	suann pho
 山地	suann tue
@@ -9643,12 +9643,12 @@ import_tables:
 線索	suann soh
 線頭	suann thau
 線頂	suann ting
-散散去	suann suann khIR
+散散去	suann suann khir
 散市	suann chi
 散場	suann tiunn
 散會	suann hue
 散工	suann kang
-散去	suann khIR
+散去	suann khir
 散陣	suann tin
 ##	uainn/uainnh
 灣	uainn1
@@ -9661,8 +9661,8 @@ import_tables:
 橫	huainn5
 檨	suainn7
 關密密	kuainn bat bat
-關門	kuainn muI
-關門閂戶	kuainn muI chuann hoo
+關門	kuainn mui
+關門閂戶	kuainn mui chuann hoo
 關死	kuainn si
 關絚	kuainn an
 關電	kuainn tian
@@ -9671,24 +9671,24 @@ import_tables:
 橫扴	huainn keeh
 橫霸霸	huainn pa pa
 橫財	huainn ca
-橫向	huainn hIang
-##	uAinn/uAinnh
-慣	kuAinn3
-懸	kuAinn5
-縣	kuAinn7
-慣勢	kuAinn si
-懸低	kuAinn kee
-懸度	kuAinn too
-懸懸	kuAinn kuAinn
-縣誌	kuAinn ci
-縣衙	kuAinn gee
-縣官	kuAinn kuann
-縣令	kuAinn ling
-縣城	kuAinn siann
-縣丞	kuAinn sing
-縣老爺	kuAinn noo ia
-縣老爺	kuAinn lo ia
-縣誌	kuAinn ci
+橫向	huainn hiang
+##	uainn/uainnh
+慣	kuainn3
+懸	kuainn5
+縣	kuainn7
+慣勢	kuainn si
+懸低	kuainn kee
+懸度	kuainn too
+懸懸	kuainn kuainn
+縣誌	kuainn ci
+縣衙	kuainn gee
+縣官	kuainn kuann
+縣令	kuainn ling
+縣城	kuainn siann
+縣丞	kuainn sing
+縣老爺	kuainn noo ia
+縣老爺	kuainn lo ia
+縣誌	kuainn ci
 ##	uan/uat
 冤	uan1	10
 灣	uan1	10
@@ -9940,7 +9940,7 @@ import_tables:
 彎街僻巷	uan kere phiah hang
 彎斡	uan uat
 彎空斡縫	uan khang uat phang
-彎來斡去	uan lai uat khIR
+彎來斡去	uan lai uat khir
 鴛鴦	uan iunn
 蜿蜒	uan ian
 遠征	uan cing
@@ -9953,8 +9953,8 @@ import_tables:
 遠離	uan li
 宛然	uan jian
 婉轉	uan cuan
-婉約	uan Iak
-婉約派	uan Iak phai
+婉約	uan iak
+婉約派	uan iak phai
 怨嘆	uan than
 怨恨	uan hern
 怨慼	uan chereh
@@ -10005,7 +10005,7 @@ import_tables:
 半仙	puan sian
 半信半疑	puan sin puan gi
 半島	puan to
-半島	puan toO
+半島	puan too
 半途而廢	puan too ji hue
 半吊	puan tiau
 半吊囝	puan tiau kiann
@@ -10033,12 +10033,12 @@ import_tables:
 滿漢全席	buan han cuan sik
 滿漢全席	buan han cuan sit
 滿清	buan ching
-末將	buat cIang
+末將	buat ciang
 末日	buat jit
 末世	buat se
 端正	tuan ciann
 端莊	tuan cong
-端陽	tuan Iang
+端陽	tuan iang
 端方	tuan hong
 端午	tuan ngoo
 端口	tuan khau
@@ -10051,9 +10051,9 @@ import_tables:
 斷言	tuan gian
 斷然	tuan jian
 斷送	tuan sang
-斷約	tuan Iak
+斷約	tuan iak
 斷定	tuan ting
-斷算	tuan suInn
+斷算	tuan suinn
 斷額	tuan giah
 輟學	tuat hak
 傳言
@@ -10091,7 +10091,7 @@ import_tables:
 斷絕	tuan cuat
 斷交	tuan kau
 斷食	tuan sit
-斷腸	tuan tIang
+斷腸	tuan tiang
 篆刻	tuan khik
 傳記	tuan ki
 湍急	thuan kip
@@ -10111,7 +10111,7 @@ import_tables:
 團長	thuan tiunn
 團費	thuan hui
 團隊	thuan tui
-軟弱	luan jIak
+軟弱	luan jiak
 卵生	luan sing
 卵生	luan serng
 暖氣	luan khi
@@ -10133,7 +10133,7 @@ import_tables:
 亂臣賊子	luan sin cerk cur
 亂臣賊子	luan sin cak cur
 亂碼	luan be
-亂象	luan sIang
+亂象	luan siang
 劣跡	luat cik
 劣等	luat ting
 劣等	luat terng
@@ -10156,7 +10156,7 @@ import_tables:
 關鍵	kuan kian
 關照	kuan ciau
 關注	kuan cu
-官官相護	kuan kuan sIang hoo
+官官相護	kuan kuan siang hoo
 觀察	kuan chat
 觀望	kuan bong
 觀音	kuan im
@@ -10181,14 +10181,14 @@ import_tables:
 管絃	kuan hian
 管家	kuan kee
 管家婆	kuan kee po
-管區	kuan khU
+管區	kuan khu
 管顧	kuan koo
 管數	kuan siau
 管束	kuan sok
 管待	kuan thai
 管教	kuan ka
 管道	kuan to
-管道	kuan toO
+管道	kuan too
 管制	kuan ce
 館長	kuan tiunn
 館主	kuan cu
@@ -10226,8 +10226,8 @@ import_tables:
 寬寬	khuan khuan
 寬限	khuan han
 寬心	khuan sim
-寬宏大量	khuan hing tai lIang
-寬宏大量	khuan hong tai lIang
+寬宏大量	khuan hing tai liang
+寬宏大量	khuan hong tai liang
 寬容	khuan iong
 寬恕	khuan sir
 寬頻	khuan pin
@@ -10256,7 +10256,7 @@ import_tables:
 環保	khuan po
 環保	huan po
 環島	khuan to
-環島	khuan toO
+環島	khuan too
 環球	khuan kiu
 環繞	khuan jiau
 權力	khuan lik
@@ -10265,7 +10265,7 @@ import_tables:
 權利	kuan li
 權勢	kuan se
 權勢	khuan se
-玩具	guan kU
+玩具	guan ku
 玩家	guan ka
 元寶	guan po
 元夜	guan ia
@@ -10302,7 +10302,7 @@ import_tables:
 原稿	guan ko
 原告
 原料	guan liau
-原諒	guan lIang
+原諒	guan liang
 原版	guan pan
 原壁歸趙	guan pik kui tiau
 原位	guan ui
@@ -10311,7 +10311,7 @@ import_tables:
 原味	guan bi
 原油	guan iu
 原始	guan si
-原先	guan saInn
+原先	guan sainn
 原點	guan tiam
 原故	guan koo
 原創	guan chong
@@ -10366,7 +10366,7 @@ import_tables:
 翻版	huan pan
 翻點	huan tiam
 翻唱	huan chiunn
-翻來覆去	huan lai hok khIR
+翻來覆去	huan lai hok khir
 翻流	huan lau
 吩咐	huan hu
 返點	huan tiam
@@ -10377,7 +10377,7 @@ import_tables:
 反應	huan ing
 反抗	huan khong
 反省	huan sing
-反常	huan sIang
+反常	huan siang
 反正	huan cing
 反證	huan cing
 反對	huan tui
@@ -10394,7 +10394,7 @@ import_tables:
 反饋	huan kui
 反查	huan cha
 反之亦然	huan ci ik jian
-幻想	huan sIang
+幻想	huan siang
 幻影	huan ing
 幻境	huan king
 幻燈片	huan ting phinn
@@ -10421,7 +10421,7 @@ import_tables:
 法規	huat kui
 法寶	huat po
 法治	huat ti
-法門	huat muI
+法門	huat mui
 法學	huat hak
 法庭	huat ting
 法則	huat cik
@@ -10454,7 +10454,7 @@ import_tables:
 發喙齒	huat chui khi
 發起	huat khi
 發起人	huat khi jin
-發光	huat kuInn
+發光	huat kuinn
 發令	huat ling
 發兵	huat ping
 發聲	huat siann
@@ -10466,7 +10466,7 @@ import_tables:
 發電機	huat tian ki
 發動	huat tong
 發動機	huat tong ki
-發揚	huat Iang
+發揚	huat iang
 發角	huat kak
 發狂	huat kong
 發表	huat piau
@@ -10478,7 +10478,7 @@ import_tables:
 發票	huat phio
 發送	huat sang
 發車	huat chia
-發問	huat muI
+發問	huat mui
 髮型	huat hing
 豁免	huat bian
 煩惱	huan lo
@@ -10493,7 +10493,7 @@ import_tables:
 還魂	huan hun
 還禮	huan le
 還手	huan chiu
-還鄉	huan hIang
+還鄉	huan hiang
 還原	huan guan
 還願	huan guan
 凡間	huan kan
@@ -10584,9 +10584,9 @@ import_tables:
 泉州話	cuan ciu uee
 泉州儂	cuan ciu lang
 泉腔	cuan khiunn
-泉漳	cuan cIang
-泉漳片	cuan cIang phian
-泉漳話	cuan cIang ue
+泉漳	cuan ciang
+泉漳片	cuan ciang phian
+泉漳話	cuan ciang ue
 泉廈	cuan ha
 全部	cuan poo
 全文	cuan bun
@@ -10646,7 +10646,7 @@ import_tables:
 串聯	chuan lian
 篡位	chuan ui
 闖道	chuan to
-闖道	chuan toO
+闖道	chuan too
 闖路	chuan loo
 闖入	chuan jip
 攢好勢	chuan ho se
@@ -10658,7 +10658,7 @@ import_tables:
 宣旨	suan ci
 宣告
 宣言	suan gian
-宣揚	suan Iang
+宣揚	suan iang
 宣判	suan phuann
 宣誓	suan se
 宣示	suan si
@@ -10674,8 +10674,8 @@ import_tables:
 選擇	suan tik
 選民	suan bin
 選項	suan hang
-選區	suan khU
-選購	suan kiO
+選區	suan khu
+選購	suan kio
 選定	suan ting
 選出	suan chut
 選單	suan tuann
@@ -10812,7 +10812,7 @@ import_tables:
 下跤	ee kha
 下底	ee tere
 下面	ee bin
-下昏	ee huInn
+下昏	ee huinn
 下晡	ee poo
 下晝	ee tau
 下日	ee jit
@@ -10829,16 +10829,16 @@ import_tables:
 下半身	ee puann sin
 下半暝	e puann mee
 下世儂	ee si lang
-下頓	ee tuInn
+下頓	ee tuinn
 下跤手儂	ee kha chiu lang
 下司	ee si
 下勻	ee un
-廈門	ee muI
-廈門市	ee muI chi
-廈門腔	ee muI khiunn
-廈門話	ee muI uee
-廈門儂	ee muI lang
-扒飯	pee puInn
+廈門	ee mui
+廈門市	ee mui chi
+廈門腔	ee mui khiunn
+廈門話	ee mui uee
+廈門儂	ee mui lang
+扒飯	pee puinn
 扒癢	pee ciunn
 伯仔	peeh a
 伯公	peeh kong
@@ -10848,7 +10848,7 @@ import_tables:
 擘金	peeh kim
 擘伊金	peeh i kim
 竡起來	peeh khi lai
-竡落去	peeh loh khIR
+竡落去	peeh loh khir
 竡起竡倒	peeh khi peeh to
 竡山	peeh suann
 竡樓梯	peeh lau thui
@@ -10887,10 +10887,10 @@ import_tables:
 白面	peeh bin
 白滾水	peeh kun cui
 白斑	peeh pan
-白飯	peeh puInn
+白飯	peeh puinn
 白帶	peeh tai
 白糖	peeh thng
-白痘	peeh tiO
+白痘	peeh tio
 白菜	peeh chai
 白醋	peeh choo
 白話	peeh uee
@@ -10935,20 +10935,20 @@ import_tables:
 麥角	beeh kak
 麥仔茶	beeh a tee
 麥仔酒	beeh a ciu
-脈管	beeh kuInn
-脈象	beeh sIang
+脈管	beeh kuinn
+脈象	beeh siang
 脈搏	beeh phok
-脈管	meeh kuInn
-脈象	meeh sIang
+脈管	meeh kuinn
+脈象	meeh siang
 脈搏	meeh phok
 硩死	teeeh si
 硩著	teeh tioh
-硩落去	teeh loh khIR
+硩落去	teeh loh khir
 硩驚	teeh kiann
 硩扁	teeh pinn
 硩死	eeh si
 硩著	eeh tioh
-硩落去	eeh loh khIR
+硩落去	eeh loh khir
 硩驚	eeh kiann
 硩扁	eeh pinn
 茶葉	tee hioh
@@ -10961,7 +10961,7 @@ import_tables:
 茶杯	tee pue
 茶莊	tee cng
 茶水	tee cui
-茶園	tee huInn
+茶園	tee huinn
 茶會	tee hue
 茶粉	tee hun
 茶粕	tee phoh
@@ -10981,7 +10981,7 @@ import_tables:
 徹潔	theeh kereh
 剺破	leeh phua
 剺死	leeh si
-剺斷	leeh tuInn
+剺斷	leeh tuinn
 加減	kee kiam
 加少	kee cio
 加加	kee kee
@@ -11041,7 +11041,7 @@ import_tables:
 隔牆	keeh chiunn
 隔暝	keeh mee
 隔開	keeh khui
-隔間	keeh kaInn
+隔間	keeh kainn
 隔離	keeh li
 隔日	keeh jit
 隔界	keeh kai
@@ -11063,7 +11063,7 @@ import_tables:
 客氣	kheeh khi
 客觀	kheeh kuan
 客官	kheeh kuann
-客商	kheeh sIang
+客商	kheeh siang
 客套	kheeh tho
 客戶	kheeh hoo
 客戶端	kheeh hoo tuan
@@ -11075,7 +11075,7 @@ import_tables:
 客房	kheeh pang
 客串	kheeh chuan
 牙槽	gee co
-衙門	gee muI
+衙門	gee mui
 衙役	gee iah
 瘕痀	hee ku
 瘕瘕嗽	hee hee sau
@@ -11084,7 +11084,7 @@ import_tables:
 下鹽	hee iam
 下落	hee loh
 下力	hee lat
-下本	hee puInn
+下本	hee puinn
 下本	hee pun
 下筆	hee pit
 下毒	hee tok
@@ -11093,7 +11093,7 @@ import_tables:
 夏天	ha thinn
 債務	cee bu
 債主	cee cu
-債券	cee kuInn
+債券	cee kuinn
 債權	cee kuan
 債權	cee khuan
 寨營	cee iann
@@ -11101,7 +11101,7 @@ import_tables:
 差教	chee kah
 差役	chee iah
 差叫	chee kio
-差來教去	chee lai kah khIR
+差來教去	chee lai kah khir
 廁所	chee soo
 冊面	cheeh bin
 冊錢	cheeh cinn
@@ -11133,11 +11133,11 @@ import_tables:
 話語	uee gir
 話母
 話尾	uee ber
-話劇	uee kIak
+話劇	uee kiak
 畫面	uee bin
-畫卷	uee kuInn
+畫卷	uee kuinn
 畫報	uee po
-畫像	uee sIang
+畫像	uee siang
 畫冊	uee cheeh
 畫家	uee ka
 畫面	uee bin
@@ -11171,7 +11171,7 @@ import_tables:
 花面	huee bin
 花燭	huee cik
 花車	huee chia
-花園	huee huInn
+花園	huee huinn
 花粉	huee hun
 花樣	huee iunn
 花客	huee kheeh
@@ -11198,11 +11198,11 @@ import_tables:
 花跤	huee kha
 花巴哩貓	huee pa li niau
 ##	e/eh
-縊	e3
-翳	e3
-兮	e5	10
-个	e5	10
-裔	e7
+縊	Øe3
+翳	Øe3
+兮	Øe5	10
+个	Øe5	10
+裔	Øe7
 閉	pe3	0%
 蔽	pe3
 陛	pe6
@@ -11328,7 +11328,7 @@ import_tables:
 迷魂香	be hun hiunn
 迷魂藥	be hun ioh
 迷魂陣	be hun tin
-迷去	be khIR
+迷去	be khir
 迷信	be sin
 迷途	be too
 迷亂	be luan
@@ -11352,7 +11352,7 @@ import_tables:
 帝國	te kok
 帝都	te too
 帝位	te ui
-締約	te Iak
+締約	te iak
 締結	te kiat
 弟子	te cur
 第一	te it
@@ -11381,7 +11381,7 @@ import_tables:
 地下室	te ha sik
 地域	te hik
 地方	te hng
-地區	te khU
+地區	te khu
 地府	te hu
 地球	te kiu
 地理	te li
@@ -11411,7 +11411,7 @@ import_tables:
 體式	the sik
 體勢	the se
 體例	the le
-體諒	the lIang
+體諒	the liang
 體態	the thai
 體貼	the thiap
 體統	the thong
@@ -11430,8 +11430,8 @@ import_tables:
 提起	the khi
 提案	the an
 提議	the gi
-提問	the muI
-提倡	the chIang
+提問	the mui
+提倡	the chiang
 提防	the hong
 提交	the kau
 提琴	the khim
@@ -11474,8 +11474,8 @@ import_tables:
 禮盒	le ah
 禮遇	le gu
 禮品	le phin
-梨園	le huInn
-梨園戲	le huInn hi
+梨園	le huinn
+梨園戲	le huinn hi
 黎明	le bing
 黎民	le bin
 黎民百姓	le bin peeh senn
@@ -11491,9 +11491,9 @@ import_tables:
 計較	ke kau
 計策	ke chik
 計謀	ke bio
-計略	ke lIak
-計算	ke suInn
-計算機	ke suInn ki
+計略	ke liak
+計算	ke suinn
+計算機	ke suinn ki
 計智	ke ti
 計劃	ke hik
 計畫	ke uee
@@ -11507,7 +11507,7 @@ import_tables:
 啟用
 契合	khe hap
 契機	khe ki
-霓裳	ge sIang
+霓裳	ge siang
 霓紅燈	ge ang ting
 藝妓	ge ki
 藝術	ge sut
@@ -11516,14 +11516,14 @@ import_tables:
 藝壇	ge tuann
 系統	he thong
 系列	he liat
-劑量	ce lIang
+劑量	ce liang
 濟公	ce kong
 制度	ce too
 制裁	ce chai
 制服	ce hok
 制定	ce ting
 制式	ce sik
-制約	ce Iak
+制約	ce iak
 祭文	ce bun
 祭祖	ce coo
 祭日	ce jit
@@ -11543,9 +11543,9 @@ import_tables:
 製片	ce phinn
 製作	ce cok
 製造	ce co
-製造商	ce co sIang
+製造商	ce co siang
 齊家	ce ka
-淒涼	che lIang
+淒涼	che liang
 悽慘	che cham
 悽慘	chi cham
 悽慘落魄	che cham lok phik
@@ -11576,14 +11576,14 @@ import_tables:
 世事	se sur
 世家	se ka
 世風	se hong
-世態炎涼	se thai iam lIang
+世態炎涼	se thai iam liang
 細胞	se pau
 細緻	se ti
 細菌	se khun
 細節	se ciat
 細微	se bi
 誓言	se gian
-誓不兩立	se put lIang lip
+誓不兩立	se put liang lip
 筮卦	se kua
 ##	enn/ennh
 嚶	enn1
@@ -11683,7 +11683,7 @@ import_tables:
 猛猛	mee mee
 猛火	mee her
 猛醒	mee chenn
-暝昏	mee huInn
+暝昏	mee huinn
 暝日	mee jit
 暝時	mee si
 暝半	mee puann
@@ -11704,12 +11704,12 @@ import_tables:
 佯天佯踱	thenn thian tenn thoh
 撜力	tenn lat
 撜屎	tenn sai
-牚懸	thenn kuAinn
+牚懸	thenn kuainn
 牚頭	thenn thau
 牚腿	thenn thui
 瞪目	thenn bak
 瞪日	thenn jit
-瞪光	thenn kuInn
+瞪光	thenn kuinn
 奶仔
 奶茶
 奶套
@@ -11727,13 +11727,13 @@ import_tables:
 奶母
 奶羶
 奶帕
-奶穿	nee chuInn
-奶穿	lin chuInn
-奶穿	ling chuInn
+奶穿	nee chuinn
+奶穿	lin chuinn
+奶穿	ling chuinn
 奶胎	nee thai
 奶胎	lin thai
 奶胎	ling thai
-躡跤前	neeh kha caInn
+躡跤前	neeh kha cainn
 躡腳尾	neeh kha ber
 晾衫	nee sann
 經布	kenn poo
@@ -11780,11 +11780,11 @@ import_tables:
 生面虎	chenn bin hoo
 生生	chenn chenn
 生脆	chenn cher
-生魚片	chenn hIR phinn
+生魚片	chenn hir phinn
 生兮	chenn e
 生疏	chenn soo
 生驚	chenn kiann
-星光月現	chenn kuInn gerh hian
+星光月現	chenn kuinn gerh hian
 星斗	chenn tau
 腥臊	chenn chau
 腥臊	che chau
@@ -11907,7 +11907,7 @@ import_tables:
 陪伴	pue phuann
 陪綴	pue ter
 陪酒	pue ciu
-培養	pue Iang
+培養	pue iang
 賠罪	pue cue
 賠禮	pue le
 背叛	pue puan
@@ -11916,7 +11916,7 @@ import_tables:
 背誦	pue siong
 背後	pue au
 背景	pue king
-背約	pue Iak
+背約	pue iak
 背影	pue iann
 背椅	pue i
 佩服	pue hok
@@ -11957,7 +11957,7 @@ import_tables:
 內心	lai sim
 內閣	lue koh
 內在	lue cai
-內向	lue hIang
+內向	lue hiang
 內涵	lue ham
 內涵	lai ham
 內幕	lue boo
@@ -11978,7 +11978,7 @@ import_tables:
 廢物	hue but
 廢話	hue uee
 廢寢忘食	hue chim bong sit
-廢去	hue khIR
+廢去	hue khir
 廢官	hue kuann
 廢捒	hue sak
 廢除	hue tir
@@ -11997,7 +11997,7 @@ import_tables:
 回禮	hue le
 回憶	hue ik
 回顧	hue koo
-回想	hue sIang
+回想	hue siang
 會晤	hue goo
 會務省	hue bu sing
 會集	hue cip
@@ -12101,7 +12101,7 @@ import_tables:
 做乞食	cue khit ciah
 做官	cue kuann
 做大官	cue tua kuann
-做半剸	cue puann tuInn
+做半剸	cue puann tuinn
 做生日	cue senn jit
 做生理	cue sing li
 做生理	cue serng li
@@ -12132,7 +12132,7 @@ import_tables:
 做乞食	co khit ciah
 做官	co kuann
 做大官	co tua kuann
-做半剸	co puann tuInn
+做半剸	co puann tuinn
 做生日	co senn jit
 做生理	co sing li
 做親情	co chin ciann
@@ -12155,7 +12155,7 @@ import_tables:
 睿智	jue ti
 衰儂	sue lang
 衰神	sue sin
-衰弱	sue jIak
+衰弱	sue jiak
 衰旺	sue ong
 衰敗	sue pai
 衰運	sue un
@@ -12188,35 +12188,35 @@ import_tables:
 玫瑰	mue kui
 玫瑰花	mue kui huee
 ##	i/ih
-伊	i1	10
-醫	i1	10
-衣	i1
-依	i1
-漪	i1
-咿	i1
-以	i2	10
-已	i2	10
-椅	i2	10
-倚	i2
-矣	i2
-迤	i2
-意	i3	10
-懿	i3
-薏	i3
+伊	Øi1	10
+醫	Øi1	10
+衣	Øi1
+依	Øi1
+漪	Øi1
+咿	Øi1
+以	Øi2	10
+已	Øi2	10
+椅	Øi2	10
+倚	Øi2
+矣	Øi2
+迤	Øi2
+意	Øi3	10
+懿	Øi3
+薏	Øi3
 踦	ih4
-姨	i5	10
-移	i5	10
-怡	i5
-夷	i5
-維	i5	0%
-頤	i5
-胰	i5
-彝	i5
-貽	i5
-奕	i6	10
-異	i7	10
-易	i7	10
-肄	i7
+姨	Øi5	10
+移	Øi5	10
+怡	Øi5
+夷	Øi5
+維	Øi5	0%
+頤	Øi5
+胰	Øi5
+彝	Øi5
+貽	Øi5
+奕	Øi6	10
+異	Øi7	10
+易	Øi7	10
+肄	Øi7
 悲	pi1	10
 卑	pi1
 碑	pi1
@@ -12550,15 +12550,15 @@ import_tables:
 依據	i kir
 依照	i ciau
 以後	i au
-以前	i caInn
+以前	i cainn
 以早	i ca
 以來	i lai
 以內	i lai
 以外	i gua
-以上	i sIang
+以上	i siang
 以為	i ui
 以毒攻毒	i tok kong tok
-以下犯上	i ha huan sIang
+以下犯上	i ha huan siang
 已經	i king
 椅仔	i a
 椅條	i liau
@@ -12574,7 +12574,7 @@ import_tables:
 意外	i gua
 意譯	i ik
 意願	i guan
-意向	i hIang
+意向	i hiang
 意會	i hue
 意見	i kian
 意氣用事	i khi iong sur
@@ -12586,7 +12586,7 @@ import_tables:
 意料	i liau
 意料之中	i liau ci tiong
 意識	i sik
-意象	i sIang
+意象	i siang
 意圖	i too
 薏仁	i jin
 姨仔	i a
@@ -12616,13 +12616,13 @@ import_tables:
 異教徒	i kau too
 異物	i but
 異性	i sing
-異鄉	i hIang
-異常	i sIang
+異鄉	i hiang
+異常	i siang
 易容	i iong
 易容術	i iong sut
 肄業	i giap
 悲哀	pi ai
-悲傷	pi sIang
+悲傷	pi siang
 悲哀	pi ai
 悲慘	pi cham
 悲喜交加	pi hi kau ka
@@ -12645,7 +12645,7 @@ import_tables:
 比論	pi lun
 比在	pi cai
 比範	pi pan
-比喻	pi jU
+比喻	pi ju
 比照	pi ciau
 比例	pi le
 比並
@@ -12672,9 +12672,9 @@ import_tables:
 閉路	pi loo
 閉合	pi hap
 鱉殼	pih khak
-鱉卵	pih nuI
+鱉卵	pih nui
 撆紮	pih cah
-撆手䘼	pih chiu uInn
+撆手䘼	pih chiu uinn
 撆褲跤	pih khoo kha
 脾氣	pi khi
 脾土	pi thoo
@@ -12791,12 +12791,12 @@ import_tables:
 覕相揣
 微微
 微微仔
-微弱	bi jIak
+微弱	bi jiak
 微妙	bi biau
 微妙	bi miau
 微波	bi pho
 微波爐	bi pho loo
-眉來眼去	bi lai gan khIR
+眉來眼去	bi lai gan khir
 彌補	bi poo
 味素	bi soo
 味素粉	bi soo hun
@@ -12839,7 +12839,7 @@ import_tables:
 智識	ti sik
 智能	ti ling
 智能	ti lerng
-智商	ti sIang
+智商	ti siang
 智者	ti cia
 滴落來	tih loh lai
 滴水	tih cui
@@ -12871,13 +12871,13 @@ import_tables:
 底一幫	ti cit pang
 底一站	ti cit cam
 底一內	ti cit lai
-底一爿	ti cit paInn
+底一爿	ti cit painn
 底一塊	ti cit tEr
 底一棟	ti cit tong
 底一頭	ti cit thau
 底一尾	ti cit ber
 底一粒	ti cit liap
-底一卷	ti cit kuInn
+底一卷	ti cit kuinn
 底一本	ti cit pun
 底一臺	ti cit tai
 底一條	ti cit tiau
@@ -12930,7 +12930,7 @@ import_tables:
 鐵釘仔	thih tan a
 鐵釘	thih ting
 鐵釘仔	thih ting a
-鐵門	thih muI
+鐵門	thih mui
 鐵路	thih loo
 鐵道
 鐵塔	thih thah
@@ -12938,7 +12938,7 @@ import_tables:
 鐵皮厝	thih pher chu
 剃面	thih bin
 剃頭	thih thau
-剃頭店	thi thau taInn
+剃頭店	thi thau tainn
 剃頭刀	thih thau to
 剃面	thi bin
 剃頭	thi thau
@@ -12957,7 +12957,7 @@ import_tables:
 理化	li hua
 理工	li kang
 理念	li liam
-理想	li sIang
+理想	li siang
 理智	li ti
 理所當然	li soo tong jian
 理科	li ko
@@ -12965,9 +12965,9 @@ import_tables:
 李仔	li a
 李仔樹	li a chiu
 李仔膏	li a ko
-李仔酸	li a suInn
+李仔酸	li a suinn
 李仔糖	li a thng
-鯉魚	li hIR
+鯉魚	li hir
 里長	li tiunn
 里民	li bin
 履行	li hing
@@ -13014,7 +13014,7 @@ import_tables:
 機倉	ki chng
 機緣	ki ian
 機型	ki hing
-機構	ki kiO
+機構	ki kio
 機油	ki iu
 機率	ki lut
 機能	ki ling
@@ -13054,7 +13054,7 @@ import_tables:
 技師	ki sur
 技藝	ki ge
 技巧	ki kha
-飢荒	ki huInn
+飢荒	ki huinn
 飢寒	ki han
 肌肉	ki hik
 肌肉	ki bah
@@ -13193,7 +13193,7 @@ import_tables:
 起飛	khi per
 起身	khi sin
 起點	khi tiam
-起先	khi saInn
+起先	khi sainn
 起草	khi chau
 起初	khi choo
 起霧	khi bu
@@ -13203,7 +13203,7 @@ import_tables:
 起症	khi cing
 起𪁎	khi chio
 起工	khi kang
-起去	khi khIR
+起去	khi khir
 起稿	khi ko
 起居	khi kir
 起雷	khi lui
@@ -13236,8 +13236,8 @@ import_tables:
 企業	khi giap
 企圖	khi too
 器重	khi tiong
-器量	khi lIang
-器具	khi kU
+器量	khi liang
+器具	khi ku
 器械	khi hai
 器官	khi kuan
 器材	khi cai
@@ -13246,8 +13246,8 @@ import_tables:
 汽車	khi chia
 汽船	khi cun
 汽水	khi cui
-氣管	khi kuInn
-氣管炎	khi kuInn iam
+氣管	khi kuinn
+氣管炎	khi kuinn iam
 氣質	khi cit
 氣壓	khi ap
 氣味	khi bi
@@ -13260,7 +13260,7 @@ import_tables:
 氣色	khi sik
 氣怫怫	khi phut phut
 氣怫怫	khi put put
-氣象	khi sIang
+氣象	khi siang
 氣溫	khi un
 氣數	khi soo
 氣身惱命	khi sin loo mia
@@ -13339,7 +13339,7 @@ import_tables:
 喜炮	hi phauh
 喜報	hi po
 喜帖	hi thiap
-喜劇	hi kIak
+喜劇	hi kiak
 喜氣	hi khi
 喜宴	hi ian
 戲弄	hi lang
@@ -13347,7 +13347,7 @@ import_tables:
 戲文	hi bun
 戲齣	hi chut
 戲言	hi gian
-戲園	hi huInn
+戲園	hi huinn
 戲服	hi hok
 戲曲	hi khik
 戲館	hi kuan
@@ -13385,7 +13385,7 @@ import_tables:
 之內	ci lai
 之外	ci gua
 之類	ci lui
-之前	ci caInn
+之前	ci cainn
 之後	ci au
 支持	ci chi
 支持	ki chi
@@ -13439,7 +13439,7 @@ import_tables:
 指示	ci si
 指點	ci tiam
 指導	ci to
-指導	ci toO
+指導	ci too
 指紋	ci bun
 指認	ci jin
 指令	ci ling
@@ -13450,7 +13450,7 @@ import_tables:
 旨意	ci i
 咫尺	ci chik
 志願	ci guan
-志向	ci hIang
+志向	ci hiang
 志氣	ci khi
 志工	ci kang
 志學	ci hak
@@ -13469,7 +13469,7 @@ import_tables:
 接力	cih lat
 接著	cih tioh
 舌仔	cih a
-折去	cih khIR
+折去	cih khir
 痴情	chi cing
 痴哥	chi ko
 痴哥神	chi ko sin
@@ -13499,7 +13499,7 @@ import_tables:
 溡溡	chi chi
 溡儂	chi lang
 溡喌喌	chi ciuh ciuh
-市區	chi khU
+市區	chi khu
 市內	chi lai
 市長	chi tiunn
 市民	chi bin
@@ -13517,11 +13517,11 @@ import_tables:
 飼雞鴨	chi kere ah
 飼狗	chi kau
 飼狗捌主儂
-飼豬	chi tIR
+飼豬	chi tir
 飼牛	chi gu
 飼貓	chi niau
 飼囝
-飼金魚	chi kim hIR
+飼金魚	chi kim hir
 飼奶
 飼囡仔
 飼料	chi liau
@@ -13550,7 +13550,7 @@ import_tables:
 字典	ji tian
 字運	ji un
 字眼	ji gan
-字爿	ji paInn
+字爿	ji painn
 字劃	ji uih
 字劃	ji uah
 字紙籠	ji cua lang
@@ -13563,8 +13563,8 @@ import_tables:
 二指	ji cuinn
 二等	ji ting
 二等	ji terng
-二等獎	ji ting cIang
-二等獎	ji terng cIang
+二等獎	ji ting ciang
+二等獎	ji terng ciang
 二手	ji chiu
 二手貨	ji chiu her
 二房	ji pang
@@ -13620,7 +13620,7 @@ import_tables:
 死刑	si hing
 死刑犯	si hing huan
 死結	si kat
-死去	si khIR
+死去	si khir
 死窟	si khut
 死賴	si lua
 死路	si loo
@@ -13634,7 +13634,7 @@ import_tables:
 死皮	si pher
 死性	si sing
 死心	si sim
-死傷	si sIang
+死傷	si siang
 死守	si siu
 死直	si tit
 死死	si si
@@ -13648,7 +13648,7 @@ import_tables:
 死賴儂	si lua lang
 死路旁	si loo pong
 死趖	si so
-死豬仔價	si tIR a kee
+死豬仔價	si tir a kee
 死忠	si tiong
 死坐活食	si cEr uah ciah
 死海	si hai
@@ -13674,20 +13674,20 @@ import_tables:
 四散	si suann
 四箍圍	si khoo ui
 四箍圍仔	si khoo ui a
-四箍輾轉	si khoo lin tuInn
-四箍輾轉	si khoo lian tuInn
+四箍輾轉	si khoo lin tuinn
+四箍輾轉	si khoo lian tuinn
 四叉路口	si chee loo khau
 四房看廳	si pang khuann thiann
 四淋垂	si lam sui
 四句聯	si ku lian
 四片仔	si phinn a
-四爿	si paInn
+四爿	si painn
 四輪	si lun
 四輪	si lian
 四邊	si pinn
 四十	si cap
 四百
-四千	si chaInn
+四千	si chainn
 四萬	si ban
 四億	si ik
 四交五月	si kau goo gerh
@@ -13711,7 +13711,7 @@ import_tables:
 時令	si ling
 時時	si si
 時時刻刻	si si khik khik
-時常	si sIang
+時常	si siang
 時代	si tai
 時運	si un
 時到	si kau
@@ -13768,7 +13768,7 @@ import_tables:
 侍講	si kang
 侍者	si cia
 嗜好	si honn
-蝕本	sih puInn
+蝕本	sih puinn
 蝕本	sih pun
 蝕重	sih tang
 ##	inn/innh
@@ -13856,7 +13856,7 @@ import_tables:
 院會	inn hue
 院校	inn hau
 院士	inn sur
-院區	inn khU
+院區	inn khu
 邊頭	pinn thau
 邊仔	pinn a
 扁扁	pinn pinn
@@ -13922,20 +13922,20 @@ import_tables:
 滇滇	tinn tinn
 天頂	thinn ting
 天跤下	thinn kha ee
-天未光	thinn ber kuInn
+天未光	thinn ber kuinn
 天猶未光	thinn ia ber kng
 天猶未光	thinn iau ber kng
-天欲光	thinn berh kuInn
-天則欲光	thinn ciah berh kuInn
-天欲光	thinn beh kuInn
-天則欲光	thinn ciah beh kuInn
+天欲光	thinn berh kuinn
+天則欲光	thinn ciah berh kuinn
+天欲光	thinn beh kuinn
+天則欲光	thinn ciah beh kuinn
 天差仔地	thinn cha a tere
 天註定	thinn cu tiann
 天氣	thinn khi
 天時	thinn si
-天光	thinn kuInn
-天光早	thinn kuInn ca
-天光白日	thinn kuInn peeh jit
+天光	thinn kuinn
+天光早	thinn kuinn ca
+天光白日	thinn kuinn peeh jit
 天公	thinn kong
 天公伯	thinn kong peeh
 天公伯仔	thinn kong peeh a
@@ -13951,7 +13951,7 @@ import_tables:
 添油	thinn iu
 添錢	thinn cinn
 添價	thinn kee
-添飯	thinn puInn
+添飯	thinn puinn
 添話	thinn uee
 䋎衫	thinn sann
 䋎褲	thinn khoo
@@ -13962,7 +13962,7 @@ import_tables:
 染頭鬃	ni thau cang
 染料	ni liau
 染布	ni poo
-睰光	nih kuInn
+睰光	nih kuinn
 睰目	nih bak
 年頭	ni thau
 年尾	ni ber
@@ -14163,7 +14163,7 @@ import_tables:
 音理	im li
 音節	im cat
 音樂會	im gak hue
-音響	im hIang
+音響	im hiang
 音箱	im siunn
 音律	im lut
 音訊	im sin
@@ -14182,7 +14182,7 @@ import_tables:
 淹死	im si
 淹水	im cui
 淹沒	im but
-陰謀	im biO
+陰謀	im bio
 陰暗	im am
 陰天	im thinn
 陰晴	im cing
@@ -14195,7 +14195,7 @@ import_tables:
 陰部	im poo
 陰魂	im hun
 陰魂不散	im hun put san
-陰陽	im Iang
+陰陽	im iang
 陰司	im si
 陰冷	im ling
 陰森	im serm
@@ -14244,7 +14244,7 @@ import_tables:
 臨時臨陣	lim si lim tin
 臨時臨陣	liam si liam tin
 臨終	lim ciong
-臨危不懼	lim gui put kU
+臨危不懼	lim gui put ku
 臨盆	lim phun
 臨陣	lim tin
 臨場	lim tiunn
@@ -14280,7 +14280,7 @@ import_tables:
 金庫	kim khoo
 金枝玉葉	kim ki gik hioh
 金金	kim kim
-金金相	kim kim sIang
+金金相	kim kim siang
 金剛	kim kong
 金剛石	kim kong cioh
 金滑	kim kut
@@ -14430,7 +14430,7 @@ import_tables:
 侵入	chim jip
 侵佔	chim ciam
 侵犯	chim huan
-侵略	chim lIak
+侵略	chim liak
 侵害	chim hai
 寢室	chim sik
 寢宮	chim kiong
@@ -14466,7 +14466,7 @@ import_tables:
 入學	jip oh
 入教	jip kau
 入境	jip king
-入門	jip muI
+入門	jip mui
 入房	jip pang
 入數	jip siau
 入心	jip sim
@@ -14544,7 +14544,7 @@ import_tables:
 審判	sim phuann
 審察	sim chat
 審議	sim gi
-審問	sim muI
+審問	sim mui
 審核	sim hik
 審理	sim li
 審定	sim ting
@@ -14811,10 +14811,10 @@ import_tables:
 應聲	in siann
 印刷	in suat
 印仔	in a
-印章	in cIang
+印章	in ciang
 印花	in huee
 印堂	in tong
-印象	in sIang
+印象	in siang
 一生	it sing
 一生	it serng
 一味	it bi
@@ -14827,7 +14827,7 @@ import_tables:
 一心	it sim
 一心一意	it sim it i
 一來	it lai
-一向	it hIang
+一向	it hiang
 一呼百諾	it hoo pik lok
 一馬平川	it ma ping chuan
 一夫一妻	it hu it che
@@ -14839,8 +14839,8 @@ import_tables:
 一品	it phin
 一等	it ting
 一等	it terng
-一等獎	it ting cIang
-一等獎	it terng cIang
+一等獎	it ting ciang
+一等獎	it terng ciang
 一表人才	it piau jin cai
 一視同仁	it si tong jin
 一身	it sin
@@ -14857,7 +14857,7 @@ import_tables:
 一問三不知	it bun sam put ti
 一概	it khai
 一致	it ti
-一刀兩斷	it to lIang tuan
+一刀兩斷	it to liang tuan
 一貫	it kuan
 一流	it liu
 一連串	it lian chuan
@@ -14900,7 +14900,7 @@ import_tables:
 筆尖	pit ciam
 筆者	pit cia
 筆架	pit kee
-筆管	pit kuInn
+筆管	pit kuinn
 筆管	pit kong
 筆芯	pit sim
 筆筒	pit tang
@@ -14915,7 +14915,7 @@ import_tables:
 憑據	pin kir
 憑證	pin cing
 憑心	pin sim
-憑良心	pin lIang sim
+憑良心	pin liang sim
 憑準	pin cun
 嬪妃	pin hui
 屏幕	pin boo
@@ -14996,8 +14996,8 @@ import_tables:
 面貌	bin mau
 面水	bin cui
 面模	bin boo
-面前	bin caInn
-面頭前	bin thau caInn
+面前	bin cainn
+面頭前	bin thau cainn
 面形	bin hing
 面油	bin iu
 面巾	bin kern
@@ -15008,7 +15008,7 @@ import_tables:
 面色	bin sik
 面熟	bin sik
 面神	bin sin
-面相	bin sIang
+面相	bin siang
 面頂	bin ting
 面頂衫	bin ting sann
 面紅紅	bin ang ang
@@ -15112,8 +15112,8 @@ import_tables:
 恁翁	lin ang
 恁兜	lin tau
 恁厝	lin chu
-輾轉	lin tuInn
-輾轉	lian tuInn
+輾轉	lin tuinn
+輾轉	lian tuinn
 鄰家	lin kee
 鄰國	lin kok
 鄰里	lin li
@@ -15148,14 +15148,14 @@ import_tables:
 輕易	khin i
 輕罪	khin cue
 輕音	khin im
-輕傷	khin sIang
+輕傷	khin siang
 輕便	khin pian
 輕型	khin hing
 輕快	khin khuai
 輕鬆	khin sang
 淺色	khin sik
 淺紅	khin ang
-淺黃	khin uInn
+淺黃	khin uinn
 淺藍	khin lam
 淺綠	khin lik
 淺紫	khin ci
@@ -15200,7 +15200,7 @@ import_tables:
 彼角仔	hit kak a
 彼箍	hit khoo
 彼內	hit lai
-彼爿	hit paInn
+彼爿	hit painn
 彼時	hit si
 彼絲仔	hit si a
 彼點仔	hit tiam a
@@ -15211,7 +15211,7 @@ import_tables:
 彼頭	hit thau
 彼尾	hit ber
 彼粒	hit liap
-彼卷	hit kuInn
+彼卷	hit kuinn
 彼本	hit pun
 彼臺	hit tai
 彼條	hit tiau
@@ -15261,7 +15261,7 @@ import_tables:
 真真	cin cin
 真知	cin cai
 真心	cin sim
-真相	cin sIang
+真相	cin siang
 真實	cin sit
 真傳	cin tuan
 真傳	cin thuan
@@ -15288,7 +15288,7 @@ import_tables:
 真凊	cin chin
 真凝	cin gan
 真冰	cin ping
-真懸	cin kuAinn
+真懸	cin kuainn
 真低	cin kee
 真𠢕	cin gau
 真䆀	cin bai
@@ -15306,8 +15306,8 @@ import_tables:
 進行	cin hing
 進步	cin poo
 進入	cin jip
-進取	cin chU
-進前	cin caInn
+進取	cin chu
+進前	cin cainn
 進主	cin cu
 進化	cin hua
 進香	cin hiunn
@@ -15356,7 +15356,7 @@ import_tables:
 這箍	cit khoo
 這勢	cit si
 這內	cit lai
-這爿	cit paInn
+這爿	cit painn
 這時	cit si
 這絲仔	cit si a
 這點仔	cit tiam a
@@ -15367,7 +15367,7 @@ import_tables:
 這頭	cit thau
 這尾	cit ber
 這粒	cit liap
-這卷	cit kuInn
+這卷	cit kuinn
 這本	cit pun
 這杯	cit pue
 這臺	cit tai
@@ -15397,7 +15397,7 @@ import_tables:
 這蕊	cit lui
 這段	cit tuann
 這片	cit phian
-這間	cit kaInn
+這間	cit kainn
 這型	cit hing
 這體	cit the
 這領	cit nia
@@ -15415,7 +15415,7 @@ import_tables:
 職能	cit ling
 職能	cit lerng
 職責	cit cik
-質量	cit lIang
+質量	cit liang
 質子	cit cur
 質問	cit bun
 質數	cit soo
@@ -15442,7 +15442,7 @@ import_tables:
 盡濟	cin cere
 盡少	cin cio
 盡早	cin ca
-盡量	cin lIang
+盡量	cin liang
 盡無	cin bo
 盡頭	cin thau
 盡有盡毀	cin u cin hui
@@ -15452,7 +15452,7 @@ import_tables:
 儘管	cin kuan
 一百	cit pah
 一百	cit peeh
-一千	cit chaInn
+一千	cit chainn
 一萬	cit ban
 一億	cit ik
 一个	cit e
@@ -15485,7 +15485,7 @@ import_tables:
 一箍	cit khoo
 一箍銀	cit khoo gern
 一內	cit lai
-一爿	cit paInn
+一爿	cit painn
 一時	cit si
 一絲	cit si
 一絲絲	cit si si
@@ -15505,7 +15505,7 @@ import_tables:
 一頭	cit thau
 一尾	cit ber
 一粒	cit liap
-一卷	cit kuInn
+一卷	cit kuinn
 一本	cit pun
 一杯	cit pue
 一臺	cit tai
@@ -15539,7 +15539,7 @@ import_tables:
 一段	cit tuann
 一久仔	cit ku a
 一仔久	cit a ku
-一間	cit kaInn
+一間	cit kainn
 一小時	cit sio si
 一點鐘	cit tiam cing
 一分鐘	cit hun cing
@@ -15548,7 +15548,7 @@ import_tables:
 一秒	cit bio
 一仔	cit a
 一仔久	cit a ku
-一頓	cit tuInn
+一頓	cit tuinn
 疾苦	cit khoo
 親愛	chin ai
 親目	chin bak
@@ -15606,7 +15606,7 @@ import_tables:
 凊黐黐	chin thi thi
 凊水	chin cui
 凊汗	chin kuann
-凊飯	chin puInn
+凊飯	chin puinn
 凊心	chin sim
 凊糜	chin mue
 凊糜	chin ber
@@ -15625,7 +15625,7 @@ import_tables:
 七喙八舌	chit chui pereh cih
 七嫌八嫌	chit hiam pereh hiam
 七開八開	chit khai pereh khai
-七扣八除	chit khiO pereh tir
+七扣八除	chit khio pereh tir
 七扣八除	chit khau pereh tir
 七竅	chit khiau
 七娘媽	chit niu ma
@@ -15639,7 +15639,7 @@ import_tables:
 七字仔	chit ji a
 七十	chit cap
 七百
-七千	chit chaInn
+七千	chit chainn
 七萬	chit ban
 七億	chit ik
 拭椅	chit i
@@ -15706,7 +15706,7 @@ import_tables:
 仁政	jin cing
 仁慈	jin cur
 仁義	jin gi
-仁厚	jin hiO
+仁厚	jin hio
 認為	jin ui
 認可	jin kho
 認可	jin khonn
@@ -15725,7 +15725,7 @@ import_tables:
 認路	jin loo
 認知	jin ti
 認識	jin sik
-認養	jin Iang
+認養	jin iang
 認領	jin nia
 認證	jin cing
 日子	jit ci
@@ -15745,7 +15745,7 @@ import_tables:
 日影	jit iann
 日熄	jit sit
 日炎	jit iam
-日常	jit sIang
+日常	jit siang
 日用品	jit iong phin
 日日	jit jit
 日期	jit ki
@@ -15753,7 +15753,7 @@ import_tables:
 日結	jit kiat
 日光	jit kng
 日報	jit po
-日商	jit sIang
+日商	jit siang
 日式	jit sik
 日晝	jit tau
 日晝中	jit tau tiong
@@ -15767,7 +15767,7 @@ import_tables:
 日頭花	jit thau huee
 日誌	jit ci
 日間	jit kan
-日劇	jit kIak
+日劇	jit kiak
 日程
 日思夜夢	jit sur ia bang
 新婦	sin pu
@@ -15816,7 +15816,7 @@ import_tables:
 身頂	sin ting
 身軀頂	sin khu ting
 身亡	sin bong
-身懸	sin kuAinn
+身懸	sin kuainn
 身價	sin kee
 身份	sin hun
 身邊	sin pinn
@@ -15827,7 +15827,7 @@ import_tables:
 身段	sin tuann
 身心	sin sim
 身為	sin ui
-伸張	sin tIang
+伸張	sin tiang
 伸展	sin tian
 辛苦	sin khoo
 辛勞
@@ -15845,13 +15845,13 @@ import_tables:
 薪資	sin cur
 呻吟	sin gim
 信用	sin iong
-信仰	sin gIang
+信仰	sin giang
 信息
 信任	sin jim
 訊號	sin ho
 訊息	sin sit
 迅速	sin sok
-失去	sit khIR
+失去	sit khir
 失路	sit loo
 失敗	sit pai
 失望	sit bong
@@ -15861,19 +15861,19 @@ import_tables:
 失真	sit cin
 失言	sit gian
 失血	sit huih
-失約	sit Iak
+失約	sit iak
 失敬	sit king
 失禮	sit le
 失陪	sit pue
 失聲	sit siann
 失信	sit sin
-失算	sit suInn
+失算	sit suinn
 失味	sit bi
 失眠	sit bin
 失明	sit bing
 失誤
 失戀	sit luan
-失常	sit sIang
+失常	sit siang
 失收	sit siu
 失神	sit sin
 失德	sit tik
@@ -15885,7 +15885,7 @@ import_tables:
 失靈	sit ling
 穡頭	sit thau
 熄電	sit tian
-熄去	sit khIR
+熄去	sit khir
 熄日	sit jit
 熄月	sit gerh
 神明	sin bing
@@ -15897,7 +15897,7 @@ import_tables:
 神經	sin king
 神經病	sin king penn
 神魂	sin hun
-神去	sin khIR
+神去	sin khir
 神器	sin khi
 神機妙算	sin ki biau suan
 神機妙算	sin ki miau suan
@@ -15908,7 +15908,7 @@ import_tables:
 神聖	sin sing
 神通	sin thong
 神位	sin ui
-神像	sin sIang
+神像	sin siang
 神轎	sin kio
 神桌	sin toh
 神祕	sin pi
@@ -15919,7 +15919,7 @@ import_tables:
 臣民	sin bin
 慎重	sin tiong
 實際	sit ce
-實際上	sit ce sIang
+實際上	sit ce siang
 實務	sit bu
 實在	sit cai
 實質	sit cit
@@ -16476,7 +16476,7 @@ import_tables:
 英里	ing li
 英靈	ing ling
 英鎊	ing ping
-英商	ing sIang
+英商	ing siang
 英才	ing cai
 英尺	ing chioh
 英吋	ing chun
@@ -16502,7 +16502,7 @@ import_tables:
 往日
 往年
 往過
-影響	ing hIang
+影響	ing hiang
 湧勢	ing se
 應用	ing iong
 應用題	ing iong tere
@@ -16560,7 +16560,7 @@ import_tables:
 翌日	ik jit
 兵仔	ping a
 兵馬
-兵將	ping cIang
+兵將	ping ciang
 兵書
 兵法	ping huat
 兵卒	ping cut
@@ -16578,7 +16578,7 @@ import_tables:
 冰冰	ping ping
 冰琪凌	ping ki ling
 冰淇淋	ping ki lim
-冰涼	ping lIang
+冰涼	ping liang
 冰河	ping ho
 冰水	ping cui
 冰山	ping suann
@@ -16606,7 +16606,7 @@ import_tables:
 百科全書	pik kho cuan sir
 百科	pik kher
 百科全書	pik kher cuan sir
-伯爵	pik cIak
+伯爵	pik ciak
 柏油
 柏油路
 平安	ping an
@@ -16618,9 +16618,9 @@ import_tables:
 平和	ping ho
 平均	ping kun
 平亂	ping luan
-平常	ping sIang
+平常	ping siang
 平時	ping si
-平常時	ping sIang si
+平常時	ping siang si
 平生	ping sing
 平生	ping serng
 平等	ping ting
@@ -16650,7 +16650,7 @@ import_tables:
 聘金	phing kim
 聘禮	phing le
 聘書
-聘約	phing Iak
+聘約	phing iak
 聘任	phing jim
 魄力	phik lik
 碧玉	phik giok
@@ -16662,16 +16662,16 @@ import_tables:
 評語	phing gir
 評鑑	phing kam
 評分	phing hun
-評量	phing lIang
+評量	phing liang
 評估	phing koo
 評定	phing ting
 評選	phing suan
 評審	phing sim
 評書
 鵬鳥	phing niau
-萍水相逢	phing sui sIang hong
+萍水相逢	phing sui siang hong
 猛烈	bing liat
-猛將	bing cIang
+猛將	bing ciang
 猛虎	bing hoo
 猛獸	bing siu
 猛禽	bing khim
@@ -16681,7 +16681,7 @@ import_tables:
 明察秋毫	bing chat chiu ho
 明月	bing guat
 明珠	bing cu
-明約	bing Iak
+明約	bing iak
 明說	bing serh
 明知	bing cai
 明日	bing jit
@@ -16706,7 +16706,7 @@ import_tables:
 名節	bing ciat
 名義	bing gi
 名詞	bing sir
-名揚四海	bing Iang sur hai
+名揚四海	bing iang sur hai
 名家	bing ka
 名利	bing li
 名流	bing liu
@@ -16716,20 +16716,20 @@ import_tables:
 名不虛傳
 名勝	bing sing
 名譽	bing ir
-冥想	bing sIang
+冥想	bing siang
 冥婚	bing hun
 冥王	bing ong
 冥王星	bing ong chenn
 盟主	bing cu
-盟約	bing Iak
+盟約	bing iak
 盟友	bing iu
 鳴鑼	bing lo
 鳴鼓	bing koo
 螟蛉	bing ling
-孟母	bing biO
-孟母	bing bIO
-孟母三遷	bing biO sam chian
-孟母三遷	bing bIO sam chian
+孟母	bing bio
+孟母	bing bio
+孟母三遷	bing bio sam chian
+孟母三遷	bing bio sam chian
 孟子	bing cur
 命令	bing ling
 命題	bing tere
@@ -16755,8 +16755,8 @@ import_tables:
 燈心	ting sim
 燈猜	ting chai
 燈座	ting co
-燈光	ting kuInn
-燈具	ting kU
+燈光	ting kuinn
+燈具	ting ku
 燈泡	ting pha
 叮嚀	ting ling
 徵收
@@ -16788,7 +16788,7 @@ import_tables:
 頂月	ting gerh
 頂下	ting ee
 頂日仔	ting jit a
-頂懸	ting kuAinn
+頂懸	ting kuainn
 頂港	ting kang
 頂肱骨	ting kong kut
 頂落	ting loh
@@ -16816,7 +16816,7 @@ import_tables:
 釘根	ting kern
 德行	tik hing
 德高望重	tik ko bong tiong
-德高望重	tik koO bong tiong
+德高望重	tik koo bong tiong
 德育	tik iok
 竹仔	tik a
 竹仔枝	tik a ki
@@ -16846,7 +16846,7 @@ import_tables:
 竹筍	tik sun
 竹筒	tik tang
 竹蟶	tik than
-竹筅	tik chaInn
+竹筅	tik chainn
 竹䉔	tik chuann
 得失	tik sit
 得意	tik i
@@ -16870,11 +16870,11 @@ import_tables:
 定存	ting cun
 定義	ting gi
 定額	ting giah
-定向	ting hIang
+定向	ting hiang
 定價	ting kee
 定時	ting si
 定理	ting li
-定量	ting lIang
+定量	ting liang
 定期	ting ki
 定居	ting kir
 定論	ting lun
@@ -16911,7 +16911,7 @@ import_tables:
 特殊	tik su
 特務	tik bu
 特效	tik hau
-特區	tik khU
+特區	tik khu
 特技	tik ki
 特派員	tik phai uan
 特使	tik sai
@@ -16931,7 +16931,7 @@ import_tables:
 敵對	tik tui
 瞠目結舌
 挺拔	thing puat
-逞強	thing kIang
+逞強	thing kiang
 寵慂	thing sing
 聽便	thing pian
 聽便便	thing pian pian
@@ -16984,7 +16984,7 @@ import_tables:
 伶俐	ling li
 領悟	ling goo
 領悟	ling ngoo
-領略	ling lIak
+領略	ling liak
 領情	ling cing
 領教	ling kau
 領袖	ling siu
@@ -16997,7 +16997,7 @@ import_tables:
 領域	ling hik
 領先	ling sian
 領導	ling to
-領導	ling toO
+領導	ling too
 領隊	ling tui
 躘跤	ling kha
 躘開	ling khui
@@ -17005,7 +17005,7 @@ import_tables:
 零件	ling kiann
 零頭	ling thau
 零售	ling siu
-零售商	ling siu sIang
+零售商	ling siu siang
 零蛋	ling tan
 零度	ling too
 零分	ling hun
@@ -17014,7 +17014,7 @@ import_tables:
 靈芝	ling ci
 靈芝草	ling ci chau
 靈驗	ling giam
-靈前	ling caInn
+靈前	ling cainn
 靈顯	ling hian
 靈符	ling hu
 靈藥	ling ioh
@@ -17032,8 +17032,8 @@ import_tables:
 龍船	ling cun
 能力	ling lik
 能力	lerng lik
-能量	ling lIang
-能量	lerng lIang
+能量	ling liang
+能量	lerng liang
 能源
 能耐
 凌霄	ling siau
@@ -17050,7 +17050,7 @@ import_tables:
 菱形	ling hing
 綾羅綢緞	ling lo tiu tuan
 聆聽	ling thiann
-聆償	ling sIang
+聆償	ling siang
 另外	ling gua
 另外來	ling gua lai
 另日	ling jit
@@ -17060,7 +17060,7 @@ import_tables:
 令愛	ling ai
 冗冗	ling ling
 佞臣	ling sin
-力量	lik lIang
+力量	lik liang
 力學	lik hak
 歷代	lik tai
 歷史	lik sur
@@ -17095,17 +17095,17 @@ import_tables:
 經理	king li
 經絡	king lok
 經綸	king lun
-經常	king sIang
-經商	king sIang
+經常	king siang
+經商	king siang
 經線	king suann
 經度	king too
 經緯	king ui
 經書	king sir
 經史	king sur
 經典	king tian
-經貿	king biO
+經貿	king bio
 經銷	king siau
-經銷商	king siau sIang
+經銷商	king siau siang
 耕地	king tere
 驚天動地	king thian tong te
 驚嘆	king than
@@ -17135,7 +17135,7 @@ import_tables:
 景物	king but
 景況	king hong
 景觀	king kuan
-景象	king sIang
+景象	king siang
 景點	king tiam
 耿耿于懷	king king ir huai
 敬天公	king thinn kong
@@ -17203,13 +17203,13 @@ import_tables:
 競賽	king sai
 極端	kik tuan
 極點	kik tiam
-極光	kik kuInn
+極光	kik kuinn
 極限	kik han
 局長	kik tiunn
 局長	kiok tiunn
 框仔	khing a
 框殼	khing khak
-傾向	khing hIang
+傾向	khing hiang
 傾家蕩產	khing ka tong san
 傾國	khing kok
 傾國傾城	khing kok khing siann
@@ -17255,7 +17255,7 @@ import_tables:
 胸坎	hing kham
 胸坎骨	hing kham kut
 胸掛骨	hing kua kut
-胸前	hing caInn
+胸前	hing cainn
 胸槽	hing co
 興亡	hing bong
 興衰	hing sue
@@ -17268,7 +17268,7 @@ import_tables:
 興頭	hing thau
 刑罰	hing huat
 刑法	hing huat
-刑具	hing kU
+刑具	hing ku
 刑部	hing poo
 行為	hing ui
 行文	hing bun
@@ -17322,7 +17322,7 @@ import_tables:
 精選	cing suan
 精差	cing cha
 精進	cing cin
-精良	cing lIang
+精良	cing liang
 精英	ching ing
 精靈	cing ling
 精牲	cing senn
@@ -17372,9 +17372,9 @@ import_tables:
 旌表	cing pio
 晶片	cing phinn
 僧侶
-爭鬥	cing tiO
+爭鬥	cing tio
 爭論	cing lun
-爭取	cing chU
+爭取	cing chu
 爭辯	cing pian
 爭議	cing gi
 爭踖	cing coh
@@ -17383,7 +17383,7 @@ import_tables:
 蒸發	cing huat
 蒸汽	cing khi
 蒸餾水	cing liu cui
-蒸蒸日上	cing cing jit sIang
+蒸蒸日上	cing cing jit siang
 貞操	cing cho
 崢嶸	cing hing
 整理	cing li
@@ -17444,7 +17444,7 @@ import_tables:
 正經代	cing king tai
 正氣	cing khi
 正果	cing ko
-正果	cing koO
+正果	cing koo
 正派	cing phai
 正式	cing sik
 正統	ching thong
@@ -17453,7 +17453,7 @@ import_tables:
 正規	cing kui
 正確	cing khak
 正視	cing si
-正常	cing sIang
+正常	cing siang
 眾儂	cing lang
 眾儂生	cing lang senn
 政治	cing ti
@@ -17483,7 +17483,7 @@ import_tables:
 叔伯大姊
 叔孫	cik sun
 叔伯兮	cik peeh e
-燭光	cik kuInn
+燭光	cik kuinn
 燭台	cik tai
 燭淚	cik lui
 責罰
@@ -17549,7 +17549,7 @@ import_tables:
 靜靜	cing cing
 靜脈	cing meeh
 靜脈	cing beeh
-靜養	cing Iang
+靜養	cing iang
 靜坐	cing co
 靜音	cing im
 靜態	cing thai
@@ -17587,7 +17587,7 @@ import_tables:
 清官	ching kuann
 清潔	ching kiat
 清廉	ching liam
-清涼	ching lIang
+清涼	ching liang
 清數	ching siau
 清心	ching sim
 清芳	ching phang
@@ -17603,7 +17603,7 @@ import_tables:
 清淨	ching cing
 清火	ching her
 清幽	ching iu
-清閒	ching aInn
+清閒	ching ainn
 清寒	ching han
 清水	ching cui
 清掃	ching sau
@@ -17646,11 +17646,11 @@ import_tables:
 衝煙	ching ian
 衝出來	ching chut lai
 衝起來	ching khi lai
-熗油飯	ching iu puInn
-熗飯	ching puInn
+熗油飯	ching iu puinn
+熗飯	ching puinn
 稱心	ching sim
 測驗	chik giam
-測量	chik lIang
+測量	chik liang
 測試	chik chi
 策略	chik liok
 策畫	chik uee
@@ -17708,7 +17708,7 @@ import_tables:
 星期	sing ki
 星辰	sing sin
 星辰	chenn sin
-星象	sing sIang
+星象	sing siang
 星夜	sing ia
 星夜	chenn ia
 星宿	sing siu
@@ -17724,7 +17724,7 @@ import_tables:
 升級	sing khip
 升級	sing kip
 升官	sing kuann
-升懸	sing kuAinn
+升懸	sing kuainn
 升天	sing thian
 升堂	sing tng
 升學	sing hak
@@ -17742,7 +17742,7 @@ import_tables:
 省長	senn tiunn
 省事	senn sur
 省親	sing chin
-省略	sing lIak
+省略	sing liak
 省用	sing ing
 省會	sing hue
 省力	sing lat
@@ -17760,7 +17760,7 @@ import_tables:
 性能	sing ling
 性能	sing lerng
 聖母	sing bio
-聖母	sing bIO
+聖母	sing bio
 聖火	sing her
 聖嬰	sing ing
 聖誕	sing tan
@@ -17794,7 +17794,7 @@ import_tables:
 適宜	sik gi
 適用	sik iong
 適當	sik tong
-適量	sik lIang
+適量	sik liang
 適應	sik ing
 釋疑	sik gi
 釋義	sik gi
@@ -17835,11 +17835,11 @@ import_tables:
 成熟	sing sik
 成敗	sing pai
 成立	sing lip
-成長	sing tIang
+成長	sing tiang
 成年	sing lian
 成人	sing jin
 成員	sing uan
-丞相	sing sIang
+丞相	sing siang
 丞相	sing siunn
 承認	sing jin
 承受	sing siu
@@ -17887,7 +17887,7 @@ import_tables:
 熟練	sik lian
 熟兮	sik e
 席次	sik chur
-夕陽	sik Iang
+夕陽	sik iang
 碩士	sik sur
 碩士	sit sur
 ##	ui/uih
@@ -18099,13 +18099,13 @@ import_tables:
 胃疼	ui thiann
 胃下垂	ui ha sui
 胃發炎	ui huat iam
-胃潰瘍	ui khui Iang
+胃潰瘍	ui khui iang
 胃出血	ui chut huih
-胃酸	ui suInn
+胃酸	ui suinn
 揻空	ui khang
 揻空搤縫	ui khang iah phang
 揻一空	ui cit khang
-揻揻鑽	ui ui cuInn
+揻揻鑽	ui ui cuinn
 衣帶	ui tua
 衣架	ui kee
 衣食	ui sit
@@ -18119,8 +18119,8 @@ import_tables:
 委員會	ui uan hue
 委員長	ui uan tiunn
 委屈	ui khut
-萎去	ui khIR
-萎萎去	ui ui khIR
+萎去	ui khir
+萎萎去	ui ui khir
 猥瑣	ui so
 猥褻	ui siat
 慰問	ui bun
@@ -18147,7 +18147,7 @@ import_tables:
 畏事	ui sur
 畏途	ui too
 畏罪	ui cue
-畏懼	ui khU
+畏懼	ui khu
 畏懼	ui ku
 畏喙	ui chui
 蔚然	ui jian
@@ -18164,7 +18164,7 @@ import_tables:
 挖塗機	uih thoo ki
 挖半工	uih puann kang
 挖半晡	uih puann poo
-挖來挖去	uih lai uih khIR
+挖來挖去	uih lai uih khir
 圍倚	ui ua
 圍倚來	ui ua lai
 圍起來	ui khi lai
@@ -18230,7 +18230,7 @@ import_tables:
 遺囑	ui ciok
 遺書	ui sir
 遺容	ui iong
-遺相	ui sIang
+遺相	ui siang
 遺訓	ui hun
 遺言	ui gian
 遺產	ui san
@@ -18251,8 +18251,8 @@ import_tables:
 遺傳性	ui thuan sing
 遺傳學	ui thuan hak
 遺傳學家	ui thuan hak ka
-違約	ui Iak
-違約金	ui Iak kim
+違約	ui iak
+違約金	ui iak kim
 違反	ui huan
 違抗	ui khong
 違命	ui bing
@@ -18264,7 +18264,7 @@ import_tables:
 違規	ui kui
 違法	ui huat
 違建	ui kian
-違章建築	ui cIang kian tiok
+違章建築	ui ciang kian tiok
 韋馱	ui to
 韋馱佛	ui to put
 帷幕	ui boo
@@ -18301,10 +18301,10 @@ import_tables:
 肥兮	pui e
 肥肉	pui bah
 肥肉	pui hik
-肥豬	pui tIR
-肥豬豆	pui tIR tau
-肥豬仔豆	pui tIR a tau
-肥軟	pui nuI
+肥豬	pui tir
+肥豬豆	pui tir tau
+肥豬仔豆	pui tir a tau
+肥軟	pui nui
 肥糞	pui pun
 肥料	pui liau
 肥水	pui cui
@@ -18350,13 +18350,13 @@ import_tables:
 追思法會	tui sur huat hue
 追悼
 追悼會	tui to hue
-追悼會	tui toO hue
+追悼會	tui too hue
 追求	tui kiu
 追隨	tui sui
 追蹤	tui cong
 追趕	tui kuann
 追查	tui ca
-追問	tui muI
+追問	tui mui
 追究	tui kiu
 追訴	tui soo
 追訴權
@@ -18379,17 +18379,17 @@ import_tables:
 對準	tui cun
 對予準	tui hoo cun
 對同	tui tang
-對相	tui sIang
+對相	tui siang
 對看	tui khuann
 對親	tui chin
-對象	tui sIang
+對象	tui siang
 對半	tui puann
 對半分	tui puann pun
 對分	tui pun
 對拗	tui au
 對拗	tui auh
 對摺	tui cih
-對反	tui paInn
+對反	tui painn
 對反	tui huan
 對拄	tui tu
 對調	tui tiau
@@ -18410,7 +18410,7 @@ import_tables:
 對策	tui chik
 對儂	tui lang
 對待	tui thai
-對問	tui muI
+對問	tui mui
 對話	tui uee
 對喙	tui chui
 對談	tui tam
@@ -18425,7 +18425,7 @@ import_tables:
 對跋	tui puah
 對岸	tui huann
 對面	tui bin
-對向	tui hIang
+對向	tui hiang
 對拜	tui pai
 對沖	tui chiong
 對時	tui si
@@ -18442,7 +18442,7 @@ import_tables:
 對比	tui pi
 對焦	tui ciau
 對白	tui peeh
-對獎	tui cIang
+對獎	tui ciang
 對號	tui ho
 對號車	tui ho chia
 對稿	tui ko
@@ -18461,7 +18461,7 @@ import_tables:
 碓頭	tui thau
 捶死	tui si
 捶扁	tui pinn
-捶扁去	tui pinn khIR
+捶扁去	tui pinn khir
 捶予扁	tui hoo pinn
 捶布	tui poo
 捶衫	tui sann
@@ -18513,7 +18513,7 @@ import_tables:
 推撨	thui chiau
 推撨	thui chau
 推測	thui chik
-推算	thui suInn
+推算	thui suinn
 推斷	thui tuan
 推定	thui ting
 推移	thui i
@@ -18525,7 +18525,7 @@ import_tables:
 推了傷飽	thui liau siunn pa
 推了傷濟	thui liau siunn cere
 推硬仔	thui ngee a
-推軟仔	thui nuI a
+推軟仔	thui nui a
 推卸	thui sia
 推卸責任	thui sia cik jim
 推卸責任	thui sia cit jim
@@ -18589,12 +18589,12 @@ import_tables:
 類股	lui koo
 規氣	kui khi
 規勢	kui si
-規千萬	kui chaInn ban
+規千萬	kui chainn ban
 規工	kui kang
 規半工	kui puann kang
 規日	kui jit
 規暝	kui mee
-規暝到光	kui mee kau kuInn
+規暝到光	kui mee kau kuinn
 規暗	kui am
 規暗暝	kui am mee
 規個月	kui ko gerh
@@ -18622,7 +18622,7 @@ import_tables:
 規箱	kui siunn
 規片	kui phian
 規本	kui pun
-規卷	kui kuInn
+規卷	kui kuinn
 規篇	kui phinn
 規盤	kui puann
 規套	kui tho
@@ -18644,7 +18644,7 @@ import_tables:
 規空	kui khang
 規跤	kui kha
 規棟	kui tong
-規間	kui kaInn
+規間	kui kainn
 規欉	kui cang
 規隻	kui ciah
 規雙	kui siang
@@ -18653,11 +18653,11 @@ import_tables:
 規軀	kui su
 規身	kui sin
 規身軀	kui sin khu
-規爿	kui paInn
+規爿	kui painn
 規句	kui ku
 規路	kui loo
 規路頭	kui loo thau
-規路上	kui loo sIang
+規路上	kui loo siang
 規路頂	kui loo ting
 規腹	kui pak
 規腹肚	kui pak too
@@ -18730,7 +18730,7 @@ import_tables:
 歸陰	kui im
 歸柩	kui kiu
 歸途	kui too
-歸鄉	kui hIang
+歸鄉	kui hiang
 歸省	kui sing
 歸隱	kui un
 歸心	kui sim
@@ -18764,9 +18764,9 @@ import_tables:
 鬼火	kui her
 鬼仔火	kui a her
 鬼節	kui ciat
-鬼門	kui muI
-鬼門關	kui muI kuan
-鬼掠去	kui liah khIR
+鬼門	kui mui
+鬼門關	kui mui kuan
+鬼掠去	kui liah khir
 鬼剃頭	kui thi thau
 鬼剃頭	kui thih thau
 鬼話	kui uee
@@ -18789,7 +18789,7 @@ import_tables:
 幾百萬	kui pah ban
 幾百萬	kui peeh ban
 幾千	kui chainn
-幾千萬	kui chaInn ban
+幾千萬	kui chainn ban
 幾萬	kui ban
 幾億	kui ik
 幾兆	kui tiau
@@ -18802,13 +18802,13 @@ import_tables:
 幾若日	kui na jit
 幾若日	kui loh jit
 幾工	kui kang
-幾工前	kui kang caInn
+幾工前	kui kang cainn
 幾日	kui jit
 幾日仔	kui jit a
 幾年	kui ni
-幾年前	kui ni caInn
+幾年前	kui ni cainn
 幾冬	kui tang
-幾冬前	kui tang caInn
+幾冬前	kui tang cainn
 幾個月	kui ko gerh
 幾月日	kui gerh jit
 幾小時	kui sio si
@@ -18836,7 +18836,7 @@ import_tables:
 幾箱	kui siunn
 幾片	kui phinn
 幾本	kui pun
-幾卷	kui kuInn
+幾卷	kui kuinn
 幾篇	kui phinn
 幾盤	kui puann
 幾套	kui tho
@@ -18855,7 +18855,7 @@ import_tables:
 幾空	kui khang
 幾跤	kui kha
 幾棟	kui tong
-幾間	kui kaInn
+幾間	kui kainn
 幾欉	kui cang
 幾隻	kui ciah
 幾雙	kui siang
@@ -18863,7 +18863,7 @@ import_tables:
 幾領	kui nia
 幾軀	kui su
 幾身	kui sin
-幾爿	kui paInn
+幾爿	kui painn
 幾句	kui ku
 幾攤	kui thuann
 幾班	kui pan
@@ -18919,7 +18919,7 @@ import_tables:
 桂圓	kui uan
 桂花	kui huee
 桂花巷	kui huee hang
-桂花卵	kui huee nuI
+桂花卵	kui huee nui
 桂竹	kui tik
 桂竹荀	kui tik sun
 桂冠	kui kuan
@@ -18947,24 +18947,24 @@ import_tables:
 葵花	kui huee
 跪落	kui loh
 跪落來	kui loh lai
-跪落去	kui loh khIR
+跪落去	kui loh khir
 跪咧	kui lErh
 跪踮	kui tiam
 跪拜	kui pai
 跪地	kui tere
-跪乳	kui jU
-跪算盤	kui suInn puann
+跪乳	kui ju
+跪算盤	kui suinn puann
 跪路呈	kui loo tiann
 跪路呈	kui loo thiann
 跪貼貼	kui tah tah
 櫃仔	kui a
-櫃門	kui muI
+櫃門	kui mui
 櫃屜	kui thuah
 櫃臺	kui tai
 開開	khui khui
 開來	khui lai
-開來開去	khui lai khui khIR
-開去	khui khIR
+開來開去	khui lai khui khir
+開去	khui khir
 開空	khui khang
 開空開縫	khui khang khui phang
 開空開隙	khui khang khui khiah
@@ -18978,8 +18978,8 @@ import_tables:
 開鑼	khui lo
 開聲	khui siann
 開弓	khui king
-開門	khui muI
-開鬼門	khui kui muI
+開門	khui mui
+開鬼門	khui kui mui
 開窗	khui thang
 開窗仔	khui thang a
 開穴	khui hiat
@@ -18992,7 +18992,7 @@ import_tables:
 開正	khui ciann
 開花	khui huee
 開透	khui thau
-開荒	khui huInn
+開荒	khui huinn
 開地	khui tere
 開平	khui penn
 開田	khui chan
@@ -19013,7 +19013,7 @@ import_tables:
 開跤	khui kha
 開路	khui loo
 開道	khui to
-開道	khui toO
+開道	khui too
 開溝	khui kau
 開市	khui chi
 開幕
@@ -19061,7 +19061,7 @@ import_tables:
 虧損	khui sun
 虧空	khui khang
 虧本	khui pun
-虧本	khui puInn
+虧本	khui puinn
 軌道
 氣口	khui khau
 氣力	khui lat
@@ -19069,14 +19069,14 @@ import_tables:
 氣喘入	khui chuan jip
 氣喘出	khui chuan chut
 氣絕	khui cuat
-氣斷	khui tuInn
+氣斷	khui tuinn
 氣絲	khui si
 氣絲仔	khui si a
 氣衝天	khui chiong thian
 氣勢	khui si
 氣勢	khui se
 愧疚	khui kiu
-潰瘍	khui Iang
+潰瘍	khui iang
 危險	gui hiam
 危險	hui hiam
 危篤	gui tok
@@ -19093,7 +19093,7 @@ import_tables:
 偽證	gui cing
 偽君子	gui kun cur
 偽裝	gui cng
-非常	hui sIang
+非常	hui siang
 非同小可
 非凡	hui huan
 非凡公子	hui huan kong cur
@@ -19133,10 +19133,10 @@ import_tables:
 毀破	hui phua
 毀歹
 毀毀掉	hui hui tiau
-毀毀去	hui hui khIR
+毀毀去	hui hui khir
 毀損	hui sun
 毀滅	hui biat
-毀傷	hui sIang
+毀傷	hui siang
 毀譽	hui ir
 毀容	hui iong
 誹謗	hui pong
@@ -19153,7 +19153,7 @@ import_tables:
 費力	hui lat
 費力	hui lik
 費神	hui sin
-費神汝	hui sin lIR
+費神汝	hui sin lir
 費精神	hui cing sin
 費心	hui sim
 費心神	hui sim sin
@@ -19163,7 +19163,7 @@ import_tables:
 費率	hui lut
 費城	hui siann
 肺炎	hui iam
-肺管	hui kuInn
+肺管	hui kuinn
 肺癆	hui lo
 肺癌	hui gam
 肺部	hui poo
@@ -19171,13 +19171,13 @@ import_tables:
 諱母
 諱名	hui mia
 血壓	huih ap
-血量	huih lIang
+血量	huih liang
 血液	huih ik
 血型	huih hing
 血油	huih iu
 血水	huih cui
 血母
-血管	huih kuInn
+血管	huih kuinn
 血筋	huih kern
 血路	huih loo
 血脈	huih meeh
@@ -19206,8 +19206,8 @@ import_tables:
 肥沃	hui ak
 惠民	hui bin
 惠贈	hui cing
-惠我良多	hui ngoo lIang to
-惠我良多	hui ngoo lIang toO
+惠我良多	hui ngoo liang to
+惠我良多	hui ngoo liang too
 慧眼	hui gan
 彗星	hui chenn
 錐錐	cui cui
@@ -19239,23 +19239,23 @@ import_tables:
 水泉空	cui cuann khang
 水池	cui ti
 水窟	cui khut
-水門	cui muI
+水門	cui mui
 水閘	cui cah
-水管	cui kuInn
+水管	cui kuinn
 水管	cui kong
 水引	cui in
 水路	cui loo
 水道	cui to
-水道	cui toO
+水道	cui too
 水道水	cui to cui
-水道水	cui toO cui
+水道水	cui too cui
 水道頭	cui to thau
-水道頭	cui toO thau
+水道頭	cui too thau
 水轉	cui cuan
 水轉頭	cui cuan thau
 水龍頭	cui ling thau
 水壓	cui ap
-水量	cui lIang
+水量	cui liang
 水拹仔	cui hiap a
 水車	cui chia
 水珠	cui cu
@@ -19323,8 +19323,8 @@ import_tables:
 水淹	cui im
 水滇	cui tinn
 水漲	cui tiunn
-水漲	cui tIang
-水轉	cui tuInn
+水漲	cui tiang
+水轉	cui tuinn
 水翻頭	cui huan thau
 水滿	cui mua
 水墘	cui kinn
@@ -19377,7 +19377,7 @@ import_tables:
 水彩畫	cui chai uee
 水火無情	cui her bo cing
 水疱	cui pha
-水筧	cui kaInn
+水筧	cui kainn
 水淋天	cui lam thinn
 水瀨	cui lua
 醉甲	cui kah
@@ -19398,8 +19398,8 @@ import_tables:
 催眠	chui bin
 催眠術	chui bin sut
 催油	chui iu
-催油門	chui iu muI
-催落去	chui loh khIR
+催油門	chui iu mui
+催落去	chui loh khir
 催一下	chui cit ee
 催較緊咧	chui khah kin lErh
 催討	chui tho
@@ -19444,7 +19444,7 @@ import_tables:
 喙箍話	chui khoo uee
 喙邊	chui pinn
 喙聖	chui siann
-喙約	chui Iak
+喙約	chui iak
 喙講	chui kong
 喙說	chui serh
 喙尾	chui ber
@@ -19466,7 +19466,7 @@ import_tables:
 喙硬	chui ngee
 喙凊	chui chin
 喙起凊	chui khi chin
-喙前話	chui caInn uee
+喙前話	chui cainn uee
 喙錦	chui gim
 喙錦	chui kim
 喙目鼻
@@ -19475,7 +19475,7 @@ import_tables:
 喙翹翹	chui khiau khiau
 喙䫌	chui phue
 碎碎	chui chui
-碎去	chui khIR
+碎去	chui khir
 碎甲	chui kah
 碎肉	chui bah
 碎石	chui cioh
@@ -19484,11 +19484,11 @@ import_tables:
 碎錢	chui cinn
 碎銀	chui gern
 碎工	chui kang
-碎插筅	chui chap chaInn
+碎插筅	chui chap chainn
 碎了了	chui liau liau
 碎糊糊	chui koo koo
 翠玉	chui giok
-脆弱	chui jIak
+脆弱	chui jiak
 淬火	chui her
 淬鋼	chui kng
 雖然	sui jian
@@ -19529,10 +19529,10 @@ import_tables:
 隨時	sui si
 隨來	sui lai
 隨隨來	sui sui lai
-隨來去	sui lai khIR
-隨去	sui khIR
+隨來去	sui lai khir
+隨去	sui khir
 隨到	sui kau
-隨隨去	sui sui khIR
+隨隨去	sui sui khir
 隨隨到	sui sui kau
 隨行	sui kiann
 隨行	sui hing
@@ -19561,7 +19561,7 @@ import_tables:
 隨意	sui i
 隨在	sui cai
 隨在我	sui cai gua
-隨在汝	sui cai lIR
+隨在汝	sui cai lir
 隨在伊	sui cai i
 隨在儂	sui cai lang
 隨儂	sui lang
@@ -19594,353 +19594,353 @@ import_tables:
 蜢	muih4
 快活	khuinn uah
 快活	khuann uah
-##	uinn/uinnh(设为uInn/uInnh是为以模糊音解决腔调差异)
-阮	uInn2	1%
-䘼	uInn2
-黃	uInn5	10
-磺	uInn5
-暈	uInn7
-方	puInn1	1%
-楓	puInn1
-本	puInn2
-飯	puInn7	10
-晚	muI2
-門	muI5
-問	muI7
-轉	tuInn2
-頓	tuInn3
-傳	tuInn5	1%
-剸	tuInn5
-斷	tuInn6
-褪	thuInn3
-團	thuInn5
-傳	thuInn5	1%
-軟	nuI2
-軁	nuI3
-卵	nuI6
-光	kuInn1
-廣	kuInn2	1%
-管	kuInn2
-卷	kuInn2
-捲	kuInn2
-卷	kuInn3
-貫	kuInn3
-券	kuInn3
-勸	khuInn3
-昏	huInn1
-荒	huInn1
-園	huInn5
-遠	huInn6
-磚	cuInn1
-鑽	cuInn3
-全	cuInn5	1%
-旋	cuInn7	1%
-村	chuInn1
-川	chuInn1	1%
-穿	chuInn1	5%
-吮	chuInn2
-串	chuInn3
-竄	chuInn3	0%
-酸	suInn1	10
-孫	suInn1	1%
-栓	suInn1
-痠	suInn1
-算	suInn3	10
-繏	suInn3
-黃色	uInn sik
-黃金	uInn kim
-黃尾	uInn ber
-黃腫	uInn cing
-黃紙	uInn cua
-黃黃	uInn uInn
-黃黃黃	uInn uInn uInn
-黃酸	uInn suInn
+##	uinn/uinnh(设为uinn/uinnh是为以模糊音解决腔调差异)
+阮	uinn2	1%
+䘼	uinn2
+黃	uinn5	10
+磺	uinn5
+暈	uinn7
+方	puinn1	1%
+楓	puinn1
+本	puinn2
+飯	puinn7	10
+晚	mui2
+門	mui5
+問	mui7
+轉	tuinn2
+頓	tuinn3
+傳	tuinn5	1%
+剸	tuinn5
+斷	tuinn6
+褪	thuinn3
+團	thuinn5
+傳	thuinn5	1%
+軟	nui2
+軁	nui3
+卵	nui6
+光	kuinn1
+廣	kuinn2	1%
+管	kuinn2
+卷	kuinn2
+捲	kuinn2
+卷	kuinn3
+貫	kuinn3
+券	kuinn3
+勸	khuinn3
+昏	huinn1
+荒	huinn1
+園	huinn5
+遠	huinn6
+磚	cuinn1
+鑽	cuinn3
+全	cuinn5	1%
+旋	cuinn7	1%
+村	chuinn1
+川	chuinn1	1%
+穿	chuinn1	5%
+吮	chuinn2
+串	chuinn3
+竄	chuinn3	0%
+酸	suinn1	10
+孫	suinn1	1%
+栓	suinn1
+痠	suinn1
+算	suinn3	10
+繏	suinn3
+黃色	uinn sik
+黃金	uinn kim
+黃尾	uinn ber
+黃腫	uinn cing
+黃紙	uinn cua
+黃黃	uinn uinn
+黃黃黃	uinn uinn uinn
+黃酸	uinn suinn
 黃疸	ng than
-黃酸疸	uInn suInn than
-黃豆	uInn tau
-黃酒	uInn ciu
-黃連	uInn ni
-黃絲帶	uInn si tua
-楓葉	puInn hioh
-楓樹	puInn chiu
-方時雨	puInn si hoo
-飯桶	puInn thang
-飯匙	puInn si
-飯匙骨	puInn si kut
-飯坩	puInn khann
-飯盒	puInn ah
-飯盒仔	puInn ah a
-飯疕	puInn phi
-飯包	puInn pau
-飯斗	puInn tau
+黃酸疸	uinn suinn than
+黃豆	uinn tau
+黃酒	uinn ciu
+黃連	uinn ni
+黃絲帶	uinn si tua
+楓葉	puinn hioh
+楓樹	puinn chiu
+方時雨	puinn si hoo
+飯桶	puinn thang
+飯匙	puinn si
+飯匙骨	puinn si kut
+飯坩	puinn khann
+飯盒	puinn ah
+飯盒仔	puinn ah a
+飯疕	puinn phi
+飯包	puinn pau
+飯斗	puinn tau
 飯店
-飯丸	puInn uan
-飯桶仙	puInn thang sian
-飯碗	puInn uann
-飯勺	puInn siah
-飯後	puInn au
-飯前	puInn caInn
-飯菜	puInn chai
-飯春花	puInn chun huee
-飯粒	puInn liap
-飯篱	puInn lere
-飯籃	puInn na
-飯頓	puInn tuInn
-飯桌	puInn toh
-晚冬	muI tang
-門戶	muI hoo
-門扇	muI sinn
-門楣	muI bai
-門楣頂	muI bai ting
-門前	muI caInn
-門後	muI au
-門前門後	muI caInn muI au
-門閂	muI chuann
-門牽	muI khian
-門喙口	muI chui khau
-門牙	muI gee
-門外	muI gua
-門跤	muI kha
-門跤口	muI kha khau
-門坎	muI kham
-門跤兜	muI kha tau
-門口	muI khau
-門口公	muI khau kong
-門框	muI khing
-門臼	muI khu
-門栱	muI kong
-門內	muI lai
-門簾	muI ni
-門聯	muI lian
-門牌	muI pai
-門路	muI loo
-門邊	muI pinn
-門神	muI sin
-門栓	muI suInn
-門榫	muI sun
-門斗	muI tau
-門窗	muI thang
-門窗戶扇	muI thang hoo sinn
-門頭	muI thau
-門柱	muI thiau
-門拄	muI tu
-門扇後	muI sinn au
-門扇板	muI sinn pan
+飯丸	puinn uan
+飯桶仙	puinn thang sian
+飯碗	puinn uann
+飯勺	puinn siah
+飯後	puinn au
+飯前	puinn cainn
+飯菜	puinn chai
+飯春花	puinn chun huee
+飯粒	puinn liap
+飯篱	puinn lere
+飯籃	puinn na
+飯頓	puinn tuinn
+飯桌	puinn toh
+晚冬	mui tang
+門戶	mui hoo
+門扇	mui sinn
+門楣	mui bai
+門楣頂	mui bai ting
+門前	mui cainn
+門後	mui au
+門前門後	mui cainn mui au
+門閂	mui chuann
+門牽	mui khian
+門喙口	mui chui khau
+門牙	mui gee
+門外	mui gua
+門跤	mui kha
+門跤口	mui kha khau
+門坎	mui kham
+門跤兜	mui kha tau
+門口	mui khau
+門口公	mui khau kong
+門框	mui khing
+門臼	mui khu
+門栱	mui kong
+門內	mui lai
+門簾	mui ni
+門聯	mui lian
+門牌	mui pai
+門路	mui loo
+門邊	mui pinn
+門神	mui sin
+門栓	mui suinn
+門榫	mui sun
+門斗	mui tau
+門窗	mui thang
+門窗戶扇	mui thang hoo sinn
+門頭	mui thau
+門柱	mui thiau
+門拄	mui tu
+門扇後	mui sinn au
+門扇板	mui sinn pan
 門閂鼻
-門市	muI chi
-門岸	muI huann
-門診	muI cin
-門票	muI phio
-門鈴	muI ling
-問七問八	muI chit muI pereh
-問東問西	muI tang muI sai
-問前問後	muI caInn muI au
-問路	muI loo
-問問題	muI bun tere
-問清楚	muI ching choo
-問安	muI an
-問病	muI penn
-問卜	muI pok
-問佛	muI put
-問神	muI sin
-問話	muI uee
-轉來	tuInn lai
-轉去	tuInn khIR
-轉來去	tuInn lai khIR
-轉車	tuInn chia
-轉大	tuInn tua
-轉大儂	tuInn tua lang
-轉骨	tuInn kut
-轉喙	tuInn chui
-轉氣	tuInn khui
-轉臍	tuInn cai
-轉頭	tuInn thau
-轉頭斡角	tuInn thau uat kak
-轉輪	tuInn lun
-轉運	tuInn un
-轉聲	tuInn siann
-轉話	tuInn uee
-轉色	tuInn sik
-轉後頭	tuInn au thau
-轉外家	tuInn gua kee
-轉踅	tuInn sErh
-轉彎	tuInn uan
-轉彎踅角	tuInn uan sErh kak
-轉速	tuInn sok
-頓跤	tuInn kha
-頓印	tuInn in
-頓蹄	tuInn tere
-頓椅頓桌	tuInn i tuInn toh
-頓手印	tuInn chiu in
-頓龜	tuInn ku
-頓大龜	tuInn tua ku
-頓跋坐	tuInn puah cEr
-頓大坐	tuInn tua cEr
-頓坐坐	tuInn cEr cEr
-頓心肝	tuInn sim kuann
-傳儂	tuInn lang
-斷水	tuInn cui
-斷電	tuInn tian
-斷囝斷孫	tuInn kiann tuInn sun
-斷囝斷孫	tuInn kann tuInn sun
-斷站	tuInn cam
-斷節	tuInn cat
-斷種	tuInn cing
-斷路	tuInn loo
-斷氣	tuInn khui
-斷奶	tuInn nee
-斷奶	tuInn lin
-斷奶	tuInn ling
-斷翼	tuInn sit
-斷根	tuInn kern
-斷腦筋	tuInn nau kern
-斷掌	tuInn ciunn
-斷訊	tuInn sin
-斷頭	tuInn thau
-褪衫	thuInn sann
-褪皮	thuInn pher
-褪儂	thuInn lang
-褪赤跤	thuInn ciah kha
-褪赤跤	thuInn chiah kha
-褪腹徹	thuInn pak theeh
-褪褲𡳞	thuInn khoo lan
-褪褲	thuInn khoo
-褪殼	thuInn khak
-褪齒	thuInn khi
-褪捒	thuInn sak
-褪牙	thuInn gee
-褪喙齒	thuInn chui khi
-褪鞋	thuInn ere
-褪襪	thuInn berh
-褪衫褲	thuInn sann khoo
-褪徹徹	thuInn theeh theeh
-傳種	thuInn cing
-傳房份	thuInn pang hun
-軟糖	nuI thng
-軟心肝	nuI sim kuann
-軟跤	nuI kha
-軟跤垂手	nuI kha sEr chiu
-軟𩛩𩛩	nuI kauh kauh
-軟跤蝦	nuI kha hee
-軟轎	nuI kio
-軟膏膏	nuI ko ko
-軟膏膏	nuI koo koo
-軟骨	nuI kut
-軟晡	nuI poo
-軟心	nuI sim
-軟㽎㽎	nuI sim sim
-軟荍荍	nuI sio sio
-軟塗深掘	nuI thoo chim kut
-軟䭕	nuI ciann
-軟軟	nuI nuI
-軟啹啹	nuI kiuh kiuh
-軟齶	nuI gok
-軟體	nuI the
-軟塗	nuI thoo
-軟塗深掘	nuI thoo chim kut
-軁鑽	nuI cuInn
-軁空	nuI khang
-軁錢空	nuI cinn khang
-軁儂空	nuI lang khang
-卵仁	nuI jin
-卵包	nuI pau
-卵清	nuI ching
-卵殼	nuI khak
-卵白質	nuI peeh cit
-光線	kuInn suann
-光面	kuInn bin
-光頭	kuInn thau
-光全	kuInn cuInn
-光炎炎	kuInn iam iam
-光光	kuInn kuInn
-光滑	kuInn kut
-光驅	kuInn khu
-捲薰	kuInn hun
-捲心白	kuInn sim peeh
+門市	mui chi
+門岸	mui huann
+門診	mui cin
+門票	mui phio
+門鈴	mui ling
+問七問八	mui chit mui pereh
+問東問西	mui tang mui sai
+問前問後	mui cainn mui au
+問路	mui loo
+問問題	mui bun tere
+問清楚	mui ching choo
+問安	mui an
+問病	mui penn
+問卜	mui pok
+問佛	mui put
+問神	mui sin
+問話	mui uee
+轉來	tuinn lai
+轉去	tuinn khir
+轉來去	tuinn lai khir
+轉車	tuinn chia
+轉大	tuinn tua
+轉大儂	tuinn tua lang
+轉骨	tuinn kut
+轉喙	tuinn chui
+轉氣	tuinn khui
+轉臍	tuinn cai
+轉頭	tuinn thau
+轉頭斡角	tuinn thau uat kak
+轉輪	tuinn lun
+轉運	tuinn un
+轉聲	tuinn siann
+轉話	tuinn uee
+轉色	tuinn sik
+轉後頭	tuinn au thau
+轉外家	tuinn gua kee
+轉踅	tuinn sErh
+轉彎	tuinn uan
+轉彎踅角	tuinn uan sErh kak
+轉速	tuinn sok
+頓跤	tuinn kha
+頓印	tuinn in
+頓蹄	tuinn tere
+頓椅頓桌	tuinn i tuinn toh
+頓手印	tuinn chiu in
+頓龜	tuinn ku
+頓大龜	tuinn tua ku
+頓跋坐	tuinn puah cEr
+頓大坐	tuinn tua cEr
+頓坐坐	tuinn cEr cEr
+頓心肝	tuinn sim kuann
+傳儂	tuinn lang
+斷水	tuinn cui
+斷電	tuinn tian
+斷囝斷孫	tuinn kiann tuinn sun
+斷囝斷孫	tuinn kann tuinn sun
+斷站	tuinn cam
+斷節	tuinn cat
+斷種	tuinn cing
+斷路	tuinn loo
+斷氣	tuinn khui
+斷奶	tuinn nee
+斷奶	tuinn lin
+斷奶	tuinn ling
+斷翼	tuinn sit
+斷根	tuinn kern
+斷腦筋	tuinn nau kern
+斷掌	tuinn ciunn
+斷訊	tuinn sin
+斷頭	tuinn thau
+褪衫	thuinn sann
+褪皮	thuinn pher
+褪儂	thuinn lang
+褪赤跤	thuinn ciah kha
+褪赤跤	thuinn chiah kha
+褪腹徹	thuinn pak theeh
+褪褲𡳞	thuinn khoo lan
+褪褲	thuinn khoo
+褪殼	thuinn khak
+褪齒	thuinn khi
+褪捒	thuinn sak
+褪牙	thuinn gee
+褪喙齒	thuinn chui khi
+褪鞋	thuinn ere
+褪襪	thuinn berh
+褪衫褲	thuinn sann khoo
+褪徹徹	thuinn theeh theeh
+傳種	thuinn cing
+傳房份	thuinn pang hun
+軟糖	nui thng
+軟心肝	nui sim kuann
+軟跤	nui kha
+軟跤垂手	nui kha sEr chiu
+軟𩛩𩛩	nui kauh kauh
+軟跤蝦	nui kha hee
+軟轎	nui kio
+軟膏膏	nui ko ko
+軟膏膏	nui koo koo
+軟骨	nui kut
+軟晡	nui poo
+軟心	nui sim
+軟㽎㽎	nui sim sim
+軟荍荍	nui sio sio
+軟塗深掘	nui thoo chim kut
+軟䭕	nui ciann
+軟軟	nui nui
+軟啹啹	nui kiuh kiuh
+軟齶	nui gok
+軟體	nui the
+軟塗	nui thoo
+軟塗深掘	nui thoo chim kut
+軁鑽	nui cuinn
+軁空	nui khang
+軁錢空	nui cinn khang
+軁儂空	nui lang khang
+卵仁	nui jin
+卵包	nui pau
+卵清	nui ching
+卵殼	nui khak
+卵白質	nui peeh cit
+光線	kuinn suann
+光面	kuinn bin
+光頭	kuinn thau
+光全	kuinn cuinn
+光炎炎	kuinn iam iam
+光光	kuinn kuinn
+光滑	kuinn kut
+光驅	kuinn khu
+捲薰	kuinn hun
+捲心白	kuinn sim peeh
 捲螺仔旋
 捲螺仔風
-捲舌	kuInn cih
-貫針	kuInn ciam
-貫針	kuInn cam
-勸和	khuInn ho
-荒埔	huInn poo
-園區	huInn khU
-園長	huInn tiunn
-遠遠	huInn huInn
-遠長	huInn tng
-遠路	huInn loo
-磚仔	cuInn a
-磚仔厝	cuInn a chu
-磚坪	cuInn penn
-鑽空	cuInn khang
-鑽仔	cuInn a
-鑽破	cuInn phua
-鑽耳	cuInn hi
-鑽耳	cuInn hinn
-鑽落去	cuInn loh khIR
-串仔	chuInn a
-酸酸	suInn suInn
-酸甘甜	suInn kam tinn
-酸味	suInn bi
-酸菜	suInn chai
-栓仔	suInn a
-痠軟	suInn nuI
-痠死	suInn si
-痠疼	suInn thiann
-痠抽疼	suInn thiu thiann
-算數	suInn siau
-算錢	suInn cinn
-算無盤	suInn bo puann
-算袂和	suInn bere ho
-算會和	suInn ere ho
-算會和	suInn e ho
-算話	suInn uee
-算額	suInn giah
-算術	suInn sut
-算法	suInn huat
-算式	suInn sik
-算命	suInn mia
-算盤	suInn puann
-算做	suInn cue
-算做	suInn co
-算是	suInn si
-算著	suInn tioh
-算賺	suInn tann
-算出來	suInn chut lai
-算起	suInn khi
-算日	suInn jit
-算時算日	suInn si suInn jit
+捲舌	kuinn cih
+貫針	kuinn ciam
+貫針	kuinn cam
+勸和	khuinn ho
+荒埔	huinn poo
+園區	huinn khu
+園長	huinn tiunn
+遠遠	huinn huinn
+遠長	huinn tng
+遠路	huinn loo
+磚仔	cuinn a
+磚仔厝	cuinn a chu
+磚坪	cuinn penn
+鑽空	cuinn khang
+鑽仔	cuinn a
+鑽破	cuinn phua
+鑽耳	cuinn hi
+鑽耳	cuinn hinn
+鑽落去	cuinn loh khir
+串仔	chuinn a
+酸酸	suinn suinn
+酸甘甜	suinn kam tinn
+酸味	suinn bi
+酸菜	suinn chai
+栓仔	suinn a
+痠軟	suinn nui
+痠死	suinn si
+痠疼	suinn thiann
+痠抽疼	suinn thiu thiann
+算數	suinn siau
+算錢	suinn cinn
+算無盤	suinn bo puann
+算袂和	suinn bere ho
+算會和	suinn ere ho
+算會和	suinn e ho
+算話	suinn uee
+算額	suinn giah
+算術	suinn sut
+算法	suinn huat
+算式	suinn sik
+算命	suinn mia
+算盤	suinn puann
+算做	suinn cue
+算做	suinn co
+算是	suinn si
+算著	suinn tioh
+算賺	suinn tann
+算出來	suinn chut lai
+算起	suinn khi
+算日	suinn jit
+算時算日	suinn si suinn jit
 繏腰
 繏儂
 繏嚨喉
 ##	ir/irh
-於	ir1
-于	ir1
-與	ir2
-予	ir2
-飫	ir3
-飫	IR3	#廈
-余	ir5
-餘	ir5
-妤	ir5
-歟	ir5
-預	ir7	10
-預	IR7	10	#廈
-譽	ir7
-豫	ir7
+於	Øir1
+于	Øir1
+與	Øir2
+予	Øir2
+飫	Øir3
+飫	Øir3	#廈
+余	Øir5
+餘	Øir5
+妤	Øir5
+歟	Øir5
+預	Øir7	10
+預	Øir7	10	#廈
+譽	Øir7
+豫	Øir7
 豬	tir1
-豬	tIR1	#廈
+豬	tir1	#廈
 著	tir3
 除	tir5
 鋤	tir5
-鋤	tIR5	#廈
+鋤	tir5	#廈
 躇	tir5
 佇	tir6	10
-佇	tIR6	10	#廈
+佇	tir6	10	#廈
 苧	tir6
 杼	tir6
 箸	tir7	10
-箸	tIR7	10	#廈
+箸	tir7	10	#廈
 攄	thir1	5%
 貯	thir2
 杵	thir2
@@ -19948,11 +19948,11 @@ import_tables:
 儲	thir2
 儲	thir5
 鋤	thir5
-鋤	thIR5	#廈
+鋤	thir5	#廈
 汝	lir2	20
-汝	lIR2	20	#廈
+汝	lir2	20	#廈
 女	lir2
-女	lIR2	#廈
+女	lir2	#廈
 旅	lir2
 驢	lir5
 閭	lir5
@@ -19982,7 +19982,7 @@ import_tables:
 祛	khir1
 佉	khir1
 去	khir3	10
-去	khIR3	10	#廈
+去	khir3	10	#廈
 語	gir2
 魚	gir5	1%
 漁	gir5
@@ -19994,9 +19994,9 @@ import_tables:
 噓	hir1
 許	hir2
 魚	hir5	10
-魚	hIR5	10	#廈
+魚	hir5	10	#廈
 漁	hir5
-漁	hIR5	#廈
+漁	hir5	#廈
 書	cir1
 諸	cir1
 煮	cir2	10
@@ -20014,7 +20014,7 @@ import_tables:
 處	chir3	10
 𩑾	chirh4
 徐	chir5
-徐	chIR5	#廈
+徐	chir5	#廈
 汝	jir2	0%
 挐	jir5
 如	jir5	10
@@ -20038,10 +20038,10 @@ import_tables:
 於今	ir kim
 與會	ir hue
 與世隔絕	ir se kik cuat
-予取予求	ir chU ir kiu
-飫喙	IR chui
-飫儂	IR lang
-飫飫	IR IR
+予取予求	ir chu ir kiu
+飫喙	ir chui
+飫儂	ir lang
+飫飫	ir ir
 餘數	ir soo
 餘者	ir cia
 餘言	ir gian
@@ -20055,7 +20055,7 @@ import_tables:
 預告
 預知	ir ti
 預先	ir sian
-預約	ir Iak
+預約	ir iak
 預選	ir suan
 預算	ir suan
 預言
@@ -20067,7 +20067,7 @@ import_tables:
 預感	ir kam
 預料	ir liau
 預備	ir pi
-預購	ir kiO
+預購	ir kio
 預估	ir koo
 預賽
 預兆	ir tiau
@@ -20077,33 +20077,33 @@ import_tables:
 預設	ir siat
 預產期	ir san ki
 預審	ir sim
-豬仔	tIR a
-豬頭	tIR thau
+豬仔	tir a
+豬頭	tir thau
 豬腦
 豬肉
-豬心	tIR sim
-豬跤	tIR kha
-豬哥	tIR ko
-豬公	tIR kang
+豬心	tir sim
+豬跤	tir kha
+豬哥	tir ko
+豬公	tir kang
 豬母
 豬鼻
-豬頭皮	tIR thau pher
-豬八戒	tIR pat kai
-豬哥仔	tIR ko a
-豬哥仔牙	tIR ko a gee
+豬頭皮	tir thau pher
+豬八戒	tir pat kai
+豬哥仔	tir ko a
+豬哥仔牙	tir ko a gee
 豬母癲
-豬牢	tIR tiau
-豬槽	tIR co
-豬血	tIR huih
-豬腰	tIR io
-豬油	tIR iu
+豬牢	tir tiau
+豬槽	tir co
+豬血	tir huih
+豬腰	tir io
+豬油	tir iu
 豬狗不如
-豬肝	tIR kuann
-豬屎	tIR sai
-豬岫	tIR siu
-豬腿	tIR thui
-豬刀	tIR to
-豬肚	tIR too
+豬肝	tir kuann
+豬屎	tir sai
+豬岫	tir siu
+豬腿	tir thui
+豬刀	tir to
+豬肚	tir too
 著作	tir cok
 著名	tir bing
 著冊	tir cheeh
@@ -20114,26 +20114,26 @@ import_tables:
 除名	tir mia
 除非	tir hui
 除了	tir liau
-除去	tir khIR
+除去	tir khir
 除害	tir hai
 除夕	tir sik
-除算	tir suInn
-除除去	tir tir khIR
+除算	tir suinn
+除除去	tir tir khir
 除權
 除外	tir gua
-鋤頭	tIR thau
-鋤頭柄	tIR thau penn
-佇咧	tIR lErh
-佇咧	tIR tErh
+鋤頭	tir thau
+鋤頭柄	tir thau penn
+佇咧	tir lErh
+佇咧	tir tErh
 佇足	tir ciok
 佇立	tir lip
-箸奇	tIR khia
+箸奇	tir khia
 箸奇	tir kha
-箸籠	tIR lang
+箸籠	tir lang
 貯藏	thir cong
 儲蓄	thir thiok
 儲君	thir kun
-汝好	lIR ho
+汝好	lir ho
 汝做汝
 女性	lir sing
 女性	lu sing	#俗
@@ -20177,7 +20177,7 @@ import_tables:
 女士	lu sur	#俗
 女方	lir hong
 女方	lu hong	#俗
-女將	lir cIang
+女將	lir ciang
 旅行	lir hing
 旅居	lir kir
 旅費	lir hui
@@ -20194,7 +20194,7 @@ import_tables:
 驢仔	lir a
 呂洞賓	lir6 tong pin
 鋁觳仔	lir khok a
-鋁門窗	lir muI thang
+鋁門窗	lir mui thang
 濾仔	lir a
 濾紙	lir cua
 濾出來	lir chut lai
@@ -20228,7 +20228,7 @@ import_tables:
 鋸齒	kir khi
 據在	kir cai
 據在伊	kir cai i
-據在伊去	kir cai i khIR
+據在伊去	kir cai i khir
 據在汝	kir cai lir
 據實	kir sit
 據點	kir tiam
@@ -20242,11 +20242,11 @@ import_tables:
 扼咧	kirh lErh
 扼絚絚	kirh an an
 扼牢牢	kirh tiau tiau
-去火	khIR her
-去了了	khIR liau liau
-去痰	khIR tham
-去除	khIR tir
-去死	khIR si
+去火	khir her
+去了了	khir liau liau
+去痰	khir tham
+去除	khir tir
+去死	khir si
 語言
 語感	gir kam
 語文	gir bun
@@ -20284,68 +20284,68 @@ import_tables:
 虛度	hir too
 虛空	hir khong
 虛肥	hir pui
-虛弱	hir jIak
+虛弱	hir jiak
 虛心	hir sim
 虛詞	hir sur
 虛擬	hir gi
-虛構	hir kiO
+虛構	hir kio
 許諾	hir lok
 許配	hir phue
 許可	hir kho
 許可	hir khonn
 許可證	hir kho cing
 許可證	hir khonn cing
-魚仔	HIR a
-魚頭	HIR thau
-魚骨	HIR kut
-魚仁	HIR jin
-魚目睭	HIR bak ciu
-魚尾	HIR ber
-魚肉	HIR bah
-魚肉	HIR hik
-魚刺	HIR chi
-魚翅	HIR chi
-魚市	HIR chi
-魚臊	HIR cho
-魚鉤	HIR kau
-魚罾	HIR can
-魚蝦水卒	HIR hee cui cut
-魚巴	HIR pa
-魚脯	HIR poo
-魚油	HIR iu
-魚肝油	HIR kuann iu
-魚鰭	HIR ki
-魚架仔	HIR kee a
-魚鱗	HIR lan
-魚膎	HIR kere
-魚籃	HIR na
-魚卵	HIR nuI
-魚雷	HIR lui
-魚丸	HIR uan
-魚肚	HIR too
-魚池	HIR ti
-魚翼	HIR sit
-魚腐	HIR hu
-魚餌	HIR ji
-魚鰾	HIR pio
-魚藤	HIR tin
-魚釣仔	HIR tio a
-魚栽	HIR cai
-魚鰓	HIR chi
-魚鮮	HIR chinn
-魚子	HIR ci
-魚塭	HIR un
-漁民	HIR bin
-漁船	HIR cun
-漁業	HIR giap
-漁村	HIR chuan
-漁村	HIR chuInn
-漁村	HIR chun
-漁場	HIR tiunn
-漁會	HIR hue
-漁網	HIR bang
-漁港	HIR kang
-漁戶	HIR hoo
+魚仔	Hir a
+魚頭	Hir thau
+魚骨	Hir kut
+魚仁	Hir jin
+魚目睭	Hir bak ciu
+魚尾	Hir ber
+魚肉	Hir bah
+魚肉	Hir hik
+魚刺	Hir chi
+魚翅	Hir chi
+魚市	Hir chi
+魚臊	Hir cho
+魚鉤	Hir kau
+魚罾	Hir can
+魚蝦水卒	Hir hee cui cut
+魚巴	Hir pa
+魚脯	Hir poo
+魚油	Hir iu
+魚肝油	Hir kuann iu
+魚鰭	Hir ki
+魚架仔	Hir kee a
+魚鱗	Hir lan
+魚膎	Hir kere
+魚籃	Hir na
+魚卵	Hir nui
+魚雷	Hir lui
+魚丸	Hir uan
+魚肚	Hir too
+魚池	Hir ti
+魚翼	Hir sit
+魚腐	Hir hu
+魚餌	Hir ji
+魚鰾	Hir pio
+魚藤	Hir tin
+魚釣仔	Hir tio a
+魚栽	Hir cai
+魚鰓	Hir chi
+魚鮮	Hir chinn
+魚子	Hir ci
+魚塭	Hir un
+漁民	Hir bin
+漁船	Hir cun
+漁業	Hir giap
+漁村	Hir chuan
+漁村	Hir chuinn
+漁村	Hir chun
+漁場	Hir tiunn
+漁會	Hir hue
+漁網	Hir bang
+漁港	Hir kang
+漁戶	Hir hoo
 書包	cir pau
 書架	cir kee
 書架仔	cir kee a
@@ -20362,11 +20362,11 @@ import_tables:
 諸君	cir kun
 諸神	cir sin
 諸位	cir ui
-諸侯	cir hiO
+諸侯	cir hio
 諸娘	cir niu
 諸子百家	cir cir pik ka
 煮食	cir ciah
-煮飯	cir puInn
+煮飯	cir puinn
 煮菜	cir chai
 煮麵	cir mi
 煮糜	cir ber
@@ -20415,7 +20415,7 @@ import_tables:
 挐嘈嘈	jir chauh chauh
 挐氅氅	jir chang chang
 挐膏膏	jir ko ko
-挐去	jir khIR
+挐去	jir khir
 挐頭散鬼	jir thau sam kui
 挐頭散髻	jir thau sam ker
 如果
@@ -20423,7 +20423,7 @@ import_tables:
 如願	jir guan
 如意	jir i
 如何	jir ho
-如何	jir hoO
+如何	jir hoo
 如今	jir kim
 如來	jir lai
 如來佛	jir lai hut
@@ -20433,7 +20433,7 @@ import_tables:
 如同	jir tong
 書籍	sir cik
 書函	sir ham
-書香門第	sir hIang bun te
+書香門第	sir hiang bun te
 書法	sir huat
 書法家	sir huat ka
 書法	cir huat
@@ -20468,7 +20468,7 @@ import_tables:
 序幕	sir boo
 敘事	sir sur
 敘述	sir sut
-曙光	sir kuInn
+曙光	sir kuinn
 ##	ur/urh
 資	cur1	10
 滋	cur1
@@ -20538,7 +20538,7 @@ import_tables:
 資訊	cur sin
 資深	cur chim
 滋味	cur bi
-滋養	cur Iang
+滋養	cur iang
 滋潤	cur jun
 滋補	cur poo
 姿娘	cur niu
@@ -20546,7 +20546,7 @@ import_tables:
 姿勢	cur se
 姿態	cur thai
 姿容	cur iong
-諮商	cur sIang
+諮商	cur siang
 諮詢	cur sun
 孜孜不倦	cur cur put kuan
 子夜	cur ia
@@ -20561,8 +20561,8 @@ import_tables:
 恣意	cur i
 慈悲	cur pi
 慈悲為懷	cur pi ui huai
-慈母	cur biO
-慈母	cur bIO
+慈母	cur bio
+慈母	cur bio
 慈愛	cur ai
 慈悲心	cur pi sim
 慈善	cur sian
@@ -20630,7 +20630,7 @@ import_tables:
 自動	cur tong
 自彈自唱	cur tuann cur chiunn
 自謙	cur khiam
-自強	cur kIang
+自強	cur kiang
 自私	cur sur
 自動車	cur tong chia
 自轉車	cur cuan chia
@@ -20647,9 +20647,9 @@ import_tables:
 自責	cur cerk
 自從	cur ciong
 自治	cur ti
-自治區	cur ti khU
+自治區	cur ti khu
 自治州	cur ti ciu
-自治縣	cur ti kuAinn
+自治縣	cur ti kuainn
 自來	cur lai
 自新	cur sin
 自定義	cur ting gi
@@ -20659,12 +20659,12 @@ import_tables:
 此路	chur loo
 此刻	chur khik
 此時	chur si
-此去	chur khIR
+此去	chur khir
 此中	chur tiong
 此外	chur gua
 次序	chur sir
 次第	chur te
-次長	chur tIang
+次長	chur tiang
 次要	chur iau
 司法	sur huat
 司令	sur ling
@@ -20673,8 +20673,8 @@ import_tables:
 司機	sur ki
 司長	sur tiunn
 師父	sur hu
-師母	sur biO
-師母	sur bIO
+師母	sur bio
+師母	sur bio
 師祖	sur coo
 師叔	sur cik
 師公	sur kong
@@ -20692,20 +20692,20 @@ import_tables:
 師資	sur cur
 師生	sur sing
 師生	sur serng
-思想	sur sIang
+思想	sur siang
 思路	sur loo
 思慕	sur boo
 思考	sur kho
 思考	sur khonn
 思念	sur liam
-思量	sur lIang
+思量	sur liang
 思春	sur chun
 思潮	sur tiau
 思量	sur niu
 思維	sur ui
 斯文	sur bun
 私情	sur cing
-私娼	sur chIang
+私娼	sur chiang
 私佔	sur ciam
 私業	sur giap
 私企	sur khi
@@ -20725,7 +20725,7 @@ import_tables:
 私底下	sur tere ha
 史記	sur ki
 史官	sur kuann
-史略	sur lIak
+史略	sur liak
 使用	sur iong
 使用	sur ing
 使用人	sur iong jin
@@ -20747,7 +20747,7 @@ import_tables:
 四配	sur phue
 四序	sur si
 四色牌	sur sik pai
-四常	sur sIang
+四常	sur siang
 四神湯	sur sin thng
 肆意	sur i
 駟馬難追	sur ma lan tui
@@ -20767,13 +20767,13 @@ import_tables:
 辭世	sur se
 辭典	sur tian
 辭書	sur sir
-似有若無	sur iu jIak bu
+似有若無	sur iu jiak bu
 士子	sur cur
 士卒	sur cut
 士氣	sur khi
 士官	sur kuann
 士族	sur cok
-士農工商	sur long kong sIang
+士農工商	sur long kong siang
 士兵	sur ping
 事務	sur bu
 事業	sur giap
@@ -20825,7 +20825,7 @@ import_tables:
 踅	sErh8
 倭番	er huan
 倭奴	er loo
-倭寇	er khiO
+倭寇	er khio
 禍星	Er chenn
 禍根	Er kern
 禍端	Er tuann
@@ -20844,7 +20844,7 @@ import_tables:
 短語	tEr gir
 短句	tEr ku
 短路	tEr loo
-短䘼	tEr uInn
+短䘼	tEr uinn
 短銃	tEr ching
 短線	tEr suann
 短信	tEr sin
@@ -20898,7 +20898,7 @@ import_tables:
 螺仔	lEr a
 螺肉	lEr bah
 螺殼	lEr khak
-螺旋	lEr cuInn
+螺旋	lEr cuinn
 㤉潲	gEr siau
 㤉𡳞	gEr lan
 㤉死	gEr si
@@ -20913,7 +20913,7 @@ import_tables:
 坐車	cEr chia
 坐船	cEr cun
 坐飛機	cEr hui ki
-坐向	cEr hIang
+坐向	cEr hiang
 坐禪	cEr sian
 坐桌	cEr toh
 坐清	cEr ching
@@ -20937,12 +20937,12 @@ import_tables:
 踅螺風	sErh lEr hong
 踅螺風	sErh lEr huang
 踅螺梯	sErh lEr thui
-踅輾轉	sErh lian tuInn
-踅輾轉	sErh lin tuInn
+踅輾轉	sErh lian tuinn
+踅輾轉	sErh lin tuinn
 踅玲瑯	sErh lin long
 踅踅唸	sErh sErh liam
 踅神	sErh sin
-踅來踅去	sErh lai sErh khIR
+踅來踅去	sErh lai sErh khir
 ##	er/erh
 萵	er1
 鍋	er1
@@ -21016,7 +21016,7 @@ import_tables:
 穢涗	er sue
 穢儂	er lang
 飛蛇	per cua
-飛魚	per hIR
+飛魚	per hir
 飛禽走獸	per khim cau siu
 飛砂走石	per sua cau cioh
 飛船	per cun
@@ -21026,9 +21026,9 @@ import_tables:
 賠儂	per lang
 賠命	per mia
 賠款	per khuann
-賠償	per sIang
+賠償	per siang
 倍數	per soo
-焙飯	per puInn
+焙飯	per puinn
 焙茶	per tee
 培墓	per boo
 培墓	per bong
@@ -21036,7 +21036,7 @@ import_tables:
 配酒	pher ciu
 配茶	pher tee
 配肉	pher hik
-配魚	pher hIR
+配魚	pher hir
 配湯	pher thng
 配話	pher uee
 配物配	pher mngh pher
@@ -21084,7 +21084,7 @@ import_tables:
 尾聲	ber siann
 尾錐	ber cui
 欲來	berh lai
-欲去	berh khIR
+欲去	berh khir
 欲食	berh ciah
 欲啉	berh lim
 欲睏	berh khun
@@ -21093,7 +21093,7 @@ import_tables:
 欲毋	berh m
 欲挃	berh tih
 欲來	beh lai
-欲去	beh khIR
+欲去	beh khir
 欲食	beh ciah
 欲啉	beh lim
 欲睏	beh khun
@@ -21101,7 +21101,7 @@ import_tables:
 欲暗仔	beh am a
 欲毋	beh m
 欲挃	beh tih
-糜飯	ber puInn
+糜飯	ber puinn
 未曾	ber cing
 未曾未	ber cing ber
 未捌	ber pat
@@ -21123,10 +21123,10 @@ import_tables:
 綴會仔	ter hue a
 綴轎後兮	ter kio au e
 綴儂走	ter lang cau
-綴前綴後	ter caInn ter au
+綴前綴後	ter cainn ter au
 綴袂著	ter bere tioh
 綴無	ter bo
-綴去	ter khIR
+綴去	ter khir
 綴路	ter loo
 綴揣	ter cher
 跂跤	ker kha
@@ -21136,9 +21136,9 @@ import_tables:
 果子皮	ker ci pher
 果子擔	ker ci tann
 果子攤	ker ci thuann
-果子園	ker ci huInn
+果子園	ker ci huinn
 果實	ker sit
-果園	ker huInn
+果園	ker huinn
 果品	ker phin
 果凍	ker tang
 果凍	ko tang
@@ -21152,10 +21152,10 @@ import_tables:
 粿印	ker in
 粿粞	ker chere
 粿粽	ker cang
-過去	ker khIR
-過袂得去	ker bere tit khIR
-過會得去	ker ere tit khIR
-過會得去	ker e tit khIR
+過去	ker khir
+過袂得去	ker bere tit khir
+過會得去	ker ere tit khir
+過會得去	ker e tit khir
 過手	ker chiu
 過身	ker sin
 過癮	ker gian
@@ -21186,10 +21186,10 @@ import_tables:
 過路	ker loo
 過爐	ker loo
 過勞	ker lo
-過勞	ker loO
+過勞	ker loo
 過客	ker kheeh
 過冬	ker tang
-過門	ker muI
+過門	ker mui
 過濾	ker lir
 過五關	ker ngoo kuan
 過往	ker ong
@@ -21213,7 +21213,7 @@ import_tables:
 過喙	ker chui
 過敏	ker bin
 過來	ker lai
-過量	ker lIang
+過量	ker liang
 過剩	ker sing
 過程	ker thing
 過程	ker ting
@@ -21225,7 +21225,7 @@ import_tables:
 過滯	ker te
 過番	ker huan
 過貢	ker kong
-過獎	ker cIang
+過獎	ker ciang
 過角	ker kak
 過芒過角	ker mee ker kak
 過空	ker khang
@@ -21329,7 +21329,7 @@ import_tables:
 火箸	her tir
 火雞母
 火薰	her hun
-火管	her kuInn
+火管	her kuinn
 火夾	her ngereh
 火夾	her gereh
 火屎	her sai
@@ -21341,7 +21341,7 @@ import_tables:
 火車路	her chia loo
 火大	her tua
 火警	her king
-火光	her kuInn
+火光	her kuinn
 火船	her cun
 夥計	her ki
 伙食	her sit
@@ -21381,11 +21381,11 @@ import_tables:
 吹頭毛	cher thau mng
 吹頭毛	cher thau moo
 吹狗螺	cher kau lEr
-炊魚	cher hIR
+炊魚	cher hir
 炊粿	cher ker
 炊龜	cher ku
 炊甜粿	cher tinn ker
-炊飯	cher puInn
+炊飯	cher puinn
 炊床	cher chng
 炊斗	cher tau
 髓尾	cher ber
@@ -21411,7 +21411,7 @@ import_tables:
 稅制	ser ce
 說話	serh uee
 說多謝	serh to sia
-說多謝	serh toO sia
+說多謝	serh too sia
 說笑	serh chio
 說明	serh bing
 說啥	serh siann
@@ -21420,8 +21420,8 @@ import_tables:
 說破毋值一分錢	serh phua m tat cit hun cinn
 說法	serh huat
 垂垂	ser ser
-垂落去	ser loh khIR
-垂肩	ser kaInn
+垂落去	ser loh khir
+垂肩	ser kainn
 垂手	ser chiu
 ##	ere/ereh
 挨	ere1
@@ -21429,7 +21429,7 @@ import_tables:
 揋	ere3
 鞋	ere5
 會	ere6	10
-會	e6	10	#异
+會	Øe6	10	#异
 狹	ereh8
 八	pereh4
 批	phere1
@@ -21566,7 +21566,7 @@ import_tables:
 八角	pereh kak
 八十	pereh cap
 八百
-八千	pereh chaInn
+八千	pereh chainn
 八萬	pereh ban
 八億	pereh ik
 八寶	pereh po
@@ -21638,7 +21638,7 @@ import_tables:
 底薪	tere sin
 底線	tere suann
 貯食	tere ciah
-貯飯	tere puInn
+貯飯	tere puinn
 貯湯	tere thng
 貯菜	tere chai
 貯便便	tere pian pian
@@ -21671,7 +21671,7 @@ import_tables:
 替換	there uann
 替儂	there lang
 摕來	thereh lai
-摕去	thereh khIR
+摕去	thereh khir
 詈罵	lere ma
 詈罵	lere mee
 詈儂	lere lang
@@ -21679,7 +21679,7 @@ import_tables:
 礪破	lere phua
 礪礪破	lere lere phua
 犁田	lere chan
-犁園	lere huInn
+犁園	lere huinn
 笠仔	lereh a
 雞角	kere kak
 雞母
@@ -21687,11 +21687,11 @@ import_tables:
 雞母屎半烏白
 雞仔	kere a
 雞鴨	kere ah
-雞卵	kere nuI
+雞卵	kere nui
 雞毛	kere mng
 雞毛	kere moo
-雞毛筅	kere mng chaInn
-雞毛筅	kere moo chaInn
+雞毛筅	kere mng chainn
+雞毛筅	kere moo chainn
 雞翼	kere sit
 雞跤	kere kha
 雞牢	kere tiau
@@ -21702,11 +21702,11 @@ import_tables:
 雞仔腸肚	kere a tng too
 雞母皮
 雞喙	kere chui
-雞卷	kere kuInn
-雞卵糕	kere nuI ko
-雞卵形	kere nuI hing
-雞卵仁	kere nuI jin
-雞卵清	kere nuI ching
+雞卷	kere kuinn
+雞卵糕	kere nui ko
+雞卵形	kere nui hing
+雞卵仁	kere nui jin
+雞卵清	kere nui ching
 雞心	kere sim
 雞胘	kere kian
 雞料	kere liau
@@ -21733,7 +21733,7 @@ import_tables:
 解酒	kere ciu
 解薰	kere hun
 解毒	kere tok
-解勸	kere khuInn
+解勸	kere khuinn
 解說	kere serh
 解藥	kere ioh
 鍥仔	kereh a
@@ -21773,7 +21773,7 @@ import_tables:
 截菜	cereh chai
 截肉	cereh hik
 截肉	cereh bah
-截斷	cereh tuInn
+截斷	cereh tuinn
 截長補短	cereh tng poo tEr
 初幾	chere kui
 初一	chere it
@@ -21817,7 +21817,7 @@ import_tables:
 細細仔	sere sere a
 細細	sere sere
 細塊	sere tEr
-細爿	sere paInn
+細爿	sere painn
 細聲	sere siann
 細下	sere e
 細仔聲	sere a siann
@@ -21852,10 +21852,10 @@ import_tables:
 參	serm1	10
 森	serm1	10
 滲	serm3
-欣賞	herm sIang
+欣賞	herm siang
 欣羨	herm sian
 欣慕	herm boo
-欣欣向榮	herm herm hIang ing
+欣欣向榮	herm herm hiang ing
 箴言	cerm gian
 參差	cherm chir
 參差	cham chir
@@ -21898,7 +21898,7 @@ import_tables:
 核	hert8
 恩愛	ern ai
 恩情	ern cing
-恩將仇報	ern cIang siu po
+恩將仇報	ern ciang siu po
 恩主	ern cu
 恩義	ern gi
 恩施	ern si
@@ -21925,7 +21925,7 @@ import_tables:
 斤兩	kern niu
 斤聲	kern siann
 根數	kern soo
-根量	kern lIang
+根量	kern liang
 筋脈	kern beh
 筋脈	kern meeh
 筋骨	kern kut
@@ -21935,7 +21935,7 @@ import_tables:
 跟綴	kern ter
 跟進	kern cin
 近近	kern kern
-近前	kern caInn
+近前	kern cainn
 近路	kern loo
 近水	kern cui
 近海	kern hai
@@ -22248,7 +22248,7 @@ import_tables:
 烏貓	oo niau
 烏狗	oo kau
 烏心肝	oo sim kuann
-烏甕串	oo ang chuInn
+烏甕串	oo ang chuinn
 烏漚	oo au
 烏墨	oo bak
 烏煙	oo ian
@@ -22292,7 +22292,7 @@ import_tables:
 烏鹹鹹	oo kiam kiam
 烏灰	oo her
 嗚呼	oo hoo
-扝飯	oo puInn
+扝飯	oo puinn
 扝心肝	oo sim kuann
 扝空	oo khang
 惡妒	oo too
@@ -22339,9 +22339,9 @@ import_tables:
 補給	poo kip
 補校	poo hau
 補繳	poo kiau
-補強	poo kIang
+補強	poo kiang
 補救	poo kiu
-補償	poo sIang
+補償	poo siang
 補選	poo suan
 補正	poo cing
 補足	poo ciok
@@ -22386,7 +22386,7 @@ import_tables:
 部落	poo lok
 部位	poo ui
 部長	poo tiunn
-部門	poo muI
+部門	poo mui
 部會	poo hue
 部屬	poo siok
 部隊	poo tui
@@ -22400,8 +22400,8 @@ import_tables:
 步數	poo soo
 步入	poo jip
 步伐	poo huah
-步驟	poo ciO
-哺乳	poo jU
+步驟	poo cio
+哺乳	poo ju
 哺舌	poo cih
 哺齒	poo khi
 哺食	poo ciah
@@ -22415,7 +22415,7 @@ import_tables:
 鋪排	phoo pai
 鋪排話	phoo pai uee
 鋪路	phoo loo
-鋪磚	phoo cuInn
+鋪磚	phoo cuinn
 鋪石	phoo cioh
 鋪橋	phoo kio
 鋪枋	phoo pang
@@ -22448,7 +22448,7 @@ import_tables:
 模擬	boo gi
 模擬器	boo gi khi
 模樣	boo iunn
-模具	boo kU
+模具	boo ku
 模板	boo pan
 模範	boo huan
 模型	boo hing
@@ -22462,15 +22462,15 @@ import_tables:
 墓穴
 墓聯
 墓壙
-墓園	boo huInn
-墓園	bong huInn
+墓園	boo huinn
+墓園	bong huinn
 墓地	boo tere
 墓地	bong tere
 墓龜	boo ku
 墓龜	bong ku
 幕府	boo hu
 幕後	boo au
-幕前	boo caInn
+幕前	boo cainn
 幕僚	boo liau
 幕布	boo poo
 慕名
@@ -22496,9 +22496,9 @@ import_tables:
 都市	too chi
 肚垂	too se
 肚綰	too kuann
-肚脹	too tIang
+肚脹	too tiang
 賭氣	too khi
-賭強	too kIang
+賭強	too kiang
 賭定	too tiann
 睹物思人	too but sur jin
 妒恨	too hern
@@ -22515,8 +22515,8 @@ import_tables:
 圖書
 圖書館
 圖解	too kai
-圖章	too cIang
-圖謀	too biO
+圖章	too ciang
+圖謀	too bio
 圖片	too phinn
 圖庫	too khoo
 圖面	too bin
@@ -22528,12 +22528,12 @@ import_tables:
 塗改	too kai
 塗改液	too kai ik
 屠戶	too hoo
-肚量	too lIang
+肚量	too liang
 肚腸	too tng
 肚臍	too cai
 度咧
 度度咧
-度量衡	too lIang hing
+度量衡	too liang hing
 度生活	too sing uah
 度生活	too serng uah
 度一下	too cit ee
@@ -22555,7 +22555,7 @@ import_tables:
 土匪	thoo hui
 土木	thoo bok
 土星	thoo chenn
-土壤	thoo jIang
+土壤	thoo jiang
 土番	thoo huan
 土話	thoo uee
 土土講	thoo thoo kong
@@ -22616,10 +22616,10 @@ import_tables:
 塗筍凍	thoo sun tang
 滷麵	loo mi
 滷肉	loo bah
-滷肉飯	loo bah puInn
+滷肉飯	loo bah puinn
 滷肉	loo hik
 滷鴨	loo ah
-滷卵	loo nuI
+滷卵	loo nui
 滷味	loo bi
 惱氣	loo khi
 勞力	loo lat
@@ -22677,7 +22677,7 @@ import_tables:
 孤項	koo hang
 孤枕獨眠	koo cin tok bian
 孤枕難眠	koo cim lan bian
-孤掌難鳴	koo cIang lan bing
+孤掌難鳴	koo ciang lan bing
 孤囝
 孤兒院	koo ji inn
 孤軍	koo kun
@@ -22685,12 +22685,12 @@ import_tables:
 孤老	koo lo
 孤老	koo lau
 孤身	koo sin
-孤死酸	koo si suInn
+孤死酸	koo si suinn
 姑娘	koo niu
 姑仔	koo a
 姑丈	koo tiunn
 姑且	koo chiann
-姑不而將	koo put ji cIang
+姑不而將	koo put ji ciang
 姑爺	koo ia
 姑嫂	koo so
 姑息
@@ -22725,7 +22725,7 @@ import_tables:
 古老	koo lo
 古老	koo noo
 古怪	koo kuai
-古物商	koo but sIang
+古物商	koo but siang
 古董	koo tong
 古意儂	koo i lang
 古板	koo pan
@@ -22743,7 +22743,7 @@ import_tables:
 鼓吹花	koo cher huee
 鼓吹
 鼓舞	koo bu
-鼓掌	koo cIang
+鼓掌	koo ciang
 股份	koo hun
 股東	koo tong
 股票	koo phio
@@ -22754,12 +22754,12 @@ import_tables:
 股權
 股市	koo chi
 估計	koo ke
-估算	koo suInn
+估算	koo suinn
 估價	koo kee
 蠱脹	koo tiunn
 蠱病	koo penn
 故意	koo i
-故鄉	koo hIang
+故鄉	koo hiang
 故事	koo sur
 故友	koo iu
 故國	koo kok
@@ -22767,21 +22767,21 @@ import_tables:
 故交	koo kau
 故里	koo li
 故土	koo thoo
-故障	koo cIang
+故障	koo ciang
 故宮	koo kiong
 顧問	koo bun
 顧家	koo kee
 顧客	koo kheeh
 顧儂怨	koo lang uan
-顧門	koo muI
-顧三頓	koo sann tuInn
+顧門	koo mui
+顧三頓	koo sann tuinn
 顧厝	koo chu
-觀前顧後	kuan caInn koo au
+觀前顧後	kuan cainn koo au
 顧慮	koo lir
 顧家己	koo  ka ki
 顧家己	koo  ka ti
 顧家己	koo  kai ki
-顧全大局	koo cuan tai kIak
+顧全大局	koo cuan tai kiak
 固定	koo ting
 固執	koo cip
 固有	koo iu
@@ -22820,7 +22820,7 @@ import_tables:
 苦戰	khoo cian
 苦海	khoo hai
 苦海無邊	khoo hai bu pian
-苦勸	khoo khuInn
+苦勸	khoo khuinn
 苦工	khoo kang
 苦力
 苦樂	khoo lok
@@ -22850,7 +22850,7 @@ import_tables:
 褲帶	khoo tua
 褲長	khoo tng
 庫存	khoo cun
-庫存量	khoo cun lIang
+庫存量	khoo cun liang
 庫銀	khoo gern
 庫房	khoo pang
 庫錢	khoo cinn
@@ -22859,7 +22859,7 @@ import_tables:
 五个	goo e
 五十	goo cap
 五百
-五千	goo caInn
+五千	goo cainn
 五萬	goo ban
 五億	goo ik
 五棧塔	goo can thah
@@ -22885,7 +22885,7 @@ import_tables:
 誤殺
 誤認
 誤區
-誤傷	goo sIang
+誤傷	goo siang
 誤讀
 誤導
 悟道
@@ -22911,7 +22911,7 @@ import_tables:
 戽水	hoo cui
 戽斗	hoo tau
 戽勺	hoo siah
-戽出去	hoo chut khIR
+戽出去	hoo chut khir
 狐假虎威	hoo ka hoo ui
 狐仙	hoo sian
 狐狸精
@@ -22950,7 +22950,7 @@ import_tables:
 戶口名	hoo khau mia
 戶口抄本	hoo khau chau pun
 戶頭	hoo thau
-戶橂	hoo taInn
+戶橂	hoo tainn
 戶內	hoo lai
 戶外	hoo gua
 戶數	hoo soo
@@ -22965,7 +22965,7 @@ import_tables:
 予汝	thoo lir
 予我	thoo gua
 予誰	thoo siang
-互相	hoo sIang
+互相	hoo siang
 互助	hoo coo
 互聯網	hoo lian bang
 互惠	hoo hui
@@ -22993,7 +22993,7 @@ import_tables:
 租店
 租車	coo chia
 租地	coo tere
-租約	coo Iak
+租約	coo iak
 租金	coo kim
 組織	coo cit
 組長	coo tiu
@@ -23047,7 +23047,7 @@ import_tables:
 粗桶	choo thang
 粗穿	choo ching
 粗紙	choo cua
-粗菜便飯	choo chai pian puInn
+粗菜便飯	choo chai pian puinn
 粗淺
 粗話	choo uee
 粗喙	choo chui
@@ -23090,7 +23090,7 @@ import_tables:
 疏遠	soo uan
 疏開	soo khai
 酥腰	soo io
-酥軟	soo nuI
+酥軟	soo nui
 甦醒	soo sing
 所在	soo cai
 所謂	soo ui
@@ -23104,7 +23104,7 @@ import_tables:
 所有權
 所長	soo tiunn
 所致	soo ti
-數量	soo lIang
+數量	soo liang
 數學	soo hak
 數理化	soo li hua
 數字	soo ji
@@ -23121,7 +23121,7 @@ import_tables:
 素質	soo cit
 素描	soo biau
 素材	soo cai
-素養	soo Iang
+素養	soo iang
 素昧平生	soo mue ping sing
 素昧平生	soo mue ping serng
 訴狀	soo cng
@@ -23210,9 +23210,9 @@ import_tables:
 老鼠	loo chir
 老鼠藥	loo chir ioh
 怒氣	noo khi
-懦弱	noo jIak
+懦弱	noo jiak
 五花十色	ngoo huee cap sik
-五香	ngoo hIang
+五香	ngoo hiang
 五彩	ngoo chai
 五福	ngoo hok
 五仁	ngoo jin
@@ -23221,7 +23221,7 @@ import_tables:
 五言	ngoo gian
 五馬分屍	ngoo ma hun si
 五方	ngoo hong
-五虎將	ngoo hoo cIang
+五虎將	ngoo hoo ciang
 五葷	ngoo hun
 五音	ngoo im
 五音不全	ngoo im put cuan
@@ -23259,19 +23259,19 @@ import_tables:
 好勝	honn sing
 好色	honn sik
 好色之徒	honn sik ci too
-##	o/oh (oO是泉州音oo)
-蒿	o1
-呵	o1
-堝	o1
-窩	o1
-阿	o1	5%
-撾	o1
-襖	o2
-奧	o3
-澳	o3
-懊	o3
+##	o/oh (oo是泉州音oo)
+蒿	Øo1
+呵	Øo1
+堝	Øo1
+窩	Øo1
+阿	Øo1	5%
+撾	Øo1
+襖	Øo2
+奧	Øo3
+澳	Øo3
+懊	Øo3
 僫	oh4
-蚵	o5	10
+蚵	Øo5	10
 學	oh8
 褒	po1
 玻	po1
@@ -23287,7 +23287,7 @@ import_tables:
 駁	poh4
 婆	po5
 暴	po7
-暴	poO7
+暴	poo7
 薄	poh8
 箔	poh8
 波	pho1
@@ -23295,7 +23295,7 @@ import_tables:
 泡	pho1
 頗	pho2
 破	pho3
-破	phoO3
+破	phoo3
 粕	phoh4
 樸	phoh4
 抱	pho6
@@ -23308,23 +23308,23 @@ import_tables:
 刀	to1	10
 都	to1
 多	to1
-多	toO1
+多	too1
 哆	to1
 倒	to2
 佗	to2	10
 島	to2	10
-島	toO2	10
+島	too2	10
 禱	to2
 倒	to3	10
 到	to3	5%
-到	toO3	5%
+到	too3	5%
 桌	toh4
 卓	toh4
 逃	to5
 萄	to5
 駝	to5
 陀	to5
-陀	toO5
+陀	too5
 桃	to5	1%
 陶	to5
 濤	to5
@@ -23333,20 +23333,20 @@ import_tables:
 跎	to5
 馱	to5
 道	to6	10
-道	toO6	10
+道	too6	10
 舵	to6
 墮	to6
 惰	to6
 就	to7	20
 導	to7	10
-導	toO7	10
+導	too7	10
 盜	to7	10
-盜	toO7	10
+盜	too7	10
 稻	to7
 悼	to7
-悼	toO7
+悼	too7
 蹈	to7
-蹈	toO7
+蹈	too7
 著	toh8	1%
 叨	tho1
 饕	tho1
@@ -23369,7 +23369,7 @@ import_tables:
 落	loh4
 羅	lo5
 勞	lo5	10
-勞	loO5	10
+勞	loo5	10
 牢	lo5
 醪	lo5	10
 騾	lo5
@@ -23379,7 +23379,7 @@ import_tables:
 邏	lo5
 烙	lo6
 賂	lo7
-賂	loO7
+賂	loo7
 落	loh8
 駱	loh8
 洛	loh8
@@ -23387,7 +23387,7 @@ import_tables:
 糕	ko1
 哥	ko1
 高	ko1	10
-高	koO1	10
+高	koo1	10
 歌	ko1
 篙	ko1
 膏	ko1	10
@@ -23398,13 +23398,13 @@ import_tables:
 咖	ko1
 稿	ko2
 果	ko2	10
-果	koO2	10
+果	koo2	10
 裹	ko2
 個	ko3	10
 告	ko3	10
-告	koO3	10
+告	koo3	10
 過	ko3	5%
-過	koO3	5%
+過	koo3	5%
 划	ko3
 誥	ko3
 閣	koh4
@@ -23426,7 +23426,7 @@ import_tables:
 洘	kho2	10
 坷	kho2
 靠	kho3	10
-靠	khoO3	10
+靠	khoo3	10
 課	kho3	10
 犒	kho3
 熬	go5	10
@@ -23462,7 +23462,7 @@ import_tables:
 皓	ho6
 顥	ho6
 號	ho7	10
-號	hoO7	10
+號	hoo7	10
 賀	ho7
 鶴	hoh8
 遭	co1
@@ -23471,7 +23471,7 @@ import_tables:
 藻	co2
 澡	co2
 左	co2	10
-左	coO2	10
+左	coo2	10
 早	co2
 做	co3	10
 灶	co3
@@ -23554,14 +23554,14 @@ import_tables:
 學仔仙	oh a sian
 褒歌	po kua
 褒嗦	po so
-褒獎	po cIang
-褒獎歌	po cIang kua
+褒獎	po ciang
+褒獎歌	po ciang kua
 褒義	po gi
 褒貶	po pian
 玻璃	po le
 玻璃珠	po le cu
 玻璃窗	po le thang
-玻璃門	po le muI
+玻璃門	po le mui
 玻璃矸	po le kan
 玻璃瓶	po le pan
 保護	po hoo
@@ -23570,7 +23570,7 @@ import_tables:
 保全	po cuan
 保險	po hiam
 保險箱	po hiam siunn
-保養	po Iang
+保養	po iang
 保駕	po ka
 保家衛國	po ka ue kok
 保釋	po sik
@@ -23585,11 +23585,11 @@ import_tables:
 保守黨	po siu tong
 保守主義	po siu cu gi
 保重	po tiong
-保養場	po Iang tiunn
+保養場	po iang tiunn
 保證人	po cing jin
 保留	po liu
 保庇	po pi
-保庇	poO pi
+保庇	poo pi
 保家	po kee
 保衛	po ue
 保正	po ciann
@@ -23601,7 +23601,7 @@ import_tables:
 保送	po sang
 保戶	po hoo
 保持	po chi
-保障	po cIang
+保障	po ciang
 保健	po kian
 保固	po koo
 保育	po iok
@@ -23669,13 +23669,13 @@ import_tables:
 暴其然
 暴戾
 暴力	po lik
-暴力	poO lik
+暴力	poo lik
 暴虐	po giok
-暴虐	poO giok
+暴虐	poo giok
 暴行	po hing
-暴行	poO hing
+暴行	poo hing
 暴動	po tong
-暴動	poO tong
+暴動	poo tong
 暴殄天物
 薄薄	poh poh
 薄紙	poh cua
@@ -23689,21 +23689,21 @@ import_tables:
 波濤	pho to
 頗略仔	pho lioh a
 破壞	pho huai
-破壞	phoO huai
+破壞	phoo huai
 破產	pho san
-破產	phoO san
+破產	phoo san
 破費	pho hui
-破費	phoO hui
-破傷風	pho sIang hong
-破傷風	phoO sIang hong
+破費	phoo hui
+破傷風	pho siang hong
+破傷風	phoo siang hong
 破滅	pho biat
-破滅	phoO biat
+破滅	phoo biat
 破碎	pho chui
-破碎	phoO chui
+破碎	phoo chui
 破除	pho tir
-破除	phoO tir
+破除	phoo tir
 破解	pho kai
-破解	phoO kai
+破解	phoo kai
 樸實	phoh sit
 抱兮	pho e
 抱歉	pho khiam
@@ -23786,9 +23786,9 @@ import_tables:
 無毋著	bo m tioh
 無客氣	bo kheeh khi
 無坎無站	bo kham bo cam
-無去	bo khIR
+無去	bo khir
 無救	bo kiu
-無良心	bo lIang sim
+無良心	bo liang sim
 無儂	bo lang
 無半儂	bo puann lang
 無半个	bo puann e
@@ -23831,8 +23831,8 @@ import_tables:
 無佮意	bo kah i
 無意愛	bo i ai
 無意中	bo i ting
-無閒	bo aInn
-無閒無工	bo aInn bo kang
+無閒	bo ainn
+無閒無工	bo ainn bo kang
 無仝	bo kang
 無侗	bo siang
 無侗	bo sang
@@ -23865,7 +23865,7 @@ import_tables:
 無消無息	bo siau bo sit
 無心肝	bo sim kuann
 無神	bo sin
-無相干	bo sIang kan
+無相干	bo siang kan
 無心情	bo sim cing
 無事使	bo sur sai
 無線
@@ -23906,7 +23906,7 @@ import_tables:
 無折	bo ciat
 無怪	bo kuee
 無地	bo tEr
-無合算	bo hah suInn
+無合算	bo hah suinn
 無侵無欠	bo chim bo khiam
 帽仔	bo a
 莫幹	boh kan
@@ -23926,12 +23926,12 @@ import_tables:
 刀劍	to kiam
 刀肉	to bah
 刀銎	to khing
-刀具	to kU
+刀具	to ku
 刀喙	to chui
 刀石	to cioh
 多數
 多少	to siau
-多少	toO siau
+多少	too siau
 多謝
 多情
 多事
@@ -23954,35 +23954,35 @@ import_tables:
 島嶼
 島內
 禱告
-倒去	to khIR
+倒去	to khir
 倒來	to lai
 倒是	to si
 倒捒	to sak
-倒落去	to loh khIR
-倒入去	to jip khIR
+倒落去	to loh khir
+倒入去	to jip khir
 倒面	to bin
-倒爿	to paInn
+倒爿	to painn
 倒手	to chiu
-倒手爿	to chiu paInn
+倒手爿	to chiu painn
 倒水	to cui
 倒吊	to tiau
-倒吊反	to tiau paInn
+倒吊反	to tiau painn
 倒頭向	to thau hiann
 倒翻	to huan
 倒翻頭	to huan thau
 倒退	to thEr
 倒退行	to thEr kiann
 倒害	to hai
-倒轉	to tuInn
-倒轉去	to tuInn khIR
-倒轉來	to tuInn lai
+倒轉	to tuinn
+倒轉去	to tuinn khir
+倒轉來	to tuinn lai
 倒想	to siunn
 倒退步	to thEr poo
 倒彈	to tuann
 倒向	to hiann
 倒剾	to khau
-倒反	to puInn
-倒相向	to sIang hiann
+倒反	to puinn
+倒相向	to siang hiann
 倒踏	to tah
 倒頭	to thau
 倒頭行	to thau kiann
@@ -24033,13 +24033,13 @@ import_tables:
 道路
 道人
 道行	to hing
-道行	toO hing
+道行	too hing
 道教	to kau
-道教	toO kau
+道教	too kau
 道家	to ka
-道家	toO ka
+道家	too ka
 道學	to hak
-道學	toO hak
+道學	too hak
 墮落	to lok
 惰性
 導航
@@ -24048,18 +24048,18 @@ import_tables:
 導師
 導覽
 導師	to sur
-導師	toO sur
+導師	too sur
 導彈	to tuann
-導彈	toO tuann
+導彈	too tuann
 盜賊	to chat
-盜賊	toO chat
+盜賊	too chat
 盜版
 悼念
 著火	toh her
 著起來	toh khi lai
 叨著	tho tioh
 饕餮	tho thiat
-韜光養諱	tho kong Iang hui
+韜光養諱	tho kong iang hui
 討錢	tho cinn
 討食	tho cian
 討海	tho hai
@@ -24105,19 +24105,19 @@ import_tables:
 勞動者
 勞動節
 勞動	lo tong
-勞動	loO tong
+勞動	loo tong
 勞工	lo kang
-勞工	loO kang
+勞工	loo kang
 勞改	lo kai
-勞改	loO kai
+勞改	loo kai
 勞力	lo lik
-勞力	loO lik
+勞力	loo lik
 牢獄	lo gak
 醪醪	lo lo
 醪醪激規膏	lo lo kik kui ko
 醪黐黐	lo thi thi
 邏輯	lo chip
-落去	loh khIR
+落去	loh khir
 落來	loh lai
 落車	loh chia
 落課	loh kho
@@ -24159,9 +24159,9 @@ import_tables:
 落湳	loh lam
 落儂兮喙	loh lang e chui
 落難	loh lan
-落軟	loh nuI
+落軟	loh nui
 落本	loh pun
-落本	loh puInn
+落本	loh puinn
 落山風	loh suann hong
 落衰	loh sue
 落頭	loh thau
@@ -24206,27 +24206,27 @@ import_tables:
 高跟鞋
 高頻
 高鐵	ko thih
-高鐵	koO thih
+高鐵	koo thih
 高等	ko ting
-高等	koO ting
+高等	koo ting
 高架	ko kee
-高架	koO kee
+高架	koo kee
 高中	ko tiong
-高中	koO tiong
+高中	koo tiong
 高中生	ko tiong sing
-高中生	koO tiong serng
+高中生	koo tiong serng
 高手	ko chiu
-高手	koO chiu
+高手	koo chiu
 高見	ko kian
-高見	koO kian
-高強	ko kIang
-高強	koO kIang
+高見	koo kian
+高強	ko kiang
+高強	koo kiang
 高升	ko sing
-高升	koO sing
-高尚	ko sIang
-高尚	koO sIang
+高升	koo sing
+高尚	ko siang
+高尚	koo siang
 歌訣	ko kuat
-歌訣	koO kuat
+歌訣	koo kuat
 歌頌	ko siong
 膏藥	ko ioh
 膏膏纏	ko ko tinn
@@ -24253,27 +24253,27 @@ import_tables:
 個位	ko ui
 個位數	ko ui soo
 個外月	ko gua gerh
-個十百千	koh cap pah caInn
-個十百千	koh cap peeh caInn
+個十百千	koh cap pah cainn
+個十百千	koh cap peeh cainn
 告狀	ko cng
 告訴	ko soo
 告儂	ko lang
 告白	ko peeh
-告白	koO peeh
+告白	koo peeh
 告別	ko piat
-告別	koO piat
+告別	koo piat
 告知	ko ti
-告知	koO ti
+告知	koo ti
 告示
 告辭	ko si
-告辭	koO si
+告辭	koo si
 划船	ko cun
 誥命	ko bing
 閣樓	koh lau
 閣員	koh uan
 閣再	koh cai
 閣來	koh lai
-閣去	koh khIR
+閣去	koh khir
 閣欲	koh berh
 閣欲	koh beh
 閣毋	koh m
@@ -24300,13 +24300,13 @@ import_tables:
 科目	kher bok
 科長	kho tiunn
 科長	kher tiunn
-炣魚	kho hIR
+炣魚	kho hir
 炣肉	kho hik
 炣菜	kho chai
 考試	kho chi
 考場	kho tiunn
 考驗	kho giam
-考卷	kho kuInn
+考卷	kho kuinn
 考證	kho cing
 考官	kho kuann
 考慮	kho lir
@@ -24316,11 +24316,11 @@ import_tables:
 考究	kho kiu
 考妣	kho pi
 考倒	kho to
-考量	kho lIang
+考量	kho liang
 考試	khonn chi
 考場	khonn tiunn
 考驗	khonn giam
-考卷	khonn kuInn
+考卷	khonn kuinn
 考證	khonn cing
 考官	khonn kuann
 考慮	khonn lir
@@ -24331,7 +24331,7 @@ import_tables:
 考究	khonn kiu
 考妣	khonn pi
 考倒	khonn to
-考量	khonn lIang
+考量	khonn liang
 可惡
 可以
 可怕
@@ -24362,7 +24362,7 @@ import_tables:
 洘流	kho lau
 洘秫秫	kho cut cut
 洘汔汔	kho kit kit
-洘頓頓	kho tuInn tuInn
+洘頓頓	kho tuinn tuinn
 靠著	kho tioh
 靠儂
 靠枕
@@ -24370,11 +24370,11 @@ import_tables:
 靠勢
 靠俗
 靠山	kho suann
-靠山	khoO suann
-靠前	kho caInn
-靠前	khoO caInn
+靠山	khoo suann
+靠前	kho cainn
+靠前	khoo cainn
 靠後	kho au
-靠後	khoO au
+靠後	khoo au
 課時	kho si
 課本	kho pun
 課間	kho kan
@@ -24434,13 +24434,13 @@ import_tables:
 好意	ho i
 好好儂	ho ho lang
 好好行	ho ho kiann
-好魚好菜	ho hIR ho chai
+好魚好菜	ho hir ho chai
 好兄弟	ho hiann ti
 好姊妹	ho ci ber
 好姊妹	ho ci mue
 好言好語	ho gian ho gir
 好景	ho king
-好景不長	ho king put tIang
+好景不長	ho king put tiang
 好空	ho khang
 好料	ho liau
 好跤好手	ho kha ho chiu
@@ -24480,7 +24480,7 @@ import_tables:
 好禮	ho le
 好育飼	ho io chi
 好價	ho kee
-好量	ho lIang
+好量	ho liang
 好年冬	ho ni tang
 好性地	ho sing te
 好感	ho kam
@@ -24497,18 +24497,18 @@ import_tables:
 何苦	ho khoo
 何故	ho koo
 何必	ho pit
-何必	hoO pit
+何必	hoo pit
 何用	ho ing
-何用	hoO ing
+何用	hoo ing
 何差	ho cha
-何差	hoO cha
+何差	hoo cha
 和睦	ho bok
 和好	ho ho
 和諧	ho hai
 和服	ho hok
 和絃	ho hian
 和合	ho hap
-和約	ho Iak
+和約	ho iak
 和解	ho kai
 和平	ho ping
 和順	ho sun
@@ -24548,15 +24548,15 @@ import_tables:
 左右為難
 左派
 左翼	co ik
-左翼	coO ik
+左翼	coo ik
 左營	co iann
-左營	coO iann
+左營	coo iann
 左傾
 左手
 左跤
 左耳
 左目	co bak
-左目	coO bak
+左目	coo bak
 左腦
 左側
 左面
@@ -24566,7 +24566,7 @@ import_tables:
 作穡	coh sit
 作田	coh chan
 作心	coh sim
-作園	coh huInn
+作園	coh huinn
 作岫	coh siu
 作穡儂	coh sit lang
 作田儂	coh chan lang
@@ -24624,7 +24624,7 @@ import_tables:
 挲草	so chau
 鎖匙	so si
 鎖喉	so au
-鎖門	so muI
+鎖門	so mui
 鎖頭	so thau
 鎖定	so ting
 嫂仔	so a
@@ -25012,7 +25012,7 @@ import_tables:
 塑	sok4
 朔	sok4
 倯	song5
-汪洋	ong Iang
+汪洋	ong iang
 往事	ong sur
 往昔	ong sik
 往來	ong lai
@@ -25043,8 +25043,8 @@ import_tables:
 王妃	ong hui
 王府	ong hu
 王位	ong ui
-王后	ong hiO
-王后	ong hIO
+王后	ong hio
+王后	ong hio
 王室	ong sik
 王爺債	ong ia cee
 王國	ok kok
@@ -25121,21 +25121,21 @@ import_tables:
 亡魂	bong hun
 亡靈	bong ling
 亡命天涯	bong bing thian gai
-茫然若失	bong jian jIak sit
+茫然若失	bong jian jiak sit
 盲腸	bong tng
 盲腸炎	bong tng iam
 盲目	bong bok
 忘恩負義	bong ern hu gi
 忘懷	bong huai
-妄想	bong sIang
+妄想	bong siang
 目前	bok cian
 目的	bok tik
-目無尊長	bok bu cun tIang
+目無尊長	bok bu cun tiang
 目錄	bok liok
 目錄	bok lok
 目標	bok phiau
 目標	bok piau
-木魚	bok hIR
+木魚	bok hir
 木材	bok cai
 木心枋	bok sim pang
 木雕	bok tiau
@@ -25170,20 +25170,20 @@ import_tables:
 黨派	tong phai
 黨員	tong uan
 黨參
-黨羽	tong U
+黨羽	tong u
 黨務	tong bu
 黨工	tong kang
 黨旗	tong ki
 黨部	tong poo
 黨團	tong thuan
 黨籍	tong cik
-黨章	tong cIang
+黨章	tong ciang
 黨職	tong cit
 黨內	tong lai
 黨外	tong gua
 黨委	tong ui
 黨支部	tong ci poo
-棟樑	tong lIang
+棟樑	tong liang
 擋袂牢	tong bere tiau
 擋咧	tong lErh
 擋頭	tong thau
@@ -25211,7 +25211,7 @@ import_tables:
 同族	tong cok
 同宗	tong cong
 同意	tong i
-同鄉	tong hIang
+同鄉	tong hiang
 同事	tong sur
 同類	tong lui
 同時	tong si
@@ -25245,7 +25245,7 @@ import_tables:
 螳螂	tong bong
 螳臂當車	tong pi tong chia
 動物	tong but
-動物園	tong but huInn
+動物園	tong but huinn
 動靜	tong cing
 動不動	tong put tong
 動作	tong cok
@@ -25314,9 +25314,9 @@ import_tables:
 通四界	thong si kere
 通報	thong puann
 通信	thong sin
-通商	thong sIang
+通商	thong siang
 通道	thong to
-通道	thong toO
+通道	thong too
 通達	thong tat
 通天下	thong thian ha
 通知	thong ti
@@ -25325,13 +25325,13 @@ import_tables:
 通鼓	thong koo
 通譯	thong ik
 通譯官	thong ik kuann
-通常	thong sIang
+通常	thong siang
 通緝	thong chip
 通書	thong sir
 通航	thong hang
 通行	thong hing
 通告	thong ko
-通告	thong koO
+通告	thong koo
 通勤	thong khern
 通關	thong kuan
 通路	thong loo
@@ -25369,7 +25369,7 @@ import_tables:
 攏共	liong kiong
 籠罩	long tau
 挵破	long phua
-挵門	long muI
+挵門	long mui
 挵鼓	long koo
 挵鐘	long cing
 挵球	long kiu
@@ -25383,7 +25383,7 @@ import_tables:
 農業	long giap
 農家	long ka
 農家樂	long ka lok
-農具	long kU
+農具	long ku
 農產品	long san phin
 農學	long hak
 農民曆	long bin lik
@@ -25412,13 +25412,13 @@ import_tables:
 浪漫	long ban
 弄狗相咬
 樂觀	lok kuan
-樂園	lok huInn
+樂園	lok huinn
 樂極生悲	lok kik sing pi
-樂暢	lok thIang
+樂暢	lok thiang
 絡繹不絕	lok ik put cuat
 落花流水	lok hua liu sui
-落後	lok hiO
-落後	lok hIO
+落後	lok hio
+落後	lok hio
 落魄	lok phik
 落志	lok ci
 落成	lok sing
@@ -25445,7 +25445,7 @@ import_tables:
 光陰	kong im
 光臨	kong lim
 光碟	kong tiap
-光碟	kuInn tiap
+光碟	kuinn tiap
 公安	kong an
 公安局	kong an kik
 公墓	kong boo
@@ -25462,17 +25462,17 @@ import_tables:
 公益	kong ik
 公家	kong ka
 公家錢	kong ka cinn
-公爵	kong cIak
+公爵	kong ciak
 公立	kong lip
-公園	kong huInn
+公園	kong huinn
 公會	kong hue
 公分	kong hun
 公認	kong jin
-公約	kong Iak
+公約	kong iak
 公開	kong khai
 公款	kong khuann
 公告	kong ko
-公告	kong koO
+公告	kong koo
 公權	kong kuan
 公權	kong khuan
 公決	kong kuat
@@ -25483,7 +25483,7 @@ import_tables:
 公理	kong li
 公里	kong li
 公平	kong penn
-公約數	kong Iak soo
+公約數	kong iak soo
 公倍數	kong pue soo
 公佈	kong poo
 公司	kong si
@@ -25528,7 +25528,7 @@ import_tables:
 功業	kong giap
 功效	kong hau
 功勞	kong lo
-功勞	kong loO
+功勞	kong loo
 功德	kong tik
 功臣	kong sin
 功利	kong li
@@ -25547,7 +25547,7 @@ import_tables:
 攻防	kong hong
 攻勢	kong se
 攻讀
-剛強	kong kIang
+剛強	kong kiang
 剛毅	kong ge
 綱要	kong iau
 講話	kong uee
@@ -25557,14 +25557,14 @@ import_tables:
 講袂出喙	kong bere chut chui
 講情	kong cing
 講笑	kong chio
-講千講萬	kong chaInn kong ban
+講千講萬	kong chainn kong ban
 講賺	kong tann
 講起	kong khi
 講了	kong liau
 講煞	kong suah
 講滾笑	kong kun chio
 講耍笑	kong sng chio
-講來講去	kong lai kong khIR
+講來講去	kong lai kong khir
 講破	kong phua
 講東講西	kong tang kong sai
 講透透	kong thau thau
@@ -25681,7 +25681,7 @@ import_tables:
 各个	kok e
 各地	kok te
 閣下	kok ha
-硞落去	kok loh khIR
+硞落去	kok loh khir
 康健	khong kian
 康復	khong hok
 空前	khong cian
@@ -25689,7 +25689,7 @@ import_tables:
 空中	khong tiong
 空氣	khong khi
 空氣鞋	khong khi ere
-空想	khong sIang
+空想	khong siang
 空襲	khong sip
 空軍	khong kun
 空難	khong lan
@@ -25723,7 +25723,7 @@ import_tables:
 礦石	khong cioh
 壙物	khong but
 壙物質	khong but cit
-礦區	khong khU
+礦區	khong khu
 壙山	khong suann
 礦泉水	khong cuann cui
 曠野	khong ia
@@ -25731,7 +25731,7 @@ import_tables:
 炕肉	khong bah
 炕肉	khong hik
 炕菜	khong chai
-炕肉飯	khong bah puInn
+炕肉飯	khong bah puinn
 炕窯	khong io
 炕菜頭	khong chai thau
 伉儷	khong le
@@ -25741,14 +25741,14 @@ import_tables:
 擴頭	khok thau
 擴擴	khok khok
 擴充	khok chiong
-擴張	khok tIang
+擴張	khok tiang
 酷刑	khok hing
 酷毒	khok tok
 觳仔	khok a
 觳仔炱	khok a tEr
 硞著
 硞硞綴	khok khok tEr
-嘓魚	khok hIR
+嘓魚	khok hir
 嘓子	khok ci
 戇戇	gong gong
 戇囝
@@ -25785,11 +25785,11 @@ import_tables:
 風飛水走	hong per cui cau
 風吹輪	hong cher lian
 風暴	hong po
-風暴	hong poO
+風暴	hong poo
 風塵	hong tin
 方面	hong bin
 方言
-方向	hong hIang
+方向	hong hiang
 方法	hong huat
 方便	hong pian
 方位	hong ui
@@ -25857,7 +25857,7 @@ import_tables:
 福德	hok tik
 福德正神	hok tik cing sin
 福星	hok chenn
-福相	hok sIang
+福相	hok siang
 霍亂	hok luan
 幅度	hok too
 覆滅	hok biat
@@ -25878,8 +25878,8 @@ import_tables:
 複賽	hok sai
 複審	hok sim
 皇帝	hong te
-皇后	hong hiO
-皇后	hong hIO
+皇后	hong hio
+皇后	hong hio
 皇宮	hong kiong
 皇子	hong cur
 皇兄	hong hiann
@@ -25887,13 +25887,13 @@ import_tables:
 皇家	hong ka
 皇陵	hong ling
 皇室	hong sik
-皇上	hong sIang
+皇上	hong siang
 皇儲	hong thir
 皇天	hong thian
 皇恩	hong ern
 皇弟	hong te
-皇太后	hong thai hiO
-皇太后	hong thai hIO
+皇太后	hong thai hio
+皇太后	hong thai hio
 皇太子	hong thai cur
 皇帝豆	hong te tau
 防守	hong siu
@@ -25967,7 +25967,7 @@ import_tables:
 總管	cong kuan
 總是	cong si
 總論	cong lun
-總算	cong suInn
+總算	cong suinn
 總督	cong tok
 總講	cong kong
 總之	cong ci
@@ -26029,7 +26029,7 @@ import_tables:
 創好勢	chong ho se
 創孔	chong khang
 創業	chong giap
-創傷	chong sIang
+創傷	chong siang
 創設	chong siat
 創新	chong sin
 創死	chong si
@@ -26044,7 +26044,7 @@ import_tables:
 創刊	chong khan
 創始	chong si
 創作	chong cok
-桑榆暮景	song jU boo king
+桑榆暮景	song ju boo king
 鬆懈	song hai
 爽快	song khuai
 喪失	song sit
@@ -26234,7 +26234,7 @@ import_tables:
 藥店
 藥箱	ioh siunn
 藥性	ioh sing
-鑰門	ioh muI
+鑰門	ioh mui
 標會仔	pio hue a
 標頭	pio thau
 標會	pio hue
@@ -26267,16 +26267,16 @@ import_tables:
 廟埕	bio tiann
 廟會	bio hue
 釣餌	tio ji
-釣魚	tio hIR
+釣魚	tio hir
 釣鉤	tio kau
 釣友	tio iu
-釣魚臺	tio hIR tai
+釣魚臺	tio hir tai
 釣著	tio tioh
 釣無	tio bo
 釣船	tio cun
 釣竿	tio kuann
 擢舌根	tioh cih kern
-趒跤頓蹄	tio kha tuInn tere
+趒跤頓蹄	tio kha tuinn tere
 著毋	tioh m
 著無	tioh bo
 著毋著	tioh m tioh
@@ -26293,7 +26293,7 @@ import_tables:
 著歹症	tioh phai cing
 著歹症	tioh phainn cing
 著時	tioh si
-著傷	tioh sIang
+著傷	tioh siang
 著箭	tioh cinn
 著痧	tioh sua
 著頭	tioh thau
@@ -26304,7 +26304,7 @@ import_tables:
 著生驚	chinn kiann
 著銃	tioh ching
 著水蛆	tioh cui chir
-著去	tioh khIR
+著去	tioh khir
 著來	tioh lai
 挑明	thio bing
 挑火	thio her
@@ -26332,7 +26332,7 @@ import_tables:
 叫苦	kio khoo
 叫更	kio kenn
 叫來	kio lai
-叫門	kio muI
+叫門	kio mui
 叫聲	kio siann
 叫天	kio thinn
 叫地	kio tere
@@ -26357,7 +26357,7 @@ import_tables:
 茄仔	kio a
 茄仔色	kio a sik
 轎車	kio chia
-轎門	kio muI
+轎門	kio mui
 轎夫	kio hu
 抾著	khioh tioh
 抾拾	khioh sip
@@ -26372,7 +26372,7 @@ import_tables:
 抾物件	khioh mngh kiann
 抾物件	khioh mih kiann
 抾骨	khioh kut
-抾襇	khioh kaInn
+抾襇	khioh kainn
 抾客	khioh kheeh
 抾捔	khioh kak
 抾笑	khioh chio
@@ -26407,12 +26407,12 @@ import_tables:
 少少	cio cio
 少歲	cio her
 少話	cio uee
-少算	cio suInn
+少算	cio suinn
 少儂	cio lang
 少缺	cio kerh
 少數	cio soo
 照明	cio bing
-照光	cio kuInn
+照光	cio kuinn
 照鏡	cio kiann
 照影	cio iann
 照路	cio loo
@@ -26427,8 +26427,8 @@ import_tables:
 借用	cio iong
 借銀	cioh gern
 借來	cioh lai
-借去	cioh khIR
-借問	cioh muI
+借去	cioh khir
+借問	cioh mui
 借過	cioh ker
 借蹛	cioh tua
 灼日	cioh jit
@@ -26471,7 +26471,7 @@ import_tables:
 石舂臼	cioh cing khu
 石板	cioh pan
 石化	cioh hua
-石狗卵	cioh kau nuI
+石狗卵	cioh kau nui
 𪁎趒	chio tio
 𪁎哥	chio ko
 𪁎雞	chio kere
@@ -26490,7 +26490,7 @@ import_tables:
 笑桮	chio pue
 笑破喙	chio phua chui
 笑頭笑面	chio thau chio bin
-笑劇	chio kIak
+笑劇	chio kiak
 笑面虎	chio bin hoo
 笑杯	chio pue
 笑談	chio tam
@@ -26501,7 +26501,7 @@ import_tables:
 尺寸	chioh chun
 尺頭	chioh thau
 螫著	chioh tioh
-耀光	chio kuInn
+耀光	chio kuinn
 耀一下	chio cit ee
 尿桸	jio hia
 尿壺	jio oo
@@ -26524,7 +26524,7 @@ import_tables:
 燒風	sio hong
 燒氣	sio khi
 燒捒	sio sak
-燒無去	sio bo khIR
+燒無去	sio bo khir
 燒熱	sio juah
 燒賣	sio mai
 燒死	sio si
@@ -26580,7 +26580,7 @@ import_tables:
 小肚	sio too
 小組	sio coo
 小島	sio to
-小島	sio toO
+小島	sio too
 小鎮	sio tin
 小提琴	sio the khim
 小學生
@@ -26596,117 +26596,117 @@ import_tables:
 惜別	sioh piat
 惜錢	sioh cinn
 寂寂	sioh sioh
-##	iO/iOh
-歐	iO1	0%
-鷗	iO1
-謳	iO1
-毆	iO2
-嘔	iO2
-剖	phiO2
-母	biO2	5%
-母	bIO2	5%	#臺
-謀	biO5
-牟	biO5
-眸	biO5
-貿	biO7
-茂	biO7
-懋	biO7
-斗	tiO2
-鬥	tiO3
-投	tiO5	0%
-豆	tiO7	0%
-竇	tiO7
-痘	tiO7	0%
-荳	tiO7
-讀	tiO7	0%
-偷	thiO1	0%
-透	thiO3
-頭	thiO5	1%
-簍	liO2
-樓	liO5	0%
-婁	liO5
-陋	liO7
-漏	liO7	0%
-鉤	kiO1	0%
-溝	kiO1
-勾	kiO1
-狗	kiO2	0%
-苟	kiO2
-枸	kiO2
-構	kiO3
-購	kiO3
-口	khiO2
-叩	khiO3
-扣	khiO3
-寇	khiO3
-蔻	khiO3
-偶	giO2
-藕	giO2
-否	hiO2
-侯	hiO5
-後	hiO6	10
-後	hIO6	10	#臺
-厚	hiO6
-后	hiO6
-后	hIO6	#臺
-候	hiO7
-逅	hiO7
-鄒	ciO1
-走	ciO2	0%
-奏	ciO3
-皺	ciO3
-縐	ciO3
-驟	ciO7
-湊	chiO3
-搜	siO1
-叟	siO2
-瘦	siO3
-貿易	biO ik
-溝通	kiO thong
-構思	kiO sur
-構想	kiO sIang
-構圖	kiO too
-構成	kiO sing
-構造	kiO co
-購物	kiO but
-購併	kiO ping
-購物車	kiO but chia
-偶像	giO sIang
-偶像	ngoo sIang
-偶數	giO soo
+##	io/ioh
+歐	io1	0%
+鷗	io1
+謳	io1
+毆	io2
+嘔	io2
+剖	phio2
+母	bio2	5%
+母	bio2	5%	#臺
+謀	bio5
+牟	bio5
+眸	bio5
+貿	bio7
+茂	bio7
+懋	bio7
+斗	tio2
+鬥	tio3
+投	tio5	0%
+豆	tio7	0%
+竇	tio7
+痘	tio7	0%
+荳	tio7
+讀	tio7	0%
+偷	thio1	0%
+透	thio3
+頭	thio5	1%
+簍	lio2
+樓	lio5	0%
+婁	lio5
+陋	lio7
+漏	lio7	0%
+鉤	kio1	0%
+溝	kio1
+勾	kio1
+狗	kio2	0%
+苟	kio2
+枸	kio2
+構	kio3
+購	kio3
+口	khio2
+叩	khio3
+扣	khio3
+寇	khio3
+蔻	khio3
+偶	gio2
+藕	gio2
+否	hio2
+侯	hio5
+後	hio6	10
+後	hio6	10	#臺
+厚	hio6
+后	hio6
+后	hio6	#臺
+候	hio7
+逅	hio7
+鄒	cio1
+走	cio2	0%
+奏	cio3
+皺	cio3
+縐	cio3
+驟	cio7
+湊	chio3
+搜	sio1
+叟	sio2
+瘦	sio3
+貿易	bio ik
+溝通	kio thong
+構思	kio sur
+構想	kio siang
+構圖	kio too
+構成	kio sing
+構造	kio co
+購物	kio but
+購併	kio ping
+購物車	kio but chia
+偶像	gio siang
+偶像	ngoo siang
+偶數	gio soo
 偶數	ngoo soo
 偶然
 偶遇
 偶發
-否決	hiO kuat
-否定	hiO ting
-否認	hiO jin
-後悔	hiO hue
-後悔	hIO hue
-後患	hiO huan
-後患	hIO huan
-後患無強	hiO huan bu kIang
-後患無強	hIO huan bu kIang
-後繼無人	hiO ke bu jin
-後繼無人	hIO ke bu jin
-後宮	hiO kiong
-後宮	hIO kiong
-後輩	hiO pue
-後輩	hIO pue
-後嗣	hiO sur
-後嗣	hIO sur
-後果	hiO ko
-後果	hIO ko
-後果	hiO koO
-後者	hiO cia
-後者	hIO cia
-後衛	hiO ue
-後衛	hIO ue
-搜救	siO kiu
-搜查	siO ca
-搜集	siO cip
-搜索	siO sik
-搜檢	siO kiam
+否決	hio kuat
+否定	hio ting
+否認	hio jin
+後悔	hio hue
+後悔	hio hue
+後患	hio huan
+後患	hio huan
+後患無強	hio huan bu kiang
+後患無強	hio huan bu kiang
+後繼無人	hio ke bu jin
+後繼無人	hio ke bu jin
+後宮	hio kiong
+後宮	hio kiong
+後輩	hio pue
+後輩	hio pue
+後嗣	hio sur
+後嗣	hio sur
+後果	hio ko
+後果	hio ko
+後果	hio koo
+後者	hio cia
+後者	hio cia
+後衛	hio ue
+後衛	hio ue
+搜救	sio kiu
+搜查	sio ca
+搜集	sio cip
+搜索	sio sik
+搜檢	sio kiam
 ##	iong/iok
 雍	iong1
 勇	iong2	10
@@ -26867,11 +26867,11 @@ import_tables:
 勇猛	iong bing
 湧泉	iong cuann
 擁護	iong hoo
-踴躍	iong Iak
+踴躍	iong iak
 容易	iong i
 容忍	iong jim
 容納	iong lap
-容量	iong lIang
+容量	iong liang
 容貌	iong bau
 容貌	iong mau
 容允	iong ern
@@ -26908,14 +26908,14 @@ import_tables:
 慾骨	iok kut
 慾念	iok liam
 中途	tiong too
-中將	tiong cIang
-中獎	tiong cIang
+中將	tiong ciang
+中獎	tiong ciang
 中毒	tiong tok
 中箭	tiong cinn
 中風	tiong hong
 中鋒	tiong hong
 中央	tiong iong
-中用	tiong Iang
+中用	tiong iang
 中計	tiong ke
 中氣	tiong khi
 中選	tiong suan
@@ -26949,7 +26949,7 @@ import_tables:
 中立	tiong lip
 中流	tiong liu
 中落	tiong loh
-中門	tiong muI
+中門	tiong mui
 中央	tiong ng
 中午	tiong ngoo
 中樑	tiong niu
@@ -26962,12 +26962,12 @@ import_tables:
 中心	tiong sim
 中心點	tiong sim tiam
 中心站	tiong sim cam
-中傷	tiong sIang
+中傷	tiong siang
 中樞	tiong su
 中旬	tiong sun
 中晝	tiong tau
 中土	tiong thoo
-中剸	tiong tuInn
+中剸	tiong tuinn
 中堂	tiong tng
 中隊	tiong tui
 中醫	tiong i
@@ -26989,12 +26989,12 @@ import_tables:
 忠言	tiong gian
 中校	tiong hau
 忠孝	tiong hau
-忠厚	tiong hiO
+忠厚	tiong hio
 忠魂	tiong hun
 忠勇	tiong iong
 忠告
 忠烈	tiong liat
-忠良	tiong lIang
+忠良	tiong liang
 忠誠	tiong sing
 忠信	tiong sin
 忠直	tiong tit
@@ -27118,7 +27118,7 @@ import_tables:
 共同	kiong tong
 共管	kiong kuan
 共鳴	kiong bing
-共謀	kiong biO
+共謀	kiong bio
 共存	kiong cun
 共議	kiong gi
 共產	kiong san
@@ -27138,7 +27138,7 @@ import_tables:
 恐喝	khiong hat
 恐嚇	khiong hik
 恐懼	khiong khu
-恐懼	khiong kU
+恐懼	khiong ku
 恐驚	khiong kiann
 恐怕	khiong pha
 恐怕	khiong phann
@@ -27225,7 +27225,7 @@ import_tables:
 從軍	ciong kun
 從令	ciong ling
 從廉	ciong liam
-從良	ciong lIang
+從良	ciong liang
 從善	ciong sian
 從俗	ciong siok
 從事	ciong sur
@@ -27248,7 +27248,7 @@ import_tables:
 充值	chiong tat
 充值卡	chiong tat khah
 衝頭	chiong thau
-衝頭前	chiong thau caInn
+衝頭前	chiong thau cainn
 衝動	chiong tong
 衝突	chiong tut
 衝擊	chiong kik
@@ -27277,8 +27277,8 @@ import_tables:
 肅靜	siok cing
 肅靜	sok cing
 肅貪
-叔母	siok biO
-叔母	siok bIO
+叔母	siok bio
+叔母	siok bio
 叔父	siok hu
 叔姪	siok tit
 宿怨	siok uan
@@ -27289,7 +27289,7 @@ import_tables:
 夙夜	siok ia
 夙望	siok bong
 夙願	siok guan
-松香	siong hIang
+松香	siong hiang
 松膠	siong ka
 誦文	siong bun
 誦經	siong king
@@ -27327,11 +27327,11 @@ import_tables:
 贖回	siok hue
 贖身	siok sin
 ##	u/uh
-污	u1
-宇	u2
-煦	u3
+污	Øu1
+宇	Øu2
+煦	Øu3
 噎	uh4
-有	u6	10
+有	Øu6	10
 富	pu3
 發	puh4	5%
 匏	pu5
@@ -27475,7 +27475,7 @@ import_tables:
 煦燒	u sio
 煦印	u in
 有關
-有量	u lIang
+有量	u liang
 有身	u sin
 有雄	u hing
 有額	u giah
@@ -27503,7 +27503,7 @@ import_tables:
 有時節	u si cereh
 有兮無兮	u e bo e
 有用	u ing
-有閒	u aInn
+有閒	u ainn
 有效	u hau
 有歲	u her
 有耳無喙	u hi bo chui
@@ -27526,7 +27526,7 @@ import_tables:
 有盤	u puann
 有聖	u siann
 有心	u sim
-有算無貫	u suInn bo kuInn
+有算無貫	u suinn bo kuinn
 有頭無尾	u thau bo ber
 有底	u tere
 有擋頭	u tong thau
@@ -27558,7 +27558,7 @@ import_tables:
 有雲無影	u hun bo iann
 有潲無鼻	u siau bo phi
 有潲無鼻	u siau bo phinn
-有合算	u hah suInn
+有合算	u hah suinn
 富儂	pu lang
 發穎	puh inn
 發穎	huat inn
@@ -27568,14 +27568,14 @@ import_tables:
 匏仔	pu a
 匏荖	pu lau
 炰番薯	pu han cur
-伏卵	pu nuI
+伏卵	pu nui
 伏岫	pu siu
 伏膿	pu lang
-殕仔光	phu a kuInn
-殕殕光	phu phu kuInn
+殕仔光	phu a kuinn
+殕殕光	phu phu kuinn
 殕殕	phu phu
 殕目	phu bak
-殕光	phu kuInn
+殕光	phu kuinn
 殕綠	phu lik
 殕色	phu sik
 浮面	phu bin
@@ -27622,8 +27622,8 @@ import_tables:
 武市	bu chi
 武廟	bu bio
 武齣	bu chut
-武將	bu cIang
-武狀元	bu cIang guan
+武將	bu ciang
+武狀元	bu ciang guan
 武職	bu cit
 武裝	bu cong
 武藝	bu ge
@@ -27649,7 +27649,7 @@ import_tables:
 舞女	bu lir
 舞台	bu tai
 舞廳	bu thiann
-舞台劇	bu tai kIak
+舞台劇	bu tai kiak
 舞池	bu ti
 舞步	bu poo
 舞者	bu cia
@@ -27679,26 +27679,26 @@ import_tables:
 無辜	bu koo
 無故	bu koo
 無禮	bu le
-無量	bu lIang
+無量	bu liang
 無奈
 無惡不作	bu ok put cok
 無比	bu pi
 無邊	bu pian
 無心	bu sim
-無常	bu sIang
-無上	bu sIang
+無常	bu siang
+無上	bu siang
 無雙	bu song
 無數	bu soo
 無敵	bu tik
 無道	bu to
-無道	bu toO
+無道	bu too
 無忌	bu ki
 無知	bu ti
 無知不識	bu ti put sik
 無恥	bu thi
 無憂	bu iu
-無理取鬧	bu li chU nau
-無理取鬧	bu li chU lau
+無理取鬧	bu li chu nau
+無理取鬧	bu li chu lau
 無孔不入	bu khong put jip
 誣賴	bu lua
 誣告	bu ko
@@ -27726,7 +27726,7 @@ import_tables:
 拄額	tu giah
 拄錢	tu cinn
 拄壁	tu phiah
-拄門	tu muI
+拄門	tu mui
 拄咧	tu lErh
 拄時	tu si
 拄時拄陣	tu si tu cin
@@ -27734,7 +27734,7 @@ import_tables:
 拄觸	tu tak
 拄撞	tu tng
 拄儂	tu lang
-拄佇咧	tu tIR lErh
+拄佇咧	tu tir lErh
 拄拄仔	tu tu a
 拄仔好	tu a ho
 拄時陣	tu si cun
@@ -27765,7 +27765,7 @@ import_tables:
 揬著	tuh tioh
 嘟嘟	tu tu
 禿額	thuh hiah
-托懸	thuh kuAinn
+托懸	thuh kuainn
 托咧	thuh lErh
 托下頦	thuh ee hai
 托下斗	thuh ee tau
@@ -27808,7 +27808,7 @@ import_tables:
 痀痀	ku ku
 痀燒	ku sio
 跔跔	ku ku
-俱樂部	kU lok poo
+俱樂部	ku lok poo
 久久	ku ku
 久病	ku penn
 久長	ku tng
@@ -27835,7 +27835,7 @@ import_tables:
 舊厝	ku chu
 舊主	ku cu
 舊前年	ku cun ni
-舊約	ku Iak
+舊約	ku iak
 舊友	ku iu
 舊欠	ku khiam
 舊款	ku kuan
@@ -27868,8 +27868,8 @@ import_tables:
 牛百葉	gu pah iap
 牛仔	gu a
 牛犅	gu kang
-牛貫鼻	gu kuInn phi
-牛貫鼻	gu kuInn phinn
+牛貫鼻	gu kuinn phi
+牛貫鼻	gu kuinn phinn
 牛頭馬面	gu thau bee bin
 牛仔褲	gu a khoo
 牛仔褲	gu cai khoo
@@ -27927,7 +27927,7 @@ import_tables:
 膚色	hu sik
 膚淺	hu chian2
 府上	hu ciunn
-府縣	hu kuAinn
+府縣	hu kuainn
 府內	hu lai
 府學	hu oh
 府第	hu te
@@ -27935,7 +27935,7 @@ import_tables:
 府城腔	hu siann khiunn
 府中	hu tiong
 府文廟	hu bun bio
-撫養	hu Iang
+撫養	hu iang
 撫慰	hu ui
 斧正	hu cing
 斧削	hu siah
@@ -27944,7 +27944,7 @@ import_tables:
 輔選	hu suan
 輔助	hu coo
 輔音	hu im
-俯仰	hu gIang
+俯仰	hu giang
 赴後手	hu au chiu
 赴墟	hu hi
 赴會	hu hue
@@ -27956,7 +27956,7 @@ import_tables:
 赴死	hu si
 副業	hu giap
 副手	hu chiu
-副將	hu cIang
+副將	hu ciang
 副本	hu pun
 副刊	hu khan
 副作用	hu cok iong
@@ -27968,10 +27968,10 @@ import_tables:
 富豪	hu ho
 富戶	hu hoo
 富裕	hu ju
-富強	hu kIang
+富強	hu kiang
 富翁	hu ong
 富紳	hu sin
-富商	hu sIang
+富商	hu siang
 付款	hu khuann
 付出	hu chut
 付數	hu siau
@@ -28004,8 +28004,8 @@ import_tables:
 符號	hu ho
 父親	hu chin
 父老	hu noo
-父母	hu biO
-父母	hu bIO
+父母	hu bio
+父母	hu bio
 父子	hu cur
 父兄	hu hing
 婦人	hu jin
@@ -28019,7 +28019,7 @@ import_tables:
 負債	hu cee
 負義	hu gi
 負心	hu sim
-負傷	hu sIang
+負傷	hu siang
 負擔	hu tam
 負面	hu bin
 負責	hu cik
@@ -28041,11 +28041,11 @@ import_tables:
 主事	cu sur
 主意	cu i
 主見	cu kian
-主將	cu cIang
+主將	cu ciang
 主命	cu bing
-主母	cu biO
-主母	cu bIO
-主謀	cu biO
+主母	cu bio
+主母	cu bio
+主謀	cu bio
 主文	cu bun
 主宰	cu cai
 主菜	cu chai
@@ -28053,7 +28053,7 @@ import_tables:
 主持	cu chi
 主持人	cu chi jin
 主持儂	cu chi lang
-主唱	cu chIang
+主唱	cu chiang
 主唱	cu chiunn
 主旨	cu ci
 主戰	cu cian
@@ -28084,7 +28084,7 @@ import_tables:
 主食	cu sit
 主席	cu sik
 主席	cu sit
-主上	cu sIang
+主上	cu siang
 主帥	cu sue
 主治	cu ti
 主治醫生	cu ti i sing
@@ -28169,7 +28169,7 @@ import_tables:
 厝角	chu kak
 厝架	chu kee
 厝價	chu kee
-厝間	chu kaInn
+厝間	chu kainn
 厝範	chu pan
 厝稅	chu ser
 厝身	chu sin
@@ -28194,146 +28194,146 @@ import_tables:
 速速	suh suh
 速速走	suh suh cau
 速速叫	suh suh kio
-##	U/Uh
-迂	U1
-迂	u1	#又
-羽	U2
-雨	U2
-禹	U2
-盂	U5
-竽	U5
-雩	U5
-#逾	U5
-覦	U5
-#渝	U5
-#瑜	U5
-#榆	U5
-臾	U5
-諛	U5
-芋	U7
-縷	lU2
-屢	lU2
-褸	lU2
-俱	kU1
-具	kU7
-懼	kU7
-區	khU1
-軀	khU1
-驅	khU1
-嶇	khU1
-瞿	khU5
-虞	gU5
-娛	gU5
-愚	gU5
-隅	gU5
-遇	gU7	10
-寓	gU7
-吁	hU1
-栩	hU2
-詡	hU2
-聚	cU6
-趨	chU1
-取	chU2
-娶	chU2
-乳	jU2
-庾	jU2
-儒	jU5
-俞	jU5
-蠕	jU5
-瑜	jU5
-愉	jU5
-渝	jU5
-逾	jU5
-孺	jU5
-濡	jU5
-榆	jU5
-諭	jU7
-喻	jU7
-輸	sU1	10
-需	sU1	10
-須	sU1	10
-鬚	sU1
-璽	sU2
-署	sU2
-徙	sU2	5%
-樹	sU7	5%
-豎	sU7	10
-羽毛	U moo
-羽毛球	U moo kiu
-雨水	U sui
-具體	kU the
-具備	kU pi
-具名	kU mia
-區域	khU hik
-區別	khU piat
-區長	khU tiunn
-區分	khU hun
-區隔	khU keeh
-區間	khU kan
-區段	khU tuann
-軀殼	khU khak
-軀體	khU the
-娛樂	gU lok
-愚躕	gU tu
-愚民	gU bin
-愚蠢	gU chun
-愚戇	gU gong
-愚人	gU jin
-愚人節	gU jin cereh
-愚見	gU kian
-愚忠	gU tiong
-遇著	gU tioh
-遇害	gU hai
-寓言	gU gian
-寓所	gU soo
-寓意	gU i
-聚會	cU hue
-聚餐	cU chan
-聚集	cU cip
-聚財	cU cai
-聚斂	cU liam
-聚散	cU san
-趨媚	chU bi
-趨向	chU hIang
-趨勢	chU se
-取齊	chU cere
-取義	chU gi
-取下	chU ha
-取法	chU huat
-取景	chU king
-取經	chU king
-取消	chU siau
-取締	chU te
-取代	chU tai
-取材	chU cai
-取得	chU tit
-乳名	jU mia
-儒家	jU ka
-儒門	jU bun
-儒者	jU cia
-儒子	jU cur
-儒學	jU hak
-儒醫	jU i
-儒教	jU kau
-儒林	jU lim
-儒生	jU sing
-儒生	jU serng
-儒士	jU sur
-愉快	jU khuai
-孺人	jU jin
-諭旨	jU ci
-輸出	sU chut
-輸入	sU jip
-輸入法	sU jip huat
-輸血	sU huih
-輸送	sU sang
-輸送	sU song
-需要	sU iau
-需求	sU kiu
-須當	sU tong
-須知	sU ti
-鬚眉	sU bi
-樹立	sU lip
+##	u/uh
+迂	Øu1
+迂	Øu1	#又
+羽	Øu2
+雨	Øu2
+禹	Øu2
+盂	Øu5
+竽	Øu5
+雩	Øu5
+#逾	Øu5
+覦	Øu5
+#渝	Øu5
+#瑜	Øu5
+#榆	Øu5
+臾	Øu5
+諛	Øu5
+芋	Øu7
+縷	lu2
+屢	lu2
+褸	lu2
+俱	ku1
+具	ku7
+懼	ku7
+區	khu1
+軀	khu1
+驅	khu1
+嶇	khu1
+瞿	khu5
+虞	gu5
+娛	gu5
+愚	gu5
+隅	gu5
+遇	gu7	10
+寓	gu7
+吁	hu1
+栩	hu2
+詡	hu2
+聚	cu6
+趨	chu1
+取	chu2
+娶	chu2
+乳	ju2
+庾	ju2
+儒	ju5
+俞	ju5
+蠕	ju5
+瑜	ju5
+愉	ju5
+渝	ju5
+逾	ju5
+孺	ju5
+濡	ju5
+榆	ju5
+諭	ju7
+喻	ju7
+輸	su1	10
+需	su1	10
+須	su1	10
+鬚	su1
+璽	su2
+署	su2
+徙	su2	5%
+樹	su7	5%
+豎	su7	10
+羽毛	u moo
+羽毛球	u moo kiu
+雨水	u sui
+具體	ku the
+具備	ku pi
+具名	ku mia
+區域	khu hik
+區別	khu piat
+區長	khu tiunn
+區分	khu hun
+區隔	khu keeh
+區間	khu kan
+區段	khu tuann
+軀殼	khu khak
+軀體	khu the
+娛樂	gu lok
+愚躕	gu tu
+愚民	gu bin
+愚蠢	gu chun
+愚戇	gu gong
+愚人	gu jin
+愚人節	gu jin cereh
+愚見	gu kian
+愚忠	gu tiong
+遇著	gu tioh
+遇害	gu hai
+寓言	gu gian
+寓所	gu soo
+寓意	gu i
+聚會	cu hue
+聚餐	cu chan
+聚集	cu cip
+聚財	cu cai
+聚斂	cu liam
+聚散	cu san
+趨媚	chu bi
+趨向	chu hiang
+趨勢	chu se
+取齊	chu cere
+取義	chu gi
+取下	chu ha
+取法	chu huat
+取景	chu king
+取經	chu king
+取消	chu siau
+取締	chu te
+取代	chu tai
+取材	chu cai
+取得	chu tit
+乳名	ju mia
+儒家	ju ka
+儒門	ju bun
+儒者	ju cia
+儒子	ju cur
+儒學	ju hak
+儒醫	ju i
+儒教	ju kau
+儒林	ju lim
+儒生	ju sing
+儒生	ju serng
+儒士	ju sur
+愉快	ju khuai
+孺人	ju jin
+諭旨	ju ci
+輸出	su chut
+輸入	su jip
+輸入法	su jip huat
+輸血	su huih
+輸送	su sang
+輸送	su song
+需要	su iau
+需求	su kiu
+須當	su tong
+須知	su ti
+鬚眉	su bi
+樹立	su lip
 ##	un/ut
 溫	un1	10
 瘟	un1
@@ -28627,8 +28627,8 @@ import_tables:
 溫冊	un cheeh
 溫課文	un kho bun
 溫酒	un ciu
-溫厚	un hiO
-溫良	un lIang
+溫厚	un hio
+溫良	un liang
 溫帶	un tai
 溫道
 溫度	un too
@@ -28687,19 +28687,19 @@ import_tables:
 鬱口	ut khau
 鬱氣	ut khi
 鬱金	ut kim
-鬱金香	ut kim hIang
+鬱金香	ut kim hiang
 鬱癆	ut lo
 鬱色	ut sik
-鬱傷	ut sIang
+鬱傷	ut siang
 鬱痧	ut sua
 鬱鬱	ut ut
 鬱屈	ut khut
 鬱折	ut cih
-鬱斷	ut tuInn
+鬱斷	ut tuinn
 鬱彎	ut uan
 鬱雨	ut hoo
 鬱著	ut tioh
-鬱酸	ut suInn
+鬱酸	ut suinn
 云街	un kere
 勻仔	un a
 勻仔是	un a si
@@ -28799,7 +28799,7 @@ import_tables:
 本性	pun sing
 本是	pun si
 本心	pun sim
-本相	pun sIang
+本相	pun siang
 本宅	pun theeh
 本調	pun tiau
 本土	pun thoo
@@ -28875,7 +28875,7 @@ import_tables:
 不利	put li
 不了	put liau
 不料	put liau
-不良	put lIang
+不良	put liang
 不老	put noo
 不橐不束	put lok put sok
 不論	put lun
@@ -28897,7 +28897,7 @@ import_tables:
 不小	put siau
 不肖	put siau
 不俗	put siok
-不詳	put sIang
+不詳	put siang
 不死	put sur
 不知	put ti
 不致	put ti
@@ -28919,7 +28919,7 @@ import_tables:
 不動產	put tong san
 不穩	put un
 不為	put ui
-不三似兩	put sam sur lIang
+不三似兩	put sam sur liang
 不垃不圾	put lap put sap
 抔錢	put cinn
 抔塗	put thoo
@@ -28951,7 +28951,7 @@ import_tables:
 佛話	put uee
 佛生	put senn
 佛生日	put senn jit
-佛像	put sIang
+佛像	put siang
 佛事	put sur
 佛塔	put thah
 佛殿	put tian
@@ -28984,7 +28984,7 @@ import_tables:
 噴點白	phun tiam peeh
 噴泉	phun cuann
 噴桶	phun thang
-噴管	phun kuInn
+噴管	phun kuinn
 噴管	phun kong
 噴射	phun sia
 噴漆	phun chat
@@ -29039,7 +29039,7 @@ import_tables:
 文言	bun gian
 文言文	bun gian bun
 文章	bun ciunn
-文章	bun cIang
+文章	bun ciang
 文獻	bun hian
 文物	bun but
 文宣	bun suan
@@ -29074,7 +29074,7 @@ import_tables:
 悶糟糟	bun cau cau
 悶慒慒	bun co co
 悶疼	bun thiann
-燜飯	bun puInn
+燜飯	bun puinn
 沒收	but siu
 物價	but kee
 物質	but cit
@@ -29084,8 +29084,8 @@ import_tables:
 物色	but sik
 物體	but the
 物品	but phin
-𢪱落去	but khIR
-敦厚	tun hiO
+𢪱落去	but khir
+敦厚	tun hio
 敦督	tun tok
 墩仔	tun a
 噸數	tun soo
@@ -29144,7 +29144,7 @@ import_tables:
 坉岸	thun huann
 坉塗	thun thoo
 坉平	thun penn
-坉本	thun puInn
+坉本	thun puinn
 坉本錢
 坉地	thun tere
 坉腹	thun pak
@@ -29209,13 +29209,13 @@ import_tables:
 輪替	lun there
 輪廓	lun khok
 倫理	lun li
-倫常	lun sIang
+倫常	lun siang
 崙仔	lun a
 崙仔頂	lun a ting
 崙仔尾	lun a ber
 崙尾	lun ber
 崙頂	lun ting
-論算	lun suInn
+論算	lun suinn
 論語	lun gir
 論真	lun cin
 論證	lun cing
@@ -29246,7 +29246,7 @@ import_tables:
 君神	kun sin
 君威	kun ui
 君位	kun ui
-軍將	kun cIang
+軍將	kun ciang
 軍民	kun bin
 軍帽	kun bo
 軍務	kun bu
@@ -29308,7 +29308,7 @@ import_tables:
 滾絞	kun ka
 滾滾滾	kun kun kun
 滾起來	kun khi lai
-滾出去	kun chut khIR
+滾出去	kun chut khir
 滾嘩	kun hua
 滾蛟龍	kun kau ling
 滾開	kun khui
@@ -29373,7 +29373,7 @@ import_tables:
 窘迫	kun pik
 窘態	kun thai
 郡主	kun cu
-郡縣	kun kuAinn
+郡縣	kun kuainn
 郡馬	kun ma
 郡王	kun ong
 郡守	kun siu
@@ -29384,7 +29384,7 @@ import_tables:
 滑鼠	kut chir
 掘仔	kut a
 掘金	kut kim
-倔強	kut kIang
+倔強	kut kiang
 崛起	kut khi
 坤卦	khun kua
 坤造	khun co
@@ -29417,7 +29417,7 @@ import_tables:
 睏空房	khun khang pang
 睏起	khun khi
 睏起來	khun khi lai
-睏去	khun khIR
+睏去	khun khir
 睏落眠	khun loh bin
 睏鞋	khun ere
 睏晏	khun uann
@@ -29460,7 +29460,7 @@ import_tables:
 阮翁
 阮兜
 阮厝
-婚約	hun Iak
+婚約	hun iak
 婚禮	hun le
 婚姻	hun in
 婚書	hun sir
@@ -29471,7 +29471,7 @@ import_tables:
 昏夜	hun ia
 昏君	hun kun
 昏倒	hun to
-昏去	hun khIR
+昏去	hun khir
 昏暗	hun am
 吩咐	hun hu
 紛紛	hun hun
@@ -29483,7 +29483,7 @@ import_tables:
 紛雜	hun cap
 芬芳	hun hong
 氛圍	hun ui
-勳章	hun cIang
+勳章	hun ciang
 熏儂	hun lang
 熏蠓	hun bang
 熏肉	hun hik
@@ -29546,12 +29546,12 @@ import_tables:
 奮發	hun huat
 奮勇	hun iong
 奮起	hun khi
-奮鬥	hun tiO
+奮鬥	hun tio
 奮興	hun hing
 奮膿	hun lang
 忽然	hut jian
 忽然間	hut jian kan
-忽略	hut lIak
+忽略	hut liak
 忽視	hut si
 拂倒	hut to
 雲母
@@ -29579,7 +29579,7 @@ import_tables:
 魂魄	hun phik
 魂身	hun sin
 魂亭	hun ting
-焚香	hun hIang
+焚香	hun hiang
 焚化	hun hua
 焚化爐	hun hua loo
 墳墓
@@ -29654,10 +29654,10 @@ import_tables:
 分心	hun sim
 分手	hun sim
 分佈	hun poo
-分享	hun hIang
+分享	hun hiang
 分析	hun sik
 分泌	hun pi
-分區	hun khU
+分區	hun khu
 分組	hun coo
 分裂	hun liat
 分貝	hun pue
@@ -29666,9 +29666,9 @@ import_tables:
 分叉	hun chee
 分叉路	hun chee loo
 份額	hun giah
-份前額	hun caInn giah
+份前額	hun cainn giah
 份股	hun koo
-份量	hun lIang
+份量	hun liang
 份子	hun cur
 佛祖	hut coo
 佛目	hut bak
@@ -29687,7 +29687,7 @@ import_tables:
 尊貴	cun kui
 尊名	cun mia
 尊卑	cun pi
-尊長	cun tIang
+尊長	cun tiang
 尊師	cun sur
 尊存	cun chun
 尊重	cun tiong
@@ -29708,8 +29708,8 @@ import_tables:
 準憑	cun pin
 準數	cun siau
 準拄好	cun tu ho
-準去	cun khIR
-準算	cun suInn
+準去	cun khir
+準算	cun suinn
 準講	cun kong
 準當	cun tng
 準時	cun si
@@ -29775,20 +29775,20 @@ import_tables:
 存稿	cun ko
 存根	cun kern
 存數	cun siau
-存天良	cun thian lIang
+存天良	cun thian liang
 存底	cun tere
 存戶	cun hoo
 存款	cun khuann
 存範	cun pan
 前年	cun ni
 捘開	cun khui
-捘斷	cun tuInn
+捘斷	cun tuinn
 陣疼	cun thiann
 陣雨	cun hoo
 陣陣	cun cun
 卒仔	cut a
 秫米	cut bi
-秫米飯	cut bi puInn
+秫米飯	cut bi puinn
 春餅	chun piann
 春情	chun cing
 春蠶	chun cham
@@ -29814,7 +29814,7 @@ import_tables:
 春聯	chun lian
 春暖	chun luan
 春畫	chun uee
-春飯	chun puInn
+春飯	chun puinn
 春色	chun sik
 春社	chun sia
 春宵	chun siau
@@ -29906,7 +29906,7 @@ import_tables:
 出家私	chut kee si
 出口	chut khau
 出氣	chut khi
-出去	chut khIR
+出去	chut khir
 出氣	chut khui
 出氣力	chut khui lat
 出奇	chut ki
@@ -29915,7 +29915,7 @@ import_tables:
 出膿	chut lang
 出路	chut loo
 出名	chut mia
-出門	chut muI
+出門	chut mui
 出麻	chut mua
 出版	chut pan
 出範	chut pan
@@ -29949,7 +29949,7 @@ import_tables:
 出題	chut tere
 出運	chut un
 出水淋	chut cui lam
-出磚入石	chut cuInn jip cioh
+出磚入石	chut cuinn jip cioh
 出國	chut kok
 出院	chut inn
 出界	chut kai
@@ -29962,7 +29962,7 @@ import_tables:
 出師	chut sai
 出賰	chut chun
 出剩	chut sin
-出儂前	chut lang caInn
+出儂前	chut lang cainn
 出正	chut ciann
 出山	chut san
 出床	chut sng
@@ -29983,7 +29983,7 @@ import_tables:
 存欲好	chun beh ho
 存欲死	chun beh si
 存意	chun i
-存良心	chun lIang sim
+存良心	chun liang sim
 存辦	chun pan
 存歹意	chun phai i
 存歹意	chun phainn i
@@ -29996,7 +29996,7 @@ import_tables:
 存雄	chun hiong
 賰錢	chun cinn
 賰兮	chun e
-賰長	chun tIang
+賰長	chun tiang
 潤餅	jun piann
 潤餅𩛩	jun piann kauh
 潤餅菜	jun piann chai
@@ -30014,13 +30014,13 @@ import_tables:
 孫悟空	sun goo khong
 孫悟空	sun ngoo khong
 孫行者	sun hing cia
-孫陽	sun Iang
+孫陽	sun iang
 孫女	sun lir
 孫婿	sun sai
 孫新婦	sun sin pu
 孫嫂	sun so
 詢問	sun bun
-詢問	sun muI
+詢問	sun mui
 荀子	sun cur
 損失	sun sit
 損命	sun bing
@@ -30031,7 +30031,7 @@ import_tables:
 損友	sun iu
 損破醋甕	sun phua choo ang
 損脾	sun pi
-損傷	sun sIang
+損傷	sun siang
 筍目	sun bak
 筍目仔	sun bak a
 筍箬	sun hah
@@ -30088,11 +30088,11 @@ import_tables:
 循環	sun khuan
 循環	sun huan
 旬日	sun jit
-馴良	sun lIang
+馴良	sun liang
 馴服	sun hok
 醇凎	sun kam
-醇厚	sun hiO
-醇良	sun lIang
+醇厚	sun hio
+醇良	sun liang
 吮吸	sun khip
 順月	sun gerh
 順紲	sun sua
@@ -30139,7 +30139,7 @@ import_tables:
 純真	sun cin
 純潔	sun kiat
 純樸	sun phok
-純屬虛構	sun siok hir kiO
+純屬虛構	sun siok hir kio
 純靜	sun cing
 純淨	sun cing
 殉職	sun cit
@@ -30328,7 +30328,7 @@ import_tables:
 憂頭苦面	iu thau khoo bin
 憂頭結面	iu thau kat bin
 憂頭憂面	iu thau iu bin
-憂傷	iu sIang
+憂傷	iu siang
 憂鬱	iu ut
 幽幽	iu iu
 幽靈	iu ling
@@ -30354,7 +30354,7 @@ import_tables:
 有意	iu i
 有緣	iu ian
 有孕	iu in
-有勇無謀	iu iong bu biO
+有勇無謀	iu iong bu bio
 有愧	iu khui
 有機	iu ki
 有機食品	iu ki sit phin
@@ -30385,7 +30385,7 @@ import_tables:
 幼花	iu huee
 幼瓷	iu hui
 幼幼	iu iu
-幼兒園	iu ji huInn
+幼兒園	iu ji huinn
 幼囝
 幼跤	iu kha
 幼骨	iu kut
@@ -30393,7 +30393,7 @@ import_tables:
 幼粒物	iu liap mih
 幼路	iu loo
 幼膩	iu ji
-幼軟	iu nuI
+幼軟	iu nui
 幼皮薄面	iu pher poh bin
 幼布	iu poo
 幼聲	iu siann
@@ -30402,7 +30402,7 @@ import_tables:
 幼線	iu suann
 幼茶	iu tee
 幼稚	iu ti
-幼稚園	iu ti huInn
+幼稚園	iu ti huinn
 幼童	iu tong
 幼教	iu kau
 幼細	iu sere
@@ -30427,7 +30427,7 @@ import_tables:
 優先權
 優待	iu thai
 優秀	iu siu
-優良	iu lIang
+優良	iu liang
 優雅	iu nga
 優勢	iu se
 優異	iu i
@@ -30440,7 +30440,7 @@ import_tables:
 友情	iu cing
 友愛	iu ai
 友誼	iu gi
-油門	iu muI
+油門	iu mui
 油毛氈	iu moo cian
 油炸鬼	iu cah kui
 油味	iu bi
@@ -30469,7 +30469,7 @@ import_tables:
 油矸	iu kan
 油瓶	iu pan
 油粕	iu phoh
-油飯	iu puInn
+油飯	iu puinn
 油布	iu poo
 油滓	iu tai
 油桶	iu thang
@@ -30507,7 +30507,7 @@ import_tables:
 遊輪	iu lun
 遊客	iu kheeh
 遊樂	iu lok
-遊樂園	iu lok huInn
+遊樂園	iu lok huinn
 遊說	iu sue
 遊車河	iu chia ho
 尤其	iu ki
@@ -30526,7 +30526,7 @@ import_tables:
 郵票	iu phio
 郵資	iu cur
 郵筒	iu tang
-郵購	iu kiO
+郵購	iu kio
 郵費	iu hui
 攸關	iu kuan
 猶原	iu guan
@@ -30539,11 +30539,11 @@ import_tables:
 又是	iu si
 右手	iu chiu
 右目	iu bak
-右爿	iu paInn
+右爿	iu painn
 休息	hiu sik
 休學	hiu oh
 休閒	hiu han
-休養	hiu Iang
+休養	hiu iang
 休業	hiu giap
 休止符	hiu ci hu
 朽木	hiu bok
@@ -30585,7 +30585,7 @@ import_tables:
 抽稅	thiu ser
 抽絲	thiu si
 抽身	thiu sin
-抽象	thiu sIang
+抽象	thiu siang
 抽退	thiu thEr
 抽退步	thiu thEr poo
 抽籐	thiu tin
@@ -30597,7 +30597,7 @@ import_tables:
 抽躼
 抽稿	thiu ko
 抽脂	thiu ci
-抽獎	thiu cIang
+抽獎	thiu ciang
 抽驗	thiu giam
 丑腳	thiu kioh
 丑仔	thiu a
@@ -30619,8 +30619,8 @@ import_tables:
 柳樹	liu chiu
 柳葉	liu hioh
 柳枝	liu ki
-扭尻川	liu kha chuInn
-扭尻川	ngiu kha chuInn
+扭尻川	liu kha chuinn
+扭尻川	ngiu kha chuinn
 扭掠	liu liah
 扭搦	liu lak
 扭鬃	liu cang
@@ -30656,7 +30656,7 @@ import_tables:
 流入	liu jip
 流程	liu thing
 流程	liu ting
-流量	liu lIang
+流量	liu liang
 流派	liu phai
 流星	liu chenn
 留學	liu oh
@@ -30680,8 +30680,8 @@ import_tables:
 瀏覽器	liu lam khi
 琉璃	liu li
 琉球	liu kiu
-硫黃	liu uInn
-硫磺	liu uInn
+硫黃	liu uinn
+硫磺	liu uinn
 勼跤	kiu kha
 勼手	kiu chiu
 勼勼	kiu kiu
@@ -30699,7 +30699,7 @@ import_tables:
 九五之尊	kiu ngoo ci cun
 九品	kiu phin
 久聞	kiu bun
-久仰	kiu gIang
+久仰	kiu giang
 久遠	kiu uan
 久見	kiu kian
 久別	kiu piat
@@ -30707,7 +30707,7 @@ import_tables:
 糾絞疼	kiu ka thiann
 糾正	kiu cing
 糾腸糾道	kiu tng kiu to
-糾腸糾道	kiuh tng kiuh toO
+糾腸糾道	kiuh tng kiuh too
 糾帶	kiu tua
 糾帶	kiuh tua
 糾紙	kiu cua
@@ -30723,7 +30723,7 @@ import_tables:
 糾結	kiu kat
 糾水	kiu cui
 糾紛	kiu hun
-救本	kiu puInn
+救本	kiu puinn
 救本	kiu pun
 救世	kiu se
 救災	kiu cai
@@ -30753,7 +30753,7 @@ import_tables:
 求情	kiu cing
 求證	kiu cing
 求親	kiu chin
-求取	kiu chU
+求取	kiu chu
 求借	kiu cioh
 求助	kiu coo
 求下	kiu hee
@@ -30766,7 +30766,7 @@ import_tables:
 求桮	kiu pue
 求神	kiu sin
 求討	kiu tho
-求神問佛	kiu sin muI put
+求神問佛	kiu sin mui put
 求婚	kiu hun
 求學
 求職	kiu cit
@@ -30795,12 +30795,12 @@ import_tables:
 搝搦	khiu lak
 搝倒	khiu to
 搝直	khiu tit
-搝斷	khiu tuInn
+搝斷	khiu tuinn
 搝搝搦搦	giu giu lak lak
 搝搦	giu lak
 搝倒	giu to
 搝直	giu tit
-搝斷	giu tuInn
+搝斷	giu tuinn
 虯毛	khiu mng
 虯毛	khiu moo
 虯頭毛	khiu thau mng
@@ -30821,7 +30821,7 @@ import_tables:
 𩚨𩚨	khiu khiu
 牛黃	giu hong
 州府	ciu hu
-州縣	ciu kuAinn
+州縣	ciu kuainn
 周圍	ciu ui
 周全	ciu cuan
 周至	ciu ci
@@ -30836,7 +30836,7 @@ import_tables:
 周刊	ciu khan
 周轉	ciu cuan
 周期	ciu ki
-周詳	ciu sIang
+周詳	ciu siang
 酒盞	ciu cuann
 酒窟	ciu khut
 酒甕	ciu ang
@@ -30868,7 +30868,7 @@ import_tables:
 酒漏	ciu lau
 酒令	ciu ling
 酒料	ciu liau
-酒量	ciu lIang
+酒量	ciu liang
 酒話	ciu uee
 酒配	ciu pher
 酒癖	ciu phiah
@@ -30910,7 +30910,7 @@ import_tables:
 咒罵
 咒身詈命	ciu sin lere mia
 蛀子	ciu ci
-蛀穿	ciu chuInn
+蛀穿	ciu chuinn
 蛀齒	ciu khi
 蛀核	ciu hert
 蛀空	ciu khang
@@ -30942,9 +30942,9 @@ import_tables:
 就倚	ciu ua
 就地正法	ciu tere cing huat
 就位	ciu ui
-就算	ciu suInn
-就算	to suInn
-就算	tio suInn
+就算	ciu suinn
+就算	to suinn
+就算	tio suinn
 秋凊	chiu chin
 秋分	chiu hun
 鞦韆	chiu chian
@@ -30959,7 +30959,7 @@ import_tables:
 秋風	chiu hong
 秋日	chiu jit
 秋冷	chiu ling
-秋涼	chiu lIang
+秋涼	chiu liang
 秋色	chiu sik
 秋收	chiu siu
 秋雨	chiu u
@@ -30971,7 +30971,7 @@ import_tables:
 手指	chiu ci
 手液	chiu sioh
 手路	chiu loo
-手䘼	chiu uInn
+手䘼	chiu uinn
 手囊	chiu long
 手環	chiu khuan
 手圈	chiu khuan
@@ -30980,7 +30980,7 @@ import_tables:
 手巾仔	chiu kern a
 手頷	chiu am
 手後曲	chiu au khiau
-手後卵	chiu au nuI
+手後卵	chiu au nui
 手後彎	chiu au uan
 手後蹬	chiu au tenn
 手目	chiu bak
@@ -31006,7 +31006,7 @@ import_tables:
 手印	chiu in
 手爪	chiu jiau
 手工	chiu kang
-手扣	chiu khiO
+手扣	chiu khio
 手銬	chiu khau
 手曲	chiu khiau
 手擒	chiu khim
@@ -31017,8 +31017,8 @@ import_tables:
 手鼓	chiu koo
 手鋸	chiu kir
 手內子	chiu lai ci
-手門	chiu muI
-手䘼管	chiu uInn kuInn
+手門	chiu mui
+手䘼管	chiu uinn kuinn
 手腕	chiu uan
 手腕	chiu uann
 手斡彎	chiu uat uan
@@ -31113,8 +31113,8 @@ import_tables:
 樹頭	chiu thau
 樹薯	chiu cir
 樹尾溜	chiu ber liu
-柔弱	jiu jIak
-柔軟	jiu nuInn
+柔弱	jiu jiak
+柔軟	jiu nuinn
 柔軟	jiu luan
 柔順	jiu sun
 柔術	jiu sut
@@ -31199,7 +31199,7 @@ import_tables:
 修業	siu giap
 修學	siu oh
 修學	siu hak
-修養	siu Iang
+修養	siu iang
 修改	siu kere
 修改	siu kai
 修己	siu ki
@@ -31236,8 +31236,8 @@ import_tables:
 首飾	siu sik
 首席	siu sik
 首席	siu sit
-首相	siu sIang
-首先	siu saInn
+首相	siu siang
+首先	siu sainn
 首先	siu sian
 首長	siu tiunn
 守則	siu cik
@@ -31252,7 +31252,7 @@ import_tables:
 守孝	siu ha
 守法	siu huat
 守分	siu hun
-守約	siu Iak
+守約	siu iak
 守空房	siu khang phang
 守己	siu ki
 守宮	siu kiong
@@ -31320,7 +31320,7 @@ import_tables:
 受累	siu lui
 受室	siu sik
 受恿	siu sing
-受傷	siu sIang
+受傷	siu siang
 受敵	siu tik
 受胎	siu thai
 受託	siu thok
@@ -31443,7 +31443,7 @@ import_tables:
 羊肉	iunn hik
 羊肉	iunn bah
 楊桃	iunn to
-楊桃酸	iunn to suInn
+楊桃酸	iunn to suinn
 洋裝	iunn cong
 洋服	iunn hok
 洋樓	iunn lau
@@ -31460,7 +31460,7 @@ import_tables:
 溶糊糊	iunn koo koo
 溶醬醬	iunn ciunn ciunn
 溶瘍	iunn siunn
-溶去	iunn khIR
+溶去	iunn khir
 溶糖	iunn thng
 溶霜	iunn sng
 樣式	iunn sik
@@ -31479,7 +31479,7 @@ import_tables:
 張聲	tiunn siann
 張樣	tiunn iunn
 張掇	tiunn tuah
-張門面	tiunn muI bin
+張門面	tiunn mui bin
 長官	tiunn kuann
 長老	tiunn lo
 長老會	tiunn lo hue
@@ -31527,7 +31527,7 @@ import_tables:
 娘仔棗	niu a co
 娘仔屎	niu a sai
 娘仔豆	niu a tau
-娘仔卵	niu a nuI
+娘仔卵	niu a nui
 娘仔蝶	niu a iah
 娘仔樹	niu a chiu
 娘仔葉	niu a hioh
@@ -31624,7 +31624,7 @@ import_tables:
 香香仔	hiunn hiunn a
 章節	ciunn cat
 章旨	ciunn ci
-章魚	ciunn hIR
+章魚	ciunn hir
 章螺	ciunn lEr
 樟仔	ciunn a
 樟仔樹	ciunn a chiu
@@ -31648,14 +31648,14 @@ import_tables:
 醬清	ciunn ching
 醬醬	ciunn ciunn
 醬水	ciunn cui
-醬園	ciunn huInn
+醬園	ciunn huinn
 醬鹹	ciunn kiam
 醬薑	ciunn kiunn
 醬瓜	ciunn kuee
 醬料	ciunn liau
 醬麵炙	ciunn mi cia
 醬色	ciunn sik
-障頓	ciunn tuInn
+障頓	ciunn tuinn
 障日	ciunn jit
 障日時	ciunn jit si
 障日晝	ciunn jit tau
@@ -31676,7 +31676,7 @@ import_tables:
 障生	ciunn senn
 上後	ciunn au
 上網	ciunn bang
-上網	sIang bang
+上網	siang bang
 上目	ciunn bak
 上馬	ciunn bee
 上馬寒	ciunn bee kuann
@@ -31691,7 +31691,7 @@ import_tables:
 上手契	ciunn chiu khere
 上樹	ciunn chiu
 上床	ciunn chng
-上取	ciunn chU
+上取	ciunn chu
 上春	ciunn chun
 上正	ciunn ciann
 上錢	ciunn cinn
@@ -31727,7 +31727,7 @@ import_tables:
 上京	ciunn kiann
 上轎	ciunn kio
 上櫃	ciunn kui
-上懸	ciunn kuAinn
+上懸	ciunn kuainn
 上官	ciunn kuann
 上街	ciunn kere
 上斤	ciunn kern
@@ -31736,7 +31736,7 @@ import_tables:
 上瀨	ciunn lua
 上落	ciunn loh
 上路	ciunn loo
-上門娶	ciunn muI chua
+上門娶	ciunn mui chua
 上五穀	ciunn ngoo kok
 上年	ciunn ni
 上樑	ciunn niu
@@ -31745,7 +31745,7 @@ import_tables:
 上北	ciunn pak
 上北落南	ciunn pak loh lam
 上班	ciunn pan
-上班	sIang pan
+上班	siang pan
 上範	ciunn pan
 上簿	ciunn phoo
 上棚	ciunn penn
@@ -31755,7 +31755,7 @@ import_tables:
 上色	ciunn sik
 上數	ciunn siau
 上身	ciunn sin
-上算	ciunn suInn
+上算	ciunn suinn
 上山	ciunn suann
 上山頭	ciunn suann thau
 上台	ciunn tai
@@ -31765,7 +31765,7 @@ import_tables:
 上釣	ciunn tiau
 上丁	ciunn ting
 上場	ciunn tiunn
-上場	sIang tiunn
+上場	siang tiunn
 上頭上面	ciunn thau ciunn bin
 上廳	ciunn thiann
 上天庭	ciunn thian ting
@@ -31798,7 +31798,7 @@ import_tables:
 搶剝賊	chiunn pak chat
 搶頭香	chiunn thau hiunn
 搶頭標	chiunn thau pio
-搶頭前	chiunn thau caInn
+搶頭前	chiunn thau cainn
 搶救	chiunn kiu
 搶奪	chiunn tuat
 搶銀行	chiunn gern hang
@@ -31806,14 +31806,14 @@ import_tables:
 廠房	chiunn pang
 廠牌	chiunn pai
 廠長	chiunn tiunn
-廠商	chiunn sIang
+廠商	chiunn siang
 廠址	chiunn ci
 唱片	chiunn phinn
 唱曲	chiunn khik
 唱機	chiunn ki
 唱歌	chiunn kua
 唱歌唸曲	chiunn kua liam khik
-唱懸調	chiunn kuAinn tiau
+唱懸調	chiunn kuainn tiau
 唱唸	chiunn liam
 唱盤	chiunn puann
 薔薇	chiunn bi
@@ -31849,7 +31849,7 @@ import_tables:
 象牙	chiunn gee
 象棋	chiunn ki
 象油	chiunn iu
-象管	chiunn kuInn
+象管	chiunn kuinn
 象鼻	chiunn phi
 象鼻	chiunn phinn
 象皮	chiunn pher
@@ -31900,13 +31900,13 @@ import_tables:
 瘍黐黐	siunn thi thi
 瘍拖拖	siunn thua thua
 瘍瘍	siunn siunn
-想來想去	siunn lai siunn khIR
+想來想去	siunn lai siunn khir
 想說	siunn serh
 想講	siunn kong
 想叫	siunn kio
 想空想縫	siunn khang siunn phang
 想東想西	siunn tang siunn sai
-想前想後	siunn caInn siunn au
+想前想後	siunn cainn siunn au
 想欲	siunn berh
 想袂出	siunn bere chut
 想無路	siunn bo loo
@@ -31921,7 +31921,7 @@ import_tables:
 想起	siunn khi
 想看	siunn khuann
 想見	siunn kinn
-想來想去	siunn lai siunn khIR
+想來想去	siunn lai siunn khir
 想路	siunn loo
 想毋著	siunn m tioh
 想偏	siunn phian
@@ -31931,12 +31931,12 @@ import_tables:
 想心想肝	siunn sim siunn kuann
 想賺	siunn tann
 想短路	siunn ter loo
-想貪軁雞罨	siunn tham nuI kere am
+想貪軁雞罨	siunn tham nui kere am
 想退悔	siunn ther hue
 想定	siunn tiann
 想著	siunn tioh
-想轉	siunn tuInn
-想倒轉	siunn to tuInn
+想轉	siunn tuinn
+想倒轉	siunn to tuinn
 想差	siunn cha
 想法	siunn huat
 尚書	siunn sir
@@ -32049,7 +32049,7 @@ import_tables:
 摁儂	hmh lang
 摁死	hmh si
 摁倒	hmh to
-摁落去	hmh loh khIR
+摁落去	hmh loh khir
 媒儂	hm lang
 媒儂	mue lang
 媒儂	mue lang
@@ -32067,12 +32067,12 @@ import_tables:
 茅草	hm chau
 默默	hmh hmh
 ##	ng/ngh
-嗯	ng1
-央	ng1
-掩	ng1	10
-秧	ng1
-影	ng2
-向	ng3
+嗯	Øng1
+央	Øng1
+掩	Øng1	10
+秧	Øng1
+影	Øng2
+向	Øng3
 嗯	ngh8
 幫	png1
 楓	png1
@@ -32149,7 +32149,7 @@ import_tables:
 掩掩揜揜	ng ng iap iap
 秧仔	ng a
 秧仔田	ng a chan
-秧仔園	ng a huInn
+秧仔園	ng a huinn
 秧田	ng chan
 秧船	ng cun
 秧埕	ng tiann
@@ -32160,7 +32160,7 @@ import_tables:
 向西	ng sai
 向後	ng au
 向望	ng bang
-向前	ng caInn
+向前	ng cainn
 幫貼	png thiap
 幫補	png poo
 幫注	png tu
@@ -32171,15 +32171,15 @@ import_tables:
 傍福氣	png hok khi
 傍神	png sin
 傍官靠勢	png kuann kho se
-傍官靠勢	png kuann khoO se
+傍官靠勢	png kuann khoo se
 傍著	png tioh
-毛管	mng kuInn
-毛管空	mng kuInn khang
+毛管	mng kuinn
+毛管空	mng kuinn khang
 毛刺	mng chi
 毛尾仔	mng ber a
 毛跤	mng kha
-毛管	moo kuInn
-毛管空	moo kuInn khang
+毛管	moo kuinn
+毛管空	moo kuinn khang
 毛刺	moo chi
 毛尾仔	moo ber a
 毛跤	moo kha
@@ -32207,7 +32207,7 @@ import_tables:
 長壽	tng siu
 長歲壽	tng her siu
 長短跤	tng ter kha
-長交關短算數	tng kau kuan ter suInn siau
+長交關短算數	tng kau kuan ter suinn siau
 長手	tng chiu
 長跤	tng kha
 長跤躼手	tng kha lio chiu
@@ -32223,8 +32223,8 @@ import_tables:
 長暝	tng mee
 長命	tng mia
 長衫	tng sann
-長䘼	tng uInn
-長䘼兮	tng uInn e
+長䘼	tng uinn
+長䘼兮	tng uinn e
 長褲	tng khoo
 長聲	tng siann
 長賒短欠	tng sia ter khiam
@@ -32239,7 +32239,7 @@ import_tables:
 長年久月	tng ni ku gerh
 長佬佬	tng lo lo
 長尾星	tng ber chenn
-長尻川	tng kha chuInn
+長尻川	tng kha chuinn
 長躼埽	tng lo so
 長年菜	tng ni chai
 長途	tng too
@@ -32310,12 +32310,12 @@ import_tables:
 糖霜寮	thng sng liau
 糖霜寮仔	thng sng liau a
 糖黏黏	thng liam liam
-碭光	thng kuInn
+碭光	thng kuinn
 兩个
 兩爿
 兩百
-兩千	nng chaInn
-兩千	noo chaInn
+兩千	nng chainn
+兩千	noo chainn
 兩萬
 兩億
 扛轎	kng kio
@@ -32379,7 +32379,7 @@ import_tables:
 驚蟄	kenn tit
 驚蟄	king tik
 春分	chun hun
-清明	chaInn mia
+清明	chainn mia
 穀雨	kok u
 立夏	lip hee
 小滿	sio buan
@@ -32401,7 +32401,7 @@ import_tables:
 大寒	tai han
 ##	朝代
 夏朝	ha tiau
-商朝	sIang tiau
+商朝	siang tiau
 周朝	ciu tiau
 西周	se ciu
 東周	tong ciu
@@ -32417,10 +32417,10 @@ import_tables:
 吳王
 夫差	hu cha
 宋國	song kok
-宋襄公	song sIang kong
+宋襄公	song siang kong
 越國	uat kok
 越王	uat ong
-勾踐	kiO cian
+勾踐	kio cian
 秦國	cin kok
 秦穆公	cin bok kong
 鄭國	ting kok
@@ -32474,8 +32474,8 @@ import_tables:
 唐高宗
 唐中宗	tong tiong cong
 唐睿宗	tong jue cong
-武后	bu hiO
-武后	bu hIO
+武后	bu hio
+武后	bu hio
 武則天	bu cik thian
 武則天	bu cerk thian
 武則天	bu cak thian
@@ -32484,16 +32484,16 @@ import_tables:
 開元	khai guan
 開元盛世	khai guan sing se
 五代	ngoo tai
-後梁	hiO lIang
-後梁	hIO lIang
-後唐	hiO tong
-後唐	hIO tong
-後晉	hiO cin
-後晉	hIO cin
-後漢	hiO han
-後漢	hIO han
-後周	hiO ciu
-後周	hIO ciu
+後梁	hio liang
+後梁	hio liang
+後唐	hio tong
+後唐	hio tong
+後晉	hio cin
+後晉	hio cin
+後漢	hio han
+後漢	hio han
+後周	hio ciu
+後周	hio ciu
 十國	sip kok
 宋朝	song tiau
 北宋	pak song
@@ -32507,8 +32507,8 @@ import_tables:
 明太祖	bing thai coo
 明成祖	bing sing coo
 永樂	ing lok
-後金	hiO kim
-後金	hIO kim
+後金	hio kim
+後金	hio kim
 清朝	ching tiau
 愛新覺羅	ai sin kak lo
 康熙	khong hi
@@ -32518,17 +32518,17 @@ import_tables:
 中華人民共和國	tiong hua jin bin kiong ho kok
 ##	都城
 安邑	an ip
-陽翟	Iang tik
+陽翟	iang tik
 鎬京	ho kiann
 洛邑	lok ip
-咸陽	ham Iang
-長安	tIang an
+咸陽	ham iang
+長安	tiang an
 建業	kian giap
 建康	kian khong
 大興	tai hing
 臨安	lim an
 皇都	hong too
-上京	sIang kiann
+上京	siang kiann
 會寧	hue ling
 中都	tiong too
 大都	tai too
@@ -32540,7 +32540,7 @@ import_tables:
 北極	pak kik
 南極	lam kik
 赤道	chik to
-赤道	chik toO
+赤道	chik too
 熱帶	jiat tai
 副熱帶	hu jiat tai
 溫帶	un tai
@@ -32590,7 +32590,7 @@ import_tables:
 歐美	au bi
 歐盟	au bing
 歐共體	au kiong the
-北約	pak Iak
+北約	pak iak
 大洋洲	tua iunn ciu
 非洲	hui ciu
 北非	pak hui
@@ -32610,7 +32610,7 @@ import_tables:
 首爾
 朝鮮	tiau sian
 朝鮮語	tiau sian gir
-平壤	ping jIang
+平壤	ping jiang
 北韓	pak han
 南韓	lam han
 日本	jit pun
@@ -32644,7 +32644,7 @@ import_tables:
 柬埔寨	kan phoo cee
 金邊	kim pian
 緬甸	bian tian
-仰光	gIang kong
+仰光	giang kong
 菲律賓	hui lut pin
 菲律賓	hui lit pin #异
 馬尼拉	ma ni la
@@ -32652,7 +32652,7 @@ import_tables:
 曼谷	ban kok
 泰語	thai gir
 老撾	lau o
-萬象	ban sIang
+萬象	ban siang
 越南	uat lam
 越南語	uat lam gir
 河內	ho lai
@@ -32676,7 +32676,7 @@ import_tables:
 馬累	ma lui
 巴基斯坦	pa ki sur than
 科威特	kho ui tik
-阿塞拜疆	a sai pai kIang
+阿塞拜疆	a sai pai kiang
 巴庫	pa khoo
 伊朗	i long
 波斯	pho sur
@@ -32761,13 +32761,13 @@ import_tables:
 秘魯	pi loo
 阿根廷	a kirn ting
 ##	中國
-香港	hIang kang
+香港	hiang kang
 澳門
 北京	pak kiann
 北京話	pak kiann uee
 天津	thian tin
-上海	sIang hai
-上海話	sIang hai uee
+上海	siang hai
+上海話	siang hai uee
 重慶	tiong khing
 重慶話	tiong khing uee
 河北	ho pak
@@ -32787,11 +32787,11 @@ import_tables:
 河南省	ho lam sing
 開封	khai hong
 郑州	tenn ciu
-安阳	an Iang
-洛陽	lok Iang
-南陽	lam Iang
-商丘	sIang khiu
-信陽	sin Iang
+安阳	an iang
+洛陽	lok iang
+南陽	lam iang
+商丘	siang khiu
+信陽	sin iang
 固始	koo si
 中原官話	tiong guan kuann uee
 山西	suann sai
@@ -32802,7 +32802,7 @@ import_tables:
 山東省	suann tang sing
 濟南	ce lam
 青島	ching to
-青島	ching toO
+青島	ching too
 大連	tai lian
 菏澤	ho tik
 聊城	liau siann
@@ -32824,14 +32824,14 @@ import_tables:
 蘇南	soo lam
 江南	kang kam
 江東	kang tong
-蘇錫常	soo sik sIang
+蘇錫常	soo sik siang
 吳語
 北吳
 南京	lam kiann
 金陵	kim ling
 南京話	lam kiann uee
 無錫	bu sik
-常州	sIang ciu
+常州	siang ciu
 蘇州	soo ciu
 蘇州話	soo ciu uee
 姑蘇	koo soo
@@ -32871,7 +32871,7 @@ import_tables:
 合肥
 安慶	an khing
 池州	ti ciu
-阜陽	hu Iang
+阜陽	hu iang
 淮北	huai pak
 淮南	huai lam
 六安	liok an
@@ -32887,14 +32887,14 @@ import_tables:
 江西	kang sai
 江西省	kang sai sing
 江右	kang iu
-南昌	lam chIang
+南昌	lam chiang
 贛語	kam gir
 湖北	oo pak
 湖北省	oo pak sing
 武漢	bu han
 湖南省	oo lam sing
-長沙	tIang sa
-湘語	sIang gir
+長沙	tiang sa
+湘語	siang gir
 湖南話	oo lam uee
 四川	sur chuan
 成都	sing too
@@ -32904,10 +32904,10 @@ import_tables:
 四川話	sur chuan uee
 巴蜀	pa siok
 天府之國	thian hu ci kok
-廣東	kuInn tang
-廣東省	kuInn tang sing
-廣州	kuInn ciu
-廣府	kuInn hu
+廣東	kuinn tang
+廣東省	kuinn tang sing
+廣州	kuinn ciu
+廣府	kuinn hu
 深圳	chim cun
 珠海	cu hai
 東莞	tang kuan
@@ -32925,8 +32925,8 @@ import_tables:
 陸豐	liok hong
 潮州話	tio ciu uee
 潮汕	tio suann
-廣西	kuInn sai
-廣西省	kuInn sai sing
+廣西	kuinn sai
+廣西省	kuinn sai sing
 桂林	kui lim
 柳州	liu ciu
 桂柳話	kui liu uee
@@ -32937,7 +32937,7 @@ import_tables:
 海南話	hai lam uee
 貴州	kui ciu
 貴州省	kui ciu sing
-貴陽	kui Iang
+貴陽	kui iang
 雲南	hun lam
 雲南省	hun lam sing
 昆明	khun bing
@@ -32951,14 +32951,14 @@ import_tables:
 青海省	ching hai sing
 西寧	se ling
 寧夏	ling ha
-新疆	sin kIang
+新疆	sin kiang
 西藏	se cong
 遼寧	liau ling
 遼寧省	liau ling sing
-瀋陽	sim Iang
+瀋陽	sim iang
 吉林	kiat lim
 吉林省	kiat lim sing
-長春	tIang chun
+長春	tiang chun
 黑龍江	hik liong kang
 黑龍江省	hik liong kang sing
 哈爾濱
@@ -32974,23 +32974,23 @@ import_tables:
 龍岩
 南平	lam ping
 ##	水生
-白魚	peeh hIR
-白帶魚	peeh tua hIR
+白魚	peeh hir
+白帶魚	peeh tua hir
 墨賊	bak cat
 墨賊	bat cat
 石矩	cioh kir
 花枝	huee ki
-鎖管	so kuInn
-小管仔	sio kuInn a
-小管	sio kuInn
-軟絲仔	nuI si a
+鎖管	so kuinn
+小管仔	sio kuinn a
+小管	sio kuinn
+軟絲仔	nui si a
 透抽	thau thiu
-鰇魚	jiu hIR
-鰻魚	mua hIR
-鯽魚	cit hIR
+鰇魚	jiu hir
+鰻魚	mua hir
+鯽魚	cit hir
 非洲鯽	hui ciu cit
-草魚	chau hIR
-鱔魚	sian hIR
+草魚	chau hir
+鱔魚	sian hir
 塗虱	thoo sat
 塗鰡	thoo liu
 鰗鰡	hoo liu
@@ -33014,18 +33014,18 @@ import_tables:
 蠘仔	chih a
 毛蟹
 沙梭	sua so
-梭仔魚	so a hIR
-鮑魚	pau hIR
+梭仔魚	so a hir
+鮑魚	pau hir
 巴郎	pa lang
-巴郎魚	pa lang hIR
+巴郎魚	pa lang hir
 煙仔	ian a
-煙仔魚	ian a hIR
-黃翼	uInn sit
-鯊魚	sua hIR
+煙仔魚	ian a hir
+黃翼	uinn sit
+鯊魚	sua hir
 魴仔	hang a
 海翁	hai ang
 海象	hai chiunn
-海豬	hai tIR
+海豬	hai tir
 海狗	hai kau
 海馬	hai bee
 海豹	hai pa
@@ -33040,18 +33040,18 @@ import_tables:
 海蟹	hai here
 海鷹	hai ing
 海隅	hai gu
-狗母魚	kau bu hIR
-狗母魚	kau bo hIR
-烏胿魚	oo kui hIR
+狗母魚	kau bu hir
+狗母魚	kau bo hir
+烏胿魚	oo kui hir
 田螺	chan lEr
 長釘螺	tng tan lEr
 鵝蚌
-皇帝魚	hong te hIR
-肉魚	hik hIR
-虱目魚	sat bak hIR
+皇帝魚	hong te hir
+肉魚	hik hir
+虱目魚	sat bak hir
 馬跤	bee kha
-馬跤魚	bee kha hIR
-紅花魚	ang huee hIR
+馬跤魚	bee kha hir
+紅花魚	ang huee hir
 沙蜊	sua la
 蜊仔	la a
 烏鯧	oo chiunn
@@ -33059,27 +33059,27 @@ import_tables:
 紅娘仔	ang niu a
 海鰱	hai lian
 鰨紗	thah see
-扁魚	pinn hIR
-金魚	kim hIR
+扁魚	pinn hir
+金魚	kim hir
 四破	si phua
-四破魚	si phua hIR
-旗魚	ki hIR
-劍魚	kiam hIR
-鮪魚	ui hIR
+四破魚	si phua hir
+旗魚	ki hir
+劍魚	kiam hir
+鮪魚	ui hir
 鬼頭刀	kui thau to
 水母
 水螺	cui lEr
 水獺	cui thuah
-銀魚	gern hIR
+銀魚	gern hir
 江瑤柱	kang iau cu
 海䖳	hai thee
 番䖳	huan thee
-鯧仔魚	chiunn a hIR
-鯧魚	chiunn hIR
-鱖魚	ker hIR
-鬼仔魚	kui a hIR
+鯧仔魚	chiunn a hir
+鯧魚	chiunn hir
+鱖魚	ker hir
+鬼仔魚	kui a hir
 紅魽	ang kam
-魽魚	kam hIR
+魽魚	kam hir
 ##	蟲豸
 烏虼蠐	oo ka ce
 𧌄蜅蠐	am poo ce
@@ -33103,12 +33103,12 @@ import_tables:
 海虼蚻	hai ka cuah
 狗蟻	kau hia
 軍蟻	kun hia
-黃絲蟻	uInn si hia
+黃絲蟻	uinn si hia
 白蟻	peeh hia
 雞母蟲
 蟧蜈	la gia
 蜜蜂	bit phang
-黃蜂	uInn phang
+黃蜂	uinn phang
 塗猴	thoo kau
 杜猴	too kau
 草猴	chau kau
@@ -33137,7 +33137,7 @@ import_tables:
 ##	四跤
 四跤蛇	si kha cua
 錦蛇	kim cua
-鱷魚	khok hIR
+鱷魚	khok hir
 鯪鯉	la li
 烏龜	oo ku
 百步蛇	pah poo cua
@@ -33145,7 +33145,7 @@ import_tables:
 七步蛇	chit poo cua
 水蛇	cui cua
 海蛇	hai cua
-飯匙銃	puInn si ching
+飯匙銃	puinn si ching
 青竹絲	chenn tik si
 簸箕甲	pua ki kah
 土地公蛇	thoo ti kong cua
@@ -33194,7 +33194,7 @@ import_tables:
 鷓鴣	cia koo
 燕仔	inn a
 鵁鴒	ka ling
-孔雀	khong chIak
+孔雀	khong chiak
 鸕鶿	loo cur
 白鶴	peeh hoh
 天鵝	thian gia
@@ -33203,12 +33203,12 @@ import_tables:
 鸚哥	ing ko
 金絲鳥	kim si ciau
 伯勞	pik lo
-伯勞	pik loO
+伯勞	pik loo
 長尾山娘	tng ber suann niu
 水鳥	cui ciau
 水鴛鴦	cui uan iunn
-黃鶯	uInn ing
-黃鸝	uInn le
+黃鶯	uinn ing
+黃鸝	uinn le
 ##	野獸
 日婆	jit po
 密婆	bit po
@@ -33223,7 +33223,7 @@ import_tables:
 老虎	lau hoo
 犀牛	sai gu
 山貓	suann niau
-山豬	suann tIR
+山豬	suann tir
 兔仔	thoo a
 大象	tua chiunn
 猴仔	kau a
@@ -33235,7 +33235,7 @@ import_tables:
 麒麟鹿	ki lin lok
 野狗	ia kau
 野貓	ia niau
-野豬	ia tIR
+野豬	ia tir
 野馬	ia bee
 野牛	ia gu
 赤牛	chiah gu
@@ -33245,7 +33245,7 @@ import_tables:
 刺蝟	chi ui
 長尾猴	tng ber kau
 水牛
-黃牛	uInn gu
+黃牛	uinn gu
 ##	菜蔬
 瓜仔	kuee a
 菜頭	chai thau
@@ -33310,14 +33310,14 @@ import_tables:
 甜瓜	tinn kuee
 敏豆	bin tau
 七棧塔	chit can thah
-黃瓜	uInn kuee
+黃瓜	uinn kuee
 木瓜	bok kuee
 芳菜	phang chai
 抿豆	bin tau
 ##	水果
 蘋果	phing ko
-蘋果	phing koO
-蘋果	phiang koO
+蘋果	phing koo
+蘋果	phiang koo
 蘋果	phong ko
 梨仔	lai a
 王梨	ong lai
@@ -33336,9 +33336,9 @@ import_tables:
 楊梅	chiunn m
 楊梅	chiu m
 火梅	her m
-龍眼	ling ngaI
-龍眼	ging ngaI
-荔枝	naI ci
+龍眼	ling ngai
+龍眼	ging ngai
+荔枝	nai ci
 荔枝	lian ci
 燈柿	ting khi
 柿仔	khi a
@@ -33366,7 +33366,7 @@ import_tables:
 刺竹	chi tik
 梔仔	ki a
 梔仔花	ki a huee
-黃梔仔花	uInn ki a huee
+黃梔仔花	uinn ki a huee
 龜殼花	ku khak huee
 木棉	bok mi
 仙人球	sian jin kiu
@@ -33375,7 +33375,7 @@ import_tables:
 火巷	her hang
 荖藤	lau tin
 瑞香	sui hiunn
-瑞香	sui hIang
+瑞香	sui hiang
 ##	音韻學
 音韻	im un
 音韻學	im un hak
@@ -33390,7 +33390,7 @@ import_tables:
 十五音	sip ngoo im
 韻圖	un too
 反切	huan chiat
-上字	sIang ji
+上字	siang ji
 下字	ha ji
 重韻	tiong un
 重紐	tiong liu
@@ -33406,16 +33406,16 @@ import_tables:
 平仄	piann ceeh
 仄聲	ceeh siann
 陰平	im piann
-陽平	Iang piann
-上聲	sIang siann
-陰上	im sIang
-陽上	Iang sIang
-去聲	khIR siann
-陰去	im khIR
-陽去	Iang khIR
+陽平	iang piann
+上聲	siang siann
+陰上	im siang
+陽上	iang siang
+去聲	khir siann
+陰去	im khir
+陽去	iang khir
 入聲	jip siann
 陰入	im jip
-陽入	Iang jip
+陽入	iang jip
 舒聲	sir siann
 促聲	chiok siann
 ##	日期
@@ -33487,13 +33487,13 @@ import_tables:
 雙魚座
 ##	地名
 鯉城	li siann
-鯉城區	li siann khU
+鯉城區	li siann khu
 豐澤	hong tik
-豐澤區	hong tik khU
+豐澤區	hong tik khu
 洛江	lok kang
-洛江區	lok kang khU
+洛江區	lok kang khu
 泉港	cuan kang
-泉港區	cuan kang khU
+泉港區	cuan kang khu
 晉江	cin kang
 晉江市	cin kang chi
 石獅	cioh sai
@@ -33501,57 +33501,57 @@ import_tables:
 南安	lam uann
 南安市	lam uann chi
 惠安	hui uann
-惠安縣	hui uann kuAinn
+惠安縣	hui uann kuainn
 德化	tik huee
-德化縣	tik huee kuAinn
+德化縣	tik huee kuainn
 永春	ing chun
-永春縣	ing chun kuAinn
+永春縣	ing chun kuainn
 安溪	an khere
-安溪縣	an khere kuAinn
-薌城	hIang siann
-薌城區	hIang siann khU
+安溪縣	an khere kuainn
+薌城	hiang siann
+薌城區	hiang siann khu
 龍文	liong bun
-龍文區	liong bun khU
+龍文區	liong bun khu
 龍海	liong hai
 龍海市	liong hai chi
 雲霄	un sio
-雲霄縣	un sio kuAinn
+雲霄縣	un sio kuainn
 漳浦	ciunn phoo
-漳浦縣	ciunn phoo kuAinn
+漳浦縣	ciunn phoo kuainn
 詔安	ciau an
-詔安縣	ciau an kuAinn
+詔安縣	ciau an kuainn
 長泰	tio thua
-長泰縣	tio thua kuAinn
+長泰縣	tio thua kuainn
 東山	tang suann
-東山縣	tang suann kuAinn
+東山縣	tang suann kuainn
 南靖	lam cing
-南靖縣	lam cing kuAinn
+南靖縣	lam cing kuainn
 平和	ping ho
-平和縣	ping ho kuAinn
+平和縣	ping ho kuainn
 華安	hua an
-華安縣	hua an kuAinn
+華安縣	hua an kuainn
 思明	sir bing
-思明區	sir bing khU
+思明區	sir bing khu
 湖里	oo li
-湖里區	oo li khU
+湖里區	oo li khu
 海滄	hai chng
-海滄區	hai chng khU
+海滄區	hai chng khu
 同安	tang uann
-同安區	tang uann khU
-翔安	sIang uann
-翔安區	sIang uann khU
+同安區	tang uann khu
+翔安	siang uann
+翔安區	siang uann khu
 臺北	tai pak
 臺北市	tai pak chi
-臺北縣	tai pak kuAinn
+臺北縣	tai pak kuainn
 臺中	tai tiong
 臺中市	tai tiong chi
-臺中縣	tai tiong kuAinn
+臺中縣	tai tiong kuainn
 臺南	tai lam
 臺南市	tai lam chi
-臺南縣	tai lam kuAinn
+臺南縣	tai lam kuainn
 臺東	tai tang
 臺東市	tai tang chi
-臺東縣	tai tang kuAinn
+臺東縣	tai tang kuainn
 新北	sin pak
 新北市	sin pak chi
 高雄
@@ -33561,37 +33561,37 @@ import_tables:
 基隆市	ke lang chi
 新竹	sin tik
 新竹市	sin tik chi
-新竹縣	sin tik kuAinn
+新竹縣	sin tik kuainn
 嘉義	ka gi
 嘉義市	ka gi chi
-嘉義縣	ka gi kuAinn
-桃園	tho huInn
-桃園市	tho huInn chi
-桃園縣	tho huInn kuAinn
+嘉義縣	ka gi kuainn
+桃園	tho huinn
+桃園市	tho huinn chi
+桃園縣	tho huinn kuainn
 苗栗	biau lik
 苗栗市	biau lik chi
-苗栗縣	biau lik kuAinn
+苗栗縣	biau lik kuainn
 彰化
 彰化市
 彰化縣
 南投	lam tau
 南投市	lam tau chi
-南投縣	lam tau kuAinn
+南投縣	lam tau kuainn
 雲林	hun lim
-雲林縣	hun lim kuAinn
+雲林縣	hun lim kuainn
 屏東	pin tong
 屏東市	pin tong chi
-屏東縣	pin tong kuAinn
+屏東縣	pin tong kuainn
 宜蘭	gi lan
 宜蘭市	gi lan chi
-宜蘭縣	gi lan kuAinn
+宜蘭縣	gi lan kuainn
 花蓮	hua lian
 花蓮市	hua lian chi
-花蓮縣	hua lian kuAinn
+花蓮縣	hua lian kuainn
 澎湖	phenn oo
-澎湖縣	phenn oo kuAinn
-金門	kim muI
-金門縣	kim muI kuAinn
+澎湖縣	phenn oo kuainn
+金門	kim mui
+金門縣	kim mui kuainn
 ##	科技
 百度	pah too
 新浪	sin long
@@ -33608,7 +33608,7 @@ import_tables:
 ##	信息技術
 機箱	ki siunn
 主板	cu pan
-中央處理器	tiong Iang chir li khi
+中央處理器	tiong iang chir li khi
 顯卡	hian khah
 聲卡	siann khah
 鼠標	chir piau
@@ -33618,19 +33618,19 @@ import_tables:
 中鍵	tiong kian
 回車鍵	hue chia kian
 空格鍵	khang keeh kian
-軟盤	nuI puann
-軟件	nuI kiann
-軟碟	nuI tiap
+軟盤	nui puann
+軟件	nui kiann
+軟碟	nui tiap
 硬盤	ngee puann
 硬件	ngee kiann
 硬碟	ngee tiap
-光盤	kuInn puann
+光盤	kuinn puann
 雲端	hun tuan
 內存	lai cun
 內存條	lai cun tiau
 內存卡	lai cun khah
-翕相頭	hip sIang thau
-翕相頭	hap sIang thau
+翕相頭	hip siang thau
+翕相頭	hap siang thau
 拍印	phah in
 拍印機	phah in ki
 印色盒	in sik ah
