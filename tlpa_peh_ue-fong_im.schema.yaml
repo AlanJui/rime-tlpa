@@ -39,42 +39,42 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~[/\]<>-;0'
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~[/\]<>-=;'
   initials: abcdefghijklmnopqrstuvwxyz
   delimiter: " '"
   algebra:
     # 零聲母處理
     - derive/Ø//
-    - derive/q//
+    #------------------------------------------------------
+    - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
+    #------------------------------------------------------
     # 與其它拼音法相容
     # - derive/ou/oo/
     # - derive/e(ng|k)/i$1/
     # - derive/ei/e/
     # - derive/ee/e/
-    #======================================================
+    #------------------------------------------------------
+    # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     - derive/^([a-z]+)\d$/$1/
-    - abbrev/^([Øptkmnbglsjhiuc]g?s?h?h?).*/$1/
-    #======================================================
-    # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
-    # 0: 0
-    # 1: _ (底線)
+    #------------------------------------------------------
+    # 將 ‘調號’ 對映成 ‘鍵盤按鍵’
+    # 0: ;
+    # 1: [
     # 2: /
     # 3: \
-    # 4: [
+    # 4: ]
     # 5: <
     # 6: >
     # 7: -
-    # 8: ]
-    #======================================================
-    - 'xlit 123456780 [/\]<>-=0'
+    # 8: =
+    #------------------------------------------------------
+    - 'xlit 123456780 [/\]<>-=;'
 
 translator:
   # dictionary: tlpa_sip_ngoo_im
   dictionary: tlpa_peh_ue
   spelling_hints: 5
   preedit_format:
-    #======================================================
-    - 'xlit [/\]<>-=0 123456780'
     #======================================================
     # 令候選字視窗，可顯示兩組「注音/拼音」
     # 左邊：方音符號；右邊：十五音（河洛十八音）
@@ -210,6 +210,7 @@ translator:
     # 韻化輔音
     - xform/ng/ㆭ/  # 鋼
     - xform/m/ㆬ/  # 姆
+    - xform/n/ㄣ/
     #------------------------------------------------------
     # 校調
     #------------------------------------------------------
@@ -273,18 +274,22 @@ translator:
     - 'xform 8 ˙'    #8
   comment_format:
     #======================================================
-    # 調整候選字視窗左半邊
+    # 去除 '零聲母' 符號(空集合)
     #======================================================
-    # 將 '零聲母' 符號(空集合) 去除，並處理韻母和韻化輔音
-    - xform/^(Ø)[a-z]+(\d)/$2/
-    - xform/^(Ø)(a|e|i|o|u|oo|m|ng)(\d)/$2$3/
+    # 處理對象: 無聲母，接 '元音韻母' 或 '韻化輔音'
+    - xform/^(Ø)(a|e|i|o|u|oo|m|ng)([;\[\/\\\]\<\>\-=])/$2$3/
+    # - xform/^(Ø)[a-z]+(\d)/$2/
+    # - xform/^(Ø)(a|e|i|o|u|oo|m|ng)(\d)/$2$3/
+    # 處理對象: 無聲母，接複合韻母（iong, uan, ...）
+    - xform/^(Ø)([a-z]+)([;\[\/\\\]\<\>\-=])/$2$3/
     #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
-    - xform|nn(h?)(\d|\>)|$1ⁿ$2|
     # - 'xform/(nn)(h?)([12345678])/ⁿ$2$3/'
+    - xform|nn(h?)([;\[\/\\\]\<\>\-=]|\>)|$1ⁿ$2|
     #------------------------------------------------------
     # 標調
-    - 'xlit 012345678 ⁰¹²³⁴⁵⁶⁷⁸'
+    # - 'xlit 012345678 ⁰¹²³⁴⁵⁶⁷⁸'
+    - 'xlit ;[/\]<>-= ⁰¹²³⁴⁵⁶⁷⁸'
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -296,20 +301,15 @@ reverse_lookup:
 punctuator:
   import_preset: default
 
-recognizer:
-  import_preset: default
-  patterns:
-    reverse_lookup: "`[a-z]*$"
-
-style:
-  horizontal: false
-
 key_binder:
   import_preset: default
   bindings:
-    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    - { when: has_menu, accept: minus, send: "-" } # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: composing } # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: "-", when: always } # 確保 `-` 鍵用於聲調 7
+    - { accept: equal, send: "8", when: composing } # 確保 `=` 鍵用於聲調 0
+    - { accept: less, send: "<", when: composing } # 確保 `<` 鍵用於聲調 5
+    - { accept: greater, send: ">", when: composing } # 確保 `>` 鍵用於聲調 6
     # 翻頁
     - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
     - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
@@ -330,3 +330,12 @@ editor:
     Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*$"
+
+style:
+  horizontal: false
+

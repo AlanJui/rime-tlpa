@@ -5,10 +5,13 @@ customization:
   modified_time: "Tue May 21 13:16:43 2024"
   rime_version: 1.11.2
 patch:
-  # "style/font_face": "PMingLiU, BopomofoRuby1909-v1"
-  # "style/font_face": "LXGW WenKai Mono"
-  # "style/font_face": "Noto Sans TC"
-  "style/font_face": "KaiTi"
+  # "style/font_face": "BopomofoRuby1909-v1"
+  # "style/font_face": "BopomofoRuby1909-v1, LXGW WenKai Mono"
+  # "style/font_face": "BopomofoRuby1909-v1, Noto Serif TC"
+  # "style/font_face": "BopomofoRuby1909-v1, KaiTi"
+  # "style/font_face": "BopomofoRuby1909-v1, Microsoft JhengHei"
+  # "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
+  "style/font_face": "BopomofoRuby1909-v1, Noto Serif TC"
   "style/font_point": 28
   "style/horizontal": true
   "tyle/inline_preedit": true  # 內嵌編碼（僅支持TSF）
