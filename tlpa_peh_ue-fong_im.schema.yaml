@@ -39,7 +39,7 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~[/\]<>-=;'
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~=\_[/<-];'
   initials: abcdefghijklmnopqrstuvwxyz
   delimiter: " '"
   algebra:
@@ -58,18 +58,18 @@ speller:
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     - derive/^([a-z]+)\d$/$1/
     #------------------------------------------------------
-    # 將 ‘調號’ 對映成 ‘鍵盤按鍵’
+    # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
+    #------------------------------------------------------
     # 0: ;
     # 1: [
-    # 2: /
-    # 3: \
-    # 4: ]
-    # 5: <
-    # 6: >
+    # 2: \
+    # 3: _
+    # 4: [
+    # 5: /
+    # 6: <
     # 7: -
-    # 8: =
-    #------------------------------------------------------
-    - 'xlit 123456780 [/\]<>-=;'
+    # 8: ]
+    - 'xlit 123456780 =\_[/<-];'
 
 translator:
   # dictionary: tlpa_sip_ngoo_im
@@ -80,10 +80,6 @@ translator:
     # 令候選字視窗，可顯示兩組「注音/拼音」
     # 左邊：方音符號；右邊：十五音（河洛十八音）
     #======================================================
-    # - xform/^([Øa-z]+\d)$/$1;$1/
-    # - xform/^([a-z]+\d)$/$1【;$1】/
-    # - xform/^([Øa-z]+\d)$/$1【;$1】/
-    #------------------------------------------------------
     - xform/^p(?!h)/ㄅ/
     - xform/^ph/ㄆ/
     - xform/^m/ㄇ/
@@ -225,27 +221,27 @@ translator:
     # 鼻韻處理
     #------------------------------------------------------
     # 元音鼻韻處理
-    - xform/ㄚnn/ㆩ/
-    - xform/ㄧnn/ㆪ/
-    - xform/ㄨnn/ㆫ/
-    - xform/ㆤnn/ㆥ/
-    - xform/ㆦnn/ㆧ/
+    - xform/ㄚㄣㄣ/ㆩ/
+    - xform/ㄧㄣㄣ/ㆪ/
+    - xform/ㄨㄣㄣ/ㆫ/
+    - xform/ㆤㄣㄣ/ㆥ/
+    - xform/ㆦㄣㄣ/ㆧ/
     # 組合韻母鼻韻處理
-    - xform/ㄞnn/ㆮ/  # ainn
-    - xform/ㄠnn/ㆯ/  # aunn
+    - xform/ㄞㄣㄣ/ㆮ/  # aiㄣㄣ
+    - xform/ㄠㄣㄣ/ㆯ/  # auㄣㄣ
     #------------------------------------------------------
     # 韻腹鼻韻處理
     #------------------------------------------------------
     # 含介音[i]之組合韻母鼻韻處理
-    - xform/ㄧㄚnn/ㄧㆩ/  # iann
-    - xform/ㄧㄠnn/ㄧㆯ/  # iaunn
-    - xform/ㄧㄜnn/ㄧㆧ/  # ionn
-    - xform/ㄧㄨnn/ㄧㆫ/  # iunn
+    - xform/ㄧㄚㄣㄣ/ㄧㆩ/  # iaㄣㄣ
+    - xform/ㄧㄠㄣㄣ/ㄧㆯ/  # iauㄣㄣ
+    - xform/ㄧㄜㄣㄣ/ㄧㆧ/  # ioㄣㄣ
+    - xform/ㄧㄨㄣㄣ/ㄧㆫ/  # iuㄣㄣ
     # 含介音[u]之組合韻母鼻韻處理
-    - xform/ㄨㄚnn/ㄨㆩ/  # uann
-    - xform/ㄨㄞnn/ㄨㆮ/  # uainn
-    - xform/ㄨㆤnn/ㄨㆥ/  # uenn
-    - xform/ㄨㄧnn/ㄨㆪ/  # uinn
+    - xform/ㄨㄚㄣㄣ/ㄨㆩ/  # uaㄣㄣ
+    - xform/ㄨㄞㄣㄣ/ㄨㆮ/  # uaiㄣㄣ
+    - xform/ㄨㆤㄣㄣ/ㄨㆥ/  # ueㄣㄣ
+    - xform/ㄨㄧㄣㄣ/ㄨㆪ/  # uiㄣㄣ
     #------------------------------------------------------
     # 入聲
     #------------------------------------------------------
@@ -264,33 +260,40 @@ translator:
     #------------------------------------------------------
     # 聲調
     #------------------------------------------------------
-    - 'xform 0 。'   #9 （輕聲在標準方音未定義）
-    - 'xform 1 ˉ'    #1
-    - 'xform 2 ˋ'    #2
-    - 'xform 3 ˪'    #3
-    - 'xform 4 '     #4
-    - 'xform 5 ˊ'    #5
-    - 'xform 6 ˋ'    #2
-    - 'xform 7 ˫'    #7
-    - 'xform 8 ˙'    #8
+    # - 'xlit =\_[<-]; ¹²³⁴⁵⁶⁷⁸⁰'
+    # - 'xform 1 ˉ'    #1
+    # - 'xform 2 ˋ'    #2
+    # - 'xform 3 ˪'    #3
+    # - 'xform 4 '     #4
+    # - 'xform 5 ˊ'    #5
+    # - 'xform 6 ˋ'    #2
+    # - 'xform 7 ˫'    #7
+    # - 'xform 8 ˙'    #8
+    # - 'xform 0 。'   #9 （輕聲在標準方音未定義）
   comment_format:
     #======================================================
-    # 去除 '零聲母' 符號(空集合)
+    # 調整候選字視窗左半邊
+    #
+    # 處理 ’候選字視窗‘ (comment_format) ，會依據
+    # ’拼音字母輸入視窗‘ (preedit_format) ，已輸入之拼音字母，
+    # 顯示可能的候選漢字及其 TLPA 拼音碼。
+    #
+    # 此時的 TLPA  拼音碼，不顥示： ’零聲母‘ 。
+    # 零聲母的格式有兩種：
+    # 1. 零聲母 + 元音韻母 + 調號，如：Øu5, Øi1, ...
+    # 2. 零聲母 + 複合韻母 + 調號，如：Øiau1, Øiong2, ....
+    #
+    # 以下的設定僅只能處理第 1 種格式：
+    # - xform/Ø(a|e|i|o|u|oo|m|ng)(\d)/$1$2/
     #======================================================
-    # 處理對象: 無聲母，接 '元音韻母' 或 '韻化輔音'
-    - xform/^(Ø)(a|e|i|o|u|oo|m|ng)([;\[\/\\\]\<\>\-=])/$2$3/
-    # - xform/^(Ø)[a-z]+(\d)/$2/
-    # - xform/^(Ø)(a|e|i|o|u|oo|m|ng)(\d)/$2$3/
-    # 處理對象: 無聲母，接複合韻母（iong, uan, ...）
-    - xform/^(Ø)([a-z]+)([;\[\/\\\]\<\>\-=])/$2$3/
+    - xform/Ø(a|e|i|o|u|oo|m|ng)(\d)/$1$2/
+    - xform/Ø([aeiou]|oo|[aeiuo]{2,})(\d)/$1$2/
     #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
-    # - 'xform/(nn)(h?)([12345678])/ⁿ$2$3/'
-    - xform|nn(h?)([;\[\/\\\]\<\>\-=]|\>)|$1ⁿ$2|
+    - 'xform/(nn)(h?)(\d)/ⁿ$2$3/'
     #------------------------------------------------------
-    # 標調
-    # - 'xlit 012345678 ⁰¹²³⁴⁵⁶⁷⁸'
-    - 'xlit ;[/\]<>-= ⁰¹²³⁴⁵⁶⁷⁸'
+    # 調號以上標格式顯示
+    - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -299,18 +302,47 @@ reverse_lookup:
   preedit_format:
     - xform/([nljqxy])v/$1ü/
 
-punctuator:
-  import_preset: default
-
 key_binder:
   import_preset: default
   bindings:
-    - { when: has_menu, accept: minus, send: "-" } # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: composing } # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: always } # 確保 `-` 鍵用於聲調 7
-    - { accept: equal, send: "8", when: composing } # 確保 `=` 鍵用於聲調 0
-    - { accept: less, send: "<", when: composing } # 確保 `<` 鍵用於聲調 5
-    - { accept: greater, send: ">", when: composing } # 確保 `>` 鍵用於聲調 6
+    # 確保 `=` 鍵用於聲調 1 (陰平：高平調)
+    - { accept: equal, send: "=", when: composing }
+    # 確保 `/` 鍵用於聲調 5 (陽平：上陽調)
+    - { accept: slash, send: "/", when: composing }
+    # 確保 `\` 鍵用於聲調 2 (陰上：高降調)
+    - { accept: backslash, send: "\\", when: composing }
+    # 確保 `<` 鍵用於聲調 6 (陽上：高揚調)
+    - { accept: less, send: "<", when: composing }
+    # 確保 `_` 鍵用於聲調 3 (陰去)
+    - { accept: underscore, send: "_", when: composing }
+    # 確保 `-` 鍵用於聲調 7 (陽去)
+    - { accept: minus, send: "-", when: composing }
+    # 確保 `[` 鍵用於聲調 4 (陰入)
+    - { accept: bracketleft, send: "[", when: composing }
+    # 確保 `]` 鍵用於聲調 8 (陽入)
+    - { accept: bracketright, send: "]", when: composing }
+    # 確保 `;` 鍵用於聲調 0
+    - {accept: semicolon, send: ';', when: composing}
+    #---------------------------------------------------
+    # # 確保 `=` 鍵用於聲調 1 (陰平：高平調)
+    # - { accept: equal, send: "1", when: composing }
+    # # 確保 `/` 鍵用於聲調 5 (陽平：上陽調)
+    # - { accept: slash, send: "5", when: composing }
+    # # 確保 `\` 鍵用於聲調 2 (陰上：高降調)
+    # - { accept: backslash, send: "2", when: composing }
+    # # 確保 `<` 鍵用於聲調 6 (陽上：高揚調)
+    # - { accept: less, send: "6", when: composing }
+    # # 確保 `_` 鍵用於聲調 3 (陰去)
+    # - { accept: underscore, send: "_", when: composing }
+    # # 確保 `-` 鍵用於聲調 7 (陽去)
+    # - { accept: minus, send: "7", when: composing }
+    # # 確保 `[` 鍵用於聲調 4 (陰入)
+    # - { accept: bracketleft, send: "4", when: composing }
+    # # 確保 `]` 鍵用於聲調 8 (陽入)
+    # - { accept: bracketright, send: "8", when: composing }
+    # # 確保 `;` 鍵用於聲調 0
+    # - {accept: semicolon, send: '0', when: composing}
+    #---------------------------------------------------
     # 翻頁
     - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
     - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
@@ -324,18 +356,34 @@ key_binder:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
     #---------------------------------------------------
+    - {accept: "Control+1", select: .next, when: always}
+    - {accept: "Control+2", toggle: full_shape, when: always}
+    - {accept: "Control+3", toggle: simplification, when: always}
+    - {accept: "Control+4", toggle: extended_charset, when: always}
 
 editor:
   bindings:
     space: commit                       # 選擇「備選漢字」
     Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
+    # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
+    # Control+Return: confirm    # 上屏原始的輸入：lau5
+    Control+Return: commit_composition    # 上屏原始的輸入：lau5
+
+punctuator:
+  import_preset: default
 
 recognizer:
   import_preset: default
   patterns:
     reverse_lookup: "`[a-z]*$"
+
+menu:
+  # alternative_select_labels: [ ①, ②, ③, ④, ⑤, ⑥, ⑦, ⑧, ⑨ ]  # 修改候選標籤
+  # alternative_select_keys: ASDFGHJKL #如編碼字符佔用數字鍵則須另設選字鍵
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  alternative_select_keys: 12345 #如編碼字符佔用數字鍵則須另設選字鍵
+  page_size: 5 #選單每䈎顯示個數
 
 style:
   horizontal: false
