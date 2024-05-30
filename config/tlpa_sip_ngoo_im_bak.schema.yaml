@@ -1,3 +1,4 @@
+# Backup
 # Rime schema
 # encoding: utf-8
 ---
@@ -48,19 +49,8 @@ engine:
     - uniquifier
 
 speller:
-    #------------------------------------------------------
-    # 定義使用者按下鍵盤時，輸入法能接受的按鍵
-    #------------------------------------------------------
-    # 0: '
-    # 1: [
-    # 2: \
-    # 3: _
-    # 4: [
-    # 5: /
-    # 6: >
-    # 7: -
-    # 8: ]
-  alphabet: "abcdefghijklmnopqrstuvwxyz~;\u005C\u005F[/<-]'"
+  # alphabet: zyxwvutsrqponmlkjihgfedcba
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~[/\]90-;'
   initials: abcdefghijklmnopqrstuvwxyz
   delimiter: " '"
   algebra:
@@ -92,7 +82,7 @@ speller:
     #==========================================
     - derive/^([Øa-z]+)\d$/$1/
     - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
-    - xlit|123456780|;\_[/<-]'|
+    - xlit|12345678|[/\]90-;|
 
 translator:
   # dictionary: tlpa_bun_thok
@@ -102,9 +92,9 @@ translator:
     #======================================================
     # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
     #======================================================
-    - xlit|;\_[/<-]'|¹²³⁴⁵⁶⁷⁸⁰|
-    - xform/([aeiou])(r?m?n*h?g?p?t?k?)([123456780])/$1$2$3/
-    - xform/([aeo])([iueo])([123456780])/$1$2$3/
+    - xlit|[/\]90-;|¹²³⁴⁵⁶⁷⁸|
+    - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$2$3/
+    - xform/([aeo])([iueo])([12345678])/$1$2$3/
     #======================================================
     # 鼻化符號顯示成上標
     #======================================================
@@ -195,7 +185,6 @@ translator:
     - xform/;5/下平】/
     - xform/;7/下去】/
     - xform/;8/下入】/
-    - xform/;0/輕声】/
     #=================================================
     # 「更」韻
     - xform/([^u])enn/$1eenn/
@@ -217,15 +206,14 @@ translator:
     #   標調
     # - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$2$3/
     # - xform/([aeo])([iueo])([1234578])/$1$2$3/
-    # - "xform 1 ¹"
-    # - "xform 2 ²"
-    # - "xform 3 ³"
-    # - "xform 4 ⁴"
-    # - "xform 5 ⁵"
-    # - "xform 6 ⁶"
-    # - "xform 7 ⁷"
-    # - "xform 8 ⁸"
-    - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
+    - "xform 1 ¹"
+    - "xform 2 ²"
+    - "xform 3 ³"
+    - "xform 4 ⁴"
+    - "xform 5 ⁵"
+    - "xform 6 ⁶"
+    - "xform 7 ⁷"
+    - "xform 8 ⁸"
 
 reverse_lookup:
   dictionary: luna_pinyin
