@@ -41,7 +41,6 @@ speller:
   #------------------------------------------------------
   # 定義使用者按下鍵盤時，輸入法能接受的按鍵
   #------------------------------------------------------
-  # 0: 0
   # 1: ;
   # 2: \
   # 3: _
@@ -50,7 +49,7 @@ speller:
   # 6: <
   # 7: -
   # 8: ]
-  # alphabet: "abcdefghijklmnopqrstuvwxyz~;\u005C\u005F[/<-]'"
+  # 0: 0
   alphabet: 'abcdefghijklmnopqrstuvwxyz~;\[/<-]0'
   initials: abcdefghijklmnopqrstuvwxyz
   delimiter: " '"
@@ -200,6 +199,7 @@ translator:
     - xform/;c(?!h)/【ㄗ/
     - xform/;ch/【ㄘ/
     - xform/;s/【ㄙ/
+    - xform/;j/【ㆡ/
     #------------------------------------------------------
     # 右半邊 `零聲母` 不顥示處理 。
     # 1. 零聲母 + 元音韻母 + 調號，如：Øu5, Øi1, ...
