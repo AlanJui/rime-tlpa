@@ -1,0 +1,66 @@
+# Rime dictionary
+# encoding: utf-8
+---
+name: tlpa_cu_im_fu_ho
+version: "0.0.0.1"
+sort: by_weight
+use_preset_vocabulary: false
+import_tables:
+  - tlpa_peh_ue
+...
+ㄅ	po1
+ㄆ	pho1
+ㆠ	bo1
+ㄇ	mo1
+
+ㄉ	to1
+ㄊ	tho1
+ㄋ	no1
+ㄌ	lo1
+
+ㄍ	ko1
+ㄎ	kho1
+ㆣ	go1
+ㄫ	ngo1
+
+# ㄐ	ci1
+# ㄑ	Ci1
+# ㆢ	zi1
+# ㄒ	si1
+
+ㄗ	ci1
+ㄘ	chi1
+ㆡ	ji1
+ㄙ	si1
+
+ㄏ	ho1
+
+ㄚ	øa1
+ㄧ	øi1
+ㄨ	øu1
+ㆤ	øe1
+ㆦ	øo1
+ㄜ	øo1
+
+ㆩ	ann1
+ㆪ	inn1
+ㆫ	unn1
+ㆥ	enn1
+ㆧ	onn1
+
+ㄥ	øng1
+ㆭ	øng1
+ㄣ	øn1
+ㆬ	øm1
+
+ㄞ	øai1
+ㆮ	øainn1
+ㄠ	øau1
+ㆯ	øaunn1
+
+ㄤ	øang1
+ㄢ	øan1
+ㆰ	øam1
+
+ㆲ	øong1
+ㆱ	øom1

@@ -284,7 +284,7 @@ recognizer:
 
 menu:
   alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
-  alternative_select_keys: 12345 #如編碼字符佔用數字鍵則須另設選字鍵
+  alternative_select_keys: "hjkl;" #如編碼字符佔用數字鍵則須另設選字鍵
   page_size: 5 #選單每䈎顯示個數
 
 style:

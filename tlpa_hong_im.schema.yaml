@@ -118,6 +118,11 @@ translator:
     - xform/^/\t→ /
     - xform/'/ /
     - xlit|pPbtTdkKgcCzshiuaoøeIUBDGN|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㆤㄞㄠㆬㄣㆭｎ|
+    # 自動校調
+    - xform/ㄗㄧ/ㄐㄧ/
+    - xform/ㄘㄧ/ㄑㄧ/
+    - xform/ㄙㄧ/ㄒㄧ/
+    - xform/ㆡㄧ/ㆢㄧ/
     # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
     - xform/ㄗ((ｎ)?ㄧ)/ㄐ$1/
     - xform/ㄘ((ｎ)?ㄧ)/ㄑ$1/
@@ -189,6 +194,12 @@ translator:
     - xform/ㄚㆭ/ㄤ/
     - xform/ㆦㆭ/ㆲ/
     - xform/ㄜㆭ/ㄥ/
+    # 自動校調
+    - xform/ㄗㄧ/ㄐㄧ/
+    - xform/ㄘㄧ/ㄑㄧ/
+    - xform/ㄙㄧ/ㄒㄧ/
+    - xform/ㆡㄧ/ㆢㄧ/
+
 
 custom_phrase:
   dictionary: ""
