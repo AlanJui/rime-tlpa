@@ -49,6 +49,10 @@ engine:
   filters:
     - uniquifier
 
+menu:
+  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
+  alternative_select_keys: "ABCDEFGHIJ"
+
 speller:
   alphabet: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657"
   initials: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-7"
@@ -208,52 +212,30 @@ recognizer:
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     punct: '`[^\s]$'
 
-reverse_lookup:
-  dictionary: luna_pinyin
-  prefix: "`"
-  tips: 〔拼音〕
-  preedit_format:
-    - xform/([nljqxy])v/$1ü/
-
-key_binder:
-  import_preset: default
-  bindings:
-    #---------------------------------------------------
-    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
-    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
-    #---------------------------------------------------
-    # 翻頁
-    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
-    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
-    - { accept: "Control+p", send: Page_Up, when: composing }
-    - { accept: "Control+n", send: Page_Down, when: composing }
-    #---------------------------------------------------
-    # Vim Mode
-    #---------------------------------------------------
-    - { when: has_menu, accept: "Control+h", send: Page_Up }
-    - { when: has_menu, accept: "Control+l", send: Page_Down }
-    - { when: has_menu, accept: "Control+k", send: Up }
-    - { when: has_menu, accept: "Control+j", send: Down }
-    #---------------------------------------------------
-    - {accept: "Control+1", select: .next, when: always}
-    - {accept: "Control+2", toggle: full_shape, when: always}
-    - {accept: "Control+3", toggle: simplification, when: always}
-    - {accept: "Control+4", toggle: extended_charset, when: always}
-
-editor:
-  bindings:
-    space: commit                       # 選擇「備選漢字」
-    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_composition    # 上屏原始的輸入：lau5
-    # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
-    # Control+Return: confirm    # 上屏原始的輸入：lau5
-
-menu:
-  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
-  alternative_select_keys: "ABCDEFGHIJ"
-
 style:
   horizontal: false
+#   display_tray_icon: false
+#   font_point: 24
+#   fullscreen: false
+#   inline_preedit: false
+#   layout:
+#     border_width: 3
+#     candidate_spacing: 5
+#     hilite_padding: 2
+#     hilite_spacing: 4
+#     margin_x: 12
+#     margin_y: 6
+#     min_height: 0
+#     min_width: 160
+#     round_corner: 4
+#     spacing: 10
+#
+# key_binder:
+#   import_preset: default
+#   bindings:
+#     - { when: has_menu, accept: comma, send: comma } # ㆤ
+#     - { when: has_menu, accept: period, send: period } # ㆲ
+#     - { when: has_menu, accept: minus, send: minus } # ｎ
+#     - { when: paging, accept: minus, send: Page_Up }
+#     - { when: has_menu, accept: equal, send: Page_Down }
+
