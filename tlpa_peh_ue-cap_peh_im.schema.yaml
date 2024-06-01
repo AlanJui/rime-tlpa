@@ -138,63 +138,83 @@ translator:
     - xform/》a(ng|k)/江》/
     - xform/》a(n|t)/干》/
     - xform/》a(m|p)/甘》/
-    - xform/》ai/皆》/
+
     - xform/》aiⁿ/閒》/
-    - xform/》au(h?)/交》/
+    - xform/》ai/皆》/
+
     - xform/》auⁿ/爻》/
-    - xform/》a(h?)/膠》/
-    - xform/》aⁿ(h?)/監》/
+    - xform/》au(h?)/交》/
     #------------------------------------------------------
     # i
-    - xform/》iau(h?)/嬌》/
     - xform/》iauⁿ(h?)/嘄》/
-    - xform/》ia(h?)/迦》/
-    - xform/》iaⁿ/驚》/
-    - xform/》ia(ng|k)/姜》/
-    - xform/》ia(n|t)/堅》/
-    - xform/》ia(m|p)/兼》/
-    - xform/》io(ng|k)/恭》/
-    - xform/》ioⁿ/薑》/
-    - xform/》io(h?)/茄》/
-    - xform/》iuⁿ/牛》/
-    - xform/》iu/丩》/
-    - xform/》i(h?)/居》/
-    - xform/》iⁿ(h?)/梔》/
+    - xform/》iau(h?)/嬌》/
+
     - xform/》i(ng|k)/經》/
     - xform/》i(n|t)/巾》/
     - xform/》i(m|p)/金》/
+
+    - xform/》ia(ng|k)/姜》/
+    - xform/》ia(n|t)/堅》/
+    - xform/》ia(m|p)/兼》/
+
+    - xform/》iaⁿ/驚》/
+    - xform/》ia(h?)/迦》/
+
+    - xform/》iuⁿ/牛》/
+    - xform/》iu/丩》/
+
+    - xform/》io(ng|k)/恭》/
+
+    - xform/》ioⁿ/薑》/
+    - xform/》io(h?)/茄》/
     #------------------------------------------------------
     # u
-    - xform/》uai(h?)/乖》/
     - xform/》uaiⁿ(h?)/閂》/
+    - xform/》uai(h?)/乖》/
+
     - xform/》ua(ng|k)/光》/
     - xform/》ua(n|t)/觀》/
-    - xform/》ua(h?)/瓜》/
+
     - xform/》uaⁿ/官》/
-    - xform/》ui(h?)/規》/
+    - xform/》ua(h?)/瓜》/
+
     - xform/》uiⁿ/禈》/
-    - xform/》ue(h?)/檜》/
+    - xform/》ui(h?)/規》/
+
     - xform/》ueⁿ/糜》/
-    - xform/》u(h?)/艍》/
+    - xform/》ue(h?)/檜》/
+
     - xform/》u(n|t)/君》/
     #------------------------------------------------------
     # e
     - xform/》ei/稽》/
     - xform/》ee(h?)/嘉》/
-    - xform/》e(h?)/伽》/
-    - xform/》eⁿ(h?)/更》/
     #------------------------------------------------------
     # oo
-    - xform/》oⁿ(h?)/姑》/
+    - xform/》o(ng|k)/公》/
+    - xform/》o(m|p)/箴》/
+
     - xform/》ooⁿ/姑》/
     - xform/》oo(h?)/沽》/
     #------------------------------------------------------
     # o
     # 停用 `江(oⁿ)` ，併入 `姑(oⁿ/ooⁿ)`
     # - xform/》oⁿ(h?)/扛》/
+    #------------------------------------------------------
+    - xform/》aⁿ(h?)/監》/
+    - xform/》a(h?)/膠》/
+
+    - xform/》iⁿ(h?)/梔》/
+    - xform/》i(h?)/居》/
+
+    - xform/》u(h?)/艍》/
+
+    - xform/》eⁿ(h?)/更》/
+    - xform/》e(h?)/伽》/
+
+    - xform/》oⁿ(h?)/姑》/
+
     - xform/》o(h?)/高》/
-    - xform/》o(ng|k)/公》/
-    - xform/》o(m|p)/箴》/
     #------------------------------------------------------
     - xform/》m/姆》/
     - xform/》ng/鋼》/
