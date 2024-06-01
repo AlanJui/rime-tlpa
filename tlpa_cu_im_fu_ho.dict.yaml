@@ -7,6 +7,7 @@ sort: by_weight
 use_preset_vocabulary: false
 import_tables:
   - tlpa_peh_ue
+  - tlpa_ciann_ji
 ...
 ㄅ	po1
 ㄆ	pho1
