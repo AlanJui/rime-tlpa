@@ -57,26 +57,39 @@ speller:
   delimiter: "'"
   use_space: true
   algebra:
-    # # 變調
-    # - derive/1/7/ # 第一調 → 第七調
-    # - derive/2/1/ # 第二調 → 第一調
-    # - derive/3/2/ # 第三調 → 第二調
-    # - derive/7/3/ # 第七調 → 第三調
-    # - derive/5/7/ # 第五調 → 第七調
-    # - derive/5/3/ # 第五調 → 第三調
-    # - derive/(?<![BDG])4/2/ # -ㆷ 第四調 → 第二調
-    # - derive/(?<![BDG])8/3/ # -ㆷ 第八調 → 第三調
-    # - xform/[48]/0/ # 入聲調（第四調、第八調）合併
-    # # 音變
-    # - derive/z/d/ # ㆡ、ㆢ → ㄌ
-    # - derive/z(N?i)/g$1/ # ㆢ → ㆣ
-    # - derive/iaD/ieD/ # ㄧㄢ、ㄧㄚㆵ → ㄧㄢ、ㄧㆤㆵ
-    # - derive/ieD/eD/ # ㄧㄢ、ㄧㆤㆵ → ㆤㄣ、ㆤㆵ
-    # # 方言差
-    # - derive/Ne/Ni/ # ㆥ → ㆪ
-    # - derive/Niu/Nio/ # ㄧㆫ → ㄧㆧ
-    # # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
-    # #- xform/z(N?i)/Z$1/  # 毋過咱共 ㆢ 和 ㆡ 合併矣
+    #--------------------------------------------------
+    # 對映
+    #--------------------------------------------------
+    # - derive/ph/P/
+    # - derive/th/T/
+    # - derive/kh/K/
+    # - derive/ng/w/
+    # - derive/ch/C/
+    # - derive/oo/O/
+    # - derive/ng/W/
+    # - derive/n(?!g)/D/
+    # - derive/m/B/
+    #--------------------------------------------------
+    - xform/ph/P/
+    - xform/th/T/
+    - xform/kh/K/
+    - xform/ng/w/
+    - xform/ch/C/
+    - xform/oo/O/
+    - xform/ng/W/
+    - xform/n(?!g)/D/
+    - xform/m/B/
+    # 鼻音
+    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
+    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
+    # 簡拼
+    - abbrev/[iu]?[iuaoeIU]N/N/ # 用 ｎ 代表所有的鼻音母音
+    - abbrev/[iuaoøeIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
+    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/ # 會當干焦拍聲母
+    - abbrev/^(\D+)([123579])$/$1/ # 除了第四調、第八調，調號會當免拍
+    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/ # 會當干焦拍子音+調號
+    # - xlit|pPmbtTndkKhjJSgqzcCsiuBaoøMIeUYLDQGN123570|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657|
+    - 'xlit|pPbmtTnlkKgwcCsjhiuaOoeBDW23570|1qra2wsxefdvyhnbcuj8ik,mp/4367z|'
     # - xform/c(N?i)/j$1/ # ㄐㄧ
     # - xform/C(N?i)/J$1/ # ㄑㄧ
     # - xform/s(N?i)/S$1/ # ㄒㄧ
@@ -86,30 +99,6 @@ speller:
     # - derive/gN/q/ # ㄫ
     # - derive/bG/mG/ # ㄇㆭ
     # - derive/dG/nG/ # ㄋㆭ
-    # 鼻音
-    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
-    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
-    # # 注音
-    # - derive/øG/G/ # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
-    # - derive/(?<!i)oG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
-    # - derive/ioG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
-    # # 入聲調
-    # - derive/([iao])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
-    # - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
-    # - derive/([iaoø])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
-    # 方音韻母
-    # - derive/oB/aB/ # ㆦㆬ、ㆰ（併入）
-    # - derive/aB/M/ # ㄚㆬ、ㆰ
-    # - xform/aD/L/ # ㄢ
-    # - xform/aG/Q/ # ㄤ
-    # - derive/oG/Y/ # ㆦㆭ、ㆲ
-    # 簡拼
-    - abbrev/[iu]?[iuaoeIU]N/N/ # 用 ｎ 代表所有的鼻音母音
-    - abbrev/[iuaoøeIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
-    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/ # 會當干焦拍聲母
-    - abbrev/^(\D+)([123579])$/$1/ # 除了第四調、第八調，調號會當免拍
-    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/ # 會當干焦拍子音+調號
-    - xlit|pPmbtTndkKhjJSgqzcCsiuBaoøMIeUYLDQGN123570|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657|
 
 translator:
   # dictionary: tlpa_hong_im_fu_ho
@@ -122,7 +111,18 @@ translator:
     # 定義 '候選清單' 各漢字之 ’拼音字母‘ 與 “字典” 的對映關係
     # 在 “字典” 中的漢字是以 TLPA 拼音字母儲存；
     # 而 “候選清單” 各漢字的拼音字母，當以 “方音符號” 顯示。
-    - xlit|pPbtTdkKgcCzshiuaoøeIUBDGN|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㆤㄞㄠㆬㄣㆭｎ|
+    # - xlit|pPbtTdkKgcCzshiuaoøeIUBDGN|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㆤㄞㄠㆬㄣㆭｎ|
+    - 'xlit|pPbmtTnlkKgwcCsjhiuaOoeBDW23570|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㄙㆡㄏㄧㄨㄚㆦㄜㄝㆬㄣㄥˋ˪ˊ˫˙|'
+    #
+    # - derive/ph/P/
+    # - derive/th/T/
+    # - derive/kh/K/
+    # - derive/ng/w/
+    # - derive/ch/C/
+    # - derive/oo/O/
+    # - derive/ng/W/
+    # - derive/n(?!g)/D/
+    # - derive/m/B/
     # 自動校調
     - xform/ㄗㄧ/ㄐㄧ/
     - xform/ㄘㄧ/ㄑㄧ/
@@ -168,7 +168,8 @@ translator:
     - xform/ /ˉ/
     - xform/'/ /
     # 定義 “鍵盤按鍵” 與 “方音符號” 的對映關係。
-    - xlit|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-43657|ㄅㄆㄇㆠㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㆣㄫㆡㄗㄘㄙㄧㄨㆬㄚㆦㄜㆰㄞㆤㄠㆲㄢㄣㄤㆭｎˋ˪ˊ˫．|
+    # - xlit|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-43657|ㄅㄆㄇㆠㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㆣㄫㆡㄗㄘㄙㄧㄨㆬㄚㆦㄜㆰㄞㆤㄠㆲㄢㄣㄤㆭｎˋ˪ˊ˫．|
+    - 'xlit|1qra2wsxefdvyhnbcuj8ik,mp/4367zol|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㄙㆡㄏㄧㄨㄚㆦㄜㄝㆬㄣㄥˋ˪ˊ˫˙鼻濁|'
     # 拆韻母
     # - xform/ㄒ/ㄙㄧ/
     - xform/ㆰ/ㄚㆬ/
