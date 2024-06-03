@@ -5,9 +5,9 @@ name: tlpa_cu_im_fu_ho
 version: "0.0.0.1"
 sort: by_weight
 use_preset_vocabulary: false
-import_tables:
-  - tlpa_peh_ue
-  - tlpa_ciann_ji
+# import_tables:
+#   - tlpa_peh_ue
+#   - tlpa_ciann_ji
 ...
 ㄅ	po1
 ㄆ	pho1
