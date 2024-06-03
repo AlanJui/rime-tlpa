@@ -34,7 +34,7 @@ engine:
     - punctuator
     - selector
     - navigator
-    - express_editor
+    - fluency_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -42,12 +42,10 @@ engine:
     - punct_segmentor
     - fallback_segmentor
   translators:
-    - echo_translator
     - punct_translator
-    - r10n_translator
-    - reverse_lookup_translator
+    - table_translator@custom_phrase
+    - script_translator
   filters:
-    - simplifier
     - uniquifier
 
 speller:
@@ -57,27 +55,73 @@ speller:
   delimiter: "'"
   use_space: true
   algebra:
-    # 聲母
+    #--------------------------------------------------------------------------
+    # 將字典中漢字的【拼音字母】對映成輸入法使用的【字典編碼】
+    #--------------------------------------------------------------------------
+    # 聲母對映
     - derive/ph/P/
     - derive/th/T/
     - derive/kh/K/
     - derive/ph/P/
     - derive/ch/C/
     - derive/j/z/       # ㆡ
-    - derive/ng/w/      # ㄫ
-    - derive/n(?!g)/d/  # ㄋ
-    # 韻尾 (ng, m 為韻化聲母)
-    - derive/(ng)\d/G/
-    - derive/(n)\d/D/
-    - derive/(m)\d/B/
-    # 韻母
+    - derive/^ng/w/      # ㄫ
+    - derive/^n(?!g)/d/  # ㄋ
+    # 韻腹【元音韻母】對映
     - derive/oo/O/
-    - derive/oB/aB/ # ㆦㆬ、ㆰ（併入）
-    - derive/aB/M/ # ㄚㆬ、ㆰ
-    - xform/aD/L/ # ㄢ
-    - xform/aG/Q/ # ㄤ
-    - derive/oG/Y/ # ㆦㆭ、ㆲ
-    # 變調
+    #--------------------------------------------------------------------------
+    # 韻尾對映 (ng, m 為【韻化聲母】)
+    #--------------------------------------------------------------------------
+    # - derive/(ng)\d/G/
+    # - derive/(n)\d/D/
+    # - derive/(m)\d/B/
+    # i 韻
+    - derive/iang/iaG/  # iong
+    - derive/iong/ioG/  # iong
+    - derive/ing/iG/
+    - derive/ong/OG/
+    #--------------------------------------------------------------------------
+    # 韻母對映
+    #--------------------------------------------------------------------------
+    # - derive/ioG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
+    # u 韻
+    # - derive/uang/uaG/
+    # - derive/uan/uaD/
+    # - derive/(?<!i)oG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
+    # a 韻
+    # - derive/aB/M/ # ㄚㆬ、ㆰ
+    # - xform/aD/L/ # ㄢ
+    # - xform/aG/Q/ # ㄤ
+    # e 韻
+    # oo 韻
+    # - derive/ong/OG/
+    # - derive/OG/Y/ # ㆦㆭ、ㆲ
+    # o 韻
+    # - derive/oB/aB/ # ㆦㆬ、ㆰ（併入）
+    #--------------------------------------------------------------------------
+    # 鼻音韻母輸入處理
+    #--------------------------------------------------------------------------
+    # 為【鼻音韻母】建【標識】：N+[iuaeoO]
+    - derive/([iu]?[iuaeOIU])nn/N$1/
+    # 設定【鼻音韻母】可用連續輸入兩次方式完成
+    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
+    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
+    #--------------------------------------------------------------------------
+    # 入聲輸入處理
+    #--------------------------------------------------------------------------
+    # 為 ‘入聲’ 調號便捷輸入做準備
+    - xform/[48]/0/ # 入聲調（第四調、第八調）合併
+    # 設定 【韻尾】的【字典編碼】：ng, n, m 使用之 ‘字典編碼’
+    - derive/([iaoO]ng)/$1G/
+    - derive/([iuae]n(?!g))/$1D/
+    - derive/([iuaeO]m)/$1B/
+    # 設定【字典編碼】之【聲調】值，不論4或8，皆以0代換
+    - derive/([iaoO])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
+    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
+    - derive/([iao])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
+    #--------------------------------------------------------------------------
+    # 變調處理
+    #--------------------------------------------------------------------------
     - derive/1/7/ # 第一調 → 第七調
     - derive/2/1/ # 第二調 → 第一調
     - derive/3/2/ # 第三調 → 第二調
@@ -86,24 +130,17 @@ speller:
     - derive/5/3/ # 第五調 → 第三調
     - derive/(?<![BDG])4/2/ # -ㆷ 第四調 → 第二調
     - derive/(?<![BDG])8/3/ # -ㆷ 第八調 → 第三調
-    - xform/[48]/0/ # 入聲調（第四調、第八調）合併
-    # 鼻音
-    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
-    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
-    # 注音
-    - derive/øG/G/ # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
-    - derive/(?<!i)oG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
-    - derive/ioG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
-    # 入聲調
-    - derive/([iao])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
-    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
-    - derive/([iaoø])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
+    #--------------------------------------------------------------------------
     # 簡拼
+    #--------------------------------------------------------------------------
     - abbrev/[iu]?[iuaeoOIU]N/N/ # 用 ｎ 代表所有的鼻音母音
     - abbrev/[iuaeoOIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
     - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/ # 會當干焦拍聲母
     - abbrev/^(\D+)([123579])$/$1/ # 除了第四調、第八調，調號會當免拍
     - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/ # 會當干焦拍子音+調號
+    #--------------------------------------------------------------------------
+    # 字典【拼音字母】與【鍵盤按鍵】對映設定
+    #--------------------------------------------------------------------------
     - xlit|pPbmtTdlkKgwcCzshiuaeoOBDG23570NL1|1qra2wsxedfvyhbncuj8,kimp/4367zol1|
 
 translator:
@@ -118,21 +155,21 @@ translator:
     # 定義 '候選清單' 各漢字之 ’拼音字母‘ 與 “字典” 的對映關係
     # 在 “字典” 中的漢字是以 TLPA 拼音字母儲存；
     # 而 “候選清單” 各漢字的拼音字母，當以 “方音符號” 顯示。
-    # - 'xlit|pPbmtTdlkKgwcCzshiuaeoOBDG2357|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㆡㄙㄏㄧㄨㄚㄝㄜㆦㆬㄣㄥˋ˪ˊ˫|'
-    - xlit|pPbmtTdlkKgwcCzshiuaeoOBDG2357|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㆡㄙㄏㄧㄨㄚㄝㄜㆦㆬㄣㄥˋ˪ˊ˫|
+    # - xlit|pPbmtTdlkKgwcCzshiuaeoOBDG23570NL|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫjjㄘㆡㄙㄏㄧㄨㄚㄝㄜㆦㆬㄣㄥˋ˪ˊ˫入鼻濁|
+    - xlit|pPbmtTdlkKgwcCzshiuaeoOBDG23570NL|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫjjㄘㆡㄙㄏㄧㄨㄚㄝㄜㆦㆬㄣㄥˋ˪ˊ˫．鼻濁|
     # 鼻音輸入
-    - xform/ｎ((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㆤ|ㄞ|ㄠ))/$1ｎ/
+    - xform/ｎ((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㄝ|ㄞ|ㄠ))/$1ｎ/
     - xform/ㄧｎ/ㆪ/
     - xform/ㄨｎ/ㆫ/
     - xform/ㄚｎ/ㆩ/
     - xform/ㆦｎ/ㆧ/
-    - xform/ㆤｎ/ㆥ/
+    - xform/ㄝｎ/ㆥ/
     - xform/ㄞｎ/ㆮ/
     - xform/ㄠｎ/ㆯ/
     # 入聲調： ㆴ、ㆵ、ㆻ、ㆷ
     - xform/(?<=ㄧ|ㄚ|ㆦ)ㆬ([48])/ㆴ$1/
     - xform/(?<=ㄧ|ㄨ|ㄚ)ㄣ([48])/ㆵ$1/
-    - xform/(?<=ㄚ|ㆦ|ㄜ)ㆭ([48])/ㆻ$1/
+    - xform/(?<=ㄚ|ㆦ|ㄜ)ㄥ([48])/ㆻ$1/
     - xform/(?<!ㆴ|ㆵ|ㆻ)([48])/ㆷ$1/
     # 自動校調
     - xform/ㄗㄧ/ㄐㄧ/
@@ -143,10 +180,10 @@ translator:
     - xform/ㄚㆬ/ㆰ/
     - xform/ㆦㆬ/ㆱ/
     - xform/ㄚㄣ/ㄢ/
-    - xform/ㄚㆭ/ㄤ/
-    - xform/ㆦㆭ/ㆲ/
-    - xform/ㄜㆭ/ㄥ/
-    # 聲調
+    - xform/ㄚㄥ/ㄤ/
+    - xform/ㆦㄥ/ㆲ/
+    - xform/ㄜㄥ/ㄥ/
+    # 將【聲調數值】轉換成【聲調符號】
     - xlit|12357|ˉˋ˪ˊ˫|
     - xform/4//
     - xform/8/˙/
@@ -154,68 +191,58 @@ translator:
     - xform/ /ˉ/
     - xform/'/ /
     # 定義 “鍵盤按鍵” 與 “方音符號” 的對映關係。
-    # - 'xlit|1qra2wsxedfvyhbncuj8,kimp/4367zol|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㆡㄙㄏㄧㄨㄚㄝㄜㆦㆬㄣㄥˋ˪ˊ˫˙鼻濁|'
-    - xlit|1qra2wsxedfvyhbncuj8,kimp/4367zol|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㆡㄙㄏㄧㄨㄚㄝㄜㆦㆬㄣㄥˋ˪ˊ˫入鼻濁|
+    # - xlit|1qra2wsxedfvyhbncuj8,kimp/4367zol|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㆡㄙㄏㄧㄨㄚㄝㄜㆦㆬㄣㄥˋ˪ˊ˫入鼻濁|
+    - xlit|1qra2wsxedfvyhbncuj8,kimp/4367zol|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㆡㄙㄏㄧㄨㄚㄝㄜㆦㆬㄣㄥˋ˪ˊ˫．鼻濁|
     # 濁聲輸入
     - xform/濁ㄅ/ㆠ/
     - xform/濁ㄍ/ㆣ/
     - xform/濁ㄗ/ㆡ/
     # 鼻音輸入
-    - xform/鼻((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㆤ|ㄞ|ㄠ))/$1ｎ/
-    - xform/ㄧｎ/ㆪ/
-    - xform/ㄨｎ/ㆫ/
-    - xform/ㄚｎ/ㆩ/
-    - xform/ㆦｎ/ㆧ/
-    - xform/ㆤｎ/ㆥ/
-    - xform/ㄞｎ/ㆮ/
-    - xform/ㄠｎ/ㆯ/
+    - xform/鼻((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㄝ|ㄞ|ㄠ))/$1ｎ/
     # 重複輸入兩次轉鼻音韻
     - xform/ㄧ(ㄧ|ｎ)/ㆪ/
     - xform/ㄨ(ㄨ|ｎ)/ㆫ/
     - xform/ㄚ(ㄚ|ｎ)/ㆩ/
     - xform/ㆦ(ㆦ|ｎ)/ㆧ/
-    - xform/ㆤ(ㆤ|ｎ)/ㆥ/
+    - xform/ㄝ(ㄝ|ｎ)/ㆥ/
     - xform/ㄞ(ㄞ|ｎ)/ㆮ/
     - xform/ㄠ(ㄠ|ｎ)/ㆯ/
-    # 自動校調
-    - xform/ㄘ(N?ㄧ)/ㄑ$1/
-    - xform/ㄗ(N?ㄧ)/ㄐ$1/
-    - xform/ㆡ(N?ㄧ)/ㆢ$1/
-    - xform/ㄙ(N?ㄧ)/ㄒ$1/
-    # 拆韻母
-    # - xform/ㄒ/ㄙㄧ/
-    - xform/ㆰ/ㄚㆬ/
-    - xform/ㄢ/ㄚㄣ/
-    - xform/ㄤ/ㄚㆭ/
-    - xform/ㆲ/ㆦㆭ/
-    - xform/ㄨㆭ/ㆦㆭ/
-    - xform/ㆬㆭ/ㄧㆦㆭ/
-    - xform/ㄧㆭ/ㄧㄜㆭ/
     # 入聲調
     - xform/(ㄧ|ㄚ|ㆦ)(ㄅ|ㆬ)˙/$1ㆴ/
     - xform/(ㄧ|ㄨ|ㄚ|ㆤ)(ㄉ|ㄣ)˙/$1ㆵ/
     - xform/(ㄚ|ㆦ|ㄜ)(ㄍ|ㆭ)˙/$1ㆻ/
     - xform/(ㄧ|ㄨ|ㄚ|ㆦ|ㄜ|ㆤ|ㄞ|ㄠ|ㆬ|ㆭ)˙/$1ㆷ/
-    # 合韻母
-    - xform/ㄚㆬ/ㆰ/
-    - xform/ㆦㆬ/ㆱ/
-    - xform/ㄚㄣ/ㄢ/
-    - xform/ㄚㆭ/ㄤ/
-    - xform/ㆦㆭ/ㆲ/
-    - xform/ㄜㆭ/ㄥ/
-    # 自動校調
-    - xform/ㄗㄧ/ㄐㄧ/
-    - xform/ㄘㄧ/ㄑㄧ/
-    - xform/ㄙㄧ/ㄒㄧ/
-    - xform/ㆡㄧ/ㆢㄧ/
 
-# custom_phrase:
-#   dictionary: ""
-#   user_dict: custom_phrase
-#   db_class: stabledb
-#   enable_completion: false
-#   enable_sentence: false
-#   initial_quality: 1
+    - xform/(ㄧ|ㄚ|ㆦ)(ㄅ|ㆬ)入/$1ㆴ/
+    - xform/(ㄧ|ㄨ|ㄚ|ㄝ)(ㄉ|ㄣ)入/$1ㆵ/
+    - xform/(ㄚ|ㆦ|ㄜ)(ㄍ|ㄥ)入/$1ㆻ/
+    - xform/(ㄧ|ㄨ|ㄚ|ㆦ|ㄜ|ㄝ|ㄞ|ㄠ|ㆬ|ㄥ)入/$1ㆷ/
+    #------------------------------------------------------
+    # 韻母
+    #------------------------------------------------------
+    # a 陽聲韻: ang, an, am
+    - xform/ㄚㄨ/ㄠ/
+    - xform/ㄚㄥ/ㄤ/
+    - xform/ㄚㄣ/ㄢ/
+    - xform/ㄚㆬ/ㆰ/
+    #------------------------------------------------------
+    # oo 陽聲韻: ong, om
+    - xform/ㆦㄥ/ㆲ/
+    - xform/ㆦㆬ/ㆱ/
+    #------------------------------------------------------
+    # 自動校調
+    - xform/ㄗ(N?ㄧ)/ㄐ$1/
+    - xform/ㄘ(N?ㄧ)/ㄑ$1/
+    - xform/ㆡ(N?ㄧ)/ㆢ$1/
+    - xform/ㄙ(N?ㄧ)/ㄒ$1/
+
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
 
 punctuator:
   import_preset: tlpa_utl_symbols
