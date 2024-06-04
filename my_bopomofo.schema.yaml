@@ -80,6 +80,11 @@ translator:
   prism: my_bopomofo
   preedit_format:
     - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
+  comment_format:
+    - xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR12345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙|
+    #------------------------------------------------------
+    # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
+    - xlit|123456780|¹²³⁴⁵⁶⁷⁸⁰|
 
 custom_phrase:
   dictionary: ""
@@ -220,3 +225,6 @@ __patch:
   - grammar:/hant?
   # 用家自選配置
   - bopomofo.custom:/patch?
+
+style:
+  horizontal: false
