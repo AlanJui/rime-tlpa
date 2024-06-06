@@ -117,7 +117,7 @@ translator:
   prism: tlpa_hong_im
   spelling_hints: 3
   comment_format:
-    - xform/^/\t→ /
+    # - xform/^/\t→ /
     - xform/'/ /
     - xlit|pPbtTdkKgcCzshiuaoøeIUBDGN|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㆤㄞㄠㆬㄣㆭｎ|
     # 自動校調
@@ -258,9 +258,9 @@ key_binder:
 editor:
   bindings:
     space: commit                       # 選擇「備選漢字」
-    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_composition    # 上屏原始的輸入：lau5
     # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
     # Control+Return: confirm    # 上屏原始的輸入：lau5
 
