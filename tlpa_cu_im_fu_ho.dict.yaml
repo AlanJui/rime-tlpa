@@ -5,8 +5,8 @@ name: tlpa_cu_im_fu_ho
 version: "0.0.0.1"
 sort: by_weight
 use_preset_vocabulary: false
-import_tables:
-  - tlpa_peh_ue
+# import_tables:
+#   - tlpa_peh_ue
 #   - tlpa_ciann_ji
 ...
 ㄅ	po1
@@ -24,15 +24,15 @@ import_tables:
 ㆣ	go1
 ㄫ	ngo1
 
-# ㄐ	ci1
-# ㄑ	Ci1
-# ㆢ	zi1
-# ㄒ	si1
+ㄐ	ci1
+ㄑ	chi1
+ㆢ	ji1
+ㄒ	si1
 
-ㄗ	ci1
-ㄘ	chi1
-ㆡ	ji1
-ㄙ	si1
+ㄗ	c1
+ㄘ	ch1
+ㆡ	j1
+ㄙ	s1
 
 ㄏ	ho1
 
