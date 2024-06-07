@@ -159,7 +159,8 @@ speller:
     - xlit|1qaz2wsxedcrfvyhnujm8ik,9l0p;/ 43657o|1qaz2wsxedcrfvyhnujm8ik,9l0p;/ 43657o|
 
 translator:
-  dictionary: tlpa_peh_ue
+  dictionary: my_banlam
+  # dictionary: tlpa_peh_ue
   # dictionary: tlpa_cu_im_fu_ho
   # dictionary: tlpa_hong_im_fu_ho
   prism: tlpa_cu_im
