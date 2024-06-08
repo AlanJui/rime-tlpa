@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_cu_im
   name: 河洛注音
-  version: "v0.0.0.4"
+  version: "v0.0.0.5"
   author: 居正中
   description: |
     河洛話白話音, 採用「TLPA標音方案」
@@ -54,8 +54,8 @@ engine:
 speller:
   # alphabet: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657"
   # initials: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-7"
-  alphabet: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg 43657"
-  initials: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg7"
+  alphabet: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657"
+  initials: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7"
   finals: " 43567"
   delimiter: "'"
   use_space: true
@@ -76,6 +76,7 @@ speller:
     #--------------------------------------------------------------------------
     # 【鼻音韻母】
     - xform/nn/N/
+    # - derive/([iuaeOIU])nn/$1$1/
     # 【元音韻母】對映
     - xform/oo/O/   # ㆦ
     - xform/oN/ON/  # 舒聲 [oonn] = [onn] ==> 入聲 [onnh]
@@ -111,7 +112,8 @@ speller:
     # 鼻音韻母輸入處理
     # 設定【鼻音韻母】可用連續輸入兩次方式完成
     #--------------------------------------------------------------------------
-    - derive/([iuaeOIU])N/$1$1/
+    # - derive/([iuaeOIU])N/$1$1/
+    - derive/([iuaeOIU])nn/$1$1/
     # --------------------------------------------------------------------------
     # 地方腔調
     - xform/ee/e/       # ㄝ ==> ㆤ
@@ -144,16 +146,19 @@ speller:
     #--------------------------------------------------------------------------
     # 簡拼設定（abbreviation：縮寫詞）
     # --------------------------------------------------------------------------
-    - abbrev/[iu]?[iuaeOIU]N/N/       # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
+    - abbrev/([iuaeOIU]N)/$1/
+    # - abbrev/[iu]?[iuaeOIU]N/N/       # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
     - abbrev/[iuaeoOIULQYHBWDM]+0/0/  # 【字典編碼】：【．】表所有的【入聲韻母】
     - abbrev/^([pPbmtTnlkKghcCjsw]).+$/$1/ # 可只輸入：【聲母】
     - abbrev/^(\D+)([1235679])$/$1/   # 舒聲調拼音字母，可免輸入【調號】
     - abbrev/^([pPbmtTnlkKghcCjsw]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
+    - derive/^([a-zA-Z]+)\d$/$1/
     #--------------------------------------------------------------------------
     # 定義【字典編碼】與【鍵盤按鍵】對映關聯
     #--------------------------------------------------------------------------
     # - xlit|pPmbtTnlkKhjgwcCsiuMaOoeDWIULQZXRSEVFY123570N|1qa!2wsxedcYEvyhnujm8ik,p/9l0;UJ*I<(Lo 43657-|
-    - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBN123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg 43657|
+    # - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBN123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg 43657|
+    - 'xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBN123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657|'
 
 translator:
   dictionary: moetaigi
@@ -161,16 +166,34 @@ translator:
   # dictionary: tlpa_peh_ue
   # dictionary: tlpa_cu_im_fu_ho
   # dictionary: tlpa_hong_im_fu_ho
-  prism: tlpa_cu_im
+  # prism: tlpa_cu_im
+  prism: Tsu_Im
   spelling_hints: 5
   preedit_format:
     - xform/ /ˉ/
     - xform/'/ /
     # 定義【鍵盤按鍵】與【方音符號】對映關聯
     # - xlit|1qa!2wsxedcYEvyhnujm8ik,p/9l0;UJ*I<(Lo43657-|ㄅㄆㄇㆠㄉㄊㄋㄌㄍㄎㄏㆡㆣㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲˋ˪ˊ˫˙ｎ|
-    - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎˋ˪ˊ˫˙|
+    # - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎˋ˪ˊ˫˙|
+    - 'xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎˋ˪ˊ˫˙|'
     #--------------------------------------------------------------------------
     # 鼻音韻母輸入：方音符號【ｎ】，鍵盤按鍵為【-】(按鍵【0】的右邉)
+    #--------------------------------------------------------------------------
+    # - xform/U/ㆪ/
+    # - xform/J/ㆫ/
+    # - xform/8/ㆩ/
+    # - xform/I/ㆧ/
+    # - xform/,/ㆥ/
+    # - xform/(/ㆮ/
+    # - xform/L/ㆯ/
+    #--------------------------------------------------------------------------
+    # - xform/ㄧ(ㄧ|ｎ)/ㆪ/
+    # - xform/ㄨ(ㄨ|ｎ)/ㆫ/
+    # - xform/ㄚ(ㄚ|ｎ)/ㆩ/
+    # - xform/ㆦ(ㆦ|ｎ)/ㆧ/
+    # - xform/ㄝ(ㆤ|ｎ)/ㆥ/
+    # - xform/ㄞ(ㄞ|ｎ)/ㆮ/
+    # - xform/ㄠ(ㄠ|ｎ)/ㆯ/
     #--------------------------------------------------------------------------
     - xform/ㄧㄧ/ㆪ/
     - xform/ㄨㄨ/ㆫ/
@@ -180,13 +203,13 @@ translator:
     - xform/ㄞㄞ/ㆮ/
     - xform/ㄠㄠ/ㆯ/
     #--------------------------------------------------------------------------
-    - xform/ㄧ(ㄧ|ｎ)/ㆪ/
-    - xform/ㄨ(ㄨ|ｎ)/ㆫ/
-    - xform/ㄚ(ㄚ|ｎ)/ㆩ/
-    - xform/ㆦ(ㆦ|ｎ)/ㆧ/
-    - xform/ㄝ(ㆤ|ｎ)/ㆥ/
-    - xform/ㄞ(ㄞ|ｎ)/ㆮ/
-    - xform/ㄠ(ㄠ|ｎ)/ㆯ/
+    - xform/ㄧz/ㆪ/
+    - xform/ㄨz/ㆫ/
+    - xform/ㄚz/ㆩ/
+    - xform/ㆦz/ㆧ/
+    - xform/ㄝz/ㆥ/
+    - xform/ㄞz/ㆮ/
+    - xform/ㄠz/ㆯ/
     #--------------------------------------------------------------------------
     # 拆韻母
     #--------------------------------------------------------------------------
@@ -409,14 +432,6 @@ translator:
     - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
     #------------------------------------------------------
 
-#### 單字母拼寫轉換成ㄅㄆㄇ對應的按鍵
-keymap_bopomofo:
-  - 'xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBN123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg 43657|'
-
-#### ㄅㄆㄇ對應的按鍵轉換成螢幕顯示的符號
-bopomofo_symbols:
-  - 'xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎˋ˪ˊ˫˙|'
-
 custom_phrase:
   dictionary: ""
   user_dict: custom_phrase
@@ -478,9 +493,11 @@ key_binder:
     #---------------------------------------------------
     # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
     #---------------------------------------------------
-    # - { when: has_menu, accept: comma, send: comma }      # ㆤ
-    # - { when: has_menu, accept: period, send: period }    # ㆲ
-    # - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { when: has_menu, accept: comma, send: comma }      # ㆤ
+    - { when: has_menu, accept: period, send: period }    # ㆲ
+    - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { accept: minus, send: minus, when: composing }       # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: always }          # 確保 `-` 鍵用於聲調 7
     # - { when: paging, accept: minus, send: Page_Up }
     # - { when: has_menu, accept: equal, send: Page_Down }
     # - { when: has_menu, accept: minus, send: "ｎ" }        # 確保 `-` 鍵用於聲調 7
