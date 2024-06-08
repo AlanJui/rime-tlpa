@@ -6,6 +6,7 @@ customization:
   rime_version: 1.11.2
 patch:
   schema_list:
+    - {schema: moetaigi-tsuim}
     - {schema: my_bopomofo}
     - {schema: ngsth_bun}
     - {schema: tlpa_peh_ue}
