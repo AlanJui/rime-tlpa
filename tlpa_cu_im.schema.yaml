@@ -39,23 +39,25 @@ engine:
     - ascii_segmentor
     - matcher
     - abc_segmentor
+    - affix_segmentor@learning
+    - affix_segmentor@cu_im
     - punct_segmentor
     - fallback_segmentor
   translators:
-    - echo_translator
     - punct_translator
+    - table_translator@custom_phrase
     - script_translator
-    # - table_translator@custom_phrase
-    - script_translator@learning
-    - script_translator@zhuyin
+    # - script_translator@learning
+    # - script_translator@cu_im
   filters:
+    - simplifier
     - uniquifier
+    # - reverse_lookup_filter@cu_im_reverse_lookup_hide_cu_im
+    # - reverse_lookup_filter@cu_im_reverse_lookup
 
 speller:
-  # alphabet: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657"
-  # initials: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-7"
-  alphabet: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657"
-  initials: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7"
+  alphabet: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657"
+  initials: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz7"
   finals: " 43567"
   delimiter: "'"
   use_space: true
@@ -74,46 +76,49 @@ speller:
     #--------------------------------------------------------------------------
     # 韻母對映
     #--------------------------------------------------------------------------
-    # 【鼻音韻母】
-    - xform/nn/N/
-    # - derive/([iuaeOIU])nn/$1$1/
     # 【元音韻母】對映
     - xform/oo/O/   # ㆦ
-    - xform/oN/ON/  # 舒聲 [oonn] = [onn] ==> 入聲 [onnh]
     - xform/oW/OW/  # 舒聲 [ong] = [oong] = [OW]
     - xform/ok/Ok/  # 舒聲 [ong] ==> 入聲 [ook] = [Ok]
     - xform/oM/OM/  # 舒聲 [om] ==> 入聲 [oom] = [OM]
-    - xform/op/Op/  # 舒聲 [om] ==> 入聲 [op] = [Op]
+    - xform/op/Op/  # 舒聲 [op] ==> 入聲 [op] = [Op]
     # ioo [iɔ]
     # 舒聲：ioo  入聲: iooh  鼻音（陰聲韻）= ionn
-    # iong ==> 舒聲 ioong = [iOW]  ；入聲 iook = [iOk]
-    - xform/ioN/iON/
-    - xform/ioW/iOW/
-    - xform/iok/iOk/
+    # - xform/ioN/iON/ # iong ==> 舒聲 ioong = [iOW]  ；入聲 iook = [iOk]
+    # - xform/ioW/iOW/
+    # - xform/iok/iOk/
+    #--------------------------------------------------------------------------
     # 複合元音韻母
     - xform/ai/I/   # ㄞ
     - xform/au/U/   # ㄠ
     # 組合韻母
     - xform/aD/L/   # ㄢ[an] 的【字典編碼】：L
     - xform/aW/Q/   # ㄤ[ang] 的【字典編碼】：Q
-    # 鼻音韻母
-    - xform/ON/S/   # ㆧ
-    - xform/iN/Z/   # ㆪ
-    - xform/uN/X/   # ㆫ
-    - xform/aN/R/   # ㆩ
-    - xform/eN/E/   # ㆥ
-    - xform/aiN/V/  # ㆮ
-    - xform/auN/F/  # ㆯ
     # 方音符號
     - xform/OW/Y/   # ㆲ[ong] = ㆦㆭ
     - xform/OM/H/   # ㆱ
     - xform/aM/B/   # ㆰ
     #--------------------------------------------------------------------------
     # 鼻音韻母輸入處理
-    # 設定【鼻音韻母】可用連續輸入兩次方式完成
+    # ㆪ: Z,
+    # ㆫ: X,
+    # ㆩ: R,
+    # ㆧ: S,
+    # ㆥ: E,
+    # ㆮ: V,
+    # ㆯ: F
     #--------------------------------------------------------------------------
-    # - derive/([iuaeOIU])N/$1$1/
-    - derive/([iuaeOIU])nn/$1$1/
+    # 【鼻音韻母】
+    - xform/([iu]?[iuaoeIU]nn)/$1N/ # 鼻音拍佇後壁
+    - xform/nn/N/
+    - derive/([iuaeOIU])N/$1$1/     # 設定【鼻音韻母】可用連續輸入兩次方式完成
+    - xform/iN/Z/   # ㆪ
+    - xform/uN/X/   # ㆫ
+    - xform/aN/R/   # ㆩ
+    - xform/eN/E/   # ㆥ
+    - xform/oN/S/   # ㆧ ==> 舒聲 [ooN] = [oN] ==> 入聲 [oNh]
+    - xform/aiN/V/  # ㆮ
+    - xform/auN/F/  # ㆯ
     # --------------------------------------------------------------------------
     # 地方腔調
     - xform/ee/e/       # ㄝ ==> ㆤ
@@ -122,6 +127,7 @@ speller:
     # --------------------------------------------------------------------------
     # 聲母對映
     # --------------------------------------------------------------------------
+    # - xform/n/d/      # ㄋ
     - xform/ng/w/     # ㄫ
     - xform/ph/P/     # ㄅ
     - xform/th/T/     # ㄊ
@@ -146,28 +152,27 @@ speller:
     #--------------------------------------------------------------------------
     # 簡拼設定（abbreviation：縮寫詞）
     # --------------------------------------------------------------------------
-    - abbrev/([iuaeOIU]N)/$1/
-    # - abbrev/[iu]?[iuaeOIU]N/N/       # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
+    - abbrev/[iu]?[iuaoeIU]N/N/   # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
+    # --------------------------------------------------------------------------
     - abbrev/[iuaeoOIULQYHBWDM]+0/0/  # 【字典編碼】：【．】表所有的【入聲韻母】
     - abbrev/^([pPbmtTnlkKghcCjsw]).+$/$1/ # 可只輸入：【聲母】
     - abbrev/^(\D+)([1235679])$/$1/   # 舒聲調拼音字母，可免輸入【調號】
     - abbrev/^([pPbmtTnlkKghcCjsw]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
-    - derive/^([a-zA-Z]+)\d$/$1/
+    # - derive/^([a-zA-Z]+)\d$/$1/
     #--------------------------------------------------------------------------
     # 定義【字典編碼】與【鍵盤按鍵】對映關聯
     #--------------------------------------------------------------------------
     # - xlit|pPmbtTnlkKhjgwcCsiuMaOoeDWIULQZXRSEVFY123570N|1qa!2wsxedcYEvyhnujm8ik,p/9l0;UJ*I<(Lo 43657-|
     # - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBN123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg 43657|
-    - 'xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBN123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657|'
+    - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBN123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657|
 
 translator:
-  dictionary: moetaigi
-  # dictionary: my_banlam
+  # dictionary: moetaigi
+  dictionary: my_banlam
   # dictionary: tlpa_peh_ue
   # dictionary: tlpa_cu_im_fu_ho
   # dictionary: tlpa_hong_im_fu_ho
-  # prism: tlpa_cu_im
-  prism: Tsu_Im
+  prism: tlpa_cu_im
   spelling_hints: 5
   preedit_format:
     - xform/ /ˉ/
@@ -175,10 +180,11 @@ translator:
     # 定義【鍵盤按鍵】與【方音符號】對映關聯
     # - xlit|1qa!2wsxedcYEvyhnujm8ik,p/9l0;UJ*I<(Lo43657-|ㄅㄆㄇㆠㄉㄊㄋㄌㄍㄎㄏㆡㆣㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲˋ˪ˊ˫˙ｎ|
     # - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvg43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎˋ˪ˊ˫˙|
-    - 'xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎˋ˪ˊ˫˙|'
+    - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎˋ˪ˊ˫．|
     #--------------------------------------------------------------------------
     # 鼻音韻母輸入：方音符號【ｎ】，鍵盤按鍵為【-】(按鍵【0】的右邉)
     #--------------------------------------------------------------------------
+    # - xform/n/ㄙ/
     # - xform/U/ㆪ/
     # - xform/J/ㆫ/
     # - xform/8/ㆩ/
@@ -187,21 +193,21 @@ translator:
     # - xform/(/ㆮ/
     # - xform/L/ㆯ/
     #--------------------------------------------------------------------------
-    # - xform/ㄧ(ㄧ|ｎ)/ㆪ/
-    # - xform/ㄨ(ㄨ|ｎ)/ㆫ/
-    # - xform/ㄚ(ㄚ|ｎ)/ㆩ/
-    # - xform/ㆦ(ㆦ|ｎ)/ㆧ/
-    # - xform/ㄝ(ㆤ|ｎ)/ㆥ/
-    # - xform/ㄞ(ㄞ|ｎ)/ㆮ/
-    # - xform/ㄠ(ㄠ|ｎ)/ㆯ/
+    - xform/ㄧ(ㄧ|ｎ)/ㆪ/
+    - xform/ㄨ(ㄨ|ｎ)/ㆫ/
+    - xform/ㄚ(ㄚ|ｎ)/ㆩ/
+    - xform/ㆦ(ㆦ|ｎ)/ㆧ/
+    - xform/ㄝ(ㆤ|ｎ)/ㆥ/
+    - xform/ㄞ(ㄞ|ｎ)/ㆮ/
+    - xform/ㄠ(ㄠ|ｎ)/ㆯ/
     #--------------------------------------------------------------------------
-    - xform/ㄧㄧ/ㆪ/
-    - xform/ㄨㄨ/ㆫ/
-    - xform/ㄚㄚ/ㆩ/
-    - xform/ㆦㆦ/ㆧ/
-    - xform/ㄝㄝ/ㆥ/
-    - xform/ㄞㄞ/ㆮ/
-    - xform/ㄠㄠ/ㆯ/
+    - xform/ㄧ'ㄧ/ㆪ/
+    - xform/ㄨ'ㄨ/ㆫ/
+    - xform/ㄚ'ㄚ/ㆩ/
+    - xform/ㆦ'ㆦ/ㆧ/
+    - xform/ㄝ'ㄝ/ㆥ/
+    - xform/ㄞ'ㄞ/ㆮ/
+    - xform/ㄠ'ㄠ/ㆯ/
     #--------------------------------------------------------------------------
     - xform/ㄧz/ㆪ/
     - xform/ㄨz/ㆫ/
@@ -408,7 +414,8 @@ translator:
     # 轉換成聲調符號
     #------------------------------------------------------
     # 將【聲調數值】轉換成【聲調符號】
-    - xform/1(】)/ˉ$1/
+    # - xform/1(】)/ˉ$1/
+    - xform/1(】)/$1/     # 聲調一無需顯示
     - xform/[26](】)/ˋ$1/
     - xform/3(】)/˪$1/
     - xform/5(】)/ˊ$1/
@@ -432,58 +439,123 @@ translator:
     - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
     #------------------------------------------------------
 
-custom_phrase:
-  dictionary: ""
-  user_dict: custom_phrase
-  db_class: stabledb
-  enable_completion: false
-  enable_sentence: false
-  initial_quality: 1
+# custom_phrase:
+#   dictionary: ""
+#   user_dict: custom_phrase
+#   db_class: stabledb
+#   enable_completion: false
+#   enable_sentence: false
+#   initial_quality: 1
+
+#--------------------------------------------------------------------------
+# script_translator@learning
+# 注音顯示模式的設定
+#--------------------------------------------------------------------------
+learning:
+  tag: learning
+  dictionary: moetaigi
+  prism: cu_im
+  tips: 《注音顯示》
+  spelling_hints: 5
+  prefix: "'"    # 啟動碼
+  preedit_format:
+    # - "xlit|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㆪㄨㆫ ˋ˪ㆴㆵㆻㆷˊ˫˙|"
+    - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎ ˋ˪ˊ˫．|
+    - xform/^/《注音顯示》/
+  comment_format:
+    __patch:
+      - cu_im:/phing_im_tng_cu_im
+      - cu_im:/keymap_bopomofo
+      - cu_im:/bopomofo_hu_ho
+
+#--------------------------------------------------------------------------
+# script_translator@cu_im
+# 中文反查模式的設定 (1) -- 利用中文注音打出字
+#--------------------------------------------------------------------------
+cu_im:
+  tag: cu_im
+  dictionary: terra_pinyin # luna_pinyin
+  prism: bopomofo_tw
+  prefix: "`"    # 啟動碼
+  # suffix: ;
+  spelling_hints: 5
+  preedit_format:
+    - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
+    - xform/^/《中文反查》/
+    # - xform/([nl])v/$1ü/
+    # - xform/([nl])ue/$1üe/
+    # - xform/([jqxy])v/$1u/
+  tips: 《中文反查》
+  # closing_tips: 【蒼頡】
+  # initial_quality: 0.2  # 調整該編譯器出字優先度
+
+#--------------------------------------------------------------------------
+# reverse_lookup_filter@cu_im_reverse_lookup_hide_cu_im
+# 中文注音反查的設定 (2) -- 對於不存在台語注音的漢字詞，在註解中把拼音隱藏起來，並顯示【無台語注音】
+#--------------------------------------------------------------------------
+# cu_im_reverse_lookup_hide_cu_im:
+#   tags: [ cu_im ]
+#   overwrite_comment: true
+#   dictionary: terra_pinyin
+#   comment_format:
+#     # - erase/^.*$/
+#     - xform/^.*$/【無台語注音】/
+#     # - xform/d/ /
+
+#--------------------------------------------------------------------------
+# reverse_lookup_filter@cu_im_reverse_lookup
+# 中文反查模式的設定 (3) -- 如果漢字詞有台語注音，就在候選項後面顯示
+#--------------------------------------------------------------------------
+# cu_im_reverse_lookup:
+#   tags: [ cu_im ]
+#   overwrite_comment: true
+#   dictionary: holok_cu_im.unspaced
+#   comment_format:
+#     __patch:
+#       - cu_im:/phing_im_tng_cu_im
+#       - cu_im:/keymap_bopomofo
+#       - cu_im:/bopomofo_hu_ho
 
 punctuator:
-#   import_preset: tlpa_utl_symbols
-  #### 依照教育部《重訂標點符號手冊》排序
-  #### https://language.moe.gov.tw/001/upload/files/site_content/m0001/hau/haushou.htm
-  full_shape: &symtable
-    ">" : { commit: "。" }
-    "." : { commit: "，" }
-    "\"" : { commit: "、" }
-    "\\" : { commit: "；" }
-    "=" : { commit: "：" }
-    "?" : { commit: "？" }
-    "[" : [ "「", "〈" ]
-    "]" : [ "」", "〉"]
-    "{" : { commit: "（" }
-    "}" : { commit: "）" }
-    "?" : { commit: "？" }
-    "|" : { commit: "！" }
-    "_" : { commit: "─" }
-    "+" : [ "‧" ]
-    "~" : { commit: "～" }
-  half_shape: *symtable
-  symbols:
-    "[[" : [ "『", "《" ]
-    "]]" : [ "』", "》" ]
-    "++" : [ "…" ]
-    "+++" : [ "…" ]
+  import_preset: tlpa_utl_symbols
+  # #### 依照教育部《重訂標點符號手冊》排序
+  # #### https://language.moe.gov.tw/001/upload/files/site_content/m0001/hau/haushou.htm
+  # full_shape: &symtable
+  #   ">" : { commit: "。" }
+  #   "." : { commit: "，" }
+  #   "\"" : { commit: "、" }
+  #   "\\" : { commit: "；" }
+  #   "=" : { commit: "：" }
+  #   "?" : { commit: "？" }
+  #   "[" : [ "「", "〈" ]
+  #   "]" : [ "」", "〉"]
+  #   "{" : { commit: "（" }
+  #   "}" : { commit: "）" }
+  #   "?" : { commit: "？" }
+  #   "|" : { commit: "！" }
+  #   "_" : { commit: "─" }
+  #   "+" : [ "‧" ]
+  #   "~" : { commit: "～" }
+  # half_shape: *symtable
+  # symbols:
+  #   "[[" : [ "『", "《" ]
+  #   "]]" : [ "』", "》" ]
+  #   "++" : [ "…" ]
+  #   "+++" : [ "…" ]
 
 recognizer:
   patterns:
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
-    # punct: '`[^\s]$'
-    punct: "[[]{2}$|[]]{2}$|[+]{2,3}$"    # 比對 "[[", "]]", "++", 和 "+++"
-    # reverse_lookup: "`[a-z]*$"   # wrong pattern
-    # reverse_lookup: "`.*$"
-    # custom_reverse_lookup: "`[a-z]*$"   # wrong pattern
-    learning: "'.*$"
-    zhuyin: "`.*$"
+    punct: '`[^\s]$'
+    # learning: "'.*$"
+    # cu_im: "`.*$"
 
 reverse_lookup:
-  dictionary: luna_pinyin
+  dictionary: terra_pinyin
   prefix: "`"
-  tips: 〔拼音〕
+  tips: 〔地球拼音〕
   preedit_format:
     - xform/([nljqxy])v/$1ü/
 
