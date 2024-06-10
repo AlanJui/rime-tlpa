@@ -41,24 +41,26 @@ engine:
     - ascii_segmentor
     - matcher
     - abc_segmentor
-    - affix_segmentor@learning
-    - affix_segmentor@cu_im
+    # - affix_segmentor@learning
+    # - affix_segmentor@cu_im
     - punct_segmentor
     - fallback_segmentor
   translators:
     - punct_translator
+    - table_translator@custom_phrase
+    - reverse_lookup_translator
     - script_translator
-    - script_translator@learning
-    - script_translator@cu_im
+    # - script_translator@learning
+    # - script_translator@cu_im
   filters:
-    - simplifier
     - uniquifier
-    - reverse_lookup_filter@cu_im_reverse_lookup_hide_cu_im
-    - reverse_lookup_filter@cu_im_reverse_lookup
+    # - simplifier
+    # - reverse_lookup_filter@cu_im_reverse_lookup_hide_cu_im
+    # - reverse_lookup_filter@cu_im_reverse_lookup
 
 speller:
-  alphabet: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657"
-  initials: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz7"
+  alphabet: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657"
+  initials: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7"
   finals: " 43567"
   delimiter: "'"
   use_space: true
@@ -78,8 +80,8 @@ translator:
   spelling_hints: 5
   preedit_format:
     __patch:
-      - tlpa_piau_im:/phah_ji_tng_cu_im
       - tlpa_piau_im:/keymap_tng_cu_im_fu_ho
+      - tlpa_piau_im:/phah_ji_tng_cu_im
   comment_format:
     __patch:
       - tlpa_piau_im:/hau_suan_piau_cu_im
@@ -203,7 +205,7 @@ recognizer:
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     reverse_lookup: "`[a-z]*'?$"
-    # punct: '`[^\s]$'
+    punct: '`[^\s]$'
 
 menu:
   # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
