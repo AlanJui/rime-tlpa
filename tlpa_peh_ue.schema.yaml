@@ -43,16 +43,22 @@ speller:
   #------------------------------------------------------
   # 1: ;
   # 2: \
-  # 3: _
-  # 4: [
+  # 3: <
+  # 4: (N/A)
   # 5: /
-  # 6: <
+  # 6: (N/A)
   # 7: -
   # 8: ]
   # 0: 0
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\_[/<-]0'
-  initials: abcdefghijklmnopqrstuvwxyz
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\<[/-]0'
+  initials: "abcdefghijklmnopqrstuvwxyz~"
+  finals: ';\<[/-]0'
   delimiter: " '"
+  # alphabet: "abcdefghijklmnopqrstuvwxyz-43657"
+  # initials: "abcdefghijklmnopqrstuvwxyz7"
+  # finals: "-43567"
+  # delimiter: "'"
+  # use_space: true
   algebra:
     #------------------------------------------------------
     # 零聲母處理
@@ -61,11 +67,11 @@ speller:
     #------------------------------------------------------
     # 定義字典中的 ‘漢字拼音’ 可與其它拼音法相容的規則
     #------------------------------------------------------
-    # - derive/ts/c/
-    # - derive/ou/oo/
-    # - derive/e(ng|k)/i$1/
-    # - derive/ei/e/
-    # - derive/ee/e/
+    - derive/ts/c/
+    - derive/ou/oo/
+    - derive/e(ng|k)/i$1/
+    - derive/ei/e/
+    - derive/ee/e/
     #------------------------------------------------------
     # 定義：聲母簡拼
     #------------------------------------------------------
@@ -78,7 +84,15 @@ speller:
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
-    - xlit|12345678|;\_[/<-]|
+    - xlit|23578|\</-]|
+    # - xlit|12345678|;\_[/<-]|
+    # - xform/1/-/
+    # - xform/2/4/
+    # - xform/3/3/
+    # - xform/5/6/
+    # - xform/7/5/
+    # - xform/8/7/
+    # - xform/0/0/
 
 translator:
   dictionary: tlpa_peh_ue
@@ -88,31 +102,46 @@ translator:
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
-    - xlit|;\_[/<-]0|¹²³⁴⁵⁶⁷⁸⁰|
+    - xlit|\</-]0|²³⁵⁷⁸⁰|
+    # - xlit|;\_[/<-]0|¹²³⁴⁵⁶⁷⁸⁰|
   comment_format:
-    #======================================================
-    # 令候選字視窗，可顯示兩組「拼音/注音」
-    # 左邊：拼音（TLPA 拼音字母）；右邊：注音符號。
-    #======================================================
-    # 所有元音韻母、鼻韻輔音（聲母）
-    - xform/Ø(a|e|i|o|u|oo|m|ng)(\d)/$1$2/
-    # 所有鼻韻韻母
-    - xform/Ø((a|e|i|o|u)nn)(\d)/$1$3/
-    # 所有組合韻母
-    - xform/Ø(ai|an|au|ang)(\d)/$1$2/
-    - xform/Ø(ia|io|iu|ua|ue|ui|un|uan|uang)(\d)/$1$2/
-    #------------------------------------------------------
-    # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
-    #------------------------------------------------------
-    # - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$2$3/
-    # - xform/([aeo])([iueo])([12345678])/$1$2$3/
-    #------------------------------------------------------
-    # 鼻化符號以 ‘上標n’ 顯示
-    #------------------------------------------------------
-    - 'xform/(nn)(h?)(\d)/ⁿ$2$3/'
-    #------------------------------------------------------
-    # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
-    - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
+    __patch:
+      - tlpa_piau_im:/hau_suan_piau_cu_im
+    # #======================================================
+    # # 令候選字視窗，可顯示兩組「拼音/注音」
+    # # 左邊：拼音（TLPA 拼音字母）；右邊：注音符號。
+    # #======================================================
+    # # 所有元音韻母、鼻韻輔音（聲母）
+    # - xform/Ø(a|e|i|o|u|oo|m|ng)(\d)/$1$2/
+    # # 所有鼻韻韻母
+    # - xform/Ø((a|e|i|o|u)nn)(\d)/$1$3/
+    # # 所有組合韻母
+    # - xform/Ø(ai|an|au|ang)(\d)/$1$2/
+    # - xform/Ø(ia|io|iu|ua|ue|ui|un|uan|uang)(\d)/$1$2/
+    # #------------------------------------------------------
+    # # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
+    # #------------------------------------------------------
+    # # - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$2$3/
+    # # - xform/([aeo])([iueo])([12345678])/$1$2$3/
+    # #------------------------------------------------------
+    # # 鼻化符號以 ‘上標n’ 顯示
+    # #------------------------------------------------------
+    # - 'xform/(nn)(h?)(\d)/ⁿ$2$3/'
+    # #------------------------------------------------------
+    # # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
+    # - xform/\/2/  # 2
+    # - xform/</3/  # 3
+    # - xform|/|5|  # 5
+    # - xform/-/7/  # 7
+    # - xform/]/8/ # 8
+    # - xform/0/0/  # 0 (輕声)
+    # # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
+    # # - xform/\/ˋ/  # 2
+    # # - xform/</˪/  # 3
+    # # - xform|/|ˊ|  # 5
+    # # - xform/-/˫/  # 7
+    # # - xform/]/．/ # 8
+    # # - xform/0/⁰/  # 0 (輕声)
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -124,9 +153,11 @@ reverse_lookup:
 key_binder:
   import_preset: default
   bindings:
-    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
+    # - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
+    # - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
+    # - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
     # 翻頁
     - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
     - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
@@ -144,9 +175,9 @@ key_binder:
 editor:
   bindings:
     space: commit                       # 選擇「備選漢字」
-    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
 
 punctuator:
   import_preset: default
@@ -155,7 +186,13 @@ recognizer:
   import_preset: default
   patterns:
     reverse_lookup: "`[a-z]*$"
-    # punct: "^/([0-9]0?|[A-Za-z]+)$"
+    punct: "^/([0-9]0?|[A-Za-z]+)$"
+
+menu:
+  # alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
+  # alternative_select_keys: "ABCDEFGHIJ"
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  page_size: 5 #選單每䈎顯示個數
 
 style:
   horizontal: false

@@ -175,17 +175,8 @@ key_binder:
     - { when: has_menu, accept: comma, send: comma }      # ㆤ
     - { when: has_menu, accept: period, send: period }    # ㆲ
     - { when: has_menu, accept: minus, send: minus }      # ｎ
-    - { when: composing, accept: minus, send: minus }       # 確保 `-` 鍵用於聲調 7
-    - { when: composing, accept: minus, send: "ｎ" }       # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: minus, when: always }          # 確保 `-` 鍵用於聲調 7
-    # - { when: paging, accept: minus, send: Page_Up }
-    # - { when: has_menu, accept: equal, send: Page_Down }
-    # - { when: has_menu, accept: minus, send: "ｎ" }        # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: "ｎ", when: composing }       # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: "ｎ", when: always }          # 確保 `-` 鍵用於聲調 7
-    # - { when: has_menu, accept: comma, send: comma }      # 解除【ㆤ】與候選字選上一頁的衝突
-    # - { when: has_menu, accept: period, send: period }    # 解除【ㆲ】與候選字選下一頁的衝突
-    # - { when: has_menu, accept: minus, send: minus }      # 解除【ｎ】與預設衝突，無法送出的問題
+    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
+    - { when: composing, accept: minus, send: "声" }      # 確保 `-` 鍵用於聲調 7
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------
