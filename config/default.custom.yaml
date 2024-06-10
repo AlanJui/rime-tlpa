@@ -6,8 +6,12 @@ customization:
   rime_version: 1.11.2
 patch:
   schema_list:
-    - {schema: moetaigi-tsuim}
     - {schema: my_bopomofo}
+    - {schema: tlpa_holok_piau_im}
+    - {schema: holok_cu_im}
+    - {schema: holok_cu_im.unspaced}
+    - {schema: moetaigi-tsuim}
+    - {schema: moetaigi.unspaced}
     - {schema: ngsth_bun}
     - {schema: tlpa_peh_ue}
     - {schema: tlpa_peh_ue-cu_im}
