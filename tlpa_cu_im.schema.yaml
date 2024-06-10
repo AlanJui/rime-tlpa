@@ -16,6 +16,8 @@ schema:
       ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
       ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
       ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
+  dependencies:
+    - stroke
 
 switches:
   - name: ascii_mode
@@ -45,15 +47,14 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
-    - table_translator@custom_phrase
     - script_translator
-    # - script_translator@learning
-    # - script_translator@cu_im
+    - script_translator@learning
+    - script_translator@cu_im
   filters:
     - simplifier
     - uniquifier
-    # - reverse_lookup_filter@cu_im_reverse_lookup_hide_cu_im
-    # - reverse_lookup_filter@cu_im_reverse_lookup
+    - reverse_lookup_filter@cu_im_reverse_lookup_hide_cu_im
+    - reverse_lookup_filter@cu_im_reverse_lookup
 
 speller:
   alphabet: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657"
@@ -83,125 +84,85 @@ translator:
     __patch:
       - tlpa_piau_im:/hau_suan_piau_cu_im
 
-# custom_phrase:
-#   dictionary: ""
-#   user_dict: custom_phrase
-#   db_class: stabledb
-#   enable_completion: false
-#   enable_sentence: false
-#   initial_quality: 1
-
-#--------------------------------------------------------------------------
-# script_translator@learning
-# 注音顯示模式的設定
-#--------------------------------------------------------------------------
-learning:
-  tag: learning
-  dictionary: moetaigi
-  prism: cu_im
-  tips: 《注音顯示》
-  spelling_hints: 5
-  prefix: "'"    # 啟動碼
-  preedit_format:
-    # - "xlit|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㆪㄨㆫ ˋ˪ㆴㆵㆻㆷˊ˫˙|"
-    - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎ ˋ˪ˊ˫．|
-    - xform/^/《注音顯示》/
-  comment_format:
-    __patch:
-      - cu_im:/phing_im_tng_cu_im
-      - cu_im:/keymap_bopomofo
-      - cu_im:/bopomofo_hu_ho
-
-#--------------------------------------------------------------------------
-# script_translator@cu_im
-# 中文反查模式的設定 (1) -- 利用中文注音打出字
-#--------------------------------------------------------------------------
-cu_im:
-  tag: cu_im
-  dictionary: terra_pinyin # luna_pinyin
-  prism: bopomofo_tw
-  prefix: "`"    # 啟動碼
-  # suffix: ;
-  spelling_hints: 5
-  preedit_format:
-    - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
-    - xform/^/《中文反查》/
-    # - xform/([nl])v/$1ü/
-    # - xform/([nl])ue/$1üe/
-    # - xform/([jqxy])v/$1u/
-  tips: 《中文反查》
-  # closing_tips: 【蒼頡】
-  # initial_quality: 0.2  # 調整該編譯器出字優先度
-
-#--------------------------------------------------------------------------
-# reverse_lookup_filter@cu_im_reverse_lookup_hide_cu_im
-# 中文注音反查的設定 (2) -- 對於不存在台語注音的漢字詞，在註解中把拼音隱藏起來，並顯示【無台語注音】
-#--------------------------------------------------------------------------
-# cu_im_reverse_lookup_hide_cu_im:
-#   tags: [ cu_im ]
-#   overwrite_comment: true
-#   dictionary: terra_pinyin
-#   comment_format:
-#     # - erase/^.*$/
-#     - xform/^.*$/【無台語注音】/
-#     # - xform/d/ /
-
-#--------------------------------------------------------------------------
-# reverse_lookup_filter@cu_im_reverse_lookup
-# 中文反查模式的設定 (3) -- 如果漢字詞有台語注音，就在候選項後面顯示
-#--------------------------------------------------------------------------
-# cu_im_reverse_lookup:
-#   tags: [ cu_im ]
-#   overwrite_comment: true
-#   dictionary: holok_cu_im.unspaced
-#   comment_format:
-#     __patch:
-#       - cu_im:/phing_im_tng_cu_im
-#       - cu_im:/keymap_bopomofo
-#       - cu_im:/bopomofo_hu_ho
-
-punctuator:
-  import_preset: tlpa_utl_symbols
-  # #### 依照教育部《重訂標點符號手冊》排序
-  # #### https://language.moe.gov.tw/001/upload/files/site_content/m0001/hau/haushou.htm
-  # full_shape: &symtable
-  #   ">" : { commit: "。" }
-  #   "." : { commit: "，" }
-  #   "\"" : { commit: "、" }
-  #   "\\" : { commit: "；" }
-  #   "=" : { commit: "：" }
-  #   "?" : { commit: "？" }
-  #   "[" : [ "「", "〈" ]
-  #   "]" : [ "」", "〉"]
-  #   "{" : { commit: "（" }
-  #   "}" : { commit: "）" }
-  #   "?" : { commit: "？" }
-  #   "|" : { commit: "！" }
-  #   "_" : { commit: "─" }
-  #   "+" : [ "‧" ]
-  #   "~" : { commit: "～" }
-  # half_shape: *symtable
-  # symbols:
-  #   "[[" : [ "『", "《" ]
-  #   "]]" : [ "』", "》" ]
-  #   "++" : [ "…" ]
-  #   "+++" : [ "…" ]
-
-recognizer:
-  patterns:
-    email: ^[a-z][-_.0-9a-z]*@.*$
-    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
-    url: ^(www[.]|https?:|ftp:|mailto:).*$
-    punct: '`[^\s]$'
-    # learning: "'.*$"
-    # cu_im: "`.*$"
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
 
 reverse_lookup:
-  dictionary: terra_pinyin
+  dictionary: stroke
+  enable_completion: true
   prefix: "`"
-  tips: 〔地球拼音〕
+  suffix: "'"
+  tips: 〔筆畫〕
   preedit_format:
-    - xform/([nljqxy])v/$1ü/
+    - xlit/hspnz/一丨丿丶乙/
+  comment_format:
+    - xform/e?r5$/er5/
+    - xform/iu/iou/
+    - xform/ui/uei/
+    - xform/ong/ung/
+    - xform/^yi?/i/
+    - xform/^wu?/u/
+    - xform/iu/v/
+    - xform/^([jqx])u/$1v/
+    - xform/([iuv])n/$1en/
+    - xform/zh/Z/
+    - xform/ch/C/
+    - xform/sh/S/
+    - xform/ai/A/
+    - xform/ei/I/
+    - xform/ao/O/
+    - xform/ou/U/
+    - xform/ang/K/
+    - xform/eng/G/
+    - xform/an/M/
+    - xform/en/N/
+    - xform/er/R/
+    - xform/eh/E/
+    - xform/([iv])e/$1E/
+    - xform/1//
+    - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
+
+punctuator:
+  # import_preset: tlpa_utl_symbols
+  # #### 依照教育部《重訂標點符號手冊》排序
+  # #### https://language.moe.gov.tw/001/upload/files/site_content/m0001/hau/haushou.htm
+  full_shape: &symtable
+    ">" : { commit: "。" }
+    "." : { commit: "，" }
+    "\"" : { commit: "、" }
+    "\\" : { commit: "；" }
+    "=" : { commit: "：" }
+    "?" : { commit: "？" }
+    "[" : [ "「", "〈" ]
+    "]" : [ "」", "〉"]
+    "{" : { commit: "（" }
+    "}" : { commit: "）" }
+    "?" : { commit: "？" }
+    "|" : { commit: "！" }
+    "_" : { commit: "─" }
+    "+" : [ "‧" ]
+    "~" : { commit: "～" }
+  half_shape: *symtable
+  symbols:
+    "[[" : [ "『", "《" ]
+    "]]" : [ "』", "》" ]
+    "++" : [ "…" ]
+    "+++" : [ "…" ]
+
+editor:
+  bindings:
+    space: toggle_selection
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
+    # Control+Return: confirm    # 上屏原始的輸入：lau5
 
 key_binder:
   import_preset: default
@@ -212,8 +173,9 @@ key_binder:
     - { when: has_menu, accept: comma, send: comma }      # ㆤ
     - { when: has_menu, accept: period, send: period }    # ㆲ
     - { when: has_menu, accept: minus, send: minus }      # ｎ
-    - { accept: minus, send: minus, when: composing }       # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: always }          # 確保 `-` 鍵用於聲調 7
+    - { when: composing, accept: minus, send: minus }       # 確保 `-` 鍵用於聲調 7
+    - { when: composing, accept: minus, send: "ｎ" }       # 確保 `-` 鍵用於聲調 7
+    # - { accept: minus, send: minus, when: always }          # 確保 `-` 鍵用於聲調 7
     # - { when: paging, accept: minus, send: Page_Up }
     # - { when: has_menu, accept: equal, send: Page_Down }
     # - { when: has_menu, accept: minus, send: "ｎ" }        # 確保 `-` 鍵用於聲調 7
@@ -234,24 +196,14 @@ key_binder:
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
-    #---------------------------------------------------
-    # 選擇 ‘候選字號’
-    #---------------------------------------------------
-    # - { accept: semicolon,  send: 5, when: has_menu } # 設定 Ctrl+1 選擇第 1 字
-    # - { accept: "Control+1", send: "Ａ", when: has_menu } # 設定 Ctrl+1 選擇第 1 字
-    # - { accept: "Control+2", send: "Ｂ", when: has_menu } # 設定 Ctrl+2 選擇第 2 字
-    # - { accept: "Control+3", send: "Ｃ", when: has_menu } # 設定 Ctrl+3 選擇第 3 字
-    # - { accept: "Control+4", send: "Ｄ", when: has_menu } # 設定 Ctrl+4 選擇第 4 字
-    # - { accept: "Control+5", send: "Ｅ", when: has_menu } # 設定 Ctrl+5 選擇第 5 字
 
-editor:
-  bindings:
-    space: commit                       # 選擇「備選漢字」
-    Return: commit_composition          # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
-    # Control+Return: confirm    # 上屏原始的輸入：lau5
+recognizer:
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    reverse_lookup: "`[a-z]*'?$"
+    # punct: '`[^\s]$'
 
 menu:
   # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
@@ -261,20 +213,3 @@ menu:
 
 style:
   horizontal: false
-    # #--------------------------------------------------------------------------
-    # # 將字典中漢字的【拼音字母】對映成輸入法使用的【字典編碼】
-    # #--------------------------------------------------------------------------
-    # # 設定【陽聲韻】（ng,n,m）的【韻尾】與【字典編碼】對映關聯
-    # # a: am/an/ang
-    # # ee: x/x/eng
-    # # i: im/in/ing
-    # # ia: iam/ian/iang
-    # # ioo: x/x/iong
-    # # oo: om/x/ong
-    # # ir: irm/irn/irng
-    # # ua: x/uan/uang
-    # # - xform/(([aeio]|ia|ir|io|ua)W)/$2W/
-    # # - xform/(([aiu]|ia|ir)D)/$2D/
-    # # - xform/(([aio]|ia|ir)M)/$1M/
-    # - xform/o(W|k|M|p)/O$1/    # ong = oong, om = oom, oo = O (大寫英文字母)
-    # - xform/io(W|k|M|p)/iO$1/  # iong = ioong
