@@ -122,13 +122,14 @@ ji_tian_tng_keymap:
     #--------------------------------------------------------------------------
     # 定義【字典編碼】與【鍵盤按鍵】對映關聯
     #--------------------------------------------------------------------------
-    - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBz123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
-
+    # - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBz123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
+    - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
 
 # ㄅㄆㄇ對應的按鍵轉換成螢幕顯示的符號
 keymap_tng_cu_im_fu_ho:
   __append:
     # 定義【鍵盤按鍵】與【方音符號】對映關聯
+    # - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰ声ˉˋ˪ˊ˫．|
     - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰ声ˉˋ˪ˊ˫．|
 
 

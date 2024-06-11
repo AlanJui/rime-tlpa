@@ -84,12 +84,13 @@ abbreviation:
 #### 單字母拼寫轉換成ㄅㄆㄇ對應的按鍵
 keymap_bopomofo:
   __append:
-    - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M0N[]RriIuU1239><4578|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|'
+   - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
 
 #### ㄅㄆㄇ對應的按鍵轉換成螢幕顯示的符號
 bopomofo_hu_ho:
   __append:
-    - "xlit|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㆪㄨㆫ ˋ˪ㆴㆵㆻㆷˊ˫˙|"
+    # - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰ声ˉˋ˪ˊ˫．|
+    - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA23570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰ声ˋ˪ˊ˫．|
 
 hau_suan_piau_cu_im:
   __append:
