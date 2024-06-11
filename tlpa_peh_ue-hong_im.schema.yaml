@@ -51,8 +51,8 @@ speller:
   # 7: -
   # 8: ]
   # 0: 0
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\[/<-]0'
-  initials: abcdefghijklmnopqrstuvwxyz
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\/-]0'
+  initials: 'abcdefghijklmnopqrstuvwxyz'
   delimiter: " '"
   algebra:
     # 零聲母處理
@@ -75,7 +75,7 @@ speller:
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
-    - xlit|12345678|;\_[/<-]|
+    - xlit|23578|\</-]|
 
 translator:
   # dictionary: tlpa_sip_ngoo_im
@@ -89,7 +89,8 @@ translator:
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    - xlit|;\_[/<-]0|¹²³⁴⁵⁶⁷⁸⁰|
+    # - xlit|;\_[/<-]0|¹²³⁴⁵⁶⁷⁸⁰|
+    - xlit|\</-]0|235780|
   comment_format:
     #======================================================
     # 令候選字視窗，可顯示兩組「注音/拼音」
@@ -254,9 +255,9 @@ key_binder:
   bindings:
     #---------------------------------------------------
     # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
-    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
     #---------------------------------------------------
     # 翻頁
     # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
@@ -279,9 +280,9 @@ key_binder:
 editor:
   bindings:
     space: commit                       # 選擇「備選漢字」
-    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_composition    # 上屏原始的輸入：lau5
     # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
     # Control+Return: confirm    # 上屏原始的輸入：lau5
 
@@ -292,7 +293,7 @@ recognizer:
   import_preset: default
   patterns:
     reverse_lookup: "`[a-z]*$"
-    punct: "^/([0-9]0?|[A-Za-z]+)$"
+    # punct: "^/([0-9]0?|[A-Za-z]+)$"
 
 menu:
   alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
@@ -301,3 +302,4 @@ menu:
 
 style:
   horizontal: false
+  # font_face: "Microsoft Jhenghei"

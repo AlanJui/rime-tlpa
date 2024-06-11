@@ -5,12 +5,20 @@
 schema:
   schema_id: tlpa_peh_ue
   name: 河洛白話
-  version: "0.0.0.1"
+  version: "0.0.1.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
     河洛話白話音
     採用「TLPA標音方案」
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
 
 engine:
   processors:
@@ -22,6 +30,7 @@ engine:
     - selector
     - navigator
     - express_editor
+    # - fluency_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -31,7 +40,8 @@ engine:
   translators:
     - echo_translator
     - punct_translator
-    - r10n_translator
+    # - r10n_translator
+    - script_translator
     - reverse_lookup_translator
   filters:
     - simplifier
@@ -56,9 +66,12 @@ speller:
   delimiter: " '"
   algebra:
     #------------------------------------------------------
-    # 零聲母處理
+    # 前置處理
     #------------------------------------------------------
-    # - derive/Ø//
+    # 去除零聲母
+    - derive/Ø//
+    - xform/tsh/ch/
+    - xform/ts/c/
     #------------------------------------------------------
     # 定義：聲母簡拼
     #------------------------------------------------------
@@ -66,9 +79,9 @@ speller:
     #------------------------------------------------------
     # 定義字典中的 ‘漢字拼音’ 可與其它拼音法相容的規則
     #------------------------------------------------------
-    - derive/^c/ts/
-    - derive/oo/ou/
-    - derive/i(ng|k)/e$1/
+    # - derive/^c/ts/
+    # - derive/oo/ou/
+    # - derive/i(ng|k)/e$1/
     #------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #------------------------------------------------------
@@ -88,13 +101,14 @@ speller:
     - 'xform 0 0'
 
 translator:
-  dictionary: tlpa_peh_ue
-  # dictionary: banlam
+  # dictionary: tlpa_peh_ue
+  dictionary: banlam
   preedit_format:
     # 鼻化符號以 ‘上標n’ 顯示
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
+    - xlit|012345678|⁰¹²³⁴⁵⁶⁷⁸|
     - 'xform ; 1'
     - 'xform \\ 2'
     - 'xform < 3'
@@ -104,17 +118,14 @@ translator:
     - 'xform - 7'
     - 'xform ] 8'
     - 'xform 0 0'
-    # - xlit|012345678|⁰¹²³⁴⁵⁶⁷⁸|
   comment_format:
-    # __patch:
-    #   - tlpa_piau_im:/hau_suan_piau_cu_im
-    # #------------------------------------------------------
-    # # 鼻化符號以 ‘上標n’ 顯示
-    # #------------------------------------------------------
-    # - 'xform/(nn)(h?)(\d)/ⁿ$2$3/'
-    # #------------------------------------------------------
-    # # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
-    # - 'xlit 012345678 ⁰¹²³⁴⁵⁶⁷⁸'
+    # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
+    - 'xlit 012345678 ⁰¹²³⁴⁵⁶⁷⁸'
+    #------------------------------------------------------
+    # 鼻化符號以 ‘上標n’ 顯示
+    #------------------------------------------------------
+    - 'xform/(nn)(h?)(\d)/ⁿ$2$3/'
+    #------------------------------------------------------
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -124,7 +135,7 @@ reverse_lookup:
     - xform/([nljqxy])v/$1ü/
 
 key_binder:
-  # import_preset: default
+  import_preset: default
   bindings:
     - { when: has_menu, accept: minus, send: minus }      # ｎ
     - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
@@ -153,29 +164,7 @@ editor:
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
 
 punctuator:
-  # import_preset: default
-  full_shape: &symtable
-    ">" : { commit: "。" }
-    "." : { commit: "，" }
-    # "\"" : { commit: "、" }
-    # "\\" : { commit: "；" }
-    "=" : { commit: "：" }
-    "?" : { commit: "？" }
-    # "[" : [ "「", "〈" ]
-    # "]" : [ "」", "〉"]
-    "{" : { commit: "（" }
-    "}" : { commit: "）" }
-    "?" : { commit: "？" }
-    "|" : { commit: "！" }
-    "_" : { commit: "─" }
-    "+" : [ "‧" ]
-    # "~" : { commit: "～" }
-  half_shape: *symtable
-  symbols:
-    # "[[" : [ "『", "《" ]
-    # "]]" : [ "』", "》" ]
-    "++" : [ "…" ]
-    "+++" : [ "…" ]
+  import_preset: default
 
 recognizer:
   import_preset: default
@@ -190,4 +179,3 @@ menu:
 
 style:
   horizontal: false
-  font_face: "Microsoft Jhenghei"
