@@ -17,27 +17,27 @@ import_tables:
 軾	sik4	60%
 過	kue3	60%
 如	ju5	60%
-餘	u5	60%
-養	iong2	60%
+餘	Øu5	60%
+養	Øiong2	60%
 虛	hi1	60%
 遠	hng7	60%
-閒	ing5	60%
+閒	Øing5	60%
 礴	pok8	60%
-##	a/ah
-啊	a0
-啊	ah0
-矣	ah0
-阿	a1	10
-鴉	a1
-亞	a1
-腌	a1
-仔	a2	10
-啞	a2
-鴨	ah4
-押	ah4
-壓	ah4	1%
-盒	ah8
-曷	ah8	1%
+##	Øa/ah
+啊	Øa0
+啊	Øah0
+矣	Øah0
+阿	Øa1	10
+鴉	Øa1
+亞	Øa1
+腌	Øa1
+仔	Øa2	10
+啞	Øa2
+鴨	Øah4
+押	Øah4
+壓	Øah4	1%
+盒	Øah8
+曷	Øah8	1%
 巴	pa1
 笆	pa1
 芭	pa1
@@ -193,19 +193,19 @@ import_tables:
 耍	sa2
 嗄	sa3
 煠	sah8
-##	ai/aih
-哀	ai1
-挨	ai1
-埃	ai1
-唉	ai1
-哎	ai1
-藹	ai2
-矮	ai2	0%
-愛	ai3	10
-隘	ai3
-嬡	ai3
-曖	ai3
-璦	ai3
+##	Øai/aih
+哀	Øai1
+挨	Øai1
+埃	Øai1
+唉	Øai1
+哎	Øai1
+藹	Øai2
+矮	Øai2	0%
+愛	Øai3	10
+隘	Øai3
+嬡	Øai3
+曖	Øai3
+璦	Øai3
 俳	pai1	1%
 擺	pai2	10
 跛	pai2
@@ -379,18 +379,18 @@ import_tables:
 侍	sai7	1%
 寘	sai7
 祀	sai7
-##	au/auh
-歐	au1
-區	au1	5%
-甌	au1
-漚	au1
-拗	au2
-嘔	au2
-漚	au3
-懊	au3
-拗	auh4
-喉	au5	10
-後	au6	10
+##	Øau/auh
+歐	Øau1
+區	Øau1	5%
+甌	Øau1
+漚	Øau1
+拗	Øau2
+嘔	Øau2
+漚	Øau3
+懊	Øau3
+拗	Øauh4
+喉	Øau5	10
+後	Øau6	10
 包	pau1
 胞	pau1
 苞	pau1
@@ -520,10 +520,10 @@ import_tables:
 嗽	sau3
 哨	sau3
 稍	sau3
-##	ann/annh
-向	ann3	5%
-涵	ann5
-餡	ann7
+##	Øann/annh
+向	Øann3	5%
+涵	Øann5
+餡	Øann7
 冇	phann3
 怕	phann3
 奅	phann7
@@ -589,8 +589,8 @@ import_tables:
 衫	sann1
 煞	sannh4
 喢	sannh4
-##	ainn/ainnh
-閒	ainn5
+##	Øainn/ainnh
+閒	Øainn5
 反	painn2
 爿	painn5
 店	tainn3	10
@@ -612,7 +612,7 @@ import_tables:
 千	chainn1
 筅	chainn2
 先	sainn1
-##	aunn/aunnh
+##	Øaunn/aunnh
 茅	mau5
 矛	mau5
 貌	mau7
@@ -624,23 +624,23 @@ import_tables:
 藕	ngau6
 樂	ngau7
 藃	haunnh
-##	am/ap
-庵	am1
-𧌄	am1
-腌	am1
-鵪	am1
-諳	am1
-闇	am1
-罨	am1
-泔	am2	5%
-黯	am2
-暗	am3	10
-壓	ap4
-押	ap4
-鴨	ap4	5%
-涵	am5
-頷	am6	10
-盒	ap8	1%
+##	Øam/ap
+庵	Øam1
+𧌄	Øam1
+腌	Øam1
+鵪	Øam1
+諳	Øam1
+闇	Øam1
+罨	Øam1
+泔	Øam2	5%
+黯	Øam2
+暗	Øam3	10
+壓	Øap4
+押	Øap4
+鴨	Øap4	5%
+涵	Øam5
+頷	Øam6	10
+盒	Øap8	1%
 耽	tam1
 擔	tam1
 眈	tam1
@@ -781,19 +781,19 @@ import_tables:
 霎	sap4
 颯	sap4
 儳	sam5
-##	an/at
-安	an1	10
-鞍	an1
-俺	an2
-按	an2
-按	an3	10
-案	an3	10
-晏	an3
-遏	at4
-軋	at4
-揠	at4
-絚	an5	10
-限	an6	0%
+##	Øan/at
+安	Øan1	10
+鞍	Øan1
+俺	Øan2
+按	Øan2
+按	Øan3	10
+案	Øan3	10
+晏	Øan3
+遏	Øat4
+軋	Øat4
+揠	Øat4
+絚	Øan5	10
+限	Øan6	0%
 班	pan1
 扳	pan1
 斑	pan1
@@ -992,17 +992,17 @@ import_tables:
 蝨	sat4
 剎	sat4
 薩	sat4
-##	ang/ak
-翁	ang1	10
-尪	ang1
-甕	ang3
-握	ak4
-沃	ak4
-齷	ak4
-幄	ak4
-渥	ak4
-紅	ang5	10
-洪	ang5
+##	Øang/ak
+翁	Øang1	10
+尪	Øang1
+甕	Øang3
+握	Øak4
+沃	Øak4
+齷	Øak4
+幄	Øak4
+渥	Øak4
+紅	Øang5	10
+洪	Øang5
 幫	pang1
 枋	pang1
 封	pang1	0%
@@ -1150,25 +1150,25 @@ import_tables:
 鬆	sang1
 送	sang3	10
 捒	sak4
-##	iau/iauh
-枵	iau1	10
-要	iau1
-腰	iau1	0%
-妖	iau1
-邀	iau1
-猶	iau2	10
-夭	iau2	10
-窈	iau2
-杳	iau2
-要	iau3
-遙	iau5
-搖	iau5
-謠	iau5
-瑤	iau5
-姚	iau5
-耀	iau7
-曜	iau7
-燿	iau7
+##	Øiau/iauh
+枵	Øiau1	10
+要	Øiau1
+腰	Øiau1	0%
+妖	Øiau1
+邀	Øiau1
+猶	Øiau2	10
+夭	Øiau2	10
+窈	Øiau2
+杳	Øiau2
+要	Øiau3
+遙	Øiau5
+搖	Øiau5
+謠	Øiau5
+瑤	Øiau5
+姚	Øiau5
+耀	Øiau7
+曜	Øiau7
+燿	Øiau7
 標	piau1
 鑣	piau1
 膘	piau1
@@ -1328,12 +1328,12 @@ import_tables:
 紹	siau7
 邵	siau7
 劭	siau7
-##	iann/iannh
-纓	iann1
-影	iann2
-贏	iann5
-營	iann5
-颺	iann6
+##	Øiann/iannh
+纓	Øiann1
+影	Øiann2
+贏	Øiann5
+營	Øiann5
+颺	Øiann6
 兵	piann1	1%
 餅	piann2
 丙	piann2
@@ -1399,36 +1399,36 @@ import_tables:
 城	siann5
 成	siann5	5%
 唌	siann5
-##	iaunn/iaunnh
+##	Øiaunn/iaunnh
 喵	miau1
 妙	miau7
 貓	niau1
 鳥	niau2
 擽	ngiau1
 蟯	ngiauh8
-##	iam/iap
-陰	iam1	1%
-閹	iam1
-醃	iam1
-掩	iam2
-奄	iam2
-琰	iam2
-魘	iam2
-厭	iam3
-揜	iap4
-揞	iap4
-鹽	iam5
-檐	iam5
-炎	iam7	10
-焰	iam7
-燄	iam7
-艷	iam7	10
-焱	iam7
-豔	iam7
-灩	iam7
-葉	iap8	5%
-曄	iap8
-燁	iap8
+##	Øiam/iap
+陰	Øiam1	1%
+閹	Øiam1
+醃	Øiam1
+掩	Øiam2
+奄	Øiam2
+琰	Øiam2
+魘	Øiam2
+厭	Øiam3
+揜	Øiap4
+揞	Øiap4
+鹽	Øiam5
+檐	Øiam5
+炎	Øiam7	10
+焰	Øiam7
+燄	Øiam7
+艷	Øiam7	10
+焱	Øiam7
+豔	Øiam7
+灩	Øiam7
+葉	Øiap8	5%
+曄	Øiap8
+燁	Øiap8
 砧	tiam1
 沾	tiam1
 點	tiam2	10
@@ -1564,34 +1564,34 @@ import_tables:
 蟾	siam5
 贍	siam7
 涉	siap8
-##	ian/iat
-煙	ian1	10
-胭	ian1
-燕	ian1
-焉	ian1
-嫣	ian1
-淵	ian1
-咽	ian1
-鳶	ian1
-演	ian2	10
-偃	ian2	10
-衍	ian2
-宴	ian3	10
-嚥	ian3
-燕	ian3
-噎	iat4
-謁	iat4
-緣	ian5
-沿	ian5	10
-鉛	ian5	10
-筵	ian5
-延	ian5	10
-芫	ian5
-捐	ian5	5%
-蜒	ian5
-閱	iat8
-悅	iat8
-擛	iat8
+##	Øian/iat
+煙	Øian1	10
+胭	Øian1
+燕	Øian1
+焉	Øian1
+嫣	Øian1
+淵	Øian1
+咽	Øian1
+鳶	Øian1
+演	Øian2	10
+偃	Øian2	10
+衍	Øian2
+宴	Øian3	10
+嚥	Øian3
+燕	Øian3
+噎	Øiat4
+謁	Øiat4
+緣	Øian5
+沿	Øian5	10
+鉛	Øian5	10
+筵	Øian5
+延	Øian5	10
+芫	Øian5
+捐	Øian5	5%
+蜒	Øian5
+閱	Øiat8
+悅	Øiat8
+擛	Øiat8
 邊	pian1
 編	pian1
 鞭	pian1
@@ -1825,11 +1825,11 @@ import_tables:
 繕	sian7
 舌	siat8	5%
 折	siat8
-##	iang/iak
-偝	iang7
-偝	iannh8	#泉
+##	Øiang/iak
+偝	Øiang7
+偝	Øiannh8	#泉
 偝	ciann1	#泉
-偝	ainn7	#漳
+偝	Øainn7	#漳
 嘣	piang1
 迸	piang3
 煏	piak4
@@ -1856,28 +1856,28 @@ import_tables:
 誰	siang7	1%	10	#异
 侗	siang5
 侗	sang5	#泉
-##	iang/iak
-央	iang1	10
-鴦	iang1
-秧	iang1
-殃	iang1
-泱	iang1
-鞅	iang1
-養	iang2	10
-癢	iang2	5%
-氧	iang2	10
-約	iak4
-陽	iang5	10
-羊	iang5	5%
-楊	iang5	5%
-洋	iang5	5%
-揚	iang5	10
-恙	iang7
-漾	iang7
-樣	iang7	5%
-躍	iak8
-藥	iak8	5%
-鑰	iak8
+##	Øiang/iak
+央	Øiang1	10
+鴦	Øiang1
+秧	Øiang1
+殃	Øiang1
+泱	Øiang1
+鞅	Øiang1
+養	Øiang2	10
+癢	Øiang2	5%
+氧	Øiang2	10
+約	Øiak4
+陽	Øiang5	10
+羊	Øiang5	5%
+楊	Øiang5	5%
+洋	Øiang5	5%
+揚	Øiang5	10
+恙	Øiang7
+漾	Øiang7
+樣	Øiang7	5%
+躍	Øiak8
+藥	Øiak8	5%
+鑰	Øiak8
 張	tiang1
 長	tiang2
 漲	tiang3
@@ -1993,13 +1993,13 @@ import_tables:
 橡	siang6
 上	siang7	10
 尚	siang7
-##	ua/uah
-蛙	ua1
-娃	ua1
-哇	ua1
-倚	ua2	1%	10
-何	ua5	1%
-活	uah8
+##	Øua/uah
+蛙	Øua1
+娃	Øua1
+哇	Øua1
+倚	Øua2	1%	10
+何	Øua5	1%
+活	Øuah8
 簸	pua3
 撥	puah4
 缽	puah4
@@ -2096,7 +2096,7 @@ import_tables:
 紲	sua3	10
 煞	suah4
 撒	suah4
-##	uai/uaih
+##	Øuai/uaih
 跩	cuai6
 乖	kuai1
 拐	kuai2
@@ -2110,16 +2110,16 @@ import_tables:
 淮	huai5
 槐	huai5
 濰	huai5
-歪	uai1
-##	uann/uannh
-安	uann1	1%
-鞍	uann1
-碗	uann2	10
-腕	uann2
-晏	uann3	10
-案	uann3
-旱	uann6
-換	uann7	10
+歪	Øuai1
+##	Øuann/uannh
+安	Øuann1	1%
+鞍	Øuann1
+碗	Øuann2	10
+腕	Øuann2
+晏	Øuann3	10
+案	Øuann3
+旱	Øuann6
+換	Øuann7	10
 般	puann1
 搬	puann1	10
 坂	puann2
@@ -2193,59 +2193,59 @@ import_tables:
 傘	suann3
 散	suann3
 汕	suann3
-##	uainn/uainnh
-灣	uainn1
-崴	uainn2
-崴	uainnh4
+##	Øuainn/uainnh
+灣	Øuainn1
+崴	Øuainn2
+崴	Øuainnh4
 糜	muai5
 妹	muai7	1%
 關	kuainn1
 杆	kuainn1
 橫	huainn5
 檨	suainn7
-##	uainn/uainnh
+##	Øuainn/uainnh
 慣	kuainn3
 懸	kuainn5
 縣	kuainn7
-##	uan/uat
-冤	uan1	10
-灣	uan1	10
-彎	uan1	10
-鴛	uan1
-蜿	uan1
-遠	uan2	10
-宛	uan2
-苑	uan2
-腕	uan2
-婉	uan2
-琬	uan2
-皖	uan2
-菀	uan2
-怨	uan3	10
-惋	uan3
-斡	uat4
-挖	uat4	0%
-員	uan5	10
-圓	uan5	1%
-完	uan5	10
-園	uan5	5%
-丸	uan5	0%
-猿	uan5
-袁	uan5
-紈	uan5
-轅	uan5
-緩	uan6
-浣	uan6
-院	uan7	0%
-援	uan7
-媛	uan7
-瑗	uan7
-越	uat8
-粵	uat8
-活	uat8	1%
-悅	uat8
-閱	uat8
-曰	uat8
+##	Øuan/uat
+冤	Øuan1	10
+灣	Øuan1	10
+彎	Øuan1	10
+鴛	Øuan1
+蜿	Øuan1
+遠	Øuan2	10
+宛	Øuan2
+苑	Øuan2
+腕	Øuan2
+婉	Øuan2
+琬	Øuan2
+皖	Øuan2
+菀	Øuan2
+怨	Øuan3	10
+惋	Øuan3
+斡	Øuat4
+挖	Øuat4	0%
+員	Øuan5	10
+圓	Øuan5	1%
+完	Øuan5	10
+園	Øuan5	5%
+丸	Øuan5	0%
+猿	Øuan5
+袁	Øuan5
+紈	Øuan5
+轅	Øuan5
+緩	Øuan6
+浣	Øuan6
+院	Øuan7	0%
+援	Øuan7
+媛	Øuan7
+瑗	Øuan7
+越	Øuat8
+粵	Øuat8
+活	Øuat8	1%
+悅	Øuat8
+閱	Øuat8
+曰	Øuat8
 搬	puan1	0%
 般	puan1	1%
 半	puan3	5%
@@ -2445,15 +2445,15 @@ import_tables:
 旋	suan5	10
 璇	suan5
 檨	suan7
-##	uang/uak
-嚾	uang1
+##	Øuang/uak
+嚾	Øuang1
 風	huang1
-##	ee/eeh
-啞	ee2
-厄	eeh4
-下	ee6
-廈	ee6
-下	ee7
+##	Øee/eeh
+啞	Øee2
+厄	Øeeh4
+下	Øee6
+廈	Øee6
+下	Øee7
 扒	pee1
 把	pee2	5%
 靶	pee2
@@ -2522,21 +2522,21 @@ import_tables:
 紗	see1
 裟	see1
 屑	seeh4
-##	uee/ueeh
-話	uee7
-畫	uee7
-畫	ueeh8
+##	Øuee/ueeh
+話	Øuee7
+畫	Øuee7
+畫	Øueeh8
 瓜	kuee1
 怪	kuee3
 花	huee1
 嘩	huee1
 化	huee3	1%
-##	e/eh
-縊	e3
-翳	e3
-兮	e5	10
-个	e5	10
-裔	e7
+##	Øe/eh
+縊	Øe3
+翳	Øe3
+兮	Øe5	10
+个	Øe5	10
+裔	Øe7
 閉	pe3	0%
 蔽	pe3
 陛	pe6
@@ -2655,10 +2655,10 @@ import_tables:
 逝	se7	10
 筮	se7
 噬	se7
-##	enn/ennh
-嚶	enn1
-嬰	enn1	10
-楹	enn5
+##	Øenn/ennh
+嚶	Øenn1
+嬰	Øenn1	10
+楹	Øenn5
 柄	penn3
 平	penn5	10
 棚	penn5
@@ -2718,12 +2718,12 @@ import_tables:
 省	senn2
 姓	senn3
 性	senn3	1%
-##	ue/ueh
-喂	ue1
-煨	ue1
-崴	ue1
-穢	ue3
-衛	ue7
+##	Øue/ueh
+喂	Øue1
+煨	Øue1
+崴	Øue1
+穢	Øue3
+衛	Øue7
 杯	pue1	10
 桮	pue1
 盃	pue1
@@ -2793,7 +2793,7 @@ import_tables:
 涗	sue3
 說	sue3	1%
 稅	sue3	0%
-##	uenn/uennh
+##	Øuenn/uennh
 每	mue2
 媒	mue5
 煤	mue5
@@ -2802,36 +2802,36 @@ import_tables:
 莓	mue5
 妹	mue7
 昧	mue7
-##	i/ih
-伊	i1	10
-醫	i1	10
-衣	i1
-依	i1
-漪	i1
-咿	i1
-以	i2	10
-已	i2	10
-椅	i2	10
-倚	i2
-矣	i2
-迤	i2
-意	i3	10
-懿	i3
-薏	i3
-踦	ih4
-姨	i5	10
-移	i5	10
-怡	i5
-夷	i5
-維	i5	0%
-頤	i5
-胰	i5
-彝	i5
-貽	i5
-奕	i6	10
-異	i7	10
-易	i7	10
-肄	i7
+##	Øi/ih
+伊	Øi1	10
+醫	Øi1	10
+衣	Øi1
+依	Øi1
+漪	Øi1
+咿	Øi1
+以	Øi2	10
+已	Øi2	10
+椅	Øi2	10
+倚	Øi2
+矣	Øi2
+迤	Øi2
+意	Øi3	10
+懿	Øi3
+薏	Øi3
+踦	Øih4
+姨	Øi5	10
+移	Øi5	10
+怡	Øi5
+夷	Øi5
+維	Øi5	0%
+頤	Øi5
+胰	Øi5
+彝	Øi5
+貽	Øi5
+奕	Øi6	10
+異	Øi7	10
+易	Øi7	10
+肄	Øi7
 悲	pi1	10
 卑	pi1
 碑	pi1
@@ -3140,13 +3140,13 @@ import_tables:
 嗜	si7
 諡	si7
 蝕	sih8
-##	inn/innh
-縈	inn1
-穎	inn2
-燕	inn3
-圓	inn5
-丸	inn5
-院	inn7
+##	Øinn/innh
+縈	Øinn1
+穎	Øinn2
+燕	Øinn3
+圓	Øinn5
+丸	Øinn5
+院	Øinn7
 邊	pinn1
 鞭	pinn1
 扁	pinn2
@@ -3205,18 +3205,18 @@ import_tables:
 鹽	sinn5	1%
 鹽	sinn7	5%
 豉	sinn7
-##	im/ip
-音	im1
-淹	im1
-陰	im1
-飲	im2
-蔭	im3
-廕	im3
-窨	im3
-揖	ip4
-挹	ip4
-邑	ip4
-淫	im5
+##	Øim/ip
+音	Øim1
+淹	Øim1
+陰	Øim1
+飲	Øim2
+蔭	Øim3
+廕	Øim3
+窨	Øim3
+揖	Øip4
+挹	Øip4
+邑	Øip4
+淫	Øim5
 頕	tim3
 掂	tim3
 抌	tim3
@@ -3323,25 +3323,25 @@ import_tables:
 拾	sip8
 襲	sip8
 什	sip8
-##	in/it
-因	in1	10
-姻	in1
-怹	in1	10
-茵	in1
-引	in2	10
-應	in3	10
-印	in3
-一	it4	10
-憶	it4	1%
-乙	it4
-壹	it4
-寅	in5
-孕	in7
-胤	in7
-逸	it8
-佚	it8
-軼	it8
-佾	it8
+##	Øin/it
+因	Øin1	10
+姻	Øin1
+怹	Øin1	10
+茵	Øin1
+引	Øin2	10
+應	Øin3	10
+印	Øin3
+一	Øit4	10
+憶	Øit4	1%
+乙	Øit4
+壹	Øit4
+寅	Øin5
+孕	Øin7
+胤	Øin7
+逸	Øit8
+佚	Øit8
+軼	Øit8
+佾	Øit8
 賓	pin1
 檳	pin1
 彬	pin1
@@ -3532,60 +3532,60 @@ import_tables:
 食	sit8
 殖	sit8
 植	sit8
-##	ing/ik
-英	ing1	10
-應	ing1	10
-嬰	ing1
-瑛	ing1
-櫻	ing1
-鷹	ing1
-鸚	ing1
-坱	ing1
-纓	ing1
-膺	ing1
-瓔	ing1
-縈	ing1
-永	ing2	10
-往	ing2	10
-影	ing2
-湧	ing2	10
-泳	ing2
-穎	ing2
-郢	ing2
-應	ing3
-映	ing3
-蕹	ing3
-壅	ing3
-憶	ik4	10
-益	ik4	10
-億	ik4
-臆	ik4
-溢	ik4
-抑	ik4
-扼	ik4
-厄	ik4
-營	ing5
-榮	ing5	10
-熒	ing5
-盈	ing5
-贏	ing5	0%
-楹	ing5
-瀛	ing5
-用	ing7	10
-詠	ing7
-譯	ik8	10
-易	ik8
-疫	ik8
-役	ik8
-亦	ik8
-翼	ik8	5%
-驛	ik8
-域	ik8
-液	ik8
-奕	ik8
-弈	ik8
-腋	ik8
-翌	ik8
+##	Øing/ik
+英	Øing1	10
+應	Øing1	10
+嬰	Øing1
+瑛	Øing1
+櫻	Øing1
+鷹	Øing1
+鸚	Øing1
+坱	Øing1
+纓	Øing1
+膺	Øing1
+瓔	Øing1
+縈	Øing1
+永	Øing2	10
+往	Øing2	10
+影	Øing2
+湧	Øing2	10
+泳	Øing2
+穎	Øing2
+郢	Øing2
+應	Øing3
+映	Øing3
+蕹	Øing3
+壅	Øing3
+憶	Øik4	10
+益	Øik4	10
+億	Øik4
+臆	Øik4
+溢	Øik4
+抑	Øik4
+扼	Øik4
+厄	Øik4
+營	Øing5
+榮	Øing5	10
+熒	Øing5
+盈	Øing5
+贏	Øing5	0%
+楹	Øing5
+瀛	Øing5
+用	Øing7	10
+詠	Øing7
+譯	Øik8	10
+易	Øik8
+疫	Øik8
+役	Øik8
+亦	Øik8
+翼	Øik8	5%
+驛	Øik8
+域	Øik8
+液	Øik8
+奕	Øik8
+弈	Øik8
+腋	Øik8
+翌	Øik8
 兵	ping1	10
 崩	ping1
 冰	ping1	10
@@ -4044,38 +4044,38 @@ import_tables:
 食	sik8	0%
 殖	sik8	0%
 植	sik8	0%
-##	ui/uih
-威	ui1	10
-揻	ui1
-衣	ui1
-逶	ui1
-偉	ui2	10
-委	ui2	10
-葦	ui2
-萎	ui2
-猥	ui2
-鮪	ui2
-慰	ui3	10
-畏	ui3	10
-蔚	ui3
-挖	uih4
-圍	ui5	10
-為	ui5	10
-唯	ui5	10
-維	ui5
-遺	ui5	10
-惟	ui5
-違	ui5
-韋	ui5
-帷	ui5
-位	ui7	10
-為	ui7
-胃	ui7
-謂	ui7
-緯	ui7
-渭	ui7
-劃	uih8
-劃	uah8	#漳
+##	Øui/uih
+威	Øui1	10
+揻	Øui1
+衣	Øui1
+逶	Øui1
+偉	Øui2	10
+委	Øui2	10
+葦	Øui2
+萎	Øui2
+猥	Øui2
+鮪	Øui2
+慰	Øui3	10
+畏	Øui3	10
+蔚	Øui3
+挖	Øuih4
+圍	Øui5	10
+為	Øui5	10
+唯	Øui5	10
+維	Øui5
+遺	Øui5	10
+惟	Øui5
+違	Øui5
+韋	Øui5
+帷	Øui5
+位	Øui7	10
+為	Øui7
+胃	Øui7
+謂	Øui7
+緯	Øui7
+渭	Øui7
+劃	Øuih8
+劃	Øuah8	#漳
 痱	pui3
 沸	pui3
 肥	pui5	10
@@ -4230,12 +4230,12 @@ import_tables:
 隧	sui7
 燧	sui7
 邃	sui7
-##	uinn/uinnh(设为uinn/uinnh是为以模糊音解决腔调差异)
-阮	uinn2	1%
-䘼	uinn2
-黃	uinn5	10
-磺	uinn5
-暈	uinn7
+##	Øuinn/uinnh(设为uinn/uinnh是为以模糊音解决腔调差异)
+阮	Øuinn2	1%
+䘼	Øuinn2
+黃	Øuinn5	10
+磺	Øuinn5
+暈	Øuinn7
 方	puinn1	1%
 楓	puinn1
 本	puinn2
@@ -4283,21 +4283,21 @@ import_tables:
 痠	suinn1
 算	suinn3	10
 繏	suinn3
-##	ir/irh
-於	ir1
-于	ir1
-與	ir2
-予	ir2
-飫	ir3
-飫	ir3	#廈
-余	ir5
-餘	ir5
-妤	ir5
-歟	ir5
-預	ir7	10
-預	ir7	10	#廈
-譽	ir7
-豫	ir7
+##	Øir/irh
+於	Øir1
+于	Øir1
+與	Øir2
+予	Øir2
+飫	Øir3
+飫	Øir3	#廈
+余	Øir5
+餘	Øir5
+妤	Øir5
+歟	Øir5
+預	Øir7	10
+預	Øir7	10	#廈
+譽	Øir7
+豫	Øir7
 豬	tir1
 豬	tir1	#廈
 著	tir3
@@ -4405,7 +4405,7 @@ import_tables:
 緒	sir6
 敘	sir6
 曙	sir7
-##	ur/urh
+##	Øur/urh
 資	cur1	10
 滋	cur1
 茲	cur1
@@ -4458,10 +4458,10 @@ import_tables:
 俟	sur6
 事	sur7	10
 嗣	sur7
-##	er/erh(设为Er/Erh是为解决腔调差异)
-倭	er1
-呃	erh4
-禍	er6
+##	Øer/erh(设为Er/Erh是为解决腔调差异)
+倭	Øer1
+呃	Øerh4
+禍	Øer6
 䭔	tEr1
 短	tEr2
 塊	tEr3
@@ -4491,10 +4491,10 @@ import_tables:
 脆	chEr3
 雪	sErh4
 踅	sErh8
-##	er/erh
-萵	er1
-鍋	er1
-穢	er3
+##	Øer/erh
+萵	Øer1
+鍋	Øer1
+穢	Øer3
 飛	per1	10
 掰	per2
 壩	per3
@@ -4558,14 +4558,14 @@ import_tables:
 稅	ser3
 說	serh4
 垂	ser5
-##	ere/ereh
-挨	ere1
-矮	ere2
-揋	ere3
-鞋	ere5
-會	ere6	10
-會	e6	10	#异
-狹	ereh8
+##	Øere/ereh
+挨	Øere1
+矮	Øere2
+揋	Øere3
+鞋	Øere5
+會	Øere6	10
+會	Øe6	10	#异
+狹	Øereh8
 八	pereh4
 批	phere1
 稗	phere7
@@ -4633,11 +4633,11 @@ import_tables:
 黍	sere2
 細	sere3	10
 楔	sereh4
-##	ern/ert
-恩	ern1	10
-殷	ern1
-允	ern2	10
-癮	ern2
+##	Øern/ert
+恩	Øern1	10
+殷	Øern1
+允	Øern2	10
+癮	Øern2
 根	kern1	10
 巾	kern1	10
 斤	kern1	10
@@ -4665,7 +4665,7 @@ import_tables:
 痕	hern5	10
 恨	hern7	10
 核	hert8
-##	erng/erk
+##	Øerng/erk
 等	terng2
 德	terk4
 得	terk4
@@ -4696,24 +4696,24 @@ import_tables:
 甥	serng1
 僧	serng1
 塞	serk4
-##	oo/ooh
-烏	oo1	10
-嗚	oo1
-鄔	oo1
-鎢	oo1
-扝	oo2
-塢	oo2
-惡	oo3	10
-噁	oo3
-喔	ooh4
-嘔	ooh4
-湖	oo5	10
-壺	oo5	10
-胡	oo5
-蝴	oo5
-弧	oo5
-瑚	oo5
-芋	oo7	10
+##	Øoo/ooh
+烏	Øoo1	10
+嗚	Øoo1
+鄔	Øoo1
+鎢	Øoo1
+扝	Øoo2
+塢	Øoo2
+惡	Øoo3	10
+噁	Øoo3
+喔	Øooh4
+嘔	Øooh4
+湖	Øoo5	10
+壺	Øoo5	10
+胡	Øoo5
+蝴	Øoo5
+弧	Øoo5
+瑚	Øoo5
+芋	Øoo7	10
 晡	poo1
 埔	poo1
 埠	poo1
@@ -4904,9 +4904,9 @@ import_tables:
 素	soo3	10
 訴	soo3
 溯	soo3
-##	onn/onnh
-唔	onn1
-惡	onn3
+##	Øonn/onnh
+唔	Øonn1
+惡	Øonn3
 麼	moo2
 𢯾	mooh4
 毛	moo5
@@ -4950,20 +4950,20 @@ import_tables:
 好	honn3	5%
 耗	honn3
 貨	honn3	5%
-##	o/oh (oo是泉州音oo)
-蒿	o1
-呵	o1
-堝	o1
-窩	o1
-阿	o1	5%
-撾	o1
-襖	o2
-奧	o3
-澳	o3
-懊	o3
-僫	oh4
-蚵	o5	10
-學	oh8
+##	Øo/oh (oo是泉州音oo)
+蒿	Øo1
+呵	Øo1
+堝	Øo1
+窩	Øo1
+阿	Øo1	5%
+撾	Øo1
+襖	Øo2
+奧	Øo3
+澳	Øo3
+懊	Øo3
+僫	Øoh4
+蚵	Øo5	10
+學	Øoh8
 褒	po1
 玻	po1
 菠	po1
@@ -5206,23 +5206,23 @@ import_tables:
 躁	so3
 索	soh4
 趖	so5	10
-##	om/op
-掩	om1
+##	Øom/op
+掩	Øom1
 橐	lop4
 欱	hop4
 參	som1
 森	som1
-##	ong/ok
-汪	ong1
-翁	ong1	5%
-往	ong2	10
-枉	ong2
-惡	ok4
-屋	ok4
-渥	ok4
-沃	ok4
-王	ong5	10
-旺	ong7	10
+##	Øong/ok
+汪	Øong1
+翁	Øong1	5%
+往	Øong2	10
+枉	Øong2
+惡	Øok4
+屋	Øok4
+渥	Øok4
+沃	Øok4
+王	Øong5	10
+旺	Øong7	10
 榜	pong2
 謗	pong3
 泵	pong3
@@ -5585,19 +5585,19 @@ import_tables:
 塑	sok4
 朔	sok4
 倯	song5
-##	io/ioh
-腰	io1	10
-么	io1
-邀	io1
-育	io1
-喲	io1
-舀	io2
-臆	ioh4
-搖	io5	10
-窯	io5
-姚	io5
-藥	ioh8
-鑰	ioh8
+##	Øio/ioh
+腰	Øio1	10
+么	Øio1
+邀	Øio1
+育	Øio1
+喲	Øio1
+舀	Øio2
+臆	Øioh4
+搖	Øio5	10
+窯	Øio5
+姚	Øio5
+藥	Øioh8
+鑰	Øioh8
 標	pio1
 摽	pio1
 鏢	pio1
@@ -5670,12 +5670,12 @@ import_tables:
 邵	sio7
 液	sioh8
 寂	sioh8
-##	io/ioh
-歐	io1	0%
-鷗	io1
-謳	io1
-毆	io2
-嘔	io2
+##	Øio/ioh
+歐	Øio1	0%
+鷗	Øio1
+謳	Øio1
+毆	Øio2
+嘔	Øio2
 剖	phio2
 母	bio2	5%
 母	bio2	5%	#臺
@@ -5735,12 +5735,12 @@ import_tables:
 搜	sio1
 叟	sio2
 瘦	sio3
-##	u/uh
-污	u1
-宇	u2
-煦	u3
-噎	uh4
-有	u6	10
+##	Øu/uh
+污	Øu1
+宇	Øu2
+煦	Øu3
+噎	Øuh4
+有	Øu6	10
 富	pu3
 發	puh4	5%
 匏	pu5
@@ -5878,23 +5878,23 @@ import_tables:
 欶	suh4
 速	suh4
 殊	su5	10
-##	u/uh
-迂	u1
-迂	u1	#又
-羽	u2
-雨	u2
-禹	u2
-盂	u5
-竽	u5
-雩	u5
-#逾	u5
-覦	u5
-#渝	u5
-#瑜	u5
-#榆	u5
-臾	u5
-諛	u5
-芋	u7
+##	Øu/uh
+迂	Øu1
+迂	Øu1	#又
+羽	Øu2
+雨	Øu2
+禹	Øu2
+盂	Øu5
+竽	Øu5
+雩	Øu5
+#逾	Øu5
+覦	Øu5
+#渝	Øu5
+#瑜	Øu5
+#榆	Øu5
+臾	Øu5
+諛	Øu5
+芋	Øu7
 縷	lu2
 屢	lu2
 褸	lu2
@@ -5942,40 +5942,40 @@ import_tables:
 徙	su2	5%
 樹	su7	5%
 豎	su7	10
-##	un/ut
-溫	un1	10
-瘟	un1
-蝹	un1
-穩	un2	10
-尹	un2
-隕	un2
-殞	un2
-隱	un2
-癮	un2
-蚓	un2
-搵	un3
-蘊	un3
-慍	un3
-醞	un3
-塭	un3
-熨	ut4
-鬱	ut4
-尉	ut4
-雲	un5	5%
-云	un5
-勻	un5	10
-筠	un5
-芸	un5
-耘	un5
-紜	un5
-蕓	un5
-韻	un7	10
-運	un7	10
-暈	un7
-聿	ut8
-遹	ut8
-鷸	ut8
-汩	ut8
+##	Øun/ut
+溫	Øun1	10
+瘟	Øun1
+蝹	Øun1
+穩	Øun2	10
+尹	Øun2
+隕	Øun2
+殞	Øun2
+隱	Øun2
+癮	Øun2
+蚓	Øun2
+搵	Øun3
+蘊	Øun3
+慍	Øun3
+醞	Øun3
+塭	Øun3
+熨	Øut4
+鬱	Øut4
+尉	Øut4
+雲	Øun5	5%
+云	Øun5
+勻	Øun5	10
+筠	Øun5
+芸	Øun5
+耘	Øun5
+紜	Øun5
+蕓	Øun5
+韻	Øun7	10
+運	Øun7	10
+暈	Øun7
+聿	Øut8
+遹	Øut8
+鷸	Øut8
+汩	Øut8
 分	pun1	1%
 本	pun2
 畚	pun3
@@ -6223,38 +6223,38 @@ import_tables:
 殉	sun7
 術	sut8	10
 述	sut8
-##	iu/iuh
-憂	iu1
-幽	iu1
-優	iu1	10
-悠	iu1
-友	iu2	10
-有	iu2	5%
-誘	iu2
-酉	iu2
-黝	iu2
-莠	iu2
-幼	iu3	10
-油	iu5	10
-由	iu5	10
-猶	iu5
-遊	iu5	10
-尤	iu5
-游	iu5	10
-郵	iu5
-攸	iu5
-猷	iu5
-蝣	iu5
-酋	iu5
-又	iu7	10
-右	iu7	10
-柚	iu7
-佑	iu7
-祐	iu7
-囿	iu7
-侑	iu7
-宥	iu7
-鼬	iu7
+##	Øiu/iuh
+憂	Øiu1
+幽	Øiu1
+優	Øiu1	10
+悠	Øiu1
+友	Øiu2	10
+有	Øiu2	5%
+誘	Øiu2
+酉	Øiu2
+黝	Øiu2
+莠	Øiu2
+幼	Øiu3	10
+油	Øiu5	10
+由	Øiu5	10
+猶	Øiu5
+遊	Øiu5	10
+尤	Øiu5
+游	Øiu5	10
+郵	Øiu5
+攸	Øiu5
+猷	Øiu5
+蝣	Øiu5
+酋	Øiu5
+又	Øiu7	10
+右	Øiu7	10
+柚	Øiu7
+佑	Øiu7
+祐	Øiu7
+囿	Øiu7
+侑	Øiu7
+宥	Øiu7
+鼬	Øiu7
 彪	piu1
 謬	biu7
 繆	biu7
@@ -6386,17 +6386,17 @@ import_tables:
 授	siu7
 售	siu7
 綬	siu7
-##	iunn/iunnh
-鴦	iunn1
-養	iunn2
-舀	iunn2
-羊	iunn5	10
-楊	iunn5
-陽	iunn5	1%
-洋	iunn5	10
-溶	iunn5	10
-熔	iunn5
-樣	iunn7	10
+##	Øiunn/iunnh
+鴦	Øiunn1
+養	Øiunn2
+舀	Øiunn2
+羊	Øiunn5	10
+楊	Øiunn5
+陽	Øiunn5	1%
+洋	Øiunn5	10
+溶	Øiunn5	10
+熔	Øiunn5
+樣	Øiunn7	10
 張	tiunn1
 長	tiunn2
 漲	tiunn3
@@ -6460,21 +6460,21 @@ import_tables:
 想	siunn6	10
 尚	siunn7
 ##	m/mh
-姆	m2
-梅	m5
-莓	m5
-毋	m7	10
+姆	Øm2
+梅	Øm5
+莓	Øm5
+毋	Øm7	10
 摁	hmh4
 媒	hm5
 茅	hm5
 默	hmh8
 ##	ng/ngh
-嗯	ng1
-央	ng1
-掩	ng1	10
-秧	ng1
-影	ng2
-向	ng3
+嗯	Øng1
+央	Øng1
+掩	Øng1	10
+秧	Øng1
+影	Øng2
+向	Øng3
 嗯	ngh8
 幫	png1
 楓	png1
