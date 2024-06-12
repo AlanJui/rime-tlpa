@@ -9,8 +9,8 @@ schema:
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: 基於萌典 API 的 RIME 臺語注音輸入法。
-  dependencies:
-    - stroke
+  # dependencies:
+  #   - stroke
 
 switches:
   - name: ascii_mode
@@ -69,22 +69,27 @@ speller:
   use_space: true
   algebra:
     __patch:
-      - tlpa_piau_im:/phing_im_tng_cu_im
+      - tlpa_piau_im:/TLPA_phing_im_tng_cu_im
       - tlpa_piau_im:/abbreviation
-      - tlpa_piau_im:/ji_tian_tng_keymap
+      - tlpa_piau_im:/ji_be_tng_jih_kian
 
 translator:
   dictionary: moetaigi
   prism: tlpa_holok_piau_im
-  spelling_hints: 5
+  spelling_hints: 0
   preedit_format:
     # 定義【鍵盤按鍵】與【方音符號】對映關聯
-    - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰｎˋ˪ˊ˫．|
+    __patch:
+      - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
   comment_format:
     __patch:
-      - piau_im:/phing_im_tng_piau_im
-      - piau_im:/ji_tian_tng_keymap
-      - piau_im:/keymap_tng_cu_im_hu_ho
+      # - tlpa_piau_im:/TLPA_phing_im_tng_cu_im
+      # - tlpa_piau_im:/ji_be_tng_jih_kian
+      # - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
+      #-------------------------------------------------
+      # - tlpa_piau_im:/TL_hau_suan_tuann_cu_im
+      #-------------------------------------------------
+      - tlpa_piau_im:/ji_be_tng_cu_im_hu_ho
 
 custom_phrase:
   dictionary: ""
@@ -94,40 +99,6 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
-reverse_lookup:
-  dictionary: stroke
-  enable_completion: true
-  prefix: "`"
-  suffix: "'"
-  tips: 〔筆畫〕
-  preedit_format:
-    - xlit/hspnz/一丨丿丶乙/
-  comment_format:
-    - xform/e?r5$/er5/
-    - xform/iu/iou/
-    - xform/ui/uei/
-    - xform/ong/ung/
-    - xform/^yi?/i/
-    - xform/^wu?/u/
-    - xform/iu/v/
-    - xform/^([jqx])u/$1v/
-    - xform/([iuv])n/$1en/
-    - xform/zh/Z/
-    - xform/ch/C/
-    - xform/sh/S/
-    - xform/ai/A/
-    - xform/ei/I/
-    - xform/ao/O/
-    - xform/ou/U/
-    - xform/ang/K/
-    - xform/eng/G/
-    - xform/an/M/
-    - xform/en/N/
-    - xform/er/R/
-    - xform/eh/E/
-    - xform/([iv])e/$1E/
-    - xform/1//
-    - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 
 # 依照教育部《重訂標點符號手冊》排序
 # https://language.moe.gov.tw/001/upload/files/site_content/m0001/hau/haushou.htm

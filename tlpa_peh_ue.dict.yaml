@@ -14,8 +14,11 @@ import_tables:
  - tlpa_su_lui_ban_lam
 ...
 ## 新增
+長	tng5	60%
+盡	cin7	60%
 軾	sik4	60%
 過	kue3	60%
+後	Øau7	10
 如	ju5	60%
 餘	Øu5	60%
 養	Øiong2	60%
@@ -4849,7 +4852,8 @@ import_tables:
 吳	goo5
 梧	goo5
 蜈	goo5
-五	goo6	10
+五	goo7	10
+五	goo6
 午	goo6
 誤	goo7	10
 悟	goo7
@@ -5233,6 +5237,7 @@ import_tables:
 旁	pong5
 膀	pong5
 徬	pong5
+磅	pong7
 磅	pong6
 鎊	pong6
 傍	pong7
@@ -6487,7 +6492,6 @@ import_tables:
 當	tng1	10
 漲	tng2
 當	tng3
-長	tng5	10
 堂	tng5
 腸	tng5
 唐	tng5	5%

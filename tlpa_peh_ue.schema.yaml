@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_peh_ue
   name: 河洛白話
-  version: "0.0.1.0"
+  version: "0.0.1.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -90,6 +90,7 @@ speller:
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
+    - 'xform 0 0'
     - 'xform 1 ;'
     - 'xform 2 \\'
     - 'xform 3 <'
@@ -98,33 +99,45 @@ speller:
     - 'xform 6 9'
     - 'xform 7 -'
     - 'xform 8 ]'
-    - 'xform 0 0'
 
 translator:
-  # dictionary: tlpa_peh_ue
-  dictionary: banlam
+  dictionary: tlpa_peh_ue
+  # dictionary: banlam
+  # dictionary: moetaigi
+  prism: tlpa_peh_ue
+  spelling_hints: 0
   preedit_format:
     # 鼻化符號以 ‘上標n’ 顯示
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
-    - xlit|012345678|⁰¹²³⁴⁵⁶⁷⁸|
+    # - xlit|012345678|⁰¹²³⁴⁵⁶⁷⁸|
     - 'xform ; 1'
     - 'xform \\ 2'
     - 'xform < 3'
-    # - 'xform [ 4'
     - 'xform / 5'
     - 'xform 9 6'
     - 'xform - 7'
     - 'xform ] 8'
-    - 'xform 0 0'
   comment_format:
-    # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
-    - 'xlit 012345678 ⁰¹²³⁴⁵⁶⁷⁸'
+    # __patch:
+    #   - tlpa_piau_im:/TL_hau_suan_tuann_cu_im
     #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
     #------------------------------------------------------
     - 'xform/(nn)(h?)(\d)/ⁿ$2$3/'
+    #------------------------------------------------------
+    # 定義 ‘調號’ 的 '對映規則'
+    # - xlit|012345678|⁰¹²³⁴⁵⁶⁷⁸|
+    - 'xform 0 ⁰'
+    - 'xform 1 ¹'
+    - 'xform 2 ²'
+    - 'xform 3 ³'
+    - 'xform 4 ⁴'
+    - 'xform 5 ⁵'
+    - 'xform 6 ⁶'
+    - 'xform 7 ⁷'
+    - 'xform 8 ⁸'
     #------------------------------------------------------
 
 reverse_lookup:

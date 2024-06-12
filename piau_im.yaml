@@ -81,16 +81,27 @@ abbreviation:
 # i<1
 # jua48
 
-#### 單字母拼寫轉換成ㄅㄆㄇ對應的按鍵
-keymap_bopomofo:
+#=======================================================================
+# 《字碼定義》將字典中的 TLPA 拼音字母，編成【字碼】，如：
+# - 拼音字母： c(ts) ==> 字碼：c
+# - 拼音字母： ch(tsh) ==> 字碼：C
+# - 拼音字母： ai ==> 字碼：I
+#=======================================================================
+
+# 字碼轉按鍵對映：將TLPA拼音字母，編譯成【字碼】後。則此處之定義，可對映
+# 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
+ji_be_tng_keymap:
   __append:
-   - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
+   - xlit|ApbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA123570|z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
 
 #### ㄅㄆㄇ對應的按鍵轉換成螢幕顯示的符號
-bopomofo_hu_ho:
+
+# 字碼轉注音符號：定義【字碼】與【注音符號】的對映關聯
+# 候選漢字清單中，漢字與注音符號的顯示，由此處控制。
+ji_be_tng_cu_im_hu_ho:
   __append:
-    # - xlit|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰ声ˉˋ˪ˊ˫．|
     - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA23570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰ声ˋ˪ˊ˫．|
+
 
 hau_suan_piau_cu_im:
   __append:

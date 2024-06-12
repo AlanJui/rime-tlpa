@@ -58,107 +58,10 @@ speller:
   delimiter: "'"
   use_space: true
   algebra:
-    # __patch:
-    #   - tlpa_piau_im:/phing_im_tng_cu_im
-    #   - tlpa_piau_im:/abbreviation
-    #   - tlpa_piau_im:/ji_tian_tng_keymap
-    # --------------------------------------------------------------------------
-    # 設定【拼音字母】與【字典編碼】、【方音符號】的對映關聯
-    # --------------------------------------------------------------------------
-    # 零聲母處理
-    - derive/Ø//
-    #--------------------------------------------------------------------------
-    # 韻尾
-    #--------------------------------------------------------------------------
-    - xform/ng(\d)/W$2/     # ng ==> W
-    - xform/n(\d)/D$1/      # n  ==> D
-    - xform/m(\d)/M$1/      # m  ==> M
-    #--------------------------------------------------------------------------
-    # 韻母對映
-    #--------------------------------------------------------------------------
-    # 【鼻音韻母】
-    - xform/aunn/F/  # ㆯ
-    - xform/unn/X/   # ㆫ
-    - xform/nn/N/
-    # 【元音韻母】對映
-    - xform/oo/O/   # ㆦ
-    - xform/oN/ON/  # 舒聲 [oonn] = [onn] ==> 入聲 [onnh]
-    - xform/oW/OW/  # 舒聲 [ong] = [oong] = [OW]
-    - xform/ok/Ok/  # 舒聲 [ong] ==> 入聲 [ook] = [Ok]
-    - xform/oM/OM/  # 舒聲 [om] ==> 入聲 [oom] = [OM]
-    - xform/op/Op/  # 舒聲 [om] ==> 入聲 [op] = [Op]
-    # ioo [iɔ]
-    # 舒聲：ioo  入聲: iooh  鼻音（陰聲韻）= ionn
-    # iong ==> 舒聲 ioong = [iOW]  ；入聲 iook = [iOk]
-    - xform/ioN/iON/
-    - xform/ioW/iOW/
-    - xform/iok/iOk/
-    # 複合元音韻母
-    - xform/ai/I/   # ㄞ
-    - xform/au/U/   # ㄠ
-    # 組合韻母
-    - xform/aD/L/   # ㄢ[an] 的【字典編碼】：L
-    - xform/aW/Q/   # ㄤ[ang] 的【字典編碼】：Q
-    # 鼻音韻母
-    - xform/ON/S/   # ㆧ
-    - xform/iN/Z/   # ㆪ
-    # - xform/auN/F/  # ㆯ
-    # - xform/uN/X/   # ㆫ
-    - xform/aN/R/   # ㆩ
-    - xform/eN/E/   # ㆥ
-    - xform/aiN/V/  # ㆮ
-    # 方音符號
-    - xform/OW/Y/   # ㆲ[ong] = ㆦㆭ
-    - xform/OM/H/   # ㆱ
-    - xform/aM/B/   # ㆰ
-    #--------------------------------------------------------------------------
-    # 鼻音韻母輸入處理
-    # 設定【鼻音韻母】可用連續輸入兩次方式完成
-    #--------------------------------------------------------------------------
-    - derive/([iuaeOIU])N/$1$1/
-    # --------------------------------------------------------------------------
-    # 地方腔調
-    - derive/ee/e/       # ㄝ ==> ㆤ
-    - derive/(er|or)/o/  # ㄜ
-    - derive/ir/u/       # ㆨ ==> ㄨ
-    # --------------------------------------------------------------------------
-    # 聲母對映
-    # --------------------------------------------------------------------------
-    - xform/ng/w/     # ㄫ
-    - xform/ph/P/     # ㄅ
-    - xform/th/T/     # ㄊ
-    - xform/kh/K/     # ㄍ
-    # --------------------------------------------------------------------------
-    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
-    # ㄗ[c]:  c, ㄘ[ch]:  C, ㄙ[s]:  s,  ㆡ[j]: z
-    # ㄐ[ci]: i, ㄑ[chi]: J, ㄒ[si]: S,  ㆢ[ji]
-    # --------------------------------------------------------------------------
-    - derive/tsh/C/      # ㄘ
-    - derive/ts/c/       # ㄗ
-    #--------------------------------------------------------------------------
-    # 入聲輸入處理
-    #--------------------------------------------------------------------------
-    # 為 ‘入聲’ 調號便捷輸入做準備
-    - xform/[48]/0/ # 入聲調（第四調、第八調）合併
-    # 設定【字典編碼】之【聲調】值，不論4或8，皆以0代換
-    - derive/([iaO])W0/$1k0/  # 用 ㄚㄍ． 來拍 ㄚㆻ
-    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
-    - derive/([iaO])M0/$1p0/  # 用 ㄚㄅ． 來拍 ㄚㆴ
-    #--------------------------------------------------------------------------
-    # 簡拼設定（abbreviation：縮寫詞）
-    # --------------------------------------------------------------------------
-    # - abbrev/[iu]?[iuaeOIU]N/N/       # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
-    - abbrev/(([iuaeOIU]N)|Z|X|R|S|E|V|F)/A/
-    - abbrev/[iuaeoOIULQYHBWDM]+0/0/  # 【字典編碼】：【．】表所有的【入聲韻母】
-    - abbrev/^([pPbmtTnlkKghcCjsw]).+$/$1/ # 可只輸入：【聲母】
-    - abbrev/^(\D+)([1235679])$/$1/   # 舒聲調拼音字母，可免輸入【調號】
-    - abbrev/^([pPbmtTnlkKghcCjsw]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
-    #--------------------------------------------------------------------------
-    # 定義【字典編碼】與【鍵盤按鍵】對映關聯
-    #--------------------------------------------------------------------------
-    # - xlit|pPmbtTnlkKhjgwcCsiuMaOoeDWIULQZXRSEVFY123570N|1qa!2wsxedcYEvyhnujm8ik,p/9l0;UJ*I<(Lo 43657-|
-    - xlit|ApbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA123570|z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
-
+    __patch:
+      - piau_im:/phing_im_tng_cu_im
+      - piau_im:/abbreviation
+      - piau_im:/ji_be_tng_jih_kian
 
 translator:
   dictionary: tlpa_peh_ue
@@ -167,16 +70,13 @@ translator:
   # dictionary: tlpa_cu_im_fu_ho
   # dictionary: tlpa_hong_im_fu_ho
   prism: tlpa_cu_im
-  # spelling_hints: 5
+  spelling_hints: 0
   preedit_format:
-    - xlit|z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|入ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰ声ˉˋ˪ˊ˫．|
     __patch:
-      # - tlpa_piau_im:/keymap_tng_cu_im_fu_ho
-      - tlpa_piau_im:/phah_ji_tng_cu_im
-  comment_format:
-    # __patch:
-    #   - tlpa_piau_im:/hau_suan_piau_cu_im
-    - xlit|ApbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA23570|入ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰ声ˋ˪ˊ˫．|
+      - piau_im:/jih_kian_tng_cu_im_hu_ho
+  # comment_format:
+  #   __patch:
+  #     - piau_im:/ji_be_tng_cu_im_hu_ho
 
 custom_phrase:
   dictionary: ""
