@@ -51,8 +51,11 @@ speller:
   # 7: -
   # 8: ]
   # 0: 0
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\/-]0'
-  initials: 'abcdefghijklmnopqrstuvwxyz'
+  # alphabet: 'abcdefghijklmnopqrstuvwxyz~;\/-]0'
+  # initials: 'abcdefghijklmnopqrstuvwxyz'
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-]0'
+  initials: "abcdefghijklmnopqrstuvwxyz"
+  # finals: ';\</9-]0'
   delimiter: " '"
   algebra:
     # 零聲母處理
@@ -75,7 +78,16 @@ speller:
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
-    - xlit|23578|\</-]|
+    # - xlit|23578|\</-]|
+    - 'xform 0 0'
+    - 'xform 1 ;'
+    - 'xform 2 \\'
+    - 'xform 3 <'
+    # - 'xform 4 ['
+    - 'xform 5 /'
+    - 'xform 6 9'
+    - 'xform 7 -'
+    - 'xform 8 ]'
 
 translator:
   # dictionary: tlpa_sip_ngoo_im
@@ -89,8 +101,14 @@ translator:
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    # - xlit|;\_[/<-]0|¹²³⁴⁵⁶⁷⁸⁰|
-    - xlit|\</-]0|235780|
+    # - xlit|\</-]0|235780|
+    - 'xform ; 1'
+    - 'xform \\ 2'
+    - 'xform < 3'
+    - 'xform / 5'
+    - 'xform 9 6'
+    - 'xform - 7'
+    - 'xform ] 8'
   comment_format:
     #======================================================
     # 令候選字視窗，可顯示兩組「注音/拼音」

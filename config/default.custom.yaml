@@ -6,22 +6,23 @@ customization:
   rime_version: 1.11.2
 patch:
   schema_list:
-    - {schema: my_bopomofo}
-    - {schema: tlpa_holok_piau_im}
-    - {schema: holok_cu_im}
-    - {schema: holok_cu_im.unspaced}
-    - {schema: moetaigi-tsuim}
+    - {schema: "moetaigi-tsuim"}
     - {schema: moetaigi.unspaced}
-    - {schema: ngsth_bun}
-    - {schema: tlpa_peh_ue}
-    - {schema: tlpa_peh_ue-cu_im}
-    - {schema: tlpa_peh_ue-hong_im}
-    - {schema: tlpa_peh_ue-cap_peh_im}
-    - {schema: tlpa_hong_im_kb}
-    - {schema: tlpa_hong_im}
-    - {schema: tlpa_cu_im}
-    - {schema: tlpa_sip_ngoo_im}
-    - {schema: tlpa_kong_un}
     - {schema: luna_pinyin_tw}
     - {schema: taigi_tps}
+    - {schema: stroke}
+    - {schema: "tlpa_peh_ue-cu_im"}       # 河洛白話注音（使用拼音輸入，顯示注音符號標讀音）
+    - {schema: "tlpa_peh_ue-hong_im"}     # 河洛白話方音（使用拼音輸入，顯示方音符號標讀音）
+    - {schema: "tlpa_peh_ue-cap_peh_im"}  # 河洛白話十八音（使用拼音輸入，顯示十八音標讀音）
+    - {schema: tlpa_peh_ue}               # 河洛白話（使用TLPA拼音輸入）
+    - {schema: tlpa_cu_im}          # 河洛注音
+    - {schema: tlpa_holok_piau_im}  # 河洛標音（用注音符號標注音）
+    - {schema: tlpa_hong_im}        # 河洛方音
+    - {schema: tlpa_sip_ngoo_im}    # 河洛十五音（使用雅俗通十五音韻書）
+    - {schema: tlpa_kong_un}        # 河洛廣韻
+    - {schema: holok_cu_im}         # 河洛台羅方音（字典使用台羅拼音，輸入及讀音標示使用方音符號）
+    - {schema: holok_cu_im.unspaced}
+    - {schema: tlpa_hong_im_kb}     # 方音按鍵練習
+    - {schema: my_bopomofo}
+    - {schema: ngsth_bun}
 

@@ -39,9 +39,11 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~[/\]<>-=0'
-  # alphabet: 'abcdefghijklmnopqrstuvwxyz0_/\[<>-]'
-  initials: abcdefghijklmnopqrstuvwxyz
+  # alphabet: 'abcdefghijklmnopqrstuvwxyz~[/\]<>-=0'
+  # initials: abcdefghijklmnopqrstuvwxyz
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-]0'
+  initials: "abcdefghijklmnopqrstuvwxyz"
+  # finals: ';\</9-]0'
   delimiter: " '"
   algebra:
     # 零聲母處理
@@ -61,8 +63,16 @@ speller:
     #------------------------------------------------------
     # 對於已輸入（韻母）（調號）之拼音，需在韻母標「聲調符號」
     #------------------------------------------------------
-    # - 'xlit 123456780 [/\]<>-=0'
-    - 'xlit 12345678 [/\]<>-='
+    # - 'xlit 12345678 [/\]<>-='
+    - 'xform 0 0'
+    - 'xform 1 ;'
+    - 'xform 2 \\'
+    - 'xform 3 <'
+    # - 'xform 4 ['
+    - 'xform 5 /'
+    - 'xform 6 9'
+    - 'xform 7 -'
+    - 'xform 8 ]'
 
 translator:
   # dictionary: tlpa_sip_ngoo_im
@@ -76,7 +86,14 @@ translator:
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    - xlit|;\_[/<-]0|¹²³⁴⁵⁶⁷⁸⁰|
+    # - xlit|;\_[/<-]0|¹²³⁴⁵⁶⁷⁸⁰|
+    - 'xform ; 1'
+    - 'xform \\ 2'
+    - 'xform < 3'
+    - 'xform / 5'
+    - 'xform 9 6'
+    - 'xform - 7'
+    - 'xform ] 8'
   comment_format:
     #======================================================
     # 令候選字視窗，可顯示兩組「注音】/拼音」
