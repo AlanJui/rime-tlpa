@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_peh_ue-cap_peh_im
   name: 河洛白話十八音
-  version: "0.0.0.1"
+  version: "0.0.1.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -48,7 +48,7 @@ speller:
   algebra:
     # 零聲母處理
     - derive/Ø//
-    - derive/q//
+    # - derive/q//
     # 與其它拼音法相容
     # - derive/ou/oo/
     # - derive/e(ng|k)/i$1/
@@ -257,25 +257,14 @@ reverse_lookup:
   preedit_format:
     - xform/([nljqxy])v/$1ü/
 
-punctuator:
-  import_preset: default
-
-recognizer:
-  import_preset: default
-  patterns:
-    reverse_lookup: "`[a-z]*$"
-
-style:
-  horizontal: false
-
 key_binder:
   import_preset: default
   bindings:
     # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: composing }
-    - { accept: minus, send: "-", when: always }
+    - { accept: minus, send: minus, when: composing }
+    - { accept: minus, send: minus, when: always }
     # 確保 `=` 鍵用於聲調 0
-    - { accept: equal, send: "0", when: composing }
+    # - { accept: equal, send: "0", when: composing }
     # 翻頁
     - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
     - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
@@ -293,6 +282,22 @@ key_binder:
 editor:
   bindings:
     space: commit                       # 選擇「備選漢字」
-    Return: commit_script_text          # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_raw_input      # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+
+punctuator:
+  import_preset: default
+
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*$"
+
+menu:
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  page_size: 5 #選單每䈎顯示個數
+
+style:
+  horizontal: false
+

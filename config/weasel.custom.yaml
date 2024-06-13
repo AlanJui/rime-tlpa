@@ -13,15 +13,17 @@ patch:
   # "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
   # "style/font_face": "BopomofoRuby1909-v1, Noto Serif TC"
   # "style/font_face": "Iansui 094, Noto Serif TC"
-  "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
+  # "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
+  # "style/font_face": "Microsoft JhengHei"
+  "style/font_face": "STFangsong"
   "style/font_point": 28
   "style/horizontal": true
   "tyle/inline_preedit": true  # 內嵌編碼（僅支持TSF）
   "style/display_tray_icon": true  # 顯示托盤圖標
   "key_binder/bindings":
-    - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
     # 翻頁
     - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
     - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字

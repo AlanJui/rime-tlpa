@@ -10,27 +10,27 @@ use_preset_vocabulary: false
 #   - tlpa_ciann_ji
 ...
 ㄅ	po1
-ㄆ	pho1
+ㄆ	Po1     # pho1
 ㆠ	bo1
 ㄇ	mo1
 
 ㄉ	to1
-ㄊ	tho1
+ㄊ	To1     # tho1
 ㄋ	no1
 ㄌ	lo1
 
 ㄍ	ko1
-ㄎ	kho1
+ㄎ	Ko1     # kho1
 ㆣ	go1
 ㄫ	ngo1
 
 ㄐ	ci1
-ㄑ	chi1
+ㄑ	Ci1     # chi1
 ㆢ	ji1
 ㄒ	si1
 
 ㄗ	c1
-ㄘ	ch1
+ㄘ	C1      # ch1
 ㆡ	j1
 ㄙ	s1
 
@@ -41,27 +41,27 @@ use_preset_vocabulary: false
 ㄚ	øa1
 ㆤ	øe1
 ㄜ	øo1
-ㆦ	øoo1
+ㆦ	øO1
 
-ㆪ	øinn1
-ㆫ	øunn1
-ㆩ	øann1
-ㆥ	øenn1
-ㆧ	øonn1
+ㆪ	øiN1    # øinn1
+ㆫ	øuN1    # øunn1
+ㆩ	øaN1    # øann1
+ㆥ	øeN1    # øenn1
+ㆧ	øON1    # øonn1
 
-ㄥ	øng1
-ㆭ	øng1
-ㄣ	øn1
-ㆬ	øm1
+ㄥ	øG1     # øng1
+ㆭ	øG1     # øng1
+ㄣ	øN1     # øn1
+ㆬ	øM1     # øm1
 
-ㄞ	øai1
-ㆮ	øainn1
-ㄠ	øau1
-ㆯ	øaunn1
+ㄞ	øI1     # øai1
+ㆮ	øIN1    # øainn1
+ㄠ	øU1     # øau1
+ㆯ	øUN1    # øaunn1
 
-ㄤ	øang1
-ㄢ	øan1
-ㆰ	øam1
+ㄤ	øaG1    # øang1
+ㄢ	øan1    # øan1
+ㆰ	øaB1    # øam1
 
-ㆲ	øong1
-ㆱ	øom1
+ㆲ	øOG1    # øong1
+ㆱ	øOB1    # øom1

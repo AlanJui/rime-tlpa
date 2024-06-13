@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_hong_im
   name: 河洛方音
-  version: "v0.0.0.9"
+  version: "v0.0.1.0"
   author: 居正中
   description: |
     屬「方音符號」輸入法；使用源自 taigi_yu ，
@@ -49,10 +49,6 @@ engine:
   filters:
     - uniquifier
 
-menu:
-  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
-  alternative_select_keys: "ABCDEFGHIJ"
-
 speller:
   alphabet: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657"
   initials: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-7"
@@ -77,12 +73,14 @@ speller:
     - derive/ieD/eD/ # ㄧㄢ、ㄧㆤㆵ → ㆤㄣ、ㆤㆵ
     # 方言差
     - derive/Ne/Ni/ # ㆥ → ㆪ
-    - derive/Niu/Nio/ # ㄧㆫ → ㄧㆧ
+    - derive/Niu/NiO/ # ㄧㆫ → ㄧㆧ
     # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
     #- xform/z(N?i)/Z$1/  # 毋過咱共 ㆢ 和 ㆡ 合併矣
     - xform/c(N?i)/j$1/ # ㄐㄧ
     - xform/C(N?i)/J$1/ # ㄑㄧ
     - xform/s(N?i)/S$1/ # ㄒㄧ
+    # 傳統韻書的聲母：清音、送氣音、濁音、鼻音。原輸入法的設計
+    # 似也遵循此種觀念，故有以下字典編號轉換設計。
     # 方音符號會分 ㄇㄋㄫ 和 ㆠㄌㆣ
     - derive/bN/m/ # ㄇ
     - derive/dN/n/ # ㄋ
@@ -90,38 +88,44 @@ speller:
     - derive/bG/mG/ # ㄇㆭ
     - derive/dG/nG/ # ㄋㆭ
     # 鼻音
-    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
-    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
+    - xform/N([iu]?[iuaOeIU])/$1N/ # 鼻音拍佇後壁
+    - derive/([iuaOeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
     # 注音
-    - derive/øG/G/ # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
-    - derive/(?<!i)oG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
-    - derive/ioG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
+    - derive/oG/G/ # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
+    - derive/(?<!i)OG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
+    - derive/iOG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
     # 入聲調
-    - derive/([iao])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
+    - derive/([iaO])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
     - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
-    - derive/([iaoø])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
+    - derive/([iaOo])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
     # 方音韻母
-    - derive/oB/aB/ # ㆦㆬ、ㆰ（併入）
+    - derive/OB/aB/ # ㆦㆬ、ㆰ（併入）
     - derive/aB/M/ # ㄚㆬ、ㆰ
     - xform/aD/L/ # ㄢ
     - xform/aG/Q/ # ㄤ
-    - derive/oG/Y/ # ㆦㆭ、ㆲ
+    - derive/OG/Y/ # ㆦㆭ、ㆲ
     # 簡拼
-    - abbrev/[iu]?[iuaoeIU]N/N/ # 用 ｎ 代表所有的鼻音母音
-    - abbrev/[iuaoøeIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
+    - abbrev/[iu]?[iuaOeIU]N/N/ # 用 ｎ 代表所有的鼻音母音
+    - abbrev/[iuaOoeIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
     - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/ # 會當干焦拍聲母
     - abbrev/^(\D+)([123579])$/$1/ # 除了第四調、第八調，調號會當免拍
     - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/ # 會當干焦拍子音+調號
-    - xlit|pPmbtTndkKhjJSgqzcCsiuBaoøMIeUYLDQGN123570|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657|
+    - xlit|pPmbtTndkKhjJSgqzcCsiuBaOoMIeUYLDQGN123570|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657|
 
 translator:
-  dictionary: tlpa_hong_im_fu_ho
+  # dictionary: tlpa_hong_im_fu_ho
+  dictionary: tlpa_hong_im
   prism: tlpa_hong_im
   spelling_hints: 5
   comment_format:
     # - xform/^/\t→ /
     - xform/'/ /
-    - xlit|pPbtTdkKgcCzshiuaoøeIUBDGN|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㆤㄞㄠㆬㄣㆭｎ|
+    - xlit|pPbtTdkKgcCzshiuaOoeIUBDGN|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㆤㄞㄠㆬㄣㆭｎ|
+    # 自動校調
+    - xform/ㄗㄧ/ㄐㄧ/
+    - xform/ㄘㄧ/ㄑㄧ/
+    - xform/ㄙㄧ/ㄒㄧ/
+    - xform/ㆡㄧ/ㆢㄧ/
     # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
     - xform/ㄗ((ｎ)?ㄧ)/ㄐ$1/
     - xform/ㄘ((ｎ)?ㄧ)/ㄑ$1/
@@ -193,6 +197,12 @@ translator:
     - xform/ㄚㆭ/ㄤ/
     - xform/ㆦㆭ/ㆲ/
     - xform/ㄜㆭ/ㄥ/
+    # 自動校調
+    - xform/ㄗㄧ/ㄐㄧ/
+    - xform/ㄘㄧ/ㄑㄧ/
+    - xform/ㄙㄧ/ㄒㄧ/
+    - xform/ㆡㄧ/ㆢㄧ/
+
 
 custom_phrase:
   dictionary: ""
@@ -201,6 +211,16 @@ custom_phrase:
   enable_completion: false
   enable_sentence: false
   initial_quality: 1
+
+punctuator:
+  import_preset: tlpa_utl_symbols
+
+recognizer:
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -212,23 +232,34 @@ reverse_lookup:
 key_binder:
   import_preset: default
   bindings:
-    - { when: has_menu, accept: minus, send: minus }      # ｎ
-    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
+    # #---------------------------------------------------
+    # # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
     # - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
     # - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
     # - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    #---------------------------------------------------
     # 翻頁
-    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
-    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
-    - { accept: "Control+p", send: Page_Up, when: composing }
-    - { accept: "Control+n", send: Page_Down, when: composing }
+    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    # - { accept: "Control+p", send: Page_Up, when: composing }
+    # - { accept: "Control+n", send: Page_Down, when: composing }
     #---------------------------------------------------
     # Vim Mode
     #---------------------------------------------------
-    - { when: has_menu, accept: "Control+h", send: Page_Up }
-    - { when: has_menu, accept: "Control+l", send: Page_Down }
-    - { when: has_menu, accept: "Control+k", send: Up }
-    - { when: has_menu, accept: "Control+j", send: Down }
+    # - { when: has_menu, accept: "Control+h", send: Page_Up }
+    # - { when: has_menu, accept: "Control+l", send: Page_Down }
+    # - { when: has_menu, accept: "Control+k", send: Up }
+    # - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+    - { accept: "Control+h", send: Page_Up  , when: composing}
+    - { accept: "Control+l", send: Page_Down, when: composing}
+    - { accept: "Control+k", send: Up       , when: composing}
+    - { accept: "Control+j", send: Down     , when: composing}
+    #---------------------------------------------------
+    # - {accept: "Control+1", select: .next, when: always}
+    # - {accept: "Control+2", toggle: full_shape, when: always}
+    # - {accept: "Control+3", toggle: simplification, when: always}
+    # - {accept: "Control+4", toggle: extended_charset, when: always}
 
 editor:
   bindings:
@@ -238,16 +269,6 @@ editor:
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
     # Control+Return: confirm    # 上屏原始的輸入：lau5
-
-punctuator:
-  import_preset: tlpa_utl_symbols
-
-recognizer:
-  patterns:
-    email: ^[a-z][-_.0-9a-z]*@.*$
-    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
-    url: ^(www[.]|https?:|ftp:|mailto:).*$
-    punct: '`[^\s]$'
 
 menu:
   alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
