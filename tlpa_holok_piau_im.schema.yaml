@@ -15,17 +15,10 @@ schema:
 switches:
   - name: ascii_mode
     reset: 0
-    states: [ 漢文, 西文 ]
+    states: [漢文, ABC]
   - name: full_shape
-    states: [ 半形, 全形 ]
-  # - options:
-  #     - zh_hant
-  #     - zh_hans
-  #     - zh_hant_tw
-  #   states:
-  #     - 傳統漢字
-  #     - 简化字
-  #     - 臺灣字形
+    reset: 0
+    states: [半形, 全形]
 
 engine:
   processors:
@@ -41,55 +34,41 @@ engine:
     - ascii_segmentor
     - matcher
     - abc_segmentor
-    - affix_segmentor@learning
-    - affix_segmentor@cu_im
     - punct_segmentor
     - fallback_segmentor
   translators:
     - punct_translator
+    - table_translator@custom_phrase
+    - reverse_lookup_translator
     - script_translator
-    - script_translator@learning
-    - script_translator@cu_im
   filters:
-    - simplifier
     - uniquifier
-    - reverse_lookup_filter@cu_im_reverse_lookup_hide_cu_im
-    - reverse_lookup_filter@cu_im_reverse_lookup
-
-menu:
-  # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
-  alternative_select_keys: "ABCDEFGHIJ"
-  page_size: 5 #選單每䈎顯示個數
 
 speller:
-  alphabet: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657"
-  initials: "1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz7"
-  finals: " 43657"
+  alphabet: 'z!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657'
+  initials: 'z!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7'
+  # alphabet: "z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657"
+  # initials: "z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7"
+  finals: " 43567"
   delimiter: "'"
   use_space: true
   algebra:
     __patch:
-      - tlpa_piau_im:/TLPA_phing_im_tng_cu_im
-      - tlpa_piau_im:/abbreviation
+      - tlpa_piau_im:/phing_im_tng_cu_im
+      # - tlpa_piau_im:/abbreviation
+      - tlpa_piau_im:/TLPA_abbreviation
       - tlpa_piau_im:/ji_be_tng_jih_kian
 
 translator:
-  dictionary: moetaigi
-  prism: tlpa_holok_piau_im
+  dictionary: tlpa_peh_ue
+  prism: tlpa_cu_im
   spelling_hints: 0
   preedit_format:
-    # 定義【鍵盤按鍵】與【方音符號】對映關聯
     __patch:
-      - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
+      - piau_im:/jih_kian_tng_cu_im_hu_ho
   comment_format:
     __patch:
-      # - tlpa_piau_im:/TLPA_phing_im_tng_cu_im
-      # - tlpa_piau_im:/ji_be_tng_jih_kian
-      # - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
-      #-------------------------------------------------
-      # - tlpa_piau_im:/TL_hau_suan_tuann_cu_im
-      #-------------------------------------------------
-      - tlpa_piau_im:/ji_be_tng_cu_im_hu_ho
+      - piau_im:/ji_be_tng_cu_im_hu_ho
 
 custom_phrase:
   dictionary: ""
@@ -99,45 +78,51 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
+reverse_lookup:
+  dictionary: stroke
+  enable_completion: true
+  prefix: "`"
+  suffix: "'"
+  tips: 〔筆畫〕
+  preedit_format:
+    - xlit/hspnz/一丨丿丶乙/
+  comment_format:
+    - xform/e?r5$/er5/
+    - xform/iu/iou/
+    - xform/ui/uei/
+    - xform/ong/ung/
+    - xform/^yi?/i/
+    - xform/^wu?/u/
+    - xform/iu/v/
+    - xform/^([jqx])u/$1v/
+    - xform/([iuv])n/$1en/
+    - xform/zh/Z/
+    - xform/ch/C/
+    - xform/sh/S/
+    - xform/ai/A/
+    - xform/ei/I/
+    - xform/ao/O/
+    - xform/ou/U/
+    - xform/ang/K/
+    - xform/eng/G/
+    - xform/an/M/
+    - xform/en/N/
+    - xform/er/R/
+    - xform/eh/E/
+    - xform/([iv])e/$1E/
+    - xform/1//
+    - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 
-# 依照教育部《重訂標點符號手冊》排序
-# https://language.moe.gov.tw/001/upload/files/site_content/m0001/hau/haushou.htm
 punctuator:
-  # import_preset: holok-piau_im-symbols  # (之後視情況可能會移到這裡放)
-  full_shape: &symtable
-    ">" : { commit: "。" }
-    "." : { commit: "，" }
-    "\"" : { commit: "、" }
-    "\\" : { commit: "；" }
-    "=" : { commit: "：" }
-    "?" : { commit: "？" }
-    "[" : [ "「", "〈" ]
-    "]" : [ "」", "〉"]
-    "{" : { commit: "（" }
-    "}" : { commit: "）" }
-    "?" : { commit: "？" }
-    "|" : { commit: "！" }
-    "_" : { commit: "─" }
-    "+" : [ "‧" ]
-    "~" : { commit: "～" }
-  half_shape: *symtable
-  symbols:
-    "[[" : [ "『", "《" ]
-    "]]" : [ "』", "》" ]
-    "++" : [ "…" ]
-    "+++" : [ "…" ]
+  import_preset: tlpa_utl_symbols
 
 editor:
   bindings:
-    #### 因為 space 與一聲的鍵位衝突，因此設定 NumLock 為把待選字送到佇列的按鈕，之後在 key_binder 底下再把 space 設成跟 NumLock 有一樣的功能。
-    Num_Lock: toggle_selection
-    #### Return 鍵在 fluency editor 的設定下的預設功能已經是把所有字送上螢幕。
-    # Return: confirm
-    #---------------------------------------------------
-    # space: commit                       # 選擇「備選漢字」
+    space: toggle_selection
+    space: commit                       # 選擇「備選漢字」
     Return: commit_composition          # 上屏原始的輸入：lau5
-    Control+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Shift+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
     # Control+Return: confirm    # 上屏原始的輸入：lau5
 
@@ -145,11 +130,13 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    - { when: has_menu, accept: comma, send: comma }      # ㄝ
-    - { when: has_menu, accept: period, send: period }    # ㄡ
-    - { when: has_menu, accept: minus, send: minus }      # ㄦ
-    - { when: paging, accept: minus, send: Page_Up }
-    - { when: has_menu, accept: equal, send: Page_Down }
+    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
+    #---------------------------------------------------
+    - { when: has_menu, accept: comma, send: comma }      # ㆤ
+    - { when: has_menu, accept: period, send: period }    # ㆲ
+    - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
+    - { when: composing, accept: minus, send: "声" }      # 確保 `-` 鍵用於聲調 7
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------
@@ -158,19 +145,24 @@ key_binder:
     #---------------------------------------------------
     # Vim Mode
     #---------------------------------------------------
-    # - { when: has_menu, accept: "Control+h", send: Page_Up }
-    # - { when: has_menu, accept: "Control+l", send: Page_Down }
-    - { when: has_menu, accept: "Control+h", send: Left }
-    - { when: has_menu, accept: "Control+l", send: Right }
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
 
 recognizer:
   patterns:
-    email: "^[a-z][-_.0-9a-z]*@.*$"
-    uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
-    url: "^(www[.]|https?:|ftp:|mailto:).*$"
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
     reverse_lookup: "`[a-z]*'?$"
+    punct: '`[^\s]$'
+
+menu:
+  # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
+  alternative_select_keys: "ABCDEFGHIJ"
+  page_size: 5 #選單每䈎顯示個數
 
 style:
   horizontal: false

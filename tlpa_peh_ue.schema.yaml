@@ -71,8 +71,6 @@ speller:
     # 去除零聲母
     - derive/Ø//
     - xform/6/7/
-    - xform/tsh/ch/
-    - xform/ts/c/
     #------------------------------------------------------
     # 定義字典中的 ‘漢字拼音’ 可與其它拼音法相容的規則
     #------------------------------------------------------
@@ -109,8 +107,6 @@ speller:
 
 translator:
   dictionary: tlpa_peh_ue
-  # dictionary: banlam
-  # dictionary: moetaigi
   prism: tlpa_peh_ue
   spelling_hints: 5
   preedit_format:
@@ -118,7 +114,6 @@ translator:
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
-    # - xlit|012345678|⁰¹²³⁴⁵⁶⁷⁸|
     - 'xform ; 1'
     - 'xform \\ 2'
     - 'xform < 3'
@@ -127,8 +122,6 @@ translator:
     - 'xform - 7'
     - 'xform ] 8'
   comment_format:
-    # __patch:
-    #   - tlpa_piau_im:/TL_hau_suan_tuann_cu_im
     - xform/^Ø([a-z]+\d)$/$1/
     #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
@@ -146,7 +139,6 @@ translator:
     - 'xform 6 ⁶'
     - 'xform 7 ⁷'
     - 'xform 8 ⁸'
-    #------------------------------------------------------
 
 reverse_lookup:
   dictionary: luna_pinyin

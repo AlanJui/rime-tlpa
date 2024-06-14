@@ -15,8 +15,6 @@ schema:
 
     請配合 librime>=1.3 使用。
 
-  dependencies:
-    - stroke
 
 switches:
   - name: ascii_mode
@@ -24,207 +22,171 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - options:
-      - zh_hant
-      - zh_hans
-      - zh_hant_tw
-    states:
-      - 傳統漢字
-      - 简化字
-      - 臺灣字形
+#   - options:
+#       - zh_hant
+#       - zh_hans
+#       - zh_hant_tw
+#     states:
+#       - 傳統漢字
+#       - 简化字
+#       - 臺灣字形
 
 engine:
   processors:
-    - ascii_composer
-    - recognizer
-    - key_binder
-    - speller
-    - punctuator
-    - selector
-    - navigator
-    - fluency_editor
+    # - ascii_composer
+    # - recognizer
+    - key_binder	      # 搶在使用者輸入拼音字母之前，監視是否有候選字清單得翻頁的事件已觸發
+    - speller           # 接收使用者輸入之拼音字母（只能是小寫字母）
+    - punctuator	      # 可接收輸入標點符號
+    - selector	        # 候選字清單，可以挑選
+    - navigator	        # 可移動輸入介面中的游標
+    - express_editor
+    # - fluency_editor
   segmentors:
-    - ascii_segmentor
-    - matcher
-    - abc_segmentor
-    - punct_segmentor
+    # - ascii_segmentor
+    # - matcher
+    - abc_segmentor	      # 將使用者輸入加上【識別標籤】
+    - punct_segmentor	    # 配合 punctuator 使用，將使用者之輸入加上【標點符號】專用之【識別標籤】
     - fallback_segmentor
   translators:
-    - punct_translator
-    - table_translator@custom_phrase
-    - reverse_lookup_translator
+    # - echo_translator
+    # - table_translator	  # 已輸入的【拼音字母】，並加上【識別標籤】的資料，透過字典查詢，找到漢字
+    - punct_translator	  # 將【識別標魋】為【標點符號】之輸入，完成輸出
+  #   - table_translator@custom_phrase
+  #   - reverse_lookup_translator
     - script_translator
-  filters:
-    - simplifier@zh_hans
-    - simplifier@zh_hant_tw
-    - uniquifier
-
-menu:
-  alternative_select_keys: "ABCDEFGHIJ"
+  # filters:
+  #   - simplifier@zh_hans
+  #   - simplifier@zh_hant_tw
+  #   - uniquifier
 
 speller:
-  alphabet: '1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'
-  initials: '1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/-'
-  finals: " 6347"
-  delimiter: "'"
-  use_space: true
-  algebra:
-    __patch:
-      - CuIm:/pinyin_to_CuIm
-      - CuIm:/free_order
-      - CuIm:/abbreviation
-      - CuIm:/keymap_bopomofo
+  - abbrev/^([a-z]).+$/$1/
+  - abbrev/^([ptkc]h).+$/$1/
+  - abbrev/^([bmnlghj]).+$/$1/
+
+#   alphabet: '1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'
+#   initials: '1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/-'
+#   finals: " 6347"
+#   delimiter: "'"
+#   use_space: true
+#   # algebra:
+#   #   __patch:
+#   #     - CuIm:/pinyin_to_CuIm
+#   #     - CuIm:/free_order
+#   #     - CuIm:/abbreviation
+#   #     - CuIm:/keymap_bopomofo
 
 translator:
-  dictionary: terra_pinyin
-  prism: my_bopomofo
-  preedit_format:
-    - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
-  comment_format:
-    - xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR12345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙|
-    #------------------------------------------------------
-    # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
-    - xlit|123456780|¹²³⁴⁵⁶⁷⁸⁰|
+  # dictionary: tlpa_peh_ue
+  dictionary: my_bopomofo
+#   prism: my_bopomofo
+#   preedit_format:
+#     - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
+#   comment_format:
+#     - xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR12345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙|
+#     #------------------------------------------------------
+#     # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
+#     - xlit|123456780|¹²³⁴⁵⁶⁷⁸⁰|
 
-custom_phrase:
-  dictionary: ""
-  user_dict: custom_phrase
-  db_class: stabledb
-  enable_completion: false
-  enable_sentence: false
-  initial_quality: 1
-
-reverse_lookup:
-  dictionary: stroke
-  enable_completion: true
-  prefix: "`"
-  suffix: "'"
-  tips: 〔筆畫〕
-  preedit_format:
-    - xlit/hspnz/一丨丿丶乙/
-  comment_format:
-    - xform/e?r5$/er5/
-    - xform/iu/iou/
-    - xform/ui/uei/
-    - xform/ong/ung/
-    - xform/^yi?/i/
-    - xform/^wu?/u/
-    - xform/iu/v/
-    - xform/^([jqx])u/$1v/
-    - xform/([iuv])n/$1en/
-    - xform/zh/Z/
-    - xform/ch/C/
-    - xform/sh/S/
-    - xform/ai/A/
-    - xform/ei/I/
-    - xform/ao/O/
-    - xform/ou/U/
-    - xform/ang/K/
-    - xform/eng/G/
-    - xform/an/M/
-    - xform/en/N/
-    - xform/er/R/
-    - xform/eh/E/
-    - xform/([iv])e/$1E/
-    - xform/1//
-    - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
-
+# custom_phrase:
+#   dictionary: ""
+#   user_dict: custom_phrase
+#   db_class: stabledb
+#   enable_completion: false
+#   enable_sentence: false
+#   initial_quality: 1
+#
+# reverse_lookup:
+#   dictionary: stroke
+#   enable_completion: true
+#   prefix: "`"
+#   suffix: "'"
+#   tips: 〔筆畫〕
+#   preedit_format:
+#     - xlit/hspnz/一丨丿丶乙/
+#   comment_format:
+#     - xform/e?r5$/er5/
+#     - xform/iu/iou/
+#     - xform/ui/uei/
+#     - xform/ong/ung/
+#     - xform/^yi?/i/
+#     - xform/^wu?/u/
+#     - xform/iu/v/
+#     - xform/^([jqx])u/$1v/
+#     - xform/([iuv])n/$1en/
+#     - xform/zh/Z/
+#     - xform/ch/C/
+#     - xform/sh/S/
+#     - xform/ai/A/
+#     - xform/ei/I/
+#     - xform/ao/O/
+#     - xform/ou/U/
+#     - xform/ang/K/
+#     - xform/eng/G/
+#     - xform/an/M/
+#     - xform/en/N/
+#     - xform/er/R/
+#     - xform/eh/E/
+#     - xform/([iv])e/$1E/
+#     - xform/1//
+#     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
+#
 punctuator:
-  full_shape:
-    " " : { commit: "　" }
-    "<" : { commit: "，" }
-    ">" : { commit: "。" }
-    "?" : [ ？, ／, ÷ ]
-    ":" : [ ：, ； ]
-    "'" : { pair: [ "‘", "’" ] }
-    "\"" : { pair: [ "“", "”" ] }
-    "\\" : [ 、, ＼ ]
-    "|" : [ ·, ｜, "§", "¦" ]
-    "`" : ｀
-    "~" : ～
-    "!" : { commit: ！ }
-    "@" : [ ＠, ☯ ]
-    "#" : [ ＃, ⌘ ]
-    "%" : [ ％, "°", "℃" ]
-    "$" : [ ￥, "$", "€", "£", "¥", "¢", "¤" ]
-    "^" : { commit: …… }
-    "&" : ＆
-    "*" : [ ＊, ·, ・, ×, ※, ❂ ]
-    "(" : （
-    ")" : ）
-    "_" : [ ——, － ]
-    "+" : ＋
-    "=" : ＝
-    "[" : [ 「, 【, 《, 〔, ［ ]
-    "]" : [ 」, 】, 》, 〕, ］ ]
-    "{" : [ 『, 〖, 〈, ｛ ]
-    "}" : [ 』, 〗, 〉, ｝ ]
-  half_shape:
-    "<" : { commit: "，" }
-    ">" : { commit: "。" }
-    "?" : [ ？, ／, "/", ÷ ]
-    ":" : [ ：, ； ]
-    "'" : { pair: [ "‘", "’" ] }
-    "\"" : { pair: [ "“", "”" ] }
-    "\\" : [ 、, "\\", ＼ ]
-    "|" : [ ·, "|", ｜, "§", "¦" ]
-    "`" : "`"
-    "~" : "~"
-    "!" : { commit: ！ }
-    "@" : "@"
-    "#" : "#"
-    "%" : [ "%", ％, "°", "℃" ]
-    "$" : [ ￥, "$", "€", "£", "¥", "¢", "¤" ]
-    "^" : { commit: …… }
-    "&" : "&"
-    "*" : [ "*", ＊, ·, ・, ×, ※, ❂ ]
-    "(" : （
-    ")" : ）
-    "_" : [ ——, －, "-" ]
-    "+" : "+"
-    "=" : "="
-    "[" : [ 「, 【, 《, 〔, ［ ]
-    "]" : [ 」, 】, 》, 〕, ］ ]
-    "{" : [ 『, 〖, 〈, ｛ ]
-    "}" : [ 』, 〗, 〉, ｝ ]
-
-editor:
-  bindings:
-    space: toggle_selection
-
-key_binder:
   import_preset: default
+#
+# editor:
+#   bindings:
+#     space: toggle_selection
+#
+# key_binder:
+#   import_preset: default
+#   bindings:
+#     - { when: has_menu, accept: comma, send: comma }      # ㄝ
+#     - { when: has_menu, accept: period, send: period }    # ㄡ
+#     - { when: has_menu, accept: minus, send: minus }      # ㄦ
+#     - { when: paging, accept: minus, send: Page_Up }
+#     - { when: has_menu, accept: equal, send: Page_Down }
+#
+# recognizer:
+#   patterns:
+#     email: "^[a-z][-_.0-9a-z]*@.*$"
+#     uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
+#     url: "^(www[.]|https?:|ftp:|mailto:).*$"
+#     reverse_lookup: "`[a-z]*'?$"
+#
+key_binder:
   bindings:
-    - { when: has_menu, accept: comma, send: comma }      # ㄝ
-    - { when: has_menu, accept: period, send: period }    # ㄡ
-    - { when: has_menu, accept: minus, send: minus }      # ㄦ
-    - { when: paging, accept: minus, send: Page_Up }
-    - { when: has_menu, accept: equal, send: Page_Down }
+    - when:   paging    # 僅當已發生向後換頁時，
+      accept: comma     # 將「逗號」鍵……
+      send:   Page_Up   # 關聯到「向前換頁」；於是 navigator 將收到一發 Page_Up
 
-recognizer:
-  patterns:
-    email: "^[a-z][-_.0-9a-z]*@.*$"
-    uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
-    url: "^(www[.]|https?:|ftp:|mailto:).*$"
-    reverse_lookup: "`[a-z]*'?$"
-
-zh_hans:
-  option_name: zh_hans
-  opencc_config: t2s.json
-  tips: all
-  excluded_types: [ reverse_lookup ]
-
-zh_hant_tw:
-  option_name: zh_hant_tw
-  opencc_config: t2tw.json
-  tips: none
-  excluded_types: [ reverse_lookup ]
-
-__patch:
-  # 使用八股文語言模型
-  - grammar:/hant?
-  # 用家自選配置
-  - bopomofo.custom:/patch?
+    - when:   has_menu  # 只要有候選字即滿足條件
+      accept: period
+      send:   Page_Down
+    #---------------------------------------------------
+    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
+    - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    #---------------------------------------------------
+    # 翻頁
+    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+    - {accept: "Control+1", select: .next, when: always}
+    - {accept: "Control+2", toggle: full_shape, when: always}
+    - {accept: "Control+3", toggle: simplification, when: always}
+    - {accept: "Control+4", toggle: extended_charset, when: always}
 
 style:
   horizontal: false

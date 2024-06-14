@@ -1,0 +1,24 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 使用者個人擴充字庫
+
+---
+name: tlpa_peh_ue_cu_ting
+version: "0.0.1.0"
+sort: by_weight
+use_preset_vocabulary: false
+...
+##	新增
+長	tng5	60%
+盡	cin7	60%
+軾	sik4	60%
+過	kue3	60%
+後	Øau7	10
+如	ju5	60%
+餘	u5	60%
+養	iong2	60%
+虛	hi1	60%
+遠	hng7	60%
+閒	ing5	60%
+礴	pok8	60%

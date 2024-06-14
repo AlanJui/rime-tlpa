@@ -75,8 +75,8 @@ speller:
     - 'xform 8 ]'
 
 translator:
-  # dictionary: tlpa_sip_ngoo_im
   dictionary: tlpa_peh_ue
+  prism: tlpa_peh_ue_cap_peh_im
   spelling_hints: 5
   preedit_format:
     #------------------------------------------------------

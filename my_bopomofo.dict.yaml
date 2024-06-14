@@ -1,0 +1,66 @@
+# Rime dictionary
+# encoding: utf-
+---
+name: my_bopomofo
+version: "..."
+# sort: by_weight
+sort: original
+use_preset_vocabulary: false
+import_tables:
+  - tlpa_peh_ue
+...
+大家好	hello
+再見	bye
+再會	bye
+ㆡ	j
+ㄙ	s
+ㄏ	ho
+ㄚ	a
+ㆤ	e
+ㄜ	o
+ㆦ	oo
+ㄧ	i
+ㄨ	u
+ㄞ	ai
+ㄠ	au
+ㆩ	ann
+ㆥ	enn
+ㆧ	onn
+ㆪ	inn
+ㆫ	unn
+ㆮ	ainn
+ㆯ	aunn
+ㆰ	am
+ㆱ	oom
+ㄢ	an
+ㄣ	n
+ㄤ	ang
+ㆲ	ong
+ㄥ	eng
+ㆬ	m
+ㆭ	ng
+ㄧㆷ	i
+ㄨㆷ	u
+ㄚㆷ	a
+ㆤㆷ	e
+ㆦㆷ	oo
+ㄜㆷ	o
+ㄞㆷ	aih
+ㄠㆷ	auh
+
+ㆪㆷ	innh
+ㆫㆷ	unnh
+ㆩㆷ	annh
+ㆧㆷ	onnh
+ㆥㆷ	ennh
+ㆮㆷ	ainnh
+ㆯㆷ	aunnh
+ㄚㆴ	ap
+ㆦㆴ	oop
+ㄚㆵ	at
+ㄚㆻ	ak
+ㆦㆻ	ook
+ㄜㆻ	ok
+ㆬㆷ	mh
+ㆭㆷ	ngh
+ㄧㆻ	ik
