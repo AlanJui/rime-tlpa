@@ -32,7 +32,6 @@ punctuator:
     "{": [『, 〖, ｛, ﹃, ︷]
     "}": [』, 〗, ｝, ﹄, ︸]
   half_shape:
-    "z": { commit: "声" }
     "1": { commit: "ㄅ" }
     "!": { commit: "ㆠ" }
     "q": { commit: "ㄆ" }
@@ -70,10 +69,11 @@ punctuator:
     "<": { commit: "ㆥ" }
     "(": { commit: "ㆮ" }
     "L": { commit: "ㆯ" }
-    "r": { commit: "ㆲ" }
-    "f": { commit: "ㆱ" }
-    "v": { commit: "ㆰ" }
+    # "r": { commit: "ㆲ" }
+    # "f": { commit: "ㆱ" }
+    # "v": { commit: "ㆰ" }
     "-": { commit: "声" }
+    "z": { commit: "声" }
     " ": { commit: "ˉ " }
     "4": { commit: "ˋ " }
     "3": { commit: "˪ " }

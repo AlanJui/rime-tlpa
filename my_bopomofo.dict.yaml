@@ -6,8 +6,8 @@ version: "..."
 # sort: by_weight
 sort: original
 use_preset_vocabulary: false
-import_tables:
-  - tlpa_peh_ue
+# import_tables:
+#   - tlpa_peh_ue
 ...
 大家好	hello
 再見	bye

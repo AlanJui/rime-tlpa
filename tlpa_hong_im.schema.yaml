@@ -210,7 +210,7 @@ reverse_lookup:
     - xform/([nljqxy])v/$1ü/
 
 key_binder:
-  import_preset: default
+  # import_preset: default
   bindings:
     - { when: has_menu, accept: minus, send: minus }      # ｎ
     - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7

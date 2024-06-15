@@ -60,3 +60,61 @@
     - xform/h/ㄏ/
     # ok 指 ook
     - xform/ook(\d)/ㆦㄍ$1/
+
+
+    "z": { commit: "声" }
+    # 聲調符號
+    "4": { commit: "ˋ" }
+    "3": { commit: "˪" }
+    "6": { commit: "ˊ" }
+    "5": { commit: "˫" }
+    "7": { commit: "˙" }
+    # 聲母
+    "!": { commit: "ㆠ" }
+    "E": { commit: "ㆣ" }
+    "B": { commit: "ㆡ" }
+    "": { commit: "" }
+    "": { commit: "" }
+    # 韻母
+    "0": { commit: "ㄢ" }
+    "l": { commit: "ㄠ" }
+    "p": { commit: "ㄣ" }
+    '/': { commit: "ㄥ" }
+    # 鼻音韻母
+    "U": { commit: "ㆪ" }
+    "J": { commit: "ㆫ" }
+    "*": { commit: "ㆩ" }
+    "<": { commit: "ㆥ" }
+    "(": { commit: "ㆮ" }
+    "I": { commit: "ㆧ" }
+    "L": { commit: "ㆯ" }
+    #=====================================
+    # "<": { commit: "<" }
+    # ">": { commit: ">" }
+    # '?': { commit: '?' }
+    "?": [1, 2, 3, 4, 5, 6, 7, 8]
+    # '?': [¹, ², ³, ⁴, ⁵, ⁶, ⁷, ⁸,  ⁹, ⁰]
+    ":": { commit: ":" }
+    "'": { commit: "'" }
+    '"': { commit: '"' }
+    '\': { commit: '\' }
+    "|": { commit: "|" }
+    "`": ["`"]
+    "~": { commit: "~" }
+    "!": { commit: "!" }
+    "@": { commit: "@" }
+    "#": { commit: "#" }
+    "$": { commit: "$" }
+    "%": { commit: "%" }
+    "^": { commit: "^" }
+    "&": { commit: "&" }
+    # "*": { commit: "*" }
+    # "(": { commit: "(" }
+    # ")": { commit: ")" }
+    "_": { commit: "_" }
+    "=": { commit: "=" }
+    "+": { commit: "+" }
+    "[": { commit: "[" }
+    "]": { commit: "]" }
+    "{": { commit: "{" }
+    "}": { commit: "}" }

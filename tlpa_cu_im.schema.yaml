@@ -52,10 +52,9 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: 'z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657'
-  initials: 'z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7'
-  # alphabet: "z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657"
-  # initials: "z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7"
+  # alphabet: 'z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657'
+  # initials: 'z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7'
+  alphabet: "1qa2wsx3edc4v56yhn7ujm8ik,9l0p;/z！EYUJ*I,(L"
   finals: " 43567"
   delimiter: "'"
   use_space: true
@@ -116,7 +115,8 @@ speller:
     - abbrev/^(\D+)([1235679])$/$1/   # 舒聲調拼音字母，可免輸入【調號】
     - abbrev/^([pPbmtTnlkKghcCjsw]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
     #--------------------------------------------------------------------------
-    - xlit|ApbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA123570|z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
+    # - xlit|ApbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA123570|z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657|
+    # - 'xlit|pPmtTnl3kKh2w75cCs0iuMaOoeIULDQWAbgjZXRSEVF|1qa2wsx3edc4v56yhn7ujm8ik,9l0p;/z！EYUJ*I,(L|'
 
 translator:
   dictionary: tlpa_peh_ue
@@ -126,7 +126,8 @@ translator:
     - xform/ /ˉ/
     - xform/'/ /
     # 定義【鍵盤按鍵】與【方音符號】對映關聯
-    - xlit|z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv 43657|声ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰˉˋ˪ˊ˫．|
+    # - xlit|z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv 43657|声ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄫㄗㆡㄘㄙㄧㄨㆬㄚㆦㄜㄝㄣㄥㄞㄠㄢㄤㆪㆫㆩㆧㆥㆮㆯㆲㆱㆰˉˋ˪ˊ˫．|
+    # - 'xlit|1qa2wsx3edc4v56yhn7ujm8ik,9l0p;/z！EYUJ*I,(L|ㄅㄆㄇㄉㄊㄋㄌ˪ㄍㄎㄏˋㄫ˫ˊㄗㄘㄙ．ㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ|'
     #--------------------------------------------------------------------------
     # 鼻音韻母輸入：方音符號【ｎ】，鍵盤按鍵為【-】(按鍵【0】的右邉)
     #--------------------------------------------------------------------------

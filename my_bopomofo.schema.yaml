@@ -61,25 +61,113 @@ engine:
   #   - uniquifier
 
 speller:
-  - abbrev/^([a-z]).+$/$1/
-  - abbrev/^([ptkc]h).+$/$1/
-  - abbrev/^([bmnlghj]).+$/$1/
-
 #   alphabet: '1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'
 #   initials: '1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/-'
-#   finals: " 6347"
-#   delimiter: "'"
-#   use_space: true
-#   # algebra:
-#   #   __patch:
-#   #     - CuIm:/pinyin_to_CuIm
-#   #     - CuIm:/free_order
-#   #     - CuIm:/abbreviation
-#   #     - CuIm:/keymap_bopomofo
+  alphabet: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567'
+  initials: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L'
+  finals: " 6347"
+  delimiter: "'"
+  use_space: true
+  algebra:
+    #--------------------------------------------------------------------------
+    # 韻尾
+    #--------------------------------------------------------------------------
+    - xform/ng(\d)/W$2/     # ng ==> W
+    - xform/n(\d)/D$1/      # n  ==> D
+    - xform/m(\d)/M$1/      # m  ==> M
+    #--------------------------------------------------------------------------
+    # 韻母對映
+    #--------------------------------------------------------------------------
+    # 【鼻音韻母】
+    - xform/nn/N/
+    # 【元音韻母】對映
+    - xform/oo/O/   # ㆦ
+    - xform/oN/ON/  # 舒聲 [oonn] = [onn] ==> 入聲 [onnh]
+    - xform/oW/OW/  # 舒聲 [ong] = [oong] = [OW]
+    - xform/ok/Ok/  # 舒聲 [ong] ==> 入聲 [ook] = [Ok]
+    - xform/oM/OM/  # 舒聲 [om] ==> 入聲 [oom] = [OM]
+    - xform/op/Op/  # 舒聲 [om] ==> 入聲 [op] = [Op]
+    # ioo [iɔ]
+    # 舒聲：ioo  入聲: iooh  鼻音（陰聲韻）= ionn
+    # iong ==> 舒聲 ioong = [iOW]  ；入聲 iook = [iOk]
+    - xform/ioN/iON/
+    - xform/ioW/iOW/
+    - xform/iok/iOk/
+    # 複合元音韻母
+    - xform/ai/I/   # ㄞ
+    - xform/au/U/   # ㄠ
+    # 組合韻母
+    - xform/aD/L/   # ㄢ[an] 的【字典編碼】：L
+    - xform/aW/Q/   # ㄤ[ang] 的【字典編碼】：Q
+    # 鼻音韻母
+    - xform/ON/S/   # ㆧ
+    - xform/iN/Z/   # ㆪ
+    - xform/uN/X/   # ㆫ
+    - xform/aN/R/   # ㆩ
+    - xform/eN/E/   # ㆥ
+    - xform/aiN/V/  # ㆮ
+    - xform/auN/F/  # ㆯ
+    # 方音符號
+    - xform/OW/Y/   # ㆲ[ong] = ㆦㆭ
+    - xform/OM/H/   # ㆱ
+    - xform/aM/B/   # ㆰ
+    #--------------------------------------------------------------------------
+    # 鼻音韻母輸入處理
+    # 設定【鼻音韻母】可用連續輸入兩次方式完成
+    #--------------------------------------------------------------------------
+    - derive/([iuaeOIU])N/$1$1/
+    # --------------------------------------------------------------------------
+    # 地方腔調
+    - xform/ee/e/       # ㄝ ==> ㆤ
+    - xform/(er|or)/o/  # ㄜ
+    - xform/ir/u/       # ㆨ ==> ㄨ
+    # --------------------------------------------------------------------------
+    # 聲母對映
+    # --------------------------------------------------------------------------
+    - xform/ng/w/     # ㄫ
+    - xform/ph/P/     # ㄅ
+    - xform/th/T/     # ㄊ
+    - xform/kh/K/     # ㄍ
+    # --------------------------------------------------------------------------
+    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
+    # ㄗ[c]:  c, ㄘ[ch]:  C, ㄙ[s]:  s,  ㆡ[j]: z
+    # ㄐ[ci]: i, ㄑ[chi]: J, ㄒ[si]: S,  ㆢ[ji]
+    # --------------------------------------------------------------------------
+    - xform/tsh/C/      # ㄘ
+    - xform/ts/c/       # ㄗ
+    - xform/ch/C/
+    #--------------------------------------------------------------------------
+    # 鼻音韻母輸入處理
+    # 設定【鼻音韻母】可用連續輸入兩次方式完成
+    #--------------------------------------------------------------------------
+    - derive/([iuaeOIU])N/$1$1/
+    #--------------------------------------------------------------------------
+    # 入聲輸入處理
+    #--------------------------------------------------------------------------
+    # 為 ‘入聲’ 調號便捷輸入做準備
+    - xform/[48]/0/ # 入聲調（第四調、第八調）合併
+    # 設定【字典編碼】之【聲調】值，不論4或8，皆以0代換
+    - derive/([iaO])W0/$1k0/  # 用 ㄚㄍ． 來拍 ㄚㆻ
+    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
+    - derive/([iaO])M0/$1p0/  # 用 ㄚㄅ． 來拍 ㄚㆴ
+    #--------------------------------------------------------------------------
+    # 簡拼設定（abbreviation：縮寫詞）
+    # --------------------------------------------------------------------------
+    - abbrev/[iu]?[iuaeOIU]N/A/       # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
+    - abbrev/[iu]?[iuaeOIU]N/N/       # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
+    - abbrev/[iuaeoOIULQYHBWDM]+0/0/  # 【字典編碼】：【．】表所有的【入聲韻母】
+    - abbrev/^([pPbmtTnlkKghcCjsw]).+$/$1/ # 可只輸入：【聲母】
+    - abbrev/^(\D+)([1235679])$/$1/   # 舒聲調拼音字母，可免輸入【調號】
+    - abbrev/^([pPbmtTnlkKghcCjsw]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
+    #--------------------------------------------------------------------------
+  algebra:
+    - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF|qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L|'
 
 translator:
-  # dictionary: tlpa_peh_ue
-  dictionary: my_bopomofo
+  dictionary: tlpa_peh_ue
+  # dictionary: my_bopomofo
+  preedit_format:
+    - 'xlit|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ|'
 #   prism: my_bopomofo
 #   preedit_format:
 #     - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
@@ -133,7 +221,8 @@ translator:
 #     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 #
 punctuator:
-  import_preset: default
+  # import_preset: default
+  import_preset: tlpa_utl_symbols
 #
 # editor:
 #   bindings:
