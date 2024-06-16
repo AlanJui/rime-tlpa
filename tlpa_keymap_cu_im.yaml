@@ -1,6 +1,5 @@
-# punctuations and symbols - tlpa_utl_symbols
+# punctuations and Cu-Im-Fu-Ho (注音符號)
 # encoding: utf-8
-
 punctuator:
   full_shape:
     " ": { commit: "　" }

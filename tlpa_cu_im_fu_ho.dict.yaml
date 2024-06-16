@@ -5,9 +5,6 @@ name: tlpa_cu_im_fu_ho
 version: "0.0.0.1"
 sort: by_weight
 use_preset_vocabulary: false
-# import_tables:
-#   - tlpa_peh_ue
-#   - tlpa_ciann_ji
 ...
 ㄅ	po1
 ㄆ	Po1     # pho1
@@ -36,32 +33,32 @@ use_preset_vocabulary: false
 
 ㄏ	ho1
 
-ㄧ	øi1
-ㄨ	øu1
-ㄚ	øa1
-ㆤ	øe1
-ㄜ	øo1
-ㆦ	øO1
+ㄧ	i1
+ㄨ	u1
+ㄚ	a1
+ㆤ	e1
+ㄜ	o1
+ㆦ	O1
 
-ㆪ	øiN1    # øinn1
-ㆫ	øuN1    # øunn1
-ㆩ	øaN1    # øann1
-ㆥ	øeN1    # øenn1
-ㆧ	øON1    # øonn1
+ㆪ	iN1    # inn1
+ㆫ	uN1    # unn1
+ㆩ	aN1    # ann1
+ㆥ	eN1    # enn1
+ㆧ	ON1    # onn1
 
-ㄥ	øG1     # øng1
-ㆭ	øG1     # øng1
-ㄣ	øN1     # øn1
-ㆬ	øM1     # øm1
+ㄥ	G1     # ng1
+ㆭ	G1     # ng1
+ㄣ	N1     # n1
+ㆬ	M1     # m1
 
-ㄞ	øI1     # øai1
-ㆮ	øIN1    # øainn1
-ㄠ	øU1     # øau1
-ㆯ	øUN1    # øaunn1
+ㄞ	I1     # ai1
+ㆮ	IN1    # ainn1
+ㄠ	U1     # au1
+ㆯ	UN1    # aunn1
 
-ㄤ	øaG1    # øang1
-ㄢ	øan1    # øan1
-ㆰ	øaB1    # øam1
+ㄤ	aG1    # ang1
+ㄢ	an1    # an1
+ㆰ	aB1    # am1
 
-ㆲ	øOG1    # øong1
-ㆱ	øOB1    # øom1
+ㆲ	OG1    # ong1
+ㆱ	OB1    # om1

@@ -38,25 +38,24 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
-    - table_translator@custom_phrase
+    # - table_translator@custom_phrase
+    - table_translator
     - reverse_lookup_translator
     - script_translator
   filters:
     - uniquifier
 
 speller:
-  alphabet: 'z!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657'
-  initials: 'z!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7'
-  # alphabet: "z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv- 43657"
-  # initials: "z1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfv-7"
-  finals: " 43567"
+  alphabet: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567'
+  initials: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L'
+  finals: " 34567"
   delimiter: "'"
   use_space: true
   algebra:
     __patch:
       - tlpa_piau_im:/phing_im_tng_cu_im
-      # - tlpa_piau_im:/abbreviation
-      - tlpa_piau_im:/TLPA_abbreviation
+      - tlpa_piau_im:/abbreviation
+      # - tlpa_piau_im:/TLPA_abbreviation
       - tlpa_piau_im:/ji_be_tng_jih_kian
 
 translator:
@@ -65,10 +64,10 @@ translator:
   spelling_hints: 0
   preedit_format:
     __patch:
-      - piau_im:/jih_kian_tng_cu_im_hu_ho
+      - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
   comment_format:
     __patch:
-      - piau_im:/ji_be_tng_cu_im_hu_ho
+      - tlpa_piau_im:/ji_be_tng_cu_im_hu_ho
 
 custom_phrase:
   dictionary: ""
@@ -114,20 +113,18 @@ reverse_lookup:
     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 
 punctuator:
-  import_preset: tlpa_utl_symbols
+  import_preset: tlpa_keymap_cu_im
 
 editor:
   bindings:
-    space: toggle_selection
+    # space: toggle_selection
     space: commit                       # 選擇「備選漢字」
     Return: commit_composition          # 上屏原始的輸入：lau5
     Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
-    # Control+Return: confirm    # 上屏原始的輸入：lau5
 
 key_binder:
-  import_preset: default
+  # import_preset: default
   bindings:
     #---------------------------------------------------
     # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
@@ -136,7 +133,6 @@ key_binder:
     - { when: has_menu, accept: period, send: period }    # ㆲ
     - { when: has_menu, accept: minus, send: minus }      # ｎ
     - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
-    - { when: composing, accept: minus, send: "声" }      # 確保 `-` 鍵用於聲調 7
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------

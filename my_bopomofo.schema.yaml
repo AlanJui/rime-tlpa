@@ -50,11 +50,11 @@ engine:
     - fallback_segmentor
   translators:
     # - echo_translator
-    # - table_translator	  # 已輸入的【拼音字母】，並加上【識別標籤】的資料，透過字典查詢，找到漢字
-    - punct_translator	  # 將【識別標魋】為【標點符號】之輸入，完成輸出
+    - table_translator	  # 已輸入的【拼音字母】，並加上【識別標籤】的資料，透過字典查詢，找到漢字
+    - punct_translator	    # 將【識別標魋】為【標點符號】之輸入，完成輸出
   #   - table_translator@custom_phrase
   #   - reverse_lookup_translator
-    - script_translator
+    # - script_translator	    # 針對【拼音字母】切分【音節】
   # filters:
   #   - simplifier@zh_hans
   #   - simplifier@zh_hant_tw
@@ -164,8 +164,8 @@ speller:
     - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF|qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L|'
 
 translator:
-  dictionary: tlpa_peh_ue
-  # dictionary: my_bopomofo
+  # dictionary: tlpa_peh_ue
+  dictionary: my_bopomofo
   preedit_format:
     - 'xlit|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ|'
 #   prism: my_bopomofo
@@ -222,7 +222,7 @@ translator:
 #
 punctuator:
   # import_preset: default
-  import_preset: tlpa_utl_symbols
+  # import_preset: tlpa_keymap_cu_im
 #
 # editor:
 #   bindings:

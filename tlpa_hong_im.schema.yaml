@@ -115,7 +115,7 @@ speller:
     - xlit|pPmbtTndkKhjJSgqzcCsiuBaoøMIeUYLDQGN123570|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657|
 
 translator:
-  dictionary: tlpa_hong_im_fu_ho
+  dictionary: tlpa_hong_im
   prism: tlpa_hong_im
   spelling_hints: 5
   comment_format:
@@ -236,11 +236,9 @@ editor:
     Return: commit_composition          # 上屏原始的輸入：lau5
     Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    # Control+Return: commit_raw_input    # 上屏原始的輸入：lau5
-    # Control+Return: confirm    # 上屏原始的輸入：lau5
 
 punctuator:
-  import_preset: tlpa_utl_symbols
+  import_preset: tlpa_keymap_taigi_fong_im
 
 recognizer:
   patterns:
