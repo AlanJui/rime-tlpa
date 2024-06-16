@@ -1,0 +1,131 @@
+# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: tlpa_holok_piau_im
+  name: 河洛標音
+  version: "0.0.3.0"
+  author:
+    - 居正中 AlanJui <alanjui.1960@gmail.com>
+  description: 基於萌典 API 的 RIME 臺語注音輸入法。
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - fluency_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator
+    - script_translator
+  filters:
+    - uniquifier
+
+speller:
+  alphabet: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567'
+  initials: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L'
+  finals: " 34567"
+  delimiter: "'"
+  use_space: true
+  algebra:
+    __patch:
+      - tlpa_piau_im_TLPA:/phing_im_tng_cu_im
+      - tlpa_piau_im_TLPA:/abbreviation
+      - tlpa_piau_im_TLPA:/ji_be_tng_jih_kian
+      # - tlpa_piau_im:/phing_im_tng_cu_im
+      # - tlpa_piau_im:/abbreviation
+      # - tlpa_piau_im:/ji_be_tng_jih_kian
+
+translator:
+  dictionary: tlpa_peh_ue
+  prism: tlpa_cu_im
+  spelling_hints: 0
+  preedit_format:
+    __patch:
+      # - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
+      - tlpa_piau_im_TLPA:/jih_kian_tng_cu_im_hu_ho
+      # - tlpa_piau_im_TLPA:/phah_phing_im
+  comment_format:
+    __patch:
+      # - tlpa_piau_im:/ji_be_tng_cu_im_hu_ho
+      - tlpa_piau_im_TLPA:/ji_be_tng_cu_im_hu_ho
+      # - tlpa_piau_im_TLPA:/hau_suan_piau_cu_im
+
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+
+punctuator:
+  import_preset: tlpa_keymap_piau_tian
+
+editor:
+  bindings:
+    # space: toggle_selection
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+
+key_binder:
+  # import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
+    #---------------------------------------------------
+    - { when: has_menu, accept: comma, send: comma }      # ㆤ
+    - { when: has_menu, accept: period, send: period }    # ㆲ
+    - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
+    #---------------------------------------------------
+    # 翻頁
+    #---------------------------------------------------
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+
+recognizer:
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    reverse_lookup: "`[a-z]*'?$"
+    punct: '`[^\s]$'
+
+menu:
+  # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
+  alternative_select_keys: "ABCDEFGHIJ"
+  page_size: 5 #選單每䈎顯示個數
+
+style:
+  horizontal: false
