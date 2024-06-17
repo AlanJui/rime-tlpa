@@ -118,7 +118,8 @@ speller:
     - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567|'
 
 translator:
-  dictionary: tlpa_peh_ue
+  # dictionary: tlpa_peh_ue
+  dictionary: my_banlam
   prism: tlpa_cu_im
   spelling_hints: 0
   preedit_format:

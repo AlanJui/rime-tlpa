@@ -154,7 +154,8 @@ speller:
     - xlit|pbPmtTnlkgKhwcjCsiuMaOoeDWIULQZXRSEVFYHBA123570|1!qa2wsxeEdcvyYhnujm8ik,p/9l0;UJ*I<(Lrfvz 43657|
 
 translator:
-  dictionary: tlpa_peh_ue
+  # dictionary: tlpa_peh_ue
+  dictionary: my_banlam
   prism: tlpa_holok_piau_im
   spelling_hints: 0
   preedit_format:
