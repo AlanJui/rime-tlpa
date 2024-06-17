@@ -4,11 +4,11 @@
 schema:
   schema_id: my_bopomofo
   name: 我的注音
-  version: '2.4'
+  version: '0.0.0.2'
   author:
-    - 佛振 <chen.sst@gmail.com>
+    - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
-    注音符號輸入，採用「大千式」鍵盤排列。
+    實驗用專案。
 
     本方案採用「無模式」設計，以大寫字母鍵或上下方向鍵、回車鍵選詞；
     空格鍵輸入第一聲，標記爲「ˉ」。
@@ -19,249 +19,97 @@ schema:
 switches:
   - name: ascii_mode
     reset: 0
-    states: [ 中文, 西文 ]
+    states: [漢文, ABC]
   - name: full_shape
-    states: [ 半角, 全角 ]
-#   - options:
-#       - zh_hant
-#       - zh_hans
-#       - zh_hant_tw
-#     states:
-#       - 傳統漢字
-#       - 简化字
-#       - 臺灣字形
+    reset: 0
+    states: [半形, 全形]
 
 engine:
   processors:
-    # - ascii_composer
-    # - recognizer
-    - key_binder	      # 搶在使用者輸入拼音字母之前，監視是否有候選字清單得翻頁的事件已觸發
-    - speller           # 接收使用者輸入之拼音字母（只能是小寫字母）
-    - punctuator	      # 可接收輸入標點符號
-    - selector	        # 候選字清單，可以挑選
-    - navigator	        # 可移動輸入介面中的游標
-    - express_editor
-    # - fluency_editor
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - fluency_editor
   segmentors:
-    # - ascii_segmentor
-    # - matcher
-    - abc_segmentor	      # 將使用者輸入加上【識別標籤】
-    - punct_segmentor	    # 配合 punctuator 使用，將使用者之輸入加上【標點符號】專用之【識別標籤】
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
     - fallback_segmentor
   translators:
-    # - echo_translator
-    - table_translator	  # 已輸入的【拼音字母】，並加上【識別標籤】的資料，透過字典查詢，找到漢字
-    - punct_translator	    # 將【識別標魋】為【標點符號】之輸入，完成輸出
-  #   - table_translator@custom_phrase
-  #   - reverse_lookup_translator
-    # - script_translator	    # 針對【拼音字母】切分【音節】
-  # filters:
-  #   - simplifier@zh_hans
-  #   - simplifier@zh_hant_tw
-  #   - uniquifier
+    - punct_translator
+    - table_translator
+    # - table_translator@custom_phrase
+    - script_translator
+  filters:
+    - uniquifier
 
 speller:
-#   alphabet: '1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'
-#   initials: '1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/-'
   alphabet: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567'
   initials: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L'
-  finals: " 6347"
+  finals: " 34567"
   delimiter: "'"
   use_space: true
   algebra:
-    #--------------------------------------------------------------------------
-    # 韻尾
-    #--------------------------------------------------------------------------
-    - xform/ng(\d)/W$2/     # ng ==> W
-    - xform/n(\d)/D$1/      # n  ==> D
-    - xform/m(\d)/M$1/      # m  ==> M
-    #--------------------------------------------------------------------------
-    # 韻母對映
-    #--------------------------------------------------------------------------
-    # 【鼻音韻母】
-    - xform/nn/N/
-    # 【元音韻母】對映
-    - xform/oo/O/   # ㆦ
-    - xform/oN/ON/  # 舒聲 [oonn] = [onn] ==> 入聲 [onnh]
-    - xform/oW/OW/  # 舒聲 [ong] = [oong] = [OW]
-    - xform/ok/Ok/  # 舒聲 [ong] ==> 入聲 [ook] = [Ok]
-    - xform/oM/OM/  # 舒聲 [om] ==> 入聲 [oom] = [OM]
-    - xform/op/Op/  # 舒聲 [om] ==> 入聲 [op] = [Op]
-    # ioo [iɔ]
-    # 舒聲：ioo  入聲: iooh  鼻音（陰聲韻）= ionn
-    # iong ==> 舒聲 ioong = [iOW]  ；入聲 iook = [iOk]
-    - xform/ioN/iON/
-    - xform/ioW/iOW/
-    - xform/iok/iOk/
-    # 複合元音韻母
-    - xform/ai/I/   # ㄞ
-    - xform/au/U/   # ㄠ
-    # 組合韻母
-    - xform/aD/L/   # ㄢ[an] 的【字典編碼】：L
-    - xform/aW/Q/   # ㄤ[ang] 的【字典編碼】：Q
-    # 鼻音韻母
-    - xform/ON/S/   # ㆧ
-    - xform/iN/Z/   # ㆪ
-    - xform/uN/X/   # ㆫ
-    - xform/aN/R/   # ㆩ
-    - xform/eN/E/   # ㆥ
-    - xform/aiN/V/  # ㆮ
-    - xform/auN/F/  # ㆯ
-    # 方音符號
-    - xform/OW/Y/   # ㆲ[ong] = ㆦㆭ
-    - xform/OM/H/   # ㆱ
-    - xform/aM/B/   # ㆰ
-    #--------------------------------------------------------------------------
-    # 鼻音韻母輸入處理
-    # 設定【鼻音韻母】可用連續輸入兩次方式完成
-    #--------------------------------------------------------------------------
-    - derive/([iuaeOIU])N/$1$1/
-    # --------------------------------------------------------------------------
-    # 地方腔調
-    - xform/ee/e/       # ㄝ ==> ㆤ
-    - xform/(er|or)/o/  # ㄜ
-    - xform/ir/u/       # ㆨ ==> ㄨ
-    # --------------------------------------------------------------------------
-    # 聲母對映
-    # --------------------------------------------------------------------------
-    - xform/ng/w/     # ㄫ
-    - xform/ph/P/     # ㄅ
-    - xform/th/T/     # ㄊ
-    - xform/kh/K/     # ㄍ
-    # --------------------------------------------------------------------------
-    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
-    # ㄗ[c]:  c, ㄘ[ch]:  C, ㄙ[s]:  s,  ㆡ[j]: z
-    # ㄐ[ci]: i, ㄑ[chi]: J, ㄒ[si]: S,  ㆢ[ji]
-    # --------------------------------------------------------------------------
-    - xform/tsh/C/      # ㄘ
-    - xform/ts/c/       # ㄗ
-    - xform/ch/C/
-    #--------------------------------------------------------------------------
-    # 鼻音韻母輸入處理
-    # 設定【鼻音韻母】可用連續輸入兩次方式完成
-    #--------------------------------------------------------------------------
-    - derive/([iuaeOIU])N/$1$1/
-    #--------------------------------------------------------------------------
-    # 入聲輸入處理
-    #--------------------------------------------------------------------------
-    # 為 ‘入聲’ 調號便捷輸入做準備
-    - xform/[48]/0/ # 入聲調（第四調、第八調）合併
-    # 設定【字典編碼】之【聲調】值，不論4或8，皆以0代換
-    - derive/([iaO])W0/$1k0/  # 用 ㄚㄍ． 來拍 ㄚㆻ
-    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
-    - derive/([iaO])M0/$1p0/  # 用 ㄚㄅ． 來拍 ㄚㆴ
-    #--------------------------------------------------------------------------
-    # 簡拼設定（abbreviation：縮寫詞）
-    # --------------------------------------------------------------------------
-    - abbrev/[iu]?[iuaeOIU]N/A/       # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
-    - abbrev/[iu]?[iuaeOIU]N/N/       # 【字典編碼】：【ｎ】表所有的【鼻音韻母】
-    - abbrev/[iuaeoOIULQYHBWDM]+0/0/  # 【字典編碼】：【．】表所有的【入聲韻母】
-    - abbrev/^([pPbmtTnlkKghcCjsw]).+$/$1/ # 可只輸入：【聲母】
-    - abbrev/^(\D+)([1235679])$/$1/   # 舒聲調拼音字母，可免輸入【調號】
-    - abbrev/^([pPbmtTnlkKghcCjsw]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
-    #--------------------------------------------------------------------------
-  algebra:
-    - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF|qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L|'
+    __patch:
+      - tlpa_piau_im_TLPA:/phing_im_tng_cu_im
+      - tlpa_piau_im_TLPA:/abbreviation
+      - tlpa_piau_im_TLPA:/ji_be_tng_jih_kian
+      # - tlpa_piau_im:/phing_im_tng_cu_im
+      # - tlpa_piau_im:/abbreviation
+      # - tlpa_piau_im:/ji_be_tng_jih_kian
 
 translator:
   # dictionary: tlpa_peh_ue
-  dictionary: my_bopomofo
+  dictionary: my_banlam
+  prism: my_bopomofo
   preedit_format:
-    - 'xlit|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ|'
-#   prism: my_bopomofo
-#   preedit_format:
-#     - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
-#   comment_format:
-#     - xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR12345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙|
-#     #------------------------------------------------------
-#     # 定義 ‘調號’ 以 ‘上標字’ 格式顯示
-#     - xlit|123456780|¹²³⁴⁵⁶⁷⁸⁰|
+    __patch:
+      - tlpa_piau_im_TLPA:/jih_kian_tng_cu_im_hu_ho
+      # - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
+      # - tlpa_piau_im_TLPA:/phah_phing_im
+  comment_format:
+    __patch:
+      - tlpa_piau_im_TLPA:/hau_suan_piau_cu_im
+  #     - tlpa_piau_im:/ji_be_tng_cu_im_hu_ho
+  #     - tlpa_piau_im_TLPA:/ji_be_tng_cu_im_hu_ho
 
-# custom_phrase:
-#   dictionary: ""
-#   user_dict: custom_phrase
-#   db_class: stabledb
-#   enable_completion: false
-#   enable_sentence: false
-#   initial_quality: 1
-#
-# reverse_lookup:
-#   dictionary: stroke
-#   enable_completion: true
-#   prefix: "`"
-#   suffix: "'"
-#   tips: 〔筆畫〕
-#   preedit_format:
-#     - xlit/hspnz/一丨丿丶乙/
-#   comment_format:
-#     - xform/e?r5$/er5/
-#     - xform/iu/iou/
-#     - xform/ui/uei/
-#     - xform/ong/ung/
-#     - xform/^yi?/i/
-#     - xform/^wu?/u/
-#     - xform/iu/v/
-#     - xform/^([jqx])u/$1v/
-#     - xform/([iuv])n/$1en/
-#     - xform/zh/Z/
-#     - xform/ch/C/
-#     - xform/sh/S/
-#     - xform/ai/A/
-#     - xform/ei/I/
-#     - xform/ao/O/
-#     - xform/ou/U/
-#     - xform/ang/K/
-#     - xform/eng/G/
-#     - xform/an/M/
-#     - xform/en/N/
-#     - xform/er/R/
-#     - xform/eh/E/
-#     - xform/([iv])e/$1E/
-#     - xform/1//
-#     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
-#
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+
 punctuator:
-  # import_preset: default
-  # import_preset: tlpa_keymap_cu_im
-#
-# editor:
-#   bindings:
-#     space: toggle_selection
-#
-# key_binder:
-#   import_preset: default
-#   bindings:
-#     - { when: has_menu, accept: comma, send: comma }      # ㄝ
-#     - { when: has_menu, accept: period, send: period }    # ㄡ
-#     - { when: has_menu, accept: minus, send: minus }      # ㄦ
-#     - { when: paging, accept: minus, send: Page_Up }
-#     - { when: has_menu, accept: equal, send: Page_Down }
-#
-# recognizer:
-#   patterns:
-#     email: "^[a-z][-_.0-9a-z]*@.*$"
-#     uppercase: "^[A-Z][-_+.'0-9A-Za-z]*$"
-#     url: "^(www[.]|https?:|ftp:|mailto:).*$"
-#     reverse_lookup: "`[a-z]*'?$"
-#
-key_binder:
-  bindings:
-    - when:   paging    # 僅當已發生向後換頁時，
-      accept: comma     # 將「逗號」鍵……
-      send:   Page_Up   # 關聯到「向前換頁」；於是 navigator 將收到一發 Page_Up
+  import_preset: tlpa_keymap_piau_tian
 
-    - when:   has_menu  # 只要有候選字即滿足條件
-      accept: period
-      send:   Page_Down
+editor:
+  bindings:
+    # space: toggle_selection
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+
+key_binder:
+  # import_preset: default
+  bindings:
     #---------------------------------------------------
     # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
-    - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    #---------------------------------------------------
+    - { when: has_menu, accept: comma, send: comma }      # ㆤ
+    - { when: has_menu, accept: period, send: period }    # ㆲ
+    - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
     #---------------------------------------------------
     # 翻頁
-    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
-    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    #---------------------------------------------------
     - { accept: "Control+p", send: Page_Up, when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
     #---------------------------------------------------
@@ -271,11 +119,20 @@ key_binder:
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
-    #---------------------------------------------------
-    - {accept: "Control+1", select: .next, when: always}
-    - {accept: "Control+2", toggle: full_shape, when: always}
-    - {accept: "Control+3", toggle: simplification, when: always}
-    - {accept: "Control+4", toggle: extended_charset, when: always}
+
+recognizer:
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    reverse_lookup: "`[a-z]*'?$"
+    # punct: '`[^\s]$'
+
+menu:
+  # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
+  alternative_select_keys: "ABCDEFGHIJ"
+  page_size: 5 #選單每䈎顯示個數
 
 style:
   horizontal: false
