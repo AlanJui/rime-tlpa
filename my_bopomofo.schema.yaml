@@ -81,10 +81,10 @@ speller:
     - xform/unn/X/           # ㆫ
     - xform/ang/Q/           # ㄤ
     - xform/ong/Y/           # ㆲ
-    - xform/(?<=i)ng/W/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
+    # - xform/(?<=i)ng/W/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
     # - xform/^ng11$/W1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
-    - xform/ng(?![1-9])/W/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
-    - xform/ng/w/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
+    - xform/ng(?![1-9])/w/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
+    - xform/ng/W/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
     - xform/ai/I/            # ㄞ
     - xform/au/U/            # ㄠ
     - xform/oo/O/            # ㆦ (1)
@@ -104,11 +104,11 @@ speller:
     - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567|'
 
 translator:
-  dictionary: moetaigi.extended
+  # dictionary: moetaigi.extended
+  dictionary: moetaigi
   # dictionary: tlpa_hong_im
   # dictionary: tlpa_peh_ue
   # dictionary: my_banlam
-  # dictionary: moetaigi
   prism: my_bopomofo
   spelling_hinc: 0
   preedit_format:
