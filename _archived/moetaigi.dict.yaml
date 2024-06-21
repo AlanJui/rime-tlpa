@@ -1,13 +1,15 @@
 # Rime dictionary
-# encoding: utf-
+# encoding: utf-8
+#
+# 依據萌典 API 自動產生。如欲新增詞彙請至 moetaigi.extended.dict.yaml。
+
 ---
-name: my_bopomofo
-version: "..."
-# sort: by_weight
-sort: original
+name: moetaigi
+version: "0.3"
+sort: by_weight
 use_preset_vocabulary: false
-# import_tables:
-#   - tlpa_peh_ue
+import_tables:
+  - moetaigi.extended
 ...
 一	tsit8	44439
 一	it4	16762

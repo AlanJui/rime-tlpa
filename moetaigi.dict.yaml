@@ -10,7 +10,7 @@ sort: by_weight
 use_preset_vocabulary: false
 import_tables:
   - tlpa_ciann_ji
-  # - moetaigi.extended
+  - moetaigi.extended
 ...
 長	tng5	60%
 盡	cin7	60%

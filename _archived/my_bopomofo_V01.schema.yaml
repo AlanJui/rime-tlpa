@@ -1,10 +1,11 @@
+
 # Rime schema
 # encoding: utf-8
 
 schema:
   schema_id: my_bopomofo
   name: 我的注音
-  version: '0.0.0.3'
+  version: '0.0.0.2'
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -62,44 +63,60 @@ speller:
     #   - tlpa_piau_im:/phing_im_tng_cu_im
     #   - tlpa_piau_im:/abbreviation
     #   - tlpa_piau_im:/ji_be_tng_jih_kian
-    #=======================================================================
-    # - xform/ch(?=i)/Ci/      # ㄑ -- tsh 後面接 i 時，tsh 為 ㄑ
-    - xform/ch/C/           # ㄘ
-    # - xform/c(?=i)/Z/       # ㄐ -- ts 後面接 i 時，ts 為 ㄐ
-    - xform/c/z/            # ㄗ
-    - xform/ph/P/            # ㄆ
-    - xform/th/T/            # ㄊ
-    - xform/kh/K/            # ㄎ
-    # - xform/s(?=i)/S/        # ㄒ -- s 後面接 i 時，s 為 ㄒ
-    # - xform/j(?=i)/J/        # ㆢ -- j 後面接 i 時，j 為 ㆢ
-    - xform/ainn/V/          # ㆮ
-    - xform/aunn/F/          # ㆯ
-    - xform/ann/R/           # ㆩ
-    - xform/onn/S/           # ㆧ
-    - xform/enn/E/           # ㆥ
-    - xform/inn/Z/           # ㆪ
-    - xform/unn/X/           # ㆫ
-    - xform/ang/Q/           # ㄤ
-    - xform/ong/Y/           # ㆲ
-    - xform/(?<=i)ng/W/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
-    # - xform/^ng11$/W1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
-    - xform/ng(?![1-9])/W/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
-    - xform/ng/w/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
-    - xform/ai/I/            # ㄞ
-    - xform/au/U/            # ㄠ
-    - xform/oo/O/            # ㆦ (1)
-    - xform/o(?=[kpt])/O/    # ㆦ (2) -- o 後面接 k, p 或 t 時，o 為 ㆦ (注意 -oh 對應到 ㄜㆷ)
-    - xform/am/B/            # ㆰ
-    - xform/om/H/            # ㆱ
-    - xform/(?<=[eiu])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
-    - xform/^m(?=[1-9])/M/   # ㆬ (2) -- 比對單 m 接聲調符號
-    - xform/an/L/            # ㄢ
-    - xform/(?<=[iu])n/D/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
-    #=======================================================================
-    - abbrev/^([pPbmtTnlkKghcCjsw]).+/$1/   # 可只輸入：【聲母】與【調號】
+    # 變調
+    - derive/1/7/ # 第一調 → 第七調
+    - derive/2/1/ # 第二調 → 第一調
+    - derive/3/2/ # 第三調 → 第二調
+    - derive/7/3/ # 第七調 → 第三調
+    - derive/5/7/ # 第五調 → 第七調
+    - derive/5/3/ # 第五調 → 第三調
+    - xform/[48]/0/ # 入聲調（第四調、第八調）合併
+    # 音變
+    - derive/z/d/ # ㆡ、ㆢ → ㄌ
+    - derive/z(N?i)/g$1/ # ㆢ → ㆣ
+    - derive/iaD/ieD/ # ㄧㄢ、ㄧㄚㆵ → ㄧㄢ、ㄧㆤㆵ
+    - derive/ieD/eD/ # ㄧㄢ、ㄧㆤㆵ → ㆤㄣ、ㆤㆵ
+    # 方言差
+    - derive/Ne/Ni/ # ㆥ → ㆪ
+    - derive/Niu/Nio/ # ㄧㆫ → ㄧㆧ
+    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
+    #- xform/z(N?i)/Z$1/  # 毋過咱共 ㆢ 和 ㆡ 合併矣
+    - xform/c(N?i)/j$1/ # ㄐㄧ
+    - xform/C(N?i)/J$1/ # ㄑㄧ
+    - xform/s(N?i)/S$1/ # ㄒㄧ
+    # 方音符號會分 ㄇㄋㄫ 和 ㆠㄌㆣ
+    - derive/bN/m/ # ㄇ
+    - derive/dN/n/ # ㄋ
+    - derive/gN/q/ # ㄫ
+    - derive/bG/mG/ # ㄇㆭ
+    - derive/dG/nG/ # ㄋㆭ
+    # 鼻音
+    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
+    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
+    # # 注音
+    # - derive/øG/G/ # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
+    # - derive/(?<!i)oG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
+    # - derive/ioG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
+    # 入聲調
+    - derive/([iao])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
+    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
+    - derive/([iaoø])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
+    # 變調
+    - derive/(?<![BDG])4/2/ # -ㆷ 第四調 → 第二調
+    - derive/(?<![BDG])8/3/ # -ㆷ 第八調 → 第三調
+    # 方音韻母
+    - derive/oB/aB/ # ㆦㆬ、ㆰ（併入）
+    - derive/aB/M/ # ㄚㆬ、ㆰ
+    - xform/aD/L/ # ㄢ
+    - xform/aG/Q/ # ㄤ
+    - derive/oG/Y/ # ㆦㆭ、ㆲ
+    # 簡拼
+    - abbrev/[iu]?[iuaeOIU]N/N/ # 用 ｎ 代表所有的鼻音母音
+    - abbrev/[iuaoeeOIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
+    - abbrev/^(\D+)([123579])$/$1/ # 除了第四調、第八調，調號會當免拍
+    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/ # 會當干焦拍聲母
+    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/ # 會當干焦拍子音+調號
     - abbrev/^([A-Za-z]+)\d$/$1/
-    - abbrev/^([pPbmtTnlkKghcCjsw]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
-    #=======================================================================
     # 字典編碼轉換按鍵
     - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567|'
 

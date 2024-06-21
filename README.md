@@ -40,11 +40,15 @@
 本輸入法，只需輸入 TLPA 音標，即可顯示相對應之漢字；至於「聲調」，可略去不用。
 對於喜歡指明聲調者，則可參考以下之鍵盤，於 TLPA 音標之後，補入「聲調」。
 
-![聲調鍵盤](./docs/static/img/keyboard2.png)
+![聲調鍵盤](./docs/static/img/keymap_tlpa_peh_ue.png)
+
+### 河洛方音
+
+![方音符號鍵盤](./docs/static/img/keymap_tlpa_fong_im.png)
 
 ### 河洛注音
 
-![方音符號鍵盤](./docs/static/img/keyboard.png)
+![注音符號鍵盤](./docs/static/img/keymap_tlpa_cu_im.png)
 
 ## 字形
 

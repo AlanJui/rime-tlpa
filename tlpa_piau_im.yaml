@@ -4,47 +4,38 @@
 #### 因為 RIME 會逐行執行以下步驟，所以這裡的順序很重要，例如轉換 ㄑ/ㄘ 的規則必須要放在 ㄐ/ㄗ 前面，才不會讓所有 ㄑ/ㄘ 變成 ㄐ/ㄗ。
 phing_im_tng_cu_im:
   __append:
-    - xform/tsh(?=i)/C/      # ㄑ -- tsh 後面接 i 時，tsh 為 ㄑ
-    - xform/tsh/c/           # ㄘ
-    - xform/ts(?=i)/Z/       # ㄐ -- ts 後面接 i 時，ts 為 ㄐ
-    - xform/ts/z/            # ㄗ
+    # - xform/ch(?=i)/Ci/      # ㄑ -- tsh 後面接 i 時，tsh 為 ㄑ
+    - xform/ch/C/           # ㄘ
+    # - xform/c(?=i)/Z/       # ㄐ -- ts 後面接 i 時，ts 為 ㄐ
+    - xform/c/z/            # ㄗ
     - xform/ph/P/            # ㄆ
     - xform/th/T/            # ㄊ
     - xform/kh/K/            # ㄎ
-    - xform/s(?=i)/S/        # ㄒ -- s 後面接 i 時，s 為 ㄒ
-    - xform/j(?=i)/J/        # ㆢ -- j 後面接 i 時，j 為 ㆢ
-    - xform/ainn/Y/          # ㆮ
-    - xform/aunn/X/          # ㆯ
-    - xform/ann/A/           # ㆩ
-    - xform/onn/Q/           # ㆧ
+    # - xform/s(?=i)/S/        # ㄒ -- s 後面接 i 時，s 為 ㄒ
+    # - xform/j(?=i)/J/        # ㆢ -- j 後面接 i 時，j 為 ㆢ
+    - xform/ainn/V/          # ㆮ
+    - xform/aunn/F/          # ㆯ
+    - xform/ann/R/           # ㆩ
+    - xform/onn/S/           # ㆧ
     - xform/enn/E/           # ㆥ
-    - xform/inn/I/           # ㆪ
-    - xform/unn/U/           # ㆫ
-    - xform/ang/[/           # ㄤ
-    - xform/ong/]/           # ㆲ
-    - xform/(?<=i)ng/R/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
-    - xform/^ng11$/R1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
-    - xform/ng(?![1-9])/G/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
-    - xform/ng/r/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
-    - xform/ai/y/            # ㄞ
-    - xform/au/x/            # ㄠ
+    - xform/inn/Z/           # ㆪ
+    - xform/unn/X/           # ㆫ
+    - xform/ang/Q/           # ㄤ
+    - xform/ong/Y/           # ㆲ
+    - xform/(?<=i)ng/W/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
+    # - xform/^ng11$/W1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
+    - xform/ng(?![1-9])/W/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
+    - xform/ng/w/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
+    - xform/ai/I/            # ㄞ
+    - xform/au/U/            # ㄠ
     - xform/oo/O/            # ㆦ (1)
     - xform/o(?=[kpt])/O/    # ㆦ (2) -- o 後面接 k, p 或 t 時，o 為 ㆦ (注意 -oh 對應到 ㄜㆷ)
-    - xform/am/{/            # ㆰ
-    - xform/om/}/            # ㆱ
+    - xform/am/B/            # ㆰ
+    - xform/om/H/            # ㆱ
     - xform/(?<=[eiu])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
     - xform/^m(?=[1-9])/M/   # ㆬ (2) -- 比對單 m 接聲調符號
-    - xform/an/0/            # ㄢ
-    - xform/(?<=[iu])n/N/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
-    - xform/^n(?=[1-9])/N/   # ㄣ (2) -- 比對單 n 接聲調符號 (打注音ㄣ專用)
-    - xform/p4/91/           # ㆴ (1) -- 比對第四聲 (p4 轉換為 ㆴ+ 空白鍵)
-    - xform/p(?=8)/9/        # ㆴ (2) -- 比對第八聲 (p 轉換為 ㆴ，8 會在其他規則中轉換為輕聲鍵)
-    - xform/t4/>1/           # ㆵ (1) -- 以下規則請參考ㆴ的註解
-    - xform/t(?=8)/>/        # ㆵ (2)
-    - xform/k4/<1/           # ㆻ (1)
-    - xform/k(?=8)/</        # ㆻ (2)
-    - xform/h4/41/           # ㆷ (1)
-    - xform/h(?=8)/4/        # ㆷ (2)
+    - xform/an/L/            # ㄢ
+    - xform/(?<=[iu])n/D/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
 
 #### 簡化拼法表述式
 #### 這裡的規則描述在不使用完整的注音拼法下，什麼字會被搜尋到 (例如只打「ㄅ」的情況下輸出「ㄅㆭ˫」的候選字「飯」)
@@ -63,12 +54,6 @@ abbreviation:
     - abbrev/^(.)(.)[49><][18]$/$1/      # 對於具有聲母 + 韻母拼法且為四或八聲的音，只要打聲母就能夠搜尋 (部分與 #4 重疊)
     - abbrev/^(.)(.)(.)[49><][18]$/$1$2/ # 對於具有聲母 + 介音 + 韻母拼法且為四或八聲的音，只要打聲母 + 介音就能夠搜尋
     - abbrev/^(.)(.)(.)[49><][18]$/$1/   # 對於具有聲母 + 介音 + 韻母拼法且為四或八聲的音，只要打聲母就能夠搜尋
-
-TLPA_abbreviation:
-  __append:
-    - abbrev/^([bpmfdtnlgkhjqxZCSrzcs]).+$/$1/
-    - abbrev/^([A-Za-z]+)\d$/$1/
-    - abbrev/^([bpmfdtnlgkhjqxZCSrzcs]).+(\d)$/$1$2/
 
 #### 以下標音可用來測試上面的 Regex 語法是否正確。
 #### 測試網站 https://regex101.com/
