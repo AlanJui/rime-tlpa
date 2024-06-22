@@ -92,7 +92,7 @@ speller:
     # - xform/ong/Y/           # ㆲ
     # - xform/am/B/            # ㆰ
     # - xform/om/H/            # ㆱ
-    - xform/(?<=[eiu])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
+    - xform/(?<=[aeiuo])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
     - xform/^m(?=[1-9])/M/   # ㆬ (2) -- 比對單 m 接聲調符號
     - xform/an/L/            # ㄢ
     - xform/(?<=[iu])n/D/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
@@ -100,7 +100,7 @@ speller:
     # 調整
     #--------------------------------------------------------------------------
     # oo [ɔ]
-    - xform/o([mWpk])/O$1/	        # om ==> op / ong ==> ok
+    - xform/o([MWpk])/O$1/	        # om ==> op / ong ==> ok
     # ioo [iɔ]
     - xform/io([Wk])/iOW/	          # iong ==> iok
     #--------------------------------------------------------------------------
@@ -200,8 +200,8 @@ translator:
     - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ ˪ˋ˫ˊ．|'
     # 連續輸入用【拼音分隔符號】換成空白
     - xform/'/ /
-    - xform/tsh/ch/
-    - xform/ts/c/
+    # - xform/tsh/ch/
+    # - xform/ts/c/
     #------------------------------------------------------
     # 令候選字視窗，可顯示兩組「注音/拼音」
     # 左邊：TLPA 拼音；右邊：十五音（河洛十八音）

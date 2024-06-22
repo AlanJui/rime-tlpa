@@ -88,8 +88,9 @@ speller:
     - xform/o(?=[kpt])/O/    # ㆦ (2) -- o 後面接 k, p 或 t 時，o 為 ㆦ (注意 -oh 對應到 ㄜㆷ)
     # - xform/ong/Y/           # ㆲ
     # - xform/am/B/            # ㆰ
+    # - xform/am/aM/           # ㆰ
     # - xform/om/H/            # ㆱ
-    - xform/(?<=[eiu])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
+    - xform/(?<=[eiua])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
     - xform/^m(?=[1-9])/M/   # ㆬ (2) -- 比對單 m 接聲調符號
     - xform/an/L/            # ㄢ
     - xform/(?<=[iu])n/D/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
@@ -97,7 +98,7 @@ speller:
     # 調整
     #--------------------------------------------------------------------------
     # oo [ɔ]
-    - xform/o([mWpk])/O$1/	        # om ==> op / ong ==> ok
+    - xform/o([MWpk])/O$1/	        # om ==> op / ong ==> ok
     # ioo [iɔ]
     - xform/io([Wk])/iOW/	          # iong ==> iok
     #--------------------------------------------------------------------------
