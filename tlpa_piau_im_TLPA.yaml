@@ -116,14 +116,14 @@ abbreviation:
 # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
 ji_be_tng_jih_kian:
   __append:
-    - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567|'
+    - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I<(L 34567|'
 
 # 按鍵轉注音符號：定義鍵盤【按鍵】與【注音符號】的對映關聯
 # 操作輸入法時，在輸入介面壓下的【按鍵】，與之對映的注音符號（ㄅㄆㄇ），
 # 將根據此處的定義，於輸入介面顯示相對應的注音符號
 jih_kian_tng_cu_im_hu_ho:
   __append:
-    - 'xlit|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L34567|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ˪ˋ˫ˊ．|'
+    - 'xlit|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I<(L34567|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ˪ˋ˫ˊ．|'
 
 # 字碼轉注音符號：定義【字碼】與【注音符號】的對映關聯
 # 候選漢字清單中，漢字與注音符號的顯示，由此處控制。
