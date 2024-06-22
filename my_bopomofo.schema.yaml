@@ -4,7 +4,7 @@
 schema:
   schema_id: my_bopomofo
   name: 我的注音
-  version: '0.0.0.4'
+  version: '0.0.0.5'
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -78,7 +78,6 @@ speller:
     - xform/inn/Z/           # ㆪ
     - xform/unn/X/           # ㆫ
     - xform/ang/Q/           # ㄤ
-    - xform/ong/Y/           # ㆲ
     # - xform/(?<=i)ng/W/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
     # - xform/^ng11$/W1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
     - xform/ng(?![1-9])/w/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
@@ -87,12 +86,20 @@ speller:
     - xform/au/U/            # ㄠ
     - xform/oo/O/            # ㆦ (1)
     - xform/o(?=[kpt])/O/    # ㆦ (2) -- o 後面接 k, p 或 t 時，o 為 ㆦ (注意 -oh 對應到 ㄜㆷ)
-    - xform/am/B/            # ㆰ
-    - xform/om/H/            # ㆱ
+    # - xform/ong/Y/           # ㆲ
+    # - xform/am/B/            # ㆰ
+    # - xform/om/H/            # ㆱ
     - xform/(?<=[eiu])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
     - xform/^m(?=[1-9])/M/   # ㆬ (2) -- 比對單 m 接聲調符號
     - xform/an/L/            # ㄢ
     - xform/(?<=[iu])n/D/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
+    #--------------------------------------------------------------------------
+    # 調整
+    #--------------------------------------------------------------------------
+    # oo [ɔ]
+    - xform/o([mWpk])/O$1/	        # om ==> op / ong ==> ok
+    # ioo [iɔ]
+    - xform/io([Wk])/iOW/	          # iong ==> iok
     #--------------------------------------------------------------------------
     # 入聲輸入處理
     #--------------------------------------------------------------------------
@@ -112,10 +119,10 @@ speller:
 
 translator:
   # dictionary: moetaigi.extended
-  dictionary: moetaigi
   # dictionary: tlpa_hong_im
   # dictionary: tlpa_peh_ue
   # dictionary: my_banlam
+  dictionary: moetaigi
   prism: my_bopomofo
   spelling_hinc: 0
   preedit_format:
@@ -146,11 +153,11 @@ translator:
     - xform/ㄞ(ㄞ|ｎ)/ㆮ/
     - xform/ㄠ(ㄠ|ｎ)/ㆯ/
     #--------------------------------------------------------------------------
-    # 拆韻母
+    # 方音符號專有韻母拆韻母
     #--------------------------------------------------------------------------
-    - xform/ㆲ/ㆦㄥ/
-    - xform/ㆰ/ㄚㆬ/
-    - xform/ㆱ/ㆦㆬ/
+    # - xform/ㆲ/ㆦㄥ/	  # 字典編碼：Y
+    # - xform/ㆰ/ㄚㆬ/
+    # - xform/ㆱ/ㆦㆬ/
     #--------------------------------------------------------------------------
     # 聲母校調
     #--------------------------------------------------------------------------
@@ -163,9 +170,9 @@ translator:
     #------------------------------------------------------
     - xform/ㄚㄥ/ㄤ/
     - xform/ㄚㄣ/ㄢ/
-    - xform/ㄚㆬ/ㆰ/
-    - xform/ㆦㄥ/ㆲ/
-    - xform/ㆦㆬ/ㆱ/
+    # - xform/ㄚㆬ/ㆰ/
+    # - xform/ㆦㄥ/ㆲ/
+    # - xform/ㆦㆬ/ㆱ/
     #------------------------------------------------------
     # 聲母校調
     #------------------------------------------------------
@@ -196,7 +203,8 @@ translator:
     # 令候選字視窗，可顯示兩組「注音/拼音」
     # 左邊：TLPA 拼音；右邊：十五音（河洛十八音）
     #------------------------------------------------------
-    - xform/^([Øa-z]+\d)$/〔$1〕【$1《/
+    # - xform/^([Øa-z]+\d)$/〔$1〕【$1《/
+    - xform/^([a-z]+\d)$/〔$1〕【$1《/
     #------------------------------------------------------
     # 處理鼻音化韻母
     #------------------------------------------------------
@@ -386,13 +394,11 @@ custom_phrase:
   initial_quality: 1
 
 punctuator:
-  # import_preset: tlpa_keymap_piau_tian
   import_preset: tlpa_keymap_cu_im
 
 editor:
   bindings:
     space: toggle_selection
-    # space: commit                       # 選擇「備選漢字」
     Return: commit_composition          # 上屏原始的輸入：lau5
     Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
@@ -426,7 +432,7 @@ recognizer:
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     reverse_lookup: "`[a-z]*'?$"
-    # punct: '`[^\s]$'
+    punct: '`[^\s]$'
 
 menu:
   # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
