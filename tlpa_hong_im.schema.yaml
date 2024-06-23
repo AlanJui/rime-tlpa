@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_hong_im
   name: 河洛方音
-  version: "v0.0.0.9"
+  version: "v0.0.1.0"
   author: 居正中
   description: |
     屬「方音符號」輸入法；使用源自 taigi_yu ，
@@ -53,8 +53,6 @@ engine:
     - uniquifier
 
 speller:
-  # alphabet: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657'
-  # initials: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ43btgz657'
   alphabet: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJbtgz 43657'
   initials: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJbtgz43657'
   finals: " 43657"
