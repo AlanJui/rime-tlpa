@@ -17,11 +17,13 @@ schema:
       ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
       ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
       ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
+  dependencies:
+    - stroke
 
 switches:
   - name: ascii_mode
     reset: 0
-    states: [台文, ABC]
+    states: [漢文, ABC]
   - name: full_shape
     reset: 0
     states: [半形, 全形]
@@ -44,155 +46,102 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
+    # - table_translator
     - table_translator@custom_phrase
     - script_translator
   filters:
     - uniquifier
 
-menu:
-  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
-  alternative_select_keys: "ABCDEFGHIJ"
-
 speller:
-  alphabet: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657"
-  initials: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-7"
-  finals: " 43567"
+  # alphabet: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657'
+  # initials: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ43btgz657'
+  alphabet: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJbtgz 43657'
+  initials: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJbtgz43657'
+  finals: " 43657"
   delimiter: "'"
   use_space: true
   algebra:
-    # 變調
-    - derive/1/7/ # 第一調 → 第七調
-    - derive/2/1/ # 第二調 → 第一調
-    - derive/3/2/ # 第三調 → 第二調
-    - derive/7/3/ # 第七調 → 第三調
-    - derive/5/7/ # 第五調 → 第七調
-    - derive/5/3/ # 第五調 → 第三調
-    - derive/(?<![BDG])4/2/ # -ㆷ 第四調 → 第二調
-    - derive/(?<![BDG])8/3/ # -ㆷ 第八調 → 第三調
+    #--------------------------------------------------------------------------
+    # 定義：字典漢字的【拼音字母】與【注音編碼】的對映關係
+    #--------------------------------------------------------------------------
+    - xform/tsh(?=i)/C/      # ㄑ -- tsh 後面接 i 時，tsh 為 ㄑ
+    - xform/tsh/c/           # ㄘ
+    - xform/ts(?=i)/Z/       # ㄐ -- ts 後面接 i 時，ts 為 ㄐ
+    - xform/ts/z/            # ㄗ
+    - xform/ph/P/            # ㄆ
+    - xform/th/T/            # ㄊ
+    - xform/kh/K/            # ㄎ
+    - xform/s(?=i)/S/        # ㄒ -- s 後面接 i 時，s 為 ㄒ
+    - xform/j(?=i)/J/        # ㆢ -- j 後面接 i 時，j 為 ㆢ
+    #--------------------------------------------------------------------------
+    - xform/ainn/Y/          # ㆮ
+    - xform/aunn/X/          # ㆯ
+    - xform/ann/A/           # ㆩ
+    - xform/onn/Q/           # ㆧ
+    - xform/enn/E/           # ㆥ
+    - xform/inn/I/           # ㆪ
+    - xform/unn/U/           # ㆫ
+    #--------------------------------------------------------------------------
+    - xform/ang/[/           # ㄤ
+    - xform/ong/]/           # ㆲ
+    - xform/(?<=i)ng/R/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
+    - xform/^ng11$/R1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
+    - xform/ng(?![1-9])/G/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
+    - xform/ng/r/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
+    - xform/ai/y/            # ㄞ
+    - xform/au/x/            # ㄠ
+    #--------------------------------------------------------------------------
+    # 調整
+    #--------------------------------------------------------------------------
+    # oo [ɔ]
+    - xform/oo/O/            # ㆦ (1)
+    - xform/o(?=[kpt])/O/    # ㆦ (2) -- o 後面接 k, p 或 t 時，o 為 ㆦ (注意 -oh 對應到 ㄜㆷ)
+    - xform/am/{/            # ㆰ
+    - xform/om/}/            # ㆱ
+    - xform/(?<=[eiu])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
+    - xform/^m(?=[1-9])/M/   # ㆬ (2) -- 比對單 m 接聲調符號
+    - xform/an/@/            # ㄢ
+    - xform/(?<=[iu])n/N/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
+    - xform/^n(?=[1-9])/N/   # ㄣ (2) -- 比對單 n 接聲調符號 (打注音ㄣ專用)
+    #--------------------------------------------------------------------------
+    # 入聲輸入處理
+    #--------------------------------------------------------------------------
+    # 為 ‘入聲’ 調號便捷輸入做準備
     - xform/[48]/0/ # 入聲調（第四調、第八調）合併
-    # 音變
-    - derive/z/d/ # ㆡ、ㆢ → ㄌ
-    - derive/z(N?i)/g$1/ # ㆢ → ㆣ
-    - derive/iaD/ieD/ # ㄧㄢ、ㄧㄚㆵ → ㄧㄢ、ㄧㆤㆵ
-    - derive/ieD/eD/ # ㄧㄢ、ㄧㆤㆵ → ㆤㄣ、ㆤㆵ
-    # 方言差
-    - derive/Ne/Ni/ # ㆥ → ㆪ
-    - derive/Niu/Nio/ # ㄧㆫ → ㄧㆧ
-    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
-    #- xform/z(N?i)/Z$1/  # 毋過咱共 ㆢ 和 ㆡ 合併矣
-    - xform/c(N?i)/j$1/ # ㄐㄧ
-    - xform/C(N?i)/J$1/ # ㄑㄧ
-    - xform/s(N?i)/S$1/ # ㄒㄧ
-    # 方音符號會分 ㄇㄋㄫ 和 ㆠㄌㆣ
-    - derive/bN/m/ # ㄇ
-    - derive/dN/n/ # ㄋ
-    - derive/gN/q/ # ㄫ
-    - derive/bG/mG/ # ㄇㆭ
-    - derive/dG/nG/ # ㄋㆭ
-    # 鼻音
-    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
-    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
-    # 注音
-    - derive/øG/G/ # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
-    - derive/(?<!i)oG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
-    - derive/ioG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
-    # 入聲調
-    - derive/([iao])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
-    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
-    - derive/([iaoø])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
-    # 方音韻母
-    - derive/oB/aB/ # ㆦㆬ、ㆰ（併入）
-    - derive/aB/M/ # ㄚㆬ、ㆰ
-    - xform/aD/L/ # ㄢ
-    - xform/aG/Q/ # ㄤ
-    - derive/oG/Y/ # ㆦㆭ、ㆲ
-    # 簡拼
-    - abbrev/[iu]?[iuaoeIU]N/N/ # 用 ｎ 代表所有的鼻音母音
-    - abbrev/[iuaoøeIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
-    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/ # 會當干焦拍聲母
-    - abbrev/^(\D+)([123579])$/$1/ # 除了第四調、第八調，調號會當免拍
-    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/ # 會當干焦拍子音+調號
-    - xlit|pPmbtTndkKhjJSgqzcCsiuBaoøMIeUYLDQGN123570|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657|
+    # 設定【字典編碼】之【聲調】值，不論4或8，皆以0代換
+    - derive/([iaO])r0/$1k0/  # 用 ㄚㄍ． 來拍 ㄚㆻ
+    - derive/([iuae])N0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
+    - derive/([iaO])M0/$1p0/  # 用 ㄚㄅ． 來拍 ㄚㆴ
+    #--------------------------------------------------------------------------
+    # 定義可用的【簡易輸入方式】
+    #--------------------------------------------------------------------------
+    - abbrev/^([pbPmtTnlkgKGhZJCSzjcs]).+/$1/   # 可只輸入：【聲母】與【調號】
+    - abbrev/^([A-Za-z]+)\d$/$1/
+    - abbrev/^([pbPmtTnlkgKGhZJCSzjcs]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
+    #--------------------------------------------------------------------------
+    # 字典編碼轉換按鍵
+    #--------------------------------------------------------------------------
+    - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU1239><4570|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|'
 
 translator:
-  dictionary: tlpa_hong_im
+  # dictionary: moetaigi.extended
+  dictionary: moetaigi
   prism: tlpa_hong_im
-  spelling_hints: 5
+  spelling_hinc: 0
   comment_format:
-    # - xform/^/\t→ /
+    - xform/^/\t→ /
     - xform/'/ /
-    - xlit|pPbtTdkKgcCzshiuaoøeIUBDGN|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㆤㄞㄠㆬㄣㆭｎ|
-    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
-    - xform/ㄗ((ｎ)?ㄧ)/ㄐ$1/
-    - xform/ㄘ((ｎ)?ㄧ)/ㄑ$1/
-    - xform/ㆡ((ｎ)?ㄧ)/ㆢ$1/
-    - xform/ㄙ((ｎ)?ㄧ)/ㄒ$1/
-    # 方音符號會分 ㄇㄋㄫ 和 ㆠㄌㆣ
-    - xform/ㆠｎ/ㄇ/
-    - xform/ㄌｎ/ㄋ/
-    - xform/ㆣｎ/ㄫ/
-    - xform/ㆠㆭ/ㄇㆭ/
-    - xform/ㄌㆭ/ㄋㆭ/
-    # 入聲調： ㆴ、ㆵ、ㆻ、ㆷ
-    - xform/(?<=ㄧ|ㄚ|ㆦ)ㆬ([48])/ㆴ$1/
-    - xform/(?<=ㄧ|ㄨ|ㄚ)ㄣ([48])/ㆵ$1/
-    - xform/(?<=ㄚ|ㆦ|ㄜ)ㆭ([48])/ㆻ$1/
-    - xform/(?<!ㆴ|ㆵ|ㆻ)([48])/ㆷ$1/
-    # 鼻音
-    - xform/ｎ((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㆤ|ㄞ|ㄠ))/$1ｎ/
-    - xform/ㄧｎ/ㆪ/
-    - xform/ㄨｎ/ㆫ/
-    - xform/ㄚｎ/ㆩ/
-    - xform/ㆦｎ/ㆧ/
-    - xform/ㆤｎ/ㆥ/
-    - xform/ㄞｎ/ㆮ/
-    - xform/ㄠｎ/ㆯ/
-    # 韻母
-    - xform/ㄚㆬ/ㆰ/
-    - xform/ㆦㆬ/ㆱ/
-    - xform/ㄚㄣ/ㄢ/
-    - xform/ㄚㆭ/ㄤ/
-    - xform/ㆦㆭ/ㆲ/
-    - xform/ㄜㆭ/ㄥ/
-    # 聲調
-    - xlit|12357|ˉˋ˪ˊ˫|
-    - xform/4//
-    - xform/8/˙/
+    # 定義 '候選清單' 各漢字之 ’拼音字母‘ 與 “字典” 的對映關係
+    # 在 “字典” 中的漢字是以 TLPA 拼音字母儲存；
+    # 而 “候選清單” 各漢字的拼音字母，當以 “方音符號” 顯示。
+    - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU9><4123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆤㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㄧㄨㆫㆴㆵㆻㆷ ˋ˪ˊ˫˙|'
   preedit_format:
     - xform/ /ˉ/
     - xform/'/ /
-    - xlit|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-43657|ㄅㄆㄇㆠㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㆣㄫㆡㄗㄘㄙㄧㄨㆬㄚㆦㄜㆰㄞㆤㄠㆲㄢㄣㄤㆭｎˋ˪ˊ˫．|
-    # 拆韻母
-    # - xform/ㄒ/ㄙㄧ/
-    - xform/ㆰ/ㄚㆬ/
-    - xform/ㄢ/ㄚㄣ/
-    - xform/ㄤ/ㄚㆭ/
-    - xform/ㆲ/ㆦㆭ/
-    - xform/ㄨㆭ/ㆦㆭ/
-    - xform/ㆬㆭ/ㄧㆦㆭ/
-    - xform/ㄧㆭ/ㄧㄜㆭ/
-    # 咱共 ㆢ 和 ㆡ 合併
-    - xform/ㆡㄧ/ㆢㄧ/
-    # 鼻音
-    - xform/ㄧ(ㄧ|ｎ)/ㆪ/
-    - xform/ㄨ(ㄨ|ｎ)/ㆫ/
-    - xform/ㄚ(ㄚ|ｎ)/ㆩ/
-    - xform/ㆦ(ㆦ|ｎ)/ㆧ/
-    - xform/ㆤ(ㆤ|ｎ)/ㆥ/
-    - xform/ㄞ(ㄞ|ｎ)/ㆮ/
-    - xform/ㄠ(ㄠ|ｎ)/ㆯ/
-    # 入聲調
-    - xform/(ㄧ|ㄚ|ㆦ)(ㄅ|ㆬ)˙/$1ㆴ/
-    - xform/(ㄧ|ㄨ|ㄚ|ㆤ)(ㄉ|ㄣ)˙/$1ㆵ/
-    - xform/(ㄚ|ㆦ|ㄜ)(ㄍ|ㆭ)˙/$1ㆻ/
-    - xform/(ㄧ|ㄨ|ㄚ|ㆦ|ㄜ|ㆤ|ㄞ|ㄠ|ㆬ|ㆭ)˙/$1ㆷ/
-    # 合韻母
-    - xform/ㄚㆬ/ㆰ/
-    - xform/ㆦㆬ/ㆱ/
-    - xform/ㄚㄣ/ㄢ/
-    - xform/ㄚㆭ/ㄤ/
-    - xform/ㆦㆭ/ㆲ/
-    - xform/ㄜㆭ/ㄥ/
+    #------------------------------------------------------
+    # 【字典編碼】與【方音符號】對映關聯
+    #------------------------------------------------------
+    - 'xlit|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㆪㄨㆫ ˋ˪ㆴㆵㆻㆷˊ˫˙|'
 
 custom_phrase:
   dictionary: ""
@@ -203,23 +152,63 @@ custom_phrase:
   initial_quality: 1
 
 reverse_lookup:
-  dictionary: luna_pinyin
+  dictionary: stroke
+  enable_completion: true
   prefix: "`"
-  tips: 〔拼音〕
+  suffix: "'"
+  tips: 〔筆畫〕
   preedit_format:
-    - xform/([nljqxy])v/$1ü/
+    - xlit/hspnz/一丨丿丶乙/
+  comment_format:
+    - xform/e?r5$/er5/
+    - xform/iu/iou/
+    - xform/ui/uei/
+    - xform/ong/ung/
+    - xform/^yi?/i/
+    - xform/^wu?/u/
+    - xform/iu/v/
+    - xform/^([jqx])u/$1v/
+    - xform/([iuv])n/$1en/
+    - xform/zh/Z/
+    - xform/ch/C/
+    - xform/sh/S/
+    - xform/ai/A/
+    - xform/ei/I/
+    - xform/ao/O/
+    - xform/ou/U/
+    - xform/ang/K/
+    - xform/eng/G/
+    - xform/an/M/
+    - xform/en/N/
+    - xform/er/R/
+    - xform/eh/E/
+    - xform/([iv])e/$1E/
+    - xform/1//
+    - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
+
+punctuator:
+  import_preset: tlpa_keymap_cu_im
+
+editor:
+  bindings:
+    space: toggle_selection
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
 
 key_binder:
   # import_preset: default
   bindings:
+    #---------------------------------------------------
+    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
+    #---------------------------------------------------
+    - { when: has_menu, accept: comma, send: comma }      # ㆤ
+    - { when: has_menu, accept: period, send: period }    # ㆲ
     - { when: has_menu, accept: minus, send: minus }      # ｎ
     - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
-    # - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    #---------------------------------------------------
     # 翻頁
-    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
-    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    #---------------------------------------------------
     - { accept: "Control+p", send: Page_Up, when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
     #---------------------------------------------------
@@ -230,26 +219,19 @@ key_binder:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
 
-editor:
-  bindings:
-    space: commit                       # 選擇「備選漢字」
-    Return: commit_composition          # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-
-punctuator:
-  import_preset: tlpa_keymap_taigi_fong_im
-
 recognizer:
   patterns:
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
+    reverse_lookup: "`[a-z]*'?$"
     punct: '`[^\s]$'
 
 menu:
+  # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
   alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
   alternative_select_keys: "ABCDEFGHIJ"
+  page_size: 5 #選單每䈎顯示個數
 
 style:
   horizontal: false
