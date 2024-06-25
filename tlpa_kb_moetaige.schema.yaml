@@ -1,0 +1,123 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: tlpa_kb_moetaigi
+  name: 萌台語方音符號鍵盤
+  version: "0.1"
+  author:
+    - Alan Jui <AlanJui.1960@gmail.com>
+  description: |
+    用「羅馬拼音字母」輸入「方音符號」
+
+    方音符號：
+      ㄅ ㄆ ㄇ       ㆠ
+      ㄉ ㄊ ㄋ ㄌ
+      ㄍ ㄎ ㄏ ㄫ    ㆣ
+
+      ㄗ ㄘ ㄙ       ㆡ
+      ㄐ ㄑ ㄒ       ㆢ
+
+      ㄧ ㄨ          ㆪ ㆫ
+      ㄚ ㆦ ㄜ ㆤ    ㆧ ㆩ ㆥ
+
+      ㄞ ㄠ          ㆮ ㆯ
+      ㆰ ㆱ ㆬ
+      ㄢ ㄣ ㄤ ㆲ ㄥ ㆭ
+
+    鍵盤對應：
+      ㄅ ㄉ ３ ２ ７ ５ ． ㄚ ㄞ ㄢ ｎ
+      ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
+      ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
+      ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+
+engine:
+  processors:
+    - punctuator
+    - selector
+    - express_editor
+  segmentors:
+    - punct_segmentor
+  translators:
+    - punct_translator
+
+punctuator:
+  half_shape: &symtable
+    "1": ㄅ
+    "!": ㆠ
+    "q": ㄆ
+    "a": ㄇ
+    "2": ㄉ
+    "w": ㄊ
+    "s": ㄋ
+    "x": ㄌ
+    "e": ㄍ
+    "E": ㆣ
+    "d": ㄎ
+    "c": ㄏ
+    "r": ㄐ
+    "R": ㆢ
+    "f": ㄑ
+    "v": ㄒ
+    "y": ㄗ
+    "Y": ㆡ
+    "h": ㄘ
+    "n": ㄙ
+    # "[" :
+    # "'" :
+    # "=" :
+    # "]" :
+    # "\" :
+    # "@" : 2
+    # "#" : 3
+    # "$" : 4
+    # "%" : 5
+    # "^" : 6
+    "-": ˉ
+    "5": ˫
+    "3": ˪
+    "4": ˋ
+    "6": ˊ
+    "7": ˙
+    "t": ㆵ
+    "g": ㆻ
+    "b": ㆴ
+    "z": ㆷ
+    # "T" : ㆵ˙
+    # "G" : ㆻ˙
+    # "B" : ㆴ˙
+    # "Z" : ㆷ˙
+    "u": ㄧ
+    "U": ㆪ
+    "j": ㄨ
+    "J": ㆫ
+    "8": ㄚ
+    "*": ㆩ
+    "i": ㆦ
+    "I": ㆧ
+    "k": ㄜ
+    "o": ㆤ
+    "O": ㆥ
+    "9": ㄞ
+    "(": ㆮ
+    "l": ㄠ
+    "L": ㆯ
+    "0": ㄢ
+    "p": ㄣ
+    ";": ㄤ
+    "/": ㄥ
+    "?": ㆭ
+    "m": ㆬ
+    ",": ㆰ
+    "<": ㆱ
+    ".": ㆲ
+full_shape:
+  ".": 。

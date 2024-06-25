@@ -13,11 +13,13 @@ patch:
     - {schema: ngsth_bun}
     - {schema: stroke}
     #------------------------------------
+    # 河洛白話音
     - {schema: tlpa_peh_ue}             # 河洛白話（使用TLPA拼音輸入）
     - {schema: tlpa_peh_ue_cu_im}       # 河洛白話注音（使用拼音輸入，顯示注音符號標讀音）
     - {schema: tlpa_peh_ue_hong_im}     # 河洛白話方音（使用拼音輸入，顯示方音符號標讀音）
     - {schema: tlpa_peh_ue_cap_peh_im}  # 河洛白話十八音（使用拼音輸入，顯示十八音標讀音）
     #------------------------------------
+    # 方音/注音
     - {schema: tlpa_cu_im}              # 河洛注音
     - {schema: tlpa_holok_piau_im}      # 河洛標音（用注音符號標注音）
     - {schema: tlpa_hong_im}            # 河洛方音
@@ -27,7 +29,10 @@ patch:
     - {schema: my_bopomofo}
     - {schema: tlpa_sip_ngoo_im}        # 河洛十五音（使用雅俗通十五音韻書）
     - {schema: tlpa_kong_un}            # 河洛廣韻
-    - {schema: tlpa_hong_im_kb}         # 方音按鍵練習
+    #------------------------------------
+    # 方音符號鍵盤練習
+    - {schema: tlpa_kb_hong_im}         # 方音按鍵練習
+    - {schema: tlpa_kb_cu_im}           # 注音按鍵練習
   #------------------------------------
   engine:
     translators:
