@@ -28,5 +28,13 @@ patch:
     - {schema: tlpa_sip_ngoo_im}        # 河洛十五音（使用雅俗通十五音韻書）
     - {schema: tlpa_kong_un}            # 河洛廣韻
     - {schema: tlpa_hong_im_kb}         # 方音按鍵練習
-    #------------------------------------
+  #------------------------------------
+  engine:
+    translators:
+      - lua_processor@custom_processor
+  lua_translator:
+    # script_dir: "/path/to/your/scripts"
+    script_dir: "C:\\Users\\AlanJ\\AppData\\Roaming\\Rime"
+    custom_processor:
+      - custom.lua
 

@@ -122,8 +122,8 @@ speller:
     - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU1239><4570|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|'
 
 translator:
-  # dictionary: moetaigi.extended
-  dictionary: moetaigi
+  # dictionary: tl_holok.extended
+  dictionary: tl_holok
   prism: tlpa_hong_im
   spelling_hinc: 0
   comment_format:
