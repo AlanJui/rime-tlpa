@@ -30,6 +30,7 @@ patch:
     # 方音符號鍵盤練習
     - {schema: tlpa_kb_hong_im}         # 方音按鍵練習
     - {schema: tlpa_kb_cu_im}           # 注音按鍵練習
+    - {schema: tlpa_kb_taigi_abc}       # 台語ABC按鍵練習
     #------------------------------------
     # 實驗/測試用
     - {schema: tlpa_holok_piau_im}      # 河洛標音（用注音符號標注音）

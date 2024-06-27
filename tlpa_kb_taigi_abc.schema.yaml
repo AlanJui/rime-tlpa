@@ -2,8 +2,8 @@
 # encoding: utf-8
 
 schema:
-  schema_id: tlpa_kb_cu_im
-  name: 河洛注音按鍵練習
+  schema_id: tlpa_kb_taigi_abc
+  name: 台語ABC按鍵練習
   version: "0.1"
   author:
     - Alan Jui <AlanJui.1960@gmail.com>
@@ -52,48 +52,39 @@ engine:
 punctuator:
   half_shape: &symtable
     "1": ㄅ
-    "!": ㆠ
     "q": ㄆ
     "a": ㄇ
+    "!": ㆠ
     "2": ㄉ
     "w": ㄊ
     "s": ㄋ
     "x": ㄌ
     "e": ㄍ
-    "E": ㆣ
     "d": ㄎ
     "c": ㄏ
-    "v": ㄫ
+    "E": ㆣ
     "y": ㄗ
-    "Y": ㆡ
     "h": ㄘ
     "n": ㄙ
+    "Y": ㆡ
     "u": ㄧ
     "j": ㄨ
-    "m": ㆬ
     "8": ㄚ
-    "i": ㆦ
-    "k": ㄜ
     ",": ㄝ
-    "p": ㄣ
-    "/": ㄥ
-    "9": ㄞ
-    "l": ㄠ
-    "0": ㄢ
-    ";": ㄤ
+    "i": ㄛ
+    "k": ㄜ
+    "-": ㄦ
     "U": ㆪ
     "J": ㆫ
     "*": ㆩ
-    "I": ㆧ
     "<": ㆥ
-    "(": ㆮ
-    "L": ㆯ
-    "r": ㆲ
-    "f": ㆱ
-    "v": ㆰ
-    "-": ㄦ
-    "z": 声
-    " ": ˉ
+    "I": ㆧ
+    "A": ㄇ
+    "p": ㄣ
+    ".": ㄥ
+    ">": ㄥ
+    # " ": [ˉ, ' ']
+    "_": ˉ
     "4": ˋ
     "3": ˪
     "6": ˊ
