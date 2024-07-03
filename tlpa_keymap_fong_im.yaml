@@ -32,33 +32,80 @@ punctuator:
     '{': [『, 〖, ｛, ﹃, ︷]
     '}': [』, 〗, ｝, ﹄, ︸]
   half_shape:
-    '<': { commit: '<' }
-    '>': { commit: '>' }
-    '?': { commit: '?' }
-    ':': { commit: ':' }
-    "'": { commit: "'" }
-    '"': { commit: '"' }
-    '\': { commit: '\' }
-    '|': { commit: '|' }
-    '`': ['`']
-    '~': { commit: '~' }
-    '!': { commit: '!' }
-    '@': { commit: '@' }
-    '#': { commit: '#' }
-    '$': { commit: '$' }
-    '%': { commit: '%' }
-    '^': { commit: '^' }
-    '&': { commit: '&' }
-    '*': { commit: '*' }
-    '(': { commit: '(' }
-    ')': { commit: ')' }
-    '_': { commit: '_' }
-    '=': { commit: '=' }
-    '+': { commit: '+' }
-    '[': { commit: '[' }
-    ']': { commit: ']' }
-    '{': { commit: '{' }
-    '}': { commit: '}' }
+    # '<': { commit: '<' }
+    # '>': { commit: '>' }
+    # '?': { commit: '?' }
+    # ':': { commit: ':' }
+    # "'": { commit: "'" }
+    # '"': { commit: '"' }
+    # '\': { commit: '\' }
+    # '|': { commit: '|' }
+    # '`': ['`']
+    # '~': { commit: '~' }
+    # '!': { commit: '!' }
+    # '@': { commit: '@' }
+    # '#': { commit: '#' }
+    # '$': { commit: '$' }
+    # '%': { commit: '%' }
+    # '^': { commit: '^' }
+    # '&': { commit: '&' }
+    # '*': { commit: '*' }
+    # '(': { commit: '(' }
+    # ')': { commit: ')' }
+    # '_': { commit: '_' }
+    # '=': { commit: '=' }
+    # '+': { commit: '+' }
+    # '[': { commit: '[' }
+    # ']': { commit: ']' }
+    # '{': { commit: '{' }
+    # '}': { commit: '}' }
+    #====================
+    '1': { commit: 'ㄅ' }
+    'q': { commit: 'ㄆ' }
+    '!': { commit: 'ㆠ' }
+    'a': { commit: 'ㄇ' }
+    '2': { commit: 'ㄉ' }
+    'w': { commit: 'ㄊ' }
+    's': { commit: 'ㄋ' }
+    'x': { commit: 'ㄌ' }
+    'e': { commit: 'ㄍ' }
+    'd': { commit: 'ㄎ' }
+    'E': { commit: 'ㆣ' }
+    'g': { commit: 'ㄫ' }
+    'y': { commit: 'ㄗ' }
+    'h': { commit: 'ㄘ' }
+    'Y': { commit: 'ㆡ' }
+    'n': { commit: 'ㄙ' }
+    'r': { commit: 'ㄐ' }
+    'f': { commit: 'ㄑ' }
+    'R': { commit: 'ㆢ' }
+    'v': { commit: 'ㄒ' }
+    'c': { commit: 'ㄏ' }
+    'u': { commit: 'ㄧ' }
+    'U': { commit: 'ㆪ' }
+    'j': { commit: 'ㄨ' }
+    'J': { commit: 'ㆫ' }
+    '8': { commit: 'ㄚ' }
+    '*': { commit: 'ㆩ' }
+    'i': { commit: 'ㆦ' }
+    'I': { commit: 'ㆧ' }
+    'k': { commit: 'ㄜ' }
+    ',': { commit: 'ㆤ' }
+    '<': { commit: 'ㆥ' }
+    '9': { commit: 'ㄞ' }
+    '(': { commit: 'ㆮ' }
+    'l': { commit: 'ㄠ' }
+    'L': { commit: 'ㆯ' }
+    'm': { commit: 'ㆬ' }
+    'p': { commit: 'ㄣ' }
+    '/': { commit: 'ㆭ' }
+    'B': { commit: 'ㆱ' }
+    'b': { commit: 'ㆰ' }
+    '0': { commit: 'ㄢ' }
+    '.': { commit: 'ㆲ' }
+    ';': { commit: 'ㄤ' }
+    '?': { commit: 'ㄥ' }
+    'u': { commit: 'ㆨ' }
   symbols:
     # Grave -- Full-width punctuations
     '`,': ，
