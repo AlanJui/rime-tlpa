@@ -53,8 +53,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJbtgz 43657'
-  initials: '1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJbtgz43657'
+  alphabet: '1!qa2wsxeEdcrRfvgyYhn8*iIk,<9(lL>.m0p:;?/uUjJ 43657'
+  initials: '1!qa2wsxeEdcrRfvgyYhn8*iIk,<9(lL>.m0p:;?/uUjJ'
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -83,7 +83,7 @@ speller:
     - xform/ang/[/           # ㄤ
     - xform/ong/]/           # ㆲ
     - xform/(?<=i)ng/R/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
-    - xform/^ng11$/R1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
+    # - xform/^ng11$/R1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
     - xform/ng(?![1-9])/G/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
     - xform/ng/r/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
     - xform/ai/y/            # ㄞ
@@ -119,28 +119,30 @@ speller:
     #--------------------------------------------------------------------------
     # 字典編碼轉換按鍵
     #--------------------------------------------------------------------------
-    - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU1239><4570|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|'
+    # - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU1239><4570|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|'
+    - xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX}{M@N][RriIuU123570|1!qa2wsxeEdgcrRfvyYhn8*iIk,<9(lL>.m0p:;?/uUjJ 43657|
 
 translator:
   # dictionary: tl_holok.extended
   dictionary: tl_holok
   prism: tlpa_hong_im
   spelling_hinc: 0
-  comment_format:
-    - xform/^/\t→ /
-    - xform/'/ /
-    # 定義 '候選清單' 各漢字之 ’拼音字母‘ 與 “字典” 的對映關係
-    # 在 “字典” 中的漢字是以 TLPA 拼音字母儲存；
-    # 而 “候選清單” 各漢字的拼音字母，當以 “方音符號” 顯示。
-    - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU9><4123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆤㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㄧㄨㆫㆴㆵㆻㆷ ˋ˪ˊ˫˙|'
   preedit_format:
     - xform/ /ˉ/
     - xform/'/ /
     #------------------------------------------------------
     # 【字典編碼】與【方音符號】對映關聯
     #------------------------------------------------------
-    - 'xlit|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㆪㄨㆫ ˋ˪ㆴㆵㆻㆷˊ˫˙|'
-
+    # - 'xlit|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㆪㄨㆫ ˋ˪ㆴㆵㆻㆷˊ˫˙|'
+    - xlit|1!qa2wsxeEdgcrRfvyYhn8*iIk,<9(lL>.m0p:;?/uUjJ 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆱㆰㆬㄢㄣㆲㄤㄥㆭㄧㆪㄨㆫ ˋ˪ˊ˫˙|
+  comment_format:
+    - xform/^/\t→ /
+    - xform/'/ /
+    # 定義 '候選清單' 各漢字之 ’拼音字母‘ 與 “字典” 的對映關係
+    # 在 “字典” 中的漢字是以 TLPA 拼音字母儲存；
+    # 而 “候選清單” 各漢字的拼音字母，當以 “方音符號” 顯示。
+    # - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU9><4123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆤㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㄧㄨㆫㆴㆵㆻㆷ ˋ˪ˊ˫˙|'
+    - xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX}{M@N][RriIuU123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆱㆰㆬㄢㄣㆲㄤㄥㆭㄧㆪㄨㆫ ˋ˪ˊ˫˙|
 custom_phrase:
   dictionary: ""
   user_dict: custom_phrase
