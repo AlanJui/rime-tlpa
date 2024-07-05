@@ -53,8 +53,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1!qa2wsxeEdcrRfvgyYhn8*iIk,<9(lL>.m0p:;?/uUjJ 43657'
-  initials: '1!qa2wsxeEdcrRfvgyYhn8*iIk,<9(lL>.m0p:;?/uUjJ'
+  alphabet: '1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,<omp/>.9(lL0:;? 43657'
+  initials: '1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,<omp/>.9(lL0:;?'
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -119,8 +119,7 @@ speller:
     #--------------------------------------------------------------------------
     # 字典編碼轉換按鍵
     #--------------------------------------------------------------------------
-    # - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU1239><4570|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|'
-    - xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX}{M@N][RriIuU123570|1!qa2wsxeEdgcrRfvyYhn8*iIk,<9(lL>.m0p:;?/uUjJ 43657|
+    - xlit|pbPmtTnlkgKwzjcshZJCSiIuUaAOQoeEwMNr}{yYxX@][R123570|1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,<omp/>.9(lL0:;? 43657|
 
 translator:
   # dictionary: tl_holok.extended
@@ -133,16 +132,14 @@ translator:
     #------------------------------------------------------
     # 【字典編碼】與【方音符號】對映關聯
     #------------------------------------------------------
-    # - 'xlit|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㆪㄨㆫ ˋ˪ㆴㆵㆻㆷˊ˫˙|'
-    - xlit|1!qa2wsxeEdgcrRfvyYhn8*iIk,<9(lL>.m0p:;?/uUjJ 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆱㆰㆬㄢㄣㆲㄤㄥㆭㄧㆪㄨㆫ ˋ˪ˊ˫˙|
+    - xlit|1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,<omp/>.9(lL0:;? 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㆡㄘㄙㄏㄐㆢㄑㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㆨㆬㄣㆭㆱㆰㄞㆮㄠㆯㄢㆲㄤㄥˉˋ˪ˊ˫˙|
   comment_format:
-    - xform/^/\t→ /
-    - xform/'/ /
+    # - xform/^/\t→ /
+    # - xform/'/ /
     # 定義 '候選清單' 各漢字之 ’拼音字母‘ 與 “字典” 的對映關係
     # 在 “字典” 中的漢字是以 TLPA 拼音字母儲存；
     # 而 “候選清單” 各漢字的拼音字母，當以 “方音符號” 顯示。
-    # - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU9><4123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆤㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㄧㄨㆫㆴㆵㆻㆷ ˋ˪ˊ˫˙|'
-    - xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX}{M@N][RriIuU123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆱㆰㆬㄢㄣㆲㄤㄥㆭㄧㆪㄨㆫ ˋ˪ˊ˫˙|
+    - xlit|pbPmtTnlkgKwzjcshZJCSiIuUaAOQoeEwMNr}{yYxX@][R123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㆡㄘㄙㄏㄐㆢㄑㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㆨㆬㄣㆭㆱㆰㄞㆮㄠㆯㄢㆲㄤㄥˉˋ˪ˊ˫˙|
 custom_phrase:
   dictionary: ""
   user_dict: custom_phrase
@@ -187,7 +184,7 @@ reverse_lookup:
     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 
 punctuator:
-  import_preset: tlpa_keymap_cu_im
+  import_preset: tlpa_keymap_hong_im
 
 editor:
   bindings:

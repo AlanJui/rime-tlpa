@@ -49,57 +49,61 @@ engine:
   translators:
     - punct_translator
 
+# punctuator:
+#   import_preset: tlpa_keymap_hong_im
+
 punctuator:
   half_shape: &symtable
-    "1": ㄅ
-    "!": ㆠ
-    "q": ㄆ
-    "a": ㄇ
-    "2": ㄉ
-    "w": ㄊ
-    "s": ㄋ
-    "x": ㄌ
-    "e": ㄍ
-    "E": ㆣ
-    "d": ㄎ
-    "g": ㄫ
-    "c": ㄏ
-    "r": ㄐ
-    "R": ㆢ
-    "f": ㄑ
-    "v": ㄒ
-    "y": ㄗ
-    "Y": ㆡ
-    "h": ㄘ
-    "n": ㄙ
-    "8": ㄚ
-    "u": ㄧ
-    "j": ㄨ
-    "o": ㆤ
-    "i": ㆦ
-    "k": ㄜ
-    "9": ㄞ
-    "l": ㄠ
-    ",": ㆰ
-    "<": ㆱ
-    "m": ㆬ
-    "0": ㄢ
-    "p": ㄣ
-    ";": ㄤ
-    ".": ㆲ
-    "/": [ ㄥ, ㆭ ]
-    "*": ㆩ
-    "U": ㆪ
-    "J": ㆫ
-    "O": ㆥ
-    "I": ㆧ
-    "(": ㆮ
-    "L": ㆯ
-    " ": ˉ
-    "4": ˋ
-    "3": ˪
-    "6": ˊ
-    "5": ˫
-    "7": ．
+    "1": { commit: "ㄅ" }
+    "!": { commit: "ㆠ" }
+    "q": { commit: "ㄆ" }
+    "a": { commit: "ㄇ" }
+    "2": { commit: "ㄉ" }
+    "w": { commit: "ㄊ" }
+    "s": { commit: "ㄋ" }
+    "x": { commit: "ㄌ" }
+    "e": { commit: "ㄍ" }
+    "E": { commit: "ㆣ" }
+    "d": { commit: "ㄎ" }
+    "g": { commit: "ㄫ" }
+    "y": { commit: "ㄗ" }
+    "Y": { commit: "ㆡ" }
+    "h": { commit: "ㄘ" }
+    "n": { commit: "ㄙ" }
+    "c": { commit: "ㄏ" }
+    "r": { commit: "ㄐ" }
+    "R": { commit: "ㆢ" }
+    "f": { commit: "ㄑ" }
+    "v": { commit: "ㄒ" }
+    "u": { commit: "ㄧ" }
+    "U": { commit: "ㆪ" }
+    "j": { commit: "ㄨ" }
+    "J": { commit: "ㆫ" }
+    "8": { commit: "ㄚ" }
+    "*": { commit: "ㆩ" }
+    "i": { commit: "ㆦ" }
+    "I": { commit: "ㆧ" }
+    "k": { commit: "ㄜ" }
+    ",": { commit: "ㆤ" }
+    "<": { commit: "ㆥ" }
+    "o": { commit: "ㆨ" }
+    "m": { commit: "ㆬ" }
+    "p": { commit: "ㄣ" }
+    "/": { commit: "ㆭ" }
+    ">": { commit: "ㆱ" }
+    ".": { commit: "ㆰ" }
+    "9": { commit: "ㄞ" }
+    "(": { commit: "ㆮ" }
+    "l": { commit: "ㄠ" }
+    "L": { commit: "ㆯ" }
+    "0": { commit: "ㄢ" }
+    ":": { commit: "ㆲ" }
+    ";": { commit: "ㄤ" }
+    "?": { commit: "ㄥ" }
+    " ": { commit: "ˉ" }
+    "4": { commit: "ˋ" }
+    "3": { commit: "˪" }
+    "6": { commit: "ˊ" }
+    "5": { commit: "˫" }
 full_shape:
   ".": 。
