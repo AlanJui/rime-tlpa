@@ -42,43 +42,33 @@ punctuator:
     "e": { commit: "ㄍ" }
     "E": { commit: "ㆣ" }
     "d": { commit: "ㄎ" }
-    "c": { commit: "ㄏ" }
-    "v": { commit: "ㄫ" }
+    "g": { commit: "ㄫ" }
     "y": { commit: "ㄗ" }
     "Y": { commit: "ㆡ" }
     "h": { commit: "ㄘ" }
     "n": { commit: "ㄙ" }
+    "c": { commit: "ㄏ" }
     "u": { commit: "ㄧ" }
+    "U": { commit: "ㆪ" }
     "j": { commit: "ㄨ" }
-    "m": { commit: "ㆬ" }
+    "J": { commit: "ㆫ" }
     "8": { commit: "ㄚ" }
+    "*": { commit: "ㆩ" }
     "i": { commit: "ㆦ" }
+    "I": { commit: "ㆧ" }
     "k": { commit: "ㄜ" }
     ",": { commit: "ㄝ" }
+    "<": { commit: "ㆥ" }
+    "o": { commit: "ㆨ" }
+    "m": { commit: "ㆬ" }
     "p": { commit: "ㄣ" }
     "/": { commit: "ㄥ" }
-    "9": { commit: "ㄞ" }
-    "l": { commit: "ㄠ" }
-    "0": { commit: "ㄢ" }
-    ";": { commit: "ㄤ" }
-    "U": { commit: "ㆪ" }
-    "J": { commit: "ㆫ" }
-    "*": { commit: "ㆩ" }
-    "I": { commit: "ㆧ" }
-    "<": { commit: "ㆥ" }
-    "(": { commit: "ㆮ" }
-    "L": { commit: "ㆯ" }
-    # "r": { commit: "ㆲ" }
-    # "f": { commit: "ㆱ" }
-    # "v": { commit: "ㆰ" }
-    "-": { commit: "声" }
-    "z": { commit: "声" }
-    " ": { commit: "ˉ " }
-    "4": { commit: "ˋ " }
-    "3": { commit: "˪ " }
-    "6": { commit: "ˊ " }
-    "5": { commit: "˫ " }
-    "7": { commit: "．" }
+    # " ": { commit: "ˉ " }
+    # "4": { commit: "ˋ " }
+    # "3": { commit: "˪ " }
+    # "6": { commit: "ˊ " }
+    # "5": { commit: "˫ " }
+    # "7": { commit: "．" }
   symbols:
     # Grave -- Full-width punctuations
     "`,": ，

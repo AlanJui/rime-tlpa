@@ -53,58 +53,63 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567'
-  initials: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L'
+  # alphabet: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567'
+  # initials: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L'
+  alphabet: '1!qa2wsxeEdgyYhncuUjJ8*iIk,<omp/ 43657'
+  initials: '1!qa2wsxeEdgyYhncuUjJ8*iIk,<omp/'
   finals: " 34567"
   delimiter: "'"
   use_space: true
   algebra:
-    # __patch:
-    #   - tlpa_piau_im:/phing_im_tng_cu_im
-    #   - tlpa_piau_im:/abbreviation
-    #   - tlpa_piau_im:/ji_be_tng_jih_kian
+    #------------------------------------------------------
+    # 前置處理
+    #------------------------------------------------------
+    # 去除零聲母
+    - derive/Ø//
+    - derive/6/7/
+    #------------------------------------------------------
+    # 定義字典中的 ‘漢字拼音’ 可與其它拼音法相容的規則
+    #------------------------------------------------------
+    - xform/ts/c/
+    - xform/ou/oo/
+    - xform/er/ue/
+    - xform/ui/ue/
+    - xform/ee/e/
+    - xform/ur/u/
+    - derive/ir/u/
+    - derive/ir/i/
+    - xform/ir/X/
     #=======================================================================
-    # - xform/ch(?=i)/Ci/      # ㄑ -- tsh 後面接 i 時，tsh 為 ㄑ
-    # - xform/ch/C/           # ㄘ
-    - xform/tsh/C/           # ㄘ
-    - xform/ts/c/            # ㄗ
-    - xform/ph/P/            # ㄆ
-    - xform/th/T/            # ㄊ
-    - xform/kh/K/            # ㄎ
-    # - xform/c(?=i)/Z/       # ㄐ -- ts 後面接 i 時，ts 為 ㄐ
-    # - xform/s(?=i)/S/        # ㄒ -- s 後面接 i 時，s 為 ㄒ
-    # - xform/j(?=i)/J/        # ㆢ -- j 後面接 i 時，j 為 ㆢ
-    - xform/ainn/V/          # ㆮ
-    - xform/aunn/F/          # ㆯ
-    - xform/ann/R/           # ㆩ
-    - xform/onn/S/           # ㆧ
+    - xform/ch/C/             # ㄘ
+    - xform/ph/P/             # ㄆ
+    - xform/th/T/             # ㄊ
+    - xform/kh/K/             # ㄎ
+    #------------------------------------------------------------------
+    - xform/ann/A/           # ㆩ
+    - xform/onn/Q/           # ㆧ
     - xform/enn/E/           # ㆥ
-    - xform/inn/Z/           # ㆪ
-    - xform/unn/X/           # ㆫ
-    - xform/ang/Q/           # ㄤ
-    # - xform/(?<=i)ng/W/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
-    # - xform/^ng11$/W1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
+    - xform/inn/I/           # ㆪ
+    - xform/unn/U/           # ㆫ
+    #------------------------------------------------------------------
     - xform/ng(?![1-9])/w/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
-    # - xform/iong/iOW/	        # iong
     - xform/ng/W/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
-    - xform/ai/I/            # ㄞ
-    - xform/au/U/            # ㄠ
-    - xform/oo/O/            # ㆦ (1)
-    - xform/o(?=[kpt])/O/    # ㆦ (2) -- o 後面接 k, p 或 t 時，o 為 ㆦ (注意 -oh 對應到 ㄜㆷ)
-    # - xform/ong/Y/           # ㆲ
-    # - xform/am/B/            # ㆰ
-    # - xform/om/H/            # ㆱ
+    #------------------------------------------------------------------
+    - xform/(?<=[iu])n/N/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
+    # - xform/^n(?=[1-9])/N/   # ㄣ (2) -- 比對單 n 接聲調符號 (打注音ㄣ專用)
+    - xform/n(?=[1-9])/N$1/  # ㄣ：拼音字母 n 後接調號，表：韻尾，
+    #------------------------------------------------------------------
     - xform/(?<=[aeiuo])m/M/   # ㆬ (1) -- m 前面接 e, i 或 u 時，m 為ㆬ
     - xform/^m(?=[1-9])/M/   # ㆬ (2) -- 比對單 m 接聲調符號
-    - xform/an/L/            # ㄢ
-    - xform/(?<=[iu])n/D/    # ㄣ (1) -- n 前面接 i 或 u 時，n 為ㄣ
     #--------------------------------------------------------------------------
     # 調整
     #--------------------------------------------------------------------------
     # oo [ɔ]
     - xform/o([MWpk])/O$1/	        # om ==> op / ong ==> ok
     # ioo [iɔ]
-    - xform/io([Wk])/iOW/	          # iong ==> iok
+    - xform/io([Wk])/iO$1/	          # iong ==> iok
+    #------------------------------------------------------------------
+    - xform/oo/O/            # ㆦ (1)
+    - xform/o(?=[kpt])/O/    # ㆦ (2) -- o 後面接 k, p 或 t 時，o 為 ㆦ (注意 -oh 對應到 ㄜㆷ)
     #--------------------------------------------------------------------------
     # 入聲輸入處理
     #--------------------------------------------------------------------------
@@ -112,47 +117,27 @@ speller:
     - xform/[48]/0/ # 入聲調（第四調、第八調）合併
     # 設定【字典編碼】之【聲調】值，不論4或8，皆以0代換
     - derive/([iaO])W0/$1k0/  # 用 ㄚㄍ． 來拍 ㄚㆻ
-    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
+    - derive/([iuae])N0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
     - derive/([iaO])M0/$1p0/  # 用 ㄚㄅ． 來拍 ㄚㆴ
     #--------------------------------------------------------------------------
-    - abbrev/^([pPbmtTnlkKghcCjsw]).+/$1/   # 可只輸入：【聲母】與【調號】
+    - abbrev/^([pbPmtTnlkgKwcjCsh]).+/$1/   # 可只輸入：【聲母】與【調號】
+    - abbrev/^([pbPmtTnlkgKwcjCsh]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
     - abbrev/^([A-Za-z]+)\d$/$1/
-    - abbrev/^([pPbmtTnlkKghcCjsw]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
     #=======================================================================
     # 字典編碼轉換按鍵
-    - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I<(L 34567|'
+    - xlit|pbPmtTnlkgKwcjCshiIuUaAOQoeEXMNW123570|1!qa2wsxeEdgyYhncuUjJ8*iIk,<omp/ 43657|
 
 translator:
-  dictionary: tl_holok
-  prism: my_bopomofo
+  # dictionary: tl_holok
+  # dictionary: tl_holok
+  dictionary: tlpa_peh_ue
+  prism: tlpa_cu_im
   spelling_hinc: 0
   preedit_format:
-    # __patch:
-    #   - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
-    #   - tlpa_piau_im:/abbreviation
-    #   - tlpa_piau_im:/phah_phing_im
     - xform/ /ˉ/
     - xform/'/ /
     # 定義【鍵盤按鍵】與【方音符號】對映關聯
-    - 'xlit|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I<(L34567|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ˪ˋ˫ˊ．|'
-    #--------------------------------------------------------------------------
-    # 鼻音韻母輸入：方音符號【ｎ】，鍵盤按鍵為【-】(按鍵【0】的右邉)
-    #--------------------------------------------------------------------------
-    - xform/ㄧ声/ㆪ/
-    - xform/ㄨ声/ㆫ/
-    - xform/ㄚ声/ㆩ/
-    - xform/ㆦ声/ㆧ/
-    - xform/ㄝ声/ㆥ/
-    - xform/ㄞ声/ㆮ/
-    - xform/ㄠ声/ㆯ/
-    #--------------------------------------------------------------------------
-    - xform/ㄧ(ㄧ|ｎ)/ㆪ/
-    - xform/ㄨ(ㄨ|ｎ)/ㆫ/
-    - xform/ㄚ(ㄚ|ｎ)/ㆩ/
-    - xform/ㆦ(ㆦ|ｎ)/ㆧ/
-    - xform/ㄝ(ㆤ|ｎ)/ㆥ/
-    - xform/ㄞ(ㄞ|ｎ)/ㆮ/
-    - xform/ㄠ(ㄠ|ｎ)/ㆯ/
+    - xlit|1!qa2wsxeEdgyYhncuUjJ8*iIk,<omp/ 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㆡㄘㄙㄏㄧㆪㄨㆫㄚㆩㆦㆧㄜㄝㆥㆨㆬㄣㄥˉˋ˪ˊ˫˙|
     #--------------------------------------------------------------------------
     # 方音符號專有韻母拆韻母
     #--------------------------------------------------------------------------
@@ -165,12 +150,12 @@ translator:
     # - xform/ㄐㄧ/ㄗㄧ/
     # - xform/ㄑㄧ/ㄘㄧ/
     # - xform/ㄒㄧ/ㄙㄧ/
-    - xform/ㆢㄧ/ㆡㄧ/
+    # - xform/ㆢㄧ/ㆡㄧ/
     #------------------------------------------------------
     # 韻母校調
     #------------------------------------------------------
-    - xform/ㄚㄥ/ㄤ/
-    - xform/ㄚㄣ/ㄢ/
+    # - xform/ㄚㄥ/ㄤ/
+    # - xform/ㄚㄣ/ㄢ/
     # - xform/ㄚㆬ/ㆰ/
     # - xform/ㆦㄥ/ㆲ/
     # - xform/ㆦㆬ/ㆱ/
@@ -178,9 +163,9 @@ translator:
     # 聲母校調
     #------------------------------------------------------
     # - xform/ㆡㄧ/ㆢㄧ/
-    - xform/ㄗ(ㄧ |ㆪ)/ㄐ$1/
-    - xform/ㄘ(ㄧ |ㆪ)/ㄑ$1/
-    - xform/ㄙ(ㄧ |ㆪ)/ㄒ$1/
+    # - xform/ㄗ(ㄧ |ㆪ)/ㄐ$1/
+    # - xform/ㄘ(ㄧ |ㆪ)/ㄑ$1/
+    # - xform/ㄙ(ㄧ |ㆪ)/ㄒ$1/
     #--------------------------------------------------------------------------
     # 入聲調輸入
     #--------------------------------------------------------------------------
@@ -188,15 +173,11 @@ translator:
     - xform/(ㄧ|ㄨ|ㄚ|ㄝ)(ㄉ|ㄣ)．/$1ㆵ/
     - xform/(ㄚ|ㆦ|ㄜ)(ㄍ|ㆭ)．/$1ㆻ/
     - xform/(ㄧ|ㄨ|ㄚ|ㆦ|ㄜ|ㄝ|ㄞ|ㄠ|ㆬ|ㆭ)．/$1ㆷ/
-  # comment_format:
-  #   #======================================================
-  #   # 在【候選字清單】顯示注音及拼音
-  #   #======================================================
-  #   - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ ˪ˋ˫ˊ．|'
-  #   # __patch:
-  #   #   - tlpa_piau_im:/phing_im_tng_cu_im
-  #   #   - tlpa_piau_im:/ji_be_tng_jih_kian
-  #   #   - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
+  comment_format:
+    #======================================================
+    # 在【候選字清單】顯示注音及拼音
+    #======================================================
+    - xlit|pbPmtTnlkgKwcjCshiIuUaAOQoeEXMNW123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㆡㄘㄙㄏㄧㆪㄨㆫㄚㆩㆦㆧㄜㄝㆥㆨㆬㄣㄥˉˋ˪ˊ˫˙|
 
 custom_phrase:
   dictionary: ""
