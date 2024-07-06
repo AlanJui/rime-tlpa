@@ -132,7 +132,6 @@ speller:
 
 translator:
   # dictionary: tl_holok
-  # dictionary: tl_holok
   dictionary: tlpa_peh_ue
   prism: tlpa_cu_im
   spelling_hinc: 0

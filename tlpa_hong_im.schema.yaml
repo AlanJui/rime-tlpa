@@ -53,8 +53,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,<omp/>.9(lL0:;? 43657'
-  initials: '1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,<omp/>.9(lL0:;?'
+  alphabet: '1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,omp/><.9(lL0:;? 43657'
+  initials: '1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,omp/><.9(lL0:;?'
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -114,7 +114,6 @@ speller:
     - xform/ng/w/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
     - xform/ai/y/            # ㄞ
     - xform/au/x/            # ㄠ
-    - xform/ir/X/	           # ㆨ 泉州腔韻母
     #--------------------------------------------------------------------------
     # 韻母
     #--------------------------------------------------------------------------
