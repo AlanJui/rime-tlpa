@@ -39,9 +39,9 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-][0'
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-[.0'
   initials: "abcdefghijklmnopqrstuvwxyz"
-  finals: ';\</9-][0'
+  finals: ';\</9-[.0'
   delimiter: " '"
   algebra:
     #------------------------------------------------------
@@ -49,15 +49,24 @@ speller:
     #------------------------------------------------------
     # 去除零聲母
     - derive/Ø//
-    - derive/6/7/
+    - derive/^ts/c/	  # 可用羅馬拼音
     #------------------------------------------------------
     # 定義字典中的 ‘漢字拼音’ 可與其它拼音法相容的規則
     #------------------------------------------------------
-    - derive/c/ts/
-    - derive/er/ue/
-    - derive/ui/ue/
+    - derive/6/7/
+    - derive/uih/ueh/
+    - derive/ou/oo/
+    - derive/eru/ou/
+    - derive/ere/oe/
     - derive/ee/e/
     - derive/ei/e/
+    - derive/er/o/
+    - derive/er/ue/
+    - derive/ui/ue/
+    - derive/ur/u/
+    # 泉州腔 ir
+    - derive/ir/u/
+    - derive/ir/i/
     #------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #------------------------------------------------------
@@ -65,7 +74,7 @@ speller:
     #------------------------------------------------------
     # 定義：聲母簡拼
     #------------------------------------------------------
-    - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
+    - abbrev/^([ptkbgmlschj]h?).+$/$1/
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
@@ -76,7 +85,7 @@ speller:
     - 'xform 5 /'
     - 'xform 6 9'
     - 'xform 7 -'
-    - 'xform 8 \]'
+    - 'xform 8 \.'
 
 translator:
   dictionary: tlpa_peh_ue
@@ -97,7 +106,7 @@ translator:
     - 'xform / 5'
     - 'xform 9 6'
     - 'xform - 7'
-    - 'xform \] 8'
+    - 'xform \. 8'
   comment_format:
     #======================================================
     # 令候選字視窗，可顯示兩組「注音】/拼音」
@@ -282,6 +291,10 @@ key_binder:
     - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
     - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
     - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    #---------------------------------------------------
+    - { when: composing, accept: period, send: period }   # 確保 `.` 鍵用於調號 8
+    - { when: has_menu, accept: period, send: period }    # 確保 `.` 鍵用於調號 8
+    - { when: has_menu, accept: period, send: period }	  # 確保 `.` 鍵不用于翻頁
     #---------------------------------------------------
     # 翻頁
     # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字

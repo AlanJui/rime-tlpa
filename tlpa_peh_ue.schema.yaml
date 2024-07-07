@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_peh_ue
   name: 河洛白話
-  version: "0.0.1.0"
+  version: "0.0.1.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -58,11 +58,11 @@ speller:
   # 5: /
   # 6: 9
   # 7: -
-  # 8: ]
+  # 8: .
   # 0: 0
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-][0'
+  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-.[0'
   initials: "abcdefghijklmnopqrstuvwxyz"
-  finals: ';\</9-][0'
+  finals: ';\</9-.[0'
   delimiter: " '"
   algebra:
     #------------------------------------------------------
@@ -70,29 +70,30 @@ speller:
     #------------------------------------------------------
     # 去除零聲母
     - derive/Ø//
+    - xform/ts/c/	  # 可用羅馬拼音
+    #------------------------------------------------------------------
+    # 定義【地方腔】與【優勢腔】相容之處理規則
+    #------------------------------------------------------------------
     - derive/6/7/
-    #------------------------------------------------------
-    # 定義字典中的 ‘漢字拼音’ 可與其它拼音法相容的規則
-    #------------------------------------------------------
-    # - derive/e(ng|k)/i$1/
-    # - derive/oa/ua/
-    # - derive/oe/ue/
-    # - derive/ou/oo/
-    - derive/c/ts/
-    - derive/er/ue/
+    - derive/uih/ueh/
+    - derive/ou/oo/
+    - derive/eru/ou/
+    - derive/ere/oe/
+    - derive/er/o/
     - derive/ui/ue/
     - derive/ee/e/
-    - derive/ei/e/
+    - derive/ur/u/
+    # 泉州腔 ir
+    - derive/ir/u/
+    - derive/ir/i/
     #------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #------------------------------------------------------
-    # - derive/^([Øa-z]+)\d$/$1/
     - derive/^([a-z]+)\d$/$1/
     #------------------------------------------------------
     # 定義：聲母簡拼
     #------------------------------------------------------
-    # - abbrev/^([ptkbgmlschj]h?).+$/$1/
-    - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
+    - abbrev/^([ptkbgmlschj]h?).+$/$1/
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
@@ -103,7 +104,8 @@ speller:
     - 'xform 5 /'
     - 'xform 6 9'
     - 'xform 7 -'
-    - 'xform 8 \]'
+    # - 'xform 8 \]'
+    - 'xform 8 \.'
 
 translator:
   dictionary: tlpa_peh_ue
@@ -124,7 +126,8 @@ translator:
     - 'xform / 5'
     - 'xform 9 6'
     - 'xform - 7'
-    - 'xform \] 8'
+    # - 'xform \] 8'
+    - 'xform \. 8'
   comment_format:
     - xform/^Ø([a-z]+\d)$/$1/
     #------------------------------------------------------
@@ -152,16 +155,18 @@ reverse_lookup:
     - xform/([nljqxy])v/$1ü/
 
 key_binder:
-  import_preset: default
+  # import_preset: default
   bindings:
     - { when: has_menu, accept: minus, send: minus }      # ｎ
     - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
-    # - { when: has_menu, accept: minus, send: "-" }           # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: "-", when: composing }          # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: "-", when: always }             # 確保 `-` 鍵用於聲調 7
+    #---------------------------------------------------
+    - { when: composing, accept: period, send: period }   # 確保 `.` 鍵用於調號 8
+    - { when: has_menu, accept: period, send: period }    # 確保 `.` 鍵用於調號 8
+    - { when: has_menu, accept: period, send: period }	  # 確保 `.` 鍵不用于翻頁
+    #---------------------------------------------------
     # 翻頁
-    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
-    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
     - { accept: "Control+p", send: Page_Up, when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
     #---------------------------------------------------
