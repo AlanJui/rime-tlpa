@@ -54,19 +54,18 @@ speller:
     # 定義字典中的 ‘漢字拼音’ 可與其它拼音法相容的規則
     #------------------------------------------------------
     - derive/6/7/
-    - derive/uih/ueh/
-    - derive/ou/oo/
-    - derive/eru/ou/
-    - derive/ere/oe/
-    - derive/ee/e/
-    - derive/ei/e/
-    - derive/er/o/
-    - derive/er/ue/
-    - derive/ui/ue/
-    - derive/ur/u/
-    # 泉州腔 ir
-    - derive/ir/u/
-    - derive/ir/i/
+    # - derive/uih/ueh/
+    # - derive/ou/oo/
+    # - derive/eru/ou/
+    # - derive/ere/oe/
+    # - derive/ee/e/
+    # - derive/er/o/
+    # - derive/er/ue/
+    # - derive/ui/ue/
+    # - derive/ur/u/
+    # # 泉州腔 ir
+    # - derive/ir/u/
+    # - derive/ir/i/
     #------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #------------------------------------------------------
@@ -75,6 +74,8 @@ speller:
     # 定義：聲母簡拼
     #------------------------------------------------------
     - abbrev/^([ptkbgmlschj]h?).+$/$1/
+    - abbrev/^([ptkbgmlschj]h?).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
+    - abbrev/^([A-Za-z]+)\d$/$1/
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
@@ -167,6 +168,14 @@ translator:
     #==================================
     # 韻母
     #==================================
+    # 泉州腔《彙音妙悟》十五音韻書
+    - xform/》ere(h?)/雞》/
+    - xform/》eru(h?)/鉤》/
+    - xform/》er(h?)/科》/
+    - xform/》or(h?)/刀》/
+    - xform/》ir(h?)/居》/	    # 泉州韻書《彙音妙悟》
+    - xform/》ur(h?)/高》/
+
     # a
     - xform/》a(ng|k)/江》/
     - xform/》a(n|t)/干》/
@@ -182,13 +191,13 @@ translator:
     - xform/》iauⁿ(h?)/嘄》/
     - xform/》iau(h?)/嬌》/
 
-    - xform/》i(ng|k)/經》/
-    - xform/》i(n|t)/巾》/
-    - xform/》i(m|p)/金》/
-
     - xform/》ia(ng|k)/姜》/
     - xform/》ia(n|t)/堅》/
     - xform/》ia(m|p)/兼》/
+
+    - xform/》i(ng|k)/經》/
+    - xform/》i(n|t)/巾》/
+    - xform/》i(m|p)/金》/
 
     - xform/》iaⁿ/驚》/
     - xform/》ia(h?)/迦》/
@@ -196,9 +205,8 @@ translator:
     - xform/》iuⁿ/牛》/
     - xform/》iu/丩》/
 
-    - xform/》io(ng|k)/恭》/
-
     - xform/》ioⁿ/薑》/
+    - xform/》io(ng|k)/恭》/
     - xform/》io(h?)/茄》/
     #------------------------------------------------------
     # u

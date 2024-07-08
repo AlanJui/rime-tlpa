@@ -9,9 +9,9 @@ version: "0.0.1.0"
 sort: by_weight
 use_preset_vocabulary: false
 import_tables:
-  - tlpa_cu_im_fu_ho
   - tlpa_peh_ue_cu_ting
   - tlpa_ciann_ji
+  # - tlpa_cu_im_fu_ho
   # - tlpa_su_lui_tai_uan
   # - tlpa_su_lui_ban_lam
 ...

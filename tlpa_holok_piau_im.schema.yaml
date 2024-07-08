@@ -50,10 +50,142 @@ speller:
   delimiter: "'"
   use_space: true
   algebra:
-    __patch:
-      - tlpa_piau_im:/phing_im_tng_cu_im
-      - tlpa_piau_im:/abbreviation
-      - tlpa_piau_im:/ji_be_tng_jih_kian
+    #==========================================================================
+    # 定義【台語音標】與【音標編碼】的對映關係
+    #==========================================================================
+    # 零聲母處理
+    - derive/Ø//
+    # 舒聲變調（1 2 3 5 7）
+    - derive/1/7/ # 第一調 → 第七調
+    - derive/2/1/ # 第二調 → 第一調
+    - derive/3/2/ # 第三調 → 第二調
+    - derive/7/3/ # 第七調 → 第三調
+    - derive/5/7/ # 第五調 → 第七調
+    - derive/5/3/ # 第五調 → 第三調
+    #------------------------------------------------------------------
+    # 定義【地方腔】與【優勢腔】相容之處理規則
+    #------------------------------------------------------------------
+    - xform/^ts/c/	          # 可用羅馬拼音
+    - derive/6/7/
+    # - xform/ou/oo/
+    - xform/eru/ou/
+    - xform/ere/oe/
+    - xform/er/o/
+    - xform/ui/ue/
+    - xform/ee/e/
+    - xform/ur/u/
+    # 泉州腔 ir
+    - derive/ir/u/
+    - derive/ir/i/
+    - xform/ir/X/
+    #------------------------------------------------------
+    # - derive/^ts/c/	          # 可用羅馬拼音
+    # - derive/6/7/
+    # - derive/uih/ueh/
+    # - derive/ou/oo/
+    # - derive/eru/ou/
+    # - derive/ere/oe/
+    # - derive/er/o/
+    # - derive/ui/ue/
+    # - derive/ee/e/
+    # - derive/ur/u/
+    # # 泉州腔 ir
+    # - derive/ir/u/
+    # - derive/ir/i/
+    # --------------------------------------------------------------------------
+    # 聲母對映
+    # --------------------------------------------------------------------------
+    - xform/ch(?=i)/C/      # ㄑ -- ch 後面接 i 時，ch 為 ㄑ
+    - xform/ch/c/           # ㄘ
+    - xform/c(?=i)/Z/       # ㄐ -- c 後面接 i 時，c 為 ㄐ
+    - xform/c/z/            # ㄗ
+    - xform/s(?=i)/S/        # ㄒ -- s 後面接 i 時，s 為 ㄒ
+    - xform/j(?=i)/J/        # ㆢ -- j 後面接 i 時，j 為 ㆢ
+    #------------------------------------------------------------------
+    - xform/ph/P/           # ㄆ
+    - xform/th/T/           # ㄊ
+    - xform/kh/K/           # ㄎ
+    #--------------------------------------------------------------------------
+    # 鼻音韻母
+    - xform/iaunn/iX/
+    - xform/uainn/uY/
+    - xform/iann/iA/
+    - xform/ionn/iQ/
+    - xform/iunn/iU/
+    - xform/uann/uX/
+    - xform/uinn/uI/
+    - xform/ainn/Y/         # ㆮ
+    - xform/aunn/X/         # ㆯ
+    - xform/ann/A/          # ㆩ
+    - xform/onn/Q/          # ㆧ
+    - xform/enn/E/          # ㆥ
+    - xform/inn/I/          # ㆪ
+    - xform/unn/U/          # ㆫ
+    # --------------------------------------------------------------------------
+    - xform/ang/[/           # ㄤ
+    - xform/ong/]/           # ㆲ
+    - xform/ai/y/            # ㄞ
+    - xform/an/@/            # ㄢ
+    - xform/au/x/            # ㄠ
+    - xform/am/{/            # ㆰ
+    - xform/om/}/            # ㆱ
+    #--------------------------------------------------------------------------
+    # 韻尾
+    #--------------------------------------------------------------------------
+    # ng 為韻化聲母，故亦可當韻母：當【聲母】為：w；當【韻母】為：W
+    - xform/ng(?![1-9])/w/    # ng 當【聲母】 ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
+    - xform/ng\d/W/           # ng 當【韻母】 ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
+    #--------------------------------------------------------------------------
+    # m 為韻化聲母，故亦可當韻母：預設當【聲母】：m；符合以下條件時當【韻母】
+    - xform/m\d/M/	          # ㆬ
+    #------------------------------------------------------------------
+    # n 為【聲母】；但居【韻尾】時為：N
+    - xform/n\d/N/
+    #------------------------------------------------------------------
+    # 韻母對映
+    #--------------------------------------------------------------------------
+    # oo [ɔ]
+    - xform/oo/O/            # ㆦ (1)
+    - xform/o(?=[kpt])/O/    # ㆦ (2) -- o 後面接 k, p 或 t 時，o 為 ㆦ (注意 -oh 對應到 ㄜㆷ)
+    #--------------------------------------------------------------------------
+    # ioo [iɔ]
+    # 舒聲：ioo  入聲: iooh  鼻音（陰聲韻）= ionn
+    # iong ==> 舒聲 ioong = [iOW]  ；入聲 iook = [iOk]
+    - xform/ioN/iON/
+    - xform/ioW/iOW/
+    - xform/iok/iOk/
+    #--------------------------------------------------------------------------
+    # 入聲輸入處理
+    #--------------------------------------------------------------------------
+    # 入聲變調（4 8）
+    - derive/(?<![MNW])4/2/ # -ㆷ 第四調 → 第二調
+    - derive/(?<![MNW])8/3/ # -ㆷ 第八調 → 第三調
+    # 設定【入聲】之【聲調】值，不論4或8，皆以0代
+    # - xform/[48]/0/ # 入聲調（第四調、第八調）合併
+    # ap, ip, iap,
+    - xform/(a|i|ia)p\d/$1p0/
+    # it, ut, iat, uat
+    - xform/(i|u|ia|ua)t\d/$1t0/
+    # ak, ik, ok, iak, iok
+    - xform/(a|i|o|ia|iO)k/$1k0/
+    # ah, ih, uh, eh, ooh, oh, aih, auh, iah, iuh, ioh, uah, uih, ueh, iauh, uaih
+    - xform/(a|i|u|e|O|o|Y|x|ia|iu|iO|ua|ui|ue|ix|uy)h/$1h0/
+    #------------------------------------------------------
+    # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
+    #------------------------------------------------------
+    - derive/^([A-Za-z]+)\d$/$1/
+    #--------------------------------------------------------------------------
+    # 簡拼設定（abbreviation：縮寫詞）
+    # --------------------------------------------------------------------------
+    - abbrev/^([pbPmtTnlkgKwZJCSzjcsh]).+/$1/   # 可只輸入：【聲母】與【調號】
+    - abbrev/^([pbPmtTnlkgKwZJCSzjcsh]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
+    - abbrev/^([A-Za-z]+)\d$/$1/
+    #==========================================================================
+    # 字典編碼轉換按鍵
+    # 字碼轉按鍵對映：將TLPA拼音字母，編譯成【字碼】後。則此處之定義，可對映
+    # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
+    #==========================================================================
+    - xlit|pbPmtTnlkgKwzjcshiIuUaAOQoe}{EXMNWyYxX@][123570|1!qa2wsxeEdgyYhncuUjJ8*iIk,>.<omp/9(lL0:; 43657|
 
 translator:
   dictionary: tlpa_peh_ue
@@ -98,12 +230,12 @@ translator:
     - xform/(ㄧ|ㄨ|ㄚ|ㄝ)(ㄉ|ㄣ)．/$1ㆵ/
     - xform/(ㄚ|ㆦ|ㄜ)(ㄍ|ㆭ)．/$1ㆻ/
     - xform/(ㄧ|ㄨ|ㄚ|ㆦ|ㄜ|ㄝ|ㄞ|ㄠ|ㆬ|ㆭ)．/$1ㆷ/
-  comment_format:
-    __patch:
-      - tlpa_piau_im:/phing_im_tng_cu_im
-      - tlpa_piau_im:/ji_be_tng_jih_kian
-      - tlpa_piau_im:/jih_kian_tng_cu_im_fu_ho
-      # - tlpa_piau_im:/au_suan_ji_tuann
+  # comment_format:
+  #   __patch:
+  #     - tlpa_lib_piau_im:/phing_im_tng_cu_im
+  #     - tlpa_lib_piau_im:/ji_be_tng_jih_kian
+  #     - tlpa_lib_piau_im:/jih_kian_tng_cu_im_fu_ho
+  #     # - tlpa_lib_piau_im:/au_suan_ji_tuann
 
 punctuator:
   import_preset: tlpa_keymap_piau_im

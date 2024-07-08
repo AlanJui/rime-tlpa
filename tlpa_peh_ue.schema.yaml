@@ -104,7 +104,6 @@ speller:
     - 'xform 5 /'
     - 'xform 6 9'
     - 'xform 7 -'
-    # - 'xform 8 \]'
     - 'xform 8 \.'
 
 translator:
@@ -126,7 +125,6 @@ translator:
     - 'xform / 5'
     - 'xform 9 6'
     - 'xform - 7'
-    # - 'xform \] 8'
     - 'xform \. 8'
   comment_format:
     - xform/^Ø([a-z]+\d)$/$1/
