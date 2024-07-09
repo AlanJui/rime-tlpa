@@ -5,7 +5,7 @@
 #
 ---
 name: tlpa_ciann_ji
-version: "v0.0.0.1"
+version: "v0.0.1.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...

@@ -1,0 +1,25 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 甲骨漢字庫
+#
+---
+name: tlpa_kah_kut_han_ji_khoo
+version: "0.1.0.0"
+sort: by_weight
+use_preset_vocabulary: false
+...
+#
+今啊	cim1 a7	6%
+今前	cin2 cing5	6%
+到	kau3	6%
+到位	kau2 ui7	6%
+到今	kau2 cin2	6%
+抵	tu2
+底	te2
+低	ke7
+阿勞	o7 lo2	6%	誇讚:誐言勞
+憃又有力	sung5 ko1 u7 lat4	6%
+猶又是你	iu1 ko1 si7 li2	6%
+又再來	ko1 cai3 lai5	6%
+

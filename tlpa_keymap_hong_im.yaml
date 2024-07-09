@@ -81,6 +81,7 @@ punctuator:
     "R": { commit: "ㆢ" }
     "f": { commit: "ㄑ" }
     "v": { commit: "ㄒ" }
+    "g": { commit: "ㄫ" }
     "u": { commit: "ㄧ" }
     "U": { commit: "ㆪ" }
     "j": { commit: "ㄨ" }

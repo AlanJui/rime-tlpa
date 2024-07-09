@@ -5,8 +5,8 @@
 #
 
 ---
-name: lpa_ji_khoo
-version: "v0.0.0.1"
+name: tlpa_su_khoo
+version: "v0.0.1.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...
@@ -23,7 +23,6 @@ use_preset_vocabulary: false
 才會	ciah4 e7
 中晝	tiong1 tau3		中午，午時
 予人知影	hoo7 lang5 cai1 iann2
-今也	cim2 ma2		現在，有人稱：這馬
 今也	cim2 a2		現在，有人稱：這馬
 今仔日	kin1 a2 jit8		今日、今天
 少󠇡寡	cio2 khua2		一點點、一些些

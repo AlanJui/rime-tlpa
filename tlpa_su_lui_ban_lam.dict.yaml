@@ -5,7 +5,7 @@
 #
 ---
 name: tlpa_su_lui_ban_lam
-version: "0.0.0.1"
+version: "0.0.1.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...

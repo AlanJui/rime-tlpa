@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_hong_im
   name: 河洛方音
-  version: "v0.0.1.1"
+  version: "v0.1.0.0"
   author: 居正中
   description: |
     屬「方音符號」輸入法；使用源自 taigi_yu ，
@@ -73,6 +73,8 @@ speller:
     - derive/ou/oo/
     - derive/eru/ou/
     - derive/ere/oe/
+    - derive/er(ng|k)/ir$1/
+    - derive/er(n|t)/ir$1/
     - derive/er/o/
     - derive/ui/ue/
     - derive/ee/e/
@@ -143,8 +145,12 @@ speller:
     #=======================================================================
     # 定義可用的【簡易輸入方式】
     #=======================================================================
-    - abbrev/^([pbPmtTnlkgKGhZJCSzjcs]).+/$1/   # 可只輸入：【聲母】與【調號】
-    - abbrev/^([pbPmtTnlkgKGhZJCSzjcs]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
+    # 可用【入聲】調號按鍵找【入聲】韻漢字
+    - abbrev/(([iaO])W|([iuae])N|([iaO])M)0/0/  # -ng 用 ㄚㄍ． 來拍 ㄚㆻ
+    # 平、上、去聲漢字，可以免輸入調號（1/2/3/5/7）；但【去聲】（調號：4/8）不適用
+    - abbrev/^(\D+)([12357])$/$1/
+    - abbrev/^([pbPmtTnlkgKGhZJCSzjcsw]).+/$1/   # 可只用【聲母】搜尋漢字
+    - abbrev/^([pbPmtTnlkgKGhZJCSzjcsw]).+(\d)$/$1$2/  # 可用【聲母】與【調號】搜尋漢字
     - abbrev/^([A-Za-z]+)\d$/$1/
     #=======================================================================
     # 字典編碼轉換按鍵

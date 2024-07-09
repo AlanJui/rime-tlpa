@@ -65,16 +65,17 @@ punctuator:
     "e": { commit: "ㄍ" }
     "E": { commit: "ㆣ" }
     "d": { commit: "ㄎ" }
-    "g": { commit: "ㄫ" }
     "y": { commit: "ㄗ" }
     "Y": { commit: "ㆡ" }
     "h": { commit: "ㄘ" }
     "n": { commit: "ㄙ" }
     "c": { commit: "ㄏ" }
+    "g": { commit: "ㄫ" }
     "r": { commit: "ㄐ" }
     "R": { commit: "ㆢ" }
     "f": { commit: "ㄑ" }
     "v": { commit: "ㄒ" }
+    "g": { commit: "ㄫ" }
     "u": { commit: "ㄧ" }
     "U": { commit: "ㆪ" }
     "j": { commit: "ㄨ" }

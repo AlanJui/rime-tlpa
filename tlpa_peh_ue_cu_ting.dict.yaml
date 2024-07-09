@@ -5,7 +5,7 @@
 
 ---
 name: tlpa_peh_ue_cu_ting
-version: "0.0.1.0"
+version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...
@@ -14,7 +14,7 @@ use_preset_vocabulary: false
 盡	cin7	60%
 軾	sik4	60%
 過	kue3	60%
-後	Øau7	10
+後	au7	10
 如	ju5	60%
 餘	u5	60%
 養	iong2	60%
@@ -52,6 +52,7 @@ use_preset_vocabulary: false
 強	kiong5	6%
 中	tiong1	6%
 開	khui1	6%
+五	ngoo2	6%
 
 
 
