@@ -2,8 +2,8 @@
 # encoding: utf-8
 #
 ---
-name: tlpa_kong_un
-version: "v0.0.0.1"
+name: tlpa_ji_khoo_kong_un
+version: "v0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 columns:

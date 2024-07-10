@@ -3,7 +3,7 @@
 # encoding: utf-8
 ---
 schema:
-  schema_id: tlpa_kong_un
+  schema_id: tlpa_holok_kong_un
   name: 河洛廣韻
   version: "v0.0.1.0"
   author: 居正中
@@ -81,7 +81,7 @@ speller:
     - xlit|123578|;\</-]|
 
 translator:
-  dictionary: tlpa_kong_un
+  dictionary: tlpa_ji_khoo_kong_un
   spelling_hints: 5
   preedit_format:
     #------------------------------------------------------

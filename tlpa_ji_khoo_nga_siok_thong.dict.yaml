@@ -2,12 +2,12 @@
 # encoding: utf-8
 #
 ---
-name: tlpa_sip_ngoo_im
+name: tlpa_ji_khoo_nga_siok_thong
 version: "v0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: true
 # import_tables:
-#   - tlpa_beh_ue
+#   - tlpa_ji_khoo_beh_ue
 ...
 啊	a0	0.6
 咬	ka6	0.6

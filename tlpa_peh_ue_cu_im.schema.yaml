@@ -100,7 +100,7 @@ speller:
     - 'xform 8 \.'
 
 translator:
-  dictionary: tlpa_peh_ue
+  dictionary: tlpa_ji_khoo_peh_ue
   prism: tlpa_peh_ue_cu_im
   spelling_hints: 5
   preedit_format:

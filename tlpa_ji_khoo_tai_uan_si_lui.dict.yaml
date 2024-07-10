@@ -4,8 +4,8 @@
 # 河洛白話音辭彙(台灣地區)
 #
 ---
-name: tlpa_su_lui_tai_uan
-version: "v.0.0.1.0"
+name: tlpa_ji_khoo_tai_uan_si_lui
+version: "v.0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...

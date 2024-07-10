@@ -20,12 +20,13 @@ patch:
     - {schema: tlpa_peh_ue_cap_peh_im}  # 河洛白話十八音（使用拼音輸入，顯示十八音標讀音）
     #------------------------------------
     # 方音/注音
-    - {schema: tlpa_cu_im}              # 河洛注音
-    - {schema: tlpa_hong_im}            # 河洛方音
+    - {schema: tlpa_holok_hong_im}      # 河洛方音
+    - {schema: tlpa_holok_cu_im}        # 河洛注音
+    - {schema: tlpa_holok_piau_im}      # 河洛標音（用注音符號標注音）
     #------------------------------------
     # 其它輸入法：十五音、廣韻
-    - {schema: tlpa_sip_ngoo_im}        # 河洛十五音（使用雅俗通十五音韻書）
-    - {schema: tlpa_kong_un}            # 河洛廣韻
+    - {schema: tlpa_holok_sip_ngoo_im}        # 河洛十五音（使用雅俗通十五音韻書）
+    - {schema: tlpa_holok_kong_un}            # 河洛廣韻
     #------------------------------------
     # 方音符號鍵盤練習
     - {schema: tlpa_kb_hong_im}         # 方音按鍵練習
@@ -33,7 +34,6 @@ patch:
     - {schema: tlpa_kb_taigi_abc}       # 台語ABC按鍵練習
     #------------------------------------
     # 實驗/測試用
-    - {schema: tlpa_holok_piau_im}      # 河洛標音（用注音符號標注音）
     - {schema: my_bopomofo}
     #------------------------------------
   engine:

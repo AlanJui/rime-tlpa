@@ -4,8 +4,8 @@
 # 河洛白話音辭彙(閩南地區)
 #
 ---
-name: tlpa_su_lui_ban_lam
-version: "0.0.1.0"
+name: tlpa_ji_khoo_si_lui_ban_lam
+version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...

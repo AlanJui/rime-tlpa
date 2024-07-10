@@ -4,7 +4,7 @@
 # 甲骨漢字庫
 #
 ---
-name: tlpa_kah_kut_han_ji_khoo
+name: tlpa_ji_khoo_kah_kut_bun
 version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false

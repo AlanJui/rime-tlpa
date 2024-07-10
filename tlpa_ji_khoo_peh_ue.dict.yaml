@@ -4,18 +4,18 @@
 # 河洛白話音
 #
 ---
-name: tlpa_peh_ue
+name: tlpa_ji_khoo_peh_ue
 version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 import_tables:
-  - tlpa_peh_ue_cu_ting
-  - tlpa_ciann_ji
-  - tlpa_kah_kut_han_ji_khoo
-  - tlpa_su_khoo
+  - tlpa_ji_khoo_cu_ting
+  - tlpa_ji_khoo_ciann_ji
+  - tlpa_ji_khoo_kah_kut_bun
+  - tlpa_ji_khoo_siong_iong_si_lui
   # - tlpa_cu_im_fu_ho
-  # - tlpa_su_lui_tai_uan
-  # - tlpa_su_lui_ban_lam
+  # - tlpa_ji_khoo_tai_uan_su_lui
+  # - tlpa_ji_khoo_ban_lam_su_lui
 ...
 ##-----------------------------
 ##	a/ah

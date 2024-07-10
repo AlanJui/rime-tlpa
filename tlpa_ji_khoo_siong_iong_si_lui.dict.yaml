@@ -5,8 +5,8 @@
 #
 
 ---
-name: tlpa_su_khoo
-version: "v0.0.1.0"
+name: tlpa_ji_khoo_siong_iong_si_lui
+version: "v0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...

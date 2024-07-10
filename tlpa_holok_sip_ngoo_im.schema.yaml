@@ -2,7 +2,7 @@
 # encoding: utf-8
 ---
 schema:
-  schema_id: tlpa_sip_ngoo_im
+  schema_id: tlpa_holok_sip_ngoo_im
   name: 河洛十五音
   version: "v0.1.0.0"
   author:
@@ -114,7 +114,7 @@ speller:
 
 translator:
   # dictionary: tlpa_bun_thok
-  dictionary: tlpa_sip_ngoo_im
+  dictionary: tlpa_ji_khoo_nga_siok_thong
   spelling_hints: 5
   preedit_format:
     #------------------------------------------------------

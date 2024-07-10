@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_hong_im
   name: 河洛方音
-  version: "v0.1.0.0"
+  version: "v0.0.1.0"
   author: 居正中
   description: |
     屬「方音符號」輸入法；使用源自 taigi_yu ，
@@ -53,47 +53,19 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,omp/><.9(lL0:;? 43657'
-  initials: '1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,omp/><.9(lL0:;?'
+  alphabet: '1q!a2wsxedEgyhYnrfRvcuUjJ8*iIk,<9(lLmp/Bb0.;?u 43657'
+  initials: '1q!a2wsxedEgyhYnrfRvcuUjJ8*iIk,<9(lLmp/Bb0.;?u'
   finals: " 43657"
   delimiter: "'"
   use_space: true
   algebra:
-    #==========================================================================
-    # 定義【台語音標】與【音標編碼】的對映關係
-    #==========================================================================
-    # 前置處理
-    - derive/Ø//	  # 去除零聲母
-    - derive/^ts/c/	  # 可用羅馬拼音
-    #------------------------------------------------------------------
-    # 定義【地方腔】與【優勢腔】相容之處理規則
-    #------------------------------------------------------------------
-    - derive/6/7/
-    - derive/uih/ueh/
-    - derive/ou/oo/
-    - derive/eru/ou/
-    - derive/ere/oe/
-    - derive/er(ng|k)/ir$1/
-    - derive/er(n|t)/ir$1/
-    - derive/er/o/
-    - derive/ui/ue/
-    - derive/ee/e/
-    - derive/ur/u/
-    # 泉州腔 ir
-    - derive/ir/u/
-    - derive/ir/i/
-    #------------------------------------------------------------------
-    # 聲母
-    #------------------------------------------------------------------
-    # - xform/tsh(?=i)/C/      # ㄑ -- tsh 後面接 i 時，tsh 為 ㄑ
-    # - xform/tsh/c/           # ㄘ
-    # - xform/ts(?=i)/Z/       # ㄐ -- ts 後面接 i 時，ts 為 ㄐ
-    # - xform/ts/z/            # ㄗ
-    - xform/ch(?=i)/C/      # ㄑ -- ch 後面接 i 時，ch 為 ㄑ
-    - xform/ch/c/           # ㄘ
-    - xform/c(?=i)/Z/       # ㄐ -- c 後面接 i 時，c 為 ㄐ
-    - xform/c/z/            # ㄗ
-    #------------------------------------------------------------------
+    #--------------------------------------------------------------------------
+    # 定義：字典漢字的【拼音字母】與【注音編碼】的對映關係
+    #--------------------------------------------------------------------------
+    - xform/tsh(?=i)/C/      # ㄑ -- tsh 後面接 i 時，tsh 為 ㄑ
+    - xform/tsh/c/           # ㄘ
+    - xform/ts(?=i)/Z/       # ㄐ -- ts 後面接 i 時，ts 為 ㄐ
+    - xform/ts/z/            # ㄗ
     - xform/ph/P/            # ㄆ
     - xform/th/T/            # ㄊ
     - xform/kh/K/            # ㄎ
@@ -110,14 +82,14 @@ speller:
     #--------------------------------------------------------------------------
     - xform/ang/[/           # ㄤ
     - xform/ong/]/           # ㆲ
-    - xform/(?<=i)ng/W/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
-    # - xform/^ng11$/R1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
-    - xform/ng(?![1-9])/W/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
-    - xform/ng/w/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
+    - xform/(?<=i)ng/R/      # ㄥ (1) -- ng 前面是 i 的時候，ng 為 ㄥ
+    - xform/^ng11$/R1/       # ㄥ (2) -- 比對 "ng11" (注音ㄥ在 extended.dict.yaml 中有著特殊拼法 "ng11" 以避免衝突，此規則專門用來打注音ㄥ)
+    - xform/ng(?![1-9])/G/   # ㄫ -- ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
+    - xform/ng/r/            # ㆭ -- 除了 ㄤ、ㆲ、ㄥ、ㄫ以外出現 ng 的情況
     - xform/ai/y/            # ㄞ
     - xform/au/x/            # ㄠ
     #--------------------------------------------------------------------------
-    # 韻母
+    # 調整
     #--------------------------------------------------------------------------
     # oo [ɔ]
     - xform/oo/O/            # ㆦ (1)
@@ -135,30 +107,24 @@ speller:
     # 為 ‘入聲’ 調號便捷輸入做準備
     - xform/[48]/0/ # 入聲調（第四調、第八調）合併
     # 設定【字典編碼】之【聲調】值，不論4或8，皆以0代換
-    - derive/([iaO])W0/$1k0/  # -ng 用 ㄚㄍ． 來拍 ㄚㆻ
-    - derive/([iuae])N0/$1t0/ # -n  用 ㄚㄉ． 來拍 ㄚㆵ
-    - derive/([iaO])M0/$1p0/  # -m  用 ㄚㄅ． 來拍 ㄚㆴ
-    #------------------------------------------------------
-    # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
-    #------------------------------------------------------
-    - derive/^([A-Za-z]+)\d$/$1/
-    #=======================================================================
+    - derive/([iaO])r0/$1k0/  # 用 ㄚㄍ． 來拍 ㄚㆻ
+    - derive/([iuae])N0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
+    - derive/([iaO])M0/$1p0/  # 用 ㄚㄅ． 來拍 ㄚㆴ
+    #--------------------------------------------------------------------------
     # 定義可用的【簡易輸入方式】
-    #=======================================================================
-    # 可用【入聲】調號按鍵找【入聲】韻漢字
-    - abbrev/(([iaO])W|([iuae])N|([iaO])M)0/0/  # -ng 用 ㄚㄍ． 來拍 ㄚㆻ
-    # 平、上、去聲漢字，可以免輸入調號（1/2/3/5/7）；但【去聲】（調號：4/8）不適用
-    - abbrev/^(\D+)([12357])$/$1/
-    - abbrev/^([pbPmtTnlkgKGhZJCSzjcsw]).+/$1/   # 可只用【聲母】搜尋漢字
-    - abbrev/^([pbPmtTnlkgKGhZJCSzjcsw]).+(\d)$/$1$2/  # 可用【聲母】與【調號】搜尋漢字
+    #--------------------------------------------------------------------------
+    - abbrev/^([pbPmtTnlkgKGhZJCSzjcs]).+/$1/   # 可只輸入：【聲母】與【調號】
     - abbrev/^([A-Za-z]+)\d$/$1/
-    #=======================================================================
+    - abbrev/^([pbPmtTnlkgKGhZJCSzjcs]).+(\d)$/$1$2/  # 可只輸入：【聲母】與【調號】
+    #--------------------------------------------------------------------------
     # 字典編碼轉換按鍵
-    #=======================================================================
-    - xlit|pbPmtTnlkgKwzjcshZJCSiIuUaAOQoeEwMNr}{yYxX@][R123570|1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,<omp/>.9(lL0:;? 43657|
+    #--------------------------------------------------------------------------
+    # - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU1239><4570|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|'
+    - xlit|pPbmtTnlkKgGzcjsZCJShiIuUaAOQoeEyYxXMNr}{@][RW123570|1q!a2wsxedEgyhYnrfRvcuUjJ8*iIk,<9(lLmp/Bb0.;?u 43657|
 
 translator:
-  dictionary: tlpa_peh_ue
+  # dictionary: tl_holok.extended
+  dictionary: tl_holok
   prism: tlpa_hong_im
   spelling_hinc: 0
   preedit_format:
@@ -167,15 +133,16 @@ translator:
     #------------------------------------------------------
     # 【字典編碼】與【方音符號】對映關聯
     #------------------------------------------------------
-    - xlit|1!qa2wsxeEdgyYhncrRfvuUjJ8*iIk,<omp/>.9(lL0:;? 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㆡㄘㄙㄏㄐㆢㄑㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㆨㆬㄣㆭㆱㆰㄞㆮㄠㆯㄢㆲㄤㄥˉˋ˪ˊ˫˙|
+    # - 'xlit|1!qa2wsxeEdDcrRfvyYhn8*iIkoO9(lL,<m0p;:/-uUjJ 43btgz657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㆪㄨㆫ ˋ˪ㆴㆵㆻㆷˊ˫˙|'
+    - xlit|1q!a2wsxedEgyhYnrfRvcuUjJ8*iIk,<9(lLmp/Bb0.;?u 43657|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㆡㄙㄐㄑㆢㄒㄏㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆬㄣㆭㆱㆰㄢㆲㄤㄥㆨ ˋ˪ˊ˫˙|
   comment_format:
     - xform/^/\t→ /
     - xform/'/ /
     # 定義 '候選清單' 各漢字之 ’拼音字母‘ 與 “字典” 的對映關係
     # 在 “字典” 中的漢字是以 TLPA 拼音字母儲存；
     # 而 “候選清單” 各漢字的拼音字母，當以 “方音符號” 顯示。
-    - xlit|pbPmtTnlkgKwzjcshZJCSiIuUaAOQoeEwMNr}{yYxX@][R123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㆡㄘㄙㄏㄐㆢㄑㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㆨㆬㄣㆭㆱㆰㄞㆮㄠㆯㄢㆲㄤㄥˉˋ˪ˊ˫˙|
-
+    # - 'xlit|pbPmtTnlkgKGhZJCSzjcsaAOQoeEyYxX{}M@N[]RriIuU9><4123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄚㆩㆦㆧㄜㆤㆤㄞㆮㄠㆯㆰㆱㆬㄢㄣㄤㆲㄥㆭㄧㄧㄨㆫㆴㆵㆻㆷ ˋ˪ˊ˫˙|'
+    - xlit|pPbmtTnlkKgGzcjsZCJShiIuUaAOQoeEyYxXMNr}{@][RW123570|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㆡㄙㄐㄑㆢㄒㄏㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㆬㄣㆭㆱㆰㄢㆲㄤㄥㆨ ˋ˪ˊ˫˙|
 custom_phrase:
   dictionary: ""
   user_dict: custom_phrase
@@ -220,7 +187,8 @@ reverse_lookup:
     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 
 punctuator:
-  import_preset: tlpa_keymap_hong_im
+  # import_preset: tlpa_keymap_cu_im
+  # import_preset: tlpa_keymap_hong_im
 
 editor:
   bindings:

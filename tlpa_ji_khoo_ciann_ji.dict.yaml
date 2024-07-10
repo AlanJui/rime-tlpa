@@ -4,8 +4,8 @@
 # 漢字詞庫
 #
 ---
-name: tlpa_ciann_ji
-version: "v0.0.1.0"
+name: tlpa_ji_khoo_ciann_ji
+version: "v0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...
