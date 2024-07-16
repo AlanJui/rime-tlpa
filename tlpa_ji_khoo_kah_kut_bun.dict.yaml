@@ -9,106 +9,163 @@ version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 ...
-今啊	cim1 a7	6%
-此嘛	cim2 ma2	6%
-今前	cin2 cing5	6%
-到	kau3	6%
-到位	kau2 ui7	6%
-到今	kau2 cin2	6%
+今啊	cim1 a7	60%
+此嘛	cim2 ma2	60%
+今前	cin2 cing5	60%
+到	kau3	60%
+到位	kau2 ui7	60%
+到今	kau2 cin2	60%
 抵	tu2
 底	te2
 低	ke7
-阿勞	o7 lo2	6%	誇讚:誐言勞
-憃又有力	song5 ko1 u7 lat4	6%
-猶又是你	iu1 ko1 si7 li2	6%
-又再來	ko1 cai3 lai5	6%
-燹	chiang5	6%	決也
-仨共	sann1 kang5	6%	參與
-至	ci3	6%
-到	kau3	6%
-又	koh4	6%
+阿勞	o7 lo2	60%	誇讚:誐言勞
+憃又有力	song5 ko1 u7 lat4	60%
+猶又是你	iu1 ko1 si7 li2	60%
+又再來	ko1 cai3 lai5	60%
+燹	chiang5	60%	決也
+仨共	sann1 kang5	60%	參與
+至	ci3	60%
+到	kau3	60%
+又	koh4	60%
 
-牴	tak8	6%	觸也
-觝	tak8	6%	牴同義字
-牴	chiok4	6%
+牴	tak8	60%	觸也
+觝	tak8	60%	牴同義字
+牴	chiok4	60%
 牴觸	te2 chiok4
 三腳抵	sann1 kha1 tu2
-拄	tuh1	6%	拄厝末頂
-美	sui2	6%	商（甲骨文）
-美	bi2	6%	周（金文）
-靦羞	kian2 siau2	6%	《玉篇》慚貎：羞羞臉
-𩈐靦羞	be7 kian2 siau2	6%	不要臉
-未靦羞	be7 kian2 siau2	6%	不要臉
-弇	kham2	6%	同也
-庶饈	si2 siu1	6%	零食
-細饈	si2 siu1	6%	零食
-粗麤	choo1 loo2	6%
+拄	tuh1	60%	拄厝末頂
+美	sui2	60%	商（甲骨文）
+美	bi2	60%	周（金文）
+靦羞	kian2 siau2	60%	《玉篇》慚貎：羞羞臉
+𩈐靦羞	be7 kian2 siau2	60%	不要臉
+未靦羞	be7 kian2 siau2	60%	不要臉
+弇	kham2	60%	同也
+庶饈	si2 siu1	60%	零食
+細饈	si2 siu1	60%	零食
+粗麤	choo1 loo2	60%
 麤入去	long3 jip8 khi3
-四界麤	si3 ke3 long3	6%
-載事	tai7 ci3	6%
-大事	tai7 ci3	6%	事情
-治大	ti7 tai3	6%	事情
-夂	tue3	6%	跟隨
-矣	ah4	6%	虛字，至於句尾,如：了
-逐个	tak8 ke1	6%	大家
-與	kap4	6%	相參
+四界麤	si3 ke3 long3	60%
+載事	tai7 ci3	60%
+大事	tai7 ci3	60%	事情
+治大	ti7 tai3	60%	事情
+夂	tue3	60%	跟隨
+矣	ah4	60%	虛字，至於句尾,如：了
+逐个	tak8 ke1	60%	大家
+與	kap4	60%	相參
 
-龓總	long2 cong2	6%	全部；總共
+龓總	long2 cong2	60%	全部；總共
 逐家个好
-學生婗仔
-我窬住宁  		6%	我家住在
-菆裡		6%	家裡
-頭勠		6%	工作
-時臶		6%	時候
-欸		6%	應該要
-𧾍錢		6%	賺錢
-的	e3	6%	語尾助詞
-矣	a3	6%	語尾助詞；矣（啊）
+學生婗仔	hak8 sing1 gin2 a2
+我窬住宁  	guan2 tau1 tua2 ti7	60%	我家住在
+菆裡	chu2 li2	60%	家裡
+頭勠	thau5 loo7	60%	工作
+時臶	si5 cun7	60%	時候
+欸	ai3	60%	須要
+𧾍錢	than3 cinn5	60%	賺錢
+的	e3	60%	語尾助詞
+矣	a3	60%	語尾助詞；矣（啊）
 足辛苦的
-弗但	put4 tan2	6%	不但
-欸到扞家		6%	需要協同持家
-賡欸拼菆內		6%	還要幫忙清掃家裡
-掃塗䠍		6%	掃地
-攢三頓煮食		6%	準備三餐
-手勠菜		6%	拿手菜
-雖蔑正厚工		6%	雖不需費功夫
-亦不過		6%	但是...
-續喙賡蔑礙胃		6%	好吃還不傷胃
+弗但	put4 tan2	60%	不但
+欸到扞家	ai3 tau7 huann7 ke1	60%	需要協同持家
+賡欸拼菆內	koh4 ai3 piann1 chu3 lai7 	60%	還要幫忙清掃家裡
+掃塗䠍	sau3 thoo5 kha1	60%	掃地
+攢三頓煮食	chuan5 sann1 tng3 cu2 ciah8 	60%	準備三餐
+手勠菜	chiu2 loo7 chai3	60%	拿手菜
+雖蔑正厚工	sui1 bue7 cin7 kau7 kang1	60%	雖不需費功夫
+亦不過	iah8 m7 koh4	60%	但是...
+續喙賡蔑礙胃	sua3 chui2 koh4 bue7 gai7 ui7	60%	好吃還不傷胃
 食好到相報
-臻正蔑輸𢓱		6%	真地不會輸給...
-婽音		6%	中意
+臻正蔑輸𢓱	cin1 ciann2 biat8 su1 hoo7	60%	真地不會輸給...
+婽意	kah4 i2	60%	中意
 食魚食肉也着菜交
-我的個性巧		6%	巧：比較傾向...
-佗		6%	他
-自我佋介
-做載𧝊巧𠯋		6%	行事風格較𩑭向...
-無愛		6%	不喜歡...
-由陀位		6%	自何處
+巧	khah4	60%	我的個性巧...（巧：比較傾向...）
+佗		60%	他
+佋介	siau7 kai3	60%	自我佋介
+做載𧝊巧𠯋	co2 tai7 ci2 khah4 eh4	60%	行事風格較𩑭向...
+無愛	bo5 ai2	60%	不喜歡...
+由陀位	tui2 toh4 ui7	60%	自何處
 
-憋緒		6%
-閉緒		6%
-此班車		6%
-此枋車		6%
-彼一罡		6%	那天...
-洶洶斡頭		6%	突然回頭
-一時恟恟
-將妳囥在我的心內
-每一次	mui2 cit4 pai2	6%
-甚想欲	cin1 siunn1 beh4	6%	很想要...
-過了三昸		6%	過去三年
-為何我𠯋唶爾閉肆		6%	為何我會如此害羞
-目睭金金		6%	張目而望
-逐回		6%	每次
-怏望𠯋同		6%	希望能夠
-顒望
-熟悉	sik4 sai7	6%
-熟似	sik4 sai7	6%
-到末兒		6%	到最後
-夂此班車來離開
-到耽		6%	到現在...
-迭迭	tiat8 tiat8	6%	時常在...
-無采
-勠力
-焉尒	an1 ni1	6%
-今年二月偎月底
+憋緒	pi2 su2	60%
+閉緒	pi2 su2	60%
+此班車	ce1 pan1 chia1	60%
+此枋車	ce1 pang1 chia1	60%
+彼一罡	hi2 cit8 kang1	60%	那天...
+洶洶斡頭	hiong7 hiong7 uat8 thau5	60%	洶洶斡頭（突然回頭）
+一時恟恟	cit8 si5 hiong5 hiong5	60%	突然之間
+囥在	khng2 ti7	60%	將妳囥在我的心內
+每一次	mui2 cit4 pai2	60%
+甚想欲	cin1 siunn1 beh4	60%	很想要...
+甚多	cin1 che7	60%	很多
+誠多	ciann5 che7	60%	很多
+逐回	tak8 hue5	60%	每次
+怏望𠯋同	ng2 bang7 e7 thang2	60%	希望能夠
+顒望	ng2 bang7	60%
+熟悉	sik4 sai7	60%
+熟似	sik4 sai7	60%
+到末兒	kau3 bue2 ah4	60%	到最後
+夂著	te3 tioh8	60%	跟著
+到耽	kau3 tann1	60%	到現在...
+時常	si5 siong5	60%	時常...
+迭迭	tiat8 tiat8	60%	時常在...
+無采	mo5 chai2	60%	可惜
+勠力	loo2 lat8	60%	辛苦了
+焉尒	an1 ni1	60%
+偎	ua2	60%	今年二月偎月底
+
+一	cit8	60%	白音
+美	sui2	60%
+無仝	mo5 kang7	60%	不同
+天	tinn1	60%
+孔	khang1	60%
+有孔無榫	u7 khang1 mo5 sun2	60%	無采功
+囊袋空空	lak4 te7 khang1 khang1	60%	口袋空空
+常常	tiann7 tiann7	60%
+無孰	bo5 siannh4	60%	沒什麼
+從少到多	ui3 cio3 kau2 cue7	60%
+你從夂來	li2 tui3 toh4 lai5	60%
+一宕兒久	cit4 tann1 a1 ku2	60%	一下子
+到耽	kau3 tann1	60%	到現在
+真的	cin1 e5	60%
+我真愛你	gua2 cing1 ai3 li2	60%
+我甚愛你	gua2 cin2 ai3 li2	60%	比較的最高級
+坐在椅仔	ce7 ti7 i2 a2	60%
+人與人	long5 kah2 long5	60%
+炸甜粿	cinn2 tinn1 kue2	60%
+油膩膩	iu5 leh4 leh4	60%
+前一臶兒	cing2 cit8 cam7 a2	60%	前一陣子
+䞯𧻴逛	phu7 long7 kong3	60%
+𧻴趤	long7 tong1	60%	逸遊
+亂𧺣	luan7 cau2	60%	亂奔
+𢸭死	long7 si2	60%	撞死
+無大無小	bo5 tua7 bo5 sio2	60%
+若輕若重	na7 kin1 na7 tang7	60%
+漂	phio3	60%
+毛翬	moo5 hui1	60%	偷懶
+爪	giau2	60%
+抓癢	giau2 ciunn7	60%	jiau2 ciunn7
+爬癢	pe5 ciunn7	60%
+𧻙山	peh4 suann1	60%
+可	ko2	60%	不明確之肯定：可見、可能、可是
+才會	ciah4 e7	60%
+需要	su1 iau3	60%
+須要	su1 iau3	60%
+㩼	ke1	60%	多...
+寫	sia2	60%
+小說	sio2 suat4	60%
+無可能	bo5 kho2 ling5	60%
+淡薄仔	tam7 poh8 a2	60%	有點兒
+仔	e7	60%	...的，陳仔：陳先生
+仔	a2	60%	肩負也，籠仔：小籠子
+正	tng1	60%	正在做工作
+在	teh4	60%	於某時候，正在執行的動作
+正在	tng1 teh4	60%
+對時	tio7 si5	60%	學台語正對時
+對	tio7	60%
+對	tui3	60%
+到	tioh8	60%
+看到	khuann3 tioh8	60%
+得到	tio7 tio3	60%	得到大奬
+就焉爾	tio7 an2 nih4	60%	就這樣
+
+
 

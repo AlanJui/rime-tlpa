@@ -78,7 +78,6 @@ speller:
     - derive/uih/ueh/
     - derive/ou/oo/
     - derive/eru/ou/
-    - derive/ere/oe/
     - derive/er/o/
     - derive/ui/ue/
     - derive/ee/e/
@@ -86,6 +85,8 @@ speller:
     # 泉州腔 ir
     - derive/ir/u/
     - derive/ir/i/
+    # 
+    - derive/er(ng|k)/i$1/
     #------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #------------------------------------------------------
