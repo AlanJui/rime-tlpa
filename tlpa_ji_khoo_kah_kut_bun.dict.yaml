@@ -12,9 +12,6 @@ use_preset_vocabulary: false
 今啊	cim1 a7	60%
 此嘛	cim2 ma2	60%
 今前	cin2 cing5	60%
-到	kau3	60%
-到位	kau2 ui7	60%
-到今	kau2 cin2	60%
 抵	tu2
 底	te2
 低	ke7
@@ -25,14 +22,15 @@ use_preset_vocabulary: false
 燹	chiang5	60%	決也
 仨共	sann1 kang5	60%	參與
 至	ci3	60%
-到	kau3	60%
 又	koh4	60%
 
 牴	tak8	60%	觸也
 觝	tak8	60%	牴同義字
 牴	chiok4	60%
 牴觸	te2 chiok4
-三腳抵	sann1 kha1 tu2
+跤	kuainn7	60%	
+腳	ka1	60%	
+三腳抵	sann1 kha1 tu2	60%
 拄	tuh1	60%	拄厝末頂
 美	sui2	60%	商（甲骨文）
 美	bi2	60%	周（金文）
@@ -64,8 +62,9 @@ use_preset_vocabulary: false
 𧾍錢	than3 cinn5	60%	賺錢
 的	e3	60%	語尾助詞
 矣	a3	60%	語尾助詞；矣（啊）
-足辛苦的
+足辛苦的	ciok4 sin1 khoo2 e3	60%	
 弗但	put4 tan2	60%	不但
+毌但	m7 na7	60%	不但
 欸到扞家	ai3 tau7 huann7 ke1	60%	需要協同持家
 賡欸拼菆內	koh4 ai3 piann1 chu3 lai7 	60%	還要幫忙清掃家裡
 掃塗䠍	sau3 thoo5 kha1	60%	掃地
@@ -156,6 +155,7 @@ use_preset_vocabulary: false
 淡薄仔	tam7 poh8 a2	60%	有點兒
 仔	e7	60%	...的，陳仔：陳先生
 仔	a2	60%	肩負也，籠仔：小籠子
+正	ti7	60%	
 正	tng1	60%	正在做工作
 在	teh4	60%	於某時候，正在執行的動作
 正在	tng1 teh4	60%
@@ -166,6 +166,54 @@ use_preset_vocabulary: false
 看到	khuann3 tioh8	60%
 得到	tio7 tio3	60%	得到大奬
 就焉爾	tio7 an2 nih4	60%	就這樣
-
-
-
+庶	sah8	60%	煮也；庶豬食料【ㄙㄚ'  ㄉㄧ"  ㄐㄧㄚ'  ㄌㄧㄠ"】
+庶	sut4	60%	大口呑也
+摭	sa1	60%	本意是用手從鍋裏抓食物吃，歹看（歹款）也，也可解釋為用手從溝泥中抓不明的東西。
+摭龓無	sa1 long2 bo5	60%	搞不清楚
+迊所費	cah4 soo2 hui3	60%	帶錢
+細膩	sioh4 lio1	60%
+斟酌	cim1 ciok4	60%
+囡	gin2	60%
+囝	kiann2	60%
+晃	hainn3	60%	擺動
+縷	liu1	60%	尾巴
+映過	iann2 kue2	60%	眼睛瞄過
+映目	iann2 bak8	60%	醒目
+迺	seh8	60%	迺菜市
+軫去	tng2 khi3	60%	回去
+他	inn2	60%	
+佗	i1	60%	他
+伊	i1	60%	他
+他竇	in1 tau1	60%	他家
+佗翁	in1 ang1	60%	她丈夫
+伊人	in1 lang5	60%	他們
+你人	lin2 lang5	60%	你們
+規	kui1	60%	
+很	cing1	60%	
+很好	cing1 hao2	60%
+捧場	phang5 tiunn5	60%
+袂	ng2	60%	手袂
+靡	bue7	60%	不可（否定詞）
+阿勞	o7 lo2	60%	稱讚
+誐䜎	o7 lo2	60%	稱讚
+迊所費	cah4 soo3 hui2	60%	身上得帶錢
+己自	ka7 ti7	60%	自己
+又	koh4	60%
+掠	liok8	60%
+丮	liah4	60%
+有食又有丮	u7 ciah8 koh4 u7 liah4	60%	有吃又有得拿
+可以	e7 sai2	60%
+哪可以	na1 e7 sai2	60%	怎麼可以（疑問詞）
+塞	 that4	60%	塞入縫
+窒	cinn1	60%
+到	kau3	60%
+到	kah4	60%
+到位	kau2 ui7	60%
+到今	kau2 cin2	60%
+窒到	cinn1 kah4	60%
+塞到	that4 kah4	60%
+人𡬚人	lang5 kueh4 lang5	60%	人擠人
+若	na1	60%	若講若走（邊說邊跑）
+咚	tong1	60%
+落佫來	lak4 loh8 lai5	60%	掉下來
+挪來挪好	na2 lai5 na2 ho2	60%	愈來愈好
