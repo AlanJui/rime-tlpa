@@ -37,7 +37,6 @@ engine:
     - selector
     - navigator
     - fluency_editor
-    # - express_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -148,7 +147,7 @@ translator:
   # dictionary: tl_holok
   dictionary: tlpa_ji_khoo_peh_ue
   prism: tlpa_cu_im
-  spelling_hinc: 0
+  spelling_hint: 0
   preedit_format:
     - xform/ /ˉ/
     - xform/'/ /

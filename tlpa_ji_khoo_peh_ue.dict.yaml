@@ -4491,6 +4491,7 @@ import_tables:
 鍋	er1
 穢	er3
 飛	per1	10%
+飛	pue1	10%
 掰	per2
 壩	per3
 褙	per3
@@ -4844,6 +4845,7 @@ import_tables:
 吳	goo5
 梧	goo5
 蜈	goo5
+蜈	gia5	10%
 五	goo6	10%
 午	goo6
 誤	goo7	10%
@@ -5590,6 +5592,7 @@ import_tables:
 臆	ioh4
 搖	io5	10%
 窯	io5
+窯	iau5	10%
 姚	io5
 藥	ioh8
 鑰	ioh8
@@ -6539,3 +6542,5 @@ import_tables:
 損	sng2	10%
 繏	sngh4
 床	sng5	1%
+足	ciok4	10%
+達	tat8	10%
