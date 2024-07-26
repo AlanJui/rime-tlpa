@@ -4,7 +4,7 @@
 schema:
   schema_id: tlpa_peh_ue_135_phing_im
   name: 135拼音法【台語音標】
-  version: "0.1.0.0"
+  version: "0.0.1.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -42,7 +42,7 @@ speller:
   #------------------------------------------------------
   # 1: ;
   # 2: \
-  # 3: _
+  # 3: <
   # 4: [
   # 5: /
   # 6: [N/A]
@@ -366,7 +366,12 @@ editor:
     Shift+Return: commit_raw_input      # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
 
 punctuator:
-  import_preset: default
+  import_preset: symbols
+  # half_shape:
+  #   "'": {pair: ["「", "」"]} #第一次按是「，第二次是」
+  #   "(": ["〔", "［"] #彈出選單
+  #   _: "_"
+  #   .: {commit: "。"} #無選單，直接上屛。優先級最高
 
 recognizer:
   import_preset: default
@@ -381,3 +386,5 @@ menu:
 style:
   horizontal: false
 
+punctuator:
+  symbols:
