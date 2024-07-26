@@ -45,32 +45,32 @@
 # 入聲
 
 # -p
-ap
-sap
-lap
-ip
-lip
+ap4
+sap4
+lap4
+ip4
+lip4
 
 # -t
-it
-pit
+it4
+pit4
 thit
-at
-pat
-that
+at0
+pat0
+that0
 
 # -k
-ak
-pak
-kak
-ok
-tok
-kok
+ak0
+pak0
+kak0
+ok0
+tok0
+kok0
 
 # -h
-eh
-seh
-theh
-ih
-sih
-thih
+eh0
+seh0
+theh0
+ih0
+sih0
+thih0

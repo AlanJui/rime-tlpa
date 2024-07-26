@@ -1928,6 +1928,7 @@ import_tables:
 嚮	hiang3
 將	ciang1	10%
 章	ciang1	10%
+章	ciong1	10%
 彰	ciang1
 漳	ciang1	10%
 漳	ciang1	10%
@@ -1988,6 +1989,7 @@ import_tables:
 橡	siang6
 上	siang7	10%
 尚	siang7
+尚	siong7	10%
 ##	ua/uah
 蛙	ua1
 娃	ua1
@@ -4280,6 +4282,7 @@ import_tables:
 繏	suinn3
 ##	ir/irh
 於	ir1
+於	ti7
 于	ir1
 與	ir2
 予	ir2
@@ -5624,6 +5627,7 @@ import_tables:
 躼	lo3	10
 撩	lio5
 略	lioh8
+略	liok8
 叫	kio3	10%
 腳	kioh4
 橋	kio5
@@ -5739,6 +5743,7 @@ import_tables:
 煦	u3
 噎	uh4
 有	u6	10%
+有	u7	10%
 富	pu3
 發	puh4	5%
 匏	pu5
