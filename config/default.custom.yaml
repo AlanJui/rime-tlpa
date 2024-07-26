@@ -14,10 +14,11 @@ patch:
     - {schema: stroke}
     #------------------------------------
     # 河洛白話音
-    - {schema: tlpa_peh_ue}             # 河洛白話（使用TLPA拼音輸入）
-    - {schema: tlpa_peh_ue_cu_im}       # 河洛白話注音（使用拼音輸入，顯示注音符號標讀音）
-    - {schema: tlpa_peh_ue_hong_im}     # 河洛白話方音（使用拼音輸入，顯示方音符號標讀音）
-    - {schema: tlpa_peh_ue_cap_peh_im}  # 河洛白話十八音（使用拼音輸入，顯示十八音標讀音）
+    - {schema: tlpa_peh_ue}               # 河洛白話（使用TLPA拼音輸入）
+    - {schema: tlpa_peh_ue_135_phing_im}  # 河洛白話注音（使用拼音輸入，顯示注音符號標讀音）
+    - {schema: tlpa_peh_ue_cu_im}         # 河洛白話注音（使用拼音輸入，顯示注音符號標讀音）
+    - {schema: tlpa_peh_ue_hong_im}       # 河洛白話方音（使用拼音輸入，顯示方音符號標讀音）
+    - {schema: tlpa_peh_ue_cap_peh_im}    # 河洛白話十八音（使用拼音輸入，顯示十八音標讀音）
     #------------------------------------
     # 方音/注音
     - {schema: tlpa_holok_hong_im}      # 河洛方音
