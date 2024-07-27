@@ -1,0 +1,99 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: tlpa_kb_135_phing_im
+  name: 135拼音法【鍵盤練習】
+  version: "0.1"
+  author:
+    - Alan Jui <AlanJui.1960@gmail.com>
+  description: |
+    用「台語音標（TLPA）拼音字母」輸入「注音符號」
+
+    鍵盤對應：
+      ㄅ ㄉ ３ ２ ７ ５ ． ㄚ ㄞ ㄢ ｎ
+      ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
+      ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
+      ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+
+engine:
+  processors:
+    - punctuator
+    - selector
+    - express_editor
+  segmentors:
+    - punct_segmentor
+  translators:
+    - punct_translator
+
+# punctuator:
+#   import_preset: symbols
+#   half_shape:
+punctuator:
+  half_shape: &symtable
+    "1": { commit: "ㄅ" }
+    "!": { commit: "ㄅㄏ" }
+    "q": { commit: "ㄆ" }
+    "a": { commit: "ㄇ" }
+    "2": { commit: "ㄉ" }
+    "w": { commit: "ㄊ" }
+    "s": { commit: "ㄋ" }
+    "x": { commit: "ㄌ" }
+    "e": { commit: "ㄍ" }
+    "E": { commit: "ㄍㄏ" }
+    "d": { commit: "ㄎ" }
+    "c": { commit: "ㄏ" }
+    "y": { commit: "ㄗ" }
+    "h": { commit: "ㄘ" }
+    "n": { commit: "ㄙ" }
+    "b": { commit: "ㄖ" }
+    "Y": { commit: "ㄐㄧ" }
+    "H": { commit: "ㄑㄧ" }
+    "N": { commit: "ㄒㄧ" }
+    "?": { commit: "ㄥ" }
+    "u": { commit: "ㄧ" }
+    "U": { commit: "ㄥㄧ" }
+    "j": { commit: "ㄨ" }
+    "J": { commit: "ㄥㄨ" }
+    "8": { commit: "ㄚ" }
+    "*": { commit: "ㄥㄚ" }
+    ",": { commit: "ㄝ" }
+    "<": { commit: "ㄥㄝ" }
+    "i": { commit: "ㄛ" }
+    "I": { commit: "ㄥㄛ" }
+    "k": { commit: "ㄜ" }
+    "0": { commit: "ㄢ" }
+    "9": { commit: "ㄞ" }
+    "(": { commit: "ㄥㄞ" }
+    "l": { commit: "ㄠ" }
+    "L": { commit: "ㄥㄠ" }
+    "M": { commit: "ㄛㄇ" }
+    "m": { commit: "ㄚㄇ" }
+    ":": { commit: "ㄛㄥ" }
+    ";": { commit: "ㄤ" }
+    "o": { commit: "ㆨ" }
+    "/": { commit: "ㄥ" }
+    "A": { commit: "ㄇ" }
+    "p": { commit: "ㄣ" }
+    # 聲調
+    " ": { commit: "ˉ" }
+    "4": { commit: "ˋ" }
+    "3": { commit: "_" }
+    "6": { commit: "ˇ" }
+    "5": { commit: "+" }
+    "7": { commit: "ˊ" }
+    _: {commit: "_"}
+    # ";": { commit: "ˉ" }
+    # "\\": { commit: "ˋ" }
+    # "<": { commit: "_" }
+    # "/": { commit: "ˇ" }
+    # "-": { commit: "+" }
+    # ".": { commit: "ˊ" }
