@@ -8,7 +8,38 @@ name: tlpa_ji_khoo_kah_kut_bun
 version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
+columns:
+  - text    #漢字／詞彙
+  - code    #台灣音標（TLPA)拼音字母
+  - weight  #常用度（優先顯示度）
+  - stem    #用法舉例
 ...
+#text 	code	weight	stem
+也	ia3	10%
+射	sia7	10%
+馮	phing5	10%
+到	kau3	10%
+有	u7	10%
+終	ciong1	10%
+將	ciong3	10%
+蜀	su2	10%
+蜀	siok8	10%
+臥	o3	10%
+居	ki1	10%
+相	siong3	10%
+晏	gan7	10%
+縣	kuan7	10%
+拓	cit4	10%
+不	m7	10%
+良	liong5	10%
+短	te2	10%
+凶	hiong1	10%
+卻	khiok4	10%
+瞽	koo2	10%
+叟	soo2	10%
+頑	uan5	10%
+兒	li5	10%
+#========================================
 今啊	cim1 a7	60%
 此嘛	cim2 ma2	60%
 今前	cin2 cing5	60%

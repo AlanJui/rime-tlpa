@@ -4,7 +4,7 @@
 schema:
   schema_id: tlpa_peh_ue_135_phing_im
   name: 135拼音法【台語音標】
-  version: "0.0.1.1"
+  version: "0.0.1.2"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -74,19 +74,22 @@ speller:
     #------------------------------------------------------------------
     # 定義【地方腔】與【優勢腔】相容之處理規則
     #------------------------------------------------------------------
-    - derive/uih/ueh/
-    - derive/ou/oo/
+    # 泉、漳通用
+    - derive/ee/e/
+    - derive/iang/iong/
+    # 泉州腔 ir
+    - derive/erng/ing/
     - derive/eru/ou/
     - derive/ere/oe/
-    - derive/er/o/
-    - derive/ui/ue/
-    - derive/ee/e/
-    - derive/ur/u/
-    # 泉州腔 ir
+    # - derive/er/o/
+    - derive/er/e/
     - derive/ir/u/
     - derive/ir/i/
-    # erng
-    - derive/erng/ing/
+    # 其它
+    - derive/uih/ueh/
+    - derive/ou/oo/
+    - derive/ui/ue/
+    - derive/ur/u/
     #------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #------------------------------------------------------
