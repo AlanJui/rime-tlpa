@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.1.0"
+  version: "0.0.1.2"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -28,7 +28,6 @@ engine:
     - punctuator
     - selector
     - navigator
-    # - fluency_editor
     - express_editor
   segmentors:
     - ascii_segmentor
@@ -38,8 +37,6 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
-    # - table_translator
-    # - table_translator@custom_phrase
     - script_translator
   filters:
     - uniquifier
@@ -96,9 +93,9 @@ speller:
     #--------------------------------------------------------------------------
     # oo [ɔ]
     - xform/oo/O/               # ㆦ (1)
-    - xform/o(?=(m|p|ng|k))/O/  # om ==> op / ong ==> ok
+    - xform/o(?=(m|ng|[Pp]|[Kk]))/O/  # om ==> op / ong ==> ok
     # ioo [iɔ]
-    - xform/io(?=(ng|k))/iO/    # iong ==> iok
+    - xform/io(?=(ng|[Kk]))/iO/    # iong ==> iok
     #------------------------------------------------------
     # 聲母轉換
     # --------------------------------------------------------------------------
@@ -184,8 +181,8 @@ speller:
     - xform/ai/y/             # ai ==> ㄞ
     - xform/au/x/             # au ==> ㄠ
     # 鍵盤的【方音符號】
-    # - xform/oW/OW/            # ong ==> ㆲ
-    # - xform/oM/OM/            # om ==> ㄛㄇ = ㆱ
+    - xform/oW/OW/            # ong ==> ㆲ
+    - xform/oM/OM/            # om ==> ㄛㄇ = ㆱ
     - derive/OW/]/            # ong ==> ㆲ
     - derive/OM/}/            # om ==> ㄛㄇ = ㆱ
     - derive/aM/{/            # am ==> ㄚㄇ = ㆰ
@@ -200,11 +197,11 @@ speller:
     # 設定【入聲】之【聲調】值，不論4或8，皆以0代
     # - xform/[48]/0/ # 入聲調（第四調、第八調）合併
     # ap, ip, iap,
-    - xform/(a|i|ia)P[48]/$1P0/
+    - xform/(a|i|ia)(p|P)[48]/$1${2}0/
     # it, ut, iat, uat
-    - xform/(i|u|ia|ua)T[48]/$1T0/
+    - xform/(i|u|ia|ua)(t|T)[48]/$1${2}0/
     # ak, ik, ok, iak, iok
-    - xform/(a|i|O|ia|iO)K[48]/$1K0/
+    - xform/(a|i|O|ia|iO)(k|K)[48]/$1${2}0/
     # ah, ih, uh, eh, ooh, oh, aih, auh, iah, iuh, ioh, uah, uih, ueh, iauh, uaih
     - xform/(a|i|u|e|O|o|Y|x|ia|iu|iO|ua|ui|ue|ix|uy)h[48]/$1h0/
     #------------------------------------------------------
