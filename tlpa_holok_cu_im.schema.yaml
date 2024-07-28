@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_holok_cu_im
   name: 河洛注音
-  version: "v0.1.0.0"
+  version: "v0.1.0.1"
   author: 居正中
   description: |
     河洛話白話音, 採用「TLPA標音方案」

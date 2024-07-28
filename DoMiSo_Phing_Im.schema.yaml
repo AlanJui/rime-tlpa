@@ -2,9 +2,9 @@
 # encoding: utf-8
 
 schema:
-  schema_id: tlpa_peh_ue_135_phing_im
+  schema_id: DoMiSo_Phing_Im
   name: 135拼音法【台語音標】
-  version: "0.0.1.2"
+  version: "0.0.1.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
