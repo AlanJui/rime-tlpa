@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.1.3"
+  version: "0.0.1.4"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -45,7 +45,7 @@ speller:
   alphabet: "1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap 43657"
   initials: "1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap"
   finals: " 43657"
-  delimiter: "'"
+  delimiter: " '"
   use_space: true
   algebra:
     #------------------------------------------------------------------
@@ -81,31 +81,33 @@ speller:
     #  - 喉音（聲門音）：h
     # --------------------------------------------------------------------------
     # 雙唇音: p, ph, b, m
-    - xform/ph/P/           # ㄆ
-    - derive/b/ph/          # ㆠ = ㄅㄏ
+    - xform/^ph/P/           # ㄆ
+    - derive/^b/ph/          # ㆠ = ㄅㄏ
     # 舌尖中音（齒齦音）: t, th, n, l
-    - xform/th/T/           # ㄊ
+    - xform/^th/T/           # ㄊ
     # 舌根音（軟顎音）: k, kh, g, ng
-    - xform/kh/K/           # ㄎ
-    - derive/g/kh/          # ㆣ = ㄍㄏ
+    - xform/^kh/K/           # ㄎ
+    # - derive/^g/kh/          # ㆣ = ㄍㄏ
     # ng 可為聲母，亦可為韻母
-    - xform/ng(?![1-9])/w/  # ng 當【聲母】ㄫ：ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
+    - xform/^ng(?![1-9])/w/  # ng 當【聲母】ㄫ：ng 後面不接調號 (也就是說 ng 後面會有一個母音) 時，ng 為 ㄫ
     # 舌尖前音（齒齦音）: c, ch, j, s
-    - xform/c(?!h)/z/       # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
-    - xform/ch/c/           # ㄘ
+    - xform/^c(?!h)/z/       # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
+    - xform/^ch/c/           # ㄘ
     # zi-, ci-, si
-    - derive/z(?=i)/Z/      # ㄐ -- c 後面接 i 時，c 為 ㄐ
-    - derive/c(?=i)/C/      # ㄑ -- ch 後面接 i 時，ch 為 ㄑ
-    - derive/s(?=i)/S/      # ㄒ -- s 後面接 i 時，s 為 ㄒ
+    - derive/^z(?=i)/Z/      # ㄐ -- c 後面接 i 時，c 為 ㄐ
+    - derive/^c(?=i)/C/      # ㄑ -- ch 後面接 i 時，ch 為 ㄑ
+    - derive/^s(?=i)/S/      # ㄒ -- s 後面接 i 時，s 為 ㄒ
+    # 鍵盤對映
+    - xlit|ZCS|ㄐㄑㄒ|
     #------------------------------------------------------
     # 韻母用台語音標編碼
     # --------------------------------------------------------------------------
     # 元音調母 oo [ɔ] = O
     - xform/oo/O/           # ㆦ (1)
-    # 鼻音韻尾 oo [ɔ] ： om ==> op / ong ==> ok
-    - xform/o(?=(m|ng|p|k))/O/
     # 鼻音韻尾 ioo [iɔ] : iong ==> iok
     - xform/io(?=(ng|k))/iO/
+    # 鼻音韻尾 oo [ɔ] ： om ==> op / ong ==> ok
+    - xform/o(?=(m|ng|p|k))/O/
     # 鼻韻母
     - derive/ann/A/         # ㆩ = ann
     - derive/onn/Q/         # ㆧ = oonn
@@ -195,6 +197,9 @@ speller:
     #--------------------------------------------------------------------------
     # 入聲調處理
     #--------------------------------------------------------------------------
+    # 鼻音韻尾 oo [ɔ] ： om ==> op / ong ==> ok
+    # - xform/io?K/iO/
+    # - xform/o(?=[PK])/O/
     # 設定【入聲】之【聲調】值，不論4或8，皆以0代
     - xform/[48]/0/ # 入聲調（第四調、第八調）合併
     # ap, ip, iap,
@@ -236,7 +241,10 @@ translator:
     - xform/ /ˉ/
     - xform/'/ /
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
-    - xlit|1!qa2wsxeEdgyhnbcuUjJ8*iIk,>.<omp/9(lL0:; 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㄖㄏㄧㆪㄨㆫㄚㆩㆦㆧㄜㄝㆱㆰㆥㆨㆬㄣㄥㄞㆮㄠㆯㄢㆲㄤˉˋ_ˇ+˙
+    - xlit|1!qa2wsxeEdgyhnbcuUjJ8*iIk,>.<omp/9(lL0:;|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㄖㄏㄧㆪㄨㆫㄚㆩㆦㆧㄜㄝㆱㆰㆥㆨㆬㄣㄥㄞㆮㄠㆯㄢㆲㄤ|
+    - xlit|YHN|ㄐㄑㄒ|
+    # 【鍵盤按鍵】與【標點符號】對映
+    - xlit| 43657|ˉˋ_ˇ+˙|
     #--------------------------------------------------------------------------
     # 方音符號轉注音符號
     #--------------------------------------------------------------------------
@@ -267,9 +275,17 @@ translator:
     #--------------------------------------------------------------------------
     # 聲母校調
     #--------------------------------------------------------------------------
+    # - xform/ㄐ/ㄗㄧ/
+    # - xform/ㄑ/ㄘㄧ/
+    # - xform/ㄒ/ㄙㄧ/
+
     - xform/ㄗㄧ/ㄐㄧ/
     - xform/ㄘㄧ/ㄑㄧ/
     - xform/ㄙㄧ/ㄒㄧ/
+
+    - xform/ㄗㄥㄧ/ㄐㄥㄧ/
+    - xform/ㄘㄥㄧ/ㄑㄥㄧ/
+    - xform/ㄙㄥㄧ/ㄒㄥㄧ/
     #--------------------------------------------------------------------------
     # 入聲調輸入
     #--------------------------------------------------------------------------
@@ -278,7 +294,7 @@ translator:
     # an/at, in/it, ian/iat, irn/irt, un/ut, uan/uat
     - xform/(ㄚ|ㄧ|ㄧㄚ|ㆨ|ㄨ|ㄨㄚ)(ㄣ|ㄊ)．/$1ㄊ/
     # ang/ak, eng/ek, ing/ik, iang/iat, iong/iok, ong,ok, irng/irk, uang/
-    - xform/(ㄚ|ㄝ|ㄧ|ㄧㄚ|ㄧㆦ|ㆦ|ㆨ|ㄨㄚ)(ㄥ|ㄍ)．/$1ㄍ/
+    - xform/(ㄚ|ㄝ|ㄧ|ㄧㄚ|ㄧㆦ|ㆦ|ㆨ|ㄨㄚ)(ㄥ|ㄍ)．/$1ㄎ/
     # ah, annh, aih, ainnh, auh, aunnh, eeh, eh, ennh, ih, innh, iah, iannh
     # iauh, ioh, iooh, iuh, iunnh, erh, oh, ooh, onnh, irh, uh, uah,
     # ueeh, ueh, ereh, mh, ngh
@@ -329,7 +345,7 @@ recognizer:
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     # reverse_lookup: "`[a-z]*'?$"
-    punct: '`[^\s]$'
+    # punct: '`[^\s]$'
 
 menu:
   alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
