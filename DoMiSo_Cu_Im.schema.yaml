@@ -4,12 +4,12 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.1.5"
+  version: "0.0.1.6"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
     【拼音系統】：135拼音法（DoMiSo拼音法）
-    【注音編碼】：漢字讀音編碼採「注音符號」
+    【注音編碼】：漢字讀音編碼採「台灣拼音+」（TLPA+）
 
 switches:
   - name: ascii_mode
@@ -231,7 +231,8 @@ speller:
     - xlit|pbPmtTnlkgKhzcsjZCSwiIuUaAeEOQo@yYxX}{][XWMN123570|1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap 43657|
 
 translator:
-  dictionary: tlpa_ji_khoo_peh_ue
+  # dictionary: tlpa_ji_khoo_peh_ue
+  dictionary: tlpaPlus_ji_khoo_peh_ue
   prism: DoMiSo_Cu_Im
   spelling_hint: 5
   preedit_format:
