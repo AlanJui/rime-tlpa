@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.1.6"
+  version: "0.0.1.7"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -72,6 +72,14 @@ speller:
     # 去除零聲母
     - derive/Ø//
     - derive/^ts/c/	  # 可用羅馬拼音
+    # 複合鼻音韻母
+    - derive/(uai|iau|ai|au|ia|io|iu|ua|ui)nn/nn$1/
+    # 元音
+    - derive/ann/nna/        # ㆩ ==> ㄥㄚ
+    - derive/oonn/nnoo/      # ㆧ
+    - derive/enn/nne/        # ㆥ
+    - derive/inn/nni/        # ㆪ
+    - derive/unn/nnu/        # ㆫ
     #------------------------------------------------------
     # 聲母用台語音標編碼
     #  - 雙唇音: p, ph, b, m
@@ -141,22 +149,22 @@ speller:
     #  * -n 定義前
     #--------------------------------------------------------------------------
     # 複合鼻音韻母
-    - derive/uainn/Wuy/
-    - derive/ainn/Wy/
-    - derive/iaunn/Wix/
-    - derive/aunn/Wx/
-    - derive/iann/Wia/
-    - derive/ionn/WiO/
-    - derive/iunn/Wiu/
-    - derive/uann/Wua/
-    - derive/uinn/Wui/
+    # - derive/uainn/Wuy/
+    # - derive/ainn/Wy/
+    # - derive/iaunn/Wix/
+    # - derive/aunn/Wx/
+    # - derive/iann/Wia/
+    # - derive/ionn/WiO/
+    # - derive/iunn/Wiu/
+    # - derive/uann/Wua/
+    # - derive/uinn/Wui/
     #--------------------------------------------------------------------------
     # 元音
-    - derive/ann/Wa/        # ㆩ ==> ㄥㄚ
-    - derive/onn/Wo/        # ㆧ
-    - derive/enn/We/        # ㆥ
-    - derive/inn/Wi/        # ㆪ
-    - derive/unn/Wu/        # ㆫ
+    # - derive/ann/Wa/        # ㆩ ==> ㄥㄚ
+    # - derive/onn/Wo/        # ㆧ
+    # - derive/enn/We/        # ㆥ
+    # - derive/inn/Wi/        # ㆪ
+    # - derive/unn/Wu/        # ㆫ
     #------------------------------------------------------------------
     # 鼻音韻尾（m/ng/n）拼音字母編碼
     #------------------------------------------------------------------
@@ -189,13 +197,13 @@ speller:
     # - xform/(a|i|u|e|O|o|Y|x|ia|iu|iO|ua|ui|ue|ix|uy)h[48]/$1h0/
     #--------------------------------------------------------------------------
     # 【135拼音法】入聲韻尾轉換
-    # -ng ==> -p
+    # -ng ==> -k
     # -n  ==> -t
     # -m  ==> -p
     - xform/[48]/0/         # 設定【入聲】之【聲調】值，不論4或8，皆以0代
-    - derive/p(?=0)/P/	    # ㄆ
-    - derive/t(?=0)/T/	    # ㄊ
     - derive/k(?=0)/K/	    # ㄎ
+    - derive/t(?=0)/T/	    # ㄊ
+    - derive/p(?=0)/P/	    # ㄆ
     #--------------------------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #--------------------------------------------------------------------------
@@ -243,6 +251,7 @@ translator:
     #--------------------------------------------------------------------------
     - xform/ /ˉ/
     - xform/'/ /
+    - xform/nn/ㄥ/          # ng-
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
     # - xlit|uUjJ8*iIk,>.<omp/9(lL0:;|ㄧㆪㄨㆫㄚㆩㆦㆧㄜㄝㆱㆰㆥㆨㆬㄣㄥㄞㆮㄠㆯㄢㆲㄤ|
     - xlit|1!qa2wsxeEdgyhnbc|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㄖㄏ|
@@ -269,6 +278,13 @@ translator:
     #--------------------------------------------------------------------------
     # 鼻音韻母轉換
     #--------------------------------------------------------------------------
+    # 複合鼻音韻母
+    - xform/ㄧㆩ/ㄥㄧㄚ/    # iann = Nia
+    - xform/ㄧㆯ/ㄥㄧㄠ/    # iaunn = Niau
+    - xform/ㄧㆫ/ㄥㄧㄨ/    # iunn = Niu
+    - xform/ㄨㆩ/ㄥㄨㄚ/    # uann = Nua
+    - xform/ㄨㆮ/ㄥㄨㄞ/    # uainn = Nuai
+    - xform/ㄨㆪ/ㄥㄨㄧ/    # uinn = Nui
     # 元音韻母
     - xform/ㆪ/ㄥㄧ/
     - xform/ㆫ/ㄥㄨ/
@@ -278,9 +294,6 @@ translator:
     # 複合韻母
     - xform/ㆮ/ㄥㄞ/
     - xform/ㆯ/ㄥㄠ/
-    # 其它
-    - xform/ㄧㆩ/ㄥㄧㄚ/    # iann = Nia
-    - xform/ㄧㆯ/ㄥㄧㄠ/    # iaunn = Niau
     #--------------------------------------------------------------------------
     # 聲母校調
     #--------------------------------------------------------------------------

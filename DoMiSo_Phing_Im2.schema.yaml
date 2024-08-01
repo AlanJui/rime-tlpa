@@ -164,7 +164,7 @@ translator:
     #------------------------------------------------------
     # 鼻音韻母顯示：鼻化韻母以 ‘上標n’ 強調
     # - 'xform/([aeiou]|oo)nn/$1ⁿ/'
-    - xform/(ai|au|ia|iau|io|iu|uai|ua|ui)nn/N$1/
+    - xform/(uai|iau|ai|au|ia|io|iu|ua|ui)nn/N$1/
     - xform/([aeiou]|oo)nn/N$1/
     #------------------------------------------------------
     # 地方腔韻母處理
