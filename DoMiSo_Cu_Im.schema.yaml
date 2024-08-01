@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.1.7"
+  version: "0.0.1.8"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -42,8 +42,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: "1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap 43657"
-  initials: "1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap"
+  alphabet: "-1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap 43657"
+  initials: "-1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap"
   finals: " 43657"
   delimiter: " '"
   use_space: true
@@ -72,14 +72,21 @@ speller:
     # 去除零聲母
     - derive/Ø//
     - derive/^ts/c/	  # 可用羅馬拼音
+    #------------------------------------------------------
+    # 【135拼音法】 鼻音韻母
+    # ann ==> nna ==> Na ==> Ba ==> ㄥㄚ ==> ㆩ
+    #------------------------------------------------------
     # 複合鼻音韻母
-    - derive/(uai|iau|ai|au|ia|io|iu|ua|ui)nn/nn$1/
+    # - derive/(iau|ia|io|iu|uai|ua|ui)nn/B$1/
+    - derive/([iu]?(ai|au|[iuaoe]|oo))nn/B$1/
     # 元音
-    - derive/ann/nna/        # ㆩ ==> ㄥㄚ
-    - derive/oonn/nnoo/      # ㆧ
-    - derive/enn/nne/        # ㆥ
-    - derive/inn/nni/        # ㆪ
-    - derive/unn/nnu/        # ㆫ
+    # - derive/ann/nna/        # ㆩ ==> ㄥㄚ
+    # - derive/oonn/nnoo/      # ㆧ
+    # - derive/enn/nne/        # ㆥ
+    # - derive/inn/nni/        # ㆪ
+    # - derive/unn/nnu/        # ㆫ
+    - derive/([aiue]|oo|ai|au)nn/B$1/
+    - derive/([aiue]|oo|ai|au)B/$1$1/
     #------------------------------------------------------
     # 聲母用台語音標編碼
     #  - 雙唇音: p, ph, b, m
@@ -142,29 +149,6 @@ speller:
     - xform/m(?=\d)/M/      # m 當【韻母】ㄇ = ㆬ (方音符號)
     # -ng (韻化輔音)：預設當【韻母ㄥ】 = ㆭ (方音符號)
     - xform/ng(?=\d)/W/     # ng 當【聲母】ㄥ = ㄫ (方音符號)
-    #--------------------------------------------------------------------------
-    # 【135拼音法】 鼻音韻母
-    # ann ==> nna ==> Wa ==> ㄥㄚ ==> ㆩ
-    #  * 必須在 ng-, ai, au, oo 定義後；
-    #  * -n 定義前
-    #--------------------------------------------------------------------------
-    # 複合鼻音韻母
-    # - derive/uainn/Wuy/
-    # - derive/ainn/Wy/
-    # - derive/iaunn/Wix/
-    # - derive/aunn/Wx/
-    # - derive/iann/Wia/
-    # - derive/ionn/WiO/
-    # - derive/iunn/Wiu/
-    # - derive/uann/Wua/
-    # - derive/uinn/Wui/
-    #--------------------------------------------------------------------------
-    # 元音
-    # - derive/ann/Wa/        # ㆩ ==> ㄥㄚ
-    # - derive/onn/Wo/        # ㆧ
-    # - derive/enn/We/        # ㆥ
-    # - derive/inn/Wi/        # ㆪ
-    # - derive/unn/Wu/        # ㆫ
     #------------------------------------------------------------------
     # 鼻音韻尾（m/ng/n）拼音字母編碼
     #------------------------------------------------------------------
@@ -183,23 +167,24 @@ speller:
     - derive/5/7/ # 第五調 → 第七調
     - derive/5/3/ # 第五調 → 第三調
     # 入聲變調（4 8）
-    # - derive/(?<![MNW])4/2/ # -ㆷ 第四調 → 第二調
-    # - derive/(?<![MNW])8/3/ # -ㆷ 第八調 → 第三調
-    #--------------------------------------------------------------------------
-    # 入聲調處理
-    # # ap, ip, iap,
-    # - xform/(a|i|ia)p[48]/${1}P0/
-    # # at, it, ut, iat, uat
-    # - xform/(a|i|u|ia|ua)t[48]/${1}T0/
-    # # ak, ik, ok, iak, iok
-    # - xform/(a|i|O|ia|iO)k[48]/${1}K0/
-    # # ah, ih, uh, eh, ooh, oh, aih, auh, iah, iuh, ioh, uah, uih, ueh, iauh, uaih
-    # - xform/(a|i|u|e|O|o|Y|x|ia|iu|iO|ua|ui|ue|ix|uy)h[48]/$1h0/
+    - derive/(?<![MNW])4/2/ # -ㆷ 第四調 → 第二調
+    - derive/(?<![MNW])8/3/ # -ㆷ 第八調 → 第三調
     #--------------------------------------------------------------------------
     # 【135拼音法】入聲韻尾轉換
-    # -ng ==> -k
-    # -n  ==> -t
-    # -m  ==> -p
+    # (1) -m  ==> -p
+    # (2) -n  ==> -t
+    # (3) -ng ==> -k
+    #
+    # (1) ap, ip, iap,
+    # (2) at, it, ut, iat, uat
+    # (3) ak, ik, ok, iak, iok
+    # (4) ah, ih, uh, eh, ooh, oh, aih, auh, iah, iuh, ioh, uah, uih, ueh, iauh, uaih
+    #--------------------------------------------------------------------------
+    # - xform/(a|i|ia)p[48]/${1}P0/
+    # - xform/(a|i|u|ia|ua)t[48]/${1}T0/
+    # - xform/(a|i|O|ia|iO)k[48]/${1}K0/
+    # - xform/(a|i|u|e|O|o|Y|x|ia|iu|iO|ua|ui|ue|ix|uy)h[48]/$1h0/
+    #--------------------------------------------------------------------------
     - xform/[48]/0/         # 設定【入聲】之【聲調】值，不論4或8，皆以0代
     - derive/k(?=0)/K/	    # ㄎ
     - derive/t(?=0)/T/	    # ㄊ
@@ -236,13 +221,53 @@ speller:
     # # 聲調編碼
     # - xlit|123570| 43657|
     # 彙總結果
-    - xlit|pbPmtTnlkgKhzcsjZCSwiIuUaAeEOQo@yYxX}{][XWMN123570|1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap 43657|
+    - xlit|BpbPmtTnlkgKhzcsjZCSwiIuUaAeEOQo@yYxX}{][XWMN123570|-1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap 43657|
 
 translator:
   # dictionary: tlpa_ji_khoo_peh_ue
   dictionary: tlpaPlus_ji_khoo_peh_ue
   prism: DoMiSo_Cu_Im
   spelling_hint: 5
+  comment_format:
+    - xform/^/\t→ /
+    - xform/'/ /
+    - xlit|pPbtTlkKgzcjshiuaoOeyxMNWB|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㄝㄞㄠㆬㄣㆭｎ|
+    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
+    - xform/ㄗ((ｎ)?ㄧ)/ㄐ$1/
+    - xform/ㄘ((ｎ)?ㄧ)/ㄑ$1/
+    - xform/ㆡ((ｎ)?ㄧ)/ㆢ$1/
+    - xform/ㄙ((ｎ)?ㄧ)/ㄒ$1/
+    # 方音符號會分 ㄇㄋㄫ 和 ㆠㄌㆣ
+    # - xform/ㆠｎ/ㄇ/
+    # - xform/ㄌｎ/ㄋ/
+    # - xform/ㆣｎ/ㄫ/
+    # - xform/ㆠㆭ/ㄇㆭ/
+    # - xform/ㄌㆭ/ㄋㆭ/
+    # 入聲調
+    - xform/(?<=ㄧ|ㄚ|ㆦ)ㆬ([48])/ㆴ$1/
+    - xform/(?<=ㄧ|ㄨ|ㄚ)ㄣ([48])/ㆵ$1/
+    - xform/(?<=ㄚ|ㆦ|ㄜ)ㆭ([48])/ㆻ$1/
+    - xform/(?<!ㆴ|ㆵ|ㆻ)([48])/ㆷ$1/
+    # 鼻音
+    - xform/ｎ((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㆤ|ㄞ|ㄠ))/$1ｎ/
+    - xform/ㄧｎ/ㆪ/
+    - xform/ㄨｎ/ㆫ/
+    - xform/ㄚｎ/ㆩ/
+    - xform/ㆦｎ/ㆧ/
+    - xform/ㆤｎ/ㆥ/
+    - xform/ㄞｎ/ㆮ/
+    - xform/ㄠｎ/ㆯ/
+    # 韻母
+    # - xform/ㄚㆬ/ㆰ/
+    # - xform/ㆦㆬ/ㆱ/
+    # - xform/ㄚㄣ/ㄢ/
+    # - xform/ㄚㆭ/ㄤ/
+    # - xform/ㆦㆭ/ㆲ/
+    # - xform/ㄜㆭ/ㄥ/
+    # 聲調
+    - xlit|12357|ˉˋ˪ˊ˫|
+    - xform/4//
+    - xform/8/˙/
   preedit_format:
     #--------------------------------------------------------------------------
     # 按鍵轉注音符號：定義鍵盤【按鍵】與【注音符號】的對映關聯
@@ -251,10 +276,11 @@ translator:
     #--------------------------------------------------------------------------
     - xform/ /ˉ/
     - xform/'/ /
-    - xform/nn/ㄥ/          # ng-
+    #--------------------------------------------------------------------------
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
     # - xlit|uUjJ8*iIk,>.<omp/9(lL0:;|ㄧㆪㄨㆫㄚㆩㆦㆧㄜㄝㆱㆰㆥㆨㆬㄣㄥㄞㆮㄠㆯㄢㆲㄤ|
-    - xlit|1!qa2wsxeEdgyhnbc|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㄖㄏ|
+    #--------------------------------------------------------------------------
+    - xlit|-1!qa2wsxeEdgyhnbc|ｎㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㄖㄏ|
     - xlit|YHN|ㄐㄑㄒ|
     - xlit|uUjJ8*iI,<k|ㄧㆪㄨㆫㄚㆩㆦㆧㄝㆥㄜ|
     - xlit|9(lL0:;|ㄞㆮㄠㆯㄢㆲㄤ|
@@ -278,6 +304,7 @@ translator:
     #--------------------------------------------------------------------------
     # 鼻音韻母轉換
     #--------------------------------------------------------------------------
+    - xform/ｎ/ㄥ/
     # 複合鼻音韻母
     - xform/ㄧㆩ/ㄥㄧㄚ/    # iann = Nia
     - xform/ㄧㆯ/ㄥㄧㄠ/    # iaunn = Niau
@@ -304,19 +331,6 @@ translator:
     - xform/ㄗㄥㄧ/ㄐㄥㄧ/
     - xform/ㄘㄥㄧ/ㄑㄥㄧ/
     - xform/ㄙㄥㄧ/ㄒㄥㄧ/
-    #--------------------------------------------------------------------------
-    # 入聲調輸入
-    #--------------------------------------------------------------------------
-    # # am/ap, im/ip, iam/iap, om/op, irm/irp
-    # - xform/(ㄚ|ㄧ|ㄧㄚ|ㆦ|ㆨ)(ㄅ|ㄆ)．/$1ㄆ/
-    # # an/at, in/it, ian/iat, irn/irt, un/ut, uan/uat
-    # - xform/(ㄚ|ㄧ|ㄧㄚ|ㆨ|ㄨ|ㄨㄚ)(ㄉ|ㄊ)．/$1ㄊ/
-    # # ang/ak, eng/ek, ing/ik, iang/iat, iong/iok, ong,ok, irng/irk, uang/
-    # - xform/(ㄚ|ㄝ|ㄧ|ㄧㄚ|ㄧㆦ|ㆦ|ㆨ|ㄨㄚ)(ㄍ|ㄎ)．/$1ㄎ/
-    # # ah, annh, aih, ainnh, auh, aunnh, eeh, eh, ennh, ih, innh, iah, iannh
-    # # iauh, ioh, iooh, iuh, iunnh, erh, oh, ooh, onnh, irh, uh, uah,
-    # # ueeh, ueh, ereh, mh, ngh
-    # - xform/(ㄧ|ㄨ|ㄚ|ㆦ|ㄜ|ㄝ|ㄞ|ㄠ|ㆬ|ㆭ)．/$1ㄏ/
 
 editor:
   bindings:
