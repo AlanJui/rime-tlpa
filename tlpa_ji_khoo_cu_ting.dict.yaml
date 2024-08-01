@@ -1,8 +1,9 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# 使用者個人擴充字庫
-
+# 自訂字庫：使用者個人擴充字庫
+# 漢字讀者：白話音
+# 漢字標音：使用【台語音標（TLPA）】
 ---
 name: tlpa_peh_ue_cu_ting
 version: "0.1.0.0"

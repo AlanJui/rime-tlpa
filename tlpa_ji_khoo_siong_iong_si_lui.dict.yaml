@@ -1,9 +1,9 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# 個人愛用的漢字庫
-#
-
+# 常用詞彙庫：個人愛用的漢字詞庫
+# 漢字讀者：白話音
+# 漢字標音：使用【台語音標（TLPA）】
 ---
 name: tlpa_ji_khoo_siong_iong_si_lui
 version: "v0.1.0.0"

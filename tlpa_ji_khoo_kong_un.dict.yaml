@@ -1,6 +1,9 @@
 # Rime dictionary
 # encoding: utf-8
 #
+# 廣韻字庫：漢字標音來源，取自【廣韻】韻書之擬音
+# 漢字讀者：白話音
+# 漢字標音：使用【台語音標（TLPA）】
 ---
 name: tlpa_ji_khoo_kong_un
 version: "v0.1.0.0"

@@ -1,10 +1,10 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# 在萌典 API 收錄詞條外加入的詞彙表。
-
----
-name: tl_holok.extended
+# 萌典擴充字庫：萌典字庫的使用者擴充字/詞庫
+# 漢字讀者：白話音為主；輔以文讀音
+# 漢字標音：使用【台羂音標（TL）】
+name: tl_ji_khoo_moetai.extended
 version: "0.1"
 sort: by_weight
 use_preset_vocabulary: false

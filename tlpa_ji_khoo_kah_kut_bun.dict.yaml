@@ -2,7 +2,8 @@
 # encoding: utf-8
 #
 # 甲骨漢字庫
-#
+# 漢字讀者：白話音
+# 漢字標音：使用【台語音標（TLPA）】
 ---
 name: tlpa_ji_khoo_kah_kut_bun
 version: "0.1.0.0"

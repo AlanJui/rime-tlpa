@@ -1,6 +1,9 @@
 # Rime dictionary
 # encoding: utf-8
 #
+# 雅俗通十五音字庫：漢字標音來源取自漳州韻書【雅俗通十五音】
+# 漢字讀者：白話音
+# 漢字標音：使用【台語音標（TLPA）】
 ---
 name: tlpa_ji_khoo_nga_siok_thong
 version: "v0.1.0.0"

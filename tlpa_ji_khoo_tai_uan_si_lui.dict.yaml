@@ -1,8 +1,9 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# 河洛白話音辭彙(台灣地區)
-#
+# 台灣常用辭彙
+# 漢字讀者：白話音
+# 漢字標音：使用【台語音標（TLPA）】
 ---
 name: tlpa_ji_khoo_tai_uan_si_lui
 version: "v.0.1.0.0"

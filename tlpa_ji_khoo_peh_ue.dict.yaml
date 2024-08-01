@@ -1,8 +1,9 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# 河洛白話音
-#
+# 白話音字庫
+# 漢字讀者：白話音
+# 漢字標音：使用【台語音標（TLPA）】
 ---
 name: tlpa_ji_khoo_peh_ue
 version: "0.1.0.0"
@@ -13,11 +14,7 @@ import_tables:
   - tlpa_ji_khoo_ciann_ji
   - tlpa_ji_khoo_kah_kut_bun
   - tlpa_ji_khoo_siong_iong_si_lui
-  # - tlpa_cu_im_fu_ho
-  # - tlpa_ji_khoo_tai_uan_su_lui
-  # - tlpa_ji_khoo_ban_lam_su_lui
 ...
-##-----------------------------
 ##	a/ah
 啊	a0
 啊	ah0
