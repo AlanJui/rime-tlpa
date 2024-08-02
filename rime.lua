@@ -1,5 +1,5 @@
 number_translator = require("number")
-custom_commit_text_translator = require("custom_commit_text")
+custom_commit_text_translator = require("custom")
 -- piau_im_translator = require("piau_im")
 
 -- function get_date(input, seg, env)
