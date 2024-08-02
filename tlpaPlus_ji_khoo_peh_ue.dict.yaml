@@ -17,6 +17,7 @@ import_tables:
   # - tlpa_ji_khoo_tai_uan_su_lui
   # - tlpa_ji_khoo_ban_lam_su_lui
 ...
+拱	kiong2	10%
 ##-----------------------------
 ##	a/ah
 啊	a0
@@ -450,6 +451,7 @@ import_tables:
 郊	kau1
 膠	kau1	0%
 蛟	kau1
+蛟	kiau2
 胶	kau1
 狗	kau2	10%
 九	kau2	10%
@@ -1523,7 +1525,8 @@ import_tables:
 汁	tsiap4
 汁	tsap4
 睫	tsiap4	0%
-潛	tsiam5
+潛	tsiam5	10%
+潛	tshiam5	10%
 漸	tsiam6	10%
 暫	tsiam7	10%
 捷	tsiap8
@@ -1960,6 +1963,8 @@ import_tables:
 瓤	jiang5
 讓	jiang7
 弱	jiak8
+弱	jiok8	10%
+弱	lam2	10%
 若	jiak8
 箬	jiak8
 傷	siang1
@@ -3610,6 +3615,7 @@ import_tables:
 並	ping6	10%
 病	ping7
 白	pik8	5%
+白	piat8	10%
 帛	pik8
 舶	pik8
 愎	pik8
@@ -3744,6 +3750,7 @@ import_tables:
 零	ling5	10%
 靈	ling5	10%
 龍	ling5	10%
+龍	liong5	10%
 能	ling5	10%
 玲	ling5
 凌	ling5
@@ -3866,6 +3873,7 @@ import_tables:
 行	hing5	10%
 形	hing5	10%
 雄	hing5	5%
+雄	hiong5	10%
 橫	hing5	10%
 恆	hing5
 衡	hing5
@@ -3939,6 +3947,7 @@ import_tables:
 窄	tsik4
 情	tsing5	10%
 曾	tsing5	10%
+曾	bat4	10%
 從	tsing5
 層	tsing5	0%
 晴	tsing5
@@ -4283,6 +4292,7 @@ import_tables:
 繏	suinn3
 ##	ir/irh
 於	ir1
+於	i5
 於	ti7
 于	ir1
 與	ir2

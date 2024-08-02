@@ -55,14 +55,17 @@ punctuator:
     "h": { commit: "ㄘ" }
     "n": { commit: "ㄙ" }
     "b": { commit: "ㄖ" }
-    "Y": { commit: "ㄐㄧ" }
-    "H": { commit: "ㄑㄧ" }
-    "N": { commit: "ㄒㄧ" }
+    "Y": { commit: "ㄐ" }
+    "H": { commit: "ㄑ" }
+    "N": { commit: "ㄒ" }
     "?": { commit: "ㄥ" }
     "u": { commit: "ㄧ" }
     "U": { commit: "ㄥㄧ" }
     "j": { commit: "ㄨ" }
     "J": { commit: "ㄥㄨ" }
+    # "m": { commit: "ㄚㄇ" }
+    # "M": { commit: "ㄛㄇ" }
+    "m": { commit: "ㄩ" }
     "8": { commit: "ㄚ" }
     "*": { commit: "ㄥㄚ" }
     ",": { commit: "ㄝ" }
@@ -75,14 +78,13 @@ punctuator:
     "(": { commit: "ㄥㄞ" }
     "l": { commit: "ㄠ" }
     "L": { commit: "ㄥㄠ" }
-    "M": { commit: "ㄛㄇ" }
-    "m": { commit: "ㄚㄇ" }
     ":": { commit: "ㄛㄥ" }
     ";": { commit: "ㄤ" }
     "o": { commit: "ㆨ" }
     "/": { commit: "ㄥ" }
     "A": { commit: "ㄇ" }
     "p": { commit: "ㄣ" }
+    "-": { commit: "ｎ" }
     # 聲調
     " ": { commit: "ˉ" }
     "4": { commit: "ˋ" }

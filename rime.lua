@@ -1,4 +1,6 @@
-require("custom")
+number_translator = require("number")
+custom_commit_text_translator = require("custom_commit_text")
+-- piau_im_translator = require("piau_im")
 
 -- function get_date(input, seg, env)
 -- 	--- 以 show_date 爲開關名或 key_binder 中 toggle 的對象
@@ -8,7 +10,7 @@ require("custom")
 -- 		yield(Candidate("date", seg.start, seg._end, os.date("%Y年%m月%d日"), " 日期"))
 -- 	end
 -- end
--- ---
+---
 -- function single_char_first(input, env)
 -- 	--- 以 single_char 爲開關名或 key_binder 中 toggle 的對象
 -- 	on = env.engine.context:get_option("single_char")

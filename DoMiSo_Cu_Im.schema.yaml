@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.1.8"
+  version: "0.0.1.9"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -29,6 +29,7 @@ engine:
     - selector
     - navigator
     - express_editor
+    # - fluency_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -36,8 +37,14 @@ engine:
     - punct_segmentor
     - fallback_segmentor
   translators:
+    - echo_translator
     - punct_translator
+    - table_translator@custom_phrase
     - script_translator
+    - lua_translator@number_translator
+    - lua_translator@custom_commit_text_translator
+    # - lua_translator@piau_im_translator
+    # - lua_translator@get_date
   filters:
     - uniquifier
 
@@ -45,7 +52,8 @@ speller:
   alphabet: "-1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap 43657"
   initials: "-1!qa2wsxeEdcyhnbYHN?uUjJ8*,<iIk09(lLMm:;o/Ap"
   finals: " 43657"
-  delimiter: " '"
+  # delimiter: " '"
+  delimiter: "'"
   use_space: true
   algebra:
     #------------------------------------------------------------------
@@ -86,7 +94,7 @@ speller:
     # - derive/inn/nni/        # ㆪ
     # - derive/unn/nnu/        # ㆫ
     - derive/([aiue]|oo|ai|au)nn/B$1/
-    - derive/([aiue]|oo|ai|au)B/$1$1/
+    # - derive/([aiue]|oo|ai|au)B/$1$1/
     #------------------------------------------------------
     # 聲母用台語音標編碼
     #  - 雙唇音: p, ph, b, m
@@ -196,6 +204,9 @@ speller:
     #=======================================================================
     # 台語音標之拼音字母輸入【簡化規則】
     #=======================================================================
+    - abbrev/[iu]?[iuaOeyx]B/B/  # 用 ｎ 代表所有的鼻音母音
+    # - abbrev/[iuaOoeyxMLQYBDG]+0/0/  # 用 ． 代表所有的入聲韻母
+    # - abbrev/[iuaOoeyxMLQYMNW]+0/0/  # 用 ． 代表所有的入聲韻母
     # 平、上、去聲漢字，可以免輸入調號（1/2/3/5/7）；但【去聲】（調號：4/8）不適用
     - abbrev/^(\D+)([12357])$/$1/
     # 可用【入聲】調號按鍵找【入聲】韻漢字
@@ -227,47 +238,59 @@ translator:
   # dictionary: tlpa_ji_khoo_peh_ue
   dictionary: tlpaPlus_ji_khoo_peh_ue
   prism: DoMiSo_Cu_Im
-  spelling_hint: 5
+  enable_sentence: true
+  enable_encoder: true
+  spelling_hint: 3
   comment_format:
+    #=======================================================================
+    # 候選字清單轉換處理
+    #=======================================================================
     - xform/^/\t→ /
     - xform/'/ /
-    - xlit|pPbtTlkKgzcjshiuaoOeyxMNWB|ㄅㄆㆠㄉㄊㄌㄍㄎㆣㄗㄘㆡㄙㄏㄧㄨㄚㆦㄜㄝㄞㄠㆬㄣㆭｎ|
-    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
-    - xform/ㄗ((ｎ)?ㄧ)/ㄐ$1/
-    - xform/ㄘ((ｎ)?ㄧ)/ㄑ$1/
-    - xform/ㆡ((ｎ)?ㄧ)/ㆢ$1/
-    - xform/ㄙ((ｎ)?ㄧ)/ㄒ$1/
-    # 方音符號會分 ㄇㄋㄫ 和 ㆠㄌㆣ
+    # - xlit|BpPmbtTnlkKgwzcjshiuaOoeyxMNW|ｎㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄫㄗㄘㄖㄙㄏㄧㄨㄚㆦㄜㄝㄞㄠㆬㄣㆭ|
+    # - xlit|pbPmtTnlkgKhzcsjZCSwiIuUaAeEOQo@yYxX}{][XWMN123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄗㄘㄙㆡㄗㄧㄘㄧㄙㄧㄫㄧㆪㄨㆫㄚㆩㄝㆥㄛㆧㄜㄢㄞㆮㄠㆯㆱㆰㆲㄤㆨㆭㆬㄣˉˋ˪ˊ˫˙|
+    - xlit|BpbPmtTnlkgKhzcsjZCSwiIuUaAeEOQo@yYxX}{][XWMN123570|ｎㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄗㄘㄙㆡㄗㄧㄘㄧㄙㄧㄫㄧㆪㄨㆫㄚㆩㄝㆥㄛㆧㄜㄢㄞㆮㄠㆯㆱㆰㆲㄤㆨㆭㆬㄣˉˋ˪ˇ˫˙|
+    # 方音符號轉注音符號
+    - xform/ｎ/ㄥ/
+    - xform/ㄫ/ㄥ/
+    - xform/ㆬ/ㄇ/
+    - xform/ㆭ/ㄥ/
     # - xform/ㆠｎ/ㄇ/
     # - xform/ㄌｎ/ㄋ/
     # - xform/ㆣｎ/ㄫ/
     # - xform/ㆠㆭ/ㄇㆭ/
     # - xform/ㄌㆭ/ㄋㆭ/
+    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
+    - xform/ㄗ((ｎ)?ㄧ)/ㄐ$1/
+    - xform/ㄘ((ｎ)?ㄧ)/ㄑ$1/
+    - xform/ㆡ((ｎ)?ㄧ)/ㆢ$1/
+    - xform/ㄙ((ｎ)?ㄧ)/ㄒ$1/
     # 入聲調
-    - xform/(?<=ㄧ|ㄚ|ㆦ)ㆬ([48])/ㆴ$1/
-    - xform/(?<=ㄧ|ㄨ|ㄚ)ㄣ([48])/ㆵ$1/
-    - xform/(?<=ㄚ|ㆦ|ㄜ)ㆭ([48])/ㆻ$1/
-    - xform/(?<!ㆴ|ㆵ|ㆻ)([48])/ㆷ$1/
+    - xform/(?<=ㄧ|ㄚ|ㆦ)ㄇ([48])/ㄆ$1/
+    - xform/(?<=ㄧ|ㄨ|ㄚ)ㄣ([48])/ㄊ$1/
+    - xform/(?<=ㄚ|ㆦ|ㄜ)ㄥ([48])/ㄎ$1/
+    - xform/(?<!ㄆ|ㄊ|ㄎ)([48])/ㄏ$1/
     # 鼻音
-    - xform/ｎ((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㆤ|ㄞ|ㄠ))/$1ｎ/
+    - xform/ｎ((ㄧ|ㄨ)?(ㄧ|ㄨ|ㄚ|ㆦ|ㄝ|ㄞ|ㄠ))/$1ｎ/
     - xform/ㄧｎ/ㆪ/
     - xform/ㄨｎ/ㆫ/
     - xform/ㄚｎ/ㆩ/
     - xform/ㆦｎ/ㆧ/
-    - xform/ㆤｎ/ㆥ/
+    - xform/ㄝｎ/ㆥ/
     - xform/ㄞｎ/ㆮ/
     - xform/ㄠｎ/ㆯ/
     # 韻母
-    # - xform/ㄚㆬ/ㆰ/
-    # - xform/ㆦㆬ/ㆱ/
-    # - xform/ㄚㄣ/ㄢ/
-    # - xform/ㄚㆭ/ㄤ/
-    # - xform/ㆦㆭ/ㆲ/
-    # - xform/ㄜㆭ/ㄥ/
+    - xform/ㆲ/ㆦㄥ/
+    - xform/ㆱ/ㆦㄇ/
+    - xform/ㆰ/ㄚㄇ/
+
+    - xform/ㄚㄣ/ㄢ/
+    - xform/ㄚㄥ/ㄤ/
+    - xform/ㄜㄥ/ㄥ/
     # 聲調
-    - xlit|12357|ˉˋ˪ˊ˫|
-    - xform/4//
-    - xform/8/˙/
+    # - xlit|12357|ˉˋ˪ˊ˫|
+    # - xform/4//
+    # - xform/8/˙/
   preedit_format:
     #--------------------------------------------------------------------------
     # 按鍵轉注音符號：定義鍵盤【按鍵】與【注音符號】的對映關聯
@@ -283,7 +306,7 @@ translator:
     - xlit|-1!qa2wsxeEdgyhnbc|ｎㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㄖㄏ|
     - xlit|YHN|ㄐㄑㄒ|
     - xlit|uUjJ8*iI,<k|ㄧㆪㄨㆫㄚㆩㆦㆧㄝㆥㄜ|
-    - xlit|9(lL0:;|ㄞㆮㄠㆯㄢㆲㄤ|
+    - xlit|9(lL0;|ㄞㆮㄠㆯㄢㄤ|
     - xlit|Ap/|ㆬㄣㄥ|
     - xlit|:mMo|ㆲㆰㆱㆨ|
     # 【鍵盤按鍵】與【標點符號】對映
@@ -332,13 +355,26 @@ translator:
     - xform/ㄘㄥㄧ/ㄑㄥㄧ/
     - xform/ㄙㄥㄧ/ㄒㄥㄧ/
 
+custom_phrase:
+  dictionary: ''
+  user_dict: custom_phrase_DoMiSo
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+
 editor:
   bindings:
-    space: toggle_selection
+    # space: toggle_selection
+    space: confirm
     Return: commit_composition          # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Shift+Return: lua_function@custom_commit_text  # 將 Control+Return 綁定到 Lua 函數
+    Shift+Return: commit_raw_input        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Return: commit_comment  # 上屏顯示的輸入：lau⁵ / lâu
+    # Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    # Control+Shift+Return: custom_commit_text  # 將 Control+Return 綁定到 Lua 函數
+    # Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    # Shift+Return: custom_commit_text_translator
+    Control+Shift+Return: commit_script_text  # 將 Control+Return 綁定到 Lua 函數
 
 key_binder:
   import_preset: default
@@ -376,7 +412,6 @@ recognizer:
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
-    # reverse_lookup: "`[a-z]*'?$"
     # punct: '`[^\s]$'
 
 menu:
@@ -519,7 +554,7 @@ punctuator:
     "<" : { commit: "，" }
     ">" : { commit: "。" }
     # "?" : [ ？, ／, "/", ÷ ]
-    ":" : [ ：, ； ]
+    # ":" : [ ：, ； ]
     "'" : { pair: [ "‘", "’" ] }
     "\"" : { pair: [ "“", "”" ] }
     "\\" : [ 、, "\\", ＼ ]

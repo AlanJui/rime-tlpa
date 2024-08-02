@@ -57,7 +57,8 @@ speller:
   finals: ;\'/".[]
   # delimiter: " '"
   delimiter: "'"
-  use_space: true
+  # use_space: true
+  use_space: false
   algebra:
     #------------------------------------------------------------------
     # 定義【地方腔】與【優勢腔】相容之處理規則

@@ -40,6 +40,7 @@ patch:
     - {schema: tlpa_peh_ue_cap_peh_im}    # 河洛白話十八音（使用拼音輸入，顯示十八音標讀音）
     #------------------------------------------------------------------------
     # 方音/注音
+    - {schema: taigi_tps}                 # 台語方音
     - {schema: tlpa_holok_hong_im}        # 河洛方音
     - {schema: tlpa_holok_cu_im}          # 河洛注音
     - {schema: tlpa_holok_piau_im}        # 河洛標音（用注音符號標注音）
