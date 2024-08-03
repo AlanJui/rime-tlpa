@@ -18,6 +18,14 @@ import_tables:
   # - tlpa_ji_khoo_ban_lam_su_lui
 ...
 拱	kiong2	10%
+也	ia7	10%
+粥	tsiok4	10%
+粥	iok8	10%
+遮	jia1	10%
+遮	tsia1	10%
+遮	ann2	10%
+充	tshiong1	10%
+憎	tsing1	10%
 ##-----------------------------
 ##	a/ah
 啊	a0
@@ -1866,6 +1874,7 @@ import_tables:
 氧	iang2	10%
 約	iak4
 陽	iang5	10%
+陽	iong5	10%
 羊	iang5	5%
 楊	iang5	5%
 洋	iang5	5%
@@ -1883,6 +1892,7 @@ import_tables:
 脹	tiang3
 帳	tiang3
 長	tiang5
+長	tiong5	10%
 場	tiang5	0%
 腸	tiang5
 丈	tiang6
@@ -2667,7 +2677,11 @@ import_tables:
 坪	penn5
 病	penn7	10%
 澎	phenn5
-平	phenn5
+平	penn5	10%
+平	phenn5	10%
+平	pinn5	10%
+平	phinn5	10%
+平	ping5	10%
 怦	phenn7
 搣	mee1
 猛	mee2	1%
@@ -2954,6 +2968,7 @@ import_tables:
 漓	li5
 離	li7	10%
 利	li7	10%
+利	le7	10%
 俐	li7
 吏	li7
 蒞	li7
@@ -5590,6 +5605,8 @@ import_tables:
 束	sok4
 索	sok4
 宿	sok4
+宿	siok4	10%
+宿	hioh4	10%
 速	sok4
 縮	sok4
 肅	sok4
