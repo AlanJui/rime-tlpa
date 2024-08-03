@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.1.10"
+  version: "0.0.1.11"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -67,15 +67,14 @@ translator:
   prism: DoMiSo_Cu_Im
   enable_sentence: true
   enable_encoder: true
-  spelling_hint: 3
+  spelling_hints: 10
   preedit_format:
     __patch:
       - DoMiSo_Libs:/display_preedit
   comment_format:
     __patch:
-      - DoMiSo_Libs:/phing_im_to_cu_im
-      - DoMiSo_Libs:/keymap_bopomofo
-      - DoMiSo_Libs:/display_comment
+      # - DoMiSo_Libs:/display_comment
+      - DoMiSo_Libs:/display_phing_im_ji_mo
 
 custom_phrase:
   dictionary: ''
@@ -90,13 +89,10 @@ editor:
     # space: toggle_selection
     space: confirm
     Return: commit_composition          # 上屏原始的輸入：lau5
-    Shift+Return: commit_raw_input        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_comment  # 上屏顯示的輸入：lau⁵ / lâu
-    # Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
     # Control+Shift+Return: custom_commit_text  # 將 Control+Return 綁定到 Lua 函數
-    # Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    # Shift+Return: custom_commit_text_translator
-    Control+Shift+Return: commit_script_text  # 將 Control+Return 綁定到 Lua 函數
 
 key_binder:
   import_preset: default
