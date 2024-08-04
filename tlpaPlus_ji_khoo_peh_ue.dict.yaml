@@ -17,6 +17,7 @@ import_tables:
   # - tlpa_ji_khoo_tai_uan_su_lui
   # - tlpa_ji_khoo_ban_lam_su_lui
 ...
+##-----------------------------
 拱	kiong2	10%
 也	ia7	10%
 粥	tsiok4	10%
@@ -26,6 +27,19 @@ import_tables:
 遮	ann2	10%
 充	tshiong1	10%
 憎	tsing1	10%
+吾	ngoo5	10%
+吾	goo5	10%
+乃	nai2	10%
+捧	phang5	10%
+寵	thiong2	10%
+擁	iong2	10%
+人	lang5	10%
+仰	giong2	10%
+仰	iong2	10%
+始	su2	10%
+者	tsia2	10%
+士	su7	50%
+則	tsik4	50%
 ##-----------------------------
 ##	a/ah
 啊	a0
@@ -4474,7 +4488,7 @@ import_tables:
 祠	sur5
 辭	sur5
 似	sur6
-士	sur6	10%
+#士	sur6	10%
 仕	sur6
 姒	sur6
 祀	sur6
@@ -4712,7 +4726,7 @@ import_tables:
 掙	tserng1
 爭	tserng1
 諍	tserng3
-則	tserk4
+則	tserk4	1%
 曾	tserng5
 賊	tserk8
 蹭	tsherng3
