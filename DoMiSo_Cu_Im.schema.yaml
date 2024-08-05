@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.1.11"
+  version: "0.0.2.0"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -55,23 +55,22 @@ speller:
   delimiter: "'"
   use_space: true
   algebra:
-    # __patch:
-    #   - DoMiSo_Libs:/phing_im_to_cu_im
-    #   - DoMiSo_Libs:/abbreviation
-    #   - DoMiSo_Libs:/keymap_bopomofo
     #------------------------------------------------------------------
     # 定義【地方腔】與【優勢腔】相容之處理規則
     #------------------------------------------------------------------
-    - derive/uih/ueh/
-    - derive/ou/oo/
     - derive/er(ng|k)/i$1/
-    # - derive/er(n|t)/u$1/
-    - xform/er(n|t)/u$1/
+    - derive/er(n|t)/u$1/
     - derive/ere/ue/
     - derive/er/e/
-    - derive/ee/e/	  # 漳州/泉州腔
+    # - xform/er(ng|k)/i$1/
+    # - xform/er(n|t)/u$1/
+    # - xform/ere/ue/
+    # - xform/er/e/
+
     - derive/ei/e/	  # 漳州腔
     - derive/ur/u/	  # 廈門腔
+    - derive/ou/oo/
+    - derive/ee/e/	  # 漳州/泉州腔
     #--------------------------------------------------------------------------
     # 調整字典台語音標字母
     # 定義【台語音標】與【音標編碼】的對映關係
@@ -166,7 +165,6 @@ speller:
     # 變調
     #------------------------------------------------------------------
     # 轉調
-    # - derive/6/7/
     - xform/6/7/
     # 舒聲變調（1 2 3 5 7）
     - derive/1/7/ # 第一調 → 第七調
@@ -224,9 +222,9 @@ translator:
   # dictionary: tlpa_ji_khoo_peh_ue
   dictionary: tlpaPlus_ji_khoo_peh_ue
   prism: DoMiSo_Cu_Im
-  enable_sentence: true
-  enable_encoder: true
-  spelling_hints: 10
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
   preedit_format:
     #--------------------------------------------------------------------------
     # 按鍵轉注音符號：定義鍵盤【按鍵】與【注音符號】的對映關聯
@@ -360,18 +358,18 @@ translator:
     # 姜 iang / 堅 ian / 兼 iam
     - xform/《iang/ㄧㄤ《/
     - xform/《ian/ㄧㄢ《/
-    - xform/《ia([kt])/ㄧㄚ$1《/
-    - xform/《ia(m|p)/ㄧㄚ$1《/
+    - xform/《ia([kt])/ㄧㄚ《$1/
+    - xform/《ia(m|p)/ㄧㄚ《$1/
     # 經 ing / 巾 in / 金 im
-    - xform/《i(ng|k)/ㄧㄚ$1《/
-    - xform/《i(n|t)/ㄧㄚ$1《/
-    - xform/《i(m|p)/ㄧㄚ$1《/
+    - xform/《i(ng|k)/ㄧ《$1/
+    - xform/《i(n|t)/ㄧ《$1/
+    - xform/《i(m|p)/ㄧ《$1/
     # 嘄 Niau / 嬌 iau
     - xform/《N?(iau)/ㄧㄠ《/
     # 驚 Nia / 迦 ia
     - xform/《N?(ia)/ㄧㄚ《/
     # 㳟 iong
-    - xform/《io(ng|k)/ㄧㄛ$1《/
+    - xform/《io(ng|k)/ㄧㄛ《$1/
     # 薑 Nio / 茄 io
     - xform/《N?(io)/ㄧㄜ《/
     # 牛 Niu / 丩 iu
@@ -388,7 +386,7 @@ translator:
     # 光 uang / 觀 uan
     - xform/《uang/ㄨㄤ《/
     - xform/《uan/ㄨㄢ《/
-    - xform/《ua([kt])/ㄨㄚ$1《/
+    - xform/《ua([kt])/ㄨㄚ《$1/
     # 官 Nua / 瓜 ua 
     - xform/《N?(ua)/ㄨㄚ《/
     # 褌 Nui / 規 ui
@@ -396,7 +394,7 @@ translator:
     # 糜 Nue / 檜 ue
     - xform/《N?(ue)/ㄨㄝ《/
     # 君 un
-    - xform/《u(n|t)/ㄨ$1《/
+    - xform/《u(n|t)/ㄨ《$1/
     # 方音
     - xform/《ur/ㄨ《/
     # 艍 u
@@ -407,8 +405,8 @@ translator:
     # 江 ang / 干 an / 甘 am
     - xform/《ang/ㄤ《/
     - xform/《an/ㄢ《/
-    - xform/《a([kt])/ㄚ$1《/
-    - xform/《a(m|p)/ㄚ$1《/
+    - xform/《a([kt])/ㄚ《$1/
+    - xform/《a(m|p)/ㄚ《$1/
     # 閒 Nai / 皆 ai
     - xform/《N?(ai)/ㄞ《/
     # 爻 Nau / 交 au
@@ -419,8 +417,8 @@ translator:
     # e
     #------------------------------------------------------
     # 泉腔: erng, erk, eru, ere, ern er
-    - xform/《er(ng|k)/ㄧ$1《/	# 等 [terng2], 德 [terk4]
-    - xform/《er(n|t)/ㄧ$1《/	  # 【恩】：ern1
+    - xform/《er(ng|k)/ㄧ《$1/	# 等 [terng2], 德 [terk4]
+    - xform/《er(n|t)/ㄧ《$1/	  # 【恩】：ern1
     - xform/《ere/ㄨㄝ《/	      # 火【鷄】:kere1
     - xform/《er/ㄜ《/	        # 【火】鷄: her2
     # 稽 ei / 嘉 ee
@@ -432,8 +430,8 @@ translator:
     # oo
     #------------------------------------------------------
     # 公 ong / 箴 om
-    - xform/《o(ng|k)/ㄛ$1《/
-    - xform/《o(m|p)/ㄛ$1《/
+    - xform/《o(ng|k)/ㄛ《$1/
+    - xform/《o(m|p)/ㄛ《$1/
     # 姑 Noo / 沽 oo
     - xform/《N?(oo)/ㄛ《/
     #------------------------------------------------------
@@ -452,30 +450,19 @@ translator:
     # 鼻音韻尾
     #------------------------------------------------------
     # 陽聲韻 ng, n, m
-    - xform/ng《/ㄥ《/
-    - xform/n《/ ㄣ《/
-    - xform/m《/ ㄇ《/
+    - xform/《ng/ㄥ《/
+    - xform/《n/ㄣ《/
+    - xform/《m/ㄇ《/
     #------------------------------------------------------
     # 入聲韻 p t k h
-    - xform/p《/ㄆ《/
-    - xform/t《/ㄊ《/
-    - xform/k《/ㄎ《/
-    - xform/h《/ㄏ《/
-    #------------------------------------------------------
-    # 校調
-    #------------------------------------------------------
-    - xform/ㄚㄧ/ㄞ/
-    - xform/ㄚㄨ/ㄠ/
-    - xform/ㄚㄣ/ㄢ/
-    - xform/ㄚㄥ/ㄤ/
+    - xform/《p/ㄆ《/
+    - xform/《t/ㄊ《/
+    - xform/《k/ㄎ《/
+    - xform/《h/ㄏ《/
     #------------------------------------------------------
     # 轉換成聲調符號
     #------------------------------------------------------
     # 將【聲調數值】轉換成【聲調符號】
-    # - xform/1(】)/ˉ$1/
-    # - xform/3(】)/_$1/
-    # - xform/7(】)/+$1/
-    # - xform/1(】)/$1/     # 聲調一無需顯示
     - xform/《1/ˉ/
     - xform/《2/ˋ/
     - xform/《6/ˋ/
@@ -496,7 +483,14 @@ translator:
     #------------------------------------------------------
     # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
     # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
-    - 'xlit 12345678 ¹²³⁴⁵⁶⁷⁸'
+    - xform/1(?=〕)/¹/
+    - xform/2(?=〕)/²/
+    - xform/3(?=〕)/³/
+    - xform/4(?=〕)/⁴/
+    - xform/5(?=〕)/⁵/
+    - xform/6(?=〕)/⁶/
+    - xform/7(?=〕)/⁷/
+    - xform/8(?=〕)/⁸/
 
 custom_phrase:
   dictionary: ''
