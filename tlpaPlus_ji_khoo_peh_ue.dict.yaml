@@ -4488,7 +4488,7 @@ import_tables:
 祠	sur5
 辭	sur5
 似	sur6
-#士	sur6	10%
+士	sur6	10%
 仕	sur6
 姒	sur6
 祀	sur6
@@ -4672,38 +4672,38 @@ import_tables:
 黍	sere2
 細	sere3	10%
 楔	sereh4
-##	ern/ert
-恩	ern1	10%
-殷	ern1
-允	ern2	10%
-癮	ern2
-根	kern1	10%
-巾	kern1	10%
-斤	kern1	10%
-筋	kern1
-跟	kern1
-艮	kern3
-近	kern6	10%
-懇	khern2
-墾	khern2
-芹	khern5
-勤	khern5	10%
-迄	gert4
-訖	gert4
-銀	gern5
-睨	gern5
-齦	gern5
-鄞	gern5
-垠	gern5
-沂	gern5
-仡	gert8
-屹	gert8
-兀	gert8
-很	hern2
-狠	hern2
-痕	hern5	10%
-恨	hern7	10%
-核	hert8
+##	ern/ert 改 un/ut
+恩	un1	10%
+殷	un1
+允	un2	10%
+癮	un2
+痕	hun5	10%
+根	kun1	10%
+巾	kun1	10%
+斤	kun1	10%
+筋	kun1
+跟	kun1
+艮	kun3
+近	kun6	10%
+懇	khun2
+墾	khun2
+芹	khun5
+勤	khun5	10%
+迄	gut4
+訖	gut4
+銀	gun5
+睨	gun5
+齦	gun5
+鄞	gun5
+垠	gun5
+沂	gun5
+仡	gut8
+屹	gut8
+兀	gut8
+很	hun2
+狠	hun2
+恨	hun7	10%
+核	hut8
 ##	erng/erk
 等	terng2
 德	terk4
