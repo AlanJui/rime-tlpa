@@ -18,6 +18,7 @@ import_tables:
   # - tlpa_ji_khoo_ban_lam_su_lui
 ...
 ##-----------------------------
+呂	li7	10%
 拱	kiong2	10%
 也	ia7	10%
 粥	tsiok4	10%
@@ -4705,36 +4706,36 @@ import_tables:
 恨	hun7	10%
 核	hut8
 ##	erng/erk ==> ing/ik
-等	ting2
-德	tik4
-得	tik4
-特	tik8
-撐	thing1
-瞠	thing1
-忒	thik4
-忑	thik4
-能	ling5
-羹	king1
-庚	king1
-更	king1
-更	king3
-肯	khing2
-增	tsing1
-崢	tsing1
-曾	tsing1
-僧	tsing1
-掙	tsing1
-爭	tsing1
-諍	tsing3
-則	tsik4	1%
-曾	tsing5
-賊	tsik8
-蹭	tshing3
-生	sing1
-牲	sing1
-甥	sing1
-僧	sing1
-塞	sik4
+等	terng2
+德	terk4
+得	terk4
+特	terk8
+撐	therng1
+瞠	therng1
+忒	therk4
+忑	therk4
+能	lerng5
+羹	kerng1
+庚	kerng1
+更	kerng1
+更	kerng3
+肯	kherng2
+增	tserng1
+崢	tserng1
+曾	tserng1
+僧	tserng1
+掙	tserng1
+爭	tserng1
+諍	tserng3
+則	tserk4	1%
+曾	tserng5
+賊	tserk8
+蹭	tsherng3
+生	serng1
+牲	serng1
+甥	serng1
+僧	serng1
+塞	serk4
 ##	oo/ooh
 烏	oo1	10%
 嗚	oo1

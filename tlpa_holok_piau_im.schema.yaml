@@ -57,16 +57,19 @@ speller:
     #------------------------------------------------------------------
     # 定義【地方腔】與【優勢腔】相容之處理規則
     #------------------------------------------------------------------
-    - derive/uih/ueh/
-    - derive/ou/oo/
     - derive/er(ng|k)/i$1/
-    # - derive/er(n|t)/u$1/
-    - xform/er(n|t)/u$1/
+    - derive/er(n|t)/u$1/
     - derive/ere/ue/
     - derive/er/e/
-    - derive/ee/e/	  # 漳州/泉州腔
+    # - xform/er(ng|k)/i$1/
+    # - xform/er(n|t)/u$1/
+    # - xform/ere/ue/
+    # - xform/er/e/
+
     - derive/ei/e/	  # 漳州腔
     - derive/ur/u/	  # 廈門腔
+    - derive/ou/oo/
+    - derive/ee/e/	  # 漳州/泉州腔
     #--------------------------------------------------------------------------
     # 調整字典台語音標字母
     # 定義【台語音標】與【音標編碼】的對映關係
@@ -316,11 +319,18 @@ translator:
     #------------------------------------------------------
     # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
     # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
-    - 'xlit 12345678 ¹²³⁴⁵⁶⁷⁸'
+    - xform/1(?=〕)/¹/
+    - xform/2(?=〕)/²/
+    - xform/3(?=〕)/³/
+    - xform/4(?=〕)/⁴/
+    - xform/5(?=〕)/⁵/
+    - xform/6(?=〕)/⁶/
+    - xform/7(?=〕)/⁷/
+    - xform/8(?=〕)/⁸/
 
 custom_phrase:
   dictionary: ''
-  user_dict: custom_phrase_DoMiSo
+  user_dict: custom_phrase_holok_piau_im
   db_class: stabledb
   enable_completion: false
   enable_sentence: false

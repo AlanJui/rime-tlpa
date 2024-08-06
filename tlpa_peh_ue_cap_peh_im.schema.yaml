@@ -44,30 +44,30 @@ speller:
   finals: ';\</9-[.0'
   delimiter: " '"
   algebra:
-    #------------------------------------------------------
-    # 前置處理
-    #------------------------------------------------------
+    #--------------------------------------------------------------------------
+    # 調整字典台語音標字母
+    # 定義【台語音標】與【音標編碼】的對映關係
+    #--------------------------------------------------------------------------
     # 去除零聲母
     - derive/Ø//
     - derive/^ts/c/	  # 可用羅馬拼音
-    #------------------------------------------------------
-    # 定義字典中的 ‘漢字拼音’ 可與其它拼音法相容的規則
-    #------------------------------------------------------
     - derive/6/7/
-    - derive/uih/ueh/
+    #------------------------------------------------------------------
+    # 定義【地方腔】與【優勢腔】相容之處理規則
+    #------------------------------------------------------------------
+    - derive/er(ng|k)/i$1/
+    - derive/er(n|t)/u$1/
+    - derive/ere/ue/
+    - derive/er/e/
+    # - xform/er(ng|k)/i$1/
+    # - xform/er(n|t)/u$1/
+    # - xform/ere/ue/
+    # - xform/er/e/
+
+    - derive/ei/e/	  # 漳州腔
+    - derive/ur/u/	  # 廈門腔
     - derive/ou/oo/
-    - derive/er(ng|k)/ir$1/
-    - derive/er(n|t)/ir$1/
-    - derive/eru/ou/
-    - derive/ere/oe/
-    - derive/ee/e/
-    - derive/er/o/
-    - derive/er/ue/
-    - derive/ui/ue/
-    - derive/ur/u/
-    # 泉州腔 ir
-    - derive/ir/u/
-    - derive/ir/i/
+    - derive/ee/e/	  # 漳州/泉州腔
     #------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #------------------------------------------------------
@@ -94,7 +94,9 @@ speller:
 translator:
   dictionary: tlpa_ji_khoo_peh_ue
   prism: tlpa_peh_ue_cap_peh_im
-  spelling_hints: 5
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
   preedit_format:
     #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
@@ -113,21 +115,36 @@ translator:
     - 'xform \. 8'
   comment_format:
     #======================================================
-    # 令候選字視窗，可顯示兩組「注音】/拼音」
-    # 左邊：TLPA 拼音；右邊：十五音（河洛十八音）
+    # 拼音系統設定
     #======================================================
-    # - xform/^([a-z]+\d)$/《$1【》$1】/
-    # 無聲母
-    # - xform/^(([aeiou]|oo|ng).*)$/《$1【》Ø$1】/
-    - xform/^(([aeiou]|oo|ng).*)$/《$1【》Ø$1/
-    # 有聲母
-    # - xform/^(([ptkmnbglsjhiuc]g?s?h?h?).*)$/《$1【》$1】/
-    - xform/^(([pbmtnlkgcjsh])([^hg]).*)$/《$1【》$1/
+    # 舌尖前音（齒齦音）: z[c], c[ch], j[j], s[s]
+    - derive/^ts/c/	  # 可用羅馬拼音
+    # - xform/^c(?!h)/z/       # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
+    # - xform/^ch/c/           # ㄘ
+    - xform/6/7/
     #------------------------------------------------------
     # 處理鼻音化韻母
     #------------------------------------------------------
     # 鼻音韻母顯示：鼻化韻母以 ‘上標n’ 強調
-    - 'xform/([aeiou]|oo)nn/$1ⁿ/'
+    # - 'xform/([aeiou]|oo)nn/$1ⁿ/'
+    # 鼻音韻母顯示：鼻化韻母以 ‘N’ 標示: Niau
+    - xform/(uai|iau|ai|au|ia|io|iu|ua|ui)nn/N$1/
+    - xform/([aeiou]|oo)nn/N$1/
+    #======================================================
+    # 令候選字視窗，可顯示兩組「注音】/拼音」
+    # 左邊：TLPA 拼音；右邊：十五音（河洛十八音）
+    #======================================================
+    # 連續輸入用【拼音分隔符號】換成空白
+    - xform/'/ /
+    #------------------------------------------------------
+    # 為候選字之拼音字母，建立轉換格式
+    #------------------------------------------------------
+    # - xform/^([Øa-z]+\d)$/〔$1〕【》$1】/
+    #------------------------------------------------------
+    # 無聲母
+    - xform/^(([aeiou]|oo|ng).*)$/《$1【》Ø$1/
+    # 有聲母
+    - xform/^(([pbmtnlkgcjsh])([^hg]).*)$/《$1【》$1/
     #------------------------------------------------------
     # 消除 "零聲母"
     #------------------------------------------------------
@@ -173,101 +190,111 @@ translator:
     - xform/》ir/居》/
     # ???
     - xform/》ur(h?)/高》/
-
-    # a
-    - xform/》a(ng|k)/江》/
-    - xform/》a(n|t)/干》/
-    - xform/》a(m|p)/甘》/
-
-    - xform/》aiⁿ/閒》/
-    - xform/》ai/皆》/
-
-    - xform/》auⁿ/爻》/
-    - xform/》au(h?)/交》/
-    #------------------------------------------------------
-    # 順序特調處理
-    #------------------------------------------------------
-    - xform/》uiⁿ/禈》/
-    - xform/》ui(h?)/規》/
-    - xform/》iⁿ(h?)/梔》/
     #------------------------------------------------------
     # i
-    - xform/》iauⁿ(h?)/嘄》/
+    #------------------------------------------------------
+    # - xform/》iauⁿ(h?)/嘄》/
+    - xform/》Niau(h?)/嘄》/
     - xform/》iau(h?)/嬌》/
+
+    # - xform/》iaⁿ/驚》/
+    - xform/》Nia/驚》/
+    - xform/》ia(h?)/迦》/
 
     - xform/》ia(ng|k)/姜》/
     - xform/》ia(n|t)/堅》/
     - xform/》ia(m|p)/兼》/
 
+    # - xform/》ioⁿ/薑》/
+    - xform/》Nio/薑》/
+    - xform/》io(ng|k)/恭》/
+    - xform/》io(h?)/茄》/
+
+    # - xform/》iuⁿ/牛》/
+    - xform/》Niu/牛》/
+    - xform/》iu/丩》/
+
     - xform/》i(ng|k)/經》/
     - xform/》i(n|t)/巾》/
     - xform/》i(m|p)/金》/
 
-    - xform/》iaⁿ/驚》/
-    - xform/》ia(h?)/迦》/
-
-    - xform/》iuⁿ/牛》/
-    - xform/》iu/丩》/
-
-    - xform/》ioⁿ/薑》/
-    - xform/》io(ng|k)/恭》/
-    - xform/》io(h?)/茄》/
+    # - xform/》iⁿ(h?)/梔》/
+    - xform/》Ni(h?)/梔》/
+    - xform/》i(h?)/居》/
     #------------------------------------------------------
     # u
-    - xform/》uaiⁿ(h?)/閂》/
+    #------------------------------------------------------
+    # - xform/》uaiⁿ(h?)/閂》/
+    - xform/》Nuai(h?)/閂》/
     - xform/》uai(h?)/乖》/
+
+    # - xform/》uaⁿ/官》/
+    - xform/》Nua/官》/
+    - xform/》ua(h?)/瓜》/
 
     - xform/》ua(ng|k)/光》/
     - xform/》ua(n|t)/觀》/
 
-    - xform/》uaⁿ/官》/
-    - xform/》ua(h?)/瓜》/
-
     # - xform/》uiⁿ/禈》/
-    # - xform/》ui(h?)/規》/
+    - xform/》Nui/禈》/
+    - xform/》ui(h?)/規》/
 
-    - xform/》ueⁿ/糜》/
+    # - xform/》ueⁿ/糜》/
+    - xform/》Nue/糜》/
     - xform/》ue(h?)/檜》/
 
     - xform/》u(n|t)/君》/
+
+    - xform/》u(h?)/艍》/
+    #------------------------------------------------------
+    # a
+    #------------------------------------------------------
+    # - xform/》aiⁿ/閒》/
+    - xform/》Nai/閒》/
+    - xform/》ai/皆》/
+
+    # - xform/》auⁿ/爻》/
+    - xform/》Nau/爻》/
+    - xform/》au(h?)/交》/
+
+    - xform/》a(ng|k)/江》/
+    - xform/》a(n|t)/干》/
+    - xform/》a(m|p)/甘》/
+
+    # - xform/》aⁿ(h?)/監》/
+    - xform/》Na(h?)/監》/
+    - xform/》a(h?)/膠》/
     #------------------------------------------------------
     # e
+    #------------------------------------------------------
     - xform/》ei/稽》/
     - xform/》ee(h?)/嘉》/
+
+    # - xform/》eⁿ(h?)/更》/
+    - xform/》Ne(h?)/更》/
+    - xform/》e(h?)/伽》/
     #------------------------------------------------------
     # oo
+    #------------------------------------------------------
     - xform/》o(ng|k)/公》/
     - xform/》o(m|p)/箴》/
 
-    - xform/》ooⁿ/姑》/
+    # - xform/》ooⁿ/姑》/
+    - xform/》Noo/姑》/
     - xform/》oo(h?)/沽》/
     #------------------------------------------------------
     # o
     # 停用 `江(oⁿ)` ，併入 `姑(oⁿ/ooⁿ)`
     # - xform/》oⁿ(h?)/扛》/
     #------------------------------------------------------
-    - xform/》aⁿ(h?)/監》/
-    - xform/》a(h?)/膠》/
-
-    # - xform/》iⁿ(h?)/梔》/
-    # - xform/》i(h?)/居》/
-
-    # - xform/》u(h?)/艍》/
-
-    - xform/》eⁿ(h?)/更》/
-    - xform/》e(h?)/伽》/
-
-    - xform/》oⁿ(h?)/姑》/
-
+    # - xform/》oⁿ(h?)/姑》/
+    - xform/》No(h?)/姑》/
     - xform/》o(h?)/高》/
+    #------------------------------------------------------
+    # m, ng
     #------------------------------------------------------
     - xform/》m/姆》/
     - xform/》ng/鋼》/
-    #------------------------------------------------------
-    # 順序特調處理：務必置於最尾端
-    #------------------------------------------------------
-    - xform/》u(h?)/艍》/
-    - xform/》i(h?)/居》/
     #------------------------------------------------------
     # 轉換聲調
     #------------------------------------------------------
@@ -290,12 +317,7 @@ translator:
     # - xform/《Ø/《/
     - xform/《//
     # 消除 "零聲母"
-    # - xform/Ø([a-z]+[¹²³⁴⁵⁶⁷⁸⁰])/$1/
     - xform/Ø([a-z]+\d)//
-    #------------------------------------------------------
-    # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
-    #------------------------------------------------------
-    # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -303,6 +325,14 @@ reverse_lookup:
   tips: 〔拼音〕
   preedit_format:
     - xform/([nljqxy])v/$1ü/
+
+editor:
+  bindings:
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
 
 key_binder:
   import_preset: default
@@ -335,17 +365,6 @@ key_binder:
     - {accept: "Control+3", toggle: simplification, when: always}
     - {accept: "Control+4", toggle: extended_charset, when: always}
 
-editor:
-  bindings:
-    space: commit                       # 選擇「備選漢字」
-    Return: commit_composition          # 上屏原始的輸入：lau5
-    # Control+Return: commit_composition          # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_raw_input      # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-
-punctuator:
-  import_preset: default
-
 recognizer:
   import_preset: default
   patterns:
@@ -357,4 +376,7 @@ menu:
 
 style:
   horizontal: false
+
+punctuator:
+  import_preset: piau_tian_hu_ho
 
