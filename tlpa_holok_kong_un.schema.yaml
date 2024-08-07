@@ -42,23 +42,17 @@ engine:
     - uniquifier
 
 speller:
-  # alphabet: 'abcdefghijklmnopqrstuvwxyz~[/\]90-;'
-  # initials: abcdefghijklmnopqrstuvwxyz
   alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</-]0'
   initials: 'abcdefghijklmnopqrstuvwxyz'
   delimiter: " '"
   algebra:
-    # 去掉聲調
-    # - derive/[1-8]//
-    # 零聲母處理
-    # - derive/Ø//
     #==========================================
+    # 設定字典檔
     # - derive/^([Øa-z]+)\d$/$1/
     # - abbrev/^([ptkmnbglsjhiuc]g?s?h?h?).*/$1/
     # - 'xlit 12345678 [/\]90-;'
     #==========================================
     # 零聲母處理
-    # - derive/q//
     - derive/Ø//
     # 通配
     - derive/ts/c/
