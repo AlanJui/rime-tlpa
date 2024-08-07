@@ -427,9 +427,6 @@ editor:
     Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
 
-punctuator:
-  import_preset: default
-
 recognizer:
   import_preset: default
   patterns:
@@ -444,3 +441,6 @@ menu:
 style:
   horizontal: false
   # font_face: "Microsoft Jhenghei"
+
+punctuator:
+  import_preset: piau_tian_hu_ho

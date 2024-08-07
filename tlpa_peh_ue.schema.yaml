@@ -111,9 +111,12 @@ speller:
     - 'xform 8 \.'
 
 translator:
-  dictionary: tlpa_ji_khoo_peh_ue
+  # dictionary: tlpa_ji_khoo_peh_ue
+  dictionary: tlpaPlus_ji_khoo_peh_ue
   prism: tlpa_peh_ue
-  spelling_hints: 5
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
   preedit_format:
     #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
