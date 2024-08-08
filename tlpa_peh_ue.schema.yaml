@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_peh_ue
   name: 河洛白話
-  version: "0.0.2.2"
+  version: "0.0.2.3"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -150,11 +150,14 @@ translator:
   initial_quality: 0.75
   preedit_format:
     #------------------------------------------------------
+    # 將【台語音標】改成【台羅拼音】
+    #------------------------------------------------------
+    - xform/z/ts/
+    - xform/c/tsh/
+    #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
     #------------------------------------------------------
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
-    - xform/z/ts/
-    - xform/c/tsh/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
@@ -368,21 +371,21 @@ translator:
     # 鼻韻符號轉換 Na = 鼻ㄚ = ㆩ
     #------------------------------------------------------
     - xform/鼻/ㄥ/
-    # 複合鼻音韻母
-    - xform/ㄥㄧㄚ/ㄧㆩ/    # iann = Nia
-    - xform/ㄥㄧㄠ/ㄧㆯ/    # iaunn = Niau
-    - xform/ㄥㄧㄨ/ㄧㆫ/    # iunn = Niu
-    - xform/ㄥㄨㄚ/ㄨㆩ/    # uann = Nua
-    - xform/ㄥㄨㄞ/ㄨㆮ/    # uainn = Nuai
-    - xform/ㄥㄨㄧ/ㄨㆪ/    # uinn = Nui
-    # 元音/複合韻母
-    - xform/ㄥㄧ/ㆪ/
-    - xform/ㄥㄨ/ㆫ/
-    - xform/ㄥㄚ/ㆩ/
-    - xform/ㄥㆦ/ㆧ/
-    - xform/ㄥㄝ/ㆥ/
-    - xform/ㄥㄞ/ㆮ/
-    - xform/ㄥㄠ/ㆯ/
+    # # 複合鼻音韻母
+    # - xform/ㄥㄧㄚ/ㄧㆩ/    # iann = Nia
+    # - xform/ㄥㄧㄠ/ㄧㆯ/    # iaunn = Niau
+    # - xform/ㄥㄧㄨ/ㄧㆫ/    # iunn = Niu
+    # - xform/ㄥㄨㄚ/ㄨㆩ/    # uann = Nua
+    # - xform/ㄥㄨㄞ/ㄨㆮ/    # uainn = Nuai
+    # - xform/ㄥㄨㄧ/ㄨㆪ/    # uinn = Nui
+    # # 元音/複合韻母
+    # - xform/ㄥㄧ/ㆪ/
+    # - xform/ㄥㄨ/ㆫ/
+    # - xform/ㄥㄚ/ㆩ/
+    # - xform/ㄥㆦ/ㆧ/
+    # - xform/ㄥㄝ/ㆥ/
+    # - xform/ㄥㄞ/ㆮ/
+    # - xform/ㄥㄠ/ㆯ/
     #------------------------------------------------------
     # 轉換成聲調符號
     # 將【聲調數值】轉換成【聲調符號】
@@ -417,8 +420,14 @@ translator:
     - xform/(〔)Ø/$1/
     #------------------------------------------------------
     # 與 TLPA+【台灣拼音進階版】相容
+    #------------------------------------------------------
     # - xform/z/ts/
     # - xform/c/tsh/
+    #------------------------------------------------------
+    # 處理鼻音化韻母
+    # a/e/i/O/u/uai/iau/ai/au/ia/io/iu/ua/ui
+    #------------------------------------------------------
+    # - xform/N([iu]?(ai|au|[iuaoe]|oo))/$1ⁿ/
     #------------------------------------------------------
     # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
     # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
@@ -464,10 +473,10 @@ key_binder:
 
 editor:
   bindings:
-    space: commit                       # 選擇「備選漢字」
-    Return: commit_composition          # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    space: commit                           # 選擇「備選漢字」
+    Return: commit_composition              # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
 
 recognizer:
