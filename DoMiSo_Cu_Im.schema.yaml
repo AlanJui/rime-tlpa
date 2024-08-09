@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.2.0"
+  version: "0.0.2.4"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -211,7 +211,7 @@ speller:
 
 translator:
   # dictionary: tlpa_ji_khoo_peh_ue
-  dictionary: tlpaPlus_ji_khoo_peh_ue
+  dictionary: tl_ji_khoo_peh_ue
   prism: DoMiSo_Cu_Im
   spelling_hints: 20
   always_show_comments: true
