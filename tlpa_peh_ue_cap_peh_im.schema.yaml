@@ -102,9 +102,9 @@ speller:
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #--------------------------------------------------------------------------
     - derive/^([A-Za-z]+)\d$/$1/
-    #=======================================================================
+    #--------------------------------------------------------------------------
     # 台語音標之拼音字母輸入【簡化規則】
-    #=======================================================================
+    #--------------------------------------------------------------------------
     # 可以只用【聲母】音標找漢字
     - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).*/$1/
     # 可只輸入【聲母】與【調號】
@@ -158,9 +158,9 @@ translator:
     # TLPA+ : tsh(TL) ==> ch(TLPA) ==> c(TLPA+)
     #======================================================
     # 舌尖前音（齒齦音）: z[c], c[ch], j[j], s[s]
-    # - derive/^ts/c/	        # 可用【台語音標】相容設𡩵
-    # - derive/^c(?!h)/z/     # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
-    # - derive/^ch/c/         # ㄘ
+    - derive/^ts/c/	        # 可用【台語音標】相容設𡩵
+    - derive/^c(?!h)/z/     # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
+    - derive/^ch/c/         # ㄘ
     - xform/6/7/            # 聲調 6 改為 7
     #------------------------------------------------------
     # 處理鼻音化韻母
@@ -196,10 +196,12 @@ translator:
     - xform/》b/門》/
     - xform/》m/毛》/
     # 舌齒音
-    - xform/》c(?!h)/曾》/
-    - xform/》ch/出》/
+    # - xform/》c(?!h)/曾》/
+    # - xform/》ch/出》/
     - xform/》ts(?!h)/曾》/
-    - xform/》ts/出》/
+    - xform/》tsh/出》/
+    - xform/》z/曾》/
+    - xform/》c/出》/
     - xform/》j/入》/
     - xform/》s/時》/
     # 舌尖音
@@ -237,13 +239,13 @@ translator:
     - xform/》Niau(h?)/嘄》/
     - xform/》iau(h?)/嬌》/
 
-    # - xform/》iaⁿ/驚》/
-    - xform/》Nia/驚》/
-    - xform/》ia(h?)/迦》/
-
     - xform/》ia(ng|k)/姜》/
     - xform/》ia(n|t)/堅》/
     - xform/》ia(m|p)/兼》/
+
+    # - xform/》iaⁿ/驚》/
+    - xform/》Nia/驚》/
+    - xform/》ia(h?)/迦》/
 
     # - xform/》ioⁿ/薑》/
     - xform/》Nio/薑》/
@@ -392,13 +394,10 @@ reverse_lookup:
   preedit_format:
     - xform/([nljqxy])v/$1ü/
 
-editor:
-  bindings:
-    space: commit                       # 選擇「備選漢字」
-    Return: commit_composition          # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
+recognizer:
+  import_preset: default
+  patterns:
+    reverse_lookup: "`[a-z]*$"
 
 key_binder:
   import_preset: default
@@ -431,10 +430,13 @@ key_binder:
     - {accept: "Control+3", toggle: simplification, when: always}
     - {accept: "Control+4", toggle: extended_charset, when: always}
 
-recognizer:
-  import_preset: default
-  patterns:
-    reverse_lookup: "`[a-z]*$"
+editor:
+  bindings:
+    space: commit                           # 選擇「備選漢字」
+    Return: commit_composition              # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
 
 menu:
   alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
