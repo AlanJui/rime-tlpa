@@ -1,28 +1,28 @@
-# Rime dictionary
-# encoding: utf-8
+# Rime ditstionary
+# entsoding: utf-8
 #
 # 甲骨漢字庫
 # 漢字讀者：白話音
 # 漢字標音：使用【台語音標（TLPA）】
 ---
-name: tlpa_ji_khoo_kah_kut_bun
+name: tl_ji_khoo_kah_kut_bun
 version: "0.1.0.0"
 sort: by_weight
-use_preset_vocabulary: false
-columns:
+use_preset_votsabulary: false
+tsolumns:
   - text    #漢字／詞彙
-  - code    #台灣音標（TLPA)拼音字母
+  - tsode    #台灣音標（TLPA)拼音字母
   - weight  #常用度（優先顯示度）
   - stem    #用法舉例
 ...
-#text 	code	weight	stem
+#text 	tsode	weight	stem
 也	ia3	10%
 射	sia7	10%
 馮	phing5	10%
 到	kau3	10%
 有	u7	10%
-終	ciong1	10%
-將	ciong3	10%
+終	tsiong1	10%
+將	tsiong3	10%
 蜀	su2	10%
 蜀	siok8	10%
 臥	o3	10%
@@ -30,7 +30,7 @@ columns:
 相	siong3	10%
 晏	gan7	10%
 縣	kuan7	10%
-拓	cit4	10%
+拓	tsit4	10%
 不	m7	10%
 良	liong5	10%
 短	te2	10%
@@ -41,25 +41,25 @@ columns:
 頑	uan5	10%
 兒	li5	10%
 #========================================
-今啊	cim1 a7	60%
-此嘛	cim2 ma2	60%
-今前	cin2 cing5	60%
+今啊	tsim1 a7	60%
+此嘛	tsim2 ma2	60%
+今前	tsin2 tsing5	60%
 抵	tu2
 底	te2
 低	ke7
 阿勞	o7 lo2	60%	誇讚:誐言勞
 憃又有力	song5 ko1 u7 lat4	60%
 猶又是你	iu1 ko1 si7 li2	60%
-又再來	ko1 cai3 lai5	60%
-燹	chiang5	60%	決也
+又再來	ko1 tsai3 lai5	60%
+燹	tshiang5	60%	決也
 仨共	sann1 kang5	60%	參與
-至	ci3	60%
+至	tsi3	60%
 又	koh4	60%
 
 牴	tak8	60%	觸也
 觝	tak8	60%	牴同義字
-牴	chiok4	60%
-牴觸	te2 chiok4
+牴	tshiok4	60%
+牴觸	te2 tshiok4
 跤	kuainn7	60%	
 腳	ka1	60%	
 三腳抵	sann1 kha1 tu2	60%
@@ -72,62 +72,62 @@ columns:
 弇	kham2	60%	同也
 庶饈	si2 siu1	60%	零食
 細饈	si2 siu1	60%	零食
-粗麤	choo1 loo2	60%
+粗麤	tshoo1 loo2	60%
 麤入去	long3 jip8 khi3
 四界麤	si3 ke3 long3	60%
-載事	tai7 ci3	60%
-大事	tai7 ci3	60%	事情
+載事	tai7 tsi3	60%
+大事	tai7 tsi3	60%	事情
 治大	ti7 tai3	60%	事情
 夂	tue3	60%	跟隨
 矣	ah4	60%	虛字，至於句尾,如：了
 逐个	tak8 ke1	60%	大家
 與	kap4	60%	相參
 
-龓總	long2 cong2	60%	全部；總共
+龓總	long2 tsong2	60%	全部；總共
 逐家个好
 學生婗仔	hak8 sing1 gin2 a2
 我窬住宁  	guan2 tau1 tua2 ti7	60%	我家住在
-菆裡	chu2 li2	60%	家裡
+菆裡	tshu2 li2	60%	家裡
 頭勠	thau5 loo7	60%	工作
-時臶	si5 cun7	60%	時候
+時臶	si5 tsun7	60%	時候
 欸	ai3	60%	須要
-𧾍錢	than3 cinn5	60%	賺錢
+𧾍錢	than3 tsinn5	60%	賺錢
 的	e3	60%	語尾助詞
 矣	a3	60%	語尾助詞；矣（啊）
-足辛苦的	ciok4 sin1 khoo2 e3	60%	
+足辛苦的	tsiok4 sin1 khoo2 e3	60%	
 弗但	put4 tan2	60%	不但
 毌但	m7 na7	60%	不但
 欸到扞家	ai3 tau7 huann7 ke1	60%	需要協同持家
-賡欸拼菆內	koh4 ai3 piann1 chu3 lai7 	60%	還要幫忙清掃家裡
+賡欸拼菆內	koh4 ai3 piann1 tshu3 lai7 	60%	還要幫忙清掃家裡
 掃塗䠍	sau3 thoo5 kha1	60%	掃地
-攢三頓煮食	chuan5 sann1 tng3 cu2 ciah8 	60%	準備三餐
-手勠菜	chiu2 loo7 chai3	60%	拿手菜
-雖蔑正厚工	sui1 bue7 cin7 kau7 kang1	60%	雖不需費功夫
+攢三頓煮食	tshuan5 sann1 tng3 tsu2 tsiah8 	60%	準備三餐
+手勠菜	tshiu2 loo7 tshai3	60%	拿手菜
+雖蔑正厚工	sui1 bue7 tsin7 kau7 kang1	60%	雖不需費功夫
 亦不過	iah8 m7 koh4	60%	但是...
-續喙賡蔑礙胃	sua3 chui2 koh4 bue7 gai7 ui7	60%	好吃還不傷胃
+續喙賡蔑礙胃	sua3 tshui2 koh4 bue7 gai7 ui7	60%	好吃還不傷胃
 食好到相報
-臻正蔑輸𢓱	cin1 ciann2 biat8 su1 hoo7	60%	真地不會輸給...
+臻正蔑輸𢓱	tsin1 tsiann2 biat8 su1 hoo7	60%	真地不會輸給...
 婽意	kah4 i2	60%	中意
 食魚食肉也着菜交
 巧	khah4	60%	我的個性巧...（巧：比較傾向...）
 佗		60%	他
 佋介	siau7 kai3	60%	自我佋介
-做載𧝊巧𠯋	co2 tai7 ci2 khah4 eh4	60%	行事風格較𩑭向...
+做載𧝊巧𠯋	tso2 tai7 tsi2 khah4 eh4	60%	行事風格較𩑭向...
 無愛	bo5 ai2	60%	不喜歡...
 由陀位	tui2 toh4 ui7	60%	自何處
 
 憋緒	pi2 su2	60%
 閉緒	pi2 su2	60%
-此班車	ce1 pan1 chia1	60%
-此枋車	ce1 pang1 chia1	60%
-彼一罡	hi2 cit8 kang1	60%	那天...
+此班車	tse1 pan1 tshia1	60%
+此枋車	tse1 pang1 tshia1	60%
+彼一罡	hi2 tsit8 kang1	60%	那天...
 洶洶斡頭	hiong7 hiong7 uat8 thau5	60%	洶洶斡頭（突然回頭）
-一時恟恟	cit8 si5 hiong5 hiong5	60%	突然之間
+一時恟恟	tsit8 si5 hiong5 hiong5	60%	突然之間
 囥在	khng2 ti7	60%	將妳囥在我的心內
-每一次	mui2 cit4 pai2	60%
-甚想欲	cin1 siunn1 beh4	60%	很想要...
-甚多	cin1 che7	60%	很多
-誠多	ciann5 che7	60%	很多
+每一次	mui2 tsit4 pai2	60%
+甚想欲	tsin1 siunn1 beh4	60%	很想要...
+甚多	tsin1 tshe7	60%	很多
+誠多	tsiann5 tshe7	60%	很多
 逐回	tak8 hue5	60%	每次
 怏望𠯋同	ng2 bang7 e7 thang2	60%	希望能夠
 顒望	ng2 bang7	60%
@@ -138,12 +138,12 @@ columns:
 到耽	kau3 tann1	60%	到現在...
 時常	si5 siong5	60%	時常...
 迭迭	tiat8 tiat8	60%	時常在...
-無采	mo5 chai2	60%	可惜
+無采	mo5 tshai2	60%	可惜
 勠力	loo2 lat8	60%	辛苦了
 焉尒	an1 ni1	60%
 偎	ua2	60%	今年二月偎月底
 
-一	cit8	60%	白音
+一	tsit8	60%	白音
 美	sui2	60%
 無仝	mo5 kang7	60%	不同
 天	tinn1	60%
@@ -152,32 +152,32 @@ columns:
 囊袋空空	lak4 te7 khang1 khang1	60%	口袋空空
 常常	tiann7 tiann7	60%
 無孰	bo5 siannh4	60%	沒什麼
-從少到多	ui3 cio3 kau2 cue7	60%
+從少到多	ui3 tsio3 kau2 tsue7	60%
 你從夂來	li2 tui3 toh4 lai5	60%
-一宕兒久	cit4 tann1 a1 ku2	60%	一下子
+一宕兒久	tsit4 tann1 a1 ku2	60%	一下子
 到耽	kau3 tann1	60%	到現在
-真的	cin1 e5	60%
-我真愛你	gua2 cing1 ai3 li2	60%
-我甚愛你	gua2 cin2 ai3 li2	60%	比較的最高級
-坐在椅仔	ce7 ti7 i2 a2	60%
+真的	tsin1 e5	60%
+我真愛你	gua2 tsing1 ai3 li2	60%
+我甚愛你	gua2 tsin2 ai3 li2	60%	比較的最高級
+坐在椅仔	tse7 ti7 i2 a2	60%
 人與人	long5 kah2 long5	60%
-炸甜粿	cinn2 tinn1 kue2	60%
+炸甜粿	tsinn2 tinn1 kue2	60%
 油膩膩	iu5 leh4 leh4	60%
-前一臶兒	cing2 cit8 cam7 a2	60%	前一陣子
+前一臶兒	tsing2 tsit8 tsam7 a2	60%	前一陣子
 䞯𧻴逛	phu7 long7 kong3	60%
 𧻴趤	long7 tong1	60%	逸遊
-亂𧺣	luan7 cau2	60%	亂奔
+亂𧺣	luan7 tsau2	60%	亂奔
 𢸭死	long7 si2	60%	撞死
 無大無小	bo5 tua7 bo5 sio2	60%
 若輕若重	na7 kin1 na7 tang7	60%
 漂	phio3	60%
 毛翬	moo5 hui1	60%	偷懶
 爪	giau2	60%
-抓癢	giau2 ciunn7	60%	jiau2 ciunn7
-爬癢	pe5 ciunn7	60%
+抓癢	giau2 tsiunn7	60%	jiau2 tsiunn7
+爬癢	pe5 tsiunn7	60%
 𧻙山	peh4 suann1	60%
 可	ko2	60%	不明確之肯定：可見、可能、可是
-才會	ciah4 e7	60%
+才會	tsiah4 e7	60%
 需要	su1 iau3	60%
 須要	su1 iau3	60%
 㩼	ke1	60%	多...
@@ -202,9 +202,9 @@ columns:
 庶	sut4	60%	大口呑也
 摭	sa1	60%	本意是用手從鍋裏抓食物吃，歹看（歹款）也，也可解釋為用手從溝泥中抓不明的東西。
 摭龓無	sa1 long2 bo5	60%	搞不清楚
-迊所費	cah4 soo2 hui3	60%	帶錢
+迊所費	tsah4 soo2 hui3	60%	帶錢
 細膩	sioh4 lio1	60%
-斟酌	cim1 ciok4	60%
+斟酌	tsim1 tsiok4	60%
 囡	gin2	60%
 囝	kiann2	60%
 晃	hainn3	60%	擺動
@@ -221,28 +221,28 @@ columns:
 伊人	in1 lang5	60%	他們
 你人	lin2 lang5	60%	你們
 規	kui1	60%	
-很	cing1	60%	
-很好	cing1 hao2	60%
+很	tsing1	60%	
+很好	tsing1 hao2	60%
 捧場	phang5 tiunn5	60%
 袂	ng2	60%	手袂
 靡	bue7	60%	不可（否定詞）
 阿勞	o7 lo2	60%	稱讚
 誐䜎	o7 lo2	60%	稱讚
-迊所費	cah4 soo3 hui2	60%	身上得帶錢
+迊所費	tsah4 soo3 hui2	60%	身上得帶錢
 己自	ka7 ti7	60%	自己
 又	koh4	60%
 掠	liok8	60%
 丮	liah4	60%
-有食又有丮	u7 ciah8 koh4 u7 liah4	60%	有吃又有得拿
+有食又有丮	u7 tsiah8 koh4 u7 liah4	60%	有吃又有得拿
 可以	e7 sai2	60%
 哪可以	na1 e7 sai2	60%	怎麼可以（疑問詞）
 塞	 that4	60%	塞入縫
-窒	cinn1	60%
+窒	tsinn1	60%
 到	kau3	60%
 到	kah4	60%
 到位	kau2 ui7	60%
-到今	kau2 cin2	60%
-窒到	cinn1 kah4	60%
+到今	kau2 tsin2	60%
+窒到	tsinn1 kah4	60%
 塞到	that4 kah4	60%
 人𡬚人	lang5 kueh4 lang5	60%	人擠人
 若	na1	60%	若講若走（邊說邊跑）

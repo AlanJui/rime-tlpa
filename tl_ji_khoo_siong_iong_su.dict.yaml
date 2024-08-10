@@ -8,21 +8,7 @@ name: tl_ji_khoo_siong_iong_su
 version: "0.1"
 sort: by_weight
 use_preset_vocabulary: false
-import_tables:
-  - tl_ji_khoo_moetai.extended
 ...
-長	tng5	60%
-盡	tsin7	60%
-軾	sik4	60%
-過	kue3	60%
-後	au7	10
-如	ju5	60%
-餘	u5	60%
-養	iong2	60%
-虛	hi1	60%
-遠	hng7	60%
-閒	ing5	60%
-礴	pok8	60%
 ##-----------------------------
 一	tsit8	44439
 一	it4	16762

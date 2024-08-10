@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_holok_piau_im
   name: 河洛標音
-  version: "0.0.2.3"
+  version: "0.0.2.5"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: 基於萌典 API 的 RIME 臺語注音輸入法。
@@ -204,9 +204,8 @@ speller:
     - xlit|pbPmtTnlkgKhzcsjZCSiIuUaAOQoeEyYxX@MNWwR][{}B123570|1!qa2wsxeEdcyhnbYHNuUjJ8*iIk,<9(lL0mp/?o:;AO- 43657|
 
 translator:
-  # dictionary: tlpa_ji_khoo_peh_ue
-  dictionary: tlpaPlus_ji_khoo_peh_ue
-  prism: tlpa_hong_im
+  dictionary: tl_ji_khoo_peh_ue
+  prism: tlpa_holok_piau_im
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -354,14 +353,6 @@ reverse_lookup:
     - xform/1//
     - 'xlit|bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2345|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙|'
 
-recognizer:
-  patterns:
-    email: ^[a-z][-_.0-9a-z]*@.*$
-    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
-    url: ^(www[.]|https?:|ftp:|mailto:).*$
-    reverse_lookup: "`[a-z]*'?$"
-    punct: '`[^\s]$'
-
 key_binder:
   import_preset: default
   bindings:
@@ -406,6 +397,14 @@ menu:
 style:
   horizontal: false
   font_face: "BopomofoRuby1909-v1, Noto Serif TC"
+
+recognizer:
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    reverse_lookup: "`[a-z]*'?$"
+    punct: '`[^\s]$'
 
 punctuator:
   import_preset: piau_tian_hu_ho

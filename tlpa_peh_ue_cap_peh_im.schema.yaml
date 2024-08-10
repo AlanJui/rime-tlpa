@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_peh_ue_cap_peh_im
   name: 河洛白話十八音
-  version: "0.0.2.3"
+  version: "0.0.2.5"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -39,10 +39,29 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-[.0'
+  #------------------------------------------------------
+  # 定義使用者按下鍵盤時，輸入法能接受的按鍵
+  #------------------------------------------------------
+  # 舒聲 [12357]
+  # 1: ;
+  # 2: \
+  # 3: <
+  # 5: /
+  # 6: [N/A]
+  # 7: -
+  # 入聲 [48] = 0
+  # 4: [
+  # 8: ]
+  # 0: .
+  alphabet: 'abcdefghijklmnopqrstuvwxyzN;\</-][.'
   initials: "abcdefghijklmnopqrstuvwxyz"
-  finals: ';\</9-[.0'
-  delimiter: " '"
+  finals: ';\</-][.'
+  delimiter: "'"
+  use_space: true
+  # alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-[.0'
+  # initials: "abcdefghijklmnopqrstuvwxyz"
+  # finals: ';\</9-[.0'
+  # delimiter: " '"
   algebra:
     #--------------------------------------------------------------------------
     # 調整字典台語音標字母
@@ -89,7 +108,7 @@ speller:
     # 【135拼音法】 鼻音韻母
     # ann ==> nna ==> Na ==> Ba ==> ㄥㄚ ==> ㆩ
     #------------------------------------------------------
-    - derive/([iu]?(ai|au|[iuaoe]|oo))nn/B$1/
+    - derive/([iu]?(ai|au|[iuaoe]|oo))nn/N$1/
     #--------------------------------------------------------------------------
     # 入聲韻尾轉換
     # -ng ==> -k = ㄎ
@@ -108,22 +127,22 @@ speller:
     # 可以只用【聲母】音標找漢字
     - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).*/$1/
     # 可只輸入【聲母】與【調號】
-    # - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
+    - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
-    - 'xform 1 ;'
-    - 'xform 2 \\'
-    - 'xform 3 <'
-    - 'xform 4 \['
-    - 'xform 5 /'
-    - 'xform 6 9'
-    - 'xform 7 -'
-    - 'xform 8 \.'
+    # - 'xform 1 ;'
+    # - 'xform 2 \\'
+    # - 'xform 3 <'
+    # - 'xform 4 \['
+    # - 'xform 5 /'
+    # - 'xform 6 9'
+    # - 'xform 7 -'
+    # - 'xform 8 \.'
+    - xlit|12357480|;\</-[].|
 
 translator:
-  # dictionary: tlpa_ji_khoo_peh_ue
-  dictionary: tlpaPlus_ji_khoo_peh_ue
+  dictionary: tl_ji_khoo_peh_ue
   prism: tlpa_peh_ue_cap_peh_im
   spelling_hints: 20
   always_show_comments: true
@@ -135,20 +154,26 @@ translator:
     - xform/z/ts/
     - xform/c/tsh/
     #------------------------------------------------------
+    # 處理鼻音化韻母
+    # a/e/i/O/u/uai/iau/ai/au/ia/io/iu/ua/ui
+    #------------------------------------------------------
+    - xform/N([iu]?(ai|au|[iuaoe]|oo))/$1ⁿ/
+    #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
     #------------------------------------------------------
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    - 'xform ; 1'
-    - 'xform \\ 2'
-    - 'xform < 3'
-    - 'xform \[ 4'
-    - 'xform / 5'
-    - 'xform 9 6'
-    - 'xform - 7'
-    - 'xform \. 8'
+    # - 'xform ; 1'
+    # - 'xform \\ 2'
+    # - 'xform < 3'
+    # - 'xform \[ 4'
+    # - 'xform / 5'
+    # - 'xform 9 6'
+    # - 'xform - 7'
+    # - 'xform \. 8'
+    - xlit|;\</-[].|12357480|
   comment_format:
     # 【千萬別做】拼音字母編碼與注音符號對映的設定
     # - xlit|pbPmtTnlkgKwzcsjZCShiIuUaAeEOQo@yYxX}{][RWMNB123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㆡㄐㄑㄒㄏㄧㆪㄨㆫㄚㆩㄝㆥㄛㆧㄜㄢㄞㆮㄠㆯㆱㆰㆲㄤㆨㆭㆬㄣㄪˉˋ_ˇ+˙|
@@ -166,7 +191,6 @@ translator:
     # 處理鼻音化韻母
     # a/e/i/O/u/uai/iau/ai/au/ia/io/iu/ua/ui
     #------------------------------------------------------
-    # - 'xform/([aeiou]|oo)nn/$1ⁿ/'     # 鼻音韻母顯示：鼻化韻母以 ‘上標n’ 強調
     - xform/([iu]?(ai|au|[iuaoe]|oo))nn/N$1/
     #======================================================
     # 令候選字視窗，可顯示兩組「注音】/拼音」
@@ -176,8 +200,6 @@ translator:
     - xform/'/ /
     #------------------------------------------------------
     # 為候選字之拼音字母，建立轉換格式
-    #------------------------------------------------------
-    # - xform/^([Øa-z]+\d)$/〔$1〕【》$1】/
     #------------------------------------------------------
     # 無聲母
     - xform/^(([aeiou]|oo|m|ng).*)$/〔$1〕 【》Ø$1】/
@@ -394,11 +416,6 @@ reverse_lookup:
   preedit_format:
     - xform/([nljqxy])v/$1ü/
 
-recognizer:
-  import_preset: default
-  patterns:
-    reverse_lookup: "`[a-z]*$"
-
 key_binder:
   import_preset: default
   bindings:
@@ -444,6 +461,14 @@ menu:
 
 style:
   horizontal: false
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    reverse_lookup: "`[a-z]*$"
 
 punctuator:
   import_preset: piau_tian_hu_ho

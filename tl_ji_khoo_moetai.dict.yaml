@@ -11,6 +11,7 @@ sort: by_weight
 use_preset_vocabulary: false
 import_tables:
   - tl_ji_khoo_moetai.extended
+  - tl_ji_khoo_cu_ting
 ...
 一	tsit8	44439
 一	it4	16762

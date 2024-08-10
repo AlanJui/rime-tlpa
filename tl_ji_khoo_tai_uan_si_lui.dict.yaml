@@ -5,7 +5,7 @@
 # 漢字讀者：白話音
 # 漢字標音：使用【台語音標（TLPA）】
 ---
-name: tlpa_ji_khoo_tai_uan_si_lui
+name: tl_ji_khoo_tai_uan_si_lui
 version: "v.0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false

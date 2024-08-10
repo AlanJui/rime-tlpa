@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Cu_Im
   name: 135拼音法【注音符號】
-  version: "0.0.2.4"
+  version: "0.0.2.5"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |
@@ -210,7 +210,6 @@ speller:
     - xlit|pbPmtTnlkgKhzcsjZCSiIuUaAOQoeEyYxX@MNWwR][{}B123570|1!qa2wsxeEdcyhnbYHNuUjJ8*iIk,<9(lL0mp/?o:;AO- 43657|
 
 translator:
-  # dictionary: tlpa_ji_khoo_peh_ue
   dictionary: tl_ji_khoo_peh_ue
   prism: DoMiSo_Cu_Im
   spelling_hints: 20
@@ -522,7 +521,6 @@ translator:
     - xform/N([iu]?(ai|au|[iuaoe]|oo))/$1ⁿ/
     #------------------------------------------------------
     # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
-    # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
     #------------------------------------------------------
     - xform/1(?=〕)/¹/
     - xform/2(?=〕)/²/
@@ -540,13 +538,6 @@ custom_phrase:
   enable_completion: false
   enable_sentence: false
   initial_quality: 1
-
-recognizer:
-  patterns:
-    email: ^[a-z][-_.0-9a-z]*@.*$
-    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
-    url: ^(www[.]|https?:|ftp:|mailto:).*$
-    # punct: '`[^\s]$'
 
 key_binder:
   import_preset: default
@@ -596,6 +587,12 @@ menu:
 style:
   horizontal: false
 
+recognizer:
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
+
 punctuator:
   import_preset: piau_tian_hu_ho
-

@@ -4,7 +4,7 @@
 schema:
   schema_id: tlpa_holok_sip_ngoo_im
   name: 河洛十五音
-  version: "v0.0.2.3"
+  version: "v0.0.2.5"
   author:
     - 居正中
   description: |
@@ -49,22 +49,25 @@ engine:
     - uniquifier
 
 speller:
-    #------------------------------------------------------
-    # 定義使用者按下鍵盤時，輸入法能接受的按鍵
-    #------------------------------------------------------
-    # 0: '
-    # 1: [
-    # 2: \
-    # 3: _
-    # 4: [
-    # 5: /
-    # 6: >
-    # 7: -
-    # 8: .
-  alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-[.0'
+  #------------------------------------------------------
+  # 定義使用者按下鍵盤時，輸入法能接受的按鍵
+  #------------------------------------------------------
+  # 舒聲 [12357]
+  # 1: ;
+  # 2: \
+  # 3: <
+  # 5: /
+  # 6: [N/A]
+  # 7: -
+  # 入聲 [48] = 0
+  # 4: [
+  # 8: ]
+  # 0: .
+  alphabet: 'abcdefghijklmnopqrstuvwxyzN;\</-][.'
   initials: "abcdefghijklmnopqrstuvwxyz"
-  finals: ';\</9-[.0'
-  delimiter: " '"
+  finals: ';\</-][.'
+  delimiter: "'"
+  use_space: true
   algebra:
     #--------------------------------------------------------------------------
     # 調整字典台語音標字母
@@ -111,7 +114,7 @@ speller:
     # 【135拼音法】 鼻音韻母
     # ann ==> nna ==> Na ==> Ba ==> ㄥㄚ ==> ㆩ
     #------------------------------------------------------
-    - derive/([iu]?(ai|au|[iuaoe]|oo))nn/B$1/
+    - derive/([iu]?(ai|au|[iuaoe]|oo))nn/N$1/
     #--------------------------------------------------------------------------
     # 入聲韻尾轉換
     # -ng ==> -k = ㄎ
@@ -134,17 +137,9 @@ speller:
     #--------------------------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #--------------------------------------------------------------------------
-    - 'xform 1 ;'
-    - 'xform 2 \\'
-    - 'xform 3 <'
-    - 'xform 4 \['
-    - 'xform 5 /'
-    - 'xform 6 9'
-    - 'xform 7 -'
-    - 'xform 8 \.'
+    - xlit|12357480|;\</-[].|
 
 translator:
-  # dictionary: tlpa_bun_thok
   dictionary: tl_ji_khoo_nga_siok_thong
   prism: tlpa_holok_sip_ngoo_im
   spelling_hints: 20
@@ -157,20 +152,18 @@ translator:
     - xform/z/ts/
     - xform/c/tsh/
     #------------------------------------------------------
+    # 處理鼻音化韻母
+    # a/e/i/O/u/uai/iau/ai/au/ia/io/iu/ua/ui
+    #------------------------------------------------------
+    - xform/N([iu]?(ai|au|[iuaoe]|oo))/$1ⁿ/
+    #------------------------------------------------------
     # 鼻化符號顯示成上標
     #------------------------------------------------------
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    - 'xform ; 1'
-    - 'xform \\ 2'
-    - 'xform < 3'
-    - 'xform \[ 4'
-    - 'xform / 5'
-    - 'xform 9 6'
-    - 'xform - 7'
-    - 'xform \. 8'
+    - xlit|;\</-[].|12357480|
   comment_format:
     # 【千萬別做】拼音字母編碼與注音符號對映的設定
     # - xlit|pbPmtTnlkgKwzcsjZCShiIuUaAeEOQo@yYxX}{][RWMNB123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㆡㄐㄑㄒㄏㄧㆪㄨㆫㄚㆩㄝㆥㄛㆧㄜㄢㄞㆮㄠㆯㆱㆰㆲㄤㆨㆭㆬㄣㄪˉˋ_ˇ+˙|
@@ -188,7 +181,6 @@ translator:
     # 處理鼻音化韻母
     # a/e/i/O/u/uai/iau/ai/au/ia/io/iu/ua/ui
     #------------------------------------------------------
-    # - 'xform/([aeiou]|oo)nn/$1ⁿ/'     # 鼻音韻母顯示：鼻化韻母以 ‘上標n’ 強調
     - xform/([iu]?(ai|au|[iuaoe]|oo))nn/N$1/
     #======================================================
     # 令候選字視窗，可顯示兩組「注音】/拼音」
@@ -527,12 +519,6 @@ reverse_lookup:
     #   鼻化符號顯示成上標
     - xform/nn(h?)(\d|\>)/ⁿ$1$2/
 
-recognizer:
-  import_preset: default
-  patterns:
-    reverse_lookup: "`[a-z]*'?$"
-    # punct: "^/([0-9]0?|[A-Za-z]+)$"
-
 key_binder:
   import_preset: default
   bindings:
@@ -566,9 +552,6 @@ editor:
     Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
     Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
-  # formats:
-  #   - pattern: "^.*$"
-  #     text: "{commit_composition} [{commit_script_text}]"
 
 menu:
   alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
@@ -576,6 +559,15 @@ menu:
 
 style:
   horizontal: false
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
+    reverse_lookup: "`[a-z]*'?$"
 
 punctuator:
   import_preset: piau_tian_hu_ho

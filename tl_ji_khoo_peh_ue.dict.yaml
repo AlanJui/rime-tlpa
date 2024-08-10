@@ -4,49 +4,17 @@
 # 河洛白話音
 #
 ---
-name: tlpaPlus_ji_khoo_peh_ue
+name: tl_ji_khoo_peh_ue
 version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 import_tables:
-  - tlpa_ji_khoo_cu_ting
-  - tlpa_ji_khoo_ciann_ji
-  - tlpa_ji_khoo_kah_kut_bun
-  - tlpa_ji_khoo_siong_iong_si_lui
-  # - tlpa_cu_im_fu_ho
-  # - tlpa_ji_khoo_tai_uan_su_lui
-  # - tlpa_ji_khoo_ban_lam_su_lui
+  # - tl_ji_khoo_cu_ting
+  # - tl_ji_khoo_moetai
+  # - tl_ji_khoo_ciann_ji
+  # - tl_ji_khoo_kah_kut_bun
+  # - tl_ji_khoo_siong_iong_si_lui
 ...
-##-----------------------------
-過	kue3	10%
-過	ke3	10%
-住	tua3	10%
-廣	kng2	10%
-盗	to7	10%
-尚	siong7	10%
-呂	li7	10%
-拱	kiong2	10%
-也	ia7	10%
-粥	tsiok4	10%
-粥	iok8	10%
-遮	jia1	10%
-遮	tsia1	10%
-遮	ann2	10%
-充	tshiong1	10%
-憎	tsing1	10%
-吾	ngoo5	10%
-吾	goo5	10%
-乃	nai2	10%
-捧	phang5	10%
-寵	thiong2	10%
-擁	iong2	10%
-人	lang5	10%
-仰	giong2	10%
-仰	iong2	10%
-始	su2	10%
-者	tsia2	10%
-士	su7	50%
-則	tsik4	50%
 ##-----------------------------
 ##	a/ah
 啊	a0
