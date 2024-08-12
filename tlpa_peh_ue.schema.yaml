@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_peh_ue
   name: 河洛白話
-  version: "0.0.2.5"
+  version: "0.0.2.6"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -95,19 +95,19 @@ speller:
     #------------------------------------------------------------------
     # 定義【地方腔】與【優勢腔】相容之處理規則
     #------------------------------------------------------------------
-    # - derive/er(ng|k)/i$1/
-    - derive/er(n|t)/u$1/
-    - derive/ere/ue/
-    - derive/er/e/
-    - xform/er(ng|k)/i$1/
-    # - xform/er(n|t)/u$1/
-    # - xform/ere/ue/
-    # - xform/er/e/
-
-    - derive/ei/e/	  # 漳州腔
-    - derive/ur/u/	  # 廈門腔
-    - derive/ou/oo/
-    - derive/ee/e/	  # 漳州/泉州腔
+    # # - derive/er(ng|k)/i$1/
+    # - xform/er(ng|k)/i$1/
+    # - derive/er(n|t)/u$1/
+    # - derive/ere/ue/
+    # - derive/er/e/
+    #
+    # - derive/ei/e/	  # 漳州腔
+    # - derive/ur/u/	  # 廈門腔
+    # - derive/ou/oo/
+    # - derive/ee/e/	  # 漳州/泉州腔
+    #
+    # - derive/ir/i/	  # 泉州腔 khir3 = khi3
+    # - derive/ir/u/    # 泉州腔 khir3 = khu3
     # --------------------------------------------------------------------------
     # 【135拼音法】 鼻音韻母
     # ann ==> nna ==> Na ==> Ba ==> ㄥㄚ ==> ㆩ
@@ -175,6 +175,21 @@ translator:
     - derive/^c(?!h)/z/     # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
     - derive/^ch/c/         # ㄘ
     - xform/6/7/            # 聲調 6 改為 7
+    #------------------------------------------------------------------
+    # 定義【地方腔】與【優勢腔】相容之處理規則
+    #------------------------------------------------------------------
+    # - derive/er(ng|k)/i$1/
+    # - derive/er(n|t)/u$1/
+    # - derive/ere/ue/
+    # - derive/er/e/
+    #
+    # - derive/ei/e/	  # 漳州腔
+    # - derive/ur/u/	  # 廈門腔
+    # - derive/ou/oo/
+    # - derive/ee/e/	  # 漳州/泉州腔
+
+    # - derive/ir/i/	  # 泉州腔 khir3 = khi3
+    # - derive/ir/u/    # 泉州腔 khir3 = khu3
     #------------------------------------------------------
     # 處理鼻音化韻母
     # a/e/i/O/u/uai/iau/ai/au/ia/io/iu/ua/ui
@@ -482,6 +497,10 @@ editor:
 recognizer:
   import_preset: default
   patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
     reverse_lookup: "`[a-z]*$"
 
 menu:

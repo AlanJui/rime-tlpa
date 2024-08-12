@@ -9,7 +9,7 @@ name: tl_ji_khoo_kah_kut_bun
 version: "0.1.0.0"
 sort: by_weight
 use_preset_votsabulary: false
-tsolumns:
+columns:
   - text    #漢字／詞彙
   - tsode    #台灣音標（TLPA)拼音字母
   - weight  #常用度（優先顯示度）

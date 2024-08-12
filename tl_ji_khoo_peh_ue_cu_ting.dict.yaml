@@ -5,13 +5,22 @@
 # 漢字讀者：白話音
 # 漢字標音：使用【台羅音標（TL）】
 ---
-name: tl_ji_khoo_cu_ting
+name: tl_ji_khoo_peh_ue_cu_ting
 version: "0.1.0.0"
 sort: by_weight
 use_preset_votsabulary: false
+columns:
+  - text    #漢字／詞彙
+  - code    #台灣音標（TLPA)拼音字母
+  - weight  #常用度（優先顯示度）
+  - stem    #用法舉例
 ...
-過	kue3	10%
+尸	si1	10%
+尸	tshi1	10%
+過	kue3	50%
 過	ke3	10%
+去	khi3	20%
+去	khu3	20%
 住	tua3	10%
 廣	kng2	10%
 盗	to7	10%
@@ -44,7 +53,7 @@ use_preset_votsabulary: false
 盡	tsin7	60%
 軾	sik4	60%
 過	kue3	60%
-後	au7	10
+後	au7	10%
 如	ju5	60%
 餘	u5	60%
 養	iong2	60%

@@ -8,13 +8,20 @@ name: tl_ji_khoo_peh_ue
 version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
+columns:
+  - text    #漢字／詞彙
+  - code    #台灣音標（TLPA)拼音字母
+  - weight  #常用度（優先顯示度）
+  - stem    #用法舉例
 import_tables:
-  # - tl_ji_khoo_cu_ting
+  - tl_ji_khoo_peh_ue_cu_ting
+  - tl_ji_khoo_kah_kut_bun
+  - tl_ji_khoo_ciann_ji
+  - tl_ji_khoo_siong_iong_si_lui
+  - tl_ji_khoo_tai_uan_si_lui
   # - tl_ji_khoo_moetai
-  # - tl_ji_khoo_ciann_ji
-  # - tl_ji_khoo_kah_kut_bun
-  # - tl_ji_khoo_siong_iong_si_lui
 ...
+墮	tui7	10%
 ##-----------------------------
 ##	a/ah
 啊	a0

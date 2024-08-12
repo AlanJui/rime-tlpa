@@ -8,10 +8,13 @@ name: tl_ji_khoo_siong_iong_su
 version: "0.1"
 sort: by_weight
 use_preset_vocabulary: false
+columns:
+  - text    #漢字／詞彙
+  - code    #台灣音標（TLPA)拼音字母
+  - weight  #常用度（優先顯示度）
+  - stem    #用法舉例
 ...
 ##-----------------------------
-一	tsit8	44439
-一	it4	16762
 一刀兩斷	it4 to1 liong2 tuan7
 一下	tsit8 e7
 一月日	tsit8 gueh8 jit8
@@ -52,31 +55,6 @@ use_preset_vocabulary: false
 一點仔	tsit8 tiam2 a2
 一礐屎	tsit8 hak8 sai2
 一觸久仔	tsit8 tak4 ku2 a2
-乙	it4	50
-丁	ting1	300
-七	tshit4	2425
-九	kau2	1406
-九	kiu2	527
-了	liau2	13495
-二	ji7	4841
-二	li7	4841
-人	jin5	22442
-人	lin5	22442
-人	lang5	52526
-入	jip8	5922
-入	lip8	5922
-八	pat4	1787
-八	peh4	1056
-八	pueh4	1056
-刀	to1	2036
-刁	tiau1	250
-力	lat8	2342
-力	lik8	6904
-十	tsap8	4304
-十	sip8	1639
-卜	poh4	50
-卜	pok4	100
-又	iu7	1449
 十一哥	tsap8 it4 ko1
 了了	liau2 liau2
 了了	liau2 liau2
@@ -231,57 +209,6 @@ use_preset_vocabulary: false
 刁難	thiau1 lan5
 人權	jin5 khuan5
 人權	lin5 khuan5
-丈	tng7	221
-三	sam1	4626
-三	sann1	5056
-上	tsiunn7	7319
-上	tshiunn7	1126
-上	siong7	11260
-下	e7	4750
-下	ha7	4750
-下	he7	1117
-低	ke7	550
-个	e5	59866
-丸	uan5	450
-久	ku2	7160
-么	io1	50
-乞	khit4	550
-也	ia7	15065
-亡	bong5	450
-凡	huan5	250
-凡	huan7	100
-千	tshian1	2213
-千	tshing1	390
-叉	tshe1	350
-口	khau2	6893
-土	thoo2	4794
-士	su7	3492
-大	ta1	1012
-大	tai7	11861
-大	tua7	30086
-女	li2	2326
-女	lu2	2326
-女	lu2	2326
-子	tsi2	4660
-子	tsu2	6716
-子	ji2	411
-子	li2	411
-寸	tshun3	300
-小	siau2	1319
-小	sio2	8653
-山	san1	4739
-山	suann1	10820
-工	kang1	12379
-工	kong1	284
-己	ki2	1560
-巳	tsi7	50
-巾	kin1	500
-巾	kun1	500
-干	kan1	1736
-弓	king1	400
-才	tsai5	5020
-才	tsiah4	3434
-才	tshai5	264
 下𦜆	e7 ham1
 丈人	tiunn7 lang5
 三八	sam1 pat4
@@ -669,42 +596,6 @@ use_preset_vocabulary: false
 大麵	tua7 mi7
 大欉	tua7 tsang5
 大廳	tua7 thiann1
-不	put4	13916
-丑	thiu2	150
-中	ting3	340
-中	tiong1	18403
-中	tiong3	1192
-丹	tan1	800
-之	tsi1	1845
-予	hoo7	24836
-五	goo7	2521
-五	ngoo2	2062
-井	tsenn2	500
-井	tsinn2	500
-仁	jin5	2425
-仁	lin5	2425
-仄	tseh4	100
-仆	phak4	50
-仇	siu5	300
-今	tann1	3424
-允	in2	606
-允	un2	606
-內	lai7	14406
-內	lue7	2150
-公	kang1	852
-公	kong1	14120
-六	lak8	1960
-六	liok8	516
-冇	phann3	350
-冗	ling7	100
-冗	liong7	150
-凶	hiong1	300
-分	hun1	8581
-分	pun1	1388
-切	tshiat4	2183
-勻	un5	550
-勼	kiu1	300
-勾	kau1	200
 內䘥仔	lai7 kah4 a2
 中人	tiong1 lang5
 允人	in2 lang5
@@ -912,56 +803,6 @@ use_preset_vocabulary: false
 分鐘	hun1 tsing1
 分攤	hun1 thuann1
 五臟	ngoo2 tsong7
-化	hua1	166
-化	hua3	8649
-匹	phit4	50
-升	tsin1	50
-升	sing1	500
-午	goo7	150
-午	ngoo2	150
-厄	eh4	200
-友	iu2	4656
-反	huan2	3397
-反	ping2	1698
-壬	jim5	50
-壬	lim5	50
-天	thian1	7219
-天	thinn1	6685
-太	thai3	3450
-夫	hu1	2228
-少	tsio2	1505
-尺	tshe1	100
-尺	tshioh4	400
-廿	jiap8	100
-廿	liap8	100
-引	in2	2143
-心	sim1	25770
-戶	hoo7	1300
-手	tshiu2	15155
-支	ki1	526
-文	bun5	22064
-斗	tau2	2150
-斤	kin1	250
-斤	kun1	250
-方	hng1	1611
-方	hong1	5014
-日	jit8	14244
-日	lit8	14244
-月	guat8	957
-月	gueh8	5651
-月	geh8	5651
-木	bak8	737
-木	bok8	1697
-欠	khiam3	1738
-止	tsi2	3659
-歹	phainn2	6780
-毋	m7	39475
-比	pi2	5713
-毛	mng5	1768
-毛	moo5	1076
-氏	si7	100
-水	tsui2	18181
-水	sui2	830
 歹𤆬頭	phainn2 tshua7 thau5
 手䘼	tshiu2 ng2
 廿一	jiap8 it4
@@ -1430,17 +1271,6 @@ use_preset_vocabulary: false
 化驗	hua3 giam7
 毋驚	m7 kiann1
 心驚膽嚇	sim1 kiann1 tann2 hiannh4
-火	hue2	5835
-火	he2	5835
-爪	jiau2	300
-爪	niau2	300
-父	hu7	5148
-爿	ping5	2834
-片	phinn3	1860
-牙	ga5	50
-牙	ge5	800
-牛	gu5	5000
-王	ong5	5200
 牛𡳞脬檨	gu5 lan7 pha1 suainn7
 火大	hue2 tua7
 火大	he2 tua7
@@ -1549,27 +1379,6 @@ use_preset_vocabulary: false
 火雞	he2 kue1
 火雞母	hue2 ke1 bo2
 火雞母	he2 kue1 bo2
-世	se3	5826
-世	si3	3962
-丙	piann2	50
-主	tsu2	15274
-丼	tom5	50
-乍	tsann3	50
-乎	honnh4	50
-乏	hat8	50
-仔	a2	90696
-仕	su7	50
-付	hu3	550
-仙	sian1	2792
-仙	sian2	68
-仝	kang7	4552
-代	tai7	14215
-代	te7	253
-代	tai7	14215
-令	ling7	1038
-以	i2	13230
-兄	hiann1	4171
-冊	tsheh4	5017
 主人	tsu2 lang5
 仙人	sian1 jin5
 仙人	sian1 lin5
@@ -1638,42 +1447,6 @@ use_preset_vocabulary: false
 冊櫥	tsheh4 tu5
 主顧	tsu2 koo3
 主權	tsu2 khuan5
-冬	tang1	3477
-凹	nah4	150
-出	tshut4	25088
-刊	khan1	1488
-功	kong1	2513
-加	ka1	7091
-加	ka1	7091
-加	ke1	1719
-包	pau1	4485
-北	pak4	6253
-半	puan3	729
-半	puann3	5103
-卌	siap4	100
-占	tsiam3	300
-卡	khah4	1648
-卡	khah8	274
-卯	bau2	200
-卯	bau2	200
-卯	mauh4	200
-去	khi3	38728
-古	koo2	3902
-句	ku3	3378
-叨	lo1	50
-叩	khau3	150
-只	tsi2	2950
-只	tsi2	2950
-叫	kio3	7760
-叮	ting1	100
-叮	ting3	50
-可	kho2	5215
-台	tai5	31281
-囚	siu5	250
-四	si3	4665
-四	su3	1639
-外	gua7	13765
-央	iang1	100
 半䖙倒	puann3 the1 to2
 出丁	tshut4 ting1
 出入	tshut4 jip8
@@ -1912,37 +1685,6 @@ use_preset_vocabulary: false
 句讀	ku3 tau7
 外觀	gua7 kuan1
 包贌	pau1 pak8
-夯	gia5	200
-失	sit4	5517
-奴	loo5	150
-奶	ling1	1300
-奶	ni1	1300
-奶	nai1	100
-巧	kha2	350
-巧	khiau2	100
-市	tshi7	5352
-布	poo3	2924
-平	penn5	2251
-平	pinn5	2251
-平	piann5	225
-平	ping5	4615
-幼	iu3	1785
-戊	boo7	50
-扒	pe1	100
-扒	pe5	200
-打	tann2	1617
-旦	tuann3	250
-未	bi7	876
-未	bue7	1607
-未	be7	1607
-本	pun2	13828
-正	tsiann3	3491
-正	tsing3	4364
-母	bio2	549
-母	bo2	6773
-母	bu2	6956
-民	bin5	11383
-汁	tsiap4	250
 本人	pun2 lang5
 失人禮	sit4 lang5 le2
 奴才	loo5 tsai5
@@ -2141,36 +1883,6 @@ use_preset_vocabulary: false
 失戀	sit4 luan5
 母體	bu2 the2
 失體面	sit4 the2 bin7
-犯	huan7	1738
-玉	gik8	266
-玉	giok8	1197
-瓜	kue1	1700
-瓦	hia7	300
-甘	kam1	2482
-生	tshenn1	3163
-生	tshinn1	3163
-生	senn1	8389
-生	sinn1	8389
-生	sing1	9626
-用	ing7	4235
-用	iong7	17269
-田	tshan5	4120
-由	iu5	2135
-甲	kah4	8530
-甲	kah4	8530
-申	sin1	300
-白	peh8	9226
-白	pik8	849
-皮	phi5	430
-皮	phue5	2583
-皮	phe5	2583
-目	bak8	9818
-目	bok8	1808
-石	tsioh8	4571
-石	sik8	304
-示	si7	3535
-穴	hiat8	100
-立	lip8	5214
 目𥍉仔	bak8 nih4 a2
 犯人	huan7 lang5
 瓜子	kue1 tsi2
@@ -2391,26 +2103,6 @@ use_preset_vocabulary: false
 生驚	tshinn1 kiann1
 立體	lip8 the2
 白鑠鑠	peh8 siak4 siak4
-交	ka1	4153
-交	kau1	5192
-交	kiau1	50
-亥	hai7	100
-亦	ik8	3792
-件	kiann7	3307
-任	jim7	2224
-任	lim7	2224
-份	hun7	3815
-仿	hong2	150
-伊	i1	63255
-伐	huah8	50
-休	hiu1	350
-伨	thin7	50
-兆	tiau7	100
-先	sian1	6185
-先	sing1	2061
-光	kng1	2761
-光	kong1	3388
-全	tsuan5	5864
 交代	kau1 tai3
 仿仔雞	hong2 a2 ke1
 仿仔雞	hong2 a2 kue1
@@ -2457,37 +2149,6 @@ use_preset_vocabulary: false
 份額	hun7 giah8
 交關	kau1 kuan1
 先覺	sian1 kak4
-共	ka7	18073
-共	kang7	150
-共	kiong7	2539
-再	tsai3	2362
-冰	ping1	750
-刐	tainn2	50
-刑	hing5	500
-划	ko3	100
-列	liat8	1678
-匠	tshiunn7	100
-印	in3	2149
-合	hah8	532
-合	hap8	5457
-合	kap4	133
-吉	kiat4	400
-吊	tiau3	1000
-同	tong5	5164
-名	bing5	2083
-名	mia5	6546
-吐	thoo2	450
-吐	thoo3	300
-向	ann3	100
-向	hiann3	250
-向	hiong3	4258
-向	ng3	1054
-囝	kiann2	7404
-回	hue5	2342
-回	he5	2342
-囟	sin3	50
-因	in1	10098
-在	tsai7	14062
 各人	kok4 lang5
 合力	hap8 lik8
 在人	tsai7 lang5
@@ -2644,31 +2305,6 @@ use_preset_vocabulary: false
 吊籃	tiau3 na5
 在欉黃	tsai7 tsang5 ng5
 印鑑	in3 kam3
-地	te7	8822
-地	tue7	8822
-圳	tsun3	150
-多	to1	4166
-奸	kan1	350
-好	ho2	23707
-好	honn3	987
-如	ju5	1489
-如	lu5	1489
-妃	hui1	100
-字	ji7	9159
-字	li7	9159
-存	tsun5	1501
-宅	theh8	300
-守	tsiu2	606
-守	siu2	1333
-安	an1	7594
-寺	si7	650
-尖	tsiam1	650
-州	tsiu1	1115
-帆	huan5	50
-帆	phang5	200
-年	lian5	3567
-年	ni5	16886
-庄	tsng1	2400
 地下	te7 ha7
 地下	tue7 ha7
 安土	an1 thoo2
@@ -2852,27 +2488,6 @@ use_preset_vocabulary: false
 年關	ni5 kuan1
 安靈	an1 ling5
 尖鑽	tsiam1 tsng3
-戌	sut4	50
-成	tsiann5	2363
-成	siann5	168
-成	sing5	7428
-托	thuh4	50
-扛	kng1	100
-扞	huann7	350
-扣	khau1	50
-扣	khau3	450
-扦	tshuann1	200
-收	siu1	5000
-早	tsa2	6579
-曲	khiau1	790
-曲	khik4	878
-有	iu2	21336
-有	u7	53685
-朱	tsu1	100
-次	tshu3	500
-此	tshu2	1183
-死	si2	11257
-死	su2	274
 有一日	u7 tsit8 jit8
 有一日	u7 tsit8 lit8
 有一無兩	u7 tsit8 bo5 nng7
@@ -3028,36 +2643,6 @@ use_preset_vocabulary: false
 扛轎	kng1 kio7
 收瀾	siu1 nua7
 收驚	siu1 kiann1
-汗	kuann7	400
-江	kang1	400
-池	ti5	450
-百	pah4	4376
-竹	tik4	4383
-米	bi2	4425
-羊	iunn5	1308
-老	loo7	99999
-老	lau2	1640
-老	lau7	11954
-考	kho2	3008
-耳	hinn7	1870
-耳	hi7	1870
-耳	ni2	387
-聿	ut8	50
-肉	bah4	4608
-肉	jiok8	288
-肉	liok8	288
-臣	sin5	150
-自	tsu7	8553
-舌	tsih8	850
-色	sik4	6336
-艾	hiann7	50
-艾	ngai7	50
-血	hiat4	635
-血	hueh4	2188
-血	huih4	2188
-行	hang5	3876
-行	hing7	1233
-行	kiann5	5462
 米𧉟	bi2 tai5
 竹䈄	tik4 ham1
 百二	pah4 ji7
@@ -3321,10 +2906,6 @@ use_preset_vocabulary: false
 米籮	bi2 lua5
 米粩	bi2 lau2
 百襇裙	pah4 king2 kun5
-衣	i1	300
-衣	ui1	50
-西	sai1	1902
-西	se1	3804
 西刀舌	sai1 to1 tsih8
 西天	se1 thian1
 西方	se1 hong1
@@ -3343,31 +2924,6 @@ use_preset_vocabulary: false
 西醫	se1 i1
 西藥	se1 ioh8
 西藥房	se1 ioh8 pang5
-串	tshng3	150
-串	tshuan3	300
-伯	peh4	1908
-估	koo2	250
-伴	phuann7	1275
-伸	tshun1	550
-伸	sin1	150
-伻	phenn1	100
-佇	ti7	47453
-佈	poo3	700
-位	ui7	6819
-何	ho5	1488
-佗	to2	834
-佗	toh4	790
-佛	hut8	1340
-佛	put8	586
-作	tsoh4	1609
-作	tsok4	8045
-你	li2	27089
-克	khik4	250
-兌	tue7	50
-兌	tui7	100
-免	bian2	4861
-兵	ping1	1742
-冷	ling2	2230
 佗一个	to2 tsit8 e5
 何乜苦	ho5 mi2 khoo2
 伯公	peh4 kong1
@@ -3439,32 +2995,6 @@ use_preset_vocabulary: false
 作孽	tsok4 giat8
 佛龕	put8 kham1
 免驚	bian2 kiann1
-刜	phut4	50
-刣	thai5	1700
-判	phuann3	1477
-別	pat8	3043
-別	piat8	3511
-利	lai7	544
-利	li7	5627
-助	tsoo7	2111
-劫	kiap4	200
-卵	nng7	850
-君	kun1	1134
-吞	thun1	200
-吟	gim5	150
-吠	pui7	100
-含	kam5	200
-含	kann5	50
-吭	khngh4	50
-吭	khong7	100
-吮	tshng2	100
-吱	ki1	150
-吵	tsha2	350
-吶	na7	2973
-吸	khip4	200
-吹	tshue1	851
-吹	tshe1	851
-吼	hau2	100
 別人	pat8 lang5
 努力	loo2 lik8
 別个	pat8 e5
@@ -3516,20 +3046,6 @@ use_preset_vocabulary: false
 判斷	phuann3 tuan3
 刣雞教猴	thai5 ke1 ka3 kau5
 刣雞教猴	thai5 kue1 ka3 kau5
-呃	eh4	150
-呆	tai1	300
-告	ko3	2113
-囤	tun2	50
-囥	khng3	1062
-囫	hut4	50
-囮	bue5	50
-坉	thun7	150
-坎	kham2	500
-坐	tse7	3988
-坐	tshe7	939
-坑	khenn1	700
-坑	khinn1	700
-夾	ngeh4	250
 坎仔	kham2 a2
 夾仔	ngeh4 a2
 坉平	thun7 penn5
@@ -3557,21 +3073,6 @@ use_preset_vocabulary: false
 坐數	tshe7 siau3
 坐禪	tse7 sian5
 困難	khun3 lan5
-妖	iau1	350
-妗	kim7	300
-妙	miau7	350
-妝	tsng1	100
-孝	hau3	1833
-宋	song3	200
-完	uan5	2285
-尪	ang1	900
-尾	bue2	6428
-尾	be2	6428
-尿	jio7	1150
-尿	lio7	1150
-局	kiok8	2245
-屁	phui3	400
-巡	sun5	500
 尾二指	bue2 ji7 tsainn2
 尾二指	be2 li7 tsainn2
 妓女	ki1 li2
@@ -3661,33 +3162,6 @@ use_preset_vocabulary: false
 尾聲	be2 siann1
 妨礙	hong5 gai7
 妖孽	iau1 giat8
-床	tshng5	1634
-床	sng5	288
-序	su7	669
-弄	lang7	450
-弟	te7	1315
-弟	ti7	1808
-形	hing5	3419
-忌	khi7	250
-忍	jim2	629
-忍	lim2	629
-忍	lun2	524
-志	tsi3	1796
-忘	bong7	100
-快	khuai3	2251
-我	gua2	36961
-我	ngoo2	18480
-扭	ngiu2	100
-扭	lau2	50
-扮	pan7	300
-扯	tshe2	50
-扱	khip8	50
-扲	gim7	50
-扳	pian1	100
-扴	keh8	150
-扶	hu5	350
-扶	phoo5	150
-扷	io2	50
 扶𡳞脬	phoo5 lan7 pha1
 床巾	tshng5 kin1
 床巾	tshng5 kun1
@@ -3736,36 +3210,6 @@ use_preset_vocabulary: false
 弄龍	lang7 ling5
 志願	tsi3 guan7
 弄鐃	lang7 lau5
-批	phue1	1936
-找	tsau7	100
-技	ki1	700
-抄	tshau1	200
-抉	kuat4	50
-把	pe2	100
-抌	tim3	50
-抐	la7	960
-抑	iah8	3856
-抓	jiau3	100
-抓	liau3	100
-抔	put4	50
-投	tau5	2494
-折	tsiat4	350
-折	tsih8	100
-改	kai2	3877
-攻	kong1	450
-旱	han7	100
-旱	huann7	100
-旱	uann7	50
-更	kenn1	150
-更	kinn1	150
-杆	kuainn1	50
-杆	kuann1	50
-李	li2	1918
-杏	hing7	150
-材	tsai5	750
-村	tshun1	400
-杓	siah8	250
-杙	khit8	250
 技工	ki1 kang1
 杏仁	hing7 jin5
 杏仁	hing7 lin5
@@ -3820,21 +3264,6 @@ use_preset_vocabulary: false
 批囊	phue1 long5
 抄襲	tshau1 sip8
 改變	kai2 pian3
-束	sok4	1080
-步	poo7	4691
-每	mui2	1805
-求	kiu5	3908
-汫	tsiann2	250
-汰	thai3	100
-汰	thua7	150
-沃	ak4	300
-沉	tim5	350
-沐	bak4	150
-沕	bit8	50
-沖	tshiang5	350
-沖	tshiong1	250
-沙	sua1	1250
-灶	tsau3	450
 每日	mui2 jit8
 每日	mui2 lit8
 決心	kuat4 sim1
@@ -3876,23 +3305,6 @@ use_preset_vocabulary: false
 束縛	sok4 pak8
 灶頭	tsau3 thau5
 沙龍巴斯	sa1 long1 pa1 suh4
-災	tsai1	750
-災	tse1	100
-牢	tiau5	1721
-狂	kong5	400
-男	lam5	1573
-疔	ting1	100
-疕	phi2	300
-皂	tso7	50
-矣	ah4	4548
-私	su1	850
-系	he7	1781
-罕	han2	250
-肚	too2	1802
-肚	too7	1823
-肝	kan1	128
-肝	kuann1	2310
-育	io1	1507
 肝𦟪	kuann1 lian5
 男女	lam5 li2
 男女	lam5 lu2
@@ -3933,26 +3345,6 @@ use_preset_vocabulary: false
 肚臍	too7 tsai5
 禿額	thuh4 hiah8
 災難	tsai1 lan7
-芋	oo7	550
-見	kian3	7496
-見	kinn3	2409
-角	kak4	3575
-言	gian5	6993
-豆	tau7	3000
-赤	tshiah4	650
-走	tsau2	6360
-足	tsiok4	3647
-身	sian1	150
-身	sin1	10865
-車	tshia1	10763
-辛	sin1	250
-辰	sin5	100
-那	na2	2994
-邪	sia5	150
-酉	iu2	50
-里	li2	3604
-阮	guan2	11550
-防	hong5	1100
 走山	tsau2 suann1
 良心	liong5 sim1
 車心	tshia1 sim1
@@ -4081,22 +3473,6 @@ use_preset_vocabulary: false
 身懸	sin1 kuan5
 豆鹹	tau7 kiam5
 身體	sin1 the2
-並	ping7	685
-並	phing7	685
-乖	kuai1	100
-事	su7	13101
-事	tai7	397
-佬	lau2	100
-佮	kah4	26700
-佮	kap4	2668
-佯	tenn3	350
-佯	tinn3	350
-使	sai2	2966
-使	su2	2966
-來	lai5	58294
-例	le7	1413
-供	king1	150
-供	king3	50
 佳人	ka1 jin5
 佳人	ka1 lin5
 佯毋知	tenn3 m7 tsai1
@@ -4155,36 +3531,6 @@ use_preset_vocabulary: false
 佯戇	tenn3 gong7
 佯戇	tinn3 gong7
 侗戇	tong3 gong7
-兔	thoo3	200
-兩	liong2	2654
-兩	niu2	589
-兩	nng7	2949
-其	ki5	3645
-具	khu7	109
-典	tian2	1978
-初	tshe1	463
-初	tshue1	463
-初	tshoo1	1736
-刮	kueh4	50
-刮	kuih4	50
-刮	khe1	50
-到	kau3	17333
-制	tse3	2722
-券	kng3	150
-券	kuan3	300
-刺	tshi3	700
-刺	tshiah4	550
-刻	khik4	1154
-剁	tok4	50
-匼	khap4	100
-卒	tsut4	200
-卦	kua3	250
-卷	kng2	150
-卷	kuan3	150
-卸	sia3	500
-叔	tsik4	1201
-取	tshu2	1284
-受	siu7	8975
 刺䲅	tshi3 kui1
 初一	tshe1 it4
 初一	tshue1 it4
@@ -4273,26 +3619,6 @@ use_preset_vocabulary: false
 協議	hiap8 gi7
 具體	ku7 the2
 刺鑿	tshi3 tshak8
-呢	nih4	8729
-呢	neh4	2892
-味	bi7	3212
-呸	phui3	300
-呻	tshan1	100
-呼	hoo1	1337
-呼	khoo1	1344
-命	bing7	1524
-命	mia7	6224
-呾	tann3	100
-咂	tsap8	150
-和	ham7	107
-和	ho5	3885
-咒	tsiu3	300
-囷	khun5	50
-坩	khann1	250
-坪	penn5	400
-坪	pinn5	400
-坯	phue1	200
-坯	phe1	200
 命令	bing7 ling7
 坩仔	khann1 a2
 和平	ho5 ping5
@@ -4346,23 +3672,6 @@ use_preset_vocabulary: false
 呸瀾	phui3 nua7
 咒讖	tsiu3 tsham3
 呼籲	hoo1 iok8
-坱	ing1	876
-坵	khu1	100
-夜	ia7	650
-奅	phann7	50
-奇	ki5	2197
-奇	khia1	516
-妹	mue7	1164
-妹	be7	1164
-妻	tshe1	150
-妾	tshiap4	50
-姆	m2	450
-姊	tse2	159
-姊	tsi2	2236
-姑	koo1	2461
-姓	senn3	682
-姓	sinn3	682
-姓	sing3	682
 姑丈	koo1 tiunn7
 姑不而將	koo1 put4 ji5 tsiong1
 姑不而將	koo1 put4 li5 tsiong1
@@ -4407,23 +3716,6 @@ use_preset_vocabulary: false
 奇數	khia1 soo3
 奇蹟	ki5 tsik4
 垃儳	la5 sam5
-季	kui3	300
-孤	koo1	1483
-官	kuan1	508
-官	kuann1	3458
-定	tiann7	2370
-定	ting7	7244
-屆	kai3	50
-屈	khut4	350
-岫	siu7	450
-岸	huann7	1508
-帕	phe3	200
-帖	thiap4	400
-幸	hing7	1042
-底	te2	4318
-底	tue2	4318
-底	ti7	442
-店	tiam3	3670
 孤𣮈	koo1 khut8
 孤𣮈絕種	koo1 khut8 tseh8 tsing2
 孤毛絕種	koo1 moo5 tseh8 tsing2
@@ -4482,23 +3774,6 @@ use_preset_vocabulary: false
 店頭	tiam3 thau5
 店頭家	tiam3 thau5 ke1
 官職	kuann1 tsit4
-庚	kenn1	100
-庚	kinn1	100
-庚	king1	50
-府	hu2	2856
-延	tshian5	100
-彼	he1	2206
-彼	hit4	21517
-往	ing2	505
-往	ong2	1180
-忝	thiam2	100
-忠	tiong1	1540
-念	liam7	3977
-怙	koo7	50
-性	sing3	6699
-怪	kuai3	2686
-怪	kue3	134
-戽	hoo3	250
 彼一日	hit4 tsit8 jit8
 彼一日	hit4 tsit8 lit8
 怪人	kuai3 lang5
@@ -4554,44 +3829,6 @@ use_preset_vocabulary: false
 往擺	ing2 pai2
 性癖	sing3 phiah4
 怪癖	kuai3 phiah4
-房	pang5	2928
-房	pong5	167
-所	soo2	24281
-承	sin5	196
-承	sing5	1177
-抨	phiann1	50
-披	phi1	200
-抱	pho7	997
-抹	buah4	400
-押	ah4	450
-抽	thiu1	950
-抾	khioh4	900
-抿	bin2	200
-拂	hut4	50
-拄	tu2	6325
-拆	thiah4	750
-拈	liam1	200
-拈	ni1	100
-拊	hu2	150
-拋	pha1	700
-拋	phau1	50
-拌	puann7	100
-拍	phah4	6781
-拍	phik4	2637
-拎	ling5	50
-拐	kuai2	150
-拐	kuainn7	50
-拑	khinn5	150
-拔	puah8	100
-拔	pueh8	100
-拖	thua1	1704
-拗	au2	350
-拚	piann3	2326
-招	tsiau1	710
-招	tsio1	1116
-放	hong3	2372
-放	pang3	4507
-旺	ong7	150
 拄䢢	tu2 tshiang7
 抹刀	buah4 to1
 放刁	pang3 tiau1
@@ -4830,19 +4067,6 @@ use_preset_vocabulary: false
 拗鬱	au2 ut4
 抾襇	khioh4 king2
 抽躼	thiu1 lo3
-昏	hun7	200
-服	hok8	2625
-杮	phue3	100
-杯	pue1	400
-東	tang1	3791
-東	tong1	1401
-板	pan2	900
-枇	pi5	100
-枋	pang1	1050
-林	lim5	2578
-林	na5	2875
-果	ko2	2217
-枝	ki1	1864
 果子	kue2 tsi2
 果子	ke2 tsi2
 果子猫	kue2 tsi2 ba5
@@ -4903,21 +4127,6 @@ use_preset_vocabulary: false
 明瞭	bing5 liau5
 明講	bing5 kong2
 明顯	bing5 hian2
-武	bu2	1500
-沓	tauh8	513
-沫	phueh8	50
-沫	pheh8	50
-沬	bi7	100
-河	ho5	1729
-油	iu5	4709
-治	ti7	3960
-沾	tsam1	50
-沿	ian5	300
-泅	siu5	400
-泏	tsuh4	50
-泏	tsuah4	50
-泏	tsuat4	50
-泔	am2	300
 法	huat4	11954
 法力	huat4 lik8
 油水	iu5 tsui2
@@ -4972,29 +4181,6 @@ use_preset_vocabulary: false
 油臊	iu5 tsho1
 法醫	huat4 i1
 武藝	bu2 ge7
-疱	pha7	150
-泡	phau3	150
-泡	pho1	50
-泡	pho3	50
-波	pho1	550
-注	tsu3	1968
-注	tu3	328
-炊	tshue1	200
-炊	tshe1	200
-炎	iam7	550
-炒	tsha2	150
-炕	khong3	250
-爬	pe5	100
-爭	tsenn1	167
-爭	tsinn1	167
-爸	pa5	336
-爸	pe7	3368
-版	pan2	1734
-物	but8	10612
-物	mih8	2476
-物	mngh8	2476
-狀	tsng7	200
-狗	kau2	3818
 狗𩸶仔	kau2 gam7 a2
 狀元	tsiong7 guan5
 狗公	kau2 kang1
@@ -5043,17 +4229,6 @@ use_preset_vocabulary: false
 狗蟻	kau2 hia7
 狗蟻碟仔	kau2 hia7 tih8 a2
 泡麵	phau3 mi7
-的	e5	184693
-的	e5	184693
-盲	bong5	150
-直	tit8	7087
-知	tsai1	8879
-知	ti1	7399
-矸	kan1	3922
-社	sia7	6244
-祀	tshai7	100
-空	khang1	5567
-空	khong3	171
 知己	ti1 ki2
 空手	khang1 tshiu2
 矸仔	kan1 a2
@@ -5088,20 +4263,6 @@ use_preset_vocabulary: false
 空頭	khang1 thau5
 空縫	khang1 phang7
 空襲	khong1 sip8
-糾	kiu3	250
-罔	bong2	1057
-羌	kiunn1	150
-者	tsia2	6376
-股	koo2	1250
-肢	ki1	250
-肥	pui5	800
-肯	khing2	788
-肺	hi3	350
-芟	sing1	50
-芡	khian3	150
-花	hua1	691
-花	hue1	7690
-芳	phang1	1101
 芳水	phang1 tsui2
 羌仔	kiunn1 a2
 花仔布	hue1 a2 poo3
@@ -5158,25 +4319,6 @@ use_preset_vocabulary: false
 花轎	hue1 kio7
 花籃	hue1 na5
 花欉	hue1 tsang5
-芽	ge5	200
-虎	hoo2	1000
-虯	khiu5	250
-表	piau2	4675
-表	pio2	834
-軋	kauh4	50
-迎	ngia5	250
-近	kin7	2586
-近	kun7	2586
-迒	hann7	50
-金	kim1	9080
-長	tiong2	1360
-長	tiunn2	4989
-長	tng5	4422
-門	bun5	224
-門	mng5	7855
-阿	a1	29473
-雨	hoo7	2449
-雨	u2	659
 青	tshenn1	2489
 青	tshinn1	2489
 青	tshing1	696
@@ -5368,13 +4510,7 @@ use_preset_vocabulary: false
 金爐	kim1 loo5
 虎鬚	hoo2 tshiu1
 長躼埽	tng5 lo3 so3
-非	hui1	2018
 非法	hui1 huat4
-亭	ting5	350
-侵	tshim1	300
-侹	thiann7	50
-便	pian7	2736
-促	tshik4	100
 亭仔	ting5 a2
 亭仔跤	ting5 a2 kha1
 侵犯	tshim1 huan7
@@ -5396,21 +4532,6 @@ use_preset_vocabulary: false
 便當	pian7 tong1
 便當篋仔	pian7 tong1 kheh4 a2
 便藥仔	pian7 ioh8 a2
-俏	tshio1	50
-俗	siok8	2810
-保	po2	5027
-信	sin3	7276
-冠	kuan1	150
-剃	thi3	400
-剉	tsho3	150
-削	siah4	300
-剋	khik4	100
-前	tsian5	5066
-前	tsing5	5527
-勇	iong2	1985
-南	lam5	6771
-卻	khiok4	1332
-厘	li5	100
 前人囝	tsing5 lang5 kiann2
 信心	sin3 sim1
 前日	tsing5 jit8
@@ -5484,20 +4605,6 @@ use_preset_vocabulary: false
 保鏢	po2 pio1
 保護	po2 hoo7
 前驛	tsing5 iah8
-厚	kau7	1200
-咧	leh4	8857
-咧	teh4	17229
-咩	meh4	50
-咬	ka7	450
-咯	kok8	150
-咯	khak8	150
-咱	lan2	17922
-咻	hiu1	200
-哀	ai1	1016
-品	phin2	2932
-哈	ha1	50
-哎	aih4	50
-垂	sui5	200
 厚子	kau7 tsi2
 厚工	kau7 kang1
 厚行	kau7 hing7
@@ -5541,15 +4648,6 @@ use_preset_vocabulary: false
 厚禮數	kau7 le2 soo3
 厚薰	kau7 hun1
 厚譴損	kau7 khian3 sng2
-城	siann5	2472
-城	sing5	581
-奏	tsau3	350
-契	khe3	450
-契	khue3	450
-奒	hai1	50
-奕	i7	50
-姦	kan3	150
-姨	i5	650
 姨丈	i5 tiunn7
 契兄	khe3 hiann1
 契兄	khue3 hiann1
@@ -5577,17 +4675,6 @@ use_preset_vocabulary: false
 奏樂	tsau3 gak8
 姻緣	in1 ian5
 威嚴	ui1 giam5
-孩	hai5	150
-客	kheh4	3978
-室	sik4	1367
-封	hong1	500
-封	pang1	50
-屍	si1	350
-屎	sai2	4331
-峇	ba7	50
-巷	hang7	200
-帝	te3	7740
-度	too7	6182
 客人	kheh4 lang5
 度小月	too7 sio2 gueh8
 度小月	too7 sio2 geh8
@@ -5627,18 +4714,6 @@ use_preset_vocabulary: false
 屎礐仔蟲	sai2 hak8 a2 thang5
 建議	kian3 gi7
 客廳	kheh4 thiann1
-待	thai7	2397
-律	lut8	1407
-後	au7	17177
-思	su1	3123
-急	kip4	650
-怨	uan3	1749
-恨	hun7	200
-恬	tiam7	2516
-扁	pinn2	300
-拜	pai3	6127
-括	kuah4	50
-拭	tshit4	250
 拜一	pai3 it4
 後山	au7 suann1
 拜公媽	pai3 kong1 ma2
@@ -5718,29 +4793,6 @@ use_preset_vocabulary: false
 急難	kip4 lan7
 後驛	au7 iah8
 後齻	au7 tsan1
-拹	hiap8	150
-挂	kui3	100
-挃	tih8	100
-指	tsainn2	750
-指	tsi2	2001
-指	ki2	333
-按	an3	3419
-挌	keh4	50
-挑	thio1	150
-挓	tha3	100
-挔	hiannh4	50
-挕	hinn3	100
-挖	oo2	200
-挖	ue2	200
-政	tsing3	6271
-故	koo3	3365
-施	si1	500
-星	tshenn1	1288
-星	tshinn1	1288
-星	sing1	339
-春	tshun1	2561
-是	si7	103109
-曷	ah8	150
 拹水	hiap8 tsui2
 春天	tshun1 thinn1
 昨日	tsoh8 jit8
@@ -5812,25 +4864,6 @@ use_preset_vocabulary: false
 按額	an3 giah8
 政黨	tsing3 tong2
 政權	tsing3 khuan5
-枴	kuai2	100
-枵	iau1	550
-架	ke3	600
-架	khue3	100
-架	khe3	100
-枷	ke5	200
-柄	penn3	150
-柄	pinn3	150
-某	boo2	9022
-柑	kam1	400
-染	jiam2	200
-染	liam2	200
-染	ni2	300
-柙	kah4	50
-柚	iu7	150
-查	tsha5	1116
-柯	kua1	50
-柱	thiau7	350
-柿	khi7	400
 某人	boo2 lang5
 柳丁	liu2 ting1
 某乜人	boo2 mi2 lang5
@@ -5877,21 +4910,6 @@ use_preset_vocabulary: false
 柿餅	khi7 piann2
 查數	tsha5 siau3
 枵饞	iau1 sai5
-歪	uai1	350
-段	tuann7	1482
-毒	tok8	1764
-毒	thau7	84
-泉	tsuan5	150
-泉	tsuann5	450
-洋	iunn5	1488
-洒	se3	50
-洗	se2	2363
-洗	sue2	2363
-洘	kho2	250
-洞	tong7	350
-津	tin1	200
-洩	siap8	150
-洲	tsiu1	1177
 毒手	tok8 tshiu2
 泉水	tsuann5 tsui2
 洩水	siap8 tsui2
@@ -5938,19 +4956,6 @@ use_preset_vocabulary: false
 洗盪	sue2 tng7
 洞簫	tong7 siau1
 毒藥	tok8 ioh8
-活	uah8	7040
-派	phai3	1780
-流	lau5	2954
-流	liu5	3829
-炤	tshio7	50
-炭	thuann3	400
-炮	phau3	250
-炰	pu5	50
-炱	te1	150
-炸	tsa3	250
-炸	tsuann3	150
-為	ui5	12403
-為	ui7	3816
 活水	uah8 tsui2
 流水	lau5 tsui2
 炮仔	phau3 a2
@@ -5992,20 +4997,6 @@ use_preset_vocabulary: false
 流瀾	lau5 nua7
 炭礦	thuann3 khong3
 牲醴	sing1 le2
-畏	ui3	150
-疤	pa1	50
-疥	ke3	50
-疥	kue3	50
-疧	khi5	50
-癸	kui2	50
-皆	kai1	50
-盆	phun5	250
-相	sann1	357
-相	sio1	8098
-相	siong1	2500
-相	siong3	1786
-相	siunn3	1071
-盹	tuh4	150
 相	sio1 siang7
 相干	siong1 kan1
 相公	siong3 kong1
@@ -6088,19 +5079,6 @@ use_preset_vocabulary: false
 相觸	sio1 tak4
 相攬	sio1 lam2
 相讓	sio1 niu7
-省	sing2	1462
-眉	bai5	300
-眉	bi5	100
-看	khan3	866
-看	khuann3	27720
-砂	sua1	200
-砉	huah4	50
-研	ging2	729
-秋	tshiu1	450
-科	kho1	2308
-秒	bio2	100
-穿	tshing7	1626
-穿	tshng1	325
 省力	sing2 lat8
 看人無	khuann3 lang5 bo5
 省工	sing2 kang1
@@ -6152,22 +5130,6 @@ use_preset_vocabulary: false
 秒鐘	bio2 tsing1
 看護婦	khan3 hoo7 hu7
 看顧	khuann3 koo3
-約	iok4	3742
-紅	ang5	5474
-紅	hong5	248
-缸	kng1	150
-美	bi2	7337
-耍	sng2	779
-耎	luan2	50
-耐	nai7	300
-胃	ui7	450
-背	pue7	1013
-胎	thai1	250
-胎	the1	150
-胘	kian7	100
-胚	phue1	100
-胚	phe1	100
-致	ti3	2414
 美人	bi2 jin5
 美人	bi2 lin5
 胃口	ui7 khau2
@@ -6246,14 +5208,6 @@ use_preset_vocabulary: false
 紅鰱魚	ang5 lian5 hi5
 紅鰱魚	ang5 lian5 hu5
 美觀	bi2 kuan1
-苛	kho5	100
-若	na2	7721
-若	na7	11582
-苦	khoo2	5829
-苴	tsu7	250
-茂	om7	50
-茄	kio5	100
-虹	khing7	50
 苦力	ku1 li2
 苦工	khoo2 kang1
 苦心	khoo2 sim1
@@ -6288,23 +5242,6 @@ use_preset_vocabulary: false
 苛頭	kho5 thau5
 苦勸	khoo2 khng3
 虼蚻	ka1 tsuah8
-衫	sann1	3376
-訂	ting7	650
-計	ke3	2759
-負	hu7	1053
-赴	hu3	100
-軍	kun1	2876
-迫	pik4	1175
-郎	long5	150
-重	tang7	3234
-重	ting5	1677
-重	tiong5	1317
-重	tiong7	3114
-閂	tshuann3	150
-降	hang5	100
-降	kang3	450
-限	an7	180
-限	han7	1536
 重大	tiong7 tai7
 重手	tang7 tshiu2
 重手頭	tang7 tshiu2 thau5
@@ -6364,18 +5301,6 @@ use_preset_vocabulary: false
 要點	iau3 tiam2
 軍艦	kun1 lam7
 重鹹	tang7 kiam5
-面	bian7	736
-面	bin7	18694
-革	kik4	300
-音	im1	8544
-頁	iah8	150
-風	hong1	9297
-飛	hui1	629
-飛	pue1	1258
-飛	pe1	1258
-食	tsiah8	15378
-食	sit8	2097
-香	hiunn1	1757
 食人	tsiah8 lang5
 食力	tsiah8 lat8
 面子	bin7 tsu2
@@ -6506,12 +5431,6 @@ use_preset_vocabulary: false
 香爐	hiunn1 loo5
 風騷	hong1 so1
 風灌	hong1 kuan3
-修	siu1	2187
-俺	an2	10635
-倉	tshng1	150
-個	ko3	33305
-倌	kuann1	50
-倍	pue7	200
 修正	siu1 tsing3
 修行	siu1 hing7
 修改	siu1 kai2
@@ -6522,23 +5441,6 @@ use_preset_vocabulary: false
 俱樂部	khu7 lok8 poo7
 修養	siu1 iong2
 修整	siu1 tsing2
-倒	to2	2836
-倒	to3	3732
-倖	sing7	200
-倚	ua2	2834
-借	tsioh4	1646
-倩	tshiann3	100
-倯	song5	100
-值	tat8	1491
-值	tit8	621
-兼	kiam1	350
-冤	uan1	750
-准	tsun2	300
-凊	tshin3	450
-凍	tang3	300
-凍	tong3	150
-剔	thak4	50
-剝	pak4	200
 借人	tsioh4 lang5
 冤仇	uan1 siu5
 冤仇人	uan1 siu5 lang5
@@ -6611,24 +5513,6 @@ use_preset_vocabulary: false
 借蹛	tsioh4 tua3
 凍露水	tang3 loo7 tsui2
 兼顧	kiam1 koo3
-勍	khiang1	100
-匪	hui2	200
-厝	tshu3	8959
-員	uan5	3580
-哥	ko1	1841
-哩	lih4	50
-哩	mai1	50
-哪	na2	4354
-哭	khau3	1662
-哹	pu1	50
-哺	poo7	100
-哼	hainn1	150
-哼	hngh4	50
-哽	kenn2	100
-唅	hannh4	50
-唉	haih4	50
-唔	onn1	150
-唚	tsim1	200
 唐山	tng5 suann1
 原子筆	guan5 tsu2 pit4
 厝內	tshu3 lai7
@@ -6682,16 +5566,6 @@ use_preset_vocabulary: false
 厝邊頭尾	tshu3 pinn1 thau5 bue2
 厝邊頭尾	tshu3 pinn1 thau5 be2
 匪類	hui2 lui7
-唷	ioh4	50
-垺	pu5	100
-埋	bai5	150
-埋	tai5	50
-埔	poo1	3662
-埕	tiann5	600
-夏	ha7	300
-套	tho3	500
-娘	nia5	1039
-娘	niu5	3365
 娘𡢃	niu5 kan2
 埕斗	tiann5 tau2
 娘仔	niu5 a2
@@ -6704,29 +5578,6 @@ use_preset_vocabulary: false
 娘娘	niu5 niu5
 套話	tho3 ue7
 娘嬭	niu5 le2
-孫	sun1	1853
-宮	king1	300
-宮	kiong1	1850
-害	hai7	3678
-家	ka1	11523
-家	ke1	11984
-容	iong5	2467
-射	sia7	800
-屑	sut4	100
-展	tian2	2778
-展	thian2	333
-屘	ban1	150
-島	to2	1143
-島	too2	1143
-崁	kham3	850
-差	tsuah8	161
-差	tsha1	2740
-差	tshe1	483
-師	sai1	3410
-師	su1	6182
-席	sik8	450
-座	tso7	500
-庫	khoo3	750
 害了了	hai7 liau2 liau2
 宮女	kiong1 li2
 宮女	kiong1 lu2
@@ -6782,22 +5633,6 @@ use_preset_vocabulary: false
 家譜	ka1 phoo2
 展寶	tian2 po2
 展覽	tian2 lam2
-弱	jiok8	550
-弱	liok8	550
-徒	too5	2797
-恁	lin2	6106
-恥	thi2	100
-恩	in1	1176
-恩	un1	1176
-恩	un1	1176
-恭	kiong1	100
-扇	sinn3	300
-拳	kun5	450
-挈	kheh8	897
-挐	ju5	100
-挐	lu5	100
-挨	e1	3611
-挩	thuah4	200
 挨米	e1 bi2
 徒弟	too5 te7
 恐怖	khiong2 poo3
@@ -6821,35 +5656,6 @@ use_preset_vocabulary: false
 拳頭拇	kun5 thau5 bu2
 拳頭師	kun5 thau5 sai1
 恐驚	khiong2 kiann1
-挵	long3	350
-挺	thann2	100
-挼	jue5	50
-挼	le5	50
-挽	ban2	600
-挾	giap8	50
-挾	ngeh8	50
-捀	phang5	250
-捅	thong2	100
-捆	khun2	100
-捋	luah8	150
-捋	luah4	50
-捌	bat4	5800
-捎	sa1	100
-捏	liap8	100
-捏	tenn7	50
-捏	tinn7	50
-捒	sak4	1302
-捗	poo5	50
-捘	tsun7	2129
-捙	tshia1	500
-揤	tshih8	150
-敆	kap4	300
-效	hau7	1816
-料	liau7	2775
-旅	li2	400
-旅	lu2	400
-時	si5	32755
-晃	huann2	50
 效力	hau7 lik8
 捀斗	phang5 tau2
 捀水	phang5 tsui2
@@ -6928,25 +5734,6 @@ use_preset_vocabulary: false
 挵鐘	long3 tsing1
 時鐘	si5 tsing1
 捏麵尪仔	liap8 mi7 ang1 a2
-晏	uann3	150
-晟	tshiann5	150
-書	tsu1	894
-書	su1	2980
-朕	tim7	50
-柴	tsha5	2111
-栓	sng1	100
-校	hau7	3610
-栱	kong5	50
-核	hut8	100
-根	kin1	1550
-根	kun1	1550
-格	keh4	1956
-栽	tsai1	550
-桃	tho5	750
-框	khing1	250
-框	khong1	50
-案	an3	2236
-桌	toh4	2677
 柴㷮	tsha5 tsau1
 柴刀	tsha5 to1
 栗子	lat8 tsi2
@@ -7010,16 +5797,6 @@ use_preset_vocabulary: false
 柴鍥	tsha5 kueh4
 桌櫃	toh4 kui7
 書櫥	tsu1 tu5
-桔	kiat4	250
-梳	se1	300
-梳	sue1	300
-欱	hap4	50
-氣	khi3	8829
-氣	khui3	3144
-浡	phu7	50
-浮	phu5	450
-海	hai2	8273
-浸	tsim3	150
 氣力	khui3 lat8
 氣口	khui3 khau2
 浪子	long7 tsu2
@@ -7091,14 +5868,6 @@ use_preset_vocabulary: false
 海獺	hai2 thuah4
 海鰻	hai2 mua5
 海鱺仔	hai2 le7 a2
-消	siau1	2810
-烈	liat8	350
-烌	hu1	250
-烏	oo1	8830
-烘	hang1	200
-爹	tia1	100
-狹	eh8	50
-狹	ueh8	50
 烏𪐞紅	oo1 too3 ang5
 烏㽎㽎	oo1 sim3 sim3
 烏人	oo1 lang5
@@ -7214,19 +5983,6 @@ use_preset_vocabulary: false
 烘爐	hang1 loo5
 烏鶖	oo1 tshiu1
 特權	tik8 khuan5
-狼	long5	200
-珠	tsu1	2117
-班	pan1	2292
-留	lau5	353
-留	liu5	1946
-畜	thik4	100
-泄	tshua7	100
-疶	tshuah4	100
-疼	thiann3	4635
-痀	ku1	250
-病	penn7	3392
-病	pinn7	3392
-症	tsing3	600
 病人	penn7 lang5
 病人	pinn7 lang5
 畚斗	pun3 tau2
@@ -7266,14 +6022,6 @@ use_preset_vocabulary: false
 留戀	liu5 luan5
 病體	penn7 the2
 病體	pinn7 the2
-盍	khah4	50
-真	tsin1	31026
-眠	bin5	1906
-眩	hin5	300
-砧	tiam1	300
-破	pho3	952
-破	phua3	3280
-祖	tsoo2	2864
 眠一下	bin5 tsit8 e7
 祖公	tsoo2 kong1
 真心	tsin1 sim1
@@ -7317,16 +6065,6 @@ use_preset_vocabulary: false
 破雞筅	phua3 ke1 tshing2
 破雞筅	phua3 kue1 tshing2
 破壞	pho3 huai7
-祝	tsiok4	1074
-神	sin5	8753
-祠	su5	100
-租	tsoo1	500
-秤	tshin3	450
-秧	ng1	200
-站	tsam7	1000
-笑	tshio3	3995
-粉	hun2	1750
-納	lap8	350
 秤仔	tshin3 a2
 秧仔	ng1 a2
 秮仔	tai1 a2
@@ -7375,23 +6113,6 @@ use_preset_vocabulary: false
 秤錘	tshin3 thui5
 粉蟯	hun2 gio5
 神轎	sin5 kio7
-純	sun5	1335
-紗	se1	600
-紙	tsua2	3134
-級	kip4	1304
-素	soo3	1717
-紡	phang2	250
-索	soh4	550
-缺	khih4	250
-缺	khuat4	300
-缺	khueh4	200
-缺	kheh4	200
-罟	koo1	150
-翁	ang1	1732
-耙	pe5	400
-耙	pe7	150
-胮	hang3	50
-胸	hing1	450
 紗仔	se1 a2
 索仔	soh4 a2
 罟仔	koo1 a2
@@ -7430,19 +6151,6 @@ use_preset_vocabulary: false
 紙燈	tsua2 ting1
 紙錢	tsua2 tsinn5
 缺點	khuat4 tiam2
-能	ling5	4149
-胿	kui1	450
-脆	tshe3	100
-脈	meh8	450
-臭	tshau3	3108
-舀	iunn2	150
-舐	tsinn7	50
-茈	tsinn2	100
-茫	bang5	50
-茫	bong5	50
-茶	te5	3426
-草	tshau2	4667
-草	tsho2	622
 臭人	tshau3 lang5
 草人	tshau2 lang5
 臭丸	tshau3 uan5
@@ -7547,11 +6255,6 @@ use_preset_vocabulary: false
 草霸王	tshau2 pa3 ong5
 茶欉	te5 tsang5
 茶罐	te5 kuan3
-荏	lam2	150
-荒	hng1	200
-衰	sue1	750
-袂	be7	11866
-袂	bue7	11866
 衰䆀	sue1 bai2
 袂䆀	be7 bai2
 袂䆀	bue7 bai2
@@ -7611,19 +6314,6 @@ use_preset_vocabulary: false
 袂伸捙	bue7 tshun1 tshia1
 荏懶	lam2 nua7
 荖藤	lau2 tin5
-討	tho2	2800
-記	ki3	5887
-豹	pa3	150
-財	tsai5	2375
-起	khi2	16425
-迵	thang3	200
-迷	be5	1479
-迸	piang3	150
-追	tui1	750
-退	the3	2387
-送	sang3	3230
-逃	to5	500
-逆	gik8	300
 起𪁎	khi2 tshio1
 財力	tsai5 lik8
 討人情	tho2 jin5 tsing5
@@ -7742,26 +6432,6 @@ use_preset_vocabulary: false
 財寶	tsai5 po2
 貢獻	kong3 hian3
 迷戀	be5 luan5
-配	phue3	1767
-配	phe3	1767
-酒	tsiu2	4471
-釘	ting3	200
-針	tsiam1	950
-閃	siam2	600
-院	inn7	3016
-陣	tsun7	1595
-陣	tin7	2992
-除	ti5	1812
-除	tu5	1812
-除	tu5	1812
-隻	tsiah4	2989
-飢	ki1	100
-馬	be2	7067
-馬	ma2	3953
-骨	kut4	3660
-高	ko1	4846
-鬥	tau3	1921
-鬼	kui2	2941
 馬力	be2 lat8
 骨力	kut4 lat8
 馬上	ma2 siong7
@@ -7876,24 +6546,6 @@ use_preset_vocabulary: false
 高麗參	ko1 le5 sim1
 高麗菜	ko1 le5 tshai3
 高麗菜穎仔	ko1 le5 tshai3 inn2 a2
-乾	kuann1	500
-乾	kan1	150
-乾	khian5	50
-偃	ian2	150
-假	ka2	1210
-假	ke2	2047
-偌	gua7	2602
-偏	phian1	600
-偏	phinn1	100
-做	tso3	18482
-做	tsue3	18482
-停	thing5	1954
-偝	ainn7	100
-偝	iang7	100
-偷	thau1	1854
-兜	tau1	150
-剪	tsian2	400
-副	hu3	350
 假𠢕	ke2 gau5
 做人	tso3 lang5
 做人	tsue3 lang5
@@ -8013,25 +6665,6 @@ use_preset_vocabulary: false
 做譴損	tso3 khian3 sng2
 做譴損	tsue3 khian3 sng2
 偷聽	thau1 thiann1
-勒	lik8	50
-動	tang7	1440
-動	tong7	8786
-務	bu7	2544
-匏	pu5	350
-匙	si5	450
-匾	pian2	50
-區	khu1	11573
-參	tsham1	2323
-唌	siann5	100
-唬	hoo2	150
-唱	tshiang3	332
-唱	tshiunn3	2326
-唸	liam7	994
-啄	tok4	200
-啉	lim1	1559
-啊	ah4	1521
-問	mng7	4872
-啖	tam1	50
 唯一	ui5 it4
 唌人	siann5 lang5
 唬人	hoo2 lang5
@@ -8080,20 +6713,6 @@ use_preset_vocabulary: false
 啖糝	tam7 sam2
 唱聲	tshiang3 siann1
 勘驗	kham1 giam7
-啥	siann2	8104
-啦	lah4	6933
-圇	lun1	100
-國	kok4	21044
-埠	poo1	100
-埤	pi1	350
-培	pue7	100
-堂	tng5	2031
-堂	tong5	1306
-堅	kian1	1553
-堆	tui1	350
-堵	too2	400
-夠	kau3	2390
-娶	tshua7	1269
 啥人	siann2 lang5
 夠工	kau3 kang1
 國中	kok4 tiong1
@@ -8149,15 +6768,6 @@ use_preset_vocabulary: false
 奢颺	tshia1 iann7
 國寶	kok4 po2
 國籍	kok4 tsik8
-婆	po5	2236
-婚	hun1	2097
-婦	hu7	1992
-寄	kia3	1169
-寅	in5	50
-密	bat8	635
-將	tsiong1	2502
-將	tsiong3	3441
-專	tsuan1	3129
 婦人人	hu7 jin5 lang5
 婦人人	hu7 lin5 lang5
 婦女	hu7 li2
@@ -8195,16 +6805,6 @@ use_preset_vocabulary: false
 婚禮	hun1 le2
 寄藥包	kia3 ioh8 pau1
 專權	tsuan1 khuan5
-屜	thuah4	150
-崎	kia7	450
-崩	pang1	250
-帶	tai3	1197
-帶	tua3	1565
-張	tiunn1	3222
-張	tng1	716
-強	kiong5	3049
-得	tik4	12251
-得	tit4	3486
 得人疼	tit4 lang5 thiann3
 得人惜	tit4 lang5 sioh4
 崩山	pang1 suann1
@@ -8250,18 +6850,6 @@ use_preset_vocabulary: false
 帶膭	tua3 kui7
 彩頭	tshai2 thau5
 強辯	kiong5 pian7
-徙	sua2	450
-徛	khia7	2561
-從	tsing5	261
-從	tsiong5	914
-悾	khong1	300
-情	tsing5	9238
-惜	sioh4	1876
-惝	tshing2	50
-戛	khiat4	100
-挲	so1	250
-捥	ng2	50
-捧	phong2	100
 情人	tsing5 jin5
 情人	tsing5 lin5
 戛火	khiat4 hue2
@@ -8316,39 +6904,6 @@ use_preset_vocabulary: false
 情願	tsing5 guan7
 徛靈	khia7 ling5
 挲鹽	so1 iam5
-捲	kng2	250
-捷	tsiap8	250
-捻	liam3	50
-捻	liam7	50
-捽	sut4	250
-捾	kuann7	200
-掀	hian1	50
-掂	tim3	50
-掃	sau3	800
-掉	tiau7	200
-排	pai5	2950
-掖	ia7	200
-掘	kut8	200
-掛	kua3	1299
-掛	khua3	259
-掜	tau1	919
-掠	liah8	4324
-採	tshai2	1681
-探	tham3	1658
-接	tsiap4	4351
-接	tsih4	600
-控	khang3	50
-推	the1	353
-推	thui1	1766
-掩	am1	150
-掩	iam2	100
-掩	ng1	200
-掩	om1	50
-掮	khainn1	50
-救	kiu3	4257
-敗	pai7	650
-教	ka3	3568
-教	kau3	15246
 接力	tsih4 lat8
 救人	kiu3 lang5
 捾水	kuann7 tsui2
@@ -8472,24 +7027,6 @@ use_preset_vocabulary: false
 敗露	pai7 loo7
 救護車	kiu3 hoo7 tshia1
 探聽	tham3 thiann1
-斜	tshia5	100
-斜	tshuah8	200
-旋	tsng7	150
-旋	suan1	100
-族	tsok8	3899
-晝	tau3	1820
-晡	poo1	1106
-望	bang7	1980
-望	bong7	3218
-桮	pue1	500
-桱	kenn3	100
-桱	kinn3	100
-桶	thang2	1650
-桷	kak4	100
-桸	hia1	250
-桿	kuainn2	50
-梅	mue5	250
-梅	m5	250
 桱仔	kenn3 a2
 桱仔	kinn3 a2
 桶仔	thang2 a2
@@ -8513,18 +7050,6 @@ use_preset_vocabulary: false
 族親	tsok8 tshin1
 旋藤	suan1 tin5
 族譜	tsok8 phoo2
-條	liau5	821
-條	tiau5	3286
-梢	sau1	350
-梨	lai5	300
-梯	thui1	300
-欲	beh4	14669
-欲	bueh4	14669
-欶	suh4	250
-欸	eh4	50
-殺	sat4	700
-液	sioh8	200
-涼	liang5	500
 欶水	suh4 tsui2
 殺手	sat4 tshiu2
 涼水	liang5 tsui2
@@ -8560,16 +7085,6 @@ use_preset_vocabulary: false
 欶管	suh4 kong2
 梢聲	sau1 siann1
 棄權	khi3 khuan5
-淋	lam5	200
-淘	to5	100
-淚	lui7	100
-深	tshim1	3438
-淹	im1	250
-淺	tshian2	400
-添	thiam1	967
-添	thinn1	362
-清	tshing1	6424
-烰	phu5	50
 添丁	thiam1 ting1
 淑女	siok4 li2
 淑女	siok4 lu2
@@ -8628,16 +7143,6 @@ use_preset_vocabulary: false
 清糜	tshing1 be5
 淡薄仔	tam7 poh8 a2
 焐	u3	50
-爽	song2	200
-牽	khan1	3217
-圈	khian1	200
-犁	le5	350
-猛	bing2	200
-猛	me2	150
-猜	tshai1	250
-現	hian3	617
-現	hian7	6999
-球	kiu5	2784
 牽亡	khan1 bong5
 牽公	khan1 kong1
 牽手	khan1 tshiu2
@@ -8694,22 +7199,6 @@ use_preset_vocabulary: false
 牽羅經	khan1 lo5 kenn1
 牽羅經	khan1 lo5 kinn1
 牽藤	khan1 tin5
-理	li2	11858
-瓶	pan5	150
-瓷	hui5	250
-甜	tinn1	900
-產	san2	3513
-疏	se1	100
-疏	soo3	50
-痔	ti7	150
-痕	hun5	400
-盒	ah8	100
-盒	ap8	250
-盛	sing7	200
-眯	bi5	50
-眵	tshuh4	200
-眷	kuan3	150
-眼	gan2	650
 眼力	gan2 lik8
 眾人	tsing3 lang5
 瓷仔	hui5 a2
@@ -8754,16 +7243,6 @@ use_preset_vocabulary: false
 理論	li2 lun7
 疏櫳	se1 lang1
 眷屬	kuan3 siok8
-票	phio3	2693
-祭	tse3	1257
-窒	that4	350
-章	tsiong1	1521
-章	tsiunn1	190
-笠	leh8	200
-符	hu5	1402
-笨	pun7	50
-第	te7	7248
-笱	ko5	100
 第一	te7 it4
 祭文	tse3 bun5
 窒仔	that4 a2
@@ -8786,22 +7265,6 @@ use_preset_vocabulary: false
 符號	hu5 ho7
 硫磺	liu5 hong5
 祭獻	tse3 hian3
-粒	liap8	2160
-粕	phoh4	400
-粗	tshoo1	1050
-紩	thinn7	200
-紬	thiu1	50
-紮	tsah4	200
-紮	tsat4	50
-細	se3	4559
-細	sue3	4559
-紲	sua3	450
-紺	khong2	100
-絃	hian5	300
-組	tsoo1	1767
-絆	puann3	100
-缽	puah4	150
-羞	tshiu1	50
 統一	thong2 it4
 粗人	tshoo1 lang5
 粗工	tshoo1 kang1
@@ -8865,13 +7328,6 @@ use_preset_vocabulary: false
 細聲	se3 siann1
 細聲	sue3 siann1
 組織	tsoo1 tsit4
-脣	tun5	250
-脫	thuat4	1255
-脫	thut8	179
-脯	poo2	450
-舂	tsing1	450
-船	tsun5	3270
-莊	tsng1	700
 舵公	tai7 kong1
 脫手	thuat4 tshiu2
 耞仔	kenn2 a2
@@ -8900,15 +7356,6 @@ use_preset_vocabulary: false
 脫離	thuat4 li7
 莊嚴	tsong1 giam5
 荷蘭豆	hue5 lian5 tau7
-莢	ngeh4	100
-莫	bok8	1720
-莫	mai3	688
-蚵	o5	300
-蚶	ham1	250
-蛀	tsiu3	250
-蛆	tshi1	150
-蛆	tshu1	150
-蛇	tsua5	300
 處方	tshu2 hng1
 蚵仔	o5 a2
 蚶仔	ham1 a2
@@ -8928,19 +7375,6 @@ use_preset_vocabulary: false
 蛀龜仔	tsiu3 ku1 a2
 莫講	mai3 kong2
 蛀蟲	tsiu3 thang5
-術	sut8	2321
-術	sut8	2321
-袋	te7	1578
-袚	phuah8	100
-被	pi7	415
-被	phue7	748
-被	phe7	748
-規	kui1	4915
-覓	ba7	50
-覓	mai7	150
-訣	kuat4	100
-設	siat4	4002
-豉	sinn7	300
 規个	kui1 e5
 規千萬	kui1 tshing1 ban7
 規心	kui1 sim1
@@ -8983,30 +7417,6 @@ use_preset_vocabulary: false
 被囊	phue7 long5
 被囊	phe7 long5
 豉鹽	sinn7 iam5
-貨	hue3	2200
-貨	he3	2200
-販	huan3	300
-販	phuann3	100
-貪	tham1	500
-貫	kng3	100
-赦	sia3	250
-趼	lan1	100
-跂	kue2	100
-跂	ke2	100
-軟	nng2	1998
-透	thau3	2543
-逐	jiok4	1370
-逐	lip4	1370
-逐	tak8	4796
-途	too5	700
-這	tse1	27958
-這	tsit4	9622
-通	thang1	13239
-通	thong1	6564
-逝	tsua7	250
-逞	thing2	50
-造	tso7	3400
-連	lian5	4313
 軟𩛩𩛩	nng2 kauh4 kauh4
 軟㽎㽎	nng2 sim3 sim3
 逐个	tak8 e5
@@ -9120,20 +7530,6 @@ use_preset_vocabulary: false
 通譯	thong1 ik8
 連續	lian5 siok8
 貪戀	tham1 luan5
-部	poo7	5174
-部	pho7	161
-都	to1	1238
-野	ia2	2274
-釣	tio3	450
-釧	tshuan1	50
-閉	pi3	200
-陪	pue5	1008
-陰	im1	850
-陵	nia7	100
-陷	ham7	1369
-雪	seh4	450
-雪	suat4	562
-頂	ting2	8873
 頂𦜆	ting2 ham1
 部下	poo7 ha7
 頂下	ting2 e7
@@ -9218,13 +7614,6 @@ use_preset_vocabulary: false
 野獸	ia2 siu3
 頂懸	ting2 kuan5
 野蠻	ia2 ban5
-魚	hi5	5259
-魚	hu5	5259
-鳥	tsiau2	2362
-鹿	lok8	800
-麥	beh8	450
-麻	ba5	350
-麻	mua5	1200
 魚丸	hi5 uan5
 魚丸	hu5 uan5
 魚子	hi5 tsi2
@@ -9315,33 +7704,10 @@ use_preset_vocabulary: false
 魚鱗𤺅仔	hi5 lan5 tshe3 a2
 魚鱗𤺅仔	hu5 lan5 tshe3 a2
 麻粩	mua5 lau2
-傍	png7	50
-傘	suann3	250
 傑出	kiat8 tshut4
 備查	pi7 tsa1
 傀儡	ka1 le2
 傀儡戲	ka1 le2 hi3
-割	kuah4	700
-創	tshong1	146
-創	tshong3	2493
-勞	lo5	1896
-博	phok4	1962
-啼	thi5	250
-喀	khennh8	100
-喂	eh4	50
-喂	ueh4	50
-喃	nauh4	50
-善	sian7	800
-喈	kainn1	50
-喊	hiam3	50
-喋	thih8	100
-喌	tsu5	50
-喓	iaunn1	50
-喔	ooh4	50
-喘	tshuan2	300
-喙	tshui3	9364
-喝	huah4	1968
-喢	sannh4	50
 喙䫌	tshui3 phue2
 勞力	loo2 lat8
 勞力	lo5 lik8
@@ -9419,14 +7785,6 @@ use_preset_vocabulary: false
 喙瀾	tshui3 nua7
 喉鐘	au5 tsing1
 喙鬚	tshui3 tshiu1
-喨	liang1	100
-單	tuann1	3371
-圍	ui5	2174
-堪	kham1	150
-報	po3	6183
-場	tiunn5	5008
-壺	hoo5	50
-壺	oo5	200
 圍巾	ui5 kin1
 圍巾	ui5 kun1
 單元	tan1 guan5
@@ -9458,15 +7816,6 @@ use_preset_vocabulary: false
 圍牆	ui5 tshiunn5
 圍軀裙	ui5 su1 kun5
 圍爐	ui5 loo5
-媌	ba5	100
-媠	sui2	2774
-富	pu3	207
-寒	kuann5	929
-寒	gan5	84
-尊	tsun1	1562
-尋	siam5	100
-就	tsiu7	21083
-就	to7	18740
 媒人	mue5 lang5
 媒人	hm5 lang5
 寒人	kuann5 lang5
@@ -9505,10 +7854,6 @@ use_preset_vocabulary: false
 寒熱仔	kuann5 liat8 a2
 媠噹噹	sui2 tang1 tang1
 尊嚴	tsun1 giam5
-帽	bo7	200
-幅	pak4	50
-幾	kui2	4460
-循	sun7	50
 幾工	kui2 kang1
 帽仔	bo7 a2
 悲哀	pi1 ai1
@@ -9665,19 +8010,6 @@ use_preset_vocabulary: false
 敢講	kam2 kong2
 斑鴿	pan1 kah4
 智識	ti3 sik4
-晾	ne5	50
-替	the3	1511
-替	thue3	1511
-朝	tiau5	250
-期	ki5	3897
-棉	mi5	500
-棋	ki5	400
-棕	tsang1	200
-棗	tso2	300
-棚	penn5	350
-棚	pinn5	350
-棟	tong3	50
-椅	i2	900
 棋子	ki5 ji2
 棋子	ki5 li2
 替手	the3 tshiu2
@@ -9715,16 +8047,6 @@ use_preset_vocabulary: false
 棉襀被	mi5 tsioh4 phe7
 椅轎	i2 kio7
 棕鑢仔	tsang1 lu3 a2
-椏	ue1	100
-欺	khi1	350
-款	khuan2	11269
-款	khuann2	331
-殕	phu2	350
-殼	khak4	2134
-毯	than2	200
-減	kiam2	1370
-渡	too7	550
-渧	te3	1412
 渡口	too7 khau2
 毯仔	than2 a2
 殼仔絃	khak4 a2 hian5
@@ -9743,13 +8065,6 @@ use_preset_vocabulary: false
 欺瞞	khi1 mua5
 渡頭	too7 thau5
 款勸	khuan2 khng3
-港	kang2	4182
-渴	khuah4	50
-湖	oo5	2109
-湠	thuann3	200
-湧	ing2	300
-湯	thng1	850
-湳	lam3	200
 湳田	lam3 tshan5
 湯匙仔	thng1 si5 a2
 湯匙仔菜	thng1 si5 a2 tshai3
@@ -9760,18 +8075,6 @@ use_preset_vocabulary: false
 湠種	thuann3 tsing2
 湯頭	thng1 thau5
 測驗	tshik4 giam7
-焙	pue7	100
-焠	tshuh4	50
-無	bo5	63119
-無	bu5	5793
-焦	ta1	2145
-煮	tsu2	928
-牌	pai5	1400
-牚	thenn3	200
-犅	kang2	150
-猌	gin7	50
-猴	kau5	1400
-猶	iau2	8915
 無一定	bo5 it4 ting7
 無了時	bo5 liau2 si5
 無人緣	bo5 lang5 ian5
@@ -9897,16 +8200,6 @@ use_preset_vocabulary: false
 無議量	bo5 gi7 niu7
 無鹹無纖	bo5 kiam5 bo5 siam1
 無攬無拈	bo5 lam2 bo5 ne1
-琴	khim5	450
-番	huan1	2005
-畫	ue7	2560
-痚	he1	200
-痟	siau2	850
-痠	sng1	200
-痣	ki3	250
-痧	sua1	200
-發	huat4	9126
-發	puh4	294
 痟人	siau2 lang5
 痡心	poo5 sim1
 番仔	huan1 a2
@@ -9982,20 +8275,6 @@ use_preset_vocabulary: false
 番顛	huan1 tian1
 發願	huat4 guan7
 發覺	huat4 kak4
-睏	khun3	3486
-短	te2	1674
-短	tuan2	186
-硞	khok8	150
-硩	teh4	350
-硬	nge7	750
-硬	ngi7	750
-硯	hinn7	50
-稅	sue3	1300
-稅	se3	1300
-窗	tshong1	207
-窗	thang1	1142
-童	tang5	350
-童	tong5	300
 短䘼	te2 ng2
 窗仔	thang1 a2
 窗仔門	thang1 a2 mng5
@@ -10046,29 +8325,6 @@ use_preset_vocabulary: false
 睏醒	khun3 tshinn2
 童謠	tong5 iau5
 硩驚	teh4 kiann1
-筅	tshing2	350
-筆	pit4	2127
-等	tan2	2562
-等	ting2	3203
-筊	kiau2	550
-筋	kin1	700
-筋	kun1	700
-筍	sun2	850
-筐	khing1	100
-筒	tang5	600
-粞	tshe3	150
-粞	tshue3	150
-粟	tshik4	450
-粧	tsng1	250
-結	kat4	1482
-結	kiat4	5066
-絕	tseh8	593
-絕	tsuat8	1306
-絚	an5	50
-絞	ka2	350
-絨	jiong5	150
-絨	liong5	150
-絲	si1	950
 等一下	tan2 tsit8 e7
 結子	kiat4 tsi2
 筅仔	tshing2 a2
@@ -10135,15 +8391,6 @@ use_preset_vocabulary: false
 紫檀	tsi2 tuann5
 結穗	kiat4 sui7
 答謝	tap4 sia7
-翕	hip4	500
-翕	hip4	500
-脹	tiong3	100
-脹	tiunn3	300
-脾	pi5	200
-腎	sin7	100
-腔	khiunn1	200
-舒	tshu1	100
-菇	koo1	350
 脾土	pi5 thoo2
 腔口	khiunn1 khau2
 菁仔	tshenn1 a2
@@ -10229,16 +8476,6 @@ use_preset_vocabulary: false
 菜櫥	tshai3 tu5
 菜礤	tshai3 tshuah4
 菜籃	tshai3 na5
-著	tioh8	46783
-著	toh8	1210
-虛	hi1	400
-街	ke1	1223
-街	kue1	1223
-裁	tshai5	650
-裂	liah4	50
-裂	lih8	100
-覕	bih4	200
-訴	soo3	450
 裁刀	tshai5 to1
 視力	si7 lik8
 著水蛆	tioh8 tsui2 tshi1
@@ -10290,26 +8527,6 @@ use_preset_vocabulary: false
 診斷	tsin2 tuan3
 著蟲	tioh8 thang5
 著驚	tioh8 kiann1
-註	tsu3	1482
-詈	le2	50
-詈	lue2	50
-評	phing5	1735
-詞	su5	2871
-象	tshiunn7	531
-貯	te2	150
-貯	tue2	150
-貴	kui3	1821
-貶	pian2	50
-買	be2	1923
-買	bue2	1923
-買	mai2	128
-貺	hing7	50
-費	hui3	2631
-貼	tah4	300
-貼	thiap4	500
-貿	bau7	200
-趁	than3	2759
-越	uat8	1371
 貴人	kui3 jin5
 貴人	kui3 lin5
 貼人食	thiap4 lang5 tsiah8
@@ -10373,13 +8590,6 @@ use_preset_vocabulary: false
 趁錢	than3 tsinn5
 貿頭	bau7 thau5
 越頭	uat8 thau5
-跋	puah8	500
-跍	khu5	50
-跑	phau2	200
-跔	ku1	50
-跙	tshu7	150
-跛	pai2	1991
-進	tsin3	5302
 跙一倒	tshu7 tsit8 to2
 進口	tsin3 khau2
 鄉土	hiong1 thoo2
@@ -10409,25 +8619,6 @@ use_preset_vocabulary: false
 跛跤	pai2 kha1
 鄉親	hiong1 tshin1
 鄉鎮	hiong1 tin3
-酥	soo1	250
-量	liong5	356
-量	liong7	2765
-量	niu5	178
-量	niu7	356
-鈃	giang1	150
-鈍	tun1	50
-鈍	tun3	50
-鈍	tun7	100
-鈕	liu2	300
-開	khai1	5693
-開	khui1	9713
-閏	jun7	150
-閏	lun7	150
-閒	ing5	1258
-間	kan1	5883
-間	king1	5883
-陽	iong5	400
-隊	tui7	1881
 鈍刀	tun7 to1
 開刀	khui1 to1
 閒人	ing5 lang5
@@ -10491,21 +8682,6 @@ use_preset_vocabulary: false
 開竅	khui1 khiau3
 開藥仔	khui1 ioh8 a2
 開關	khai1 kuan1
-雁	gan7	50
-雄	hing5	458
-雄	hiong5	2901
-集	tsip8	2628
-雲	hun5	1098
-韌	jun7	50
-韌	lun7	50
-項	hang7	4298
-順	sun7	2626
-飫	ui3	150
-飯	png7	3685
-飲	im2	350
-黃	ng5	2091
-黍	se2	200
-黍	sue2	200
 飯丸	png7 uan5
 集中	tsip8 tiong1
 順手	sun7 tshiu2
@@ -10568,25 +8744,6 @@ use_preset_vocabulary: false
 飯篱	png7 le7
 飯篱	png7 lue7
 頇顢	han5 ban7
-亂	luan7	2228
-催	tshui1	150
-傱	tsong5	150
-傳	thng5	647
-傳	thuan5	5340
-債	tse3	950
-傷	siong1	3924
-傷	siunn1	1251
-剷	thuann2	100
-剺	leh8	100
-剺	li3	100
-剾	khau1	500
-剿	tsau5	50
-募	boo7	300
-勢	se3	4059
-勢	si3	1535
-勥	khiang3	100
-匯	hue7	500
-嗄	sa3	150
 剾刀	khau1 to1
 勢力	se3 lik8
 剾刀花	khau1 to1 hue1
@@ -10641,18 +8798,6 @@ use_preset_vocabulary: false
 亂講	luan7 kong2
 亂鐘仔	luan7 tsing1 a2
 債權	tse3 khuan5
-嗙	phngh4	50
-嗚	onn1	50
-園	hng5	3408
-圓	inn5	1855
-塊	te3	1147
-塌	thap4	250
-塔	thah4	300
-塗	thoo5	3339
-塚	thiong2	150
-塞	sat4	100
-填	thiam7	150
-塭	un3	150
 塚山	thiong2 suann1
 塗水	thoo5 tsui2
 塗水師	thoo5 tsui2 sai1
@@ -10715,19 +8860,6 @@ use_preset_vocabulary: false
 嫌疑	hiam5 gi5
 幌頭仔	hainn3 thau5 a2
 幌韆鞦	hainn3 tshian1 tshiu1
-幹	kan3	250
-想	siong2	7002
-想	siunn7	7440
-惹	jia2	300
-惹	lia2	300
-愁	tshiu5	200
-愈	ju2	1450
-愈	lu2	1450
-意	i3	12059
-愛	ai3	19415
-感	kam2	9228
-戥	ting2	100
-揫	tshiu5	50
 愛人仔	ai3 jin5 a2
 愛人仔	ai3 lin5 a2
 感化	kam2 hua3
@@ -10774,33 +8906,6 @@ use_preset_vocabulary: false
 意願	i3 guan7
 感覺	kam2 kak4
 意麵	i3 mi7
-損	sng2	350
-損	sun2	300
-搐	tiuh4	50
-搖	io5	1250
-搙	jiok8	50
-搙	liok8	50
-搜	tshiau1	100
-搝	khiu2	200
-搟	hian2	50
-搢	tsinn3	200
-搣	me1	50
-搣	mi1	50
-搤	iah4	2129
-浞	tshiok8	50
-搦	lak8	400
-搧	sam3	50
-搧	sian3	200
-搩	kiat4	50
-搪	tng7	150
-搬	puann1	400
-搭	tah4	450
-搵	un3	150
-搶	tshiunn2	500
-摃	kong3	300
-敬	king3	1749
-斟	thin5	150
-新	sin1	10069
 新人	sin1 lang5
 搧大耳	sian3 tua7 hinn7
 搧大耳	sian3 tua7 hi7
@@ -10871,17 +8976,6 @@ use_preset_vocabulary: false
 搖籃	io5 na5
 摃鐘	kong3 tsing1
 搦權	lak8 khuan5
-暗	am3	6574
-會	e7	8235
-會	hue7	23113
-椰	ia5	100
-楓	png1	150
-楔	seh4	250
-楗	king7	100
-楞	gong5	50
-楠	lam5	350
-楦	hun3	50
-業	giap8	4524
 椰子	ia5 tsi2
 暗中	am3 tiong1
 楔手縫	seh4 tshiu2 phang7
@@ -10944,19 +9038,6 @@ use_preset_vocabulary: false
 暗頭仔	am3 thau5 a2
 楔縫	seh4 phang7
 會議	hue7 gi7
-歁	kham2	350
-歇	hioh4	1485
-歲	hue3	2007
-歲	he3	2007
-歲	sue3	365
-毀	hui2	100
-準	tsun2	3291
-溜	liu1	600
-溝	kau1	1206
-溡	tshi5	50
-溢	ik4	150
-溪	khe1	5577
-溪	khue1	5577
 歇工	hioh4 kang1
 概尺	kai3 tshioh4
 楹仔	enn5 a2
@@ -11007,20 +9088,6 @@ use_preset_vocabulary: false
 歁頭歁面	kham2 thau5 kham2 bin7
 流籠	liu5 long5
 溫罐	un1 kuan3
-溶	iunn5	50
-滅	biat8	300
-滇	tinn7	150
-滑	kut8	300
-滒	ko7	50
-滓	tai2	150
-煎	tsian1	200
-煎	tsuann1	150
-煏	piak4	200
-煙	ian1	700
-煞	suah4	4845
-煞	sannh4	880
-煠	sah8	100
-煡	khit8	50
 滅亡	biat8 bong5
 煞心	sannh4 sim1
 煙火	ian1 hue2
@@ -11045,12 +9112,6 @@ use_preset_vocabulary: false
 煙黗	ian1 thun5
 煞戲	suah4 hi3
 煎藥仔	tsuann1 ioh8 a2
-照	tsiau3	5261
-照	tsio3	876
-煨	ue1	50
-煩	huan5	1967
-爺	ia5	450
-獅	sai1	650
 獅仔鼻	sai1 a2 phinn7
 照步來	tsiau3 poo7 lai5
 照呼照行	tsiau3 hoo1 tsiau3 kiann5
@@ -11062,14 +9123,6 @@ use_preset_vocabulary: false
 照講	tsiau3 kong2
 照鏡	tsio3 kiann3
 照顧	tsiau3 koo3
-當	tng1	8208
-當	tng3	150
-痰	tham5	350
-痲	mua5	50
-盞	tsuann2	50
-睨	gin5	50
-矮	e2	150
-矮	ue2	150
 矮人	e2 lang5
 矮人	ue2 lang5
 痱仔	pui3 a2
@@ -11108,18 +9161,6 @@ use_preset_vocabulary: false
 當歸	tong1 kui1
 痰瀾	tham5 nua7
 痰罐	tham5 kuan3
-碇	tiann7	2331
-碌	lik8	50
-碎	tshui3	200
-碑	pi1	150
-碗	uann2	800
-碰	pong7	150
-禁	kim3	1294
-稗	phe7	100
-稗	phue7	100
-稜	ling7	50
-稟	pin2	100
-窟	khut4	300
 碗公	uann2 kong1
 碗斗	uann2 tau2
 禁止	kim3 tsi2
@@ -11144,22 +9185,6 @@ use_preset_vocabulary: false
 碗糕	uann2 ko1
 碗頭仔	uann2 thau5 a2
 禽獸	khim5 siu3
-筧	king2	50
-筧	khio3	50
-節	tsat4	1067
-節	tseh4	1245
-節	tsueh4	1245
-節	tsiat4	1245
-絹	kin3	50
-經	kenn1	2304
-經	kinn1	2304
-經	king1	9218
-罨	am1	150
-罩	ta3	450
-罩	tau3	50
-罪	tsue7	3360
-群	kun5	1745
-義	gi7	5025
 節力	tsat4 lat8
 罪人	tsue7 jin5
 罪人	tsue7 lin5
@@ -11202,21 +9227,6 @@ use_preset_vocabulary: false
 經營	king1 ing5
 罩霧	ta3 bu7
 經驗	king1 giam7
-聖	siann3	1624
-聘	phing3	350
-腡	le5	50
-腦	nau2	1434
-腫	tsing2	100
-腰	io1	750
-腸	tng5	1150
-腹	pak4	2127
-舅	ku7	550
-萬	ban7	5320
-落	lak4	767
-落	lau3	2916
-落	loh4	614
-落	loh8	8749
-落	lok8	1381
 落䈄	lau3 ham1
 萬一	ban7 it4
 腦力	nau2 lik8
@@ -11336,11 +9346,6 @@ use_preset_vocabulary: false
 落難	loh8 lan7
 腦髓	nau2 tshue2
 腦髓	nau2 tshe2
-葉	hioh8	1341
-葩	pha1	50
-葬	tsong3	150
-蒂	ti3	150
-號	ho7	5140
 葉仔	hioh8 a2
 號名	ho7 mia5
 董事	tang2 su7
@@ -11352,19 +9357,6 @@ use_preset_vocabulary: false
 葡萄酒	phu5 to5 tsiu2
 號碼	ho7 be2
 葫蘆	hoo5 loo5
-蜂	phang1	200
-蜊	la5	100
-裒	poo5	150
-裘	hiu5	300
-裙	kun5	350
-補	poo2	2470
-裝	tsng1	150
-裝	tsong1	900
-裡	li2	1940
-裡	li2	1940
-解	kai2	6019
-試	tshi3	2135
-詩	si1	3665
 解厄	kai2 eh4
 解心悶	kai2 sim1 bun7
 蛾仔	iah8 a2
@@ -11660,14 +9652,6 @@ use_preset_vocabulary: false
 過癮	kue3 gian3
 過癮	ke3 gian3
 逼籤詩	pik4 tshiam1 si1
-鈴	ling5	250
-鈷	koo2	150
-鉎	sian1	150
-鉗	khinn5	200
-鉛	ian5	650
-鉤	kau1	300
-銃	tshing3	600
-閘	tsah8	450
 鉛子	ian5 tsi2
 銃子	tshing3 tsi2
 銃手	tshing3 tshiu2
@@ -11691,16 +9675,6 @@ use_preset_vocabulary: false
 閘路	tsah8 loo7
 鉛鉼	ian5 phiann2
 鉛線	ian5 suann3
-隔	keh4	2028
-雷	lui5	450
-雹	phauh8	50
-雺	bong5	300
-電	tian7	6698
-靴	hia1	50
-頓	tng3	1427
-飼	tshi7	2294
-飽	pa2	1511
-髡	khun1	50
 電力	tian7 lik8
 電子	tian7 tsu2
 雷公	lui5 kong1
@@ -11778,10 +9752,6 @@ use_preset_vocabulary: false
 雺霧	bong5 bu7
 電爐	tian7 loo5
 電罐	tian7 kuan3
-鼎	tiann2	700
-鼓	koo2	2258
-鼠	tshi2	900
-鼠	tshu2	900
 鼓井	koo2 tsenn2
 鼓井	koo2 tsinn2
 鼎仔	tiann2 a2
@@ -11802,21 +9772,6 @@ use_preset_vocabulary: false
 鼠麴草	tshu2 khak4 tshau2
 鼠麴粿	tshi2 khak4 kue2
 鼠麴粿	tshu2 khak4 ke2
-像	tshiunn7	4377
-像	siong7	6566
-僥	hiau1	300
-僫	oh4	1121
-劃	ueh8	250
-劃	uih8	250
-厭	ia3	150
-嗽	sau3	600
-嗾	tsak8	150
-呲	tshu7	100
-嘆	than3	150
-嘔	au2	200
-嘖	tsheh4	50
-嘛	ma7	11524
-嘛	mah4	4115
 厭𤺪	ia3 sian7
 僥心	hiau1 sim1
 嘔心血	au2 sim1 hiat4
@@ -11843,17 +9798,6 @@ use_preset_vocabulary: false
 嘉獎	ka1 tsiong2
 僫講	oh4 kong2
 嘉鱲	ka1 lah8
-圖	too5	2028
-團	thuan5	2111
-境	king2	1932
-墊	tiam7	100
-墓	bong7	650
-墓	boo7	650
-墘	kinn5	450
-壽	siu7	1350
-夢	bang7	1454
-夢	bong7	363
-奪	tuat8	150
 墓仔埔	bong7 a2 poo1
 墓地	bong7 te7
 墓地	boo7 tue7
@@ -11878,16 +9822,6 @@ use_preset_vocabulary: false
 墓龜	boo7 ku1
 壽龜	siu7 ku1
 墓壙	bong7 khong3
-孵	pu7	200
-寡	kua2	3125
-實	tsat8	1233
-實	sit8	9621
-寨	tse7	50
-對	tui3	22528
-對	ui3	2354
-幔	mua1	150
-幕	boo7	550
-廕	im3	50
 實力	sit8 lik8
 對分	tui3 pun1
 對不住	tui3 put4 tsu7
@@ -11938,16 +9872,6 @@ use_preset_vocabulary: false
 對襟仔衫	tui3 khim1 a2 sann1
 實櫼	tsat8 tsinn1
 實驗	sit8 giam7
-慒	tso1	100
-慘	tsham2	1099
-慢	ban7	2514
-摔	siak4	200
-摔	siang3	100
-摖	tshe3	150
-摖	tshue3	150
-摘	tiah4	100
-摠	tsang2	200
-摧	tshui1	50
 慒心	tso1 sim1
 慢火	ban7 hue2
 慢火	ban7 he2
@@ -11966,24 +9890,6 @@ use_preset_vocabulary: false
 慢慢仔	ban7 ban7 a2
 慢慢仔是	ban7 ban7 a2 si7
 摠頭	tsang2 thau5
-摳	khaunnh8	50
-摵	tshik8	200
-摸	bong1	570
-摸	boo1	570
-摺	tsih4	200
-摻	tsham3	50
-摻	tsham1	50
-撇	phiat4	200
-敱	khainn2	50
-敲	kha3	200
-敲	khau1	50
-斡	uat4	250
-旗	ki5	550
-暝	me5	2368
-暝	mi5	2368
-暢	thiong3	100
-榕	tshing5	100
-榫	sun2	300
 暝工	me5 kang1
 暝工	mi5 kang1
 暝日	me5 jit8
@@ -12010,18 +9916,6 @@ use_preset_vocabulary: false
 榨菜	tsa3 tshai3
 敲電話	kha3 tian7 ue7
 榫頭	sun2 thau5
-槌	thui5	450
-槍	tshiunn1	50
-槓	kng3	100
-歌	ko1	765
-歌	kua1	3521
-滯	tu3	150
-滲	siam3	200
-滴	tih4	400
-滷	loo2	350
-滾	kun2	550
-滿	buan2	1996
-滿	mua2	1688
 歌手	kua1 tshiu2
 滾水	kun2 tsui2
 滿月	mua2 gueh8
@@ -12058,20 +9952,6 @@ use_preset_vocabulary: false
 榴槤	liu5 lian5
 歌謠	kua1 iau5
 滷麵	loo2 mi7
-漂	phiau1	50
-漆	tshat4	150
-漉	lok8	150
-漏	lau7	400
-演	ian2	2640
-漖	ka3	50
-漚	au1	100
-漚	au3	300
-漢	han3	7881
-漩	suan7	150
-漲	tiong3	100
-漲	tiunn3	100
-熁	hannh4	50
-熄	sit4	50
 漢文	han3 bun5
 漂白	phio3 peh8
 漂白粉	phio3 peh8 hun2
@@ -12108,23 +9988,12 @@ use_preset_vocabulary: false
 演變	ian2 pian3
 漚鬱熱	au3 ut4 juah8
 漚鬱熱	au3 ut4 luah8
-熊	him5	200
-熔	iunn5	50
-熗	tshing3	50
-疑	gi5	1832
 疑心	gi5 sim1
 疑神疑鬼	gi5 sin5 gi5 kui2
 疑問	gi5 bun7
 瑪瑙	be2 lo2
 爾爾	nia7 nia7
 熊膽	him5 tann2
-盡	tsin7	2410
-監	kann1	512
-碭	thng7	50
-碳	thuann3	100
-禍	e7	50
-禍	ho7	150
-福	hok4	5005
 盡力	tsin7 lik8
 碩士	sik8 su7
 碟仔	tih8 a2
@@ -12141,26 +10010,6 @@ use_preset_vocabulary: false
 監禁	kam1 kim3
 監獄	kann1 gak8
 盡磅	tsin7 pong7
-種	tsing2	3740
-種	tsing3	984
-種	tsiong2	2362
-箅	pin2	150
-箍	khoo1	1764
-箔	poh8	100
-算	sng3	4853
-算	suan3	808
-管	kng2	548
-管	kong2	914
-管	kuan2	2652
-箸	ti7	300
-箸	tu7	300
-粽	tsang3	550
-精	tsiann1	725
-精	tsing1	3107
-精	tsinn1	103
-粿	kue2	1400
-粿	ke2	1400
-綠	lik8	500
 精力	tsing1 lik8
 種子	tsing2 tsi2
 箅仔	pin2 a2
@@ -12219,16 +10068,6 @@ use_preset_vocabulary: false
 管顧	kuan2 koo3
 箸籠	ti7 lang7
 箸籠	tu7 lang7
-網	bang7	1939
-網	bong2	84
-綴	tue3	1323
-綴	te3	1323
-綵	tshai2	250
-綹	liu2	100
-綿	mi5	350
-緊	kin2	7239
-罰	huat8	450
-腿	thui2	450
 綴人走	tue3 lang5 tsau2
 綴人走	te3 lang5 tsau2
 緊手	kin2 tshiu2
@@ -12259,16 +10098,6 @@ use_preset_vocabulary: false
 綴轎後的	tue3 kio7 au7 e5
 綴轎後的	te3 kio7 au7 e5
 綿爛	mi5 nua7
-膎	ke5	250
-膎	kue5	250
-膏	ko1	700
-舞	bu2	1914
-蒜	suan3	250
-蓄	hak4	150
-蓆	tshioh8	300
-蓋	kah4	241
-蓋	kai3	362
-蓋	kua3	604
 舞女	bu2 li2
 舞女	bu2 lu2
 蒜仔	suan3 a2
@@ -12285,9 +10114,6 @@ use_preset_vocabulary: false
 蒜頭	suan3 thau5
 膏藥	koo1 ioh8
 舞廳	bu2 thiann1
-蜜	bit8	400
-蜷	khun5	50
-蝕	sih8	200
 蜜月	bit8 guat8
 蝕日	sit4 jit8
 蝕日	sit4 lit8
@@ -12297,25 +10123,6 @@ use_preset_vocabulary: false
 蝕重	sih8 tang7
 蜘蛛	ti1 tu1
 蜘蛛網	ti1 tu1 bang7
-裾	ki1	150
-裾	ku1	150
-認	jin7	3005
-認	lin7	3005
-誓	tsua7	100
-誓	se3	200
-誘	iu2	200
-語	gi2	21976
-語	gu2	1831
-語	gu2	1831
-誡	kai3	50
-誤	goo7	1069
-說	suat4	961
-說	sue3	549
-說	sueh4	1236
-說	seh4	1236
-賒	sia1	200
-趕	kuann2	1819
-趖	so5	500
 趕工	kuann2 kang1
 誓不兩立	se3 put4 liong2 lip8
 賒欠	sia1 khiam3
@@ -12354,21 +10161,6 @@ use_preset_vocabulary: false
 認錯	lin7 tsho3
 說謝	sueh4 sia7
 說謝	seh4 sia7
-踅	seh8	1262
-輕	khin1	2882
-辣	luah8	50
-遛	liu3	200
-遠	hng7	519
-遠	uan2	3116
-鄙	phi2	100
-酵	kann3	200
-酸	sng1	550
-酺	poo5	100
-鉸	ka1	200
-鉼	pin2	100
-鉼	phiann2	150
-銀	gin5	1481
-銀	gun5	1481
 鉸刀	ka1 to1
 鉸刀爿	ka1 to1 ping5
 輕手	khin1 tshiu2
@@ -12415,25 +10207,11 @@ use_preset_vocabulary: false
 踅螺梯	seh8 le5 thui1
 踅輾轉	seh8 lian3 tng2
 輕鬆	khin1 sang1
-銅	tang5	700
-銎	khing1	100
-銬	khau3	100
-閣	koh4	29890
-閣	koh4	29890
-隙	khiah4	100
 閣再	koh4 tsai3
 閣較	koh4 khah4
 銅管仔	tang5 kong2 a2
 銅線	tang5 suann3
 銅錢	tang5 tsinn5
-頕	tam3	200
-領	ling2	1221
-領	nia2	1526
-餅	piann2	1100
-餌	ji7	150
-餌	li7	150
-魂	hun5	1354
-鳳	hong7	850
 頕低	tam3 ke7
 領土	ling2 thoo2
 骰仔	tau5 a2
@@ -12451,10 +10229,6 @@ use_preset_vocabulary: false
 魂魄	hun5 phik4
 頕頭	tam3 thau5
 骱邊	kai2 pinn1
-鼻	phinn7	2360
-齊	tse5	754
-齊	tsue5	754
-齊	tsiau5	188
 齊勻	tsiau5 un5
 鼻水	phinn7 tsui2
 鼻仔	phinn7 a2
@@ -12471,12 +10245,6 @@ use_preset_vocabulary: false
 齊頭	tse5 thau5
 鼻龍	phinn7 liong5
 鼻翼	phinn7 sit8
-價	ke3	3323
-億	ik4	50
-儉	khiam7	450
-劇	kiok8	1395
-劌	kui3	50
-劍	kiam3	300
 劍竹	kiam3 tik4
 價值	ke3 tat8
 厲害	li7 hai7
@@ -12488,16 +10256,6 @@ use_preset_vocabulary: false
 價錢	ke3 tsinn5
 僻靜	phiah4 tsing7
 儉錢	khiam7 tsinn5
-嘹	liau5	150
-嘿	heh4	50
-噓	si1	150
-噗	pok4	100
-噗	phok4	50
-噗	phok8	100
-噴	phun3	350
-墜	tui7	250
-墟	hi1	50
-墨	bak8	500
 墨斗	bak8 tau2
 墨水	bak8 tsui2
 噴水池	phun3 tsui2 ti5
@@ -12517,23 +10275,6 @@ use_preset_vocabulary: false
 噴點	phun3 tiam2
 噗薰	pok4 hun1
 墜繩	tui7 tsin5
-嬈	hiau5	100
-嬌	kiau1	150
-審	sim2	500
-寫	sia2	7896
-寮	liau5	1650
-層	tsan3	416
-層	tsan5	1456
-屧	siap4	150
-幡	huan1	150
-廟	bio7	1600
-廠	tshiunn2	800
-廢	hui3	550
-廣	kong2	1337
-彈	tuann5	350
-彈	tuann7	150
-影	iann2	9036
-德	tik4	2594
 廚子	too5 tsi2
 廟公	bio7 kong1
 廢止	hui3 tsi2
@@ -12566,22 +10307,6 @@ use_preset_vocabulary: false
 廣播劇	kong2 poo3 kiok8
 影戲	iann2 hi3
 影響	ing2 hiong2
-慼	tsheh4	150
-慼	tshueh4	150
-憂	iu1	1250
-戮	lak4	150
-撆	pih4	200
-撈	hoo5	50
-撋	nua2	100
-撏	jim5	50
-撏	lim5	50
-撐	the1	150
-撒	suah4	1184
-撓	ngiau2	50
-撚	lian2	250
-撞	tong7	250
-撟	kiau7	100
-撠	giah4	100
 慼心	tsheh4 sim1
 慼心	tshueh4 sim1
 撆手䘼	pih4 tshiu2 ng2
@@ -12616,21 +10341,6 @@ use_preset_vocabulary: false
 撒鹽	suah4 iam5
 戮鑽	lak4 tsng3
 撚鑽	lian2 tsng3
-撥	puah4	350
-撨	tshiau5	200
-撩	liau5	50
-撩	lio5	100
-撫	hu1	50
-撬	kiau7	50
-播	poo3	800
-撮	tshok4	50
-數	siau3	3156
-數	soo3	2832
-暫	tsiam7	250
-槳	tsiunn2	100
-槽	tso5	400
-樂	gak8	2106
-樂	lok8	2229
 敵人	tik8 jin5
 敵人	tik8 lin5
 撥工	puah4 kang1
@@ -12670,16 +10380,6 @@ use_preset_vocabulary: false
 數簿	siau3 phoo7
 暴露	pok8 loo7
 樂觀	lok8 kuan1
-樓	lau5	2278
-標	piau1	1416
-標	pio1	1315
-樟	tsiunn1	200
-樠	mia5	50
-模	boo5	800
-樣	iunn7	4375
-漿	tsiunn1	300
-潑	phuah4	100
-潘	phun1	250
 潘水	phun1 tsui2
 樓仔	lau5 a2
 樟仔	tsiunn1 a2
@@ -12706,16 +10406,6 @@ use_preset_vocabulary: false
 模範	boo5 huan7
 標頭	phiau1 thau5
 標頭	pio1 thau5
-潤	jun7	200
-潤	lun7	200
-潭	tham5	550
-潲	siau5	500
-澍	tshu7	50
-濆	bun3	50
-熟	sik8	1569
-熥	thng7	50
-熨	ut4	150
-熬	go5	50
 熟手	sik8 tshiu2
 熨斗	ut4 tau2
 潭仔	tham5 a2
@@ -12729,17 +10419,6 @@ use_preset_vocabulary: false
 潤餅𩛩	jun7 piann2 kauh4
 潤餅𩛩	lun7 piann2 kauh4
 熟鐵	sik8 thih4
-熱	jiat8	2275
-熱	liat8	2275
-熱	juah8	1011
-熱	luah8	1011
-獎	tsiong2	1514
-瘡	tshng1	150
-瘤	liu5	100
-瘦	san2	500
-皺	jiau5	150
-皺	liau5	150
-盤	puann5	1650
 熱人	juah8 lang5
 熱人	luah8 lang5
 熱天	juah8 thinn1
@@ -12776,21 +10455,6 @@ use_preset_vocabulary: false
 獎勵	tsiong2 le7
 皺襞襞	jiau5 phe2 phe2
 皺襞襞	liau5 phe2 phe2
-瞌	kheh4	100
-瞌	khueh4	100
-磅	pong7	650
-磕	khap8	200
-稻	tiu7	500
-稿	ko2	300
-窮	king5	150
-窮	kiong5	50
-窮	khing5	150
-窯	io5	250
-箠	tshue5	300
-箠	tshe5	300
-箬	hah8	250
-箭	tsinn3	250
-箱	siunn1	400
 磅子	pong7 tsi2
 窮分	khing5 hun1
 磅仔	pong7 a2
@@ -12815,19 +10479,6 @@ use_preset_vocabulary: false
 磕頭	khap8 thau5
 稻穗	tiu7 sui7
 箱籠	siunn1 lang2
-篇	phinn1	891
-篋	kheh4	250
-糊	koo5	600
-糋	tsinn3	100
-線	suann3	4156
-緟	thong7	50
-緣	ian5	1944
-編	pian1	1708
-緩	uan7	50
-練	lian7	1435
-罵	ma7	153
-罵	me7	919
-罵	ma7	153
 糊人	koo5 lang5
 篋仔	kheh4 a2
 糊仔	koo5 a2
@@ -12848,13 +10499,6 @@ use_preset_vocabulary: false
 糊瘰瘰	hoo5 lui3 lui3
 編輯	pian1 tsip8
 線頭	suann3 thau5
-罷	pa7	250
-膚	hu1	200
-膜	mooh8	250
-膠	ka1	400
-膣	tsi1	100
-舖	phoo3	100
-蓬	phong7	100
 罷工	pa7 kang1
 蓮子	lian5 tsi2
 蓬心	pong7 sim1
@@ -12868,14 +10512,6 @@ use_preset_vocabulary: false
 蓬鬆	phong7 song1
 蓮藕	lian5 ngau7
 蓮霧	lian2 bu7
-蔗	tsia3	300
-蔥	tshang1	650
-蔫	lian1	50
-蔭	im3	200
-蔭	ng2	100
-蝝	ian5	50
-蝦	he5	700
-蝨	sat4	400
 蝦仁	he5 jin5
 蝦仁	he5 lin5
 蔥仔	tshang1 a2
@@ -12894,15 +10530,6 @@ use_preset_vocabulary: false
 蝨篦	sat4 pin3
 蔥頭	tshang1 thau5
 蝒蟲	bin7 thang5
-衝	tshing3	50
-衝	tshiong1	200
-褒	po1	450
-褙	pue3	50
-誰	tsui5	50
-課	kho3	2186
-調	tiau5	1762
-調	tiau7	1645
-談	tam5	750
 課文	kho3 bun5
 蝶仔	iah8 a2
 課本	kho3 pun2
@@ -12928,27 +10555,6 @@ use_preset_vocabulary: false
 調整	tiau5 tsing2
 誹謗	hui2 pong3
 複雜	hok8 tsap8
-請	tshiann2	3261
-請	tshing2	2562
-諍	tsenn3	200
-諍	tsinn3	200
-論	lun7	6468
-豬	ti1	3126
-豬	tu1	3126
-賜	su3	929
-賞	siong2	395
-賞	siunn2	1186
-賠	pue5	200
-賠	pe5	200
-賢	hian5	100
-賣	be7	2101
-賣	bue7	2101
-賣	mai7	95
-賤	tsian7	200
-質	tsit4	2369
-賭	too2	150
-踏	tah8	1736
-踢	that4	200
 請人客	tshiann2 lang5 kheh4
 豬公	ti1 kang1
 豬公	tu1 kang1
@@ -13069,21 +10675,6 @@ use_preset_vocabulary: false
 賠償	pe5 siong5
 賤蟲	tsian7 thang5
 踏蹺	tah8 khiau1
-踮	tiam3	2386
-輦	lian2	150
-輩	pue3	350
-輪	lian2	350
-輪	lun5	600
-遨	go5	50
-遮	tsia1	1669
-遮	tsiah4	2503
-遮	jia1	5007
-遮	lia1	5007
-遷	tshian1	300
-鄰	lin5	150
-醃	am1	150
-醉	tsui3	150
-醋	tshoo3	250
 遮日	jia1 jit8
 遮日	lia1 lit8
 輪仔	lian2 a2
@@ -13115,11 +10706,6 @@ use_preset_vocabulary: false
 遮瞞	lia1 mua5
 輦轎仔	lian2 kio7 a2
 輪鬮	lun5 khau1
-銷	siau1	1000
-鋏	giap4	100
-鋩	me5	100
-鋪	phoo1	600
-閬	lang3	200
 閬工	lang3 kang1
 閬月	lang3 gueh8
 閬月	lang3 geh8
@@ -13133,18 +10719,6 @@ use_preset_vocabulary: false
 鋤頭	ti5 thau5
 鋤頭	tu5 thau5
 閬縫	lang3 phang7
-霆	tan5	150
-靠	kho3	1923
-靠	khua3	160
-鞋	e5	650
-鞋	ue5	650
-鞍	uann1	150
-鞏	khong7	50
-養	iong2	2466
-養	iunn2	255
-餓	go7	150
-駐	tu7	100
-駛	sai2	2319
 靠山	kho3 suann1
 養女	iong2 li2
 養女	iong2 lu2
@@ -13177,12 +10751,6 @@ use_preset_vocabulary: false
 養飼	iong2 tshi7
 霆雷公	tan5 lui5 kong1
 駕駛	ka3 su2
-鬧	nau7	610
-魄	phik4	300
-魯	loo2	200
-麩	hu1	100
-麩	phoo1	100
-齒	khi2	1450
 齒𣻸	khi2 siunn5
 鴉片	a1 phian3
 鴉片仙	a1 phian3 sian1
@@ -13207,9 +10775,6 @@ use_preset_vocabulary: false
 齒觳仔	khi2 khok4 a2
 齒戳仔	khi2 thok4 a2
 鬧廳	nau7 thiann1
-儑	gam7	200
-凝	ging5	200
-器	khi3	1288
 噪人耳	tsho3 lang5 hinn7
 噪人耳	tsho3 lang5 hi7
 凝心	ging5 sim1
@@ -13222,12 +10787,6 @@ use_preset_vocabulary: false
 噤喙	khiunn7 tshui3
 噭噭叫	kiau3 kiau3 kio3
 儑頭儑面	gam7 thau5 gam7 bin7
-噯	aih4	50
-壁	piah4	2374
-壅	ing3	150
-壇	tuann5	600
-學	hak8	18199
-學	oh8	4044
 學人	oh8 lang5
 學力	hak8 lik8
 學士	hak8 su7
@@ -13255,25 +10814,6 @@ use_preset_vocabulary: false
 學寮	hak8 liau5
 噷噷	hmh8 hmh8
 壁櫥	piah4 tu5
-憑	pin5	250
-憲	hian3	400
-懍	lun2	150
-戰	tsian3	4010
-撼	ham2	50
-擂	lui5	200
-擇	tik8	100
-擉	tiak8	100
-擋	tong3	1193
-操	tshau1	600
-操	tsho1	50
-擒	khim5	50
-擔	tam1	1111
-擔	tann1	1010
-擔	tann3	909
-據	ki3	997
-據	ku3	997
-擛	iat8	150
-整	tsing2	1822
 擔工	tann1 kang1
 操心	tshau1 sim1
 擔水	tann1 tsui2
@@ -13320,11 +10860,6 @@ use_preset_vocabulary: false
 擋頭	tong3 thau5
 擔頭	tann3 thau5
 擁護	iong2 hoo7
-樹	tshiu7	4070
-橋	kio5	1200
-橐	lok4	200
-橐	lop4	50
-橛	kueh8	50
 樹子	tshiu7 tsi2
 曆日	lah8 jit8
 曆日	lah8 lit8
@@ -13364,12 +10899,6 @@ use_preset_vocabulary: false
 機關	ki1 kuan1
 機關銃	ki1 kuan1 tshing3
 橄欖	kan1 na2
-橫	huainn5	500
-橫	huinn5	500
-歕	pun5	350
-澹	tam5	250
-激	kik4	1908
-濁	lo5	200
 激力	kik4 lat8
 激五仁	kik4 ngoo2 jin5
 激五仁	kik4 ngoo2 lin5
@@ -13406,16 +10935,6 @@ use_preset_vocabulary: false
 歕雞胿仔	pun5 kue1 kui1 a2
 橫霸霸	huainn5 pa3 pa3
 橫霸霸	huinn5 pa3 pa3
-燃	hiann5	150
-燈	ting1	1910
-燉	tun7	50
-燒	sio1	3369
-燕	inn3	100
-燖	tim7	100
-燙	thng3	100
-燜	bun7	100
-甌	au1	250
-甍	bong3	50
 燈心	ting1 sim1
 燒水	sio1 tsui2
 燃火	hiann5 hue2
@@ -13448,14 +10967,6 @@ use_preset_vocabulary: false
 獨獨	tok8 tok8
 燖鍋	tim7 ue1
 燖鍋	tim7 e1
-瘸	khue5	150
-瘸	khe5	150
-瞞	mua5	350
-磚	tsng1	150
-磨	bo7	150
-磨	bua5	300
-積	tsik4	750
-穎	inn2	200
 瘸手	khue5 tshiu2
 瘸手	khe5 tshiu2
 瞞天過海	mua5 thinn1 kue3 hai2
@@ -13469,16 +10980,6 @@ use_preset_vocabulary: false
 磨粿	bo7 ke2
 積德	tsik4 tik4
 瞞騙	mua5 phian3
-篙	ko1	300
-篡	tshuan3	50
-篦	pin3	100
-篩	thai1	250
-糕	ko1	600
-糖	thng5	1200
-縋	lui7	50
-縖	ha5	100
-縛	pak8	300
-縣	kuan7	1675
 糖丹	thng5 tan1
 篩斗	thai1 tau2
 糖水	thng5 tsui2
@@ -13505,11 +11006,6 @@ use_preset_vocabulary: false
 窸窸窣窣	si1 si1 sut8 sut8
 糖霜	thng5 sng1
 糖廍	thng5 phoo7
-膨	phong3	850
-膭	kui7	250
-興	hing1	1656
-興	hing3	552
-蕊	lui2	150
 膭水	kui7 tsui2
 膨皮	phong3 phue5
 膨皮	phong3 phe5
@@ -13534,10 +11030,6 @@ use_preset_vocabulary: false
 興頭	hing3 thau5
 膩瓤	ji7 nng5
 膩瓤	li7 nng5
-蝹	un1	50
-褪	thng3	450
-褫	thi2	100
-褲	khoo3	1000
 褪皮	thng3 phue5
 褪皮	thng3 phe5
 褪赤跤	thng3 tshiah4 kha1
@@ -13553,16 +11045,6 @@ use_preset_vocabulary: false
 褪褲𡳞	thng3 khoo3 lan7
 蕨貓	kueh4 niau1
 褲頭	khoo3 thau5
-親	tshin1	12094
-諞	pian2	100
-諾	hioh4	50
-謔	gioh8	50
-貓	niau1	750
-賰	tshun1	1369
-賴	lua7	200
-蹁	phin5	50
-蹄	te5	250
-蹄	tue5	250
 親人	tshin1 lang5
 親切	tshin1 tshiat4
 親友	tshin1 iu2
@@ -13605,18 +11087,6 @@ use_preset_vocabulary: false
 貓頭鳥	niau1 thau5 tsiau2
 貓霧仔光	ba5 bu7 a2 kng1
 貓霧光	ba5 bu7 kng1
-躽	nua3	50
-輸	su1	3390
-辦	pan7	3468
-選	suan2	4775
-遹	ut8	50
-遺	i1	50
-醒	tshenn2	919
-醒	tshinn2	919
-鋸	ki3	200
-鋸	ku3	200
-鋼	kng3	450
-錄	lok8	1522
 輸入	su1 jip8
 輸入	su1 lip8
 辦公	pan7 kong1
@@ -13656,16 +11126,6 @@ use_preset_vocabulary: false
 鋸鑢仔	ki3 le7 a2
 鋸鑢仔	ku3 lue7 a2
 遺囑	ui5 tsiok4
-錚	tshann7	50
-錢	tsinn5	8339
-錫	siah4	100
-錶	pio2	300
-閹	iam1	150
-隨	sui5	3082
-險	hiam2	1623
-雕	tiau1	300
-靜	tsenn7	130
-靜	tsing7	2086
 錯手	tsho3 tshiu2
 錶仔	pio2 a2
 隨在	sui5 tsai7
@@ -13702,13 +11162,6 @@ use_preset_vocabulary: false
 閻羅王	giam5 lo5 ong5
 錢關	tsinn5 kuan1
 錢鰻	tsinn5 mua5
-鞘	siu3	50
-頭	thau5	34601
-頷	am7	550
-餡	ann7	200
-館	kuan2	4027
-髻	kue3	150
-髻	ke3	150
 頭七	thau5 tshit4
 頭人	thau5 lang5
 頷巾	am7 kin1
@@ -13768,11 +11221,6 @@ use_preset_vocabulary: false
 頭鬃尾	thau5 tsang1 bue2
 頭鬃尾	thau5 tsang1 be2
 頭鬃箍仔	thau5 tsang1 khoo1 a2
-鴨	ah4	1100
-黗	thun5	150
-龍	ling5	1274
-龍	liong5	1140
-龜	ku1	2000
 龜毛	ku1 moo1
 鴨仔	ah4 a2
 鴨仔囝	ah4 a2 kiann2
@@ -13804,9 +11252,6 @@ use_preset_vocabulary: false
 龜蠅	ku1 sin5
 鴨鯗	ah4 siunn2
 鮕鮘	koo1 tai1
-嚇	hann2	50
-嚇	heh4	100
-嚓	tshiak8	150
 優先	iu1 sian1
 優秀	iu1 siu3
 優待	iu1 thai7
@@ -13814,18 +11259,6 @@ use_preset_vocabulary: false
 嚓嚓趒	tshiak8 tshiak8 tio5
 優點	iu1 tiam2
 嚇驚	heh4 kiann1
-壓	ah4	297
-嶺	nia2	300
-幫	pang1	1908
-幫	png1	212
-應	in3	1297
-戲	hi3	2869
-戴	ti3	100
-擘	peh4	150
-擠	tsik4	100
-擢	tioh4	100
-擤	tshing3	100
-擦	tshat4	50
 擠𤶃仔	tsik4 thiau7 a2
 壓力	ap4 lik8
 應公仔	ing3 kong1 a2
@@ -13869,10 +11302,6 @@ use_preset_vocabulary: false
 戲齣	hi3 tshut4
 壓霸	ah4 pa3
 應驗	ing3 giam7
-檀	tuann5	100
-檔	tong2	300
-檠	kiann5	50
-檨	suainn7	350
 檨仔	suainn7 a2
 檨仔青	suainn7 a2 tshenn1
 檨仔青	suainn7 a2 tshinn1
@@ -13888,17 +11317,6 @@ use_preset_vocabulary: false
 檢舉	kiam2 ku2
 檢點	kiam2 tiam2
 檢驗	kiam2 giam7
-澀	siap4	50
-溼	sip4	350
-濟	tse7	6126
-濟	tsue7	6126
-濫	lam7	150
-營	iann5	1441
-營	ing5	1040
-燥	so3	150
-燭	tsik4	250
-燭	tsiok4	50
-牆	tshiunn5	250
 濟少	tse7 tsio2
 濟少	tsue7 tsio2
 燥水	so3 tsui2
@@ -13916,16 +11334,6 @@ use_preset_vocabulary: false
 濟濟	tsue7 tsue7
 濫糝	lam7 sam2
 燦爛	tshan3 lan7
-環	khuan5	1578
-癀	hong5	1217
-癉	tan1	100
-癌	gam5	350
-盪	tng7	100
-瞪	tenn3	150
-瞪	tinn3	150
-瞭	lio2	50
-礁	ta1	250
-禪	sian5	150
 瞪力	tenn3 lat8
 瞪力	tinn3 lat8
 磺水	hong5 tsui2
@@ -13935,19 +11343,6 @@ use_preset_vocabulary: false
 瞪屎	tinn3 sai2
 環境	khuan5 king2
 療養	liau5 iong2
-穗	sui7	400
-篷	phang5	100
-篾	bih8	200
-糜	mue5	650
-糜	be5	650
-糝	sam2	200
-糞	pun3	450
-糠	khng1	200
-縫	pang5	150
-縫	phang7	600
-縮	sok4	400
-總	tsang2
-總	tsong2	8896
 糠𧉟	khng1 tai5
 糞口	pun3 khau2
 糞口蟲	pun3 khau2 thang5
@@ -13982,23 +11377,6 @@ use_preset_vocabulary: false
 糜糜卯卯	mi1 mi1 mauh4 mauh4
 總講	tsong2 kong2
 總額	tsong2 giah8
-繃	penn1	50
-繃	pinn1	50
-罾	tsan1	150
-翼	sit8	300
-聯	lian5	2216
-聲	siann1	10175
-聲	sing1	1082
-聳	tshang3	100
-膽	tam2	250
-膽	tann2	500
-膿	lang5	200
-臆	ioh4	100
-臊	tsho1	350
-臨	lim5	500
-臨	lim2	150
-薄	poh8	1096
-薅	khau1	100
 罾仔	tsan1 a2
 臆出出	ioh4 tshut4 tshut4
 聯合	lian5 hap8
@@ -14048,11 +11426,6 @@ use_preset_vocabulary: false
 聲聲句句	siann1 siann1 ku3 ku3
 艱難	kan1 lan5
 聳鬚	tshang3 tshiu1
-薑	kiunn1	400
-薟	hiam1	300
-薯	tsi5	500
-薯	tsu5	500
-螺	le5	950
 薏仁	i3 jin5
 薏仁	i3 lin5
 薪水	sin1 sui2
@@ -14071,11 +11444,6 @@ use_preset_vocabulary: false
 螿蜍	tsiunn1 tsi5
 薟薑仔	hiam1 kiunn1 a2
 蟋蟀仔	sih4 sut4 a2
-觳	khok4	250
-講	kang2	13931
-講	kong2	40867
-謝	sia7	3028
-趨	tshu1	100
 講大聲話	kong2 tua7 siann1 ue7
 觳仔	khok4 a2
 觳仔炱	khok4 a2 te1
@@ -14115,19 +11483,6 @@ use_preset_vocabulary: false
 謝禮	sia7 le2
 蹊蹺	khi1 khiau1
 謝願	sia7 guan7
-輾	lian3	400
-避	phiah4	50
-還	hing5	250
-還	huan5	150
-還	huan7	50
-錘	thui5	100
-鍊	lian7	250
-鍋	ko1	150
-鍋	ue1	250
-鍋	e1	250
-鍤	tshiah4	100
-鍥	keh4	200
-鍥	kueh4	200
 鍊仔	lian7 a2
 鍋仔	ue1 a2
 鍋仔	e1 a2
@@ -14139,11 +11494,6 @@ use_preset_vocabulary: false
 邀請	iau1 tshiann2
 還錢	hing5 tsinn5
 輾轉	lian3 tng2
-鍾	tsing1	100
-闊	khuah4	1014
-隱	un2	350
-霜	sng1	400
-霜	song1	100
 隱弓蕉	un2 king1 tsio1
 隱居	un2 ki1
 隱居	un2 ku1
@@ -14157,16 +11507,7 @@ use_preset_vocabulary: false
 闊腹	khuah4 pak4
 闊閬閬	khuah4 long3 long3
 隱瞞	un2 mua5
-鮮	tshinn1	200
 鮮沢	tshinn1 tshioh4
-黏	liam5	969
-黜	thuh4	250
-甪	lut4	50
-黜	thut4	50
-點	tiam2	7036
-鼾	konn5	50
-鼾	huann5	150
-齋	tsai1	200
 點心	tiam2 sim1
 點心擔	tiam2 sim1 tann3
 黜仔	thuh4 a2
@@ -14188,20 +11529,6 @@ use_preset_vocabulary: false
 鼾鼾叫	huann5 huann5 kio3
 點鐘	tiam2 tsing1
 黏黐黐	liam5 thi1 thi1
-嚙	ge3	50
-壘	lui2	300
-壘	lui2	300
-壙	khong3	150
-嬸	tsim2	200
-戳	thok4	100
-擲	tan3	100
-擸	ba7	50
-擺	pai2	3083
-擽	ngiau1	100
-攄	lu1	200
-斷	tng7	1722
-斷	tuan3	430
-斷	tuan7	538
 擲㧒捔	tan3 hiat4 kak8
 攄仔	lu1 a2
 檫仔	tshat4 a2
@@ -14224,26 +11551,12 @@ use_preset_vocabulary: false
 擴頭	khok4 thau5
 攄頭毛	lu1 thau5 mng5
 擴擴	khok4 khok4
-櫃	kui7	650
-歸	kui1	2025
-濺	tsuann7	100
-濾	li7	100
-瀉	sia3	200
-爁	nah4	917
 濺水	tsuann7 tsui2
 爁日	nah4 jit8
 爁日	nah4 lit8
 檳榔	pin1 nng5
 檸檬	le5 bong2
 瀉藥仔	sia3 ioh8 a2
-甓	phiah8	50
-甕	ang3	600
-癖	phiah4	300
-癖	phiah8	100
-癗	lui5	50
-礐	hak8	200
-禮	le2	5818
-穡	sit4	250
 穢人	ue3 lang5
 穢人	e3 lang5
 甕仔	ang3 a2
@@ -14262,21 +11575,6 @@ use_preset_vocabulary: false
 禮儀	le2 gi5
 禮數	le2 soo3
 穡頭	sit4 thau5
-簫	siau1	150
-糧	niu5	200
-繏	sng3	150
-繐	sui1	100
-織	tsit4	350
-繚	liau7	100
-繡	siu3	300
-翸	phun2	100
-翹	khiau3	200
-翻	huan1	1817
-職	tsit4	2101
-臍	tsai5	150
-舊	ku7	1945
-薰	hun1	700
-薸	phio5	100
 織女	tsit4 li2
 織女	tsit4 lu2
 舊年	ku7 ni5
@@ -14312,16 +11610,6 @@ use_preset_vocabulary: false
 繏嚨喉	sng3 na5 au5
 翻譯	huan1 ik8
 職權	tsit4 khuan5
-藃	hiauh4	200
-藍	na5	250
-藏	tshang3	100
-蟬	sian5	100
-蟯	gio5	200
-蟯	ngiauh8	150
-蟲	thang5	800
-蟲	thiong5	50
-蟳	tsim5	300
-覆	phak4	200
 藏水沬	tshang3 tsui2 bi7
 蟬仔	sian5 a2
 蟯仔	gio5 a2
@@ -14338,15 +11626,6 @@ use_preset_vocabulary: false
 蟮蟲仔	sian7 thang5 a2
 蟯蟯趖	ngiauh8 ngiauh8 so5
 藃蟶	hiauh4 than1
-謼	hooh4	50
-蹔	tsam3	100
-蹛	tua3	2725
-軀	su1	898
-軁	nng3	250
-軁	nng1	50
-轉	tsuan2	5189
-轉	tsuan7	185
-轉	tng2	5374
 轉大人	tng2 tua7 lang5
 轉世	tsuan2 se3
 轉去	tng2 khi3
@@ -14374,16 +11653,6 @@ use_preset_vocabulary: false
 轉彎踅角	tng2 uan1 seh8 kak4
 轉變	tsuan2 pian3
 軁鑽	nng3 tsng3
-醫	i1	3593
-醬	tsiunn3	350
-鎖	so2	350
-鎮	tin3	2950
-闔	khah8	50
-雙	siang1	2816
-雜	tsap8	1608
-雞	ke1	5020
-雞	kue1	5020
-離	li7	3699
 雞𧉟	ke1 tai5
 雞𧉟	kue1 tai5
 雙叉路	siang1 tshe1 loo7
@@ -14501,20 +11770,6 @@ use_preset_vocabulary: false
 醬鹹	tsiunn3 kiam5
 雞籠	ke1 lam1
 雞籠	kue1 lam1
-鞭	pian1	50
-鞭	pinn1	100
-題	te5	2380
-題	tue5	2380
-額	giah8	2154
-額	hiah8	587
-顏	gan5	50
-颺	tshiunn5	150
-颺	iann7	200
-餾	liu7	150
-騎	khia5	200
-鬃	tsang1	300
-鬆	sang1	350
-鬆	song1	100
 題目	te5 bok8
 題目	tue5 bok8
 颺風	tshiunn5 hong1
@@ -14525,10 +11780,6 @@ use_preset_vocabulary: false
 題緣	tue5 ian5
 額頭	hiah8 thau5
 颺颺飛	iann7 iann7 pue1
-鯽	tsit4	150
-鵝	go5	150
-鵝	gia5	150
-鵤	kak4	200
 鯽仔魚	tsit4 a2 hi5
 鯽仔魚	tsit4 a2 hu5
 鮸魚	bian2 hi5
@@ -14542,13 +11793,6 @@ use_preset_vocabulary: false
 嚨喉	na5 au5
 嚨喉空	na5 au5 khang1
 嚨喉蒂仔	na5 au5 ti3 a2
-懶	lan2	200
-攀	phan1	100
-攏	lang2	11219
-攏	long2	11219
-曝	phak8	450
-櫓	loo2	100
-櫥	tu5	500
 曝日	phak8 jit8
 曝日	phak8 lit8
 懵仙	bong3 sian1
@@ -14568,10 +11812,6 @@ use_preset_vocabulary: false
 懶懶	lan2 lan2
 攏權	lang2 khuan5
 曝鹽	phak8 iam5
-瀨	lua7	50
-爍	sih4	150
-瓣	ban7	50
-礙	gai7	450
 礙目	gai7 bak8
 瓊花	khing5 hue1
 爆炸	pok8 tsa3
@@ -14579,19 +11819,6 @@ use_preset_vocabulary: false
 礙著	gai7 tioh8
 爍爁	sih4 nah4
 獸醫	siu3 i1
-穩	un2	1393
-簸	pua3	150
-簽	tshiam1	650
-簾	li5	100
-簾	liam5	50
-簿	phoo7	400
-繩	tsin5	100
-繭	kian2	100
-繭	king2	50
-繳	kiau2	300
-羶	hian3	150
-羹	kenn1	200
-羹	kinn1	200
 穩心仔	un2 sim1 a2
 簽仔	tshiam1 a2
 簿仔	phoo7 a2
@@ -14611,10 +11838,6 @@ use_preset_vocabulary: false
 簾簷	ni5 tsinn5
 簾簷跤	ni5 tsinn5 kha1
 穩觸觸	un2 tak4 tak4
-藝	ge7	1733
-藤	tin5	350
-藥	ioh8	4327
-蟶	than1	300
 藥丸	ioh8 uan5
 藥丹	ioh8 tan1
 藥方	ioh8 hng1
@@ -14643,16 +11866,6 @@ use_preset_vocabulary: false
 藥劑師	ioh8 tse3 su1
 藥頭仔	ioh8 thau5 a2
 藥櫥	ioh8 tu5
-譀	ham3	400
-證	tsing3	2160
-識	sik4	2256
-譜	phoo2	300
-蹺	khiau1	150
-轎	kio7	450
-辭	si5	850
-辭	su5	425
-邊	pian1	764
-邊	pinn1	5350
 證人	tsing3 jin5
 證人	tsing3 lin5
 邊仔	pinn1 a2
@@ -14677,14 +11890,6 @@ use_preset_vocabulary: false
 辭職	si5 tsit4
 譀譀	ham3 ham3
 譀鏡	ham3 kiann3
-鏡	kiann3	750
-鏢	pio1	100
-鏨	tsam7	200
-關	kuainn1	498
-關	kuinn1	498
-關	kuan1	5852
-難	lan7	1520
-霧	bu7	750
 關刀	kuan1 to1
 關心	kuan1 sim1
 鏨仔	tsam7 a2
@@ -14707,11 +11912,6 @@ use_preset_vocabulary: false
 鏡頭	kiann3 thau5
 鏨頭	tsam7 thau5
 霧霧	bu7 bu7
-韻	un7	250
-願	guan7	3016
-類	lui7	2067
-騙	phian3	1265
-鬍	hoo5	150
 騙囡仔	phian3 gin2 a2
 騙局	phian3 kiok8
 顛倒	tian1 to3
@@ -14723,18 +11923,9 @@ use_preset_vocabulary: false
 饅頭	ban2 tho5
 鯪鯉	la5 li2
 鬍鬚	hoo5 tshiu1
-麴	khak4	150
-齁	honn1	50
-龐	phiang7	100
 鯰魚	liam5 hi5
 鯰魚	liam5 hu5
 麒麟	ki5 lin5
-勸	khng3	821
-勸	khuan3	351
-嚴	giam5	1853
-嚷	jiang2	100
-嚷	liong2	100
-寶	po2	2099
 孽子	giat8 tsu2
 寶貝	po2 pue3
 勸和	khng3 ho5
@@ -14748,15 +11939,6 @@ use_preset_vocabulary: false
 寶劍	po2 kiam3
 孽潲	giat8 siau5
 孽譎仔話	giat8 khiat4 a2 ue7
-懸	kuan5	2753
-攔	ann5	50
-攕	tshiam2	150
-櫳	lang1	100
-瀳	tshinn5	50
-瀾	nua7	650
-爐	loo5	600
-獻	hian3	1663
-癢	tsiunn7	100
 懸低	kuan5 ke7
 懸山	kuan5 suann1
 爐丹	loo5 tan1
@@ -14770,11 +11952,6 @@ use_preset_vocabulary: false
 獻敬	hian3 king3
 懸價	kuan5 ke3
 攕擔	tshiam1 tann1
-礤	tshuah4	200
-礦	khong3	300
-礪	le3	50
-礬	huan5	50
-籃	na5	700
 籃仔	na5 a2
 礤冰	tshuah4 ping1
 蘆竹	loo5 tik4
@@ -14793,11 +11970,6 @@ use_preset_vocabulary: false
 礤簽	tshuah4 tshiam1
 蘆藤	loo5 tin5
 繼續	ke3 siok8
-蠓	bang2	400
-觸	tak4	550
-贏	iann5	1473
-躄	phih4	50
-辮	pinn7	50
 蠓仔	bang2 a2
 蠘仔	tshih8 a2
 蠓仔水	bang2 a2 tsui2
@@ -14829,12 +12001,7 @@ use_preset_vocabulary: false
 覺醒	kak4 tshenn2
 覺醒	kak4 tshinn2
 蠓蟲	bang2 thang5
-鐘	tsing1	1863
 釋迦	sik4 khia1
-飄	phiau1	150
-饒	jiau5	150
-饒	liau5	150
-鰓	tshi1	100
 饒命	jiau5 mia7
 饒命	liau5 mia7
 饒赦	jiau5 sia3
@@ -14845,10 +12012,6 @@ use_preset_vocabulary: false
 鰇魚羹	liu5 hu5 kinn1
 飄撇	phiau1 phiat4
 鰗鰡	hoo5 liu1
-鹹	kiam5	1200
-麵	mi7	1300
-黨	tong2	2708
-齣	tshut4	150
 麵包	mi7 pau1
 鹹卵	kiam5 nng7
 鹹汫	kiam5 tsiann2
@@ -14883,17 +12046,6 @@ use_preset_vocabulary: false
 麵麶	mi7 thi1
 鹹鰱魚	kiam5 lian5 hi5
 鹹鰱魚	kiam5 lian5 hu5
-嚾	uang1	50
-攑	giah8	1154
-攝	liap4	250
-櫼	tsinn1	150
-欄	nua5	150
-灇	tsang5	50
-灌	kuan3	350
-爛	nua7	500
-癩	thai2 ko1
-癩鬼	thai2 ko1 kui2
-癩爛癆	thai2 ko1 nua7 lo5
 攑手	giah8 tshiu2
 灌水	kuan3 tsui2
 欄杆	lan5 kan1
@@ -14915,10 +12067,6 @@ use_preset_vocabulary: false
 攑懸	giah8 kuan5
 爛癬	nua7 sian2
 攝襇	liap4 king2
-纏	tinn5	350
-蘭	lan5	1941
-蠟	lah8	250
-襪	bueh8	150
 襪仔	bueh8 a2
 纏身	tinn5 sin1
 蘭花	lan5 hue1
@@ -14931,10 +12079,6 @@ use_preset_vocabulary: false
 纏綴	tinn5 te3
 纏線	tinn5 suann3
 蠟燭	lah8 tsik4
-辯	pian7	350
-鐵	thih4	2613
-露	loo7	700
-霸	pa3	500
 鐵人	thih4 lang5
 護士	hoo7 su7
 辯士	pian7 su7
@@ -14971,10 +12115,6 @@ use_preset_vocabulary: false
 躊躇	tiu5 tu5
 辯護	pian7 hoo7
 辯護士	pian7 hoo7 su7
-響	hiang2	530
-顧	koo3	3561
-鬖	sam3	100
-鶴	hoh8	100
 顧人怨	koo3 lang5 uan3
 顧三頓	koo3 sann1 tng3
 鬖毛鬼	sam3 mng5 kui2
@@ -14990,18 +12130,7 @@ use_preset_vocabulary: false
 顧問	koo3 bun7
 魔術	moo5 sut8
 響應	hiang2 ing3
-齧	khe3	50
-齧	khue3	50
 麝香	sia7 hiunn1
-囉	lo7	50
-囉	looh4	50
-囊	long1	50
-囊	long5	250
-彎	uan1	400
-攢	tshuan5	50
-攤	thuann1	150
-欉	tsang5	350
-權	khuan5	3973
 權力	khuan5 lik8
 彎曲	uan1 khiau1
 權利	khuan5 li7
@@ -15016,24 +12145,6 @@ use_preset_vocabulary: false
 歡頭喜面	huann1 thau5 hi2 bin7
 歡歡喜喜	huann1 huann1 hi2 hi2
 彎彎斡斡	uan1 uan1 uat4 uat4
-灘	thuann1	50
-瓤	nng5	100
-疊	thah8	200
-疊	thiap8	50
-癬	sian2	250
-癮	gian3	200
-籗	khah4	100
-籠	lam1	150
-籠	lang1	50
-籠	lang2	300
-籠	lang5	150
-籠	lang7	100
-籠	long5	100
-糴	tiah8	100
-聽	thiann1	10741
-聽	thing3	1022
-讀	thak8	2820
-讀	thok8	3626
 籗仔	khah4 a2
 籠仔	lang2 a2
 讀冊	thak8 tsheh4
@@ -15049,27 +12160,15 @@ use_preset_vocabulary: false
 聽著	thiann1 tioh8
 癮頭	gian3 thau5
 聽講	thiann1 kong2
-贖	siok8	200
-鑄	tsu3	50
-顫	tsun3	50
-鬚	tshiu1	350
 贖身	siok8 sin1
 鑑定	kam3 ting7
 驕傲	kiau1 ngoo7
-鰱	lian5	250
-鰻	mua5	250
-鰾	pio7	150
-鱉	pih4	200
-齪	tsak4	150
 鰱魚	lian5 hi5
 鰱魚	lian5 hu5
 鱈魚	suat4 hi5
 鱈魚	suat4 hu5
 齪嘈	tsak4 tso7
 鷓鴣菜	tsia3 koo1 tshai3
-攪	kiau2	250
-癰	ing1	100
-籤	tshiam1	250
 癰仔	ing1 a2
 攪吵	kiau2 tsha2
 攪絞	kiau2 ka2
@@ -15079,18 +12178,6 @@ use_preset_vocabulary: false
 攪擾	kiau2 jiau2
 攪擾	kiau2 liau2
 纓纏	inn1 tinn5
-變	pian3	6266
-變	pinn3	1154
-躘	liong3	100
-鑢	lu3	150
-顯	hian2	1494
-顯	hiann2	448
-驗	giam7	2471
-驚	kiann1	6862
-驛	iah8	200
-髓	tshue2	200
-髓	tshe2	200
-體	the2	5258
 驚人	kiann1 lang5
 驚人	kiann1 lang5
 體力	the2 lat8
@@ -15135,20 +12222,12 @@ use_preset_vocabulary: false
 顯頭	hiann2 thau5
 變竅	pian3 khiau3
 體驗	the2 giam7
-鱖	kue3	100
-鱖	ke3	100
-鱗	lan5	200
 鱙仔魚	jiau5 a2 hi5
 鱙仔魚	liau5 a2 hu5
 鱔魚	sian7 hi5
 鱔魚	sian7 hu5
 鱖魚	kue3 hi5
 鱖魚	ke3 hu5
-攬	lam2	200
-罐	kuan3	500
-讓	niu7	250
-讖	tsham3	100
-靈	ling5	2220
 靈丹	ling5 tan1
 讓手	niu7 tshiu2
 罐仔	kuan3 a2
@@ -15168,12 +12247,6 @@ use_preset_vocabulary: false
 罐頭	kuan3 thau5
 韆鞦	tshian1 tshiu1
 靈驗	ling5 giam7
-鱟	hau7	200
-鷹	ing1	150
-鹼	kinn1	200
-鹽	iam5	950
-齆	ang3	200
-齴	giang3	100
 鱟𣁳仔	hau7 khat4 a2
 齴牙	giang3 ge5
 鹼仔粿	kinn1 a2 kue2
@@ -15192,19 +12265,10 @@ use_preset_vocabulary: false
 鬢繐	pin3 sui1
 鬢邊	pin3 pinn1
 齷齪	ak4 tsak4
-廳	thiann1	1112
-灣	uan1	9981
-糶	thio3	100
 糶米	thio3 bi2
 籬笆	li5 pa1
 廳堂	thiann1 tng5
 廳頭	thiann1 thau5
-襻	phan3	50
-跕	liam1	50
-躡	neh4	503
-躡	nih4	503
-鑱	tshim5	100
-饞	sai5	150
 鑱仔	tshim5 a2
 蠻皮	ban5 phue5
 蠻皮	ban5 phe5
@@ -15219,15 +12283,8 @@ use_preset_vocabulary: false
 躡跤尾	neh4 kha1 bue2
 躡跤尾	nih4 kha1 be2
 觀察	kuan1 tshat4
-讚	tsan2	50
-驢	li5	100
-驢	lu5	100
-鬮	khau1	200
 驢仔	li5 a2
 驢仔	lu5 a2
-鑼	lo5	300
-鑽	tsng3	400
-鱸	loo5	150
 鑽仔	tsng3 a2
 鑽耳	tsng3 hinn7
 鑽耳	tsng3 hi7
@@ -15239,8 +12296,6 @@ use_preset_vocabulary: false
 鑼鼓	lo5 koo2
 鸕鶿	loo5 tsi5
 鱸鰻	loo5 mua5
-戇	gong7	1150
-鑿	tshak8	300
 戇人	gong7 lang5
 戇大呆	gong7 tua7 tai1
 鑿仔	tshak8 a2
@@ -15259,95 +12314,54 @@ use_preset_vocabulary: false
 戇膽	gong7 tann2
 戇戇	gong7 gong7
 鑿鑿	tshak8 tshak8
-鬱	ut4	350
 鬱卒	ut4 tsut4
 鬱傷	ut4 siong1
 鬱歲	ut4 hue3
 鬱歲	ut4 he3
-廍	phoo7	150
-揻	ui1	50
-砛	gim5	150
 砛仔	gim5 a2
 砛簷	gim5 tsinn5
 硓𥑮石	loo2 koo2 tsioh8
-粩	lau2	150
-襇	king2	200
-贌	pak8	150
 贌田	pak8 tshan5
-蹽	liau5	150
 蹽溪仔	liau5 khe1 a2
 蹽溪仔	liau5 khue1 a2
 蹽落去	liau5 loh8 khi3
-躼	lo3	250
 躼跤	lo3 kha1
 躼跤仔	lo3 kha1 a2
-㧎	khe5	50
-㧣	tu1	50
-㨂	tang3	50
-㨨	liu5	50
-𠯗	tsip8	100
 𠯗一下	tsip8 tsit8 e7
-㤉	ge5	100
 㤉潲	ge5 siau5
-䀐	siam1	50
-㾀	khiap4	150
 㾀勢	khiap4 si3
 㾀勢命	khiap4 si3 mia7
-㧻	tok4	50
-𧉟	tai5	200
 䘥仔	kah4 a2
-𢯾	mooh4	100
 𢯾壁鬼	mooh4 piah4 kui2
-𠞩	tsui5	50
-𠞭	lio5	50
-𠢕	gau5	2377
 𠢕人	gau5 lang5
 𠢕早	gau5 tsa2
 𠢕吮食	gau5 tshng2 tsiah8
 𠢕開	gau5 khai1
-㔂	lan5	100
 㔂甘蔗	lan5 kam1 tsia3
-𢲸	loo7	50
-𨂿	uainn2	100
 𨂿著	uainn2 tioh8
-䫌	phue2	200
-𢼌	pa1	1133
 𣮈頭山	khut8 thau5 suann1
-𩑾	tshih4	50
-𡳞	lan7	600
 𡳞𦉎	lan7 sui1
 𡳞核	lan7 hut8
 𡳞神	lan7 sin5
 𡳞脬	lan7 pha1
 𡳞鳥	lan7 tsiau2
 𡳞蔓	lan7 mua7
-𩵱	ngoo2	100
 𩵱仔	ngoo2 a2
-𪁎	tshio1	250
 𪁎哥	tshio1 ko1
 𪁎趒	tshio1 tio5
 𪁎雞	tshio1 ke1
 𪁎雞	tshio1 kue1
-𩛩	kauh4	300
 𩛩肥	kauh4 pui5
-𥐵	phiat4	100
 𥐵仔	phiat4 a2
-𡢃	kan2	150
-𥰔	phin2	100
 𥰔仔	phin2 a2
-𥴊	kam2	250
 𥴊仔	kam2 a2
 𥴊仔店	kam2 a2 tiam3
 𥴊壺	kam2 oo5
-䖙	the1	200
 䖙椅	the1 i2
-𤆬	tshua7	2833
 𤆬路	tshua7 loo7
 𤆬路雞	tshua7 loo7 ke1
 𤆬路雞	tshua7 loo7 kue1
 𤆬頭	tshua7 thau5
-䘼	ng2	250
-䆀	bai2	2022
 䆀才	bai2 tsai5
 䆀手	bai2 tshiu2
 䆀味	bai2 bi7
@@ -15360,92 +12374,36 @@ use_preset_vocabulary: false
 𨑨迌物	tshit4 tho5 mngh8
 𨑨迌物仔	tshit4 tho5 mih4 a2
 𨑨迌查某	tshit4 tho5 tsa1 boo2
-𥍉	liap4	443
-𥍉	nih4	3101
 𥍉𥍉看	nih4 nih4 khuann3
 𥍉目	nih4 bak8
-𤉙	kun5	50
-㨑	tsang1	50
-𣛮	siann7	100
 𣛮籃	siann7 na5
-𤶃	thiau7	150
 𤶃仔	thiau7 a2
-𧮙	tshoh4	50
-𪐞	too3	150
 𪐞紙	too3 tsua2
-𤲍	kheh4	150
-𤲍	khueh4	150
 𤲍燒	kheh4 sio1
 𤲍燒	khueh4 sio1
-𦊓	ling5	50
-㴘	bau7	100
 㴘麵	bau7 mi7
-䖳	the7	50
-𩸙	tai7	100
 𩸙仔	tai7 a2
-㧒	hiat4	100
-䠡	tshe5	50
-𩚨	khiu7	100
 𩚨嗲嗲	khiu7 teh4 teh4
-㧌	mau1	50
-𣁳	khat4	150
 𣁳仔	khat4 a2
-㨻	tsann7	100
 㨻魚	tsann7 hi5
 㨻魚	tsann7 hu5
 𧿳𧿳跳	phut8 phut8 thiau3
 𧌄蜅蠐	am1 poo1 tse5
-必	pit4	550
 必叉	pit4 tshe1
 必痕	pit4 hun5
 必開	pit4 khui1
 䢢拄䢢	tshiang7 tu2 tshiang7
 㴙㴙落	tshap8 tshap8 loh8
 㴙㴙滴	tshap8 tshap8 tih4
-	in1
-𠕇	ting7	150
 𠕇硞硞	ting7 khok4 khok4
 𠕇篤	ting7 tauh4
-𤺪	sian7	100
-𧿬	thun2	100
 𧿬踏	thun2 tah8
-𢪱	but8	50
-𣻸	siunn5	200
-㽎	sim3	250
-𦜆	ham1	150
-寢	tshim2	100
-𨂾	lam3	50
-	gan3
-水	gan3 tsui2
-鋼	gan3 kng3
-	hiu3
-	tshai7
-	hue5
-	han5
 霧水	bu7 tsui2
-	siang7
-人	siang7 lang5
-勻	siang7 un5
-年	siang7 ni5
-時	siang7 si5
-途	siang7 too5
-款	siang7 khuan2
-	peh4
-山	peh4 suann1
-樓梯	peh4 lau5 thui1
-懸低	peh4 kuan5 peh4 ke7
 黃梔仔花	ng5 ki1 a2 hue1
-塌	lap4	150
 娘囝	niu5 kiann2
 揜貼	iap4 thiap4
-腥	tshenn3	100
-腥	tshinn3	100
 撇步	phiat4 poo7
-跤	kha1	10537
-嫣	ian1	50
 中央	tiong1 ng1
-託	thok4	450
-奶	ne1	50
 物仔	mih4 a2
 袂翻捙	be7 huan1 tshia1
 袂翻捙	bue7 huan1 tshia1
@@ -15599,7 +12557,6 @@ use_preset_vocabulary: false
 插濫	tshap4 lam7
 棧間	tsan3 king1
 欹空	khia1 khang1
-湢	pih4
 無天良	bo5 thian1 liong5
 無捨施	bo5 sia2 si3
 無盤	bo5 puann5
@@ -15706,7 +12663,6 @@ use_preset_vocabulary: false
 糖粿	thng5 ke2
 貓貓相	niau1 niau1 siong3
 頭轉客	thau5 tng2 kheh4
-麭	phang2
 䆀空	bai2 khang1
 嚇嚇叫	heh4 heh4 kio3
 戲台	hi3 tai5
@@ -15745,7 +12701,6 @@ use_preset_vocabulary: false
 鬱熱	ut4 juah8
 鬱熱	ut4 luah8
 𤺪雨	sian7 hoo7
-錢	gan3 tsinn5
 酒甜	tsiu2 tinn1
 菜鹹	tshai3 kiam5
 羹麵	kenn1 mi7
@@ -15791,8 +12746,6 @@ use_preset_vocabulary: false
 中範	tiong1 pan7
 五子直	goo7 ji2 tit8
 五子直	goo7 li2 tit8
-仁仁仁	jin5 jin5 jin5
-仁仁仁	lin5 lin5 lin5
 冇粟	phann3 tshik4
 反口供	huan2 khau2 king1
 反形	huan2 hing5
@@ -16374,7 +13327,6 @@ use_preset_vocabulary: false
 搝後跤	khiu2 au7 kha1
 搭胸坎	tah4 hing1 kham2
 搵料	un3 liau7
-摁	hmh4
 摃球	kong3 kiu5
 摃鼓	kong3 koo2
 暗安	am3 an1
@@ -16444,7 +13396,6 @@ use_preset_vocabulary: false
 頓蹬	tun3 tinn1
 飽漿	pa2 tsiunn1
 𠞭花	lio5 hue1
-嗺	sui1
 墓紙	bong7 tsua2
 寢頭	tshim2 thau5
 對同	tui3 tang5
@@ -16500,7 +13451,6 @@ use_preset_vocabulary: false
 鬧猜猜	nau7 tshai1 tshai1
 噪耳	tsho3 hinn7
 噪耳	tsho3 hi7
-噸	tong3
 樹奶束仔	tshiu7 ling1 sok4 a2
 樹奶束仔	tshiu7 ni1 sok4 a2
 樹梅	tshiu7 m5
@@ -16521,7 +13471,6 @@ use_preset_vocabulary: false
 鋸屑烌	ku3 sut4 hu1
 錢貫	tsinn5 kng3
 踮沬	tiam3 bi7
-擇	toh8
 無底代	bo5 ti7 tai7
 霎霎仔雨	sap4 sap4 a2 hoo7
 頭兄	thau5 hiann1
@@ -16535,10 +13484,8 @@ use_preset_vocabulary: false
 䆀氣	bai2 khui3
 戲籠	hi3 lang2
 戴小鬼仔殼	ti3 siau2 kui2 a2 khak4
-簇	tshok4
 總的	tsong2 e5
 臨時臨曜	lim5 si5 lim5 iau7
-蹓	lau1
 隱痀橋	un2 ku1 kio5
 鮢鱖	tsu1 kue3
 鮢鱖	tsu1 ke3
@@ -16571,9 +13518,6 @@ use_preset_vocabulary: false
 攑旗軍仔	giah8 ki5 kun1 a2
 灇水	tsang5 tsui2
 爛𤶃仔	nua7 thiau7 a2
-癩病	thai2 ko1 penn7
-癩病	thai2 ko1 pinn7
-癩蛾仔	thai2 ko1 iah8 a2
 雞豚仔	ke1 thun5 a2
 雞豚仔	kue1 thun5 a2
 鐵釘挽	thih4 ting1 ban2
@@ -16658,3173 +13602,6 @@ use_preset_vocabulary: false
 雞卵面	ke1 nng7 bin7
 雞卵清	ke1 nng7 tshing1
 面肉	bin7 bah4
-乜	mi2	100
-刁	thiau1	150
-力	li2	123
-丈	tiong7	221
-丈	tiunn7	1105
-三	sam3	215
-上	siong2	281
-上	siang7	563
-下	e1	558
-久	kiu2	1432
-口	kau2	106
-口	khio2
-夕	siah8	50
-夕	sik8	50
-川	tshng1	750
-川	tshuan1	200
-工	khang1	142
-己	ki7	4680
-已	i2	5841
-巳	su7
-弓	kiong1
-不	puh4	183
-云	un5
-互	hoo7	2721
-井	tsing2
-仇	kiu5
-今	kim1	4280
-今	kin1	1712
-介	kai3	1204
-元	guan5	1937
-分	hun7	126
-切	tshe3	181
-勿	but8	50
-及	kip8	2526
-夭	iau2	200
-孔	khang2	188
-孔	khong2	943
-少	siau2	250
-少	siau3	3010
-尺	tshik4
-屯	tun7	200
-巴	pa1	1145
-幻	huan3	200
-弔	tiau3
-手	siu2	182
-扎	tsah4	50
-支	tsi1	2281
-斗	too2
-方	png1
-曰	uat8
-歹	tai2
-毛	moo1	384
-火	honn2
-爻	ngau5
-片	phian3	279
-牛	giu5
-犬	khian2
-且	tshiann2	1452
-丘	khiu1
-丘	khu1
-丙	ping2
-乏	huat8
-仔	tsu2
-他	thann1	1094
-仗	tiong7
-仟	tshian1
-代	tai3	253
-兄	hing1	439
-充	tshiong1	1102
-冬	tong1
-凹	neh4	50
-功	kang1	139
-包	pau5	97
-匆	tshong1
-北	pok4
-占	tsiam1
-另	ling7	1745
-叩	khio3	50
-召	tiau3	250
-叭	pah4	50
-可	khua2	248
-可	khoo2	248
-史	sai2
-史	su2	2602
-右	iu7	100
-司	sai1	616
-司	si1	986
-司	su1	739
-外	gue7	509
-央	iong1	200
-央	ng1	150
-孕	in7	100
-尻	kha1	950
-尼	ni5	100
-尼	li5	100
-左	tso2	300
-巧	khau2
-巨	ki7	100
-巨	ku7
-弘	hong5	50
-必	pit4	550
-扑	phok4
-打	ta2	242
-斥	thik4	50
-旦	tan3	100
-末	buah8	150
-末	buat8
-本	png2
-札	tsat4
-正	tsiann1	872
-永	ing2	2703
-玄	hian5
-瓜	kua1	50
-瓦	ua2	50
-田	tian5	468
-甲	kap4
-皮	pi5	61
-矛	mau5	50
-矛	moo5
-矢	si2
-石	siah8	76
-禾	ho5
-丟	tiu1	50
-乩	ki1	50
-仰	giong2	100
-仰	iong2
-仲	tiong7
-仵	ngoo2
-任	jim5
-任	lim5
-企	khi3	1468
-伍	ngoo2	200
-伏	hok8	50
-伐	huat8
-伙	hue2	834
-伙	he2	834
-兇	hiong1	150
-先	sin1
-全	tsng5	183
-劣	luat8
-危	gui5	1062
-危	ui5
-各	koh4	497
-各	kok4	2238
-合	kah4
-吉	ji3	50
-吋	tshun3	50
-同	tang5	712
-后	au7	100
-后	hio7	200
-后	hoo7
-吏	li7	50
-向	hiang3	50
-囡	gin2	8068
-圭	kui1
-地	te3	363
-地	ti7	181
-夷	i5
-妄	bong7
-存	tshun5	321
-宅	thik8
-宇	u2	50
-安	uann1	120
-式	sik4	3669
-式	sit4
-忖	tshun2
-忙	bang5	50
-忙	bong5
-扛	kong1
-旨	tsi2	100
-早	tsai2	226
-旬	sun5	200
-旭	hiok4
-曲	khiok4	263
-朴	phoh4	50
-朽	hiu2
-汗	han7
-汙	u1	100
-汙	u3	50
-灰	hue1	150
-百	peh4	162
-百	pik4
-竹	tiok4
-羊	iong5	109
-羽	u2	50
-老	lo2	1172
-老	noo2	468
-而	ji5	757
-而	li5	757
-肉	hik8
-肋	lik8
-肌	ki1
-至	tsi3	1634
-臼	khu7	150
-舌	siat8
-舟	tsiu1
-行	hing5	6167
-行	ling5	176
-西	si1	285
-亨	hing1
-伯	pik4
-伯	pit4	212
-伯	phik4	212
-伴	phuan7
-伶	ling2	50
-似	sai7	150
-佃	tian7	200
-但	tan7	2284
-但	na7	1142
-住	tsu7	1718
-佐	tso3
-佑	iu7	100
-何	ua5	124
-冶	ia2
-刪	san1	50
-努	loo2	50
-即	tsik4	930
-卵	luan2	50
-吝	lin7
-吠	hui7
-否	honn2	150
-否	phi2
-吩	huan1	50
-吩	hun1
-含	ham5	300
-吳	ngoo5	730
-吵	tshau2
-吹	tshui1	85
-吻	bun2
-吾	ngoo5
-呂	li7	50
-呂	lu7	50
-呂	lu7	50
-呈	thing5	100
-困	khun3	1013
-圾	sap4	150
-址	tsi2	150
-均	kin1	50
-均	kun1
-坊	hng1
-坊	hong1
-坐	tso7	50
-坑	khing1
-壯	tsong3	300
-妍	gian2
-妒	too3	50
-妓	ki1	50
-妥	tho3	100
-妨	hong5	150
-孜	tsu1
-孝	ha3	275
-宏	hong5	50
-希	hi1	1335
-庇	pi3	150
-床	tshong5
-序	si7	669
-序	si7	669
-廷	ting5	100
-弄	long7	200
-彷	hong2	50
-役	ik8	200
-忌	ki7	100
-忤	ngoo2	50
-快	khuinn3	450
-戒	kai3	200
-扭	liu2	150
-批	phi1
-扼	ik8
-把	pa2	100
-把	pa3	50
-抗	khong3	1142
-折	tsik4	50
-更	king1	300
-更	king3	50
-杆	kan1	50
-杉	sam1	200
-杖	tiong7
-杖	thng7	50
-杜	too7	300
-杞	ki2	150
-決	kuat4	2691
-汽	khi3	150
-沈	sim2
-沌	tun7
-沐	bok8	100
-沒	but8	50
-沙	sa1	250
-沙	se1	50
-沛	phai3	50
-沢	tshioh4	50
-灶	tso3
-灸	ku3	50
-牡	boo2	250
-牢	lo5	215
-甫	hu2	808
-町	ting1	50
-禿	thuh4	50
-禿	thut4	50
-秀	siu3	1682
-私	sai1	100
-私	si1	50
-究	kiu3	1841
-肓	bong5	50
-肖	siau3	50
-肘	tiu2
-肛	kong1
-育	iok8	2344
-良	liong5	1685
-芋	u7
-芍	tsiok4
-芎	kiong1	200
-芒	bang5	50
-芒	bong5	100
-谷	kok4	100
-豸	thua7	50
-貝	pue3	200
-赤	tshik4
-走	tsoo2
-車	ki1
-車	ku1
-迅	sin3	50
-邑	ip4
-邦	pang1	150
-阮	ng2
-乳	ju2	100
-乳	lu2
-亞	a1	2083
-享	hiang2	932
-享	hiong2	233
-京	kiann1	1194
-京	king1
-佩	phue3
-佩	pue7	100
-佬	lo2
-佳	ka1	500
-併	ping3	150
-使	sai3	809
-使	su3
-侍	sai7	50
-侍	su7	50
-侗	tong3	100
-供	kiong1	150
-依	i1	350
-兒	ji5	1115
-兒	li5	1115
-具	ku7	1199
-函	ham5	150
-刮	kuat4
-到	tau3	825
-到	to3	3301
-刷	suat4	50
-卑	pi1	500
-卓	toh4	100
-卓	tok4
-協	hah8
-協	hiap8	650
-卷	kng3	50
-叔	siok4
-呢	ne1	2279
-呢	ni5	50
-呧	ti1	50
-周	tsiu1	450
-呱	kua7	100
-呴	ku1	150
-呵	o1	1353
-呻	sin1
-呼	honn1	100
-呿	khuh4	100
-和	ho7
-和	hue5	431
-咍	hai1	100
-咎	kiu7
-咐	hu3	50
-咖	ka1	200
-固	koo3	250
-坡	pho1	100
-坤	khun1
-坦	than2	600
-坪	phiann5	50
-坪	phing5
-坷	khiat8	100
-垃	la5	50
-垃	lah4	150
-奈	nai7	150
-奈	ta1	50
-奉	hong7	300
-奔	phun1	100
-妮	ni5
-妲	than2
-始	si2	2824
-姐	tsia2	1254
-姒	sai7	50
-委	ui2	550
-孟	bing7
-宗	tsong1	1500
-宙	tiu7	50
-宛	uan2	50
-宜	gi5	350
-尚	siong2	50
-尚	siong7
-尚	siunn7	200
-屄	bai1	50
-居	ki1	450
-居	ku1	450
-居	ku1	450
-岡	kong1	200
-岩	gam5	50
-岩	giam5	100
-岳	gak8
-岸	gan7	215
-帙	tiat8
-帚	tshiu2	100
-帛	peh8	100
-帛	pik8
-延	ian5	600
-弦	hian5	100
-弧	hoo5
-彼	pi2
-彿	hut4	50
-征	tsing1	50
-忽	hut4	1178
-忿	hun2
-怏	ng3
-怐	khoo3	200
-怕	pha3	50
-怖	poo3	50
-怡	i5
-怦	phenn7	100
-性	senn3	632
-性	sinn3	632
-怫	phut4	100
-怯	khiap4
-或	hik8	50
-戾	le7
-抱	phau7
-抱	po7
-抵	te2
-抵	ti2	1344
-押	ap4
-拇	bu2	150
-拈	ne1	50
-拉	la1	421
-拉	la2	842
-拒	ki7	50
-拒	ku7
-拒	ku7
-拓	thok4	150
-拔	puat8	150
-拘	khu1	100
-拙	tsuat4
-斧	hu2
-斧	poo2	100
-於	i5	200
-昂	gong5
-昆	khun1	50
-昇	sing1	100
-昊	ho7
-昌	tshiong1
-明	bin5	763
-明	bing5	8206
-明	me5	381
-明	mia5
-昏	hng1	150
-昏	hun1	100
-易	i7	100
-易	iah8	50
-易	ik8	150
-昔	sik4
-朋	ping5	2984
-杭	hang5
-杰	kiat8
-杵	thu2
-杷	pe5	50
-松	tshing5	100
-松	siong5	350
-松	song2	50
-枉	ong2	250
-析	sik4	100
-枕	tsim2	100
-果	kue2	633
-果	ke2	633
-枝	tsi1	133
-欣	him1	779
-歧	ki5	100
-沓	tap8	513
-沸	hui3
-況	hong2	500
-泄	siat4
-泊	pok8
-泊	phik4
-泌	pi3	100
-泓	hong5
-泛	huan3	50
-泛	huan7
-泡	phok8	50
-泣	khip4
-泥	ni5	50
-泱	iong1
-泳	ing2	50
-炙	tsia3	50
-爭	tsing1	1674
-爸	pah4	168
-牧	bok8	3402
-物	mih4	884
-狀	tsiong7	200
-狀	tsong7	300
-狎	ap8
-狐	hoo5	150
-狗	koo2
-玩	guan2	50
-玩	uan2
-玫	mui5	100
-的	tik4	6480
-的	tik8	3240
-盲	me5	150
-盲	mi5	150
-盲	moo5	100
-祀	sai7
-祀	su7	100
-秉	ping2
-穹	kiong1
-空	khong1	1884
-空	khang3	171
-空	khong3	171
-竺	tiok4
-羌	kiong1
-肥	hui5
-肨	hang3	50
-肩	kian1
-肩	king1	200
-肴	ngau5
-臥	ngoo7
-舍	sia3	200
-芙	hu5
-芙	phu5
-芝	tsi1	250
-芟	san1
-芡	khiam3
-芥	kai3	50
-芥	ke3	50
-芥	kua3	100
-芫	ian5	50
-芬	hun1	50
-芭	pa1	100
-芳	hong1	459
-芷	tsi2
-芹	khin5	50
-芹	khun5
-芽	ga5
-虎	hu1	100
-虱	sat4	150
-迌	tho5	1209
-迎	gia5
-迎	ging5	150
-返	huan2
-邸	ti2
-采	tshai2	100
-長	tsiong2	113
-長	tiong5	226
-阻	tsoo2	300
-阿	o1
-阿	oo1	640
-陀	too5	50
-附	hu7
-亮	liang7	50
-亮	liong7
-侮	bu2	50
-侯	hau5
-侯	hoo5	50
-便	pan5	97
-係	he7	1541
-促	tshiok4	200
-俄	go5
-俄	ngoo5
-俊	tsun3
-俍	lang7	50
-俏	tshiau3
-俐	li7	50
-俘	hu1	50
-俚	li2
-俞	ju5
-俞	lu5
-俠	kiap4	50
-冒	moo7	100
-則	tsik4	250
-削	siat4
-前	tsun5	460
-勁	king3
-勁	king7
-勃	put8
-勉	bian2	100
-厚	hoo7	50
-叛	puan7	50
-咪	bi5	100
-咫	tsi2
-咬	ngau2
-咯	lok8
-咳	ka1	100
-咳	kha1	50
-咽	ian1
-咾	lo2	1612
-哈	hah4	100
-哉	tsai3	100
-垂	se5	100
-垂	sue5	100
-型	hing5	1100
-垢	kau2	100
-垣	uan5
-姚	iau5
-姚	io5
-姜	kiong1	50
-姜	khiong1
-姜	khiunn1
-姜	kiunn1	150
-姦	kan1	150
-姪	tsit4
-姪	tit8	50
-姻	in1	100
-姼	tshit4	100
-姿	tsu1	150
-威	ui1	450
-娃	ua1
-客	khik4
-宣	suan1	1710
-宥	iu7
-宦	huan7
-屋	ok4	200
-屎	su2
-屏	pin5	350
-屏	ping5	50
-峇	ba5	50
-帥	sui3
-帥	sue3
-幽	iu1	200
-度	tok8
-建	kian3	3201
-彥	gan7
-彥	gian7
-待	tai7
-後	hau7	193
-後	hio7	1351
-後	hoo7	193
-怎	tsuann2	5628
-怒	noo7	50
-思	si1	780
-思	su3	780
-恂	sun2	150
-恆	hing5	50
-恍	hong2
-恍	huann2
-恢	hue1
-恢	khue1	50
-恨	hin7	50
-恨	hun7	200
-扁	pian2	50
-扁	pun2	50
-括	kuat4	50
-拯	tsin2	50
-拱	kiong2
-拼	phing1	934
-拾	sip8	100
-持	tshi5	1563
-持	ti5	976
-指	tsing2	667
-按	an2	2137
-挑	thiau1	100
-挑	thiau2	50
-既	ki3	50
-星	san1	135
-映	ing3	50
-映	iong3
-昧	mai7	50
-昨	tsa1	1291
-昨	tsoh8	1291
-昭	tsiau1	50
-昱	iok8
-枯	koo1
-枴	kuainn2
-架	ka3	100
-枷	ka1
-枸	koo2	50
-柄	ping3
-柏	peh4
-柏	pik4
-某	boo2	9022
-柔	jiu5	300
-柔	liu5
-查	tsa1	5445
-查	tsa1	5445
-柩	kiu7
-柫	put4	50
-柬	kan2
-柯	kho1
-柱	tsu7
-柳	liu2	300
-柵	tshik4
-柵	sa1	100
-殃	iong1
-段	tuan7
-洋	iong5	106
-洛	lok8	100
-津	tsin1
-洪	ang5
-洪	hong5
-活	huat8	293
-炫	hian7
-炳	ping2
-炸	tsiah8	50
-牲	senn1	100
-牲	sinn1
-牲	sing1	150
-狡	kau2	50
-玲	ling5
-玲	lin1	150
-玻	po1	50
-珊	suan1	50
-珍	tsin1
-珍	tin1	300
-甚	sim7	4128
-甭	bang3
-界	kai3	3799
-界	ke3	904
-界	kue3	904
-疫	iah8	50
-疫	ik8	350
-皇	hong5	600
-盈	ing5	50
-相	siunn1	357
-盼	phan3	100
-盾	tun2	50
-矜	king1
-矜	khim1
-砂	se1	100
-砌	kih4
-砍	kham2
-砒	phi1	50
-研	gian2	1458
-祈	ki5	2054
-祉	tsi2
-禹	u2
-秒	biau2
-穿	tshuan1	325
-突	tut8	350
-竿	kuann1	50
-紀	ki2	295
-紂	tiu7
-缸	kong1
-耶	ia5	4930
-背	pue3	126
-胖	phang3
-胛	kah4	150
-胞	pau1	200
-胡	hoo5	450
-胡	oo5	50
-舢	sam1	50
-苑	uan2	150
-苒	jiam5
-苒	liam5
-苓	ling5	150
-苔	thai1
-苔	thi5	100
-苗	biau5	200
-苛	kho1
-苞	pau1
-苟	koo2
-若	jiok8
-若	liok8
-苦	ku1	171
-苧	te7	50
-苧	tue7
-苧	thu2
-英	ing1	3210
-苳	tang1	300
-莓	m5	100
-茂	boo7	50
-范	huan7	50
-茄	ka1	350
-茅	hm5	50
-茅	mau5
-茉	bak8	50
-茉	buah8	100
-虐	gik8	50
-虐	gioh8	50
-虐	giok8
-虼	ka1	150
-要	iau1	407
-要	iau3	6521
-訃	hu3	50
-計	ki3	262
-貞	tsing1
-軌	kui2	50
-迦	khia1	50
-迪	tik8
-迭	tiat8
-述	sut8	250
-郁	hiok4
-郊	kau1	200
-郎	lang1	50
-郎	nng5	50
-酋	siu5
-陋	loo7
-陌	bik8
-韋	ui5
-韭	ku2	150
-飛	hue1	104
-首	siu2	1351
-香	hiang1	159
-香	hiong1	319
-乘	sing5
-乘	sing7
-俯	hu2
-俱	khu7	50
-俳	pai1	50
-俳	pai5
-俸	hong7	50
-倆	liong2
-倉	tshong1
-倒	thoh8	298
-倖	hing7	150
-候	hau7	1663
-倚	i2	218
-借	tsia3
-倡	tshiong1
-倡	tshiong3
-倦	kuan7
-倫	lun5	100
-倭	e1
-冥	bing5	100
-凊	tshing3
-凋	tiau1
-凌	ling5	100
-剔	thik4
-剖	phoo2
-剛	kong1	50
-剝	pok4
-卿	khing1
-原	guan5	7811
-員	inn5	108
-哥	koh4	92
-哨	sau3
-哨	siau3
-哩	li1	150
-哩	li2	250
-哲	tiat4	100
-唆	so1
-唆	so7
-唏	hi3	50
-唐	tong5	50
-唐	tng5	150
-埃	ai1
-埃	ia1	50
-埆	kak4
-埒	luah8
-夏	he7	100
-娉	phing1
-娘	liong5
-娛	gu5
-娛	ngoo5
-娜	na2
-娟	kuan1
-娥	ngoo5	50
-娩	bian2
-宰	tsainn2	50
-宴	ian3	150
-宵	siau1	150
-屐	kiah8	150
-屑	sap4	100
-峰	hong1	300
-峻	tsun3	50
-峽	kiap4	150
-差	tshai1	322
-庭	tiann5
-庭	ting5	1556
-徐	tshi5	50
-徑	king3	150
-恐	khiong2	150
-恕	su3	50
-息	sik4	510
-息	sit4	765
-悅	uat8
-悅	iat8
-悔	hue2	782
-悔	hui2
-悖	pue7
-悟	ngoo7	200
-扇	sian3
-拳	kuan5
-拿	na2
-挨	ai1
-挫	tsho3
-振	tsin2	50
-振	tin2	50
-挹	ip4	50
-挺	thing2
-捉	tshiok4
-捏	liap4
-捐	kuan1	150
-捔	kak8	100
-捕	poo2	150
-旁	pong5	250
-旅	lu2	400
-晉	tsin3
-晏	an3
-朔	sok4
-朗	lang2
-朗	long2	100
-栓	tshng1
-栗	lat8	100
-栗	lik8	150
-校	kau3	343
-株	tsu1
-株	tu1	50
-栱	kong2
-核	hat8	50
-核	hik8	450
-格	kik4
-桀	kiat8
-桂	kui3	200
-桃	to5	50
-桅	ui5
-案	uann3	77
-桐	tang5	100
-桐	tong5	250
-桑	sng1	50
-桑	song1	100
-桑	sang2	50
-殉	sun5
-殊	su5	50
-殷	in1
-殷	un5
-氧	iong2	100
-泰	thai3	350
-浙	tsiat4
-浡	phuh8	50
-浦	phoo2
-浩	ho7
-浪	long7	350
-浮	hu5
-浴	ik8	300
-浴	iok8
-涂	too5
-涂	thoo5
-涉	siap8	250
-涗	sue3	50
-涗	se3
-烏	u1	98
-烘	hong1
-烙	lo7	50
-烙	lok8
-特	tik8	3397
-狸	li5	150
-狹	hiap8
-狽	pue7	50
-珮	pue3
-琉	liu5	100
-畔	puan7
-畚	pun3	250
-畚	pun7
-畜	thiok4	50
-畝	boo2	50
-疲	phi5	50
-疳	kam1	100
-疸	than2	50
-疹	tsin2	50
-疾	tsik8
-疾	tsit8
-病	ping7
-益	iah4
-益	ik4	1911
-眠	bian5
-眨	tshap8	100
-矩	ki2	50
-矩	ku2
-砲	phau3
-祐	iu7
-祕	pi3	400
-祚	tsa3
-祟	sui1	50
-秘	pi3
-秤	ping5	50
-秦	tsin5	50
-秧	iang1
-秧	iong1
-秩	tiat8	50
-秪	te1
-秫	tsut8	200
-秮	tai1	50
-窄	tsik4
-窈	iau2
-笆	pa1	50
-笑	tshiau3	363
-笑	siau3	1089
-笒	gim2	50
-笒	giam2
-粅	but4	100
-紋	bun5	200
-紐	liu2
-紗	sa1
-紛	hun1	300
-紡	hong2
-索	sik4	100
-羓	pa1
-羔	ko1
-翁	ong1
-翅	tshi3	50
-耆	ki5	50
-耕	king1
-耘	un5
-耽	tann5	50
-胭	ian1	50
-胰	i5
-胱	kong1	50
-胳	koh4	100
-胸	hiong1
-脂	tsi1	150
-脅	hiap8	50
-脆	tshui3	50
-脈	bik8
-脊	tsiah4	250
-脊	tsik4
-脊	tsit4	50
-舨	pan2	50
-航	hang5	700
-般	pan1
-般	puann1	1095
-茭	ka1	50
-茭	kha1	50
-茯	hok8	50
-茱	tsu1
-茵	in1
-茸	jiong5	200
-茸	liong5
-荀	sun5
-荇	hing7
-荊	king1
-荍	sio5	100
-荐	tsian3	50
-荒	hong1	50
-荔	nai7	50
-荖	lau2	100
-荖	lo2	50
-虔	khian5	50
-蚊	bun5
-蚌	pang7
-蚓	kun2	50
-蚣	kang1	50
-蚤	tsau2	50
-衲	lap8
-衷	thiong1
-訊	sin3	350
-訓	hun3	250
-訕	suan7	100
-豈	khi2	50
-貢	kong3	200
-躬	kiong1	50
-軒	hian1
-軒	ian1
-辱	jiok8	50
-辱	liok8
-迴	hue5	200
-送	song3
-郡	kun7
-酌	tsiok4	50
-釘	ting1	450
-陛	pe3
-陝	siam2
-陞	sing1
-隻	tsik4
-馬	ma1	50
-高	kau1	110
-鬥	too3
-倏	sua7	50
-偉	ui2	100
-偕	kai1
-健	kian7	500
-健	kiann7	100
-側	tshik4
-偵	tsing1	250
-偶	ngoo2	100
-偽	gui7	50
-凰	hong5	100
-勘	kham1	100
-勘	kham3
-匿	lik8
-參	sim1	995
-參	som1	331
-售	siu7	150
-唯	ui5	50
-唱	tshiong3
-商	siong1	1750
-問	bun7	4385
-啖	tam7	50
-啞	a2
-啞	e2	50
-啟	khe2	200
-啡	pi1	100
-圇	lun5
-圈	khuan1	150
-域	ik8
-埠	poo7
-執	tsip4	500
-培	pue5	200
-基	ke1	1215
-基	ki1	4131
-埽	so3	300
-奢	tshia1	100
-娼	tshang1	50
-娼	tshiong1
-婉	uan2
-婊	piau2	150
-婢	pi7
-婦	pu7	1268
-宿	siok4	100
-宿	siu3	50
-宿	sok4	50
-寂	tsik8	50
-寂	siok4
-寄	ki3
-密	bit8	1190
-屠	too5	100
-崇	tsong5	100
-崔	tshui1
-崖	gai5
-崗	kang1
-崗	kong1	50
-崙	lun7	400
-崩	ping1
-巢	tsau5	150
-帳	tiong3
-帳	tiunn3
-帷	ui5	50
-常	tshiang5	343
-常	siong5	6189
-庵	am1	100
-康	khng1
-康	khong1	300
-庸	iong5
-張	tiong1	358
-強	kiong2	112
-強	kiong7	338
-彗	hui7
-彩	tshai2	1449
-彪	piu1
-彬	pin1
-徘	pai5
-從	tshiong1
-御	gu7
-悉	sik4
-悠	iu1
-患	huan7	100
-悽	tshi1	100
-情	tsiann5	577
-惘	bong2
-惜	sik4	144
-惟	ui5
-惟	i5
-戚	tshik4	50
-捨	sia2	100
-捷	tsiat8	100
-掃	so3
-掇	tuah4	50
-掇	tuah8
-授	siu7	1071
-掙	tsiann7	50
-掠	liok8
-控	khong3	400
-推	tshui1	117
-敏	bin2	250
-敘	su7	100
-敝	pe7
-敝	pe3
-斜	sia5	50
-斬	tsam2
-斬	tsann2
-晚	buan2	50
-晚	mng2
-晝	tiu3
-晨	sin5
-曹	tso5
-曼	ban7
-梁	niu5	50
-梅	mui5	300
-梗	kenn2
-梗	king2
-梟	hiau1	50
-梧	ngoo5	100
-梨	le5	50
-梭	so1
-梯	the1	50
-械	hai7	50
-梵	huan7	50
-棄	khi3	350
-欲	iok8	814
-毫	ho5	100
-毫	hoo5
-毬	kiu5	50
-涎	sian5	50
-涯	gai5	100
-液	ik8	100
-涵	am5	100
-涵	ham5	200
-涸	khok4	100
-涼	niu5	100
-淇	ki5	50
-淋	lim5	50
-淑	siok4	50
-淒	tshe1	50
-淡	tam7	1461
-淡	tann7	162
-淨	tsing7	300
-淪	lun5	50
-淫	im5	50
-淮	huai5	50
-淵	ian1	50
-混	hun7	100
-淺	khin2
-清	tshinn1
-烹	phing1
-焗	kok8	50
-爽	sng2
-牽	khian1
-猊	ji5
-猊	li5
-猖	tshiong1
-率	lut8	750
-率	sut4
-畢	pit4	100
-略	lioh8	150
-略	liok8	350
-異	i7	600
-疏	soo1	250
-疵	tshu5
-盔	khue1	50
-盛	siann7
-眼	ging2	200
-眾	tsing3	735
-眾	tsiong3	2450
-硃	tsu1	50
-硫	liu5	50
-祥	siong5	100
-祧	thiau7	50
-票	phiau3
-移	i5	450
-窕	thiau2
-竟	king3	150
-笙	sing1
-笛	tat8	50
-笛	tik8
-笠	lip8
-粕	phok4
-紮	tsap4
-累	lui2	100
-累	lui7	100
-紳	sin1	50
-紹	siau7	150
-終	tsiong1	350
-絆	puan3
-統	thong2	3866
-缽	puat4
-羞	siu1
-翎	ling7	50
-習	sip8	2332
-聆	ling5
-聊	liau5	150
-唇	sun5
-唇	tun5
-脫	thuah4
-脬	pha1	200
-脰	tau7	50
-舵	tai7	50
-舵	to7
-舵	tua7
-舷	hian5
-荳	too7
-荷	ha5	50
-荷	ho5	50
-荷	hue5	50
-荽	sui1	50
-莉	ni7	791
-莊	tsong1	200
-莎	sa1
-莎	so1
-莖	king1
-莖	huainn5	50
-莧	hing7	100
-莽	bong2	100
-處	tshu2	1107
-處	tshu3	790
-蛀	tsu3
-蛄	koo1	150
-蛇	sia5
-蛋	tan3	150
-蛋	tuann1	50
-袈	ka1
-袋	tai7
-袍	phau5
-袖	siu3	100
-覓	bik8
-訟	siong7
-訪	hong2	1299
-許	hi2	50
-許	hu2
-許	khoo2	50
-豚	thun5
-貧	pin5	350
-貨	ho3
-貨	honn3
-貫	kuan3	200
-責	tsik4	1364
-趺	u1	50
-趾	tsi2
-軟	luan2	90
-逍	siau1	50
-透	tho3
-逐	tiok8
-速	sok4	600
-逢	hong5	50
-連	liam5	139
-連	ni5	139
-郭	kok4
-郭	kueh4	100
-都	too1	3302
-釣	tiau3
-釵	tshai1
-釵	the1
-陰	iam1	50
-陳	tan5	886
-陳	tin5	1773
-陵	ling5	50
-陶	to5
-陸	liok8	400
-陸	lok8
-陸	lak8
-雀	tshik4
-雀	tshiok4	250
-雪	sap4	225
-頃	khing1
-頃	khing2	50
-魚	gu5
-鳥	niau2	874
-麻	ma5	150
-傀	ka1	150
-傀	khui2
-傅	hu7	100
-傅	poo3
-傍	pong7
-傑	kiat8	100
-傘	san3
-備	pi7	2639
-凱	khai2	50
-剩	sin7
-剩	sing7	50
-剩	siong7	50
-割	kat4
-勝	sing1
-勝	sing3	300
-勞	loo2	94
-勞	lo7	94
-唾	tho3
-啾	tshiunn3	100
-喂	ue5	50
-喇	la2	50
-喉	au5	500
-喌	tsiuh4	100
-喑	inn3	50
-喚	huan3	50
-喜	hi2	5697
-喝	hat4
-喧	suan1
-喪	sng1
-喪	song1	50
-喬	kiau5
-單	tan1	1379
-喲	io7	50
-喳	tsha7
-喻	ju7	100
-喻	lu7
-圍	u5
-堡	po2	200
-堤	the5
-堯	giau5
-場	tshiang5
-奠	tian7
-婷	ting5
-婸	giang1	50
-婿	sai3	300
-婿	se3
-媒	mue5	350
-媒	hm5	350
-媒	mui5	200
-媚	bi7
-媧	o1
-富	hu3	1558
-寐	bi7
-寒	han5	676
-寓	gu7	50
-寓	u2
-尋	sim5
-嵐	lam5
-幅	hok4	100
-幾	ki2	1115
-廁	tshe3
-廂	siunn1	50
-廊	long5	100
-彭	phenn5
-彭	phinn5
-彭	phing5
-復	hok8	1848
-循	sun5	50
-悲	pi1	1382
-悶	bun7	350
-惑	hik8	150
-惠	hui7	1386
-惡	onn3	103
-惰	to7
-惰	tuann7	150
-惱	lo2	960
-惱	nau2	274
-惶	hiann5	50
-惻	tshik4
-愉	ju5
-愉	lu5
-愕	gok8
-慨	khai3	150
-戟	kik4
-掌	tsiang2	50
-揀	kan2
-描	biau5	150
-揚	iong5	250
-握	ap4
-握	ok4
-揭	kiat4
-揭	khiat4
-揮	hui1	100
-援	uan7	250
-敦	tun1	100
-斌	pin1
-斐	hui1
-斐	hui2
-斑	pan1	400
-斯	su1	50
-斯	suh4	50
-晬	tse3	50
-普	phoo2	1146
-普	puh4	191
-晴	tsenn5
-晴	tsing5
-晶	tsing1	50
-晶	tsinn1	150
-智	ti3	1834
-暑	su2	250
-曾	tsan1	50
-曾	tsing1
-曾	tsing5	200
-朝	tiau1
-期	ki1
-棉	bian5
-棍	kun3	50
-棑	pai5	100
-棒	pang7	50
-棚	ping5
-棠	tong5	50
-棧	tsan3	50
-森	sim1	100
-棲	tshe1	100
-棺	kuan1	50
-棺	kuann1	50
-植	tit8
-植	sit8	50
-椒	tsiau1
-椒	tsio1	150
-椪	phong3	50
-欽	khim1
-殖	sik8
-殖	sit8	100
-殘	tsan5	250
-殘	tsuann5	50
-殘	tshan5
-殼	khok4
-渝	ju5
-渝	lu5
-渝	u5
-渣	tse1	50
-測	tshik4	400
-渴	khat4
-游	iu5	150
-渺	biau2
-渾	hun5
-湘	siong1
-湧	iong2
-湯	thong1
-溉	kai3
-滋	tsu1	150
-焦	tsiau1	100
-焰	iam7
-焱	iann7	100
-然	jian5	5569
-然	lian5	5569
-犀	sai1	50
-犀	se1
-猩	sing1	100
-猫	ba5	100
-猶	iu5
-琢	tok4
-琦	ki5
-琪	ki5
-琳	lim5
-琵	pi5	50
-琶	pa5
-琶	pe5	50
-甥	sing1	100
-番	han1	435
-痘	tau7
-痘	too7
-痛	thang3	495
-痛	thong3	990
-痞	phi2
-痟	siau1	50
-痡	poo5	50
-痢	li7	50
-登	ting1	250
-發	huat8	147
-皓	ho7
-皓	hoo7
-盜	to7	200
-硝	siau1
-硞	khok4	200
-硬	ging7
-稀	hi1	150
-稈	kuainn2	100
-程	ting5	2043
-程	thiann5
-程	thing5	601
-窘	khun2
-筐	khong1
-答	tah4	159
-答	tap4	1599
-策	tshik4	1132
-粟	siok4
-粧	tsong1
-紫	tsi2	200
-絞	kau2
-絡	loh8	50
-絡	lok8	50
-絡	le1	100
-絢	sun5
-給	kip4	200
-絪	in1	50
-絮	su3
-絳	kong3	100
-翔	siong5
-肅	siok4	150
-脽	tsui1	100
-脾	phi5	50
-腋	ik8
-腌	a1	50
-腎	sian7
-腑	hu2
-腔	khiong1
-腔	tshiunn1	50
-腕	uan2
-腕	uann2	100
-舒	soo1
-舒	su1
-舜	sun3
-莿	tshi3	150
-菁	tshenn1	150
-菁	tshinn1	150
-菅	kuann1	200
-菊	kak4
-菖	tshiong1	50
-菝	puat8	200
-菝	pat8	50
-菠	po1
-菠	pue1	50
-菠	pe1	50
-菩	phoo5	100
-華	hua1	431
-華	hua5	3233
-菱	ling5	50
-菲	hui1
-菲	hui2
-萄	to5	100
-萊	lai5	100
-萍	phing5
-萎	ui2
-著	tiok8
-著	tu3	150
-虛	hu1
-蛙	ua1
-蛛	tu1	100
-蛟	kau1	50
-蛤	kap4	150
-袱	hok8	150
-裂	liat8	50
-視	si7	2371
-診	tsin2	400
-詐	tsa3	100
-詔	tsiau3
-象	siong2
-象	siong3
-象	siong7	1461
-象	siunn7	132
-貂	tiau1	100
-貯	thu2
-貳	ji7
-貳	li7
-貸	tai7	50
-貿	boo7	100
-賀	ho7	150
-超	tshiau1	600
-超	thiau1
-跋	puat8
-跌	tiat8
-跑	phau5	50
-距	ki7	50
-距	ku7
-軸	tik8
-辜	koo1	100
-逮	tai7
-週	tsiu1	200
-逸	it8
-逸	ik8
-逸	iat4
-郵	iu5	550
-鄉	hiong1	10443
-鄉	hiunn1	131
-鈔	tshau1	50
-鈗	ng2	50
-鈞	kun1
-閒	han5	114
-間	kan3	653
-閔	bin2
-陽	iunn5	100
-隆	liong5	200
-隍	hong5	150
-階	kai1	300
-雅	nga2	1052
-雅	nge2	105
-雇	koo3
-雯	bun5
-頇	han1
-須	su1	50
-飯	huan7
-黃	hong5	697
-黑	hik4
-黹	tsi2	50
-亂	lan7	92
-傲	ngoo7	50
-傳	tuan7	323
-傾	khing1	100
-僆	nua7	50
-勤	khin5	1277
-勤	khun5
-嗙	pong3	100
-嗚	oo1	50
-嗝	keh4
-嗣	su5
-嗣	su7	100
-嗤	tshi1	50
-嗦	so1	100
-嗲	te1
-嗲	teh4	100
-園	uan5	460
-圓	uan5	252
-塑	sok4	300
-塗	too5	77
-塘	tng5	50
-塘	tong5
-塞	sai3
-奧	o3	100
-媳	sik4
-媽	ma1
-媽	mah4	231
-嫁	ka3
-嵯	tshu1
-廉	liam5	100
-微	bi5	400
-微	bui1	100
-愍	bian2
-愚	gu5
-愧	khui3
-慄	lak8	100
-慄	lik4
-慈	tsu5	300
-慌	hong1
-慍	un3
-慎	sin7	100
-搏	phok4
-搖	iau5	125
-搬	puan1
-搭	tap4
-搶	tshiong2
-斟	tsim1	50
-暇	ha7
-暈	un7
-暉	hui1	50
-暖	luan2	300
-會	kue3	265
-棰	tshue5
-棰	tshe5
-楊	tshiunn5
-楊	iong5
-楊	iunn5	250
-楓	hong1
-楚	tsho2	1143
-楝	lian7
-楝	ling7	50
-楣	bai5
-楬	at4	50
-極	kik8	1899
-楷	khai2	50
-楹	enn5	50
-楹	ing5
-概	kai3	812
-概	khai3	406
-榆	jiu5	50
-榆	liu5
-榔	long5
-榔	nng5	50
-歆	him1
-殿	tian7	100
-毽	kian3	100
-源	guan5	2104
-溫	un1	1622
-溯	soo3	50
-溶	iong5
-溺	lik8
-滂	phong7	50
-滄	tshong1	50
-滇	tian1
-滓	tsainn2
-滓	lai2	50
-煉	lian7	50
-煌	hong5	100
-煞	sat4
-煤	mue5
-煥	huan3
-煬	iang7	50
-煬	iong5
-牒	tiap8
-猾	kut8
-瑋	ui2
-瑕	ha5
-瑙	lo2	50
-瑚	oo5	50
-瑛	ing1
-瑜	u5
-瑜	ju5
-瑜	lu5
-瑞	sui7	350
-瑟	sit4
-瑟	sik4
-瑯	long1	200
-當	tang1	200
-當	tang3	4562
-當	tong1	1300
-當	tong3	200
-痱	pui3	100
-痴	tshi1	250
-痹	pi3
-痺	pi3	100
-盞	tsan2
-盟	bing5	300
-睚	kainn5	50
-睛	tsing1
-督	tok4	3324
-睦	bok8	50
-睫	tsiah4	50
-睭	tsiu1	1265
-睹	too2
-硼	phing5	50
-碇	ting7	777
-碌	lok8	50
-碓	tui3
-碖	lun2	50
-碡	tak8	50
-碰	phong3	50
-祺	ki5
-祿	lok8	100
-禽	khim5	150
-稚	ti7	100
-稜	ling5	50
-稠	tiu5
-窞	tham7	50
-窣	sut8	150
-筠	un5
-筧	kian2
-粱	liang5	50
-綁	pang2	50
-罪	tse7	336
-置	ti3	400
-署	su2	250
-署	su7
-羨	sian7	50
-聖	sing3	3249
-肆	su3	50
-腥	tshenn1	100
-腥	tshinn1	100
-腦	lo2	220
-腩	lam2	50
-腮	tshi1	50
-腰	iau1
-腱	kian3	50
-腱	kian7
-腳	kioh4	1000
-腳	kiok4
-腸	tshian5
-腸	tshiang5	150
-腸	tiong5
-腹	hok4
-舅	kiu7
-艇	thing2
-萵	ue1	50
-萵	e1	50
-落	lauh8	307
-葉	iap8
-葛	kat4	50
-葛	kuah4
-葡	phu5	100
-董	tang2	100
-董	tong2	100
-葫	hoo5	100
-葵	kui5
-葵	khue5	50
-號	lo7	700
-蛻	thui3
-蛾	iah8	50
-蜀	siok8
-蜂	hong1
-蜅	poo1	50
-蜈	gia5	150
-蜈	goo5
-蜈	ngoo5	100
-蜍	tsi5	50
-衙	ge5	200
-裌	kiap4	50
-裏	li2
-裔	e3	50
-裔	i3
-裕	ju7	50
-裕	lu7
-裟	se1
-解	ke2
-詢	sun5	200
-詣	ge7
-詬	kau7	100
-詭	khui2
-詭	kui2	100
-詮	tshuan1
-詰	khiat4
-詳	siong5	1073
-詹	tsiam1
-誇	khua1	50
-誠	sing5	3330
-貉	ho5	50
-賂	loo7
-賄	hue2	50
-資	tsu1	2706
-賈	ka2
-賈	koo2
-賊	tsat8	100
-賊	tsik8
-跡	tsik4	50
-較	ka3	539
-較	kau3	1079
-辟	phik4
-遁	tun7
-遂	sui7
-運	in7
-遍	phian3	301
-過	koo3	170
-過	kua3	340
-過	koh4	340
-達	tat8	1418
-違	ui5	350
-酬	siu5	100
-鈸	puah8
-鈸	puat8
-鉈	to5
-鉗	khiam5
-隔	kik4
-隘	ai3	150
-雉	thi7	50
-零	lan5	100
-零	ling5	100
-靖	tsing7	150
-靶	pe2
-預	i7	900
-預	u7	900
-預	u7	900
-頑	guan5
-頒	pan1	150
-頓	tun3	267
-飽	pau2
-飾	sik4	50
-馳	ti5
-馴	sun5	50
-鳩	khiu1
-鼎	ting2
-鼠	tshu2	900
-僑	kiau5	200
-僕	pok8
-僚	liau5	150
-僧	sing1
-僧	tsing1
-僭	tsiam3	100
-厭	ian3	50
-嗹	lian5	50
-嘈	tso7	50
-嘈	tshauh8	100
-嘉	ka1	400
-嘐	hau1	150
-嘓	gok8
-嘓	kok8
-嘔	oo2
-嘛	ma3	100
-嘟	tu7	100
-塵	tin5	100
-塾	siok8
-墓	boo7	650
-夥	hue2	539
-夥	he2	539
-嫖	phiau5	50
-嫡	tik4
-嫦	siong5	50
-孵	hu1
-寞	bok8	50
-察	tshat4	1467
-寢	tshim2	100
-寢	khim2
-寥	liau5
-寧	ling5	250
-屢	li2
-嶄	tsam2
-幣	pe3	100
-廖	liau7	100
-弊	pe3	150
-弊	piah4
-彰	tsiong1	150
-徹	thiat4
-態	thai3	1744
-態	thai7	134
-慣	kuan3	150
-慳	kian1
-慷	khong2	50
-截	tsiat8	100
-摘	tik4
-摸	moo1	114
-撤	thiat4	150
-暨	ki3
-榕	iong5
-榛	tsin1
-榜	pong2
-榜	png2	100
-榨	tsa3	50
-榮	ing5	1641
-榴	liu5	150
-榻	thah4
-榻	thap4
-構	koo3	500
-槐	huai5
-槔	oo1	50
-歉	khiam1
-歉	khiam3	50
-滬	hoo7	50
-滯	ti7
-滴	tik4
-滸	hoo2
-漁	gu5
-漁	hi5	400
-漁	hu5
-漂	phiau3
-漂	phio3	100
-漉	lok4	150
-漏	loo7
-漚	au2	100
-漠	bok8	200
-漫	ban7	150
-漳	tsiang1	50
-漸	tsiam7	1621
-澈	thiat4	50
-煽	sian3	50
-熇	ho1
-熏	hun1
-熔	iong5
-爾	ni7	751
-爾	nia7	300
-犒	kho3
-獄	gak8	200
-獄	gik8
-瑣	so2
-瑪	be2	230
-瑪	ma2	690
-瑰	kui3	100
-瘋	hong1
-瘍	iong5	100
-監	kam1	102
-監	kam3	820
-睡	tsue7	50
-睡	sui7
-碟	tiap8	100
-碟	tih8	100
-碧	phik4	100
-碩	sik4
-碩	sik8	50
-磁	tsu5	50
-禎	tsing1
-種	tsiong3
-稱	tshing1	1194
-窩	o1	50
-端	tuan1	350
-端	tuann1	50
-筵	ian5
-箋	tsian1
-箏	tsing1
-箕	ki1	300
-粹	tshui3	50
-綜	tsong1	100
-綠	liok8
-綢	tiu5	100
-維	i5	50
-綰	kuann7	50
-綱	kong1	50
-綴	tuat4
-綸	lun5
-綸	kuan1
-綺	khi2
-綽	tshiok4
-綾	ling5	50
-綿	bian5	50
-緒	su7	50
-翠	tshui3	150
-聚	tsu7	804
-聞	bun5	150
-肇	tiau7
-腐	hu2	200
-腐	hu7	200
-膀	phong5	50
-膁	liam2	50
-膈	keh4
-膋	la5	100
-膏	ko5	100
-膏	koo1	100
-臺	tai5	2050
-與	u2	802
-蒙	bong5
-蒲	poo5	100
-蒸	tsing1
-蒼	tshong1
-蒿	o1	100
-蓄	thiok4
-蓉	iong5
-蓑	sui1	50
-蜘	ti1	100
-蜞	khi5	100
-蜢	meh4	100
-蝕	sit4	100
-裱	piau2
-裹	ko2	50
-裼	theh4	50
-製	tse3	550
-褂	kua3	50
-誌	tsi3	6282
-誓	se7
-誣	bu5	50
-誦	siong7	50
-豪	ho5	50
-貌	mau7	300
-賑	tsin2	50
-賓	pin1	250
-趙	tio7
-輓	buan2	50
-輔	hu2	200
-輔	phoo2
-輕	khing1
-遙	iau5	150
-遜	sun3
-遞	te7	50
-遣	khian2	50
-酷	khok4	100
-酸	suan1
-銘	bing5
-閩	ban5
-際	tse3	1358
-障	tsiang3	50
-障	tsiong1	100
-障	tsiong3	100
-需	su1	1312
-鞅	iong2
-頗	pho2	50
-颱	thai1	300
-餃	kiau2	50
-餉	hiong3
-馝	pih4	50
-駁	poh4	50
-駁	pok4	100
-骰	tau5	150
-骱	kai2	50
-魁	khue1
-魠	thoh4	50
-鳴	bing5	50
-僵	khiong1
-價	ka3
-僻	phiah4	100
-儀	gi5	250
-劇	kik8	93
-劈	phik4
-劉	lau5
-厲	le7
-厲	li7	100
-嘩	hua7	100
-嘮	lo1
-嘯	siau3
-嘻	hi1	100
-噁	onn3	50
-噎	uh4	50
-增	tsing1	350
-墨	bik8
-墩	tun1	150
-墮	tui7
-墳	hun5
-墳	phun5
-嬉	hi1
-寬	khuan1	350
-寬	khuann1	250
-履	li2	150
-幢	tong5	50
-廚	too5	50
-廚	tu5	50
-廣	kng2
-彈	tan5
-彈	tan7
-彈	than5	50
-影	ing2	265
-徵	tin1
-徵	ting1	450
-慕	boo7	100
-慧	hui7	100
-慧	hue7	50
-慮	li7	150
-慮	lu7
-慰	ui3	962
-慶	khing3	300
-慼	tshik4
-慾	iok8	50
-憐	lian5	1340
-憐	lin5
-憚	tan7
-憢	giau5	50
-憤	hun3	100
-憫	bin2	50
-戮	liok8
-摩	moo5	100
-摯	tsi3
-摹	boo5
-摹	boo7
-撒	sat4
-撙	tsun2	50
-撥	puat4
-撫	bu2	50
-撫	hu2	50
-撮	tsuat4
-撰	tsuan7	50
-敵	tik8	200
-敷	hu1
-暮	boo7
-暱	lit8
-暱	lik8
-暴	po7	300
-暴	pok4	100
-暴	pok8	50
-槤	lian5	50
-樂	ngau7
-樑	liong5
-樑	niu5
-標	phiau1	404
-樞	tshu1	50
-樟	tsiong1
-樣	iong7
-歎	than3
-歐	au1	300
-歐	io1
-毅	ge7
-毅	gi7
-毿	sam3	100
-漿	tsiong1
-潑	phuat4	50
-潔	kiat4	100
-潘	phuan1
-潘	phuann1
-潛	tsiam5	100
-潦	lo2	50
-潮	tiau5	200
-潮	tiau1	50
-潺	tshan1
-澄	ting5	50
-澎	phenn5	50
-熟	siok8
-熥	thang1	50
-獠	liau5	50
-瑩	ing5
-璃	le5	50
-璃	li5
-璇	suan7	150
-瘟	un1	50
-瘡	tshong1
-瘦	soo2
-盤	puan5
-盤	phuan5	50
-瞌	ka1	50
-確	khak4	3339
-確	khiak8	607
-碼	be2	250
-碼	ma2	150
-碾	lian2	50
-磊	lui2
-磋	tsho1
-稷	tsik4
-稻	to7
-穀	kok4	100
-箠	sui5
-箭	tsian3
-箱	siong1
-箴	tsim1
-範	huan7	450
-範	pan7	250
-篇	phian1	445
-糊	hoo5	100
-糍	tsi5	150
-緝	tsip8	50
-緝	tship4
-緞	tuan7	50
-締	te3	100
-編	pinn1
-緯	ui7
-緻	ti3	100
-緻	ti7	50
-羯	kiat4
-翩	phian1
-膝	tshik4
-膝	sit4
-蓪	thong1	50
-蓬	hong5	50
-蓬	pong7	50
-蓮	lian2	111
-蓮	lian5	999
-蔑	biat8
-蔓	ban7
-蔓	mua7	50
-蔚	ui3
-蔡	tshua3
-蔬	se1	100
-蔬	soo1
-蔽	pe3
-蝒	bin7	50
-蝛	bui1	50
-蝴	hoo5
-蝴	oo5	50
-蝶	iah8	100
-蝶	tiap8	50
-衛	ue7	750
-衝	tshong2	50
-複	hok8	300
-褙	pe3
-誕	tan3	150
-誕	tan7
-誰	sui5
-課	khue3	168
-誹	hui2	50
-誼	gi5	100
-誼	gi7
-調	tiau1	117
-調	tiau3	470
-諍	tsing3
-諒	liong7	150
-諸	tsu1	100
-豍	pi1
-豎	su7
-賦	hu3	100
-趣	tshu3	1116
-踏	tap8	102
-踐	tsian7	50
-踔	tshik8
-踢	thik4
-踩	tshai2	50
-輛	liong2	50
-輛	liong7
-輝	hui1	50
-輪	lin1	100
-遨	ngoo5
-適	sik4	1090
-遭	tso1	100
-鄧	ting7	50
-鄭	tenn7	389
-鄭	ting7	389
-醇	sun5
-銲	huann7
-銳	jue7
-銳	lue7
-鋁	lu2
-鋁	lu7
-鋒	hong1	150
-鋤	ti5	100
-鋤	tu5
-閬	long3	100
-閱	iat8
-霆	ting5
-震	tsin3	100
-鞋	hai5
-鞍	an1	50
-鞏	kiong2
-頡	khiat4
-頦	hai5	100
-頦	huai5
-餘	u5	100
-駐	tsu3	150
-駕	ka3	200
-駛	su2	579
-駝	to5	50
-髮	huat4	50
-魩	but4	50
-魬	puann2	50
-魯	luh4	50
-魴	hang1	50
-鴆	thim1	150
-鴉	a1	200
-黎	le5	50
-儒	ju5	50
-儒	lu5
-儘	tsin2
-儘	tsin7
-劑	tse1	150
-劑	tse3	100
-勳	hun1
-叡	jue7
-叡	lue7
-噤	khiunn7	50
-噪	tsho3	100
-噭	kiau3	100
-噷	hmh8	100
-噹	tang1	100
-圜	huan5
-墾	khun2	50
-壁	pik4
-壇	tan5
-奮	hun3	100
-導	to7	1596
-徼	khio3
-憑	ping5	50
-憶	ik4	150
-憾	ham7	100
-懊	au3	100
-擁	iong2	50
-擅	sian7
-操	tsho3
-曆	lah8	100
-曆	lik8	350
-曉	hiau2	3083
-樵	tsiau5	50
-樸	phok4
-樹	su7	107
-樺	hua5
-樺	hua7
-橂	ting7	50
-橄	kam2
-橄	kan1	100
-橄	kann1
-橋	kiau5
-橐	lak4	50
-機	ki1	6318
-機	kui1	103
-橫	hing5	50
-歷	lik8	2707
-澡	tso2
-澤	tik8
-澳	o3	400
-澳	u3
-濁	tak8
-濁	tok8
-濃	long5	150
-燃	jian5	50
-燃	lian5
-燄	iam7
-燕	ian3	150
-獨	tak8	281
-獨	tok8	3095
-璞	phok4	50
-瓢	phio5
-瘰	lui3	100
-瘼	mooh8	50
-磚	tsuan1
-磟	lak8	50
-磨	moo5
-禦	gu7	50
-穌	soo1	4221
-窵	tiau3
-窸	si1	100
-窸	si7	50
-窸	sih8	50
-窺	khui1
-築	tiok8	50
-篤	tau2	100
-篤	tauh4	50
-篤	tok4	100
-縐	tso3
-縒	tsuah8	50
-翰	han7
-翱	ko7	100
-膩	ji7	200
-膩	li7	200
-艙	tshng1	100
-艙	tshong1
-蕃	huan1
-蕉	tsiau1	50
-蕉	tsio1	250
-蕎	gio7	50
-蕘	gio5	50
-蕨	kueh4	50
-蕩	tng7	50
-蕩	tong7	100
-蕭	siau1	50
-蕭	sio1
-融	hiong5
-融	iong5	200
-螕	pi1	50
-螟	bing5
-螢	ing5	50
-螢	hing5
-衡	hing5	100
-褥	jiok8
-褥	liok8
-褥	liok8
-親	tshenn1	409
-親	tshinn1	409
-觱	pi1	150
-諜	tiap8	50
-諦	te3
-諧	hai5	50
-諭	ju7
-諭	lu7
-諳	am1
-諾	lok8	50
-謀	boo5	250
-謂	ui7	100
-謔	giok4
-豫	u7
-貓	ba5	250
-賴	nai7	100
-踴	iong2	50
-輯	tsip8	250
-輯	tship4
-輻	hok4	50
-辨	pian7	200
-遲	ti5	200
-遵	tsun1	150
-遺	ui5	400
-遼	liau5
-醒	sing2	114
-鋼	kong1
-錄	liok8
-錄	lik8
-錐	tsui1	50
-錠	tiann7
-錠	ting7
-錢	tsian5
-錢	tshian5	120
-錦	gim2	100
-錦	kim2	50
-錦	gim3	100
-錫	sik4	50
-錯	tsho3	1268
-錯	tshok4
-閻	giam5	150
-隧	sui7
-霎	sap4	50
-霎	tiap4	50
-頭	thio5
-頭	thoo5
-頸	kun2	50
-頸	king2
-頹	tue5
-頻	pin5	400
-餐	tshan1	300
-餞	tsian3
-駱	lok8	50
-骸	hai5	50
-骿	phiann1	250
-魽	kam1	50
-鮑	pau1	50
-鮑	pau7
-鮕	koo1	50
-鴒	ling7	50
-鴛	uan1	100
-鴞	hioh8	50
-鴟	tshi1
-鴟	lai7
-鴣	koo1	50
-鴦	iong1
-鴦	iunn1	100
-默	bik8
-龍	ging5
-龍	long1	67
-龜	kui1	50
-償	siong2
-償	siong5	150
-儡	le2	150
-優	iu1	750
-儲	tu5
-勵	le7	200
-嚇	hiannh4	200
-壓	ap4	1390
-壕	ho5	50
-嬭	le2	100
-嬰	enn1	250
-嬰	inn1	250
-嬰	ing1	50
-嬰	inn3	50
-嶺	ling2
-嶼	su7	350
-嶽	gak8
-彌	mi2	100
-彌	ni5
-懂	tang2	100
-懂	tong2	100
-懇	khun2	100
-應	ing1	648
-應	ing3	6270
-懦	noo7
-戴	tai3
-戴	te3
-擊	kik4	350
-擎	khing5
-擎	king1
-擬	gi2	200
-斂	liam2
-斃	pe7
-曖	ai3	50
-檀	tan5
-檜	kue3
-檢	kiam2	2838
-殭	khiong1	50
-殮	liam7	50
-氈	tsinn1
-澩	haunnh8	100
-濟	tse3	1885
-濤	to5
-濤	too5
-濱	pin1	100
-燦	tshan3	100
-爵	tsik4
-爵	tsiok4	50
-環	huan5
-療	liau5	350
-癆	lo5	100
-盪	tong7	50
-瞬	sun3	50
-瞭	liau2
-瞭	liau5	50
-瞳	tong5
-矯	kiau2	50
-磺	hong5	150
-礁	tsiau1
-禪	sian7
-篠	siau7
-篠	siau2
-篱	le7	50
-篱	lue7
-篷	pong5	50
-篷	hong5
-篾	biat8
-簇	tshok4
-糙	tsho3	50
-糜	mi1	100
-糞	hun3
-糟	tsau1	150
-糠	khong1
-縫	hong5	100
-縭	li5
-縮	siok4
-縱	tshiong1
-縱	tshiong2
-縱	tshiong3
-績	tseh4
-績	tsik4	250
-繁	huan5	150
-繆	biu7
-翳	e3
-翳	i3
-翼	ik8
-聰	tshong1	50
-聳	sang2	50
-膿	long5
-臁	liam5	100
-臆	ik4
-臉	liam2
-臉	lian2	50
-臊	tshau1	50
-舉	ki2	1824
-舉	ku2
-艚	tso5
-艱	kan1	2140
-蕗	loo7	50
-蕹	ing3	150
-蕾	lui2
-薁	o3	50
-薄	pok8	411
-薇	bi5
-薈	hue7	50
-薏	i3	50
-薐	ling5	50
-薔	tshiunn5
-薦	tsi3	50
-薪	sin1	250
-薯	tsu5	500
-虧	khui1	300
-螺	loo5	200
-螿	tsiunn1	50
-蟀	sut4	100
-蟄	tit8	50
-蟋	sih4	50
-蟋	sik4
-蟒	bang2
-蟒	bong2
-襀	tsioh4	100
-襄	siong1	50
-謄	thing5	50
-謊	hong2
-謊	hong1
-謎	bi7	50
-謗	pong3	50
-謙	khiam1	200
-謝	tsia7
-謠	iau5	200
-賺	tsuan2	50
-購	kang2
-購	koo3	250
-賽	sai3	1147
-賽	se3
-蹈	to7	50
-蹉	tsho1
-蹊	khi1	50
-蹌	tshiang2	100
-輾	tian2
-轄	hat4	50
-避	pi7	250
-邀	iau1	200
-邀	io1
-邁	mai7
-醜	tshiu2
-錨	ba5
-錨	biau5
-鍍	too7
-鍘	tsah8
-鍵	kian7	50
-鍼	tsiam1
-鍾	tsiong1
-闆	pan2
-闇	am1	50
-雖	sui1	3954
-霞	ha5	50
-鞠	kiok4	50
-駿	tsun3
-鮡	thiau5	50
-鮫	ka1	50
-鮮	sian1	50
-鮮	sian2
-鴻	hong5	50
-鴿	kah4	50
-鴿	kap4
-鵁	ka1	50
-黛	tai7
-鼢	bun3	50
-齋	tse1
-叢	tsong5
-嚮	hiong3
-嬸	sim2
-擴	khok4	550
-擾	jiau2	300
-擾	liau2
-檫	tshat4	50
-檬	bong2	50
-檳	pin1	50
-檸	le5	50
-獵	lah8	50
-獵	liap8
-璿	suan5
-癜	tio7	50
-瞻	tsiam1
-礎	tshoo2	50
-穡	sik4
-穢	ue3	100
-穢	e3
-竄	tshuan3	50
-竅	khiau3	100
-竅	khio3
-簡	kan2	1691
-簪	tsiam1
-罈	tham5
-臍	tse5
-舊	kiu7
-薩	sat4	50
-薺	tsi5	50
-藉	tsiah4
-藉	tsik4
-藉	tsioh4
-藍	lam5
-藏	tsong5	100
-藏	tsong7	50
-藐	biau2	50
-蟧	la5	100
-蟮	sian7	50
-蟯	jiau5
-蟯	liau5
-覆	hok4	150
-謬	biu7
-謳	oo1
-謹	kin2	100
-豐	hong1	700
-豐	phong1	50
-贅	tsue3
-蹟	tsik4	250
-蹤	tsong1	150
-蹧	tsau1	50
-軀	khu1	1796
-轆	lak4	50
-轆	lok8
-轍	tiat8
-釐	li5
-鎔	iunn5
-闔	hap8
-闕	khuat4
-闖	tshuang3
-離	li1	389
-鞦	tshiu1	100
-鞭	mi1	50
-額	gik8
-顎	kok4	50
-餾	liu5
-騎	khi5	50
-魍	bang2
-鮸	bian2	50
-鯉	li2	150
-鯊	sua1	150
-鵑	kuan1	50
-鵝	ngoo5
-鵠	khok4	50
-儳	sam5	50
-嚨	long5
-嚨	na5	200
-壞	huai7	100
-壟	long2	100
-壢	lik8	250
-寵	thing2	50
-寵	thiong2	50
-懲	ting5
-懵	bong2	50
-懵	bong3	50
-懶	nua7	50
-懷	huai5	300
-曝	phok8
-曠	khong3	50
-瀘	lu7
-瀚	han7
-瀟	siau1
-爆	pok8	100
-牘	tok8
-犢	tok8
-獸	siu3	200
-獺	thuah4	100
-瓊	khing5	50
-瓊	khiong5
-疆	kiong1
-癡	tshi1
-矇	bong5
-禱	to2	1894
-穫	hik8
-簷	tsinn5	150
-簷	liam5
-簾	ni5	100
-簿	phok8
-繩	sing5
-繪	hue7	100
-羅	lo5	5188
-羹	king1
-臘	lah8	100
-臘	liap8
-藕	ngau7	50
-藤	ting5
-藥	iok8
-藩	huan1
-藩	phuan1
-蟹	hai7
-蟹	he7	50
-蟻	gi2
-蟻	hia7	150
-蟾	siam5
-蠅	sin5	450
-蠍	giat4	50
-襞	phe2	100
-襟	khim1	100
-譁	hua7
-譎	khiat4	50
-譏	ki1
-譚	tam5
-贈	tsing7	150
-贊	tsan3	1207
-贊	tsan7	603
-蹬	tenn1	50
-蹲	tsun1
-躇	tu5	50
-轎	kiau1	50
-轎	kiau7
-醮	tsiau3
-醮	tsio3	50
-鏃	tsok8
-鏘	tshiong1
-難	lan5	1394
-顛	thian1	245
-顛	tian1	980
-饅	ban2	50
-饅	ban5
-鯗	siunn2	50
-鯧	tshiunn1	100
-鯪	la5	50
-鯮	tsang1	50
-鯰	liam5	50
-鵪	ian1
-鵬	ping5
-鵬	phing5
-鵰	tiau1
-鵻	tsui1	50
-鶉	tshun1
-鶉	tun1
-麒	ki5	100
-麗	le5	743
-麗	le7	928
-龐	pang5
-嚶	inn1
-孀	song1
-孽	giat8	300
-懸	hian5
-懺	tsham3
-攔	lan5
-攔	nua5
-攕	tshiam1	50
-櫳	long5	100
-瀾	lan5	50
-癢	iong2
-竇	too7
-競	king7	300
-籃	lam5
-籌	tiu5	150
-籍	tsik8	300
-繼	ke3	1392
-耀	iau7	50
-艦	kam3
-艦	lam7	150
-藹	ai2
-蘆	loo5	550
-蘇	soo1	200
-蘋	phong5
-蘑	moo5	50
-蠐	tse5	50
-蠕	ju5
-蠕	lu5
-蠕	lun3
-蠘	tshih8	100
-襤	lam5
-覺	kak4	4559
-觸	tshik4	50
-觸	tshiok4	150
-警	king2	2277
-譬	phi3	200
-譯	ik8	1354
-議	gi7	2834
-贏	ing5
-躂	that4	50
-醴	le2	50
-釋	sik4	300
-鏽	siu3
-鐃	lau5	50
-鐃	na5
-鐐	liau5
-闡	tshian2
-顢	ban7	50
-馨	hiong1
-馨	hing1
-騰	thing5	50
-騷	so1	50
-鰇	jiu5	150
-鰇	liu5	150
-鰗	hoo5	50
-鶖	tshiu1	50
-鶿	tsi5	50
-麵	bian7
-齡	ling5	150
-囂	hiau1	50
-屬	tsiok4
-屬	siok8	1245
-懼	ku7
-攜	he5
-櫻	ing1	100
-欄	lan5	100
-爛	lan7	50
-犧	hi1	50
-癩	thai2	150
-礱	lang5	50
-籐	tin5	50
-續	siok8	4468
-纏	tian5
-蘭	lian5	138
-蠟	lap8
-襪	buat8
-覽	lam2	350
-譴	khian2	50
-譴	khian3	100
-護	hoo7	2583
-譽	u7	100
-贐	tsin7
-贓	tsng1
-贓	tsong1	50
-躊	tiu5	50
-躍	iok8	50
-轟	hong1	100
-鐳	lui5
-鐵	thiat4
-闢	pik8
-露	lok8
-霹	phik4	50
-響	hiong2	883
-飆	phiau1
-饗	hiang2
-驅	khu1	50
-魔	moo5	300
-鰡	liu1	50
-鰮	un1	50
-鶯	ing1	150
-鶴	hok8
-麝	sia7	50
-黯	am2
-囉	lo1	150
-囉	lo5	100
-懿	i3
-攤	than1
-歡	huan1	2505
-歡	huann1	3006
-灑	sa2
-灘	than1
-瓤	jiong5
-瓤	liong5
-癮	in2
-籠	long2
-糴	tik8
-聽	thing1
-聾	lang5	50
-聾	long5
-臟	tsng7
-臟	tsong7	150
-襲	sip8	100
-讀	tau7	402
-讀	too7
-鑑	kam3	250
-驍	hiau1
-驕	kiau1	50
-鬚	su1
-鱈	suat4	50
-鱉	piat4
-鷓	tsia3	50
-鷗	oo1
-麶	thi1	50
-龕	kham1	50
-戀	luan5	400
-竊	tshiat4
-竊	tshiap4	50
-纓	enn1
-纓	iann1
-纓	ing1
-纓	inn1	50
-纖	siam1	50
-臢	tsa1	50
-鑠	siak4	100
-鑢	le7	50
-鑢	lue7	50
-驚	kenn1	228
-驚	king1
-驛	ik8
-髓	tshui2
-體	thai2
-鱔	sian7	50
-鱗	lin5
-鱙	jiau5	50
-鱙	liau5	50
-鷥	si1	50
-麟	lin5	250
-黐	thi1	150
-囑	tsiok4	50
-壩	pa3	50
-壩	pe3
-蠶	tsham5
-蠶	tham5
-讓	jiong7	50
-讓	liong7
-釀	jiong7
-釀	liong7
-鑫	him1
-靂	lik8	50
-韆	tshian1	100
-鬢	pin3	200
-鷺	loo7
-鹼	kiam2
-齷	ak4	50
-廳	thing1
-欖	na2	100
-灣	uan5	7984
-籬	li5	50
-籮	lo5
-籮	lua5	50
-糶	thiau3
-蠻	ban5	350
-觀	kuan1	3698
-觀	kuan3
-鑰	ioh8
-鑰	iok8
-齻	tsan1	50
-讚	tsan3	150
-鱲	lah8	50
-纜	lam2	50
-纜	lam7
-蚻	tsuah8	100
-鑽	tsuan3
-顴	kuan3
-鱷	khok8	50
-鸕	loo5	50
-豔	iam7
-鑿	tshok8
-鸚	ing1	100
-鱺	le7	50
-鸞	luan5
-籲	iok8	50
-硓	loo2	50
-鮘	tai1	50
-䘥	kah4	100
-𣮈	khut8	150
-𦉎	sui1	50
-𥑮	koo2	50
-𨑨	tshit4	1019
-㷮	tsau1	50
-䈄	ham1	100
-𦟪	lian5	50
-𤺅	tshe3	50
-𧿳	phut8	100
-𧌄	am1	50
-䢢	tshiang7	150
-㴙	tshap8	200
-䲅	kui1	50
-𩸶	gam7	50
-	ko1
-諺	gan7	50
-焦	na1	879
-哖	ni5	100
-胿	kuai1	50
-哉	tsai1
-蓋	kap4
-梔	ki1	50
-林	na2	99
-鬧	lau7	488
-跡	tsiah4	50
-猶	iu1	1273
-妝	tsong1	100
-成	tshiann5
-悼	to7
-旋	suan5	100
-頌	siong7
-戀	luan7
-欖	lam2
-憔	tsiau5
-悴	tsui7
-薦	tsian3	50
-蘊	un3
-最	tsue3	2169
-尤	iu5	50
-似	su7	50
-趨	tshu1	100
-溝	koo1	109
-嘗	siong5
-維	ui5	200
-措	tshoo3	50
-饋	kui7	50
-污	u1
-莓	mui5
-綜	tsong3
-嚇	hik4	50
-繫	he7	50
-鍛	tuan3	50
-始	su2
-掣	tshiat4
-霞	he5
-妣	pi2
-圇	ng5
-筒	tong5
-霖	lim5
-鑾	luan5
-域	hik8	300
-磐	phuan5
-磐	puann5
-坦	thann2	50
-紀	ki3	1773
-扭	niu2	50
-離	li5	584
-嗇	sik4	50
-嗇	siah4
-魅	bi7	50
-與	i2
-餘	i5
-可	khoo1	248
-佔	tsiam3
-吧	pa1	200
-汪	ong1	50
-附	hu3	350
-咇	phih8	100
-侷	kiok8	50
-哎	ai1
-衍	ian2	50
-娛	goo5	50
-探	than3	97
-脫	thut4	89
-耞	kenn2	50
-耞	kinn2
-喪	song3	100
-焚	hun5	50
-菁	tsing1	50
-搜	soo1	50
-撇	phiat4	200
-甄	tsin1	50
-翡	hui2	50
-潰	khui3	100
-閱	uat8	50
-噯	ai3	50
-樸	phoh4	50
-諮	tsu1	100
-遴	lin5	50
-鴕	to5	50
-鴟	ba7	50
-韓	han5	50
-檯	tai5	50
-殯	pin1	50
-邏	lo5	100
-蠶	tshan5	50
-蝕	sik8
-棟	tang3
-沉	tiam5
-晟	sing7
-施	si3	50
-叢	tsang5
-絢	hian3
-役	iah8
-長	tshiang5
-墼	kat4	100
-托	thok4	50
-餒	lue2
-楚	tshoo2
-胴	tang5	150
-劃	ik8
-假	ka3	93
-假	ke3
-仔	ah4	97
 㧣風	tu1 hong1
 怯屎
 𠢕囥歲
@@ -19845,9 +13622,6 @@ use_preset_vocabulary: false
 袂爽
 𣻸捋捋
 𣻸塌塌	siunn5 lap4 lap4
-喙齒
-崎
-A仔菜
 一下仔
 一心
 一目𥍉
@@ -20896,7 +14670,6 @@ A仔菜
 舢舨
 茅草
 苦齣
-郊
 衫弓仔
 衫仔架
 衫仔裾尾
@@ -20945,7 +14718,6 @@ A仔菜
 修削
 俺娘喂
 修喙鬚
-候
 倒手扞
 倒手拐仔
 倒手雞仔
@@ -21393,7 +15165,6 @@ A仔菜
 散場
 換頭路
 散戲
-最
 棑仔
 期望
 減少
@@ -21471,9 +15242,6 @@ A仔菜
 結頭菜
 絞螺仔水
 絲襪仔
-菌
-菜
-萍
 菊仔花
 菜市
 菜垞
@@ -21483,7 +15251,6 @@ A仔菜
 菌種
 菠薐
 菠薐仔菜
-蛤
 裁布
 裂扦
 著猴損
@@ -21496,7 +15263,6 @@ A仔菜
 買命錢
 貴重物
 貿穡頭
-鄉
 鄉社
 進頭香
 鄉鎮市
@@ -21724,7 +15490,6 @@ A仔菜
 熁燒	hannh4 sio1
 熇熱
 瘋顛
-窩
 管仔
 綠豆
 管事
@@ -21747,7 +15512,6 @@ A仔菜
 辣椒
 遛精仔
 踅遠路
-雌
 銅人	tang5 lang5
 閣再來
 銅鏡鰺
@@ -21829,7 +15593,6 @@ A仔菜
 激骨話
 激悾激戇
 澹溼
-瓢
 獨力
 燒水袋
 燒水罐
@@ -21897,17 +15660,14 @@ A仔菜
 頭摠
 頭擴
 餐廳
-麭
 龍骨車
 優雅
-嬰
 戲法
 應當
 嬰纏
 壓霸的人
 溼一下
 牆圍仔
-磺
 糝胡椒
 篾扇
 糞埽市仔
@@ -21946,7 +15706,6 @@ A仔菜
 燻肉
 歸氣
 瀉腹
-穢
 礐仔蟲
 禮金
 禮拜一
@@ -22027,7 +15786,6 @@ A仔菜
 護廊
 譴損
 鐵路
-鰮
 顧更
 飆車
 囉哩囉嗦
@@ -22289,7 +16047,6 @@ A仔菜
 牛聲馬吼
 牛聲馬叫
 冬瓜酥
-心	siang7 sim1
 仝勻	kang7 un5
 仝輩	kang7 pue3
 頂下沿
@@ -22739,178 +16496,6 @@ thoo-khé-soh
 冬節	tang1 tsueh4
 小寒	siau2 han5
 大寒	tai7 han5
-a33 lu55 mih3
-a33 moo55 ni55 a51
-a33 ni55 khih3
-a33 sir55 phi55 lin51
-a55 geh3
-ai35 sat5 tsuh3
-ai55 sirh3 khu33 lin51 mu11
-an51 nai33
-at3 sa55 lih3
-au51 tsuh3
-ba55 luh3
-ba55 suh3
-ba55 tah3
-bai33 oo55 lin51
-bai35 khin51
-bak5 kuh3
-ban51 ba11
-bang51 ga11
-bat3 te55 lih3
-bat5 tah3
-bi33 ta55 bin51
-bi51 lu11
-biat5 tooh3
-bok3 sin51 gu11
-boo51 lu11
-boo51 too11
-bu33 la51 jia11
-e33 pu55 long51
-ga33 soo55 lin51
-ga55 lah3
-ga55 suh3
-gi51 ta11
-giang33
-goo11 boo33
-goo33 lu55 huh3
-ha33 moo55 ni55 khah3
-ha55 muh3
-hai35 khe55 kha55 kuh3
-hai51 ia11
-hai55 kat5 la51
-han35 too55 luh3
-hang35 goo51
-hi33 noo55 khih3
-hoo33 lu55 bong51
-hoo33 te55 luh3
-hu55 looh3
-ia55 mih3
-ian35 jin51
-io35 kang51
-io55 bih3
-iu55 lih3
-ji33 lu55 bah3
-jiak5 kuh3
-jian51 ba11
-jio55 toh3
-kha33 bang51
-kha33 la55 oo55 khe55
-kha33 me55 lah3
-kha33 ta55 lok5 guh3
-kha33 tian51
-kha51 sang11
-kha51 tsiang11
-khan35 jioo51
-khang35 pang51
-khe33 tsiap5 puh3
-khi33 moo55 tsih3
-khi55 looh3
-khia11 hang55
-khit5 teh3
-khiu35 khe51
-khok5 puh3
-khong11 ku33 li51
-khong51 buh3
-khoo33 le55 lah3
-khoo33 mi55 siong51
-khoo51 too11
-khu33 la55 tsih3
-khu33 li51 mu11
-la33 ji55 ooh3
-la33 kiat5 tooh3
-la33 mu55 neh3
-lai35 jioo51 bu11
-lai35 lin51 gu11
-lai51 tah3
-le33 bong51
-le51 sir11
-li33 a55 khah3
-lian35 tang51
-lin35 jin51
-lin51 goo11
-loo33 lai51 ba11
-loo51 suh3
-loo55 li55 a51
-ma33 la55 li55 a51
-ma33 la55 song51
-ma33 sa51 tsi11
-mai51 ku11
-me33 li55 a51
-me33 long51
-me51 si11
-mi33 sin51
-mi55 sooh3
-moo51 ta11
-nai35 long51
-ne33 kut5 tai51
-ne51 tsiang11
-noo35 sin51
-noo55 lih3
-oo33 ba55 sang51
-oo33 ji55 sang51
-oo33 lian51
-oo33 lin55 gioo51
-oo33 ne51 sang11
-oo33 too55 bai51
-oo51 ba11
-pha33 tsin51 koo11
-pha35 sian51 too11
-phang51
-phang51 ku11
-phi33 a55 nooh3
-phian51 tsih3
-phin35 phong51
-phong51 phu11
-phu33 loo55 phe55 la51
-pu33 lu51 su11
-sa33 kha55 li55 bah3
-sa33 khu55 lah3
-sa33 si55 mih3
-sa35 bi51 su11
-sai51 su11
-sak5 khuh3
-sam35 phu55 luh3
-san51 bah3
-se33 bi55 looh3
-se51 hu11
-si33 a55 geh3
-sia33 sin51
-siat5 tooh3
-siat5 tsuh3
-siok3 phang51
-sip1 pan55 na51
-sir33 be55 li55 lai51
-sir33 ten55 le51 su11
-soo51 su11
-su33 khu51 ta11
-su33 lit5 pah3
-su33 to55 lip5 puh3
-su55 sih3
-tha33 khu55 ang51
-tha33 khu55 sih3
-tha33 tha55 mih3
-thai51 ia11
-thai51 lu11
-thak5 khooh3
-than51 goo11
-thang51 su11
-that5 bi51
-the33 ni55 suh3
-thian35 pu55 lah3
-thoo33 la55 khuh3
-thoo33 ma55 tooh3
-too51 sang11
-tshian35 pa55 lah3
-tsiok5 kih3
-tsioo33 koo55 le51 too11
-tsit5 puh3
-u33 long51
-ua33 kha55 moo55 tooh3
-ua33 lu51 tsuh3
-ua33 sa55 bih3
-uai35 siat5 tsuh3
-un51 tsiang11
 九份二山	kau2 hun7 ji7 suann1
 八卦山	pat4 kua3 suann1
 七星山	tshit4 tshenn1 suann1
@@ -30152,67 +23737,3 @@ un51 tsiang11
 驚某大丈夫，拍某豬狗牛。	kiann1 boo2 tai7 tiong7 hu1 phah4 boo2 ti1 kau2 gu5
 驚驚袂著等。	kiann1 kiann1 be7 tioh8 ting2
 戇的也有一項會。	gong7 e5 ia7 u7 tsit8 hang7 e7
-𪜶	in1	22121
-𬦰	peh4	1537
-𫝛	siang7	400
-朒	tsut4	200
-梓	tsu2	200
-𫝏	gan3	150
-霄	siau1	150
-𰣻	ko1	150
-氅	tshang2	100
-巖	giam5	100
-巒	luan5	100
-汐	sik8	100
-肭	leh4	100
-瞅	tshiu1	100
-硐	tong7	100
-蓁	tsin1	100
-萣	tiann7	100
-嵙	khoo1	100
-堀	khut4	100
-噍	ta1	50
-甦	soo1	50
-虜	loo2	50
-巒	ban5	50
-阱	tsenn2	50
-瀧	liong5	50
-廬	loo5	50
-澗	kan2	50
-嵌	kham3	50
-氛	hun1	50
-沼	tsau1	50
-潢	hong5	50
-嶠	kiau1	50
-唭	ki3	50
-唭	ki1	50
-汴	pan7	50
-𫞼	tshai7	50
-𫟂	han5	50
-𫝻	hue5	50
-硿	kng2	50
-𫝺	hiu3	50
-尉	ut4	50
-坌	hun1	50
-笈	kip8	50
-舺	kah4	50
-瑤	iau5	50
-骼	keh4	50
-梘	king2	50
-鋉	sok4	50
-珞	lok8	50
-艋	bang2	50
-峨	ngoo5	50
-噶	kat4	50
-哆	to1	50
-隸	le7	50
-肱	kong1	50
-蚋	lak8	50
-鎊	pong7	50
-塹	tsham3	50
-陂	pi1	50
-泵	pong7	50
-洄	hue5	50
-嚀	ling5	50
-莒	ki2	50
-禧	hi1	50
