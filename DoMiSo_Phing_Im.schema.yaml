@@ -4,7 +4,7 @@
 schema:
   schema_id: DoMiSo_Phing_Im
   name: 135拼音法【台羅音標】
-  version: "0.0.2.7"
+  version: "0.0.2.8"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -43,19 +43,18 @@ speller:
   # 舒聲 [12357]
   # 1: ;
   # 2: \
-  # 3: -
+  # 3: _ （劃底線符號）
   # 5: /
   # 6: [N/A]
-  # 7: =
-  # 入聲 [48] = 9
+  # 7: -
   # 4: [
   # 8: ]
-  # 9: z
+  # 輕聲及入聲 [48] = 0
   # 0: .
   #------------------------------------------------------
-  alphabet: abcdefghijklmnopqrstuvwxyzN;\-/=[]". 
+  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
   initials: abcdefghijklmnopqrstuvwxyz
-  finals: ;\-/=[]".
+  finals: ;\_/-.[]
   delimiter: "'"
   use_space: true
   algebra:
@@ -110,9 +109,9 @@ speller:
     # -ng ==> -k = ㄎ
     # -n  ==> -t = ㄊ
     # -m  ==> -p = ㄆ
-    - derive/k[48]/k9/	    # ㄎ
-    - derive/t[48]/t9/	    # ㄊ
-    - derive/p[48]/p9/	    # ㄆ
+    - derive/k[48]/k0/	    # ㄎ
+    - derive/t[48]/t0/	    # ㄊ
+    - derive/p[48]/p0/	    # ㄆ
     #--------------------------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #--------------------------------------------------------------------------
@@ -126,7 +125,7 @@ speller:
     #=======================================================================
     # 字典編碼轉換按鍵
     #=======================================================================
-    - xlit|123574890|;\-/=[]".|
+    - xlit|12357480|;\_/-[].|
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -152,7 +151,7 @@ translator:
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    - xlit|;\-/=[]".|123574890|
+    - xlit|;\_/-[].|12357480|
   comment_format:
     # 【千萬別做】拼音字母編碼與注音符號對映的設定
     # - xlit|pbPmtTnlkgKwzcsjZCShiIuUaAeEOQo@yYxX}{][RWMNB123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㆡㄐㄑㄒㄏㄧㆪㄨㆫㄚㆩㄝㆥㄛㆧㄜㄢㄞㆮㄠㆯㆱㆰㆲㄤㆨㆭㆬㄣㄪˉˋ_ˇ+˙|
@@ -427,15 +426,15 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 使用【-】鍵，輸入【調號】：3 （低音調）
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore  }
+    #---------------------------------------------------
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
     - { when: composing, accept: minus, send: minus }
     - { when: has_menu, accept: minus, send: minus  }
     #---------------------------------------------------
-    # 使用【=】鍵，輸入【調號】：7 （中音調）
-    - { when: composing, accept: equal, send: equal }
-    - { when: has_menu, accept: equal, send: equal  }
-    #---------------------------------------------------
-    # 使用 【.】鍵，輸入【調號】：0（輕聲調）
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
     - { when: composing, accept: period, send: period }   
     - { when: has_menu, accept: period, send: period }   
     #---------------------------------------------------
