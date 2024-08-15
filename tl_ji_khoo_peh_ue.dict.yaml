@@ -14,14 +14,14 @@ columns:
   - weight  #常用度（優先顯示度）
   - stem    #用法舉例
 import_tables:
-  - tl_ji_khoo_peh_ue_cu_ting
-  - tl_ji_khoo_kah_kut_bun
-  - tl_ji_khoo_ciann_ji
-  - tl_ji_khoo_siong_iong_si_lui
-  - tl_ji_khoo_tai_uan_si_lui
+  - tl_ji_khoo_peh_ue_cu_ting	    # 個人自訂擴充字庫
+  - tl_ji_khoo_kah_kut_bun	      # 甲骨文考證漢字庫
+  - tl_ji_khoo_bun_thok	          # 文讀音字庫（雅俗通十五音）
+  # - tl_ji_khoo_ciann_ji
+  # - tl_ji_khoo_siong_iong_si_lui
+  # - tl_ji_khoo_tai_uan_si_lui
   # - tl_ji_khoo_moetai
 ...
-墮	tui7	10%
 ##-----------------------------
 ##	a/ah
 啊	a0
