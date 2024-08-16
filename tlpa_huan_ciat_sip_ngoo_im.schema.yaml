@@ -1,17 +1,27 @@
 # Rime schema
-# vim: set sw=2 sts=2 et:
 # encoding: utf-8
-
+---
 schema:
-  schema_id: tlpa_peh_ue_cap_peh_im
-  name: 河洛白話十八音
-  version: "0.0.2.6"
+  schema_id: tlpa_huan_ciat_sip_ngoo_im
+  name: 河洛反切十五音
+  version: "v0.0.2.8"
   author:
-    - 居正中 <alanjui.1960@gmail.com>
+    - 居正中
   description: |
-    河洛話白話音
-    採用「TLPA標音方案」對漢字讀音編碼
-    顯示注音符號
+    基於《雅俗通》(Ngée-sio̍k-thong) 所收紅字校增
+  dependencies:
+    - luna_pinyin
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [中文, 西文]
+  - name: full_shape
+    states: [半角, 全角]
+  - name: simplification
+    states: [漢字, 汉字]
+  - name: ascii_punct
+    states: [，。, ，．]
 
 engine:
   processors:
@@ -45,23 +55,19 @@ speller:
   # 舒聲 [12357]
   # 1: ;
   # 2: \
-  # 3: <
+  # 3: _ （劃底線符號）
   # 5: /
   # 6: [N/A]
   # 7: -
-  # 入聲 [48] = 0
   # 4: [
   # 8: ]
+  # 輕聲及入聲 [48] = 0
   # 0: .
-  alphabet: 'abcdefghijklmnopqrstuvwxyzN;\</-][.'
-  initials: "abcdefghijklmnopqrstuvwxyz"
-  finals: ';\</-][.'
+  #------------------------------------------------------
+  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  initials: abcdefghijklmnopqrstuvwxyz
   delimiter: "'"
   use_space: true
-  # alphabet: 'abcdefghijklmnopqrstuvwxyz~;\</9-[.0'
-  # initials: "abcdefghijklmnopqrstuvwxyz"
-  # finals: ';\</9-[.0'
-  # delimiter: " '"
   algebra:
     #--------------------------------------------------------------------------
     # 調整字典台語音標字母
@@ -127,23 +133,15 @@ speller:
     # 可以只用【聲母】音標找漢字
     - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).*/$1/
     # 可只輸入【聲母】與【調號】
-    - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
-    #------------------------------------------------------
+    # - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
+    #--------------------------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
-    #------------------------------------------------------
-    # - 'xform 1 ;'
-    # - 'xform 2 \\'
-    # - 'xform 3 <'
-    # - 'xform 4 \['
-    # - 'xform 5 /'
-    # - 'xform 6 9'
-    # - 'xform 7 -'
-    # - 'xform 8 \.'
-    - xlit|12357480|;\</-[].|
+    #--------------------------------------------------------------------------
+    - xlit|12357480|;\_/-[].|
 
 translator:
-  dictionary: tl_ji_khoo_peh_ue
-  prism: tlpa_peh_ue_cap_peh_im
+  dictionary: tl_ji_khoo_nga_siok_thong
+  prism: tlpa_huan_ciat_sip_ngoo_im
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -159,21 +157,13 @@ translator:
     #------------------------------------------------------
     - xform/N([iu]?(ai|au|[iuaoe]|oo))/$1ⁿ/
     #------------------------------------------------------
-    # 鼻化符號以 ‘上標n’ 顯示
+    # 鼻化符號顯示成上標
     #------------------------------------------------------
     - xform/nn(h?)(\d|\>)/$1ⁿ$2/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    # - 'xform ; 1'
-    # - 'xform \\ 2'
-    # - 'xform < 3'
-    # - 'xform \[ 4'
-    # - 'xform / 5'
-    # - 'xform 9 6'
-    # - 'xform - 7'
-    # - 'xform \. 8'
-    - xlit|;\</-[].|12357480|
+    - xlit|;\_/-[].|12357480|
   comment_format:
     # 【千萬別做】拼音字母編碼與注音符號對映的設定
     # - xlit|pbPmtTnlkgKwzcsjZCShiIuUaAeEOQo@yYxX}{][RWMNB123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㆡㄐㄑㄒㄏㄧㆪㄨㆫㄚㆩㄝㆥㄛㆧㄜㄢㄞㆮㄠㆯㆱㆰㆲㄤㆨㆭㆬㄣㄪˉˋ_ˇ+˙|
@@ -196,6 +186,8 @@ translator:
     #------------------------------------------------------
     # 為候選字之拼音字母，建立轉換格式
     #------------------------------------------------------
+    # - xform/^([Øa-z]+\d)$/〔$1〕【》$1】/
+    #------------------------------------------------------
     # 無聲母
     - xform/^(([aeiou]|oo|m|ng).*)$/〔$1〕 【》Ø$1】/
     # 有聲母
@@ -217,6 +209,11 @@ translator:
     - xform/》ph/頗》/
     - xform/》b/門》/
     - xform/》m/毛》/
+    # 舌尖音
+    - xform/》t(?!h)/地》/
+    - xform/》th/他》/
+    - xform/》n(?!g)/耐》/
+    - xform/》l/柳》/
     # 舌齒音
     # - xform/》c(?!h)/曾》/
     # - xform/》ch/出》/
@@ -226,11 +223,6 @@ translator:
     - xform/》c/出》/
     - xform/》j/入》/
     - xform/》s/時》/
-    # 舌尖音
-    - xform/》t(?!h)/地》/
-    - xform/》th/他》/
-    - xform/》n(?!g)/耐》/
-    - xform/》l/柳》/
     # 舌根音
     - xform/》k(?!h)/求》/
     - xform/》kh/氣》/
@@ -238,9 +230,9 @@ translator:
     # - xform/》ng/雅》/
     # 喉音
     - xform/》h/喜》/
-    #==================================
+    #======================================================
     # 韻母
-    #==================================
+    #======================================================
     # 泉州腔《彙音妙悟》十五音韻書
     - xform/》ir(ng|k)/生》/
     - xform/》er(ng|k)/生》/
@@ -362,22 +354,15 @@ translator:
     #------------------------------------------------------
     # 轉換聲調
     #------------------------------------------------------
-    # - xform/》1/一】【》/    # 上平
-    # - xform/》2/二】【》/    # 上上
-    # - xform/》3/三】【》/    # 上去
-    # - xform/》4/四】【》/    # 上入
-    # - xform/》5/五】【》/    # 下平
-    # - xform/》6/六】【》/    # 下上
-    # - xform/》7/七】【》/    # 下去
-    # - xform/》8/八】【》/    # 下入
-    - xform/》1/一/   # 上平
-    - xform/》2/二/   # 上上
-    - xform/》3/三/   # 上去
-    - xform/》4/四/   # 上入
-    - xform/》5/五/   # 下平
-    - xform/》6/六/   # 下上
-    - xform/》7/七/   # 下去
-    - xform/》8/八/   # 下入
+    # 轉換【辭彙】的聲調
+    - xform/》0/輕声/   # 上平
+    - xform/》1/上平/
+    - xform/》2/上上/
+    - xform/》3/上去/
+    - xform/》4/上入/
+    - xform/》5/下平/
+    - xform/》7/下去/
+    - xform/》8/下入/
     #======================================================
     # 調整候選字視窗左半邊
     #======================================================
@@ -399,7 +384,7 @@ translator:
     - xform/N([iu]?(ai|au|[iuaoe]|oo))/$1ⁿ/
     #------------------------------------------------------
     # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
-    # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
+    - xform/0(?=〕)/⁰/
     - xform/1(?=〕)/¹/
     - xform/2(?=〕)/²/
     - xform/3(?=〕)/³/
@@ -408,28 +393,155 @@ translator:
     - xform/6(?=〕)/⁶/
     - xform/7(?=〕)/⁷/
     - xform/8(?=〕)/⁸/
+    #------------------------------------------------------
+    # 微調輸出
+    #------------------------------------------------------
+    - xform/Ø//
 
 reverse_lookup:
   dictionary: luna_pinyin
   prefix: "`"
-  tips: 〔拼音〕
+  suffix: "'"
+  tips: 〔漢語拼音〕
   preedit_format:
-    - xform/([nljqxy])v/$1ü/
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+  comment_format:
+    - xform/([a-z]+\d)/$1;$1/
+    - xform/;l/\[柳;/
+    - xform/;p(?!h)/\[邊;/
+    - xform/;k(?!h)/\[求;/
+    - xform/;kh/\[氣;/
+    - xform/;t(?!h)/\[地;/
+    - xform/;ph/\[頗;/
+    - xform/;th/\[他;/
+    - xform/;c(?!h)/\[曾;/
+    - xform/;j/\[入;/
+    - xform/;s/\[時;/
+    - xform/;q/\[英;/
+    - xform/;b/\[門;/
+    - xform/;g/\[語;/
+    - xform/;ch/\[出;/
+    - xform/;h/\[喜;/
+    - xform/;u(n|t)(\d)/君;$2/
+    - xform/;ia(n|t)(\d)/堅;$2/
+    - xform/;i(m|p)/金;/
+    - xform/;ui(h?)(\d)/規;$2/
+    - xform/;ee(h?)/嘉;/
+    - xform/;a(n|t)(\d)/干;$2/
+    - xform/;o(ng|k)/公;/
+    - xform/;uai(h?)/乖;$2/
+    - xform/;e(ng|k)/經;/
+    - xform/;ua(n|t)(\d)/觀;$2/
+    - xform/;ou(h?)(\d)/沽;$2/
+    - xform/;iau(h?)(\d)/嬌;$2/
+    - xform/;ei/稽;/
+    - xform/;io(ng|k)/恭;/
+    - xform/;o(h?)(\d)/高;$2/
+    - xform/;ai(\d)/皆;$1/
+    - xform/;i(n|t)(\d)/巾;$2/
+    - xform/;ia(ng|k)/姜;/
+    - xform/;a(m|p)/甘;/
+    - xform/;ua(h?)(\d)/瓜;$2/
+    - xform/;a(ng|k)/江;/
+    - xform/;ia(m|p)/兼;/
+    - xform/;au(h?)(\d)/交;$2/
+    - xform/;ia(h?)(\d)/迦;$2/
+    - xform/;ue(h?)(\d)/檜;$2/
+    - xform/;ann(h?)/監;/
+    - xform/;u(h?)(\d)/艍;$2/
+    - xform/;a(h?)(\d)/膠;$2/
+    - xform/;i(h?)(\d)/居;$2/
+    - xform/;iu(\d)/丩;$1/
+    - xform/;enn(h?)/更;/
+    - xform/;inn(h?)/梔;/
+    - xform/;iann/驚;/
+    - xform/;uann/官;/
+    - xform/;e(h?)(\d)/伽;$2/
+    - xform/;ainn(h?)/閒;/
+    - xform/;ounn/姑;/
+    - xform/;uenn/糜;/
+    - xform/;iaunn(h?)/嘄;/
+    - xform/;o(m|p)/箴;/
+    - xform/;aunn/爻;/
+    - xform/;onn(h?)/扛;/
+    - xform/;iunn/牛;/
+    - xform/;1/上平\]/
+    - xform/;2/上上\]/
+    - xform/;3/上去\]/
+    - xform/;4/上入\]/
+    - xform/;5/下平\]/
+    - xform/;7/下去\]/
+    - xform/;8/下入\]/
+    #   以下爲羅馬字轉寫
+    # - xform/q//
+    # - xform/c/ts/
+    #   「更」韻
+    - xform/(^u)enn/$1eenn/
+    #   「門」「柳」「語」鼻化韻
+    - xform/b([aeiou]+)nn/m$1/
+    - xform/l([aeiou]+)nn/n$1/
+    - xform/g([aeiou]+)nn/ng$1/
+    #   標調
+    - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$3$2/
+    - xform/([aeo])([iueo])([1234578])/$1$3$2/
+    - "xform a1 a"
+    - "xform e1 e"
+    - "xform i1 i"
+    - "xform u1 u"
+    - "xform o1 o"
+    - "xform a2 á"
+    - "xform e2 é"
+    - "xform i2 í"
+    - "xform u2 ú"
+    - "xform o2 ó"
+    - "xform a3 à"
+    - "xform e3 è"
+    - "xform i3 ì"
+    - "xform u3 ù"
+    - "xform o3 ò"
+    - "xform a4 a"
+    - "xform e4 e"
+    - "xform i4 i"
+    - "xform u4 u"
+    - "xform o4 o"
+    - "xform a5 â"
+    - "xform e5 ê"
+    - "xform i5 î"
+    - "xform u5 û"
+    - "xform o5 ô"
+    - "xform a7 ā"
+    - "xform e7 ē"
+    - "xform i7 ī"
+    - "xform u7 ū"
+    - "xform o7 ō"
+    - "xform a8 a̍"
+    - "xform e8 e̍"
+    - "xform i8 i̍"
+    - "xform u8 u̍"
+    - "xform o8 o̍"
+    #   鼻化符號顯示成上標
+    - xform/nn(h?)(\d|\>)/ⁿ$1$2/
 
 key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
-    - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore  }
     #---------------------------------------------------
-    - { when: composing, accept: period, send: period }   # 確保 `.` 鍵用於調號 8
-    - { when: has_menu, accept: period, send: period }    # 確保 `.` 鍵用於調號 8
-    - { when: has_menu, accept: period, send: period }	  # 確保 `.` 鍵不用于翻頁
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus  }
+    #---------------------------------------------------
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: composing, accept: period, send: period }   
+    - { when: has_menu, accept: period, send: period }   
     #---------------------------------------------------
     # 翻頁
+    #---------------------------------------------------
     # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
     # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
     - { accept: "Control+p", send: Page_Up, when: composing }
@@ -442,10 +554,6 @@ key_binder:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
     #---------------------------------------------------
-    - {accept: "Control+1", select: .next, when: always}
-    - {accept: "Control+2", toggle: full_shape, when: always}
-    - {accept: "Control+3", toggle: simplification, when: always}
-    - {accept: "Control+4", toggle: extended_charset, when: always}
 
 editor:
   bindings:
@@ -469,7 +577,7 @@ recognizer:
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     punct: '`[^\s]$'
-    reverse_lookup: "`[a-z]*$"
+    reverse_lookup: "`[a-z]*'?$"
 
 punctuator:
   import_preset: piau_tian_hu_ho

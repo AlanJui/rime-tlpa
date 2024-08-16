@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_holok_cu_im
   name: 河洛注音
-  version: "v0.0.2.5"
+  version: "v0.0.2.8"
   author: 居正中
   description: |
     河洛話白話音, 採用「TLPA標音方案」
@@ -52,8 +52,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1!qa2wsxeEdcyhnbYHNuUjJ8*iIk,<9(lL0;mp/?oOA:g- 43657'
-  initials: '1!qa2wsxeEdcyhnbYHNuUjJ8*iIk,<9(lL0;mp/?oOA:g-'
+  alphabet: '1!qa2wsxeEd?yhnbYHNcuUjJ8*iIk,<9(lL0mp/o:;OA- 43657'
+  initials: '1!qa2wsxeEd?yhnbYHNcuUjJ8*iIk,<9(lL0mp/o:;OA-'
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -210,7 +210,7 @@ speller:
     # 字典編碼轉換按鍵
     # 定義【拼音字元編碼】與【鍵盤按鍵】對映關聯
     #-----------------------------------------------------------------------
-    - xlit|pbPmtTnlkgKhzcsjZCSiIuUaAOQoeEyYxX@MNWwR][{}B123570|1!qa2wsxeEdcyhnbYHNuUjJ8*iIk,<9(lL0mp/?o:;AO- 43657|
+    - xlit|pbPmtTnlkgKwzcsjZCShiIuUaAOQoeEyYxX@MNWR][}{B123570|1!qa2wsxeEd?yhnbYHNcuUjJ8*iIk,<9(lL0mp/o:;OA- 43657|
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -229,7 +229,7 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
     #--------------------------------------------------------------------------
-    - xlit|1!qa2wsxeEdcyhnbYHNuUjJ8*iIk,<9(lL0mp/?o;AO:- 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄗㄘㄙㆡㄐㄑㄒㄧㆪㄨㆫㄚㆩㄛㆧㄜㆤㆥㄞㆮㄠㆯㄢㆬㄣㆭㄫㆨㄤㆰㆱㆲ鼻ˉˋ˪ˊ˫˙|
+    - xlit|1!qa2wsxeEd?yhnbYHNcuUjJ8*iIk,<9(lL0mp/o:;OA- 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㆡㄐㄑㄒㄏㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㆬㄣㆭㆨㆲㄤㆱㆰ鼻ˉˋ˪ˊ˫˙|
     #--------------------------------------------------------------------------
     # 韻母校調
     #--------------------------------------------------------------------------
@@ -486,6 +486,7 @@ translator:
     # 轉換成聲調符號
     #------------------------------------------------------
     # 將【聲調數值】轉換成【聲調符號】
+    - xform/《0/˙/
     - xform/《1/ˉ/
     - xform/《2/ˋ/
     - xform/《6/ˋ/
@@ -516,6 +517,7 @@ translator:
     # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
     # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
     #------------------------------------------------------
+    - xform/0(?=〕)/⁰/
     - xform/1(?=〕)/¹/
     - xform/2(?=〕)/²/
     - xform/3(?=〕)/³/
@@ -524,6 +526,10 @@ translator:
     - xform/6(?=〕)/⁶/
     - xform/7(?=〕)/⁷/
     - xform/8(?=〕)/⁸/
+    #------------------------------------------------------
+    # 微調輸出
+    #------------------------------------------------------
+    - xform/Ø//
 
 custom_phrase:
   dictionary: ""

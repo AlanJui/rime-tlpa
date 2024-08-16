@@ -139,22 +139,38 @@ speller:
     - xform/io(?=(ng|k))/iO/
     # 鼻音韻尾 oo [ɔ] ： om ==> op / ong ==> ok
     - xform/o(?=(m|ng|p|k))/O/
+    #------------------------------------------------------------------
     # 鼻韻母
-    - derive/ann/A/         # ㆩ = ann
-    - derive/onn/Q/         # ㆧ = oonn
-    - derive/enn/E/         # ㆥ = enn
-    - derive/inn/I/         # ㆪ = inn
-    - derive/unn/U/         # ㆫ = unn
-    # 複合韻母
-    - xform/ang/[/          # ㄤ = ang
-    - xform/ai/y/           # ㄞ = ai
-    - xform/an/@/           # ㄢ = an
-    - xform/au/x/           # ㄠ = au
-    # 方音符號借用之複合韻母符號
-    - derive/ir/R/          # ㆨ = ir
-    - derive/ong/]/         # ㆲ = ong
-    - derive/am/{/          # ㆰ = am
-    - derive/om/}/          # ㆱ = om
+    # - derive/ann/A/         # ㆩ = ann
+    # - derive/onn/Q/         # ㆧ = oonn
+    # - derive/enn/E/         # ㆥ = enn
+    # - derive/inn/I/         # ㆪ = inn
+    # - derive/unn/U/         # ㆫ = unn
+    # # 複合韻母
+    # - dervie/ang/[/          # ㄤ = ang
+    # - dervie/ai/y/           # ㄞ = ai
+    # - dervie/an/@/           # ㄢ = an
+    # - dervie/au/x/           # ㄠ = au
+    # # 方音符號借用之複合韻母符號
+    # - derive/ir/R/          # ㆨ = ir
+    # - derive/ong/]/         # ㆲ = ong
+    # - derive/am/{/          # ㆰ = am
+    # - derive/om/}/          # ㆱ = om
+    #------------------------------------------------------------------
+    - xform/ainn/Y/          # ㆮ
+    - xform/aunn/X/          # ㆯ
+    - xform/ann/A/           # ㆩ
+    - xform/onn/Q/           # ㆧ
+    - xform/enn/E/           # ㆥ
+    - xform/inn/I/           # ㆪ
+    - xform/unn/U/           # ㆫ
+    - xform/ang/[/           # ㄤ
+    - xform/ong/]/           # ㆲ
+    - xform/ai/y/            # ㄞ
+    - xform/au/x/            # ㄠ
+    - xform/am/{/            # ㆰ
+    - xform/om/}/            # ㆱ
+    - xform/ir/R/          # ㆨ = ir
     #------------------------------------------------------------------
     # 鼻音韻尾（m/ng/n）拼音字母編碼
     #------------------------------------------------------------------
@@ -197,17 +213,18 @@ speller:
     # - abbrev/[iu]?[iuaOeyx]B/B/  # 用 ｎ 代表所有的鼻音母音
     # - abbrev/[iuaOoeyxMLQYBDG]+0/0/  # 用 ． 代表所有的入聲韻母
     # - abbrev/[iuaOoeyxMLQYMNW]+0/0/  # 用 ． 代表所有的入聲韻母
-    # 平、上、去聲漢字，可以免輸入調號（1/2/3/5/7）；但【去聲】（調號：4/8）不適用
-    # - abbrev/^(\D+)([12357])$/$1/
     # 可用【入聲】調號按鍵找【入聲】韻漢字
     # - abbrev/(([iaO])W|([iuae])N|([iaO])M)0/0/  # -ng 用 ㄚㄍ． 來拍 ㄚㆻ
-    - abbrev/^([pbPmtTnlkgKwzjcsh]).+/$1/   # 可只輸入：【聲母】與【調號】
-    - abbrev/^([zcsZCSj])(i|I).+/$1/   # 可只輸入：【聲母】與【調號】
+    - abbrev/^([pbPmtTnlkgKwzjcsh]).+$/$1/   # 可只輸入：【聲母】與【調號】
+    # 平、上、去聲漢字，可以免輸入調號（1/2/3/5/7）；但【去聲】（調號：4/8）不適用
+    - abbrev/^(\D+)([12357])$/$1/
+    - abbrev/^([pbPmtTnlkgKwzjcsh]).+(\d)$/$1/   # 可只輸入：【聲母】與【調號】
+    # - abbrev/^([zcsZCSj])(i|I).+/$1/   # 可只輸入：【聲母】與【調號】
     #-----------------------------------------------------------------------
     # 字典編碼轉換按鍵
     # 定義【拼音字元編碼】與【鍵盤按鍵】對映關聯
     #-----------------------------------------------------------------------
-    - xlit|pbPmtTnlkgKhzcsjZCSiIuUaAOQoeEyYxX@MNWwR][{}B123570|1!qa2wsxeEdcyhnbYHNuUjJ8*iIk,<9(lL0mp/?o:;AO- 43657|
+    - xlit|pbPmtTnlkgKwzcsjZCShiIuUaAOQoeEyYxX@MNWR][}{B123570|1!qa2wsxeEd?yhnbYHNcuUjJ8*iIk,<9(lL0mp/o:;OA- 43657|
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -226,7 +243,7 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
     #--------------------------------------------------------------------------
-    - xlit|1!qa2wsxeEdcyhnbYHNuUjJ8*iIk,<9(lL0mp/?o:;AO- 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄗㄘㄙㆡㄐㄑㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㆬㄣㆭㄫㆨㆲㄤㆰㆱ鼻ˉˋ_ˇ+˙|
+    - xlit|1!qa2wsxeEd?yhnbYHNcuUjJ8*iIk,<9(lL0mp/o:;OA- 43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㆡㄐㄑㄒㄏㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㆬㄣㆭㆨㆲㄤㆱㆰ鼻ˉˋ'ˇ"˙|
     #--------------------------------------------------------------------------
     # 方音符號轉注音符號
     #--------------------------------------------------------------------------
@@ -494,6 +511,7 @@ translator:
     # 轉換成聲調符號
     #------------------------------------------------------
     # 將【聲調數值】轉換成【聲調符號】
+    - xform/《0/˙/
     - xform/《1/ˉ/
     - xform/《2/ˋ/
     - xform/《6/ˋ/
@@ -523,6 +541,7 @@ translator:
     #------------------------------------------------------
     # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
     #------------------------------------------------------
+    - xform/0(?=〕)/⁰/
     - xform/1(?=〕)/¹/
     - xform/2(?=〕)/²/
     - xform/3(?=〕)/³/
@@ -531,6 +550,10 @@ translator:
     - xform/6(?=〕)/⁶/
     - xform/7(?=〕)/⁷/
     - xform/8(?=〕)/⁸/
+    #------------------------------------------------------
+    # 微調輸出
+    #------------------------------------------------------
+    - xform/Ø//
 
 custom_phrase:
   dictionary: ''

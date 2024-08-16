@@ -1,20 +1,17 @@
 # Rime schema
 # vim: set sw=2 sts=2 et:
 # encoding: utf-8
----
-schema:
-  schema_id: tlpa_holok_kong_un
-  name: 河洛廣韻
-  version: "v0.0.2.6"
-  author: 居正中
-  description: TLPA 河洛話輸入法
 
-switches:
-  - name: ascii_mode
-    reset: 0
-    states: [中文, 西文]
-  - name: full_shape
-    states: [半角, 全角]
+schema:
+  schema_id: tlpa_huan_ciat_cap_peh_im
+  name: 河洛反切十八音
+  version: "0.0.2.8"
+  author:
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    河洛話白話音
+    採用「TLPA標音方案」對漢字讀音編碼
+    顯示注音符號
 
 engine:
   processors:
@@ -48,17 +45,18 @@ speller:
   # 舒聲 [12357]
   # 1: ;
   # 2: \
-  # 3: <
+  # 3: _ （劃底線符號）
   # 5: /
   # 6: [N/A]
   # 7: -
-  # 入聲 [48] = 0
   # 4: [
   # 8: ]
+  # 輕聲及入聲 [48] = 0
   # 0: .
-  alphabet: 'abcdefghijklmnopqrstuvwxyzN;\</-][.'
-  initials: "abcdefghijklmnopqrstuvwxyz"
-  finals: ';\</-][.'
+  #------------------------------------------------------
+  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  initials: abcdefghijklmnopqrstuvwxyz
+  finals: ;\_/-.[]
   delimiter: "'"
   use_space: true
   algebra:
@@ -120,24 +118,32 @@ speller:
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #--------------------------------------------------------------------------
     - derive/^([A-Za-z]+)\d$/$1/
-    #=======================================================================
+    #--------------------------------------------------------------------------
     # 台語音標之拼音字母輸入【簡化規則】
-    #=======================================================================
+    #--------------------------------------------------------------------------
     # 可以只用【聲母】音標找漢字
-    # - abbrev/^([pbmtnlkgzcjshiuc]g?s?h?h?).*/$1/
     - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).*/$1/
+    # 可只輸入【聲母】與【調號】
+    - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
-    - xlit|12357480|;\</-[].|
+    # - 'xform 1 ;'
+    # - 'xform 2 \\'
+    # - 'xform 3 <'
+    # - 'xform 4 \['
+    # - 'xform 5 /'
+    # - 'xform 6 9'
+    # - 'xform 7 -'
+    # - 'xform 8 \.'
+    - xlit|12357480|;\_/-[].|
 
 translator:
-  dictionary: tl_ji_khoo_kong_un
-  prism: tlpa_holok_kong_un
+  dictionary: tl_ji_khoo_peh_ue
+  prism: tlpa_huan_ciat_cap_peh_im
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
-  spelling_hints: 5
   preedit_format:
     #------------------------------------------------------
     # 將【台語音標】改成【台羅拼音】
@@ -156,7 +162,7 @@ translator:
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    - xlit|;\</-[].|12357480|
+    - xlit|;\_/-[].|12357480|
   comment_format:
     # 【千萬別做】拼音字母編碼與注音符號對映的設定
     # - xlit|pbPmtTnlkgKwzcsjZCShiIuUaAeEOQo@yYxX}{][RWMNB123570|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄗㄘㄙㆡㄐㄑㄒㄏㄧㆪㄨㆫㄚㆩㄝㆥㄛㆧㄜㄢㄞㆮㄠㆯㆱㆰㆲㄤㆨㆭㆬㄣㄪˉˋ_ˇ+˙|
@@ -345,14 +351,7 @@ translator:
     #------------------------------------------------------
     # 轉換聲調
     #------------------------------------------------------
-    # - xform/》1/一】【》/    # 上平
-    # - xform/》2/二】【》/    # 上上
-    # - xform/》3/三】【》/    # 上去
-    # - xform/》4/四】【》/    # 上入
-    # - xform/》5/五】【》/    # 下平
-    # - xform/》6/六】【》/    # 下上
-    # - xform/》7/七】【》/    # 下去
-    # - xform/》8/八】【》/    # 下入
+    - xform/》0/輕/   # 無相對映
     - xform/》1/一/   # 上平
     - xform/》2/二/   # 上上
     - xform/》3/三/   # 上去
@@ -382,7 +381,7 @@ translator:
     - xform/N([iu]?(ai|au|[iuaoe]|oo))/$1ⁿ/
     #------------------------------------------------------
     # 顯示調號：標調務必放在 ’零聲母處理‘ 及 ’鼻音韻母顯示‘ 之後
-    # - 'xlit 123456780 ¹²³⁴⁵⁶⁷⁸⁰'
+    - xform/0(?=〕)/⁰/
     - xform/1(?=〕)/¹/
     - xform/2(?=〕)/²/
     - xform/3(?=〕)/³/
@@ -391,6 +390,10 @@ translator:
     - xform/6(?=〕)/⁶/
     - xform/7(?=〕)/⁷/
     - xform/8(?=〕)/⁸/
+    #------------------------------------------------------
+    # 微調輸出
+    #------------------------------------------------------
+    - xform/Ø//
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -403,14 +406,17 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
-    - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore  }
     #---------------------------------------------------
-    - { when: composing, accept: period, send: period }   # 確保 `.` 鍵用於調號 8
-    - { when: has_menu, accept: period, send: period }    # 確保 `.` 鍵用於調號 8
-    - { when: has_menu, accept: period, send: period }	  # 確保 `.` 鍵不用于翻頁
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus  }
+    #---------------------------------------------------
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: composing, accept: period, send: period }   
+    - { when: has_menu, accept: period, send: period }   
     #---------------------------------------------------
     # 翻頁
     # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
@@ -451,8 +457,9 @@ recognizer:
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
     reverse_lookup: "`[a-z]*$"
 
 punctuator:
-  import_preset: default
+  import_preset: piau_tian_hu_ho
 
