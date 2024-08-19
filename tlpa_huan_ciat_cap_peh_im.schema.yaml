@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_huan_ciat_cap_peh_im
   name: 河洛反切十八音
-  version: "0.0.2.8"
+  version: "0.0.2.10"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
