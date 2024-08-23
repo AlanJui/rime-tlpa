@@ -43,8 +43,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1!qa2wsxeEdcyhnbYHN?ujm8ik,9l.0p;/-UJ*I<(LOA: 43657'
-  initials: '1!qa2wsxeEdcyhnbYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:'
+  alphabet: '1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA: 43657'
+  initials: '1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:'
   finals:   ' 43657'
   delimiter: "'"
   use_space: true
@@ -208,7 +208,7 @@ speller:
     # 字典編碼轉換按鍵
     # 定義【拼音字元編碼】與【鍵盤按鍵】對映關聯
     #-----------------------------------------------------------------------
-    - "xlit|pbPmtTnlkgKhzcsjZCSwiuMaOoeyxB@N[WRIUAQEYX}{]123570|1!qa2wsxeEdcyhnbYHN?ujm8ik,9l.0p;/-UJ*I<(LOA: 43657|"
+    - "xlit|pbPmtTnlkgKhjzcsJZCSwiuMaOoeyxB@N[WRIUAQEYX}{]123570|1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA: 43657|"
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -227,7 +227,7 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
     #--------------------------------------------------------------------------
-    - "xlit|1!qa2wsxeEdcyhnbYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄗㄘㄙㆡㄐㄑㄒㄥㄧㄨㄇㄚㆦㄜㄝㄞㄠｎㄢㄣㄤㄥㄦㆪㆫㆩㆧㆥㆮㆯㆱㆰㆲˋˇˊ+˙|"
+    - "xlit|1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㆡㄗㄘㄙㆢㄐㄑㄒㄥㄧㄨㄇㄚㄛㄜㄝㄞㄠｎㄢㄣㄤㄥㄦㆪㆫㆩㆧㆥㆮㆯㆱㆰㆲˋˇˊ+˙|"
     #--------------------------------------------------------------------------
     # 聲母校調
     #--------------------------------------------------------------------------
