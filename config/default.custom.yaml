@@ -21,11 +21,11 @@ patch:
     - {schema: stroke}
     #------------------------------------------------------------------------
     # 個人常用 RIME 輸入法
-    - {schema: taigi_tps}
-    - {schema: moetaigi-tsuim}
-    - {schema: moetaigi.unspaced}
-    - {schema: moetaigi-tsuim}
-    - {schema: ngsth_bun}
+    # - {schema: taigi_tps}
+    # - {schema: moetaigi-tsuim}
+    # - {schema: moetaigi.unspaced}
+    # - {schema: moetaigi-tsuim}
+    # - {schema: ngsth_bun}
     #------------------------------------------------------------------------
     # 135 拼音法
     - {schema: DoMiSo_kb_cu_im}             # 135 拼音法鍵盤

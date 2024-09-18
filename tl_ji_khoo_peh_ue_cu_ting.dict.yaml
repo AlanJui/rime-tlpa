@@ -14,7 +14,10 @@ columns:
   - code    #台灣音標（TLPA)拼音字母
   - weight  #常用度（優先顯示度）
   - stem    #用法舉例
-...
+..
+濯	tsok8	10%
+甚	siann2	10%
+樓	loo5	10%
 將	tsiong3	10%
 不	m7	10%
 哮	aunn1	60%
