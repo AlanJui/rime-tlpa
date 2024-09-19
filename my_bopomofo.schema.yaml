@@ -64,8 +64,8 @@ engine:
     # - reverse_lookup_filter@bpm_reverse_lookup
 
 speller:
-  alphabet: '1!qa2wsxeEdcyhnbYHN?ujm8ik,9l.0p;/-UJ*I<(LOA: 43657' 
-  initials: '1!qa2wsxeEdcyhnbYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:'  
+  alphabet: '1!qaAO2wsxeEdcbyhnBYHNujm8ik,9lp;:/?-.UJ*I<(L 43657'																				
+  initials: '1!qaAO2wsxeEdcbyhnBYHNujm8ik,9lp;:/?-.UJ*I<(L'																				
   finals:   ' 43657'
   delimiter: "'"
   use_space: true
@@ -141,10 +141,11 @@ speller:
     - xform/^c(?!h)/z/       # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
     - xform/^ch/c/           # ㄘ
     # --------------------------------------------------------------------------
-    # Zi-[zi-], Ci-[ci-], Si-[si-]
-    - derive/^z(?=i)/Z/      # ㄐ -- c 後面接 i 時，c 為 ㄐ
-    - derive/^c(?=i)/C/      # ㄑ -- ch 後面接 i 時，ch 為 ㄑ
-    - derive/^s(?=i)/S/      # ㄒ -- s 後面接 i 時，s 為 ㄒ
+    # Zi-[zi-], Ci-[ci-], Si-[si-], Ji- [ji-]
+    - derive/^z(?=i)/Z/      # ㄗ --> ㄐ
+    - derive/^c(?=i)/C/      # ㄘ --> ㄑ
+    - derive/^s(?=i)/S/      # ㄙ --> ㄒ
+    - derive/^j(?=i)/J/      # ㆡ --> ㆢ
     # --------------------------------------------------------------------------
     # 韻母用台語音標編碼
     # --------------------------------------------------------------------------
@@ -227,13 +228,14 @@ speller:
     # - abbrev/^(\D+)([12357])$/$1/
     # 可用【入聲】調號按鍵找【入聲】韻漢字
     # - abbrev/(([iaO])W|([iuae])N|([iaO])M)0/0/  # -ng 用 ㄚㄍ． 來拍 ㄚㆻ
-    - abbrev/^([pbPmtTnlkgKwzjcsh]).+/$1/   # 可只輸入：【聲母】與【調號】
-    - abbrev/^([zcsZCSj])(i|I).+/$1/   # 可只輸入：【聲母】與【調號】
+    - abbrev/^([pPbmtTnlkKgwzcsjh]).+/$1/   # 可只輸入：【聲母】與【調號】
+    # - abbrev/^([zcsjZCSJ])(i|I).+/$1$2/   # 可只輸入：【聲母】與【調號】
     #-----------------------------------------------------------------------
     # 字典編碼轉換按鍵
     # 定義【拼音字元編碼】與【鍵盤按鍵】對映關聯
     #-----------------------------------------------------------------------
-    - "xlit|pbPmtTnlkgKhzcsjZCSwiuMaOoeyxB@N[WRIUAQEYX}{]123570|1!qa2wsxeEdcyhnbYHN?ujm8ik,9l.0p;/-UJ*I<(LOA: 43657|"
+    # - "xlit|pbPmtTnlkgKhzcsjZCSJwiuMaOoeyxB@N[WRIUAQEYX}{]123570|1!qa2wsxeEdcyhnbYHNB?ujm8ik,9l.0p;/-UJ*I<(LOA: 43657|"
+    - "xlit|pbPm{}tTndkgKhjzcsJZCSiuBaoøMIUDQ]WwRNIUAQEYX123570|1!qaAO2wsxeEdcbyhnBYHNujm8ik,9lp;:/?-.UJ*I<(L 43657|"
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -252,7 +254,8 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
     #--------------------------------------------------------------------------
-    - "xlit|1!qa2wsxeEdcyhnbYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄗㄘㄙㆡㄐㄑㄒㄫㄧㄨㆬㄚㆦㄜㆤㄞㄠｎㄢㄣㄤㆭㆨㆪㆫㆩㆧㆥㆮㆯㆱㆰㆲˋ˪ˊ˫˙|"
+    # - "xlit|1!qa2wsxeEdcyhnbYHNB?ujm8ik,9l.0p;/-UJ*I<(LOA:43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㄗㄘㄙㆡㄐㄑㄒㆢㄫㄧㄨㆬㄚㆦㄜㆤㄞㄠｎㄢㄣㄤㆭㆨㆪㆫㆩㆧㆥㆮㆯㆱㆰㆲˋ˪ˊ˫˙|"
+    - "xlit|1!qaAO2wsxeEdcbyhnBYHNujm8ik,9lp;:/?-.UJ*I<(L 43657|ㄅㆠㄆㄇㆰㆱㄉㄊㄋㄌㄍㆣㄎㄏㆡㄗㄘㄙㆢㄐㄑㄒㄧㄨㆬㄚㆦㄜㆤㄞㄠㄣㄤㆲㆭㄫㆨｎㆪㆫㆩㆧㆥㆮㆯˉˋ˪ˊ˫．|"
     #--------------------------------------------------------------------------
     # 韻母校調
     #--------------------------------------------------------------------------
@@ -272,6 +275,7 @@ translator:
     - xform/ㄗ(ㄧ|ㆪ)/ㄐ$1/
     - xform/ㄘ(ㄧ|ㆪ)/ㄑ$1/
     - xform/ㄙ(ㄧ|ㆪ)/ㄒ$1/
+    - xform/ㆡ(ㄧ|ㆪ)/ㆢ$1/
     #--------------------------------------------------------------------------
     # 鼻音韻母轉換
     #--------------------------------------------------------------------------
@@ -292,6 +296,12 @@ translator:
     # 複合韻母
     - xform/ⁿㄞ/ㆮ/
     - xform/ⁿㄠ/ㆯ/
+    #------------------------------------------------------
+    # 入聲韻 p t k h
+    - xform/ㄅ(?=．)/ㆴ/    # ㄅ/ㄆ
+    - xform/ㄉ(?=．)/ㆵ/    # ㄉ/ㄊ
+    - xform/ㄍ(?=．)/ㆻ/    # ㄍ/ㄎ
+    - xform/ㄏ(?=．)/ㆷ/
   comment_format:
     #======================================================
     # 速簡對映法
@@ -347,10 +357,11 @@ translator:
     - xform/c(?!h)/z/       # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
     - xform/ch/c/           # ㄘ
     # --------------------------------------------------------------------------
-    # Zi-[zi-], Ci-[ci-], Si-[si-]
-    - xform/z(?=i)/Z/      # ㄐ -- c 後面接 i 時，c 為 ㄐ
-    - xform/c(?=i)/C/      # ㄑ -- ch 後面接 i 時，ch 為 ㄑ
-    - xform/s(?=i)/S/      # ㄒ -- s 後面接 i 時，s 為 ㄒ
+    # Zi-[zi-], Ci-[ci-], Si-[si-], Ji-[ji-]
+    # - xform/z(?=i)/Z/      # ㄗ --> ㄐ
+    # - xform/c(?=i)/C/      # ㄘ --> ㄑ
+    # - xform/s(?=i)/S/      # ㄙ --> ㄒ
+    # - xform/j(?=i)/J/      # ㆡ --> ㆢ
     # --------------------------------------------------------------------------
     # 韻母用台語音標編碼
     # --------------------------------------------------------------------------
@@ -464,14 +475,20 @@ translator:
     # - xform/《g/ㄍㆷ《/
     #------------------------------------------------------
     # 舌齒音
-    # - xform/《zi/ㄐㄧ《/
-    # - xform/《ci/ㄑㄧ《/
-    # - xform/《si/ㄒㄧ《/
+    - xform/《zi/ㄐㄧ《/
+    - xform/《ci/ㄑㄧ《/
+    - xform/《si/ㄒㄧ《/
+    - xform/《ji/ㆢㄧ《/
+
+    # - xform/《Zi/ㄐㄧ《/
+    # - xform/《Ci/ㄑㄧ《/
+    # - xform/《Si/ㄒㄧ《/
+    # - xform/《Ji/ㆢㄧ《/
+
     - xform/《z/ㄗ《/
     - xform/《c/ㄘ《/
     - xform/《s/ㄙ《/
     - xform/《j/ㆡ《/
-    # - xform/《j/ㄖ《/
     #------------------------------------------------------
     # 喉音
     - xform/《h/ㄏ《/
@@ -723,9 +740,9 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 使用【_】鍵，輸入【調號】：3 （低音調）
-    - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu, accept: underscore, send: underscore  }
+    # 使用【;】鍵，輸入【ㄤ】
+    - { when: composing, accept: semicolon, send: 'ㄤ' }
+    - { when: has_menu, accept: semicolon, send: 'ㄤ' }
     #---------------------------------------------------
     # 使用【-】鍵，輸入【調號】：7 （中音調）
     - { when: composing, accept: minus, send: minus }
