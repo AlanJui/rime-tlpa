@@ -15,6 +15,9 @@ columns:
   - weight  #常用度（優先顯示度）
   - stem    #用法舉例
 ..
+於	u1	10%
+於	u5	10%
+即	tsiah4	50%
 城	siann5	10%
 五	goo5	10%
 如	ju5	10%
