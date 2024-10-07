@@ -560,8 +560,8 @@ editor:
   bindings:
     space: commit                           # 選擇「備選漢字」
     Return: commit_composition              # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Shift+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
+    Control+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
 
 menu:

@@ -1,0 +1,6580 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 河洛白話音
+#
+---
+name: tl_ji_khoo_peh_ue
+version: "0.1.0.0"
+sort: by_weight
+use_preset_vocabulary: false
+columns:
+  - text    #漢字／詞彙
+  - code    #台灣音標（TLPA)拼音字母
+  - weight  #常用度（優先顯示度）
+  - stem    #用法舉例
+import_tables:
+  - tl_ji_khoo_peh_ue_cu_ting	    # 個人自訂擴充字庫
+  - tl_ji_khoo_kah_kut_bun	      # 甲骨文考證漢字庫
+  - tl_ji_khoo_moetai
+  # - tl_ji_khoo_bun_thok	          # 文讀音字庫（雅俗通十五音）
+  # - tl_ji_khoo_ciann_ji
+  # - tl_ji_khoo_siong_iong_si_lui
+  # - tl_ji_khoo_tai_uan_si_lui
+...
+來	lai0
+著	tio0
+著	tio2
+於	u1	10%
+於	u5	10%
+即	tsiah4	50%
+##-----------------------------
+##	a/ah
+啊	a0
+啊	ah0
+矣	ah0
+阿	a1	10%
+鴉	a1
+亞	a1
+腌	a1
+仔	a2	10%
+啞	a2
+鴨	ah4
+押	ah4
+壓	ah4	1%
+盒	ah8
+曷	ah8	1%
+巴	pa1
+笆	pa1
+芭	pa1
+吧	pa1
+飽	pa2	10%
+把	pa2
+霸	pa3	10%
+豹	pa3
+壩	pa3
+百	pah4
+爸	pa5
+琶	pa5
+杷	pa5
+罷	pa6
+爸	pa7	10%
+𢼌	pa7
+拋	pha1
+葩	pha1
+脬	pha1
+趴	pha1
+泡	pha1
+啪	pha1
+帕	pha3	5%
+怕	pha3
+拍	phah4
+疱	pha6
+肉	bah4
+麻	ba5
+貓	ba5	1%
+媌	ba5
+峇	ba7
+奈	ta1	1%
+焦	ta1
+諸	ta1	1%
+罩	ta3
+咤	ta3
+搭	tah4
+貼	tah4
+答	tah4	1%
+踏	tah8
+挓	tha3
+詫	tha3
+塔	thah4
+鰨	thah4
+疊	thah8
+啦	la0
+啦	lah0
+拉	la1
+喇	la1
+拉	lah4
+蜊	la5
+膋	la5
+籮	la5
+蟧	la5
+鯪	la5
+抐	la6
+鬧	la7	1%
+曆	lah8
+蠟	lah8
+獵	lah8
+臘	lah8
+加	ka1	10%
+家	ka1	10%
+嘉	ka1
+佳	ka1
+鉸	ka1	10%
+膠	ka1	10%
+傀	ka1
+茭	ka1
+迦	ka1
+交	ka1	1%
+咖	ka1
+伽	ka1
+茄	ka1	1%
+葭	ka1
+袈	ka1
+虼	ka1
+鵁	ka1
+假	ka2	10%
+絞	ka2
+賈	ka2
+教	ka3	10%
+嫁	ka3	5%
+較	ka3	1%
+價	ka3	0%
+架	ka3	5%
+漖	ka3
+駕	ka3	10%
+稼	ka3
+教	kah4	5%
+甲	kah4	10%
+佮	kah4
+蓋	kah4
+䘥	kah4
+舺	kah4
+鉀	kah4
+胛	kah4
+咬	ka6	10%
+跤	kha1	10%
+尻	kha1
+巧	kha2
+敲	kha3
+較	khah4
+卡	khah4
+闔	khah4	5%
+籗	khah4
+卡	khah8
+牙	ga5	1%
+衙	ga5
+芽	ga5
+訝	ga7
+孝	ha3	1%
+哈	hah4
+哈	ha1
+霞	ha5
+蝦	ha5	0%
+瑕	ha5
+縖	ha5
+縖	hah8
+下	ha6	5%
+廈	ha6
+暇	ha6
+夏	ha7
+合	hah8
+箬	hah8
+查	tsa1
+楂	tsa1
+臢	tsa1
+喳	tsa1
+諸	tsa1	1%
+早	tsa2	10%
+炸	tsa3
+榨	tsa3
+詐	tsa3
+蚱	tsa3
+扎	tsah4
+昨	tsa7
+乍	tsa7
+閘	tsah8
+鍘	tsah8
+差	tsha1
+叉	tsha1
+吵	tsha2
+炒	tsha2
+插	tshah4
+查	tsha5
+柴	tsha5
+捎	sa1
+沙	sa1	5%
+紗	sa1	5%
+莎	sa1
+灑	sa2
+耍	sa2
+嗄	sa3
+煠	sah8
+##	ai/aih
+哀	ai1	6%
+挨	ai1
+埃	ai1
+唉	ai1
+哎	ai1
+藹	ai2
+矮	ai2	0%
+愛	ai3	10%
+隘	ai3
+嬡	ai3
+曖	ai3
+璦	ai3
+俳	pai1	1%
+擺	pai2	10%
+跛	pai2
+拜	pai3
+排	pai5
+牌	pai5
+徘	pai5
+棑	pai5
+俳	pai5
+敗	pai7
+歹	phai2	10%
+歹	phainn2	10%
+派	phai3
+沛	phai3
+湃	phai3
+霈	phai3
+屄	bai1
+䆀	bai2
+㝥	bai2
+眉	bai5	10%
+埋	bai5
+楣	bai5
+霾	bai5
+覓	bai7	10%
+呆	tai1
+鮘	tai1
+歹	tai2	5%
+滓	tai2	5%
+帶	tai3
+戴	tai3
+檯	tai5
+埋	tai5
+臺	tai5
+怠	tai6
+殆	tai6
+迨	tai6
+代	tai7	10%
+大	tai7	5%
+袋	tai7
+逮	tai7
+貸	tai7
+黛	tai7
+岱	tai7
+舵	tai7	1%
+颱	thai1
+胎	thai1
+台	thai1
+篩	thai1
+苔	thai1
+邰	thai1
+癩	thai2
+體	thai2	1%
+太	thai3	10%
+泰	thai3
+態	thai3
+汰	thai3
+刣	thai5	10%
+待	thai7
+來	lai5	10%
+梨	lai5
+萊	lai5
+鶆	lai5
+內	lai6	10%
+利	lai7
+耐	lai7
+奈	lai7
+賴	lai7
+柰	lai7
+睞	lai7
+該	kai1
+階	kai1
+皆	kai1
+偕	kai1
+佳	kai1	0%
+垓	kai1
+解	kai2
+改	kai2
+骱	kai2
+界	kai3
+介	kai3
+蓋	kai3	10%
+屆	kai3
+戒	kai3
+芥	kai3
+誡	kai3
+丐	kai3
+蚧	kai3
+玠	kai3
+開	khai1	5%
+凱	khai2
+楷	khai2
+愷	khai2
+鎧	khai2
+概	khai3
+慨	khai3
+溉	khai3
+愾	khai3
+涯	gai5
+崖	gai5
+獃	gai5
+皚	gai5
+礙	gai7
+艾	gai7
+奒	hai1
+咍	hai1
+嗨	hai1
+海	hai2
+頦	hai5
+諧	hai5
+孩	hai5
+鞋	hai5	0%
+骸	hai5
+蟹	hai6	0%
+亥	hai6
+懈	hai6
+駭	hai6
+害	hai7	10%
+械	hai7
+邂	hai7
+知	tsai1	10%
+栽	tsai1
+災	tsai1
+哉	tsai1
+齋	tsai1
+宰	tsai2
+載	tsai2
+再	tsai3	10%
+載	tsai3
+債	tsai3	0%
+財	tsai5
+才	tsai5
+材	tsai5
+臍	tsai5
+儕	tsai5
+豺	tsai5
+在	tsai6	10%
+寨	tsai7
+差	tshai1
+猜	tshai1
+釵	tshai1
+彩	tshai2
+採	tshai2
+采	tshai2
+綵	tshai2
+踩	tshai2
+菜	tshai3	10%
+蔡	tshai3	0%
+裁	tshai5
+柴	tshai5
+纔	tshai5
+寘	tshai7
+祀	tshai7
+獅	sai1
+師	sai1
+西	sai1	10%
+司	sai1
+私	sai1
+犀	sai1
+揌	sai1
+使	sai2	10%
+駛	sai2
+屎	sai2	10%
+史	sai2	5%
+賽	sai3
+使	sai3
+婿	sai3
+塞	sai3
+饞	sai5
+似	sai7	1%
+姒	sai7	1%
+侍	sai7	1%
+寘	sai7
+祀	sai7
+##	au/auh
+歐	au1	5%
+區	au1	5%
+甌	au1
+漚	au1
+拗	au2
+嘔	au2
+漚	au3
+懊	au3
+拗	auh4
+喉	au5	10%
+後	au6	10%
+包	pau1
+胞	pau1
+苞	pau1
+飽	pau2	5%
+豹	pau3	5%
+㿺	pauh4
+鮑	pau5
+庖	pau5
+刨	pau5
+拋	phau1
+跑	phau2
+泡	phau3
+炮	phau3
+砲	phau3
+炮	phauh4
+袍	phau5
+卯	bau2
+茆	bau2
+茅	bau5
+矛	bau5
+貓	bau5	5%
+貌	bau7
+貿	bau7
+貿	bauh8	0%
+兜	tau1
+掜	tau1
+斗	tau2
+鬥	tau3	10%
+到	tau3	1%
+罩	tau3
+晝	tau3
+篤	tauh4
+投	tau5	10%
+骰	tau5
+豆	tau7	10%
+棹	tau7
+脰	tau7
+痘	tau7
+讀	tau7	1%
+沓	tauh8
+偷	thau1
+敨	thau2
+透	thau3
+頭	thau5
+毒	thau7
+老	liau2	10%
+佬	lau2
+荖	lau2
+落	lau3
+樓	lau5	10%
+流	lau5	10%
+留	lau5	10%
+劉	lau5
+老	lau6
+漏	lau7	10%
+鬧	lau7
+落	lauh8	1%
+交	kau1
+溝	kau1
+鉤	kau1
+勾	kau1
+郊	kau1
+膠	kau1	0%
+蛟	kau1
+蛟	kiau2
+胶	kau1
+狗	kau2	10%
+九	kau2	10%
+垢	kau2
+狡	kau2
+佼	kau2
+姣	kau2
+絞	kau2
+到	kau3	10%
+較	kau3
+教	kau3	5%
+夠	kau3	10%
+校	kau3	5%
+窖	kau3
+𩛩	kauh4
+猴	kau5	10%
+厚	kau6	10%
+薅	khau1
+跤	khau1	5%
+敲	khau1
+剾	khau1
+口	khau2	10%
+巧	khau2	0%
+哭	khau3
+扣	khauh
+𠢕	gau5	10%
+爻	gau5
+肴	gau5
+樂	gau7
+嘐	hau1
+吼	hau2
+孝	hau3
+哮	hau3
+侯	hau5
+後	hau6
+校	hau7
+鱟	hau7
+候	hau7
+效	hau7
+糟	tsau1
+蹧	tsau1
+走	tsau2	10%
+蚤	tsau2
+爪	tsau2	0%
+灶	tsau3
+奏	tsau3
+巢	tsau5
+剿	tsau5
+找	tsau6	10%
+抄	tshau1
+操	tshau1
+臊	tshau1
+鈔	tshau1
+草	tshau2	10%
+炒	tshau2	0%
+吵	tshau2	0%
+臭	tshau3	10%
+嘈	tshauh8	1%
+梢	sau1
+捎	sau1
+鞘	sau1
+掃	sau3	10%
+嗽	sau3
+哨	sau3
+稍	sau3
+##	ann/annh
+向	ann3	5%
+涵	ann5
+餡	ann7
+冇	phann3
+怕	phann3
+奅	phann7
+嘛	ma0
+馬	ma2	5%
+媽	ma2	10%
+嬤	ma2
+瑪	ma2
+碼	ma2	0%
+螞	ma2
+媽	ma5
+嘛	ma6
+罵	ma7	10%
+擔	tann1
+今	tann1	1%
+膽	tann2
+打	tann2
+擔	tann3
+呾	tann3
+耽	tann5	1%
+淡	tann6	1%
+賺	tann7	5%
+他	thann1
+挺	thann2
+哪	na2	10%
+那	na2
+娜	na2
+若	na2	10%
+欖	na2
+拿	na2
+壏	na3
+爁	na3
+凹	nah4
+林	na5
+籃	na5
+藍	na5	5%
+岩	na5	1%
+嚨	na5
+但	na6	1%
+若	na7
+吶	na7
+監	kann1
+橄	kann1
+敢	kann2	10%
+酵	kann3
+幹	kann3
+含	kann5	1%
+坩	khann1
+嵌	khann2
+雅	nga2
+岩	nga5	1%
+訝	nga7
+哄	hann2	1%
+諾	hann3
+熁	hannh4
+唅	hannh4
+唅	hann5
+斬	tsann2	0%
+㨻	tsann7
+錚	tshann3
+三	sann1
+相	sann1
+衫	sann1
+煞	sannh4
+喢	sannh4
+##	ainn/ainnh
+閒	ainn5
+反	painn2
+爿	painn5
+店	tainn3	10%
+橂	tainn7
+蓮	nai5	1%
+荔	nai7
+間	kainn1
+肩	kainn1
+揀	kainn2
+襇	kainn2
+筧	kainn2
+研	ngai2
+眼	ngai2	1%
+還	hainn5
+貺	hainn7
+莧	hainn7
+指	tsainn2	5%
+前	tsainn5
+千	tshainn1
+筅	tshainn2
+先	sainn1
+##	aunn/aunnh
+茅	mau5
+矛	mau5
+貌	mau7
+腦	nau2
+嗕	nauh4
+鬧	nau7
+肴	ngau5
+爻	ngau5
+藕	ngau6
+樂	ngau7
+藃	haunnh
+##	am/ap
+庵	am1
+𧌄	am1
+腌	am1
+鵪	am1
+諳	am1
+闇	am1
+罨	am1
+泔	am2	5%
+黯	am2
+暗	am3	10%
+壓	ap4
+押	ap4
+鴨	ap4	5%
+涵	am5
+頷	am6	10%
+盒	ap8	1%
+耽	tam1
+擔	tam1
+眈	tam1
+沾	tam1	5%
+膽	tam2
+頕	tam3
+答	tap4
+搭	tap4
+談	tam5
+澹	tam5
+淡	tam6	10%
+湛	tam6
+啖	tam6
+賺	tam7	0%
+踏	tap8	5%
+沓	tap8
+貪	tham1
+坍	tham1
+忐	tham2
+探	tham3
+榻	thap4
+塌	thap4
+塔	thap4	0%
+潭	tham5
+痰	tham5
+譚	tham5
+覃	tham5
+罈	tham5
+攬	lam2
+覽	lam2
+欖	lam2
+荏	lam2
+纜	lam2
+腩	lam2
+垃	lap4
+塌	lap4
+湳	lam3
+南	lam5	10%
+男	lam5	10%
+淋	lam5
+籃	lam5	0%
+藍	lam5	10%
+楠	lam5
+襤	lam5
+婪	lam5
+嵐	lam5
+濫	lam7	10%
+艦	lam7
+納	lap8
+蠟	lap8	0%
+擸	lap8
+臘	lap8
+甘	kam1
+柑	kam1
+監	kam1
+緘	kam1
+魽	kam1
+敢	kam2	10%
+敢	kiam2	#异
+感	kam2	10%
+橄	kam2
+𠖫	kam2
+#減	kam2	0%
+監	kam3
+贛	kam3
+鑑	kam3
+佮	kap4
+甲	kap4	1%
+蛤	kap4
+鴿	kap4
+含	kam5
+洽	kap8
+堪	kham1
+龕	kham1
+砍	kham2
+坎	kham2
+嵌	kham2
+歁	kham2
+崁	kham3
+瞰	kham3
+匼	khap4
+恰	khap4
+嗑	khap4
+勘	kham5
+磕	khap8
+岩	gam5
+癌	gam5
+儑	gam6
+蚶	ham1
+酣	ham1
+䈄	ham1
+憨	ham1
+喊	ham2
+譀	ham3
+顑	ham3
+翕	hap4
+咸	ham5
+含	ham5	10%
+涵	ham5
+函	ham5
+鹹	ham5	0%
+陷	ham7	10%
+憾	ham7
+撼	ham7
+合	hap8
+闔	hap8
+洽	hap8	0%
+匣	hap8
+盒	hap8	0%
+簪	tsam1
+臢	tsam1
+斬	tsam2
+嶄	tsam2
+蹔	tsam3
+眨	tsap4
+站	tsam6	10%
+鏨	tsam6
+十	tsap8
+雜	tsap8
+摻	tsham1
+參	tsham1
+攙	tsham1
+慘	tsham2
+懺	tsham3
+插	tshap4
+蠶	tsham5
+慚	tsham5
+㴙	tshap8
+三	sam1
+衫	sam1	5%
+杉	sam1
+糝	sam2
+鬖	sam3
+謲	sam3
+三	sam3	5%
+閐	sam3
+圾	sap4
+霎	sap4
+颯	sap4
+儳	sam5
+##	an/at
+安	an1	10%
+鞍	an1
+俺	an2
+按	an2
+按	an3	10%
+案	an3	10%
+晏	an3
+遏	at4
+軋	at4
+揠	at4
+絚	an5	10%
+限	an6	0%
+班	pan1
+扳	pan1
+斑	pan1
+頒	pan1
+板	pan2
+版	pan2
+阪	pan2
+闆	pan2
+舨	pan2
+八	pat4	5%
+捌	pat4
+捌	bat4	#异
+瓶	pan5	10%
+貧	pan5	0%
+扮	pan7
+辦	pan7	10%
+範	pan7
+瓣	pan7
+別	pat8
+攀	phan1
+盼	phan3
+挽	ban2
+閩	ban5	10%
+蠻	ban5
+萬	ban7	10%
+慢	ban7	10%
+漫	ban7
+曼	ban7
+蔓	ban7
+謾	ban7
+嫚	ban7
+顢	ban7
+縵	ban7
+密	bat8
+單	tan1	10%
+釘	tan1
+丹	tan1
+等	tan2	10%
+誕	tan3
+擲	tan3	10%
+旦	tan3
+釘	tan3
+妲	tat4
+韃	tat4
+靼	tat4
+陳	tan5	10%
+彈	tan5
+霆	tan5	10%
+壇	tan5
+亭	tan5
+檀	tan5
+但	tan6	10%
+彈	tan6
+繵	tan6
+蛋	tan7
+憚	tan7
+達	tat8
+值	tat8
+笛	tat8
+蟶	than1
+攤	than1
+灘	than1
+坦	than2
+毯	than2
+疸	than2
+趁	than3	10%
+嘆	than3
+踢	that4
+窒	that4
+躂	that4
+咱	lan2
+懶	lan2
+難	lan5
+欄	lan5
+蘭	lan5
+瀾	lan5
+零	lan5	1%
+鱗	lan5
+攔	lan5
+𡳞	lan6
+難	lan7
+爛	lan7
+力	lat8
+栗	lat8
+辣	lat8	0%
+捺	lat8
+艱	kan1	10%
+間	kan1
+干	kan1
+乾	kan1
+奸	kan1
+矸	kan1	10%
+肝	kan1	5%
+姦	kan1
+杆	kan1
+竿	kan1
+簡	kan2	10%
+揀	kan2
+𡢃	kan2
+柬	kan2
+稈	kan2
+趕	kan2
+幹	kan3	10%
+諫	kan3
+間	kan3
+姦	kan3
+澗	kan3
+結	kat4
+葛	kat4
+割	kat4	5%
+墼	kat4
+噶	kat4
+牽	khan1
+看	khan1	0%
+刊	khan1
+侃	khan2
+看	khan3	5%
+渴	khat4
+克	khat4	5%
+𣁳	khat4
+眼	gan2
+顏	gan5	6%
+凝	gan5
+岸	gan7	0%
+雁	gan7
+諺	gan7
+彥	gan7
+頇	han1
+鼾	han1
+罕	han2
+漢	han3	10%
+韓	han5
+寒	han5
+閒	han5
+閑	han5
+樊	han5
+嫻	han5
+汗	han5	1%
+限	han6	10%
+旱	han6
+汗	han7	4%
+捍	han7
+翰	han7
+悍	han7
+瀚	han7
+轄	hat8
+乏	hat8
+黠	hat8
+曾	tsan1	5%
+罾	tsan1
+齻	tsan1
+盞	tsan2
+讚	tsan2
+贊	tsan3	10%
+讚	tsan3	10%
+棧	tsan3
+節	tsat4
+紮	tsat4
+札	tsat4
+扎	tsat4
+層	tsan5
+殘	tsan5
+實	tsat8
+賊	tsat8	1%
+呻	tshan1	5%
+餐	tshan1	10%
+潺	tshan1
+孱	tshan1
+鏟	tshan2
+襯	tshan3
+燦	tshan3
+璨	tshan3
+擦	tshat4
+察	tshat4
+漆	tshat4
+田	tshan5	10%
+賊	tshat8
+刪	san1
+山	san1
+珊	san1
+姍	san1
+鉎	san1
+星	san1	1%
+跚	san1
+產	san2
+散	san2
+㾪	san2	10%
+散	san3
+傘	san3	0%
+汕	san3	0%
+疝	san3
+殺	sat4
+塞	sat4
+煞	sat4
+撒	sat4	5%
+蝨	sat4
+剎	sat4
+薩	sat4
+##	ang/ak
+翁	ang1	10%
+尪	ang1
+甕	ang3
+握	ak4
+沃	ak4
+齷	ak4
+幄	ak4
+渥	ak4
+紅	ang5	10%
+洪	ang5
+幫	pang1
+枋	pang1
+封	pang1	0%
+邦	pang1
+崩	pang1
+綁	pang2
+放	pang3	10%
+北	pak4	10%
+腹	pak4	10%
+幅	pak4	5%
+剝	pak4
+駁	pak4
+房	pang5
+縫	pang5
+馮	pang5
+龐	pang5
+棒	pang6
+蚌	pang7
+縛	pak8	10%
+蔔	pak8
+芳	phang1	10%
+蜂	phang1
+紡	phang2
+覆	phak4
+仆	phak4
+捀	phang5	10%
+帆	phang5
+篷	phang5
+縫	phang7	10%
+曝	phak8
+蠓	bang2
+艋	bang2
+沐	bak4	1%
+茫	bang5
+忙	bang5
+芒	bang5
+氓	bang5
+網	bang6
+望	bang7	10%
+夢	bang7	10%
+目	bak8
+木	bak8
+墨	bak8
+東	tang1	10%
+冬	tang1	10%
+當	tang1	1%
+噹	tang1
+董	tang2
+懂	tang2	1%
+凍	tang3
+當	tang3	1%
+觸	tak4
+同	tang5	10%
+銅	tang5
+筒	tang5
+童	tang5
+胴	tang5
+動	tang6	10%
+重	tang6	10%
+逐	tak8	10%
+毒	tak8
+獨	tak8	1%
+濁	tak8	1%
+碡	tak8
+通	thang1
+窗	thang1
+熥	thang1
+桶	thang2
+痛	thang3
+迵	thang3
+剔	thak4
+蟲	thang5
+讀	thak8
+礱	lang1
+櫳	lang1
+攏	lang2	1%
+籠	lang2
+閬	lang3
+落	lak4
+儂	lang5	10%
+膿	lang5
+聾	lang5
+籠	lang5
+籠	lang6
+弄	lang7	10%
+六	lak8	10%
+搦	lak8
+磟	lak8
+慄	lak8
+江	kang1
+工	kang1	10%
+公	kang1	10%
+功	kang1
+蚣	kang1
+崗	kang1
+扛	kang1
+講	kang2	10%
+港	kang2
+犅	kang2
+降	kang3
+絳	kang3
+角	kak4
+覺	kak4
+菊	kak4
+共	kang7	10%
+共	ka7	10%
+仝	kang7	10%
+捔	kak8
+空	khang1
+孔	khang2
+控	khang2
+確	khak4
+殼	khak4
+咯	khak8
+咯	khiak8
+樂	gak8
+獄	gak8
+岳	gak8
+嶽	gak8
+烘	hang1
+魴	hang1
+哄	hang2
+肨	hang3
+行	hang5	10%
+航	hang5	10%
+降	hang5
+杭	hang5
+項	hang6	10%
+巷	hang7	10%
+學	hak8
+礐	hak8
+鬃	tsang1
+棕	tsang1
+摠	tsang2
+粽	tsang3
+齪	tsak4
+欉	tsang5	10%
+灇	tsang5
+嗾	tsak8
+蔥	tshang1
+氅	tshang2
+藏	tshang3
+聳	tshang3
+鑿	tshak8
+鬆	sang1
+送	sang3	10%
+捒	sak4
+##	iau/iauh
+枵	iau1	10%
+要	iau1
+腰	iau1	0%
+妖	iau1
+邀	iau1
+猶	iau2	10%
+夭	iau2	10%
+窈	iau2
+杳	iau2
+要	iau3
+遙	iau5
+搖	iau5
+謠	iau5
+瑤	iau5
+姚	iau5
+耀	iau7
+曜	iau7
+燿	iau7
+標	piau1
+鑣	piau1
+膘	piau1
+飙	piau1
+表	piau2	10%
+錶	piau2
+婊	piau2
+裱	piau2
+殍	piau6
+標	phiau1
+飄	phiau1
+漂	phiau1
+票	phiau3	0%
+漂	phiau3
+嫖	phiau5
+秒	biau2
+渺	biau2
+藐	biau2
+淼	biau2
+苗	biau5
+描	biau5
+錨	biau5
+妙	biau7
+廟	biau7	0%
+刁	tiau1
+雕	tiau1
+朝	tiau1
+凋	tiau1
+貂	tiau1
+佻	tiau2
+吊	tiau3
+釣	tiau3	0%
+召	tiau3
+窵	tiau3
+弔	tiau3
+條	tiau5	10%
+牢	tiau5	10%
+調	tiau5	10%
+朝	tiau5
+潮	tiau5
+迢	tiau5
+晁	tiau5
+兆	tiau6
+肇	tiau6
+趙	tiau6
+調	tiau7
+掉	tiau7	10%
+挑	thiau1
+刁	thiau1	1%
+超	thiau1	0%
+窕	thiau2
+跳	thiau3
+糶	thiau3	0%
+𤶃	thiau5
+髫	thiau5
+柱	thiau6
+𤶃	thiau7
+了	liau2	10%
+瞭	liau2
+蓼	liau2
+聊	liau5
+條	liau5	5%
+寮	liau5
+療	liau5
+嘹	liau5
+僚	liau5
+撩	liau5
+遼	liau5
+獠	liau5
+廖	liau7
+料	liau7	10%
+繚	liau7
+嬌	kiau1
+交	kiau1	1%
+驕	kiau1
+攪	kiau2
+繳	kiau2
+筊	kiau2	10%
+餃	kiau2
+皎	kiau2
+矯	kiau2
+叫	kiau3	0%
+噭	kiau3
+橋	kiau5	0%
+喬	kiau5
+僑	kiau5
+撟	kiau6
+曲	khiau1
+蹺	khiau1
+橇	khiau1
+巧	khiau2
+翹	khiau3
+竅	khiau3
+曲	khiauh4
+堯	giau5
+僥	hiau1
+梟	hiau1
+囂	hiau1
+驍	hiau1
+曉	hiau2
+嬈	hiau5
+招	tsiau1	5%
+蕉	tsiau1	5%
+焦	tsiau1
+昭	tsiau1
+礁	tsiau1
+椒	tsiau1	0%
+釗	tsiau1
+鳥	tsiau2	10%
+沼	tsiau2
+照	tsiau3	10%
+詔	tsiau3
+醮	tsiau3
+褿	tsiau5
+褿	tsau5
+樵	tsiau5
+嶕	tsiau5
+憔	tsiau5
+瞧	tsiau5
+超	tshiau1
+搜	tshiau1
+鍬	tshiau1
+悄	tshiau2
+峭	tshiau3
+俏	tshiau3
+撨	tshiau5
+撨	tshau5
+擾	jiau2
+爪	jiau2
+繞	jiau2
+抓	jiau3
+皺	jiau5
+饒	jiau5
+嬈	jiau5
+蟯	jiau5
+消	siau1	10%
+燒	siau1	1%
+宵	siau1
+銷	siau1
+蕭	siau1
+逍	siau1
+霄	siau1
+簫	siau1
+瀟	siau1
+硝	siau1
+痟	siau2	10%
+小	siau2	5%
+少	siau2	1%
+篠	siau2
+數	siau3	10%
+笑	siau3
+少	siau3
+肖	siau3
+嘯	siau3
+潲	siau5
+韶	siau5
+紹	siau7
+邵	siau7
+劭	siau7
+##	iann/iannh
+纓	iann1
+影	iann2
+贏	iann5
+營	iann5
+颺	iann6
+兵	piann1	1%
+餅	piann2
+丙	piann2
+拚	piann3	10%
+摒	piann3
+平	piann5	1%
+抨	phiann1	1%
+骿	phiann1
+鉼	phiann2
+坪	phiann5
+平	phiann5
+名	mia5
+明	mia5	1%
+命	mia7
+鼎	tiann2
+碇	tiann3
+庭	tiann5	0%
+埕	tiann5
+錠	tiann6
+定	tiann7	10%
+聽	thiann1
+廳	thiann1
+疼	thiann3
+程	thiann5	1%
+領	nia2
+嶺	nia2
+睰	niah4
+娘	nia5	1%
+爾	nia7	5%
+驚	kiann1
+京	kiann1
+囝	kiann2
+囝	kann2
+鏡	kiann3
+行	kiann5
+件	kiann6
+健	kiann7	1%
+迎	ngia5
+兄	hiann1
+顯	hiann2	1%
+向	hiann3	1%
+挔	hiannh4
+嚇	hiannh4
+燃	hiann5
+燃	nia5	#异
+惶	hiann5	1%
+艾	hiann7
+精	tsiann1	1%
+正	tsiann1
+䭕	tsiann2
+正	tsiann3	10%
+誠	tsiann5	10%
+情	tsiann5	1%
+成	tsiann5
+請	tshiann2
+且	tshiann2
+倩	tshiann3
+晟	tshiann5
+成	tshiann5
+聲	siann1
+啥	siann2	10%
+聖	siann3	5%
+城	siann5
+成	siann5	5%
+唌	siann5
+##	iaunn/iaunnh
+喵	miau1
+妙	miau7
+貓	niau1
+鳥	niau2
+擽	ngiau1
+蟯	ngiauh8
+##	iam/iap
+陰	iam1	1%
+閹	iam1
+醃	iam1
+掩	iam2
+奄	iam2
+琰	iam2
+魘	iam2
+厭	iam3
+揜	iap4
+揞	iap4
+鹽	iam5
+檐	iam5
+炎	iam7	10%
+焰	iam7
+燄	iam7
+艷	iam7	10%
+焱	iam7
+豔	iam7
+灩	iam7
+葉	iap8	5%
+曄	iap8
+燁	iap8
+砧	tiam1
+沾	tiam1
+點	tiam2	10%
+店	tiam3	10%
+踮	tiam3	10%
+玷	tiam3
+輒	tiap4
+沉	tiam5	0%
+恬	tiam5
+甜	tiam5
+恬	tiam6	10%
+墊	tiam7
+蝶	tiap8
+諜	tiap8
+碟	tiap8
+揲	tiap8
+牒	tiap8
+添	thiam1
+忝	thiam2
+諂	thiam2
+帖	thiap4
+貼	thiap4
+填	thiam7	1%
+疊	thiap8
+臉	liam2
+斂	liam2
+捻	liam3	10%
+攝	liap4	5%
+聶	liap4
+鑷	liap4
+懾	liap4
+黏	liam5	10%
+連	liam5	10%
+粘	liam5	0%
+廉	liam5
+簾	liam5
+鐮	liam5
+濂	liam5
+臨	liam5	1%
+念	liam7	10%
+唸	liam7	10%
+殮	liam7
+粒	liap8	10%
+捏	liap8
+獵	liap8	0%
+涅	liap8
+兼	kiam1
+減	kiam2	10%
+檢	kiam2
+鹼	kiam2
+劍	kiam3
+劫	kiap4
+峽	kiap4
+俠	kiap4
+頰	kiap4
+夾	kiap4
+鹹	kiam5	10%
+謙	khiam1
+歉	khiam2
+欠	khiam3	10%
+歉	khiam3
+芡	khiam3
+怯	khiap4
+愜	khiap4
+㾀	khiap4
+鉗	khiam5
+黔	khiam5
+鈐	khiam5
+儉	khiam6
+儼	giam2
+鋏	giap4
+挾	giap4
+嚴	giam5	10%
+岩	giam5
+驗	giam7	10%
+業	giap8	10%
+鄴	giap8
+薟	hiam1
+險	hiam2
+喊	hiam3	5%
+嫌	hiam5
+協	hiap8
+脅	hiap8
+拹	hiap8
+狹	hiap8
+洽	hiap8
+勰	hiap8
+挾	hiap8
+尖	tsiam1	10%
+針	tsiam1
+針	tsam1
+瞻	tsiam1
+占	tsiam1
+簪	tsiam1
+佔	tsiam3
+接	tsiap4
+汁	tsiap4
+汁	tsap4
+睫	tsiap4	0%
+潛	tsiam5	10%
+潛	tshiam5	10%
+漸	tsiam6	10%
+暫	tsiam7	10%
+捷	tsiap8
+婕	tsiap8
+簽	tshiam1
+籤	tshiam1
+纖	tshiam1
+殲	tshiam1
+攕	tshiam2
+塹	tshiam3
+僭	tshiam3
+妾	tshiap4
+竊	tshiap4
+橙	tshiam5
+橙	tshiang5	#异
+橙	siam5	#懒
+染	jiam2
+冉	jiam2
+髯	jiam5
+苒	jiam5
+廿	jiap8
+䀐	siam1
+纖	siam1	1%
+閃	siam2
+陝	siam2
+滲	siam3
+澀	siap4
+卌	siap4	10%
+燮	siap4
+攝	siap4
+屧	siap4
+懾	siap4
+蟾	siam5
+贍	siam7
+涉	siap8
+##	ian/iat
+煙	ian1	10%
+胭	ian1
+燕	ian1
+焉	ian1
+嫣	ian1
+淵	ian1
+咽	ian1
+鳶	ian1
+演	ian2	10%
+偃	ian2	10%
+衍	ian2
+宴	ian3	10%
+嚥	ian3
+燕	ian3
+噎	iat4
+謁	iat4
+緣	ian5
+沿	ian5	10%
+鉛	ian5	10%
+筵	ian5
+延	ian5	10%
+芫	ian5
+捐	ian5	5%
+蜒	ian5
+閱	iat8
+悅	iat8
+擛	iat8
+邊	pian1
+編	pian1
+鞭	pian1
+貶	pian2
+扁	pian2	1%
+匾	pian2
+諞	pian2
+蝙	pian2
+變	pian3	10%
+鱉	piat4
+憋	piat4
+駢	pian5
+辯	pian6
+辨	pian6
+辮	pian6
+便	pian7	10%
+卞	pian7
+汴	pian7
+別	piat8
+偏	phian1
+篇	phian1
+翩	phian1
+騙	phian3
+遍	phian3
+片	phian3
+撇	phiat4
+𥐵	phiat4
+瞥	phiat4
+蹁	phian5
+撇	phiat8
+免	bian2	10%
+勉	bian2
+冕	bian2
+緬	bian2
+眠	bian5	5%
+綿	bian5	5%
+棉	bian5	5%
+面	bian7	5%
+麵	bian7	5%
+滅	biat8
+篾	biat8	5%
+蔑	biat8
+顛	tian1
+癲	tian1
+滇	tian1
+典	tian2
+展	tian2	10%
+輾	tian2	5%
+哲	tiat4
+填	tian5
+田	tian5	5%
+纏	tian5	5%
+殄	tian6
+電	tian7	10%
+佃	tian7
+殿	tian7
+澱	tian7
+淀	tian7
+奠	tian7
+甸	tian7
+鈿	tian7
+綻	tian7
+迭	tiat8
+跌	tiat8
+秩	tiat8
+帙	tiat8
+轍	tiat8
+耋	tiat8
+天	thian1
+腆	thian2
+徹	thiat4
+鐵	thiat4	5%
+撤	thiat4
+澈	thiat4
+餮	thiat4
+碾	lian2
+撚	lian2
+輪	lian2
+輦	lian2
+攆	lian2
+輾	lian2	1%
+輾	lian3
+連	lian5
+聯	lian5
+年	lian5	5%
+蓮	lian5
+憐	lian5
+漣	lian5
+鰱	lian5
+練	lian7
+鍊	lian7
+煉	lian7
+楝	lian7
+列	liat8
+裂	liat8
+烈	liat8
+冽	liat8
+
+堅	kian1	10%
+肩	kian1	5%
+繭	kian2
+筧	kian2
+蹇	kian2
+見	kian3
+建	kian3	10%
+毽	kian3
+結	kiat4
+吉	kiat4
+孑	kiat4
+桔	kiat4
+桔	kit4白
+潔	kiat4
+羯	kiat4
+拮	kiat4
+件	kian6	5%
+胘	kian6
+健	kian7
+鍵	kian7
+腱	kian7
+杰	kiat8
+傑	kiat8
+竭	kiat8
+桀	kiat8
+掔	khian1
+牽	khian1	5%
+騫	khian1
+愆	khian1
+遣	khian2
+犬	khian2
+繾	khian2
+譴	khian3
+焮	khian3
+揭	khiat4
+詰	khiat4
+鍥	khiat4
+虔	khian5
+乾	khian5
+妍	gian2
+研	gian2
+癮	gian3
+囓	giat4
+言	gian5
+言	gan5
+唁	gian7
+孽	giat8
+齧	giat8
+掀	hian1
+軒	hian1
+顯	hian2
+獻	hian3
+憲	hian3
+羶	hian3
+㧒	hiat4
+歇	hiat4	5%
+血	hiat4	5%
+蠍	hiat4
+賢	hian5
+懸	hian5
+玄	hian5
+絃	hian5
+弦	hian5
+舷	hian5
+現	hian7	10%
+縣	hian7	5%
+炫	hian7
+鉉	hian7
+穴	hiat8
+頁	hiat8
+煎	tsian1	10%
+箋	tsian1
+氈	tsian1
+剪	tsian2	10%
+戰	tsian3	10%
+箭	tsian3	5%
+薦	tsian3
+節	tsiat4
+浙	tsiat4
+折	tsiat4
+前	tsian5	10%
+錢	tsian5	5%
+賤	tsian7
+踐	tsian7
+餞	tsian7
+荐	tsian7
+截	tsiat8
+千	tshian1
+遷	tshian1
+韆	tshian1
+芊	tshian1
+阡	tshian1
+淺	tshian2
+闡	tshian2
+茜	tshian3
+倩	tshian3
+蒨	tshian3
+切	tshiat4
+掣	tshiat4
+延	tshian5
+剪	jian2
+然	jian5
+燃	jian5
+熱	jiat8
+仙	sian1	10%
+先	sian1	10%
+鮮	sian1
+鉎	sian1
+鮮	sian2
+癬	sian2
+搧	sian3	10%
+扇	sian3	5%
+煽	sian3
+設	siat4
+泄	siat4
+屑	siat4	5%
+褻	siat4
+涎	sian5
+蟬	sian5
+禪	sian5
+嬋	sian5
+𤺪	sian6
+善	sian6	10%
+羨	sian6
+腎	sian6	5%
+僐	sian6	10%
+單	sian6
+蟮	sian6
+膳	sian6
+鱔	sian6
+禪	sian7
+擅	sian7
+繕	sian7
+舌	siat8	5%
+折	siat8
+##	iang/iak
+偝	iang7
+偝	iannh8
+偝	tsiann1
+偝	ainn7
+嘣	piang1
+迸	piang3
+煏	piak4
+砰	phiang3
+擗	phiak8
+喨	liang1
+涼	liang5
+娘	liang5	1%
+亮	liang7
+勍	khiang1
+講	khiang2	1%
+勥	khiang3	10%
+鏹	khiang6
+毃	khiak8
+鈃	giang1
+齴	giang3
+蹌	tshiang2
+唱	tshiang3
+沖	tshiang5
+雙	siang1
+雙	sang1
+誰	siang5	10%
+誰	siong5	1%
+誰	siang7	1%	10	#异
+侗	siang5
+侗	sang5
+##	iang/iak
+央	iang1	10%
+鴦	iang1
+秧	iang1
+殃	iang1
+泱	iang1
+鞅	iang1
+養	iang2	10%
+癢	iang2	5%
+氧	iang2	10%
+約	iak4
+陽	iang5	10%
+陽	iong5	10%
+羊	iang5	5%
+楊	iang5	5%
+洋	iang5	5%
+揚	iang5	10%
+恙	iang7
+漾	iang7
+樣	iang7	5%
+躍	iak8
+藥	iak8	5%
+鑰	iak8
+張	tiang1
+長	tiang2
+漲	tiang3
+長	tiang3
+脹	tiang3
+帳	tiang3
+長	tiang5
+長	tiong5	10%
+場	tiang5	0%
+腸	tiang5
+丈	tiang6
+杖	tiang6
+仗	tiang6
+仗	tiang7
+暢	thiang3	5%
+兩	liang2	10%
+輛	liang2
+魉	liang2
+娘	liang5	5%
+量	liang5	10%
+良	liang5	10%
+涼	liang5	10%
+糧	liang5
+樑	liang5
+粱	liang5
+量	liang7
+諒	liang7	10%
+亮	liang7	10%
+釀	liang7
+略	liak8
+掠	liak8
+薑	kiang1	5%
+僵	kiang1
+疆	kiang1
+強	kiang2
+腳	kiak4
+強	kiang5	10%
+強	kiang6
+劇	kiak8
+姜	khiang1
+羌	khiang1
+殭	khiang1
+腔	khiang1
+卻	khiak4
+仰	giang2
+香	hiang1
+鄉	hiang1
+薌	hiang1
+享	hiang2
+響	hiang2
+饗	hiang2
+餉	hiang2
+向	hiang3
+嚮	hiang3
+將	tsiang1	10%
+章	tsiang1	10%
+章	tsiong1	10%
+彰	tsiang1
+漳	tsiang1	10%
+漳	tsiang1	10%
+漳	tsing1#泉
+障	tsiang1
+樟	tsiang1
+漿	tsiang1
+獎	tsiang2
+掌	tsiang2	10%
+將	tsiang3
+爵	tsiak4
+狀	tsiang7
+嚼	tsiak8
+昌	tshiang1
+娼	tshiang1
+猖	tshiang1
+搶	tshiang2	0%
+惝	tshiang2
+唱	tshiang3
+倡	tshiang3
+雀	tshiak4
+鵲	tshiak4
+綽	tshiak4
+牆	tshiang5
+嬙	tshiang5
+踔	tshiak8
+嚷	jiang2
+壤	jiang2
+瓤	jiang5
+讓	jiang7
+弱	jiak8
+弱	jiok8	10%
+弱	lam2	10%
+若	jiak8
+箬	jiak8
+傷	siang1
+相	siang1	5%
+箱	siang1
+商	siang1
+襄	siang1
+鑲	siang1
+湘	siang1
+殤	siang1
+想	siang2	10%
+賞	siang2
+償	siang2
+相	siang3	5%
+常	siang5	10%
+詳	siang5	10%
+祥	siang5
+瘍	siang5
+裳	siang5
+嫦	siang5
+嘗	siang5
+翔	siang5
+上	siang6
+相	siang6	5%
+像	siang6
+象	siang6
+橡	siang6
+上	siang7	10%
+尚	siang7
+##	ua/uah
+蛙	ua1
+娃	ua1
+哇	ua1
+倚	ua2	10%
+何	ua5	1%
+活	uah8
+簸	pua3
+撥	puah4
+缽	puah4
+跋	puah8
+鈸	puah8
+拋	phua1
+破	phua3	10%
+潑	phuah4
+袚	phuah8
+抹	buah4
+磨	bua5
+末	buah8
+茉	buah8
+帶	tua3
+蹛	tua3
+掇	tuah4
+大	tua7	10%
+拖	thua1
+泰	thua3	1%
+屜	thuah4
+挩	thuah4
+獺	thuah4
+蹋	thuah4
+豸	thua6	1%
+汰	thua7
+籮	lua5
+賴	lua7
+瀨	lua7
+僆	nua7	1%
+辣	luah8
+捋	luah8
+歌	kua1	10%
+柯	kua1	5%
+瓜	kua1	5%
+過	kua1	1%
+呱	kua1
+媧	kua1
+牁	kua1
+寡	kua2	10%
+過	kua3	1%
+蓋	kua3
+掛	kua3
+卦	kua3
+芥	kua3	1%
+褂	kua3
+罣	kua3
+割	kuah4
+括	kuah4	1%
+葛	kuah4	1%
+誇	khua1
+可	khua2	1%
+靠	khua3	5%
+跨	khua3
+胯	khua3
+闊	khuah4
+渴	khuah4	1%
+我	gua2	5%
+瓦	gua2
+哦	guah4
+外	gua7
+花	hua1	5%
+嘩	hua1
+化	hua3	10%
+華	hua3	10%
+喝	huah4
+華	hua5
+樺	hua5
+話	hua7	1%
+畫	hua7	0%
+伐	huah8
+紙	tsua2
+泏	tsuah4	5%
+蛇	tsua5
+誰	tsua5	5%
+誓	tsua7	1%
+逝	tsua7	1%
+縒	tsuah8
+蚻	tsuah8
+蔡	tshua3
+漈	tshua3
+掣	tshuah4
+疶	tshuah4
+娶	tshua7
+𤆬	tshua7
+泄	tshua7
+斜	tshuah8
+偌	jua6
+熱	juah8
+沙	sua1	10%
+砂	sua1
+鯊	sua1
+痧	sua
+徙	sua2	10%
+紲	sua3	10%
+煞	suah4
+撒	suah4
+##	uai/uaih
+跩	tsuai6
+乖	kuai1
+拐	kuai2
+枴	kuai2
+怪	kuai3	10%
+快	khuai3
+塊	khuai3
+筷	khuai3
+懷	huai5
+徊	huai5
+淮	huai5
+槐	huai5
+濰	huai5
+歪	uai1
+##	uann/uannh
+安	uann1	1%
+鞍	uann1
+碗	uann2	10%
+腕	uann2
+晏	uann3	10%
+案	uann3
+旱	uann6
+換	uann7	10%
+般	puann1
+搬	puann1	10%
+坂	puann2
+半	puann3	10%
+盤	puann5	10%
+拌	puann6
+絆	puann6
+潘	phuann1
+販	phuann3
+判	phuann3
+盤	phuann5	5%
+伴	phuann6	10%
+幔	mua1
+滿	mua2
+麻	mua5
+鰻	mua5
+瞞	mua5
+明	mua5	1%
+單	tuann1	10%
+端	tuann1	1%
+旦	tuann3	1%
+彈	tuann5	10%
+壇	tuann5
+檀	tuann5
+惰	tuann6	1%
+彈	tuann6
+段	tuann7	10%
+攤	thuann1
+灘	thuann1
+剷	thuann2
+炭	thuann3
+湠	thuann3
+撋	nua2
+欄	nua5	1%
+攔	nua5
+瀾	nua6
+爛	nua7
+官	kuann1
+肝	kuann1
+乾	kuann1	5%
+棺	kuann1
+菅	kuann1
+竿	kuann1
+綰	kuann1
+趕	kuann2	10%
+寒	kuann5	10%
+捾	kuann6	10%
+汗	kuann7	10%
+寬	khuann1	0%
+款	khuann2
+看	khuann3	10%
+快	khuann3	1%
+歡	huann1
+鼾	huann5
+岸	huann7
+扞	huann7
+焊	huann7
+旱	huann7
+煎	tsuann1	1%
+怎	tsuann2	10%
+盞	tsuann2
+榨	tsuann3	1%
+殘	tsuann5	1%
+泉	tsuann5
+濺	tsuann6
+䉔	tshuann1
+閂	tshuann3
+山	suann1
+散	suann2
+線	suann3
+傘	suann3
+散	suann3
+汕	suann3
+##	uainn/uainnh
+灣	uainn1
+崴	uainn2
+崴	uainnh4
+糜	muai5
+妹	muai7	1%
+關	kuainn1
+杆	kuainn1
+橫	huainn5
+檨	suainn7
+##	uainn/uainnh
+慣	kuainn3
+懸	kuainn5
+縣	kuainn7
+##	uan/uat
+冤	uan1	10%
+灣	uan1	10%
+彎	uan1	10%
+鴛	uan1
+蜿	uan1
+遠	uan2	10%
+宛	uan2
+苑	uan2
+腕	uan2
+婉	uan2
+琬	uan2
+皖	uan2
+菀	uan2
+怨	uan3	10%
+惋	uan3
+斡	uat4
+挖	uat4	0%
+員	uan5	10%
+圓	uan5	1%
+完	uan5	10%
+園	uan5	5%
+丸	uan5	0%
+猿	uan5
+袁	uan5
+紈	uan5
+轅	uan5
+緩	uan6
+浣	uan6
+院	uan7	0%
+援	uan7
+媛	uan7
+瑗	uan7
+越	uat8
+粵	uat8
+活	uat8	1%
+悅	uat8
+閱	uat8
+曰	uat8
+搬	puan1	0%
+般	puan1	1%
+半	puan3	5%
+撥	puat4	5%
+缽	puat4	5%
+般	puat4	1%
+絆	puan6
+拌	puan6
+叛	puan7
+畔	puan7
+拔	puat8	5%
+跋	puat8
+鈸	puat8
+菝	puat8
+潘	phuan1
+判	phuan3
+泮	phuan3
+潑	phuat4	1%
+撇	phuat4	1%
+盤	phuan5	1%
+蟠	phuan5
+磐	phuan5
+伴	phuan6	0%
+晚	buan2
+滿	buan2	5%
+抹	buat4	0%
+瞞	buan5	0%
+末	buat8
+襪	buat8	0%
+端	tuan1
+短	tuan2	1%
+鍛	tuan3
+斷	tuan3
+掇	tuat4
+綴	tuat4	0%
+輟	tuat4
+傳	tuan5	10%
+剸	tuan5
+斷	tuan6
+篆	tuan6
+段	tuan7	0%
+傳	tuan7
+緞	tuan7
+湍	thuan1
+篆	thuan3	0%
+脫	thuat4
+團	thuan5
+傳	thuan5
+軟	luan2	1%
+卵	luan2	1%
+暖	luan2
+戀	luan5
+鸞	luan5
+巒	luan5
+亂	luan7
+劣	luat8
+關	kuan1	10%
+官	kuan1	1%
+觀	kuan1	10%
+棺	kuan1
+娟	kuan1
+冠	kuan1
+鵑	kuan1
+捐	kuan1	10%
+涓	kuan1
+鰥	kuan1
+綸	kuan1
+管	kuan2	10%
+館	kuan2	10%
+捲	kuan2	1%
+莞	kuan2
+卷	kuan2	0%
+慣	kuan3	10%
+觀	kuan3
+罐	kuan3	10%
+灌	kuan3	10%
+貫	kuan3
+券	kuan3
+冠	kuan3
+卷	kuan3	0%
+眷	kuan3
+絹	kuan3
+盥	kuan3
+訣	kuat4
+決	kuat4
+括	kuat4
+抉	kuat4
+刮	kuat4	5%
+厥	kuat4
+蹶	kuat4
+譎	kuat4
+顴	kuan5
+拳	kuan5	5%
+權	kuan5	10%
+倦	kuan7
+寬	khuan1
+圈	khuan1
+款	khuan2
+綣	khuan2
+勸	khuan3	5%
+缺	khuat4
+闊	khuat4
+闕	khuat4
+環	khuan5
+權	khuan5	10%
+阮	guan2	10%
+玩	guan2
+元	guan5
+原	guan5	10%
+源	guan5
+頑	guan5
+願	guan7	10%
+愿	guan7	10%
+月	guat8	1%
+玥	guat8
+歡	huan1
+番	huan1
+翻	huan1	10%
+蕃	huan1
+吩	huan1	1%
+萱	huan1
+暄	huan1
+返	huan2
+反	huan2	10%
+幻	huan3	10%
+販	huan3
+喚	huan3
+泛	huan3
+奐	huan3
+煥	huan3
+渙	huan3
+絢	huan3
+法	huat4
+發	huat4
+髮	huat4
+豁	huat4
+煩	huan5	10%
+繁	huan5	10%
+還	huan5	10%
+凡	huan5	10%
+環	huan5	0%
+帆	huan5	0%
+樊	huan5
+桓	huan5
+寰	huan5
+圜	huan5
+鬟	huan5
+範	huan6
+犯	huan6	10%
+范	huan6
+患	huan7
+飯	huan7	0%
+換	huan7	0%
+梵	huan7
+罰	huat8
+乏	huat8
+活	huat8	0%
+伐	huat8
+閥	huat8
+專	tsuan1	10%
+磚	tsuan1	0%
+顓	tsuan1
+賺	tsuan2	1%
+轉	tsuan2	10%
+纂	tsuan2
+拙	tsuat4
+泏	tsuat4
+泉	tsuan5
+全	tsuan5	10%
+撰	tsuan6
+饌	tsuan6
+雋	tsuan6
+絕	tsuat8
+川	tshuan1
+穿	tshuan1	5%
+詮	tshuan1
+村	tshuan1
+喘	tshuan2
+串	tshuan3
+竄	tshuan3
+篡	tshuan3
+闖	tshuan3
+撮	tshuat4
+攢	tshuan5
+酸	suan1	1%
+宣	suan1	10%
+拴	suan1
+訕	suan1
+喧	suan1
+選	suan2	10%
+算	suan3	5%
+蒜	suan3	0%
+說	suat4	5%
+雪	suat4	1%
+刷	suat4
+船	suan5	0%
+旋	suan5	10%
+璇	suan5
+檨	suan7
+##	uang/uak
+嚾	uang1
+風	huang1
+##	ee/eeh
+啞	ee2
+厄	eeh4
+下	ee6
+廈	ee6
+下	ee7
+扒	pee1
+把	pee2	5%
+靶	pee2
+伯	peeh4
+百	peeh4
+擘	peeh4
+柏	peeh4
+竡	peeh4
+爬	pee5	10%
+耙	pee5
+扒	pee5
+琶	pee5
+杷	pee5
+父	pee6	10%
+白	peeh8
+帛	peeh8
+帕	phee3
+馬	bee2
+瑪	bee2
+碼	bee2
+麥	beeh8
+脈	beeh8
+硩	teeh4
+茶	tee5
+徹	theeh4	5%
+䖳	thee7
+宅	theeh8
+咧	leeh4
+剺	leeh8
+加	kee1
+家	kee1
+假	kee2
+嫁	kee3
+價	kee3
+架	kee3
+格	keeh4
+隔	keeh4
+骼	keeh4
+膈	keeh4
+枷	kee5
+扴	keeh8
+客	kheeh4
+下	khee6	5%
+嘿	heeh4
+嚇	heeh4
+牙	gee5
+衙	gee5
+芽	gee5
+瘕	hee1
+罅	hee1
+蝦	hee5
+霞	hee5
+下	hee6	5%
+暇	hee6
+夏	hee7	5%
+渣	tsee1
+債	tsee3
+仄	tseeh4
+叔	tseeh4	1%
+寨	tsee7
+差	tshee1
+叉	tshee1
+廁	tshee3
+冊	tsheeh4
+砂	see1
+紗	see1
+裟	see1
+屑	seeh4
+##	uee/ueeh
+話	uee7
+畫	uee7
+畫	ueeh8
+瓜	kuee1
+怪	kuee3
+花	huee1
+嘩	huee1
+化	huee3	1%
+##	e/eh
+縊	e3
+翳	e3
+兮	e5	10%
+个	e5	10%
+裔	e7
+閉	pe3	0%
+蔽	pe3
+陛	pe6
+敝	pe7
+幣	pe7
+斃	pe7
+批	phe1	0%
+媲	phe3
+迷	be5
+謎	be5
+袂	be7
+低	te1	5%
+氐	te1
+抵	te2
+底	te2	0%
+邸	te2
+帝	te3
+締	te3
+渧	te3
+諦	te3
+蒂	te3
+題	te5	0%
+蹄	te5	0%
+弟	te6	1%
+娣	te6
+悌	te6
+第	te7	10%
+地	te7	10%
+棣	te7
+遞	te7
+滯	te7
+睇	te7
+彘	te7
+䖙	the1
+梯	the1	0%
+體	the2
+替	the3	0%
+涕	the3
+提	the5
+啼	the5
+堤	the5
+緹	the5
+絡	le1
+禮	le2	10%
+醴	le2
+澧	le2
+璃	le5	1%
+犁	le5	0%
+梨	le5
+黎	le5
+例	le7	10%
+麗	le7
+厲	le7
+勵	le7
+隸	le7
+荔	le7
+儷	le7
+戾	le7
+鱺	le7
+奎	ke1
+雞	ke1	5%
+計	ke3	10%
+繼	ke3
+低	ke6	10%
+偈	ke7
+稽	khe1
+溪	khe1	0%
+啟	khe2
+棨	khe2
+稽	khe2
+憩	khe3
+契	khe3	5%
+倪	ge5
+霓	ge5
+猊	ge5
+藝	ge7
+毅	ge7
+詣	ge7
+艾	ge7
+彼	he1
+兮	he5
+攜	he5
+奚	he5
+畦	he5
+系	he7
+係	he7
+繫	he7
+這	tse1	10%
+劑	tse1
+齋	tse1	0%
+濟	tse3
+制	tse3	10%
+祭	tse3
+製	tse3
+際	tse3
+齊	tse5	1%
+蠐	tse5
+臍	tse5
+淒	tshe1
+悽	tshe1
+妻	tshe1
+棲	tshe1
+扯	tshe2
+切	tshe3
+尺	tshe6
+西	se1	10%
+犀	se1
+洗	se2	5%
+勢	se3	10%
+世	se3	10%
+細	se3	5%
+婿	se3	5%
+洒	se3
+垂	se5	10%
+誓	se7	10%
+逝	se7	10%
+筮	se7
+噬	se7
+##	enn/ennh
+嚶	enn1
+嬰	enn1	10%
+楹	enn5
+柄	penn3
+平	penn5	10%
+棚	penn5
+坪	penn5
+病	penn7	10%
+澎	phenn5
+平	penn5	10%
+平	phenn5	10%
+平	pinn5	10%
+平	phinn5	10%
+平	ping5	10%
+怦	phenn7
+搣	mee1
+猛	mee2	1%
+蜢	mee2
+咩	meeh4
+蜢	meeh4
+暝	mee5
+盲	mee5	1%
+芒	mee5
+罵	mee7
+脈	meeh8
+蹬	tenn1	1%
+佯	tenn3
+撜	tenn3
+鄭	tenn7
+捏	tenn7
+牚	thenn3
+瞪	thenn5
+呢	neeh0
+奶	nee1
+奶	lin1
+奶	ling1
+呢	nee1
+拈	nee1
+躡	neeh4
+晾	nee5
+羹	kenn1
+更	kenn1	5%
+經	kenn1	1%
+庚	kenn1
+哽	kenn2
+梗	kenn2
+坑	khenn1
+硬	ngee6
+哼	henn1
+精	tsenn1	5%
+爭	tsenn1	10%
+爭	tsinn1	10%
+井	tsenn2
+阱	tsenn2
+諍	tsenn3
+靜	tsenn6	1%
+青	tshenn1
+生	tshenn1
+星	tshenn1
+腥	tshenn1
+清	tshenn1	1%
+醒	tshenn2
+生	senn1
+牲	senn1	1%
+省	senn2
+姓	senn3
+性	senn3	1%
+##	ue/ueh
+喂	ue1
+煨	ue1
+崴	ue1
+穢	ue3
+衛	ue7
+杯	pue1	10%
+桮	pue1
+盃	pue1
+輩	pue3	10%
+貝	pue3
+狽	pue3
+陪	pue5	10%
+培	pue5
+賠	pue5
+裴	pue5
+倍	pue6	0%
+蓓	pue6
+背	pue7	10%
+佩	pue7	10%
+焙	pue7
+悖	pue7
+珮	pue7
+胚	phue1
+坯	phue1
+䫌	phue2
+襞	phue2
+配	phue3
+綴	tue3
+頹	tue5
+兌	tue7
+疊	tueh8
+退	thue3	5%
+蛻	thue3
+餒	lue2
+內	lue7	5%
+會	kue3	1%
+膾	kue3
+檜	kue3
+鱖	kue3
+挾	kueh8
+魁	khue1
+詼	khue1
+恢	khue1
+盔	khue1
+刮	khue1	1%
+快	khue3
+外	gue7	1%
+刈	gue7
+灰	hue1
+悔	hue2	10%
+賄	hue2
+廢	hue3	10%
+晦	hue3
+誨	hue3
+回	hue5	10%
+徊	hue5
+迴	hue5
+會	hue7	10%
+匯	hue7	10%
+繪	hue7
+潰	hue7
+做	tsue3	10%
+最	tsue3
+贅	tsue3
+罪	tsue6
+睿	jue7
+叡	jue7
+銳	jue7
+衰	sue1
+歲	sue3	1%
+帥	sue3
+涗	sue3
+說	sue3	1%
+稅	sue3	0%
+##	uenn/uennh
+每	mue2
+媒	mue5
+煤	mue5
+梅	mue5
+玫	mue5
+莓	mue5
+妹	mue7
+昧	mue7
+##	i/ih
+伊	i1	10%
+醫	i1	10%
+衣	i1
+依	i1
+漪	i1
+咿	i1
+以	i2	10%
+已	i2	10%
+椅	i2	10%
+倚	i2
+矣	i2
+迤	i2
+意	i3	10%
+懿	i3
+薏	i3
+踦	ih4
+姨	i5	10%
+移	i5	10%
+怡	i5
+夷	i5
+維	i5	0%
+頤	i5
+胰	i5
+彝	i5
+貽	i5
+奕	i6	10%
+異	i7	10%
+易	i7	10%
+肄	i7
+悲	pi1	10%
+卑	pi1
+碑	pi1
+啡	pi1
+埤	pi1
+觱	pi1
+啤	pi1
+比	pi2	10%
+彼	pi2
+匕	pi2
+妣	pi2
+庇	pi3
+秘	pi3	10%
+費	pi3	5%
+閉	pi3	10%
+臂	pi3
+痹	pi3
+鱉	pih4
+撆	pih4
+脾	pi5
+琵	pi5
+枇	pi5
+毗	pi5
+被	pi6
+婢	pi6
+備	pi7	10%
+避	pi7	10%
+披	phi1
+丕	phi1
+砒	phi1
+紕	phi1
+鄙	phi2
+否	phi2
+痞	phi2
+疕	phi2
+譬	phi3
+屁	phi3
+皮	phi5
+疲	phi5
+鼻	phi7	10%
+鼻	phinn7	#异
+咪	bi1
+米	bi2	10%
+美	bi2	10%
+弭	bi2
+覕	bih4
+微	bi5	10%
+眉	bi5
+眯	bi5
+彌	bi5
+湄	bi5
+薇	bi5
+嵋	bi5
+糜	bi5	1%
+味	bi7	10%
+未	bi7	10%
+沬	bi7
+媚	bi7
+謎	bi7
+魅	bi7
+寐	bi7
+篾	bih8
+知	ti1	10%
+蜘	ti1
+抵	ti2
+戴	ti3	10%
+致	ti3
+智	ti3	10%
+置	ti3
+緻	ti3
+蒂	ti3
+滴	tih4
+池	ti5	10%
+持	ti5
+遲	ti5	10%
+馳	ti5
+弟	ti6	10%
+痔	ti6
+底	ti6	10%
+治	ti6
+豸	ti6
+峙	ti6
+稚	ti7
+地	ti7	1%
+碟	tih8
+挃	tih8
+黐	thi1
+魑	thi1
+褫	thi2
+恥	thi2
+剃	thi3
+鐵	thih4
+剃	thih4
+苔	thi5
+啼	thi5
+雉	thi6
+裡	li0
+哩	li1
+理	li2	10%
+李	li2	10%
+鯉	li2
+里	li2
+履	li2
+娌	li2
+俚	li2
+裡	li2
+裏	li2
+離	li5
+狸	li5
+璃	li5
+厘	li5
+籬	li5
+篱	li5
+罹	li5
+釐	li5
+縭	li5
+漓	li5
+離	li7	10%
+利	li7	10%
+利	le7	10%
+俐	li7
+吏	li7
+蒞	li7
+裂	lih8
+支	ki1	10%
+機	ki1	10%
+枝	ki1	10%
+基	ki1	10%
+几	ki1	10%
+吱	ki1
+技	ki1	10%
+箕	ki1
+飢	ki1
+肌	ki1
+肢	ki1
+乩	ki1
+畿	ki1
+妓	ki1
+姬	ki1
+譏	ki1
+璣	ki1
+梔	ki1
+指	ki2	10%
+幾	ki2	1%
+己	ki2	10%
+紀	ki2	10%
+杞	ki2
+記	ki3	10%
+既	ki3	10%
+痣	ki3	10%
+冀	ki3
+覬	ki3
+暨	ki3
+寄	ki3	1%
+驥	ki3
+計	ki3	1%
+砌	kih4
+其	ki5	10%
+期	ki5
+棋	ki5	10%
+奇	ki5	10%
+旗	ki5	10%
+祈	ki5
+歧	ki5
+岐	ki5
+麒	ki5
+琪	ki5
+琦	ki5
+騎	ki5	5%
+祇	ki5
+祁	ki5
+鰭	ki5
+碁	ki5
+伎	ki6
+忌	ki7	10%
+己	ki7
+騎	ki7	5%
+欺	khi1
+敧	khi1
+蹊	khi1
+起	khi2	10%
+齒	khi2
+豈	khi2
+綺	khi2
+企	khi3	10%
+器	khi3	10%
+棄	khi3
+汽	khi3	10%
+氣	khi3	10%
+缺	khih4
+蜞	khi5
+柿	khi6
+忌	khi7
+擬	gi2
+蟻	gi2	0%
+疑	gi5
+宜	gi5
+儀	gi5
+義	gi7
+議	gi7
+誼	gi7
+希	hi1	10%
+稀	hi1
+嘻	hi1
+犧	hi1
+熙	hi1
+嬉	hi1
+羲	hi1
+晞	hi1
+曦	hi1
+熹	hi1
+唏	hi1
+桸	hi1	0%
+喜	hi2	10%
+囍	hi2
+戲	hi3	10%
+耳	hi6	10%
+耳	hinn6	10	#异
+之	tsi1
+枝	tsi1	0%
+支	tsi1
+脂	tsi1
+芝	tsi1
+膣	tsi1
+只	tsi2	10%
+姊	tsi2	10%
+紫	tsi2	10%
+子	tsi2	5%
+止	tsi2	10%
+址	tsi2
+指	tsi2	10%
+紙	tsi2	0%
+旨	tsi2
+咫	tsi2
+芷	tsi2
+趾	tsi2
+祉	tsi2
+誌	tsi3
+志	tsi3	10%
+至	tsi3
+摯	tsi3
+幟	tsi3
+接	tsih4
+摺	tsih4
+糍	tsi5
+舐	tsi6
+舌	tsih8
+折	tsih8
+痴	tshi1
+嗤	tshi1
+癡	tshi1
+鰓	tshi1
+鴟	tshi1
+侈	tshi2
+齒	tshi2	0%
+試	tshi3	10%
+刺	tshi3	10%
+熾	tshi3
+翅	tshi3
+𩑾	tshih4
+爍	tshih4
+持	tshi5
+溡	tshi5
+市	tshi6	10%
+飼	tshi7	10%
+揤	tshih8
+蠘	tshih8
+子	ji2
+而	ji5
+兒	ji5
+字	ji7	10%
+二	ji7	10%
+餌	ji7
+膩	ji7
+詩	si1
+絲	si1
+思	si1
+司	si1
+屍	si1
+施	si1
+私	si1
+鷥	si1
+死	si2	10%
+始	si2
+矢	si2
+四	si3	10%
+世	si3	5%
+弒	si3
+勢	si3	5%
+#試	si3	0%
+薛	sih4
+爍	sih4
+時	si5	10%
+辭	si5
+匙	si5
+弛	si5
+是	si6	10%
+序	si6
+祀	si6
+氏	si6
+恃	si6
+示	si7	10%
+視	si7	10%
+寺	si7
+豉	si7
+侍	si7
+嗜	si7
+諡	si7
+蝕	sih8
+##	inn/innh
+縈	inn1
+穎	inn2
+燕	inn3
+圓	inn5
+丸	inn5
+院	inn7
+邊	pinn1
+鞭	pinn1
+扁	pinn2
+變	pinn3
+辮	pinn6	1%
+偏	phinn1	1%
+篇	phinn1
+片	phinn3
+物	mih4
+綿	mi5
+棉	mi5
+麵	mi7
+物	mih8
+甜	tinn1
+纏	tinn5
+滇	tinn6
+天	thinn1
+添	thinn1
+䋎	thinn7
+染	ni2
+爾	ni2
+耳	ni2	5%
+邇	ni2
+你	ni2	0%
+睰	nih4
+躡	nih4
+鑷	nih4
+年	ni5
+簾	ni5
+鐮	ni5
+尼	ni5
+泥	ni5
+妮	ni5
+呢	ni5
+爾	ni6
+捏	nih8
+## inn
+見	kinn3
+墘	kinn5
+鉗	khinn5
+拑	khinn5
+挕	hinn3
+硯	hinn7
+櫼	tsinn1
+晶	tsinn1
+茈	tsinn2
+箭	tsinn3
+糋	tsinn3
+錢	tsinn5
+簷	tsinn5
+舐	tsinn6
+鮮	tshinn1
+親	tshinn1	1%
+瀳	tshinn5
+扇	sinn3
+鹽	sinn5	1%
+鹽	sinn7	5%
+豉	sinn7
+##	im/ip
+音	im1
+淹	im1
+陰	im1
+飲	im2
+蔭	im3
+廕	im3
+窨	im3
+揖	ip4
+挹	ip4
+邑	ip4
+淫	im5
+頕	tim3
+掂	tim3
+抌	tim3
+沉	tim5
+朕	tim6
+燖	tim7
+鴆	tim7
+蟄	tip8
+琛	thim1
+鴆	thim1
+抌	thim3
+啉	lim1	10%
+臨	lim2
+凜	lim2
+懍	lim2
+林	lim5	10%
+臨	lim5	10%
+淋	lim5
+霖	lim5
+琳	lim5
+賃	lim7
+立	lip8
+粒	lip8
+笠	lip8
+金	kim1
+今	kim1
+禁	kim1
+錦	kim2
+禁	kim3
+急	kip4
+級	kip4
+給	kip4
+汲	kip4
+妗	kim6
+噤	kim7
+及	kip8
+笈	kip8
+欽	khim1
+襟	khim1
+吸	khip4
+泣	khip4
+級	khip4
+禽	khim5
+琴	khim5
+擒	khim5
+扱	khip8
+錦	gim2	1%
+吟	gim5
+岑	gim5
+翕	hip4
+熻	hip4
+熊	him5
+斟	tsim1
+唚	tsim1	10%
+箴	tsim1
+針	tsim1	0%
+枕	tsim2	10%
+嬸	tsim2	10%
+怎	tsim2
+浸	tsim3	10%
+執	tsip4
+唼	tsip4
+緝	tsip4	5%
+蟳	tsim5	10%
+集	tsip8
+輯	tsip8
+深	tshim1
+侵	tshim1
+寢	tshim2
+沁	tshim3
+葺	tship4
+咠	tship4
+緝	tship4
+輯	tship4
+楫	tship4
+岑	tshim5
+忍	jim2	10%
+緝	jip4	5%
+壬	jim5
+任	jim5
+任	jim7	10%
+刃	jim7
+飪	jim7
+妊	jim7
+入	jip8
+心	sim1	10%
+芯	sim1
+參	sim1
+森	sim1
+深	sim1	0%
+沈	sim2
+瀋	sim2
+審	sim2
+嬸	sim2	0%
+滲	sim3
+㽎	sim3	10%
+濕	sip4
+尋	sim5
+甚	sim6	10%
+葚	sim6
+愖	sim7
+習	sip8
+十	sip8
+拾	sip8
+襲	sip8
+什	sip8
+##	in/it
+因	in1	10%
+姻	in1
+怹	in1	10%
+茵	in1
+引	in2	10%
+應	in3	10%
+印	in3
+一	it4	10%
+憶	it4	1%
+乙	it4
+壹	it4
+寅	in5
+孕	in7
+胤	in7
+逸	it8
+佚	it8
+軼	it8
+佾	it8
+賓	pin1
+檳	pin1
+彬	pin1
+斌	pin1
+繽	pin1
+濱	pin1
+稟	pin2
+鬢	pin3
+殯	pin3
+必	pit4
+筆	pit4
+畢	pit4
+蓽	pit4
+頻	pin5	10%
+憑	pin5	10%
+屏	pin5	10%
+嬪	pin5
+顰	pin5
+貧	pin5
+牝	pin6
+弼	pit8
+乒	phin1
+品	phin2
+𥰔	phin2
+匹	phit4
+敏	bin2
+憫	bin2
+抿	bin2
+閔	bin2
+泯	bin2
+民	bin5	10%
+眠	bin5
+明	bin5	1%
+旻	bin5
+岷	bin5
+閩	bin5	0%
+面	bin7	10%
+蜜	bit8
+密	bit8
+宓	bit8
+謐	bit8
+珍	tin1
+津	tin1
+振	tin2	1%
+鎮	tin3
+得	tit4
+藤	tin5
+陳	tin5
+塵	tin5
+陣	tin7
+直	tit8
+值	tit8
+姪	tit8
+秩	tit8	0%
+𨑨	thit4
+斟	thin5
+媵	thin7
+輪	lin1	0%
+恁	lin2
+輾	lin3
+憐	lin5	1%
+麟	lin5
+鄰	lin5
+鱗	lin5	1%
+嶙	lin5
+燐	lin5
+磷	lin5
+吝	lin7
+藺	lin7
+躪	lin7
+栗	lit8	0%
+溧	lit8
+慄	lit8
+今	kin1	5%
+緊	kin2
+囡	kin2
+囡	gin2	#异
+囡	kan2	#异
+謹	kin2
+瑾	kin2
+靳	kin3
+絹	kin3
+吉	kit4	0%
+覲	kin7
+僅	kin7
+汔	kit8
+輕	khin1
+淺	khin2
+肯	khin2
+乞	khit4
+煡	khit4
+吃	khit4
+契	khit4	1%
+睨	gin5
+猌	gin7
+彼	hit4	10%
+迄	hit4
+眩	hin5
+掝	hit8
+真	tsin1	10%
+升	tsin1	1%
+津	tsin1	0%
+蓁	tsin1
+榛	tsin1
+甄	tsin1
+臻	tsin1
+振	tsin2
+拯	tsin2
+診	tsin2
+賑	tsin2
+縝	tsin2
+疹	tsin2
+進	tsin3	10%
+震	tsin3	10%
+晉	tsin3
+這	tsit4	10%
+職	tsit4
+質	tsit4
+即	tsit4
+績	tsit4
+積	tsit4
+脊	tsit4	1%
+織	tsit4
+鯽	tsit4
+桎	tsit4
+繩	tsin5	10%
+秦	tsin5
+盡	tsin6	10%
+儘	tsin6
+贐	tsin6
+一	tsit8	10%
+疾	tsit8
+嫉	tsit8
+親	tshin1	10%
+嗔	tshin1
+瞋	tshin1
+秤	tshin3	10%
+凊	tshin3	10%
+襯	tshin3
+七	tshit4
+拭	tshit4
+𨑨	tshit4
+姼	tshit4
+漆	tshit4	0%
+人	jin5
+仁	jin5
+認	jin7
+仞	jin7
+軔	jin7
+日	jit8
+新	sin1	10%
+身	sin1	10%
+伸	sin1
+辛	sin1
+紳	sin1
+申	sin1
+薪	sin1
+呻	sin1
+娠	sin1
+哂	sin2
+矧	sin2
+信	sin3	10%
+訊	sin3
+迅	sin3
+汛	sin3
+囟	sin3
+失	sit4	10%
+息	sit4
+穡	sit4
+熄	sit4	10%
+膝	sit4	0%
+悉	sit4	0%
+室	sit4	0%
+瑟	sit4
+神	sin5	10%
+承	sin5	10%
+蠅	sin5
+臣	sin5
+辰	sin5
+晨	sin5
+宸	sin5
+蜃	sin6
+腎	sin7
+剩	sin7
+慎	sin7
+實	sit8	10%
+翼	sit8	10%
+食	sit8
+殖	sit8
+植	sit8
+##	ing/ik
+英	ing1	10%
+應	ing1	10%
+嬰	ing1
+瑛	ing1
+櫻	ing1
+鷹	ing1
+鸚	ing1
+坱	ing1
+纓	ing1
+膺	ing1
+瓔	ing1
+縈	ing1
+永	ing2	10%
+往	ing2	10%
+影	ing2
+湧	ing2	10%
+泳	ing2
+穎	ing2
+郢	ing2
+應	ing3
+映	ing3
+蕹	ing3
+壅	ing3
+憶	ik4	10%
+益	ik4	10%
+億	ik4
+臆	ik4
+溢	ik4
+抑	ik4
+扼	ik4
+厄	ik4
+營	ing5
+榮	ing5	10%
+熒	ing5
+盈	ing5
+贏	ing5	0%
+楹	ing5
+瀛	ing5
+用	ing7	10%
+詠	ing7
+譯	ik8	10%
+易	ik8
+疫	ik8
+役	ik8
+亦	ik8
+翼	ik8	5%
+驛	ik8
+域	ik8
+液	ik8
+奕	ik8
+弈	ik8
+腋	ik8
+翌	ik8
+兵	ping1	10%
+崩	ping1
+冰	ping1	10%
+丙	ping2	0%
+餅	ping2	0%
+秉	ping2
+并	ping3
+柄	ping3
+併	ping3
+逼	pik4	10%
+迫	pik4	10%
+百	pik4	1%
+壁	pik4	0%
+伯	pik4
+柏	pik4
+璧	pik4
+平	ping5	10%
+棚	ping5
+朋	ping5	10%
+屏	ping5
+憑	ping5	1%
+秤	ping5
+瓶	ping5
+並	ping6	10%
+病	ping7
+白	pik8	5%
+白	piat8	10%
+帛	pik8
+舶	pik8
+愎	pik8
+拼	phing1
+烹	phing1
+娉	phing1
+砰	phing1
+怦	phing1
+聘	phing3
+姘	phing3
+魄	phik4
+拍	phik4	0%
+伯	phik4
+碧	phik4
+霹	phik4
+辟	phik4
+劈	phik4
+璧	phik4
+珀	phik4
+評	phing5	10%
+蘋	phing5
+坪	phing5
+彭	phing5
+鵬	phing5
+萍	phing5
+苹	phing5
+並	phing6
+猛	bing2
+皿	bing2
+明	bing5
+銘	bing5
+名	bing5	1%
+冥	bing5
+盟	bing5
+鳴	bing5
+螟	bing5
+茗	bing5
+萌	bing5
+孟	bing7
+命	bing7
+默	bik8
+覓	bik8
+麥	bik8
+脈	bik8
+墨	bik8
+陌	bik8
+燈	ting1
+登	ting1
+丁	ting1
+釘	ting1
+叮	ting1
+徵	ting1
+町	ting1
+頂	ting2	10%
+等	ting2	10%
+鼎	ting2
+戥	ting2
+中	ting3
+釘	ting3
+鐙	ting3
+凳	ting3
+德	tik4
+竹	tik4
+的	tik4
+得	tik4
+滴	tik4
+摘	tik4
+嫡	tik4
+謫	tik4
+重	ting5	10%
+庭	ting5
+橙	ting5	5%
+藤	ting5	5%
+亭	ting5
+廷	ting5
+滕	ting5
+澄	ting5
+霆	ting5
+錠	ting6
+定	ting7	10%
+訂	ting7	10%
+鄧	ting7
+碇	ting7
+鄭	ting7
+特	tik8	10%
+擇	tik8	10%
+直	tik8
+值	tik8
+敵	tik8	10%
+澤	tik8
+糴	tik8
+狄	tik8
+笛	tik8
+軸	tik8
+滌	tik8
+迪	tik8
+宅	tik8
+翟	tik8
+廳	thing1
+聽	thing1
+撐	thing1
+瞠	thing1
+挺	thing2
+逞	thing2	10%
+艇	thing2
+騁	thing2
+寵	thing2
+聽	thing3
+畜	thik4
+㜅	thik4
+斥	thik4
+踢	thik4
+敕	thik4
+忒	thik4
+剔	thik4
+惕	thik4
+倜	thik4
+停	thing5	10%
+程	thing5	10%
+程	ting5	10	#异
+騰	thing5
+婷	thing5
+婷	ting5	#异
+呈	thing5
+謄	thing5
+冷	ling2	10%
+伶	ling2
+領	ling2
+嶺	ling2
+躘	ling3
+勒	lik4
+零	ling5	10%
+靈	ling5	10%
+龍	ling5	10%
+龍	liong5	10%
+能	ling5	10%
+玲	ling5
+凌	ling5
+鈴	ling5	10%
+陵	ling5
+寧	ling5	10%
+伶	ling5
+菱	ling5
+綾	ling5
+翎	ling5
+齡	ling5
+聆	ling5
+羚	ling5
+楝	ling6
+另	ling7	10%
+令	ling7	10%
+冗	ling7
+鴒	ling7
+佞	ling7
+甯	ling7
+濘	ling7
+力	lik8	10%
+歷	lik8
+碌	lik8
+綠	lik8	10%
+勒	lik8
+曆	lik8
+匿	lik8
+壢	lik8
+溺	lik8
+肋	lik8
+礫	lik8
+瀝	lik8
+靂	lik8
+暱	lik8
+經	king1	10%
+耕	king1
+驚	king1
+更	king1
+宮	king1	10%
+京	king1
+弓	king1	10%
+供	king1
+羹	king1	0%
+庚	king1
+荊	king1
+兢	king1
+矜	king1
+境	king2	10%
+景	king2	10%
+梗	king2
+龔	king2
+憬	king2
+耿	king2
+哽	king2
+儆	king2
+頸	king2
+炯	king2
+敬	king3	10%
+警	king3	10%
+莖	king3
+更	king3	10%
+鏡	king3	1%
+竟	king3	10%
+勁	king3
+徑	king3
+逕	king3
+革	kik4
+隔	kik4	0%
+格	kik4
+激	kik4	10%
+擊	kik4
+棘	kik4
+戟	kik4
+窮	king5	10%
+楗	king6
+競	king7
+極	kik8	10%
+局	kik8	1%
+框	khing1
+傾	khing1
+卿	khing1
+輕	khing1	0%
+坑	khing1	0%
+鯨	khing1
+銎	khing1
+肯	khing2	10%
+頃	khing2
+慶	khing3	10%
+曲	khik4	10%
+刻	khik4
+客	khik4	0%
+克	khik4
+隙	khik4
+剋	khik4
+瓊	khing5
+窮	khing5	10%
+擎	khing5
+虹	khing6	10%
+迎	ging5
+凝	ging5
+硬	ging6
+玉	gik8
+逆	gik8
+虐	gik8
+額	gik8
+胸	hing1
+興	hing1
+亨	hing1
+兄	hing1
+馨	hing1
+哼	hing1
+興	hing3
+黑	hik4
+赫	hik4
+嚇	hik4
+鬩	hik4
+型	hing5	10%
+刑	hing5
+行	hing5	10%
+形	hing5	10%
+雄	hing5	5%
+雄	hiong5	10%
+橫	hing5	10%
+恆	hing5
+衡	hing5
+邢	hing5
+嶸	hing5
+杏	hing6
+莧	hing6
+悻	hing6
+荇	hing6
+幸	hing7	10%
+行	hing7
+倖	hing7
+肉	hik8
+或	hik8	10%
+惑	hik8
+域	hik8
+獲	hik8
+核	hik8
+劾	hik8
+劃	hik8
+浴	hik8	1%
+精	tsing1	10%
+鐘	tsing1	10%
+舂	tsing1	10%
+增	tsing1	10%
+征	tsing1
+佂	tsing1
+偵	tsing1
+怔	tsing1
+曾	tsing1	1%
+旌	tsing1
+晶	tsing1
+正	tsing1	10%
+僧	tsing1
+爭	tsing1
+眐	tsing1
+睛	tsing1
+菁	tsing1
+蒸	tsing1	10%
+貞	tsing1
+箏	tsing1
+崢	tsing1
+整	tsing2	10%
+腫	tsing2	10%
+種	tsing2
+指	tsing2
+井	tsing2
+阱	tsing2
+拯	tsing2	0%
+症	tsing3	10%
+種	tsing3	10%
+證	tsing3
+正	tsing3
+眾	tsing3	10%
+政	tsing3	10%
+証	tsing3	10%
+諍	tsing3	5%
+叔	tsik4
+燭	tsik4
+擠	tsik4
+責	tsik4
+則	tsik4
+積	tsik4
+績	tsik4
+即	tsik4
+蹟	tsik4
+跡	tsik4
+稷	tsik4
+隻	tsik4
+脊	tsik4
+窄	tsik4
+情	tsing5	10%
+曾	tsing5	10%
+曾	bat4	10%
+從	tsing5
+層	tsing5	0%
+晴	tsing5
+榕	tsing5
+松	tsing5
+靜	tsing6	10%
+淨	tsing7
+贈	tsing7
+靖	tsing7
+靚	tsing7
+寂	tsik8
+籍	tsik8
+藉	tsik8
+賊	tsik8
+清	tshing1
+稱	tshing1
+青	tshing1
+蜻	tshing1
+琤	tshing1
+請	tshing2	5%
+銃	tshing3	10%
+衝	tshing3
+熗	tshing3
+稱	tshing3
+凊	tshing3	0%
+測	tshik4
+策	tshik4
+粟	tshik4
+斥	tshik4
+側	tshik4
+促	tshik4
+惻	tshik4
+慼	tshik4
+尺	tshik4
+赤	tshik4
+戚	tshik4
+叱	tshik4
+膝	tshik4
+冊	tshik4	0%
+松	tshing5
+穿	tshing7
+摵	tshik8
+仍	jing5
+生	sing1
+星	sing1
+聲	sing1	1%
+牲	sing1
+勝	sing1	10%
+僧	sing1
+甥	sing1
+昇	sing1	10%
+升	sing1
+猩	sing1
+笙	sing1
+惺	sing1
+省	sing2
+醒	sing2
+性	sing3	10%
+姓	sing3
+聖	sing3
+勝	sing3
+色	sik4
+適	sik4
+釋	sik4
+式	sik4
+室	sik4
+識	sik4
+索	sik4
+息	sik4
+飾	sik4
+悉	sik4
+昔	sik4
+惜	sik4	5%
+析	sik4
+晰	sik4
+錫	sik4
+塞	sik4
+蟋	sik4
+媳	sik4
+嗇	sik4
+熄	sik4	0%
+成	sing5
+丞	sing5
+承	sing5	10%
+城	sing5
+誠	sing5
+繩	sing5
+乘	sing5
+慂	sing6
+盛	sing7
+剩	sing7
+乘	sing7
+熟	sik8	10%
+席	sik8
+夕	sik8
+汐	sik8
+碩	sik8
+蓆	sik8
+石	sik8
+矽	sik8
+食	sik8	0%
+殖	sik8	0%
+植	sik8	0%
+##	ui/uih
+威	ui1	10%
+揻	ui1
+衣	ui1
+逶	ui1
+偉	ui2	10%
+委	ui2	10%
+葦	ui2
+萎	ui2
+猥	ui2
+鮪	ui2
+慰	ui3	10%
+畏	ui3	10%
+蔚	ui3
+挖	uih4
+圍	ui5	10%
+為	ui5	10%
+唯	ui5	10%
+維	ui5
+遺	ui5	10%
+惟	ui5
+違	ui5
+韋	ui5
+帷	ui5
+位	ui7	10%
+為	ui7
+胃	ui7
+謂	ui7
+緯	ui7
+渭	ui7
+劃	uih8
+劃	uah8
+痱	pui3
+沸	pui3
+肥	pui5	10%
+吠	pui7
+拔	puih8
+拔	peh8
+屁	phui3
+呸	phui3
+微	bui1
+蝛	bui1
+堆	tui1
+追	tui1
+對	tui3
+碓	tui3
+捶	tui5
+錘	tui5
+隊	tui7
+墜	tui7
+懟	tui7
+梯	thui1
+推	thui1
+腿	thui2
+槌	thui5
+錘	thui5
+墜	thui7
+鐳	lui1
+蕊	lui2	10%
+蕾	lui2
+累	lui2
+壘	lui2
+磊	lui2
+瘰	lui3
+雷	lui5	10%
+類	lui7
+淚	lui7
+累	lui7
+彙	lui7
+酹	lui7
+規	kui1	10%
+歸	kui1
+胿	kui1
+圭	kui1
+機	kui1	1%
+龜	kui1
+閨	kui1
+皈	kui1
+奎	kui1
+鬼	kui2	10%
+幾	kui2	10%
+詭	kui2
+軌	kui2
+癸	kui2
+貴	kui3	10%
+季	kui3	10%
+桂	kui3
+瑰	kui3
+挂	kui3	10%
+炅	kui3
+刮	kuih4
+懷	kui5
+葵	kui5
+逵	kui5
+馗	kui5
+揆	kui5
+跪	kui6	10%
+櫃	kui7	10%
+饋	kui7
+匱	kui7
+開	khui1	10%
+虧	khui1
+窺	khui1
+傀	khui2
+詭	khui2
+軌	khui2
+氣	khui3	10%
+愧	khui3
+潰	khui3
+危	gui5
+巍	gui5
+桅	gui5
+魏	gui7
+偽	gui7
+非	hui1	10%
+飛	hui1	5%
+輝	hui1
+揮	hui1
+妃	hui1
+菲	hui1
+徽	hui1
+霏	hui1
+扉	hui1
+麾	hui1
+匪	hui2
+毀	hui2	10%
+菲	hui2
+誹	hui2
+翡	hui2
+斐	hui2
+費	hui3	10%
+肺	hui3
+沸	hui3
+諱	hui3
+卉	hui3
+血	huih4
+瓷	hui5	10%
+肥	hui5	5%
+惠	hui7
+慧	hui7
+蕙	hui7
+彗	hui7
+吠	hui7
+錐	tsui1
+椎	tsui1
+水	tsui2	10%
+嘴	tsui2
+醉	tsui3	10%
+𠞩	tsui5
+悴	tsui7
+萃	tsui7
+誰	tsui7
+瘁	tsui7
+摧	tshui1
+催	tshui1
+吹	tshui1
+推	tshui1
+崔	tshui1
+喙	tshui3	10%
+碎	tshui3
+翠	tshui3
+脆	tshui3
+粹	tshui3
+淬	tshui3
+焠	tshui3
+雖	sui1	10%
+蓑	sui1
+荽	sui1
+綏	sui1
+𦉎	sui1
+媠	sui2	10%
+水	sui2	5%
+髓	sui2
+祟	sui3
+隨	sui5	10%
+誰	sui5
+垂	sui5
+箠	sui5
+隋	sui5
+瑞	sui7
+遂	sui7
+穗	sui7
+睡	sui7
+隧	sui7
+燧	sui7
+邃	sui7
+##	uinn/uinnh(设为uinn/uinnh是为以模糊音解决腔调差异)
+阮	uinn2	1%
+䘼	uinn2
+黃	uinn5	10%
+磺	uinn5
+暈	uinn7
+方	puinn1	1%
+楓	puinn1
+本	puinn2
+飯	puinn7	10%
+晚	mui2
+門	mui5
+問	mui7
+轉	tuinn2
+頓	tuinn3
+傳	tuinn5	1%
+剸	tuinn5
+斷	tuinn6
+褪	thuinn3
+團	thuinn5
+傳	thuinn5	1%
+軟	nui2
+軁	nui3
+卵	nui6
+光	kuinn1
+廣	kuinn2	1%
+管	kuinn2
+卷	kuinn2
+捲	kuinn2
+卷	kuinn3
+貫	kuinn3
+券	kuinn3
+勸	khuinn3
+昏	huinn1
+荒	huinn1
+園	huinn5
+遠	huinn6
+磚	tsuinn1
+鑽	tsuinn3
+全	tsuinn5	1%
+旋	tsuinn7	1%
+村	tshuinn1
+川	tshuinn1	1%
+穿	tshuinn1	5%
+吮	tshuinn2
+串	tshuinn3
+竄	tshuinn3	0%
+酸	suinn1	10%
+孫	suinn1	1%
+栓	suinn1
+痠	suinn1
+算	suinn3	10%
+繏	suinn3
+##	ir/irh
+於	ir1
+於	i5
+於	ti7
+于	ir1
+與	ir2
+予	ir2
+飫	ir3
+飫	ir3	#廈
+余	ir5
+餘	ir5
+妤	ir5
+歟	ir5
+預	ir7	10%
+預	ir7	10	#廈
+譽	ir7
+豫	ir7
+豬	tir1
+豬	tir1	#廈
+著	tir3
+除	tir5
+鋤	tir5
+鋤	tir5	#廈
+躇	tir5
+佇	tir6	10%
+佇	tir6	10	#廈
+苧	tir6
+杼	tir6
+箸	tir7	10%
+箸	tir7	10	#廈
+攄	thir1	5%
+貯	thir2
+杵	thir2
+褚	thir2
+儲	thir2
+儲	thir5
+鋤	thir5
+鋤	thir5	#廈
+汝	lir2	10%
+汝	lir2	20	#廈
+女	lir2
+女	lir2	#廈
+旅	lir2
+驢	lir5
+閭	lir5
+呂	lir6
+侶	lir6
+鋁	lir6
+慮	lir7
+濾	lir7
+居	kir1
+車	kir1	5%
+裾	kir1
+据	kir1
+舉	kir2
+矩	kir2
+鋸	kir3
+據	kir3
+踞	kir3
+倨	kir3
+渠	kir5
+璩	kir5
+距	kir6
+拒	kir6
+巨	kir6
+炬	kir6
+遽	kir7
+扼	kirh8
+祛	khir1
+佉	khir1
+去	khir3	10%
+去	khir3	10	#廈
+語	gir2
+魚	gir5	1%
+漁	gir5
+馭	gir7
+禦	gir7
+御	gir7
+虛	hir1
+墟	hir1
+噓	hir1
+許	hir2
+魚	hir5	10%
+魚	hir5	10	#廈
+漁	hir5
+漁	hir5	#廈
+書	tsir1
+諸	tsir1
+煮	tsir2	10%
+咀	tsir2
+薯	tsir5
+蜍	tsir5
+沮	tsir6
+蛆	tshir1
+舒	tshir1
+狙	tshir1
+苴	tshir1
+趄	tshir1
+鼠	tshir2	10%
+處	tshir2	6%
+處	tshir3	10%
+𩑾	tshirh4
+徐	tshir5
+徐	tshir5	#廈
+汝	jir2	0%
+挐	jir5
+如	jir5	10%
+茹	jir5
+書	sir1
+舒	sir1
+抒	sir1
+紓	sir1
+胥	sir1
+暑	sir2
+恕	sir3
+庶	sir3
+絮	sir3
+徐	sir5
+蜍	sir5
+嶼	sir6
+序	sir6
+緒	sir6
+敘	sir6
+曙	sir7
+##	ur/urh
+資	tsur1	10%
+滋	tsur1
+茲	tsur1
+姿	tsur1
+諮	tsur1
+咨	tsur1
+孜	tsur1
+錙	tsur1
+淄	tsur1
+子	tsur2	10%
+梓	tsur2
+仔	tsur2	5%
+恣	tsur3
+慈	tsur5
+磁	tsur5
+鶿	tsur5
+自	tsur7	10%
+字	tsur7
+差	tshur1
+雌	tshur1
+疵	tshur1
+此	tshur2	10%
+次	tshur3	10%
+司	sur1
+師	sur1
+思	sur1	10%
+斯	sur1
+私	sur1
+史	sur2	10%
+使	sur2
+駛	sur2
+死	sur2
+屎	sur2
+四	sur3	5%
+賜	sur3
+思	sur3
+肆	sur3
+駟	sur3
+使	sur3
+伺	sur3
+詞	sur5	10%
+祠	sur5
+辭	sur5
+似	sur6
+士	sur6	10%
+仕	sur6
+姒	sur6
+祀	sur6
+巳	sur6
+俟	sur6
+事	sur7	10%
+嗣	sur7
+##	er/erh(设为er/erh是为解决腔调差异)
+倭	er1
+呃	erh4
+禍	er6
+䭔	ter1
+短	ter2
+塊	ter3
+戴	ter3
+地	ter3
+啄	terh4
+咧	terh4
+袋	ter7
+代	ter7
+埭	ter7
+胎	ther1	5%
+推	ther1
+退	ther3
+儡	ler2
+裡	ler3
+咧	lerh4
+捩	lerh4
+螺	ler5
+腡	ler5
+㤉	ger5
+災	tser1
+晬	tser3
+嘖	tserh4
+作	tserh4	1%
+坐	tser6
+絕	tserh8
+脆	tsher3
+雪	serh4
+踅	serh8
+##	er/erh
+萵	er1
+鍋	er1
+穢	er3
+飛	per1	10%
+飛	pue1	10%
+掰	per2
+壩	per3
+褙	per3
+賠	per5	10%
+倍	per6	10%
+焙	per7
+背	per7	10%
+背	phainn7	10
+培	per7
+胚	pher1
+坯	pher1
+配	pher3	10%
+杮	pher3
+皮	pher5	10%
+被	pher6	10%
+沫	pherh8
+尾	ber2
+美	ber2
+欲	berh4	10%
+欲	beh4	10	#异
+欲	boh4	10	#异
+糜	ber5
+微	ber5
+未	ber7	10%
+妹	ber7
+襪	berh8
+綴	ter3
+跂	ker2
+果	ker2	5%
+粿	ker2
+過	ker3	10%
+髻	ker3
+鱖	ker3
+郭	kerh4
+蕨	kerh4
+科	kher1
+詼	kher1
+課	kher3
+缺	kherh4
+瘸	kher5
+葵	kher5
+月	gerh8
+灰	her1
+火	her2
+夥	her2
+伙	her2
+貨	her3
+歲	her3
+和	her5
+回	her5
+會	her7
+罪	tser6
+睡	tser7
+吹	tsher1
+炊	tsher1
+髓	tsher2
+箠	tsher5
+揣	tsher7	10%
+挼	jer5
+稅	ser3
+說	serh4
+垂	ser5
+##	ere/ereh
+挨	ere1
+矮	ere2
+揋	ere3
+鞋	ere5
+會	ere6	10%
+會	e6	10	#异
+狹	ereh8
+八	pereh4
+批	phere1
+稗	phere7
+買	bere2
+袂	bere6	10%
+賣	bere7
+底	tere2
+貯	tere2
+題	tere5
+蹄	tere5
+苧	tere6
+地	tere7	10%
+釵	there1
+𠞄	there1
+體	there2	1%
+替	there3	10%
+摕	thereh8
+詈	lere2
+礪	lere3
+犁	lere5
+篱	lere5	1%
+鑢	lere7
+笠	lereh8
+雞	kere1	10%
+街	kere1	10%
+階	kere1
+改	kere2	10%
+解	kere2	5%
+界	kere3	1%
+鍥	kereh4
+圿	kereh4
+潔	kereh4	1%
+膎	kere5
+快	kere7
+溪	khere1
+齧	khere3
+契	khere3
+瞌	khereh4
+篋	khereh4
+匧	khereh4
+夾	gereh4
+夾	ngereh4
+夾	ngeh4
+莢	gereh4
+莢	ngereh4
+莢	ngeh4
+倪	gere5
+藝	gere7	1%
+挾	gereh8
+挾	ngereh8
+挾	ngeh8
+蟹	here6
+節	tsereh4	5%
+齊	tsere5
+濟	tsere7
+截	tsereh8
+初	tshere1	1%
+粞	tshere3
+慼	tshereh4
+䠡	tshere5
+梳	sere1
+蔬	sere1
+疏	sere1
+洗	sere2
+黍	sere2
+細	sere3	10%
+楔	sereh4
+##	ern/ert 改 un/ut
+恩	un1	10%
+殷	un1
+允	un2	10%
+癮	un2
+痕	hun5	10%
+根	kun1	10%
+巾	kun1	10%
+斤	kun1	10%
+筋	kun1
+跟	kun1
+艮	kun3
+近	kun6	10%
+懇	khun2
+墾	khun2
+芹	khun5
+勤	khun5	10%
+迄	gut4
+訖	gut4
+銀	gun5
+睨	gun5
+齦	gun5
+鄞	gun5
+垠	gun5
+沂	gun5
+仡	gut8
+屹	gut8
+兀	gut8
+很	hun2
+狠	hun2
+恨	hun7	10%
+核	hut8
+##	erng/erk ==> ing/ik
+等	terng2
+德	terk4
+得	terk4
+特	terk8
+撐	therng1
+瞠	therng1
+忒	therk4
+忑	therk4
+能	lerng5
+羹	kerng1
+庚	kerng1
+更	kerng1
+更	kerng3
+肯	kherng2
+增	tserng1
+崢	tserng1
+曾	tserng1
+僧	tserng1
+掙	tserng1
+爭	tserng1
+諍	tserng3
+則	tserk4	1%
+曾	tserng5
+賊	tserk8
+蹭	tsherng3
+生	serng1
+牲	serng1
+甥	serng1
+僧	serng1
+塞	serk4
+##	oo/ooh
+烏	oo1	10%
+嗚	oo1
+鄔	oo1
+鎢	oo1
+扝	oo2
+塢	oo2
+惡	oo3	10%
+噁	oo3
+喔	ooh4
+嘔	ooh4
+湖	oo5	10%
+壺	oo5	10%
+胡	oo5
+蝴	oo5
+弧	oo5
+瑚	oo5
+芋	oo7	10%
+晡	poo1
+埔	poo1
+埠	poo1
+蜅	poo1
+補	poo2	10%
+斧	poo2
+脯	poo2
+布	poo3	10%
+傅	poo3
+佈	poo3
+怖	poo3
+播	poo3
+蒲	poo5
+匍	poo5
+酺	poo5
+部	poo6	10%
+步	poo7	10%
+哺	poo7
+捕	poo7
+捗	poo7
+麩	phoo1
+鋪	phoo1
+普	phoo2
+譜	phoo2
+圃	phoo2
+浦	phoo2
+舖	phoo3
+扶	phoo5
+菩	phoo5
+莆	phoo5
+簿	phoo6
+部	phoo6	1%
+廍	phoo7
+摸	boo1
+某	boo2	10%
+牡	boo2
+畝	boo2
+摸	boo5	10%
+模	boo5
+謨	boo5
+摹	boo5
+墓	boo7	10%
+幕	boo7
+慕	boo7
+暮	boo7
+募	boo7
+戊	boo7
+都	too1
+肚	too2	10%
+堵	too2
+賭	too2
+睹	too2
+妒	too3
+蠹	too3
+𪐞	too3
+徒	too5	10%
+圖	too5	10%
+廚	too5
+途	too5
+塗	too5
+屠	too5
+荼	too5
+肚	too6
+杜	too6
+度	too7	10%
+渡	too7
+鍍	too7
+土	thoo2
+吐	thoo2
+吐	thoo3
+兔	thoo3
+塗	thoo5
+涂	thoo5
+予	thoo7	10%
+囉	loo0
+魯	loo2
+滷	loo2
+鹵	loo2
+虜	loo2
+櫓	loo2
+惱	loo2
+勞	loo2	1%
+盧	loo5
+奴	loo5
+爐	loo5
+蘆	loo5
+鱸	loo5
+廬	loo5
+鸕	loo5
+𢲸	loo6
+弩	loo6
+努	loo6
+路	loo7	10%
+露	loo7
+鷺	loo7
+璐	loo7
+蕗	loo7
+孤	koo1	10%
+姑	koo1
+辜	koo1
+菇	koo1
+咕	koo1
+鮕	koo1
+沽	koo1
+蛄	koo1
+古	koo2	10%
+鼓	koo2
+股	koo2
+估	koo2
+賈	koo2
+蠱	koo2
+牯	koo2
+鈷	koo2
+故	koo3	10%
+顧	koo3	10%
+固	koo3
+雇	koo3
+僱	koo3
+錮	koo3
+糊	koo5	10%
+怙	koo6
+箍	khoo1
+呼	khoo1
+枯	khoo1
+苦	khoo2	10%
+許	khoo2
+褲	khoo3	10%
+庫	khoo3
+絝	khoo3
+怐	khoo3
+糊	khoo5	1%
+忤	goo2
+吳	goo5
+梧	goo5
+蜈	goo5
+蜈	gia5	10%
+五	goo6	10%
+午	goo6
+誤	goo7	10%
+悟	goo7
+寤	goo7
+晤	goo7
+呼	hoo1
+虎	hoo2
+唬	hoo2
+滸	hoo2
+琥	hoo2
+戽	hoo3
+乎	hoo5
+狐	hoo5
+葫	hoo5
+蝴	hoo5
+湖	hoo5
+糊	hoo5
+胡	hoo5
+壺	hoo5
+弧	hoo5
+醐	hoo5
+雨	hoo6	10%
+戶	hoo6
+滬	hoo6
+扈	hoo6
+怙	hoo6
+予	hoo7	10%
+互	hoo7	10%
+護	hoo7	10%
+租	tsoo1	10%
+組	tsoo2	10%
+祖	tsoo2
+阻	tsoo2
+俎	tsoo2
+詛	tsoo3
+雛	tsoo5
+助	tsoo7	10%
+粗	tshoo1
+初	tshoo1
+楚	tshoo2
+醋	tshoo3
+措	tshoo3
+穌	soo1
+梳	soo1
+蘇	soo1
+疏	soo1
+酥	soo1
+蔬	soo1
+甦	soo1
+所	soo2	10%
+數	soo3
+素	soo3	10%
+訴	soo3
+溯	soo3
+##	onn/onnh
+唔	onn1
+惡	onn3
+麼	moo2
+𢯾	mooh4
+毛	moo5
+磨	moo5
+魔	moo5
+摩	moo5
+蘑	moo5
+髦	moo5
+冒	moo7
+耄	moo7
+膜	mooh8
+瘼	mooh8
+老	noo2
+兩	noo6
+挪	noo5
+怒	noo7
+懦	noo7
+考	khonn2
+可	khonn2
+拷	khonn2
+烤	khonn2
+坷	khonn2
+五	ngoo2	10%
+我	ngoo2	10%
+午	ngoo2
+仵	ngoo2
+忤	ngoo2
+伍	ngoo2
+偶	ngoo2
+吳	ngoo5
+娥	ngoo5
+鵝	ngoo5	0%
+俄	ngoo5
+峨	ngoo5
+蛾	ngoo5
+吪	ngoo5
+翱	ngoo5
+臥	ngoo7
+傲	ngoo7	10%
+火	honn2
+好	honn3	5%
+耗	honn3
+貨	honn3	5%
+##	o/oh (oo是泉州音oo)
+蒿	o1
+呵	o1
+堝	o1
+窩	o1
+阿	o1	5%
+撾	o1
+襖	o2
+奧	o3
+澳	o3
+懊	o3
+僫	oh4
+蚵	o5	10%
+學	oh8
+褒	po1
+玻	po1
+菠	po1
+保	po2	10%
+寶	po2	10%
+堡	po2
+褓	po2
+鴇	po2
+報	po3	10%
+播	po3
+卜	poh4
+駁	poh4
+婆	po5
+暴	po7
+暴	poo7
+薄	poh8
+箔	poh8
+波	pho1
+坡	pho1
+泡	pho1
+頗	pho2
+破	pho3
+破	phoo3
+粕	phoh4
+樸	phoh4
+抱	pho6
+無	bo5	10%
+帽	bo7
+磨	bo7
+膜	boh8
+瘼	boh8
+莫	boh8
+刀	to1	10%
+都	to1
+多	to1
+多	too1
+哆	to1
+倒	to2
+佗	to2	10%
+島	to2	10%
+島	too2	10%
+禱	to2
+倒	to3	10%
+到	to3	5%
+到	too3	5%
+桌	toh4
+卓	toh4
+逃	to5
+萄	to5
+駝	to5
+陀	to5
+陀	too5
+桃	to5	1%
+陶	to5
+濤	to5
+淘	to5
+沱	to5
+跎	to5
+馱	to5
+道	to6	10%
+道	too6	10%
+舵	to6
+墮	to6
+惰	to6
+就	to7	10%
+導	to7	10%
+導	too7	10%
+盜	to7	10%
+盜	too7	10%
+稻	to7
+悼	to7
+悼	too7
+蹈	to7
+蹈	too7
+著	toh8	1%
+叨	tho1
+饕	tho1
+韜	tho1
+拖	tho1	0%
+討	tho2	10%
+套	tho3
+妥	tho3
+唾	tho3
+桃	tho5	10%
+迌	tho5
+踱	thoh8
+囉	loh0
+囉	lo1
+惱	lo2
+老	lo2
+腦	lo2
+瑙	lo2
+裸	lo2
+落	loh4
+羅	lo5
+勞	lo5	10%
+勞	loo5	10%
+牢	lo5
+醪	lo5	10%
+騾	lo5
+癆	lo5
+那	lo5	1%
+籮	lo5	0%
+邏	lo5
+烙	lo6
+賂	lo7
+賂	loo7
+落	loh8
+駱	loh8
+洛	loh8
+絡	loh8
+糕	ko1
+哥	ko1
+高	ko1	10%
+高	koo1	10%
+歌	ko1
+篙	ko1
+膏	ko1	10%
+鍋	ko1
+戈	ko1
+羔	ko1
+皋	ko1
+咖	ko1
+稿	ko2
+果	ko2	10%
+果	koo2	10%
+裹	ko2
+個	ko3	10%
+告	ko3	10%
+告	koo3	10%
+過	ko3	5%
+過	koo3	5%
+划	ko3
+誥	ko3
+閣	koh4
+胳	koh4
+各	koh4
+笱	ko5
+翱	ko6
+科	kho1
+炣	kho1
+柯	kho1
+窠	kho1
+珂	kho1
+嵙	kho1
+軻	kho1
+考	kho2	10%
+可	kho2	10%
+烤	kho2
+拷	kho2
+洘	kho2	10%
+坷	kho2
+靠	kho3	10%
+靠	khoo3	10%
+課	kho3	10%
+犒	kho3
+熬	go5	10%
+鵝	go5	10%
+俄	go5
+遨	go5
+峨	go5
+娥	go5
+蛾	go5
+鼇	go5
+吪	go5
+翱	go5
+傲	go7	10%
+餓	go7	10%
+臥	go7
+蒿	ho1
+苛	ho1
+好	ho2	10%
+豪	ho5
+荷	ho5
+何	ho5
+和	ho5
+毫	ho5
+河	ho5
+禾	ho5
+壕	ho5
+濠	ho5
+菏	ho5
+鎬	ho6
+浩	ho6
+禍	ho6
+昊	ho6
+皓	ho6
+顥	ho6
+號	ho7	10%
+號	hoo7	10%
+賀	ho7
+鶴	hoh8
+遭	tso1
+慒	tso1
+棗	tso2
+藻	tso2
+澡	tso2
+左	tso2	10%
+左	tsoo2	10%
+早	tso2
+做	tso3	10%
+灶	tso3
+佐	tso3
+作	tsoh4
+槽	tso5
+曹	tso5
+嘈	tso5
+艚	tso5
+造	tso6	10%
+座	tso6
+坐	tso6
+皂	tso6
+昨	tsoh8
+踖	tsoh8
+臊	tsho1
+操	tsho1
+搓	tsho1
+蹉	tsho1
+草	tsho2	5%
+錯	tsho3	10%
+剉	tsho3	10%
+操	tsho3
+噪	tsho3
+挫	tsho3
+糙	tsho3
+銼	tsho3
+𧮙	tshoh4
+挲	so1	10%
+梭	so1
+唆	so1
+騷	so1
+搔	so1
+娑	so1
+鎖	so2	10%
+嫂	so2	10%
+瑣	so2
+燥	so3
+掃	so3
+埽	so3
+躁	so3
+索	soh4
+趖	so5	10%
+##	om/op
+掩	om1
+橐	lop4
+欱	hop4
+參	som1
+森	som1
+##	ong/ok
+汪	ong1
+翁	ong1	5%
+往	ong2	10%
+枉	ong2
+惡	ok4
+屋	ok4
+渥	ok4
+沃	ok4
+王	ong5	10%
+旺	ong7	10%
+榜	pong2
+謗	pong3
+泵	pong3
+卜	pok4
+北	pok4	0%
+烞	pok4
+房	pong5	1%
+旁	pong5
+膀	pong5
+徬	pong5
+磅	pong6
+鎊	pong6
+傍	pong7
+爆	pok8
+暴	pok8	5%
+薄	pok8	1%
+泊	pok8
+僕	pok8
+瀑	pok8
+豐	phong1
+滂	phong1
+乓	phong1
+捧	phong2
+膨	phong3
+碰	phong3
+博	phok4
+撲	phok4
+樸	phok4
+噗	phok4
+搏	phok4
+粕	phok4
+璞	phok4
+噗	phok8
+篷	phong5
+蓬	phong5
+曝	phok8
+摸	bong1
+罔	bong2
+網	bong2
+莽	bong2
+懵	bong2
+蟒	bong2
+檬	bong2
+惘	bong2
+魍	bong2
+甍	bong3
+亡	bong5
+茫	bong5	10%
+盲	bong5
+忙	bong5
+蒙	bong5	10%
+芒	bong5
+濛	bong5
+朦	bong5
+矇	bong5
+望	bong7	10%
+夢	bong7	0%
+忘	bong7
+妄	bong7
+墓	bong7
+目	bok8	5%
+木	bok8
+牧	bok8
+莫	bok8
+寞	bok8
+沐	bok8
+膜	bok8	0%
+漠	bok8
+穆	bok8
+睦	bok8
+邈	bok8
+當	tong1
+東	tong1	0%
+冬	tong1	1%
+鐺	tong1
+黨	tong2
+懂	tong2
+董	tong2
+棟	tong3
+擋	tong3	10%
+檔	tong3
+當	tong3
+凍	tong3	5%
+督	tok4
+啄	tok4
+剁	tok4
+㧻	tok4
+卓	tok4
+琢	tok4
+篤	tok4
+同	tong5	10%
+堂	tong5	5%
+童	tong5
+唐	tong5
+筒	tong5
+塘	tong5	0%
+桐	tong5
+佟	tong5
+瞳	tong5
+幢	tong5
+棠	tong5
+彤	tong5
+螳	tong5
+銅	tong5	1%
+動	tong6	10%
+蕩	tong6
+盪	tong6
+洞	tong7	10%
+撞	tong7
+慟	tong7
+獨	tok8
+濁	tok8
+毒	tok8
+度	tok8
+踱	tok8
+瀆	tok8
+牘	tok8
+犢	tok8
+鐸	tok8
+櫝	tok8
+通	thong1
+湯	thong1	0%
+統	thong2
+捅	thong2
+痛	thong3
+托	thok4
+託	thok4
+拓	thok4
+戳	thok4
+糖	thong5	5%
+讀	thok8	1%
+瑯	long1
+攏	long2	10%
+朗	long2
+籠	long2	1%
+挵	long3
+漉	lok4
+郎	long5	10%
+籠	long5	5%
+農	long5
+狼	long5	10%
+榔	long5	0%
+瓏	long5
+囊	long5	10%
+廊	long5	10%
+膿	long5	5%
+濃	long5
+儂	long5	5%
+聾	long5	5%
+琅	long5
+螂	long5
+瀧	long5
+浪	long7	10%
+弄	long7	0%
+樂	lok8
+落	lok8
+鹿	lok8
+錄	lok8
+洛	lok8
+諾	lok8
+絡	lok8
+碌	lok8
+轆	lok8
+祿	lok8
+駱	lok8
+烙	lok8
+漉	lok8
+光	kong1
+公	kong1
+工	kong1	5%
+功	kong1
+攻	kong1
+缸	kong1	0%
+岡	kong1
+剛	kong1
+崗	kong1
+綱	kong1
+胱	kong1
+蚣	kong1	0%
+肱	kong1
+講	kong2	10%
+廣	kong2
+管	kong2	10%
+栱	kong2
+貢	kong3
+摃	kong3	10%
+鋼	kong3	0%
+國	kok4
+各	kok4
+閣	kok4	1%
+穀	kok4
+郭	kok4
+谷	kok4
+幗	kok4
+摑	kok4
+狂	kong5
+硞	kok8
+康	khong1	10%
+空	khong1	10%
+糠	khong1	0%
+框	khong1	0%
+眶	khong1
+筐	khong1	0%
+匡	khong1
+悾	khong1
+倥	khong1
+孔	khong2
+慷	khong2
+空	khong3
+控	khong3	10%
+抗	khong3
+礦	khong3
+曠	khong3
+炕	khong3	10%
+亢	khong3
+伉	khong3
+壙	khong3
+擴	khok4
+酷	khok4
+硞	khok4
+觳	khok4
+涸	khok4
+廓	khok4
+哭	khok4	5%
+恪	khok4
+硞	khok8
+鱷	khok8
+嘓	khok8
+昂	gong5
+戇	gong7	10%
+鱷	gok8
+愕	gok8
+齶	gok8
+顎	gok8
+噩	gok8
+萼	gok8
+風	hong1	10%
+方	hong1	10%
+瘋	hong1
+芳	hong1	5%
+封	hong1
+豐	hong1
+蜂	hong1	0%
+荒	hong1
+楓	hong1	0%
+峰	hong1	10%
+鋒	hong1
+坊	hong1
+轟	hong1
+慌	hong1
+酆	hong1
+妨	hong1
+烽	hong1
+烘	hong1	0%
+況	hong2	10%
+訪	hong2	10%
+紡	hong2	0%
+仿	hong2	10%
+暀	hong2
+恍	hong2
+諷	hong2
+彷	hong2
+倣	hong2
+謊	hong2
+舫	hong2
+幌	hong2
+放	hong3	10%
+福	hok4
+霍	hok4
+腹	hok4	0%
+幅	hok4
+覆	hok4
+複	hok4
+郝	hok4
+蝠	hok4
+壑	hok4
+皇	hong5	10%
+防	hong5	10%
+逢	hong5
+鴻	hong5
+宏	hong5
+紅	hong5	1%
+洪	hong5
+黃	hong5	1%
+縫	hong5	1%
+虹	hong5
+隍	hong5
+凰	hong5
+煌	hong5
+簧	hong5
+癀	hong5
+馮	hong5
+奉	hong6
+晃	hong6
+鳳	hong7	10%
+縫	hong7	0%
+俸	hong7
+服	hok8
+復	hok8
+袱	hok8
+鶴	hok8
+伏	hok8
+馥	hok8
+穫	hok8
+匐	hok8
+宗	tsong1	10%
+裝	tsong1	10%
+莊	tsong1
+妝	tsong1	10%
+蹤	tsong1
+贓	tsong1
+臧	tsong1
+樁	tsong1
+總	tsong2
+葬	tsong3
+壯	tsong3	10%
+綜	tsong3	10%
+粽	tsong3	0%
+作	tsok4
+叢	tsong5
+藏	tsong5
+崇	tsong5
+琮	tsong5
+奘	tsong6
+藏	tsong7	5%
+狀	tsong7	10%
+臟	tsong7
+族	tsok8
+昨	tsok8
+聰	tshong1
+窗	tshong1	1%
+倉	tshong1
+蒼	tshong1
+瘡	tshong1	0%
+匆	tshong1
+滄	tshong1
+囪	tshong1
+艙	tshong1	0%
+創	tshong3	10%
+愴	tshong3
+簇	tshok4
+錯	tshok4	1%
+床	tshong5	0%
+鑿	tshok8	0%
+桑	song1	1%
+霜	song1	1%
+雙	song1	1%
+鬆	song1	1%
+孀	song1
+爽	song2	10%
+宋	song3
+送	song3	5%
+喪	song3
+束	sok4
+索	sok4
+宿	sok4
+宿	siok4	10%
+宿	hioh4	10%
+速	sok4
+縮	sok4
+肅	sok4
+塑	sok4
+朔	sok4
+倯	song5
+##	io/ioh
+腰	io1	10%
+么	io1
+邀	io1
+育	io1
+喲	io1
+舀	io2
+臆	ioh4
+搖	io5	10%
+窯	io5
+窯	iau5	10%
+姚	io5
+藥	ioh8
+鑰	ioh8
+標	pio1
+摽	pio1
+鏢	pio1
+表	pio2
+錶	pio2	10%
+鰾	pio6
+票	phio3
+漂	phio3
+薸	phio5
+瓢	phio5
+秒	bio2	0%
+描	bio5	0%
+廟	bio7
+釣	tio3
+擢	tioh4
+潮	tio5	1%
+趒	tio5
+趙	tio6
+就	tio7	10%
+銚	tio7
+著	tioh8	10%
+挑	thio1
+糶	thio3
+瞭	lio2
+躼	lio3	10%
+躼	lo3	10
+撩	lio5
+略	lioh8
+略	liok8
+叫	kio3	10%
+腳	kioh4
+橋	kio5
+茄	kio5
+轎	kio7
+竅	khio3
+抾	khioh4
+卻	khioh4	5%
+藠	gio6
+虐	gioh8
+靴	hio1	0%
+歇	hioh4
+葉	hioh8
+鴞	hioh8
+招	tsio1
+蕉	tsio1
+椒	tsio1
+少	tsio2	10%
+照	tsio3	10%
+醮	tsio3
+借	tsioh4
+襀	tsioh4
+灼	tsioh4
+石	tsioh8
+𪁎	tshio1
+笑	tshio3	10%
+俏	tshio3
+尺	tshioh4
+螫	tshioh4
+沢	tshioh4
+蹠	tshioh4
+耀	tshio7
+蓆	tshioh8
+尿	jio7
+燒	sio1
+相	sio1
+蕭	sio1
+霄	sio1
+小	sio2	10%
+惜	sioh4
+荍	sio5
+邵	sio7
+液	sioh8
+寂	sioh8
+##	io/ioh
+歐	io1	0%
+鷗	io1
+謳	io1
+毆	io2
+嘔	io2
+剖	phio2
+母	bio2	5%
+母	bio2	5%	#臺
+謀	bio5
+牟	bio5
+眸	bio5
+貿	bio7
+茂	bio7
+懋	bio7
+斗	tio2
+鬥	tio3
+投	tio5	0%
+豆	tio7	0%
+竇	tio7
+痘	tio7	0%
+荳	tio7
+讀	tio7	0%
+偷	thio1	0%
+透	thio3
+頭	thio5	1%
+簍	lio2
+樓	lio5	0%
+婁	lio5
+陋	lio7
+漏	lio7	0%
+鉤	kio1	0%
+溝	kio1
+勾	kio1
+狗	kio2	0%
+苟	kio2
+枸	kio2
+構	kio3
+購	kio3
+口	khio2
+叩	khio3
+扣	khio3
+寇	khio3
+蔻	khio3
+偶	gio2
+藕	gio2
+否	hio2
+侯	hio5
+後	hio6	10%
+後	hio6	10	#臺
+厚	hio6
+后	hio6
+后	hio6	#臺
+候	hio7
+逅	hio7
+鄒	tsio1
+走	tsio2	0%
+奏	tsio3
+皺	tsio3
+縐	tsio3
+驟	tsio7
+湊	tshio3
+搜	sio1
+叟	sio2
+瘦	sio3
+##	u/uh
+污	u1
+宇	u2
+煦	u3
+噎	uh4
+有	u6	10%
+有	u7	10%
+富	pu3
+發	puh4	5%
+匏	pu5
+炰	pu5
+婦	pu6	1%
+伏	pu7
+殕	phu2
+浦	phuh4
+浮	phu5
+烰	phu5
+芙	phu5
+葡	phu5
+浡	phu7
+浡	phuh8
+母	bu2	10%
+母	bo2	10 #漳
+武	bu2	10%
+侮	bu2	10%
+舞	bu2	10%
+拇	bu2
+鵡	bu2
+無	bu5	10%
+巫	bu5
+誣	bu5
+霧	bu7	10%
+務	bu7	10%
+蛛	tu1
+株	tu1
+誅	tu1
+㧣	tu1
+拄	tu2
+注	tu3
+厾	tuh4
+廚	tu5
+櫥	tu5
+駐	tu7
+揬	tuh8
+托	thuh4
+黜	thuh4
+禿	thuh4
+怢	thuh8
+攄	lu1
+鑢	lu3
+龜	ku1
+痀	ku1
+跔	ku1
+駒	ku1
+駒	khi1
+久	ku2	10%
+韭	ku2
+句	ku3	10%
+灸	ku3
+衢	ku5
+舅	ku6
+舊	ku7	10%
+咕	kuh8
+軀	khu1
+邱	khu1
+坵	khu1
+丘	khu1
+跔	khuh4
+呿	khuh4
+跍	khu5	10%
+柩	khu6
+臼	khu6
+懼	khu7
+具	khu7
+汩	khuh8
+牛	gu5	10%
+夫	hu1
+膚	hu1
+撫	hu1
+孵	hu1
+敷	hu1
+烌	hu1
+麩	hu1
+趺	hu1
+府	hu2	10%
+甫	hu2
+腐	hu2	10%
+撫	hu2
+斧	hu2
+輔	hu2
+腑	hu2
+俯	hu2
+釜	hu2
+赴	hu3	10%
+副	hu3	10%
+富	hu3
+付	hu3	10%
+附	hu3	10%
+咐	hu3
+訃	hu3
+賦	hu3
+煦	hu3
+傅	hu3
+扶	hu5	10%
+符	hu5	10%
+浮	hu5
+芙	hu5
+蜉	hu5
+父	hu6	10	5%
+婦	hu6
+負	hu6	10%
+阜	hu6
+腐	hu7
+珠	tsu1
+朱	tsu1
+硃	tsu1
+茱	tsu1
+主	tsu2	10%
+注	tsu3
+註	tsu3
+蛀	tsu3
+駐	tsu3
+鑄	tsu3
+柱	tsu6
+住	tsu7
+苴	tsu7
+趨	tshu1
+樞	tshu1
+厝	tshu3
+趣	tshu3
+焠	tshuh4
+澍	tshu6
+跙	tshu6
+愈	ju2	10%
+愈	ji2
+裕	ju7
+輸	su1	10%
+軀	su1
+姝	su1
+墅	su2
+戍	su3
+欶	suh4
+速	suh4
+殊	su5	10%
+##	u/uh
+迂	u1
+迂	u1
+羽	u2
+雨	u2
+禹	u2
+盂	u5
+竽	u5
+雩	u5
+#逾	u5
+覦	u5
+#渝	u5
+#瑜	u5
+#榆	u5
+臾	u5
+諛	u5
+芋	u7
+縷	lu2
+屢	lu2
+褸	lu2
+俱	ku1
+具	ku7
+懼	ku7
+區	khu1
+軀	khu1
+驅	khu1
+嶇	khu1
+瞿	khu5
+虞	gu5
+娛	gu5
+愚	gu5
+隅	gu5
+遇	gu7	10%
+寓	gu7
+吁	hu1
+栩	hu2
+詡	hu2
+聚	tsu6
+趨	tshu1
+取	tshu2
+娶	tshu2
+乳	ju2
+庾	ju2
+儒	ju5
+俞	ju5
+蠕	ju5
+瑜	ju5
+愉	ju5
+渝	ju5
+逾	ju5
+孺	ju5
+濡	ju5
+榆	ju5
+諭	ju7
+喻	ju7
+輸	su1	10%
+需	su1	10%
+須	su1	10%
+鬚	su1
+璽	su2
+署	su2
+徙	su2	5%
+樹	su7	5%
+豎	su7	10%
+##	un/ut
+溫	un1	10%
+瘟	un1
+蝹	un1
+穩	un2	10%
+尹	un2
+隕	un2
+殞	un2
+隱	un2
+癮	un2
+蚓	un2
+搵	un3
+蘊	un3
+慍	un3
+醞	un3
+塭	un3
+熨	ut4
+鬱	ut4
+尉	ut4
+雲	un5	5%
+云	un5
+勻	un5	10%
+筠	un5
+芸	un5
+耘	un5
+紜	un5
+蕓	un5
+韻	un7	10%
+運	un7	10%
+暈	un7
+聿	ut8
+遹	ut8
+鷸	ut8
+汩	ut8
+分	pun1	1%
+本	pun2
+畚	pun3
+糞	pun3
+不	put4
+抔	put4
+歕	pun5
+笨	pun6
+佛	put8
+勃	put8
+渤	put8
+菝	put8
+潘	phun1
+奔	phun1
+噴	phun3
+刜	phut4
+怫	phut4
+盆	phun5
+呅	bun1
+吻	bun2
+刎	bun2
+𢪱	but4
+粅	but4
+文	bun5	10%
+門	bun5	5%
+蚊	bun5
+聞	bun5
+紋	bun5
+雯	bun5
+捫	bun5
+們	bun5
+問	bun7	10%
+悶	bun7
+汶	bun7
+紊	bun7
+燜	bun7
+沒	but8
+物	but8
+勿	but8
+歿	but8
+𢪱	but8
+敦	tun1
+屯	tun1
+墩	tun1
+惇	tun1
+噸	tun1
+盾	tun2
+囤	tun2
+頓	tun3	10%
+咄	tut4
+唇	tun5	10%
+脣	tun5
+屯	tun5
+鈍	tun6
+沌	tun6
+遁	tun7
+燉	tun7
+突	tut8	10%
+凸	tut8
+吞	thun1
+椿	thun1
+蹾	thun2
+忳	thun3
+黜	thut4
+禿	thut4
+脫	thut4
+豚	thun5
+塵	thun5
+臀	thun5
+坉	thun7
+脫	thut8
+圇	lun1
+忍	lun2
+輪	lun2
+碖	lun2
+懍	lun2
+甪	lut4
+輪	lun5
+倫	lun5
+淪	lun5
+侖	lun5
+掄	lun5
+圇	lun5
+綸	lun5
+腀	lun5
+崙	lun5
+薐	lun5
+論	lun7	10%
+嫩	lun7
+律	lut8
+率	lut8
+君	kun1
+軍	kun1	10%
+均	kun1
+鈞	kun1
+滾	kun2	10%
+緄	kun2
+頸	kun2	5%
+袞	kun2
+棍	kun3
+骨	kut4	10%
+群	kun5
+拳	kun5
+裙	kun5	10%
+焄	kun5
+窘	kun6
+郡	kun7
+滑	kut8	10%
+掘	kut8
+倔	kut8
+猾	kut8
+崛	kut8
+坤	khun1
+崑	khun1
+鯤	khun1
+昆	khun1
+琨	khun1
+髡	khun1
+捆	khun2
+菌	khun2
+睏	khun3	10%
+困	khun3	10%
+屈	khut4
+窟	khut4
+堀	khut4
+蜷	khun5
+䘿	khut8
+顝	khut8
+阮	gun2	10%
+分	hun1	10%
+薰	hun1	10%
+婚	hun1	10%
+昏	hun1	10%
+吩	hun1
+紛	hun1
+芬	hun1
+氛	hun1
+燻	hun1
+勳	hun1
+勛	hun1
+葷	hun1
+熏	hun1
+壎	hun1
+雰	hun1
+粉	hun2	10%
+訓	hun3	10%
+奮	hun3
+糞	hun3
+忿	hun3
+釁	hun3
+忽	hut4
+惚	hut4
+彿	hut4
+沸	hut4
+囫	hut4
+拂	hut4
+雲	hun5
+魂	hun5	10%
+焚	hun5
+墳	hun5
+渾	hun5
+汾	hun5
+芸	hun5
+餛	hun5
+混	hun6
+憤	hun6
+分	hun7
+份	hun7
+佛	hut8
+尊	tsun1	10%
+遵	tsun1	10%
+諄	tsun1
+樽	tsun1
+準	tsun2	10%
+准	tsun2	10%
+撙	tsun2
+俊	tsun3
+圳	tsun3
+駿	tsun3
+顫	tsun3
+峻	tsun3
+竣	tsun3
+浚	tsun3
+濬	tsun3
+卒	tsut4
+船	tsun5	10%
+存	tsun5	10%
+前	tsun5
+蹲	tsun5
+捘	tsun6	10%
+陣	tsun7	10%
+朮	tsut8
+秫	tsut8
+捽	tsut8
+春	tshun1
+村	tshun1
+伸	tshun1
+忖	tshun2
+蠢	tshun2
+寸	tshun3
+吋	tshun3
+出	tshut4
+齣	tshut4
+猝	tshut4
+存	tshun5
+賰	tshun6	10%
+潤	jun7
+韌	jun7
+閏	jun7
+孫	sun1	10%
+珣	sun1
+荀	sun1
+峋	sun1
+洵	sun1
+蓀	sun1
+損	sun2	10%
+筍	sun2	10%
+恂	sun2
+榫	sun2	10%
+瞬	sun3
+舜	sun3
+遜	sun3
+巽	sun3
+屑	sut4
+摔	sut4
+率	sut4
+蟀	sut4
+戌	sut4
+恤	sut4
+窣	sut4
+巡	sun5	10%
+荀	sun5
+純	sun5
+洵	sun5
+峋	sun5
+詢	sun5
+唇	sun5
+循	sun5
+旬	sun5
+馴	sun5
+淳	sun5
+醇	sun5
+吮	sun6
+順	sun7	10%
+殉	sun7
+術	sut8	10%
+述	sut8
+##	iu/iuh
+憂	iu1
+幽	iu1
+優	iu1	10%
+悠	iu1
+友	iu2	10%
+有	iu2	5%
+誘	iu2
+酉	iu2
+黝	iu2
+莠	iu2
+幼	iu3	10%
+油	iu5	10%
+由	iu5	10%
+猶	iu5
+遊	iu5	10%
+尤	iu5
+游	iu5	10%
+郵	iu5
+攸	iu5
+猷	iu5
+蝣	iu5
+酋	iu5
+又	iu7	10%
+右	iu7	10%
+柚	iu7
+佑	iu7
+祐	iu7
+囿	iu7
+侑	iu7
+宥	iu7
+鼬	iu7
+彪	piu1
+謬	biu7
+繆	biu7
+丟	tiu1
+搐	tiuh4
+肘	tiu5
+晝	tiu5
+綢	tiu5
+稠	tiu5
+躊	tiu5
+籌	tiu5
+疇	tiu5
+惆	tiu5
+儔	tiu5
+宙	tiu6	10%
+紂	tiu6
+冑	tiu6
+胄	tiu6
+粙	tiu6
+住	tiu7	10%
+抽	thiu1
+紬	thiu1
+丑	thiu2
+溜	liu1
+鰡	liu1
+柳	liu2	10%
+扭	liu2
+紐	liu2
+鈕	liu2
+綹	liu2
+流	liu5	5%
+留	liu5
+榴	liu5
+瘤	liu5
+琉	liu5
+硫	liu5
+瀏	liu5
+遛	liu5
+餾	liu7
+勼	kiu1
+九	kiu2	10%
+久	kiu2
+玖	kiu2
+救	kiu3	10%
+究	kiu3
+糾	kiu3	10%
+疚	kiu3
+求	kiu5	10%
+球	kiu5	10%
+裘	kiu5
+毬	kiu5
+逑	kiu5
+仇	kiu5	1%
+舅	kiu6	5%
+柩	kiu6
+臼	kiu6
+舊	kiu7	5%
+咎	kiu7
+啹	kiuh8
+丘	khiu1
+坵	khiu1
+鳩	khiu1
+搝	khiu2	10%
+虯	khiu5	10%
+𩚨	khiu7
+搝	giu2
+牛	giu5	5%
+休	hiu1
+朽	hiu2
+嗅	hiu3
+扏	hiu3
+裘	hiu5
+州	tsiu1
+睭	tsiu1
+洲	tsiu1
+周	tsiu1
+啾	tsiu1
+舟	tsiu1
+酒	tsiu2	10%
+守	tsiu2	10%
+帚	tsiu2
+咒	tsiu3	10%
+蛀	tsiu3	10%
+喌	tsiuh4
+就	tsiu7	10%
+鷲	tsiu7
+秋	tshiu1
+鬚	tshiu1
+羞	tshiu1
+鶖	tshiu1
+鞦	tshiu1
+萩	tshiu1
+手	tshiu2	10%
+帚	tshiu2
+醜	tshiu2
+臭	tshiu3	5%
+愁	tshiu5	10%
+揫	tshiu5
+樹	tshiu7	10%
+柔	jiu5
+揉	jiu5
+鰇	jiu5
+蹂	jiu5
+收	siu1	10%
+修	siu1	10%
+羞	siu1
+脩	siu1
+饈	siu1
+首	siu2
+守	siu2	10%
+手	siu2	0%
+秀	siu3	10%
+宿	siu3
+繡	siu3
+獸	siu3
+狩	siu3
+琇	siu3
+鏽	siu3
+鞘	siu3
+仇	siu5	10%
+酋	siu5
+泅	siu5	10%
+囚	siu5
+酬	siu5
+受	siu6	10%
+壽	siu7	10%
+岫	siu7	10%
+袖	siu7
+授	siu7
+售	siu7
+綬	siu7
+##	iunn/iunnh
+鴦	iunn1
+養	iunn2
+舀	iunn2
+羊	iunn5	10%
+楊	iunn5
+陽	iunn5	1%
+洋	iunn5	10%
+溶	iunn5	10%
+熔	iunn5
+樣	iunn7	10%
+張	tiunn1
+長	tiunn2
+漲	tiunn3
+帳	tiunn3
+脹	tiunn3
+場	tiunn5	10%
+丈	tiunn6
+兩	niu2
+抅	niuh4
+娘	niu5	10%
+量	niu5
+糧	niu5
+梁	niu5
+涼	niu5
+樑	niu5
+量	niu7
+讓	niu7	10%
+薑	kiunn1
+羌	kiunn1
+犟	kiunn7
+腔	khiunn1
+姜	khiunn1
+噤	khiunn7
+扭	ngiu2
+鄉	hiunn1
+香	hiunn1
+章	tsiunn1	10%
+樟	tsiunn1
+漿	tsiunn1
+螿	tsiunn1
+漳	tsiunn1	1%
+掌	tsiunn2
+蔣	tsiunn2
+槳	tsiunn2
+醬	tsiunn3
+障	tsiunn3
+裳	tsiunn5
+癢	tsiunn6	10%
+上	tsiunn6	10%
+槍	tshiunn1
+鯧	tshiunn1
+搶	tshiunn2	10%
+廠	tshiunn2
+唱	tshiunn3	10%
+呛	tshiunn3
+牆	tshiunn5
+楊	tshiunn5
+薔	tshiunn5
+像	tshiunn6	10%
+上	tshiunn6
+象	tshiunn6	10%
+匠	tshiunn7
+傷	siunn1	10%
+相	siunn1	1%
+箱	siunn1
+廂	siunn1
+賞	siunn2
+鯗	siunn2
+相	siunn3	5%
+瘍	siunn5
+想	siunn6	10%
+尚	siunn7
+##	m/mh
+姆	m2
+梅	m5
+莓	m5
+毋	m7	10%
+摁	hmh4
+媒	hm5
+茅	hm5
+默	hmh8
+##	ng/ngh
+嗯	ng1
+央	ng1
+掩	ng1	10%
+秧	ng1
+影	ng2
+向	ng3
+嗯	ngh8
+幫	png1
+楓	png1
+榜	png2
+傍	png7
+嗙	phngh4
+毛	mng5
+物	mngh8
+張	tng1
+當	tng1	10%
+漲	tng2
+當	tng3
+長	tng5	10%
+堂	tng5
+腸	tng5
+唐	tng5	5%
+塘	tng5
+盪	tng6	10%
+蕩	tng6
+丈	tng6
+撞	tng7
+長	tng7
+湯	thng1
+燙	thng3
+糖	thng5
+杖	thng6
+熥	thng7
+碭	thng7
+團	thngh8
+裡	nng0
+郎	nng5
+榔	nng5
+瓤	nng5
+兩	nng6	10%
+缸	kng1
+扛	kng1
+鋼	kng3
+槓	kng3
+康	khng1	1%
+糠	khng1
+囥	khng3	10%
+吭	khngh4
+方	hng1	1%
+坊	hng1
+哼	hngh4
+庄	tsng1
+贓	tsng1
+裝	tsng1
+莊	tsng1
+妝	tsng1
+指	tsng2
+從	tsng5
+狀	tsng7
+臟	tsng7
+伸	tshng1
+倉	tshng1
+瘡	tshng1
+艙	tshng1
+滄	tshng1	1%
+床	tshng5
+擤	tshngh8
+霜	sng1
+桑	sng1
+孀	sng1
+喪	sng1	0%
+耍	sng2	10%
+損	sng2	10%
+繏	sngh4
+床	sng5	1%
+足	tsiok4	10%
+達	tat8	10%
