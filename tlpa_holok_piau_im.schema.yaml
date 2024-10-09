@@ -9,6 +9,14 @@ schema:
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: 基於萌典 API 的 RIME 臺語注音輸入法。
+    【輸入類型】：注音輸入法
+    【拼音系統】：注音符號改良式
+    【字典編碼】：台羅音標
+    【注音符號】：注音符號（ㄒㄧㄚˉ）
+    【侯選清單】：〔siaⁿ⁵〕【ㄙㄧㄚˉ】
+    【聲調標示】：
+      (1) 台羅八聲調；
+      (2) 使用數值標示聲調，以利閱讀。
 
 switches:
   - name: ascii_mode
