@@ -5,7 +5,7 @@
 # 漢字讀者：白話音
 # 漢字標音：使用【台羅音標（TL）】
 ---
-name: tl_ji_khoo_peh_ue_cu_ting
+name: tl_ji_khoo_peh_ue_zu_ting
 version: "0.1.0.0"
 sort: by_weight
 use_preset_votsabulary: false

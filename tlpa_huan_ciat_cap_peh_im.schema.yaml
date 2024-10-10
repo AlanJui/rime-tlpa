@@ -232,7 +232,7 @@ translator:
     # 舌尖音
     - xform/》th/他》/
     - xform/》t(?!h)/地》/
-    - xform/》n(?!g)/耐》/
+    - xform/》n(?!g)(?!\d)/耐》/
     - xform/》l/柳》/
     # 喉音
     - xform/》h/喜》/
