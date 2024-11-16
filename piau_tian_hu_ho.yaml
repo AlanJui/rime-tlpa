@@ -3,6 +3,35 @@
 # encoding: utf-8
 
 punctuator:
+  half_shape:
+    # ':': { commit: 'ㆲ' }
+    # ';': { commit: 'ㄤ' }
+    # '<': { commit: '<' }
+    # '>': { commit: '>' }
+    # '?': { commit: '?' }
+    # "'": { commit: "'" }
+    # '"': { commit: '"' }
+    # '\': { commit: '\' }
+    # '|': { commit: '|' }
+    # '`': ['`']
+    # '~': { commit: '~' }
+    # '!': { commit: '!' }
+    # '@': { commit: '@' }
+    # '#': { commit: '#' }
+    # '$': { commit: '$' }
+    # '%': { commit: '%' }
+    # '^': { commit: '^' }
+    # '&': { commit: '&' }
+    # '*': { commit: '*' }
+    # '(': { commit: '(' }
+    # ')': { commit: ')' }
+    # '_': { commit: '_' }
+    # '=': { commit: '=' }
+    # '+': { commit: '+' }
+    # '[': { commit: '[' }
+    # ']': { commit: ']' }
+    # '{': { commit: '{' }
+    # '}': { commit: '}' }
   full_shape:
     ' ': { commit: '　' }
     '<': [，, ＜, 《, 〈, ︽, ︿]
@@ -32,35 +61,6 @@ punctuator:
     ']': [」, 】, ］, 〕, ﹂, ﹈, ︺]
     '{': [『, 〖, ｛, ﹃, ︷]
     '}': [』, 〗, ｝, ﹄, ︸]
-  half_shape:
-    # ';': { commit: 'ㄤ' }
-    # '<': { commit: '<' }
-    # '>': { commit: '>' }
-    # '?': { commit: '?' }
-    # ':': { commit: ':' }
-    # "'": { commit: "'" }
-    # '"': { commit: '"' }
-    # '\': { commit: '\' }
-    # '|': { commit: '|' }
-    # '`': ['`']
-    # '~': { commit: '~' }
-    # '!': { commit: '!' }
-    # '@': { commit: '@' }
-    # '#': { commit: '#' }
-    # '$': { commit: '$' }
-    # '%': { commit: '%' }
-    # '^': { commit: '^' }
-    # '&': { commit: '&' }
-    # '*': { commit: '*' }
-    # '(': { commit: '(' }
-    # ')': { commit: ')' }
-    # '_': { commit: '_' }
-    # '=': { commit: '=' }
-    # '+': { commit: '+' }
-    # '[': { commit: '[' }
-    # ']': { commit: ']' }
-    # '{': { commit: '{' }
-    # '}': { commit: '}' }
   symbols:
     # Grave -- Full-width punctuations
     '`,': ，
