@@ -6,60 +6,64 @@ customization:
   rime_version: 1.11.2
 patch:
   schema_list:
+    #------------------------------------------------------------------------
     # RIME 官方輸入法
+    #------------------------------------------------------------------------
     # - {schema: luna_pinyin}
     # - {schema: luna_pinyin_simp}
     # - {schema: luna_pinyin_fluency}
     # - {schema: stroke}
-    - {schema: cangjie5}
-    - {schema: cangjie5_express}
-    - {schema: bopomofo}
-    - {schema: bopomofo_express}
-    - {schema: bopomofo_tw}
-    - {schema: terra_pinyin}
-    - {schema: luna_pinyin_tw}
-    - {schema: stroke}
+    # - {schema: cangjie5}
+    # - {schema: cangjie5_express}
+    # - {schema: bopomofo}
+    # - {schema: bopomofo_express}
+    # - {schema: bopomofo_tw}
+    # - {schema: terra_pinyin}
+    # - {schema: luna_pinyin_tw}
+    # - {schema: stroke}
     #------------------------------------------------------------------------
     # 個人常用 RIME 輸入法
+    #------------------------------------------------------------------------
     # - {schema: taigi_tps}
     # - {schema: moetaigi-tsuim}
     # - {schema: moetaigi.unspaced}
     # - {schema: moetaigi-tsuim}
     # - {schema: ngsth_bun}
     #------------------------------------------------------------------------
-    # 台語ㄅㄆㄇ
-    - {schema: tai_gi_bo_po_mo}             
-    #------------------------------------------------------------------------
     # 135 拼音法
-    - {schema: DoMiSo_kb_zu_im}             # 135 拼音法鍵盤
-    - {schema: DoMiSo_Zu_Im}                # 135 拼音法（使用注音符號輸入）
-    - {schema: DoMiSo_Zu_Im2}               # 135 拼音法第二式（使用注音符號輸入）
-    - {schema: DoMiSo_Phing_Im}             # 135 拼音法（使用台語音標輸入）
-    - {schema: DoMiSo_Phing_Im2}            # 135 拼音法（使用台語音標+輸入）
     #------------------------------------------------------------------------
-    # 拼音輸入法
-    - {schema: tlpa_peh_ue}                 # 河洛白話（使用TLPA拼音輸入）
-    - {schema: tlpa_peh_ue_zu_im}           # 河洛白話注音（使用拼音輸入，顯示注音符號標讀音）
-    - {schema: tlpa_peh_ue_hong_im}         # 河洛白話方音（使用拼音輸入，顯示方音符號標讀音）
-    #------------------------------------------------------------------------
-    # 拼音輸入法（仿反切）
-    - {schema: tlpa_huan_ciat_sip_ngoo_im}  # 河洛十五音（使用雅俗通十五音韻書）
-    - {schema: tlpa_huan_ciat_cap_peh_im}   # 河洛十八音（使用拼音輸入，顯示十八音標讀音）
-    - {schema: tlpa_huan_ciat_kong_un}      # 河洛廣韻
-    #------------------------------------------------------------------------
-    # 方音/注音符號輸入法
-    - {schema: tlpa_holok_hong_im}          # 河洛方音
-    - {schema: tlpa_holok_piau_im}          # 河洛標音
-    - {schema: tlpa_holok_zu_im}            # 河洛注音（用注音符號標注音）
+    - { schema: DoMiSo_kb_zu_im }             # 135 拼音法鍵盤
+    - { schema: DoMiSo_Zu_Im }                # 135 拼音法（使用注音符號輸入）
+    - { schema: DoMiSo_Phing_Im }             # 135 拼音法（使用台語音標輸入）
     #------------------------------------------------------------------------
     # 方音符號鍵盤練習
     #------------------------------------------------------------------------
-    - {schema: tlpa_kb_hong_im}             # 方音按鍵練習
-    - {schema: tlpa_kb_zu_im}               # 注音按鍵練習
-    - {schema: tlpa_kb_taigi_abc}           # 台語ABC按鍵練習
+    - { schema: tlpa_kb_hong_im } # 方音按鍵練習
+    - { schema: tlpa_kb_zu_im } # 注音按鍵練習
+    - { schema: tlpa_kb_taigi_abc } # 台語ABC按鍵練習
     #------------------------------------------------------------------------
     # 實驗/測試用
-    - {schema: my_bopomofo}
+    #------------------------------------------------------------------------
+    - { schema: Tai_Gi_BoPoMo }   # 台語ㄅㄆㄇ
+    - { schema: my_bopomofo }
+    #------------------------------------------------------------------------
+    # 方音/注音符號輸入法
+    #------------------------------------------------------------------------
+    - { schema: tlpa_holok_hong_im } # 河洛方音
+    - { schema: tlpa_holok_piau_im } # 河洛標音
+    - { schema: tlpa_holok_zu_im } # 河洛注音（用注音符號標注音）
+    #------------------------------------------------------------------------
+    # 拼音輸入法
+    #------------------------------------------------------------------------
+    - { schema: tlpa_peh_ue } # 河洛白話（使用TLPA拼音輸入）
+    - { schema: tlpa_peh_ue_zu_im } # 河洛白話注音（使用拼音輸入，顯示注音符號標讀音）
+    - { schema: tlpa_peh_ue_hong_im } # 河洛白話方音（使用拼音輸入，顯示方音符號標讀音）
+    #------------------------------------------------------------------------
+    # 拼音輸入法（反切）
+    #------------------------------------------------------------------------
+    - { schema: tlpa_huan_ciat_sip_ngoo_im } # 河洛十五音（使用雅俗通十五音韻書）
+    - { schema: tlpa_huan_ciat_cap_peh_im } # 河洛十八音（使用拼音輸入，顯示十八音標讀音）
+    - { schema: tlpa_huan_ciat_kong_un } # 河洛廣韻
     #------------------------------------------------------------------------
   engine:
     translators:
