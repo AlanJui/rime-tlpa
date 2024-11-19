@@ -67,12 +67,18 @@ translator:
   dictionary: my_bopomofo
   prism: my_bopomofo_libs
   spelling_hints: 3
-  comment_format:
-    __patch:
-      - my_bopomofo:/hau_suan_tuann_sun_hong_im
   preedit_format:
+    #--------------------------------------------------------------------------
+    # 定義【鍵盤輸入列】
+    #--------------------------------------------------------------------------
     __patch:
       - my_bopomofo:/ap_kian_tng_zu_im_hu_ho
+  comment_format:
+    #--------------------------------------------------------------------------
+    # 定義【候選字清單】
+    #--------------------------------------------------------------------------
+    __patch:
+      - my_bopomofo:/hau_suan_tuann
 
 punctuator:
   import_preset: my_bopomofo_lib_keymap
