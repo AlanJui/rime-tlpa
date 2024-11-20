@@ -56,29 +56,28 @@ speller:
   initials: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm.'
   finals:   ' 43657'
   delimiter: "'"
-  use_space: true
   algebra:
     __patch:
-      - my_bopomofo:/phing_im_tng_ji_be
-      - my_bopomofo:/abbreviation
-      - my_bopomofo:/ji_be_tng_ap_kian
+      - my_bopomofo_libs:/phing_im_tng_ji_be
+      - my_bopomofo_libs:/abbreviation
+      - my_bopomofo_libs:/ji_be_tng_ap_kian
 
 translator:
   dictionary: my_bopomofo
   prism: my_bopomofo_libs
   spelling_hints: 3
-  preedit_format:
-    #--------------------------------------------------------------------------
-    # 定義【鍵盤輸入列】
-    #--------------------------------------------------------------------------
-    __patch:
-      - my_bopomofo:/ap_kian_tng_zu_im_hu_ho
   comment_format:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
     __patch:
-      - my_bopomofo:/hau_suan_tuann
+      - my_bopomofo_libs:/hau_suan_tuann
+  preedit_format:
+    #--------------------------------------------------------------------------
+    # 定義【鍵盤輸入列】
+    #--------------------------------------------------------------------------
+    __patch:
+      - my_bopomofo_libs:/ap_kian_tng_zu_im_hu_ho
 
 punctuator:
   import_preset: my_bopomofo_lib_keymap
