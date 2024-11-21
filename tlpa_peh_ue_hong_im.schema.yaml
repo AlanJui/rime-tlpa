@@ -4,7 +4,7 @@
 
 schema:
   schema_id: tlpa_peh_ue_hong_im
-  name: 河洛白話方音
+  name: 台語音標輸入法【附方音符號】
   version: "0.0.2.11"
   author:
     - 居正中 <alanjui.1960@gmail.com>
