@@ -3,7 +3,7 @@
 # encoding: utf-8
 
 schema:
-  schema_id: tlpa_holok_piau_im
+  schema_id: zu_im_piau_im
   name: 河洛標音
   version: "0.0.2.11"
   author:
@@ -232,7 +232,7 @@ speller:
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
-  prism: tlpa_holok_piau_im
+  prism: zu_im_piau_im
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75

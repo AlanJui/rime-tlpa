@@ -3,7 +3,7 @@
 
 schema:
   schema_id: BP_Phing_Im
-  name: 閩拼式拼音輸入法
+  name: 閩拼拼音輸入法
   version: "0.0.3.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>

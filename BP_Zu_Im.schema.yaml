@@ -3,7 +3,7 @@
 
 schema:
   schema_id: BP_Zu_Im
-  name: 閩拼式方音輸入法
+  name: 閩拼方音輸入法
   version: "0.0.3.0"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>

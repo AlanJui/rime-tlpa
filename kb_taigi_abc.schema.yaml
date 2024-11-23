@@ -3,7 +3,7 @@
 
 schema:
   schema_id: kb_taigi_abc
-  name: 台語ABC按鍵練習
+  name: 按鍵練習【台語ABC】
   version: "0.1"
   author:
     - Alan Jui <AlanJui.1960@gmail.com>

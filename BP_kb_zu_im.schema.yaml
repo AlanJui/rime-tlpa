@@ -3,7 +3,7 @@
 
 schema:
   schema_id: BP_kb_zu_im
-  name: 閩拼式注音輸入法【鍵盤練習】
+  name: 按鍵練習【閩拼注音輸入法】
   version: "0.1"
   author:
     - Alan Jui <AlanJui.1960@gmail.com>

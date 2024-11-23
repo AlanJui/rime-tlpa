@@ -3,7 +3,7 @@
 # encoding: utf-8
 
 schema:
-  schema_id: tlpa_holok_hong_im
+  schema_id: zu_im_hong_im
   name: 河洛方音
   version: "v0.0.2.11"
   author: 居正中
@@ -233,7 +233,7 @@ speller:
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
-  prism: tlpa_holok_hong_im
+  prism: zu_im_hong_im
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
