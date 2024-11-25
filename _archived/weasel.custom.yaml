@@ -1,0 +1,54 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.16.0
+  generator: "Weasel::UIStyleSettings"
+  modified_time: "Tue May 21 13:16:43 2024"
+  rime_version: 1.11.2
+patch:
+  # "style/font_face": "BopomofoRuby1909-v1"
+  # "style/font_face": "BopomofoRuby1909-v1, LXGW WenKai Mono"
+  # "style/font_face": "BopomofoRuby1909-v1, Noto Serif TC"
+  # "style/font_face": "BopomofoRuby1909-v1, KaiTi"
+  # "style/font_face": "BopomofoRuby1909-v1, Microsoft JhengHei"
+  # "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
+  # "style/font_face": "BopomofoRuby1909-v1, Noto Serif TC"
+  # "style/font_face": "Iansui 094, Noto Serif TC"
+  # "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
+  # "style/font_face": "Microsoft JhengHei"
+  "style/font_face": "新細明體"
+  "style/font_point": 28
+  "style/horizontal": false
+  "tyle/inline_preedit": true  # 內嵌編碼（僅支持TSF）
+  "style/display_tray_icon": true  # 顯示托盤圖標
+  "key_binder/bindings":
+    - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
+    - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    # 翻頁
+    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+  "switcher/hotkeys":  # 這個列表裏每項定義一個快捷鍵，使哪個都中
+    - "Control+o"      # 輸入輕聲調符號
+    - "Control+n"      # 輸入鼻音韻母
+    - "Control+grave"  # 你看寫法並不  "style/color_scheme": starcraft    # 這項用於選中下面定義的新方案
+  "preset_color_schemes/starcraft":  # 在配色方案列表裏加入標識爲 starcraft 的新方案
+    name: 星際我爭霸／StarCraft
+    author: Contralisk <contralisk@gmail.com>, original artwork by Blizzard Entertainment
+    text_color: 0xccaa88             # 編碼行文字顏色，24位色值，用十六進制書寫方便些，順序是藍綠紅0xBBGGRR
+    candidate_text_color: 0x30bb55   # 候選項文字顏色，當與文字顏色不同時指定
+    back_color: 0x000000             # 底色
+    border_color: 0x1010a0           # 邊框顏色，與底色相同則爲無邊框的效果
+    hilited_text_color: 0xfecb96     # 高亮文字，即與當前高亮候選對應的那部份輸入碼
+    hilited_back_color: 0x000000     # 設定高亮文字的底色，可起到凸顯高亮部份的作用
+    hilited_candidate_text_color: 0x60ffa8  # 高亮候選項的文字顏色，要醒目！
+    hilited_candidate_back_color: 0x000000  # 高亮候選項的底色，若與背景色不同就會顯出光棒是 Ctrl+` 而是與 IBus 一致的表示法

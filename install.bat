@@ -11,22 +11,88 @@ if not exist "%RIME_DIR%" (
     exit /b
 )
 
+:: ===========================================================
 :: 複製文件到 RIME 資料夾
-echo 正在安裝方案文件...
-copy xxx.schema.yaml "%RIME_DIR%"
+:: ===========================================================
+echo 正在安裝【輸入法按鍵練習工具】...
+copy kb_*.schema.yaml "%RIME_DIR%"
 if %errorlevel% neq 0 (
-    echo 無法複製 xxx.schema.yaml，請確認文件是否存在。
+    echo 無法複製 kb_*.schema.yaml，請確認文件是否存在。
     pause
     exit /b
 )
-copy yyy.dict.yaml "%RIME_DIR%"
+
+echo 正在安裝【閩拼式輸入法】...
+copy BP_*.schema.yaml "%RIME_DIR%"
 if %errorlevel% neq 0 (
-    echo 無法複製 yyy.dict.yaml，請確認文件是否存在。
+    echo 無法複製 BP_*.schema.yaml，請確認文件是否存在。
     pause
     exit /b
 )
-copy zzz.custom.yaml "%RIME_DIR%"
-copy my_script.lua "%RIME_DIR%"
+
+echo 正在安裝【注音符號輸入法】...
+copy zu_im_*.schema.yaml "%RIME_DIR%"
+if %errorlevel% neq 0 (
+    echo 無法複製 zu_im_*.schema.yaml，請確認文件是否存在。
+    pause
+    exit /b
+)
+
+echo 正在安裝【台語音標輸入法】...
+copy tlpa_*.schema.yaml "%RIME_DIR%"
+if %errorlevel% neq 0 (
+    echo 無法複製 tlpa_*.schema.yaml，請確認文件是否存在。
+    pause
+    exit /b
+)
+
+echo 正在安裝【反切輸入法】...
+copy huan_ciat_*.schema.yaml "%RIME_DIR%"
+if %errorlevel% neq 0 (
+    echo 無法複製 huan_ciat_*.schema.yaml，請確認文件是否存在。
+    pause
+    exit /b
+)
+
+:: ===========================================================
+:: 複製輸入法使用之漢字庫到 RIME 資料夾
+:: ===========================================================
+
+:: 複製白話音用漢字庫
+copy tl_ji_khoo_peh_ue*.dict.yaml "%RIME_DIR%"
+if %errorlevel% neq 0 (
+    echo 無法複製 tl_ji_khoo_peh_ue*.dict.yaml，請確認文件是否存在。
+    pause
+    exit /b
+)
+
+:: 複製雅俗通十五音用漢字庫
+copy tl_ji_khoo_nga_siok_thong.dict.yaml "%RIME_DIR%"
+if %errorlevel% neq 0 (
+    echo 無法複製 tl_ji_khoo_nga_siok_thong.dict.yaml，請確認文件是否存在。
+    pause
+    exit /b
+)
+
+:: 複製《廣韻》用漢字庫
+copy tl_ji_khoo_kong_un.dict.yaml "%RIME_DIR%"
+if %errorlevel% neq 0 (
+    echo 無法複製 tl_ji_khoo_kong_un.dict.yaml，請確認文件是否存在。
+    pause
+    exit /b
+)
+
+:: 複製輸入法使用之【標點符號】
+copy piau_tian_hu_ho.yaml "%RIME_DIR%"
+copy keymap_*.yaml "%RIME_DIR%"
+if %errorlevel% neq 0 (
+    echo 無法複製標點符號檔【keymap_*.yaml】，請確認文件是否存在。
+    pause
+    exit /b
+)
+
+copy .\config\weasel.custom.yaml "%RIME_DIR%"
+copy rime.lua "%RIME_DIR%"
 if %errorlevel% neq 0 (
     echo 無法複製 Lua 腳本，請確認文件是否存在。
     pause
