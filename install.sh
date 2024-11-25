@@ -16,10 +16,18 @@ fi
 
 # 複製方案文件到 RIME 資料夾
 echo "正在複製必要文件..."
-cp ./xxx.schema.yaml "$RIME_USER_DIR/"
-cp ./yyy.dict.yaml "$RIME_USER_DIR/"
-cp ./zzz.custom.yaml "$RIME_USER_DIR/"  # 如果有自定義配置文件
-cp ./my_script.lua "$RIME_USER_DIR/"   # 複製 Lua 腳本
+cp ./my_*.schema.yaml "$RIME_USER_DIR/"
+cp ./kb_*.schema.yaml "$RIME_USER_DIR/"
+cp ./tlpa_*.schema.yaml "$RIME_USER_DIR/"
+cp ./zu_im_*.schema.yaml "$RIME_USER_DIR/"
+cp ./huan_ciat_*.schema.yaml "$RIME_USER_DIR/"
+cp ./BP_*.schema.yaml "$RIME_USER_DIR/"
+cp ./keymap_*.schema.yaml "$RIME_USER_DIR/"
+cp ./lib*.yaml "$RIME_USER_DIR/"
+cp ./tl_ji_khoo_*.dict.yaml "$RIME_USER_DIR/"
+cp ./config/default.custom.yaml "$RIME_USER_DIR/"  # 如果有自定義配置文件
+cp ./rime.lua "$RIME_USER_DIR/"   # 複製 Lua 腳本
+cp ./lua/*.lua "$RIME_USER_DIR/"   # 複製 Lua 腳本
 
 # 如果有其他必要的文件，也可以在此複製
 # cp ./other_file "$RIME_USER_DIR/"
@@ -37,17 +45,17 @@ else
   cat << EOF >> "$CUSTOM_FILE"
 
 #------------------------------------------------------------------------
+# 實驗/測試用
+#------------------------------------------------------------------------
+# - { schema: Tai_Gi_BoPoMo }       # 台語ㄅㄆㄇ
+# - { schema: my_bopomofo }
+# - { schema: my_hong_im }
+#------------------------------------------------------------------------
 # 方音符號鍵盤練習
 #------------------------------------------------------------------------
 - { schema: kb_hong_im }     # 方音按鍵練習
 - { schema: kb_zu_im }       # 注音按鍵練習
 - { schema: kb_taigi_abc }   # 台語ABC按鍵練習
-#------------------------------------------------------------------------
-# 實驗/測試用
-#------------------------------------------------------------------------
-# - { schema: Tai_Gi_BoPoMo }       # 台語ㄅㄆㄇ
-- { schema: my_bopomofo }
-- { schema: my_hong_im }
 #------------------------------------------------------------------------
 # 類閩拼方案輸入法（方音符號/拼音字母）
 #------------------------------------------------------------------------
