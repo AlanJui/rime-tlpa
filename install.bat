@@ -83,7 +83,6 @@ if %errorlevel% neq 0 (
 )
 
 :: 複製輸入法使用之【標點符號】
-copy piau_tian_hu_ho.yaml "%RIME_DIR%"
 copy keymap_*.yaml "%RIME_DIR%"
 if %errorlevel% neq 0 (
     echo 無法複製標點符號檔【keymap_*.yaml】，請確認文件是否存在。
@@ -91,8 +90,9 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
-copy .\config\weasel.custom.yaml "%RIME_DIR%"
+copy config\weasel.custom.yaml "%RIME_DIR%"
 copy rime.lua "%RIME_DIR%"
+copy lua\*.lua "%RIME_DIR%"
 if %errorlevel% neq 0 (
     echo 無法複製 Lua 腳本，請確認文件是否存在。
     pause
