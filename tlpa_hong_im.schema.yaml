@@ -495,7 +495,7 @@ menu:
 
 style:
   horizontal: false
-  font_face: "BopomofoRuby1909-v1, Noto Serif TC"
+  font_face: "霞鶩文楷 TC, 新細明體"
 
 recognizer:
   import_preset: default
@@ -507,4 +507,4 @@ recognizer:
     reverse_lookup: "`[a-z]*$"
 
 punctuator:
-  import_preset: piau_tian_hu_ho
+  import_preset: keymap_piau_tian

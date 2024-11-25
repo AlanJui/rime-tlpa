@@ -599,6 +599,7 @@ menu:
 
 style:
   horizontal: false
+  font_face: "霞鶩文楷 TC, 新細明體"
 
 recognizer:
   import_preset: default
@@ -609,5 +610,4 @@ recognizer:
     reverse_lookup: "`[a-z]*$"
 
 punctuator:
-  import_preset: default
-
+  import_preset: keymap_piau_tian

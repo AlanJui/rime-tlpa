@@ -200,9 +200,6 @@ custom_phrase:
   enable_sentence: false
   initial_quality: 1
 
-punctuator:
-  import_preset: symbols_yu_alpha
-
 key_binder:
   import_preset: default
   bindings:
@@ -218,3 +215,7 @@ recognizer:
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     punct: '`[^\s]$'
+
+punctuator:
+  import_preset: keymap_piau_tian
+

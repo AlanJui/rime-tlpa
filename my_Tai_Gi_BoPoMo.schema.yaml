@@ -4,7 +4,7 @@
 # 台語ㄅㄆㄇ： https://www.youtube.com/watch?v=EEndKSmeG5I&list=PL3-KKGFJdGz0lOJXfmMOZOUpYSC94TJxX&index=1
 
 schema:
-  schema_id: Tai_Gi_BoPoMo
+  schema_id: my_Tai_Gi_BoPoMo
   name: 台語ㄅㄆㄇ
   version: "0.0.2.11"
   author:
@@ -571,7 +571,7 @@ menu:
 
 style:
   horizontal: false
-  font_face: "BopomofoRuby1909-v1, Noto Serif TC"
+  font_face: "霞鶩文楷 TC, 新細明體"
 
 recognizer:
   import_preset: default
@@ -582,4 +582,4 @@ recognizer:
     punct: '`[^\s]$'
 
 punctuator:
-  import_preset: piau_tian_hu_ho
+  import_preset: keymap_piau_tian

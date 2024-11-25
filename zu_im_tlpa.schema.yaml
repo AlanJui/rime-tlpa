@@ -4,7 +4,7 @@
 
 schema:
   schema_id: zu_im_tlpa
-  name: 河洛注音【台語音標】
+  name: 注音輸入法【台語音標】
   version: "v0.0.2.11"
   author: 居正中
   description: |
@@ -12,7 +12,7 @@ schema:
     【拼音系統】：台語ㄅㄆㄇ
     【字典編碼】：台羅音標
     【鍵盤輸入】：台語注音符號（ㄒㄧㄚˉ : n.u8<SP>）
-    【侯選清單】：ㄒㄧㄚˉ
+    【侯選清單】：ㄒ广ㄧㄚˉ
     【聲調標示】：
       (1) 台羅八聲調；
       (2) 使用數值標示聲調，以利閱讀。
@@ -617,5 +617,4 @@ recognizer:
     reverse_lookup: "`[a-z]*'?$"
 
 punctuator:
-  import_preset: piau_tian_hu_ho
-
+  import_preset: keymap_piau_tian
