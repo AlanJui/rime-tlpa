@@ -5,7 +5,8 @@
 # Linux iBus-RIME: "HOME/.config/ibus/rime"
 # macOS: ~/Library/Rime
 #================================================================================
-RIME_USER_DIR="$HOME/.config/ibus/rime"  # Linux 路徑，macOS 改為 ~/Library/Rime
+# RIME_USER_DIR="$HOME/.config/ibus/rime"  # Linux 路徑，macOS 改為 ~/Library/Rime
+RIME_USER_DIR="$HOME/.config/rime"  # Linux 路徑，macOS 改為 ~/Library/Rime
 CUSTOM_FILE="$RIME_USER_DIR/default.custom.yaml"
 
 # 確保目標資料夾存在

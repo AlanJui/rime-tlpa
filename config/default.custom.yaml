@@ -69,8 +69,7 @@ patch:
     translators:
       - lua_processor@custom_processor
   lua_translator:
-    # script_dir: "/path/to/your/scripts"
+    # script_dir: "$HOME/.config/rime"
     script_dir: "C:\\Users\\AlanJ\\AppData\\Roaming\\Rime"
     custom_processor:
       - custom.lua
-
