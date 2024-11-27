@@ -42,18 +42,17 @@
 
 ## 安裝作業
 
-RIME 在不同作業系統之間，各有不同的「軟體套件名稱」。其下載、安裝操作細節，請
-參考 [Wiki](https://github.com/AlanJui/rime-tlpa/wiki) 中的操作指引文件。以下
-說明為下載及安裝作業之摘要參考。
+本專案所開發之輸入法，其安裝作業流程之概要，摘要說明如下。如對安裝操作細節，
+需要更加詳實之說明，請參考
+[Wiki](https://github.com/AlanJui/rime-tlpa/wiki) 中之安裝作業指引文件。
 
 1. **下載及安裝 [RIME 中州韻輸入法引擎](http://rime.im)**；
 
-   不同作業系統的 RIME 名稱：
+   RIME 可於不同之作業系統運作，且各有其名稱，使用者該擇用何者，請參考如下之說明：
 
    - macOS: 鼠鬚管
    - Windows: 小狼毫
    - Linux: 中州韻 (ibus-rime, fcitx-rime, fcitx5-rime)
-
 
    【註】： 由於 Linux 作業系統發布版眾多（如：Ubuntu, LinuxMint, ArchLinux）...，
             且 Linux 的各個發布版又有不同的【輸入法框架】，如：iBus, Fcitx 和 Gcin...。
@@ -61,10 +60,10 @@ RIME 在不同作業系統之間，各有不同的「軟體套件名稱」。其
             及 fcit5-rime 共三種。所以，在安裝 RIME 之前，得先確認 Linux 作業
             系統安裝的【輸入法框架】為何者。
 
-2. **下載及安裝 [河洛輸入法套件包](https://github.com/AlanJui/rime-taigi/releases) 
+2. **下載及安裝 [輸入法發行套件包](https://github.com/AlanJui/rime-taigi/releases) 
 ZIP 壓縮檔案**；
 
-3. **編輯 RIME 設定檔準備啟用河洛輸入法**；
+3. **編輯 RIME 設定檔，啟用專案之輸入法**；
 
    RIME 設定檔名稱為：`default.custom.yaml`，各作業系統之 RIME 設定檔存放
    `目錄路徑（資料夾）`條列如下：

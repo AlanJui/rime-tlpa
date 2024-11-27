@@ -81,8 +81,8 @@ speller:
     - derive/2/1/ # 第二調 → 第一調
     - derive/5/7/ # 第五調 → 第七調
     # 入聲變調（4 8）
-    # - derive/(?<![ptkh])4/8/ # -ㆷ 第四調 → 第八調
-    # - derive/(?<![ptkh])8/4/ # -ㆷ 第八調 → 第四調
+    - derive/(?<![ptkh])4/8/ # -ㆷ 第四調 → 第八調
+    - derive/(?<![ptkh])8/4/ # -ㆷ 第八調 → 第四調
     # ==========================================================================
     # 韻母編碼
     # ==========================================================================
@@ -238,7 +238,6 @@ translator:
   always_show_comments: true
   initial_quality: 0.75
   comment_format:
-    # - "xlit|pPbmtTnlzcjskKgwhiuaOoeyx@GRIUAQEYXHVWNMB123570|ㄅㄆㆠㄇㄉㄊㄋㄌㄗㄘㆡㄙㄍㄎㆣㄫㄏㄧㄨㄚㆦㄜㆤㄞㄠㄢㄤㆨㆪㆫㆩㆧㆥㆮㆯㆲㆰㆭㄣㆬㄬˉˋ˪ˊ˫˙|"
     #======================================================
     # 令候選字視窗，可顯示兩組「拼音/注音」
     # 左邊：拼音（TLPA 拼音字母）；右邊：注音符號。
@@ -261,6 +260,8 @@ translator:
     #------------------------------------------------------
     # 處理鼻音化韻母
     # a/e/i/O/u/uai/iau/ai/au/ia/io/iu/ua/ui
+    # 鼻音韻母： ann ==> nna ==> Na ==> Ba ==> ㄥㄚ ==> ㆩ
+    # 設定鼻音韻母代表拼音字母 ==> iann = ⁿia; ann = ⁿa
     #------------------------------------------------------
     # - xform/([iu]?(ai|au|[iuaoe]))nn/ⁿ$1/
     - xform/([iu]?(ai|au|[iuaoe]))nn/N$1/
@@ -607,7 +608,6 @@ menu:
 
 style:
   horizontal: false
-  # font_face: "BopomofoRuby1909-v1, Noto Serif TC SemiBold"
   font_face: "霞鶩文楷 TC, 新細明體"
 
 recognizer:
