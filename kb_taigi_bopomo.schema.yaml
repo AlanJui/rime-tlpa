@@ -2,8 +2,8 @@
 # encoding: utf-8
 
 schema:
-  schema_id: kb_taigi_abc
-  name: 按鍵練習【台語ABC】
+  schema_id: kb_taigi_bopomo
+  name: 按鍵練習【台語ㄅㄆㄇ】
   version: "0.1"
   author:
     - Alan Jui <AlanJui.1960@gmail.com>
