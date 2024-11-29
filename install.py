@@ -30,7 +30,6 @@ def install_rime_files(rime_dir):
         "tlpa_*.schema.yaml",
         "zu_im_*.schema.yaml",
         "huan_ciat_*.schema.yaml",
-        "BP_*.schema.yaml",
         "keymap_*.schema.yaml",
         "lib_*.yaml",
         "tl_ji_khoo_*.dict.yaml",

@@ -22,14 +22,6 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
-echo 正在安裝【閩拼式輸入法】...
-copy BP_*.schema.yaml "%RIME_DIR%"
-if %errorlevel% neq 0 (
-    echo 無法複製 BP_*.schema.yaml，請確認文件是否存在。
-    pause
-    exit /b
-)
-
 echo 正在安裝【注音符號輸入法】...
 copy zu_im_*.schema.yaml "%RIME_DIR%"
 if %errorlevel% neq 0 (

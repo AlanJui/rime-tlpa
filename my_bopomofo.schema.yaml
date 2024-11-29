@@ -45,6 +45,7 @@ engine:
     - punct_segmentor
     - fallback_segmentor
   translators:
+    - echo_translator
     - punct_translator
     - table_translator@custom_phrase
     - script_translator
@@ -52,20 +53,20 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657'
-  initials: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm.'
-  finals:   ' 43657'
+  alphabet: '1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:. 43657'
+  initials: '1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:.'
+  finals:   '. 43657'
   delimiter: "'"
   algebra:
     __patch:
       - my_bopomofo_libs:/phing_im_tng_ji_be
       - my_bopomofo_libs:/abbreviation
-      - my_bopomofo_libs:/ji_be_tng_ap_kian
+      - my_bopomofo_libs:/ji_be_tng_jih_kian
 
 translator:
-  dictionary: my_bopomofo
-  prism: my_bopomofo_libs
-  spelling_hints: 3
+  dictionary: tl_ji_khoo_peh_ue
+  prism: my_bopomofo
+  spelling_hints: 20
   comment_format:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
@@ -77,18 +78,15 @@ translator:
     # 定義【鍵盤輸入列】
     #--------------------------------------------------------------------------
     __patch:
-      - my_bopomofo_libs:/ap_kian_tng_zu_im_hu_ho
+      - my_bopomofo_libs:/jih_kian_tng_zu_im_hu_ho
 
-punctuator:
-  import_preset: my_bopomofo_lib_keymap
-
-editor:
-  bindings:
-    # space: toggle_selection
-    space: commit                       # 選擇「備選漢字」
-    Return: commit_composition          # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
 
 key_binder:
   import_preset: default
@@ -99,7 +97,12 @@ key_binder:
     - { when: has_menu, accept: comma, send: comma }      # ㆤ
     - { when: has_menu, accept: period, send: period }    # ㆲ
     - { when: has_menu, accept: minus, send: minus }      # ｎ
-    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
+    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵可用
+    # - { when: composing, accept: colon, send: colon }     # 確保 `:` 鍵可用
+    # - { when: has_menu, accept: colon, send: colon }      # ㆤ
+    - { when: composing, accept: colon, send: "ㆲ" }     # 確保 `:` 鍵可用
+    - { when: has_menu, accept: colon, send: "ㆲ" }      # ㆤ
+    # - { when: always, accept: colon, send: colon }      
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------
@@ -113,23 +116,30 @@ key_binder:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
 
-recognizer:
-  patterns:
-    email: ^[a-z][-_.0-9a-z]*@.*$
-    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
-    url: ^(www[.]|https?:|ftp:|mailto:).*$
-    reverse_lookup: "`[a-z]*'?$"
-    punct: '`[^\s]$'
+editor:
+  bindings:
+    space: commit                           # 選擇「備選漢字」
+    Return: commit_composition              # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
 
 menu:
-  # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
-  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
-  alternative_select_keys: "ABCDEFGHIJ"
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  alternative_select_keys: 12345 #如編碼字符佔用數字鍵則須另設選字鍵
   page_size: 5 #選單每䈎顯示個數
 
 style:
   horizontal: false
   font_face: "霞鶩文楷 TC, 新細明體"
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
 
 punctuator:
   import_preset: keymap_piau_tian
