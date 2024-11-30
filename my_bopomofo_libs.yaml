@@ -115,12 +115,11 @@ phing_im_tng_ji_be:
     - xform/o(?=(m|ng|p|k))/O/
     #------------------------------------------------------------------
     # 其它韻母
-    - derive/ang/[/        # ㄤ = ang
-    - derive/am/{/         # ㆰ = am
-    - derive/an/@/         # ㄢ = an
-
-    - derive/Ong/]/        # ㆲ = ong
-    - derive/Om/}/         # ㆱ = om
+    - derive/am/V/        # ㆰ = am = a + m = a + M = ㄚ + ㆬ
+    - derive/ang/G/       # ㄤ = ang = aW = G 
+    - derive/an/@/        # ㄢ = an  = aN = @
+    - derive/Ong/H/       # ㆲ = ong = o + ng = O + W = ㆦ + ㆭ
+    - derive/Om/D/        # ㆱ = om  = OM 
     
     - xform/ir/R/         # ㆨ = ir
     #------------------------------------------------------------------
@@ -184,7 +183,7 @@ ji_be_tng_jih_kian:
     # 字碼轉按鍵對映：將TLPA拼音字母，編譯成【字碼】後。則此處之定義，可對映
     # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
     #--------------------------------------------------------------------------
-    - "xlit|pbPmtTnlkgKhjzcsJZCSwiuMaOoeyxB@N[WRIUAQEYX}{]123570|1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA: 43657|"
+    - "xlit|pPbmtTnlzcsjZCSJkKgwhiuaOoeyxIUAQEYXRV@GDHMNWB123570|1q!a2wsxyhnbYHNBedEgcuj8ik,9lUJ*I<(L-M0;Oomp/. 43657|"
 
 #==========================================================================
 # 【輸入編輯列】：定義輸入按鍵與注音符號之對映定義（preedit_format）
@@ -197,7 +196,7 @@ jih_kian_tng_zu_im_hu_ho:
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
     #--------------------------------------------------------------------------
     # - "xlit|1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㆡㄗㄘㄙㆢㄐㄑㄒㄥㄧㄨㄇㄚㄛㄜㄝㄞㄠｎㄢㄣㄤㄥㄦㆪㆫㆩㆧㆥㆮㆯㆱㆰㆲˋ˪ˊ˫˙|"
-    - "xlit|1!qa2wsxeEdcbyhnBYHN?ujm8ik,9l.0p;/-UJ*I<(LOA:|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄏㆡㄗㄘㄙㆢㄐㄑㄒㄥㄧㄨㄇㄚㄛㄜㄝㄞㄠㄢㄣㄤㄥㄦㆪㆫㆩㆧㆥㆮㆯㆱㆰㆲ|"
+    - "xlit|1q!a2wsxyhnbYHNBedEgcuj8ik,9lUJ*I<(L-M0;Oomp/.|ㄅㄆㆠㄇㄉㄊㄋㄌㄗㄘㄙㆡㄐㄑㄒㆢㄍㄎㆣㄫㄏㄧㄨㄚㆦㄜㆤㄞㄠㆪㆫㆩㆧㆥㆮㆯㆨㆰㄢㄤㆱㆲㆬㄣㆭㄬ|"
     #--------------------------------------------------------------------------
     # 按鍵轉注音符號：定義鍵盤【按鍵】與【注音符號】的對映關聯
     # 操作輸入法時，在輸入介面壓下的【按鍵】，與之對映的注音符號（ㄅㄆㄇ），
