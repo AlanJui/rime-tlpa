@@ -20,7 +20,7 @@ phing_im_tng_ji_be:
     # ==========================================================================
     # 變調
     # ==========================================================================
-    - derive/6/7/
+    - xform/6/7/
     # 舒聲變調 (17325)
     - derive/1/7/ # 第一調 → 第七調
     - derive/7/3/ # 第七調 → 第三調
@@ -167,11 +167,6 @@ abbreviation:
     - abbrev/^([pPbmtTnlzcjskKgwh]).+(\d)$/$1/
     # 舒聲調（平、上、去聲）之漢字，可免調號（1/2/3/5/7）；但【入聲】（調號：4/8）不適用。
     - abbrev/^(\D+)([12357])$/$1/
-    # 將入聲韻母+入聲調號統一為【0】: abbrev/[iuaoOeIUMLQYWNM]+[48]/0/  
-    # - abbrev/^(ap|at|ak|ah|annh|aih|ainn|auh|aunnh|ek|eeh|eh|ennh|ip|it|ik|ih|innh|iap|iat|iak|iah|iannh|iauh|ioh|iok|iooh|iuh|iunnh|erh|oh|op|ok|ooh|onnh|irp|irt|irk|irh|ut|uh|uat|uah|ueeh|ueh|ereh|mh|ngh)1$/0/
-    # - abbrev/(ap|at|ak|ah|Bah|yh|By|xh|Bxh|ek|eeh|eh|Beh|ip|it|ik|ih|Bih|iap|iat|iak|iah|Biah|ixh|iOh|iOk|iOh|iuh|Biuh|erh|oh|Op|Ok|Oh|Boh|irp|irt|irk|irh|ut|uh|uat|uah|ueeh|ueh|ereh|Mh|Wh)0/0/
-    # 用 B 代表所有的鼻音母音
-    # - abbrev/[iu]?B[iuaOeyx](\d)/B$1/  
 
 
 #==========================================================================
