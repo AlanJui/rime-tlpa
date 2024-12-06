@@ -60,8 +60,11 @@ speller:
   use_space: true
   algebra:
     __patch:
+      # 定義【注音符號】之【注音編碼】
       - lib_zu_im:/phing_im_tng_ji_be
+      # 定義輸入時之【縮寫原則】
       - lib_zu_im:/abbreviation
+      # 定義【注音編碼】與【鍵盤按鍵】對映關聯
       - lib_zu_im:/ji_be_tng_jih_kian
 
 
@@ -76,14 +79,22 @@ translator:
     # 定義【鍵盤輸入列】
     #--------------------------------------------------------------------------
     __patch:
+      # 依據鍵盤輸入之【按鍵】，顯示【方音符號】用注音符號
       - lib_zu_im:/jih_kian_tng_zu_im_hu_ho
   comment_format:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
     __patch:
-      - lib_hau_suan_ji_tuann:/tai_gi_phing_im_kap_tai_gi_zu_im
-      - lib_hau_suan_ji_tuann:/zu_im_hu_ho
+      # 候選字單起頭
+      - lib_hau_suan_ji_tuann:/hau_suan_ji_tuann
+      # 候選字單右半邊：注音符號【聲母】
+      - lib_hau_suan_ji_tuann:/zu_im_hu_ho_siann_bu
+      # 候選字單右半邊：注音符號【韻母】
+      - lib_hau_suan_ji_tuann:/zu_im_un_bu
+      # 候選字單右半邊：注音符號【声調】
+      - lib_hau_suan_ji_tuann:/zu_im_tiau_ho
+      # 候選字單左半邊：拼音字母【台羅音標】
       - lib_hau_suan_ji_tuann:/tl_phing_im
 
 custom_phrase:
