@@ -89,7 +89,7 @@ translator:
       # 候選字單起頭
       - lib_hau_suan_ji_tuann:/hau_suan_ji_tuann
       # 候選字單右半邊：注音符號【聲母】
-      - lib_hau_suan_ji_tuann:/zu_im_hu_ho_siann_bu
+      - lib_hau_suan_ji_tuann:/zu_im_siann_bu
       # 候選字單右半邊：注音符號【韻母】
       - lib_hau_suan_ji_tuann:/zu_im_un_bu
       # 候選字單右半邊：注音符號【声調】

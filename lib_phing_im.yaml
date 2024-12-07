@@ -37,7 +37,6 @@ phing_im_tng_ji_be:
     # - xform/er(n|t)/u$1/
     # - xform/ere/ue/
     # - xform/er/e/
-
     - derive/ei/e/	  # 漳州腔
     - derive/ur/u/	  # 廈門腔
     - derive/ou/oo/
@@ -73,7 +72,7 @@ abbreviation:
     - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
 
 
-ji_be_tng_ji_kian:
+ji_be_tng_jih_kian:
   #======================================================
   # 定義【注音符號】之【符號編碼】與【鍵盤按鍵】之對映關聯。
   #------------------------------------------------------
@@ -93,7 +92,7 @@ ji_be_tng_ji_kian:
     - xlit|12357480|;\_/-[].|
 
 
-jih_kian_tng_zu_im_hu_ho:
+jih_kian_tng_uann:
   #======================================================
   # 【輸入編輯列(preedit_format)】：定義輸入按鍵與注音符號之對映定義
   # 操作輸入法時，在輸入介面壓下的【按鍵】，與之對映的注音符號（ㄅㄆㄇ），

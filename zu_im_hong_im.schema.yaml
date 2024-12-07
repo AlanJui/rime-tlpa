@@ -89,13 +89,13 @@ translator:
       # 候選字單起頭
       - lib_hau_suan_ji_tuann:/hau_suan_ji_tuann
       # 候選字單右半邊：注音符號【聲母】
-      - lib_hau_suan_ji_tuann:/zu_im_hu_ho_siann_bu
+      - lib_hau_suan_ji_tuann:/zu_im_siann_bu
       # 候選字單右半邊：注音符號【韻母】
       - lib_hau_suan_ji_tuann:/zu_im_un_bu
       # 候選字單右半邊：注音符號【声調】
       - lib_hau_suan_ji_tuann:/zu_im_tiau_ho
       # 候選字單左半邊：拼音字母【台羅音標】
-      - lib_hau_suan_ji_tuann:/tl_phing_im
+      - lib_hau_suan_ji_tuann:/phing_im_tl
 
 custom_phrase:
   dictionary: ""
