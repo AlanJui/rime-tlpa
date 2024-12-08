@@ -59,9 +59,7 @@ speller:
   use_space: true
   algebra:
     __patch:
-      - my_bopomofo_libs:/phing_im_tng_ji_be
-      - my_bopomofo_libs:/abbreviation
-      - my_bopomofo_libs:/ji_be_tng_jih_kian
+      - my_bopomofo_libs:/zu_im_hu_ho_pinn_be
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -73,14 +71,81 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【鍵盤輸入列】
     #--------------------------------------------------------------------------
-    __patch:
-      - my_bopomofo_libs:/jih_kian_tng_zu_im_hu_ho
+    __include: jih_kian
+    __append:
+      #==========================================================================
+      # 【方音符號】對映【台語BoPoMo】
+      #==========================================================================
+      # 濁聲母轉換
+      # - xform/ㆠ/万/      # b
+      # - xform/ㆣ/兀/      # g
+      # - xform/ㄫ/⁰兀/     # ng
+      # - xform/ㆡ/ㄖ/      # j
+      # - xform/ㆢ/ㄖ/      # ji-
+      #--------------------------------------------------------------------------
+      # 鼻音韻母轉換
+      #--------------------------------------------------------------------------
+      # 複合鼻音韻母： Nia, Niau, Niu; Nua, Nuai, Nui
+      - xform/ㄧㆩ/ㄬㄧㄚ/      # iann = Nia   
+      - xform/ㄧㆯ/ㄬㄧㄠ/      # iaunn = Niau
+      - xform/ㄧㆫ/ㄬㄧㄨ/      # iunn = Niu
+      - xform/ㄨㆩ/ㄬㄨㄚ/      # uann = Nua
+      - xform/ㄨㆮ/ㄬㄨㄞ/      # uainn = Nuai
+      - xform/ㄨㆪ/ㄬㄨㄧ/# uinn = Nui
+      # 元音/複合鼻音韻母
+      - xform/ㆪ/ㄬㄧ/
+      - xform/ㆫ/ㄬㄨ/
+      - xform/ㆩ/ㄬㄚ/
+      - xform/ㆧ/ㄬㆦ/
+      - xform/ㆥ/ㄬㄝ/
+      - xform/ㆮ/ㄬㄞ/
+      - xform/ㆯ/ㄬㄠ/
+      # 鼻化韻符號轉換
+      - xform/ㄬ//
+      #--------------------------------------------------------------------------
+      # 韻母校調
+      #--------------------------------------------------------------------------
+      - xform/ㄫ/ㄥ/          # ng-
+      #
+      - xform/ㆭ/ㄥ/          # -ng
+      - xform/ㆲ/ㄛㄥ/	      # ong
+      #
+      - xform/ㆬ/ㄇ/          # -m
+      - xform/ㆰ/ㄚㄇ/	      # am
+      - xform/ㆱ/ㄛㄇ/	      # om
+      #
+      - xform/ㆤ/ㄝ/          # e 	
+      - xform/ㆦ/ㄛ/          # oo	
+      #--------------------------------------------------------------------------
+      # 轉換成聲調符號
+      #--------------------------------------------------------------------------
+      - xform/ /ˉ/   # ¹  ˉ   陰平
+      - xform/6/ˊ/   # ⁵  ˊ   陽平
+      - xform/4/ˋ/   # ²  ˋ   上声
+      - xform/3/ˇ/   # ³  ˪   陰去
+      - xform/5/+/   # ⁷  ˫   陽去
+      - xform/7/˙/   # ⁰  ˙   陰入/陽入：輕聲標點符號表：入声字（陰入/陽入）
   comment_format:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
     __patch:
-      - my_bopomofo_libs:/hau_suan_tuann
+      # 【候選字單】主體架構
+      - my_bopomofo_libs:/hau_suan_tuann/ke_coo
+      # 右半邊：台語音標-注音
+      - my_bopomofo_libs:/tai_gi_bopomo/siann_bu_tng_uann
+      - my_bopomofo_libs:/hau_suan_tuann/ziann_ping/un_bu
+      - my_bopomofo_libs:/tai_gi_bopomo/un_bu_tng_uann
+      - my_bopomofo_libs:/tai_gi_bopomo/siann_tiau
+      # 左半邊：台語音標-拼音
+      - my_bopomofo_libs:/hau_suan_tuann/to_ping
+
+jih_kian:
+  #--------------------------------------------------------------------------
+  # 按鍵與方音符號對映
+  #--------------------------------------------------------------------------
+  __patch: 
+    - my_bopomofo_libs:/jih_kian_tng_uann
 
 custom_phrase:
   dictionary: ""
