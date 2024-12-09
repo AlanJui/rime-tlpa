@@ -125,20 +125,35 @@ translator:
       - xform/3/ˇ/   # ³  ˪   陰去
       - xform/5/+/   # ⁷  ˫   陽去
       - xform/7/˙/   # ⁰  ˙   陰入/陽入：輕聲標點符號表：入声字（陰入/陽入）
+      #------------------------------------------------------
+      # 入聲韻尾： ㄅ(p), ㄉ(t), ㄍ(k), ㄏ(h),  
+      #------------------------------------------------------
+      - xform/ㄅ(˙)/ㆴ$1/    # ㄅ = p
+      - xform/ㄉ(˙)/ㆵ$1/    # ㄉ = t
+      - xform/ㄍ(˙)/ㆻ$1/    # ㄍ = k
+      - xform/ㄏ(˙)/ㆷ$1/    # ㄏ = h
   comment_format:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
     __patch:
       # 【候選字單】主體架構
-      - my_bopomofo_libs:/hau_suan_tuann/ke_coo
+      - my_bopomofo_libs:/hau_suan_tuann
+      #-----------------------------------------
       # 右半邊：台語音標-注音
-      - my_bopomofo_libs:/tai_gi_bopomo/siann_bu_tng_uann
-      - my_bopomofo_libs:/hau_suan_tuann/ziann_ping/un_bu
-      - my_bopomofo_libs:/tai_gi_bopomo/un_bu_tng_uann
-      - my_bopomofo_libs:/tai_gi_bopomo/siann_tiau
+      # 【声母】
+      # - my_bopomofo_libs:/ziann_ping_siann_bu
+      - my_bopomofo_libs:/Tai_Gi_BoPoMo_siann_bu_tng_uann
+      # 【韻母】
+      - my_bopomofo_libs:/ziann_ping_un_bu
+      # - my_bopomofo_libs:/ziann_ping_un_bu_tng_tai_gi_bopomo
+      - my_bopomofo_libs:/Tai_Gi_BoPoMo_un_bu_tng_uann
+      # 【声調】
+      # - my_bopomofo_libs:/ziann_ping_siann_tiau
+      - my_bopomofo_libs:/Tai_Gi_BoPoMo_siann_tiau
+      #-----------------------------------------
       # 左半邊：台語音標-拼音
-      - my_bopomofo_libs:/hau_suan_tuann/to_ping
+      - my_bopomofo_libs:/to_ping_tl
 
 jih_kian:
   #--------------------------------------------------------------------------
