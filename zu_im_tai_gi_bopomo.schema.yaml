@@ -1,23 +1,23 @@
 # Rime schema
 # vim: set sw=2 sts=2 et:
 # encoding: utf-8
+# 台語ㄅㄆㄇ： https://www.youtube.com/watch?v=EEndKSmeG5I&list=PL3-KKGFJdGz0lOJXfmMOZOUpYSC94TJxX&index=1
 
 schema:
-  schema_id: zu_im_hong_im
-  name: 注音輸入法【方音符號】
-  version: "v0.0.2.11"
-  author: 居正中
-  description: |
+  schema_id: zu_im_tai_gi_bopomo
+  name: 注音輸入法【台語ㄅㄆㄇ】
+  version: "0.0.2.11"
+  author:
+    - 居正中 AlanJui <alanjui.1960@gmail.com>
+  description: 基於萌典 API 的 RIME 臺語注音輸入法。
     【輸入類型】：注音輸入法
-    【拼音系統】：方音符號
+    【拼音系統】：注音符號改良式
     【字典編碼】：台羅音標
-    【注音輸入】：方音符號（聲：ㄒㄧㆩˉ：nu*<SP>）
-    【侯選清單】：〔sⁿia¹〕\n 【ㄒㄧㆩˉ】
+    【注音輸入】：注音符號（ㄒㄧㄚˉ）
+    【侯選清單】：〔siaⁿ⁵〕【ㄙㄧㄚˉ】
     【聲調標示】：
       (1) 台羅八聲調；
       (2) 使用數值標示聲調，以利閱讀。
-  dependencies:
-    - stroke
 
 switches:
   - name: ascii_mode
@@ -36,9 +36,7 @@ engine:
     - punctuator
     - selector
     - navigator
-    - express_editor
-    # - fluency_editor
-    # - fluid_editor
+    - fluency_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -46,6 +44,7 @@ engine:
     - punct_segmentor
     - fallback_segmentor
   translators:
+    - echo_translator
     - punct_translator
     - table_translator@custom_phrase
     - script_translator
@@ -53,8 +52,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657'
-  initials: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm.'
+  alphabet: '1q!a2wsxyhnbYHNBedEgcuj8ik,9lUJ*I<(L-M0;Oomp/. 43657'
+  initials: '1q!a2wsxyhnbYHNBedEgcuj8ik,9lUJ*I<(L-M0;Oomp/.'
   finals:   ' 43657'
   delimiter: "'"
   use_space: true
@@ -67,7 +66,7 @@ speller:
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
-  prism: zu_im_hong_im
+  prism: my_Tai_Gi_BoPoMo
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -77,14 +76,57 @@ translator:
     #--------------------------------------------------------------------------
     __include: jih_kian
     __append:
-      #------------------------------------------------------
-      # 按鍵轉調等：將按鍵之輸入轉換成【聲調符號】
-      #------------------------------------------------------
+      #==========================================================================
+      # 【方音符號】對映【台語BoPoMo】
+      #==========================================================================
+      # 濁聲母轉換
+      # - xform/ㆠ/万/      # b
+      # - xform/ㆣ/兀/      # g
+      # - xform/ㄫ/⁰兀/     # ng
+      # - xform/ㆡ/ㄖ/      # j
+      # - xform/ㆢ/ㄖ/      # ji-
+      #--------------------------------------------------------------------------
+      # 鼻音韻母轉換
+      #--------------------------------------------------------------------------
+      # 複合鼻音韻母： Nia, Niau, Niu; Nua, Nuai, Nui
+      - xform/ㄧㆩ/ㄬㄧㄚ/      # iann = Nia   
+      - xform/ㄧㆯ/ㄬㄧㄠ/      # iaunn = Niau
+      - xform/ㄧㆫ/ㄬㄧㄨ/      # iunn = Niu
+      - xform/ㄨㆩ/ㄬㄨㄚ/      # uann = Nua
+      - xform/ㄨㆮ/ㄬㄨㄞ/      # uainn = Nuai
+      - xform/ㄨㆪ/ㄬㄨㄧ/# uinn = Nui
+      # 元音/複合鼻音韻母
+      - xform/ㆪ/ㄬㄧ/
+      - xform/ㆫ/ㄬㄨ/
+      - xform/ㆩ/ㄬㄚ/
+      - xform/ㆧ/ㄬㆦ/
+      - xform/ㆥ/ㄬㄝ/
+      - xform/ㆮ/ㄬㄞ/
+      - xform/ㆯ/ㄬㄠ/
+      # 鼻化韻符號轉換
+      - xform/ㄬ//
+      #--------------------------------------------------------------------------
+      # 韻母校調
+      #--------------------------------------------------------------------------
+      - xform/ㄫ/ㄥ/          # ng-
+      #
+      - xform/ㆭ/ㄥ/          # -ng
+      - xform/ㆲ/ㄛㄥ/	      # ong
+      #
+      - xform/ㆬ/ㄇ/          # -m
+      - xform/ㆰ/ㄚㄇ/	      # am
+      - xform/ㆱ/ㄛㄇ/	      # om
+      #
+      - xform/ㆤ/ㄝ/          # e 	
+      - xform/ㆦ/ㄛ/          # oo	
+      #--------------------------------------------------------------------------
+      # 轉換成聲調符號
+      #--------------------------------------------------------------------------
       - xform/ /ˉ/   # ¹  ˉ   陰平
       - xform/6/ˊ/   # ⁵  ˊ   陽平
       - xform/4/ˋ/   # ²  ˋ   上声
-      - xform/3/˪/   # ³  ˪   陰去
-      - xform/5/˫/   # ⁷  ˫   陽去
+      - xform/3/ˇ/   # ³  ˪   陰去
+      - xform/5/+/   # ⁷  ˫   陽去
       - xform/7/˙/   # ⁰  ˙   陰入/陽入：輕聲標點符號表：入声字（陰入/陽入）
       #------------------------------------------------------
       # 入聲韻尾： ㄅ(p), ㄉ(t), ㄍ(k), ㄏ(h),  
@@ -103,11 +145,15 @@ translator:
       #-----------------------------------------
       # 右半邊：台語音標-注音
       # 【声母】
-      - lib_zu_im:/ziann_ping_siann_bu
+      # - lib_zu_im:/ziann_ping_siann_bu
+      - lib_zu_im:/Tai_Gi_BoPoMo_siann_bu_tng_uann
       # 【韻母】
       - lib_zu_im:/ziann_ping_un_bu
+      # - lib_zu_im:/ziann_ping_un_bu_tng_tai_gi_bopomo
+      - lib_zu_im:/Tai_Gi_BoPoMo_un_bu_tng_uann
       # 【声調】
-      - lib_zu_im:/ziann_ping_siann_tiau
+      # - lib_zu_im:/ziann_ping_siann_tiau
+      - lib_zu_im:/Tai_Gi_BoPoMo_siann_tiau
       #-----------------------------------------
       # 左半邊：台語音標-拼音
       - lib_zu_im:/to_ping_tl
@@ -131,21 +177,17 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 使用【:】鍵，輸入【韻母】：ㆲ
-    # - { when: composing, accept: colon, send: colon }
-    # - { when: has_menu, accept: colon, send: colon  }
+    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
     #---------------------------------------------------
-    # 使用【_】鍵，輸入【調號】：3 （低音調）
-    - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu, accept: underscore, send: underscore  }
-    #---------------------------------------------------
-    # 使用【-】鍵，輸入【調號】：7 （中音調）
-    - { when: composing, accept: minus, send: minus }
-    - { when: has_menu, accept: minus, send: minus  }
-    #---------------------------------------------------
-    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
-    - { when: composing, accept: period, send: period }   
-    - { when: has_menu, accept: period, send: period }   
+    - { when: has_menu, accept: comma, send: comma }      # ㆤ
+    - { when: has_menu, accept: period, send: period }    # ㆲ
+    - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵可用
+    # - { when: composing, accept: colon, send: colon }     # 確保 `:` 鍵可用
+    # - { when: has_menu, accept: colon, send: colon }      # ㆤ
+    - { when: composing, accept: colon, send: "ㆲ" }     # 確保 `:` 鍵可用
+    - { when: has_menu, accept: colon, send: "ㆲ" }      # ㆤ
+    # - { when: always, accept: colon, send: colon }      
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------
@@ -163,8 +205,8 @@ editor:
   bindings:
     space: commit                           # 選擇「備選漢字」
     Return: commit_composition              # 上屏原始的輸入：lau5
-    Shift+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
-    Control+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
 
 menu:
@@ -177,8 +219,8 @@ style:
   font_face: "霞鶩文楷 TC, 新細明體"
 
 recognizer:
+  import_preset: default
   patterns:
-    # reverse_lookup: "`[a-z]*'?$"
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
@@ -186,4 +228,3 @@ recognizer:
 
 punctuator:
   import_preset: keymap_piau_tian
-
