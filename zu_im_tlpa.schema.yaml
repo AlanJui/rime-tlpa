@@ -142,21 +142,21 @@ translator:
     #--------------------------------------------------------------------------
     __patch:
       # 【候選字單】主體架構
-      - lib_zu_im:/hau_suan_tuann
+      - lib_hau_suan_ji_tuann:/hau_suan_tuann
       #-----------------------------------------
       # 右半邊：台語音標-注音
       # 【声母】
-      # - lib_zu_im:/ziann_ping_siann_bu_tlpa
-      - lib_zu_im:/TLPA_BoPoMo_siann_bu_tng_uann
+      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu_tlpa
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_siann_bu_tng_uann
       # 【韻母】
-      - lib_zu_im:/ziann_ping_un_bu
-      # - lib_zu_im:/ziann_ping_un_bu_tng_tlpa
-      - lib_zu_im:/TLPA_BoPoMo_un_bu_tng_uann
+      - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
+      # - lib_hau_suan_ji_tuann:/ziann_ping_un_bu_tng_tlpa
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_un_bu_tng_uann
       # 【声調】
-      - lib_zu_im:/TLPA_BoPoMo_siann_tiau
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_siann_tiau
       #-----------------------------------------
       # 左半邊：台語音標-拼音
-      - lib_zu_im:/to_ping_tlpa
+      - lib_hau_suan_ji_tuann:/to_ping_tlpa
 
 jih_kian:
   #--------------------------------------------------------------------------

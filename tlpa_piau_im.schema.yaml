@@ -3,19 +3,20 @@
 # encoding: utf-8
 
 schema:
-  schema_id: zu_im_hong_im
-  name: 注音輸入法【方音符號】
-  version: "v0.0.2.11"
-  author: 居正中
-  description: |
+  schema_id: tlpa_piau_im
+  name: 拼音輸入法【漢字標音】
+  version: "0.0.2.11"
+  author:
+    - 居正中 AlanJui <alanjui.1960@gmail.com>
+  description: 
     【輸入類型】：注音輸入法
-    【拼音系統】：方音符號
+    【拼音系統】：方音符號（輸出：台語音標+）
     【字典編碼】：台羅音標
     【注音輸入】：方音符號（聲：ㄒㄧㆩˉ：nu*<SP>）
-    【侯選清單】：〔sⁿia¹〕\n 【ㄒㄧㆩˉ】
+    【侯選清單】：〔siann1〕
     【聲調標示】：
       (1) 台羅八聲調；
-      (2) 使用數值標示聲調，以利閱讀。
+      (2) 聲調之數值採【上標】格式顯示。
   dependencies:
     - stroke
 
@@ -53,46 +54,32 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657'
-  initials: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm.'
-  finals:   ' 43657'
+  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  initials: abcdefghijklmnopqrstuvwxyz
   delimiter: "'"
   use_space: true
   algebra:
     __patch:
-    #--------------------------------------------------------------------------
-    # 定義【注音符號】編碼及【鍵盤按鍵】對映之【注音編碼】
-    #--------------------------------------------------------------------------
-      - lib_zu_im:/zu_im_hu_ho_pinn_be
+      # 定義【注音符號】之【注音編碼】
+      - lib_phing_im:/phing_im_tng_ji_be
+      # 定義輸入時之【縮寫原則】
+      - lib_phing_im:/abbreviation
+      # 定義【注音編碼】與【鍵盤按鍵】對映關聯
+      - lib_phing_im:/ji_be_tng_jih_kian
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
-  prism: zu_im_hong_im
+  prism: tlpa_piau_im
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
   preedit_format:
-    #--------------------------------------------------------------------------
+    #------------------------------------------------------
     # 定義【鍵盤輸入列】
-    #--------------------------------------------------------------------------
-    __include: jih_kian
-    __append:
-      #------------------------------------------------------
-      # 按鍵轉調等：將按鍵之輸入轉換成【聲調符號】
-      #------------------------------------------------------
-      - xform/ /ˉ/   # ¹  ˉ   陰平
-      - xform/6/ˊ/   # ⁵  ˊ   陽平
-      - xform/4/ˋ/   # ²  ˋ   上声
-      - xform/3/˪/   # ³  ˪   陰去
-      - xform/5/˫/   # ⁷  ˫   陽去
-      - xform/7/˙/   # ⁰  ˙   陰入/陽入：輕聲標點符號表：入声字（陰入/陽入）
-      #------------------------------------------------------
-      # 入聲韻尾： ㄅ(p), ㄉ(t), ㄍ(k), ㄏ(h),  
-      #------------------------------------------------------
-      - xform/ㄅ(˙)/ㆴ$1/    # ㄅ = p
-      - xform/ㄉ(˙)/ㆵ$1/    # ㄉ = t
-      - xform/ㄍ(˙)/ㆻ$1/    # ㄍ = k
-      - xform/ㄏ(˙)/ㆷ$1/    # ㄏ = h
+    #------------------------------------------------------
+    __patch:
+      # 定義鍵盤輸入【按鍵】，與【拼音字母】顯示對映關聯
+      - lib_phing_im:/jih_kian_tng_uann
   comment_format:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
@@ -101,7 +88,7 @@ translator:
       # 【候選字單】主體架構
       - lib_hau_suan_ji_tuann:/hau_suan_tuann
       #-----------------------------------------
-      # 右半邊：台語音標-注音
+      # 右半邊：方音符號
       # 【声母】
       - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
       # 【韻母】
@@ -109,8 +96,8 @@ translator:
       # 【声調】
       - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
       #-----------------------------------------
-      # 左半邊：台語音標-拼音
-      - lib_hau_suan_ji_tuann:/to_ping_tl
+      # 左半邊：【十五音】
+      - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im
 
 jih_kian:
   #--------------------------------------------------------------------------
@@ -120,7 +107,7 @@ jih_kian:
     - lib_zu_im:/jih_kian_tng_uann
 
 custom_phrase:
-  dictionary: ""
+  dictionary: ''
   user_dict: custom_phrase
   db_class: stabledb
   enable_completion: false
@@ -131,7 +118,7 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 使用【:】鍵，輸入【韻母】：ㆲ
+    # # 使用【:】鍵，輸入【韻母】：ㆲ
     # - { when: composing, accept: colon, send: colon }
     # - { when: has_menu, accept: colon, send: colon  }
     #---------------------------------------------------
@@ -174,11 +161,11 @@ menu:
 
 style:
   horizontal: false
+  # font_face: "BopomofoRuby1909-v1, Noto Serif TC SemiBold"
   font_face: "霞鶩文楷 TC, 新細明體"
 
 recognizer:
   patterns:
-    # reverse_lookup: "`[a-z]*'?$"
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
@@ -186,4 +173,3 @@ recognizer:
 
 punctuator:
   import_preset: keymap_piau_tian
-

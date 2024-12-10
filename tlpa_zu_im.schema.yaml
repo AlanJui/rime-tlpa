@@ -3,7 +3,7 @@
 
 schema:
   schema_id: tlpa_zu_im
-  name: 台語音標輸入法【注音符號】
+  name: 拼音輸入法【注音符號】
   version: "0.0.2.11"
   author:
     - 居正中 <alanjui.1960@gmail.com>
@@ -74,18 +74,22 @@ translator:
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
     __patch:
-      # 候選字單起頭
-      - lib_hau_suan_ji_tuann:/hau_suan_ji_tuann
-      # 候選字單右半邊：注音符號【聲母-台語音標】
-      - lib_hau_suan_ji_tuann:/zu_im_siann_bu_tlpa
-      # 候選字單右半邊：注音符號【韻母】
-      - lib_hau_suan_ji_tuann:/zu_im_un_bu
-      # 候選字單右半邊：注音符號【韻母-台語音標】
-      - lib_hau_suan_ji_tuann:/zu_im_un_bu_tng_tlpa
-      # 候選字單右半邊：注音符號【声調-台語音標】
-      - lib_hau_suan_ji_tuann:/zu_im_tiau_ho_tng_tlpa
-      # 候選字單左半邊：拼音字母【台語音標】
-      - lib_hau_suan_ji_tuann:/phing_im_tlpa
+      # 【候選字單】主體架構
+      - lib_hau_suan_ji_tuann:/hau_suan_tuann
+      #-----------------------------------------
+      # 右半邊：台語音標-注音
+      # 【声母】
+      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu_tlpa
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_siann_bu_tng_uann
+      # 【韻母】
+      - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
+      # - lib_hau_suan_ji_tuann:/ziann_ping_un_bu_tng_tlpa
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_un_bu_tng_uann
+      # 【声調】
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_siann_tiau
+      #-----------------------------------------
+      # 左半邊：台語音標-拼音
+      - lib_hau_suan_ji_tuann:/to_ping_tlpa
 
 reverse_lookup:
   dictionary: luna_pinyin

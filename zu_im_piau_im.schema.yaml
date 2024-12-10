@@ -100,18 +100,18 @@ translator:
     #--------------------------------------------------------------------------
     __patch:
       # 【候選字單】主體架構
-      - lib_zu_im:/hau_suan_tuann
+      - lib_hau_suan_ji_tuann:/hau_suan_tuann
       #-----------------------------------------
       # 右半邊：方音符號
       # 【声母】
-      - lib_zu_im:/ziann_ping_siann_bu
+      - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
       # 【韻母】
-      - lib_zu_im:/ziann_ping_un_bu
+      - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
       # 【声調】
-      - lib_zu_im:/ziann_ping_siann_tiau
+      - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
       #-----------------------------------------
       # 左半邊：【十五音】
-      - lib_zu_im:/Sip_Ngoo_Im
+      - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im
 
 jih_kian:
   #--------------------------------------------------------------------------
