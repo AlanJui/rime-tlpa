@@ -1,21 +1,24 @@
 # Rime schema
-# vim: set sw=2 sts=2 et:
 # encoding: utf-8
 ---
 schema:
-  schema_id: huan_ciat_kong_un
-  name: 反切輸入法【廣韻】
+  schema_id: huan_ciat_nga_siok_thong
+  name: 反切輸入法【雅俗通十五音】
   version: "v0.0.2.11"
-  author: 居正中
-  description: 
+  author:
+    - 居正中
+  description: |
+    基於《雅俗通》(Ngée-sio̍k-thong) 所收紅字校增
     【輸入類型】：十五音輸入法
-    【拼音系統】：十八音反切（雅俗通十五音改良）
-    【字典編碼】：台羅音標（取自《廣韻》）
+    【拼音系統】：雅俗通十五音
+    【字典編碼】：台羅音標
     【注音輸入】：羅馬拼音字母（siaⁿ1：siann;）
     【侯選清單】：〔siaⁿ¹〕 【時驚一】
     【聲調標示】：
       (1) 台羅八聲調；
       (2) 使用數值標示聲調，以利閱讀。
+  dependencies:
+    - luna_pinyin
 
 switches:
   - name: ascii_mode
@@ -23,6 +26,10 @@ switches:
     states: [中文, 西文]
   - name: full_shape
     states: [半角, 全角]
+  - name: simplification
+    states: [漢字, 汉字]
+  - name: ascii_punct
+    states: [，。, ，．]
 
 engine:
   processors:
@@ -80,12 +87,11 @@ speller:
       - lib_phing_im:/ji_be_tng_jih_kian
 
 translator:
-  dictionary: tl_ji_khoo_kong_un
-  prism: huan_ciat_kong_un
+  dictionary: tl_ji_khoo_nga_siok_thong
+  prism: huan_ciat_nga_siok_thong
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
-  spelling_hints: 5
   preedit_format:
     #------------------------------------------------------
     # 定義【鍵盤輸入列】
@@ -111,14 +117,135 @@ translator:
       #-----------------------------------------
       # 左半邊：【十五音】
       - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im
-      - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im_Siann_Tiau
+      - lib_hau_suan_ji_tuann:/Nga_Siok_Thong_Siann_Tiau
 
 reverse_lookup:
   dictionary: luna_pinyin
   prefix: "`"
-  tips: 〔拼音〕
+  suffix: "'"
+  tips: 〔漢語拼音〕
   preedit_format:
-    - xform/([nljqxy])v/$1ü/
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+  comment_format:
+    - xform/([a-z]+\d)/$1;$1/
+    - xform/;l/\[柳;/
+    - xform/;p(?!h)/\[邊;/
+    - xform/;k(?!h)/\[求;/
+    - xform/;kh/\[氣;/
+    - xform/;t(?!h)/\[地;/
+    - xform/;ph/\[頗;/
+    - xform/;th/\[他;/
+    - xform/;c(?!h)/\[曾;/
+    - xform/;j/\[入;/
+    - xform/;s/\[時;/
+    - xform/;q/\[英;/
+    - xform/;b/\[門;/
+    - xform/;g/\[語;/
+    - xform/;ch/\[出;/
+    - xform/;h/\[喜;/
+    # 韻母
+    - xform/;iaunn(h?)/嘄;/
+    - xform/;ainn(h?)/閒;/
+    - xform/;aunn/爻;/
+    - xform/;iann/驚;/
+    - xform/;iunn/牛;/
+    - xform/;ounn/姑;/
+    - xform/;uann/官;/
+    - xform/;uenn/糜;/
+    - xform/;ann(h?)/監;/
+    - xform/;ui(h?)(\d)/規;$2/
+    - xform/;ua(n|t)(\d)/觀;$2/
+    - xform/;iau(h?)(\d)/嬌;$2/
+    - xform/;io(ng|k)/恭;/
+    - xform/;oo(h?)(\d)/沽;$2/
+    - xform/;ou(h?)(\d)/沽;$2/
+    - xform/;onn(h?)/扛;/
+    - xform/;uai(h?)/乖;$2/
+    - xform/;ua(h?)(\d)/瓜;$2/
+    - xform/;u(n|t)(\d)/君;$2/
+    - xform/;ia(n|t)(\d)/堅;$2/
+    - xform/;i(m|p)/金;/
+    - xform/;ee(h?)/嘉;/
+    - xform/;a(n|t)(\d)/干;$2/
+    - xform/;o(ng|k)/公;/
+    - xform/;e(ng|k)/經;/
+    - xform/;ei/稽;/
+    - xform/;o(h?)(\d)/高;$2/
+    - xform/;ai(\d)/皆;$1/
+    - xform/;i(n|t)(\d)/巾;$2/
+    - xform/;ia(ng|k)/姜;/
+    - xform/;a(m|p)/甘;/
+    - xform/;a(ng|k)/江;/
+    - xform/;ia(h?)(\d)/迦;$2/
+    - xform/;ia(m|p)/兼;/
+    - xform/;au(h?)(\d)/交;$2/
+    - xform/;ue(h?)(\d)/檜;$2/
+    - xform/;u(h?)(\d)/艍;$2/
+    - xform/;a(h?)(\d)/膠;$2/
+    - xform/;i(h?)(\d)/居;$2/
+    - xform/;iu(\d)/丩;$1/
+    - xform/;enn(h?)/更;/
+    - xform/;inn(h?)/梔;/
+    - xform/;e(h?)(\d)/伽;$2/
+    - xform/;o(m|p)/箴;/
+    - xform/;1/上平\]/
+    - xform/;2/上上\]/
+    - xform/;3/上去\]/
+    - xform/;4/上入\]/
+    - xform/;5/下平\]/
+    - xform/;7/下去\]/
+    - xform/;8/下入\]/
+    #   以下爲羅馬字轉寫
+    # - xform/q//
+    # - xform/c/ts/
+    #   「更」韻
+    - xform/(^u)enn/$1eenn/
+    #   「門」「柳」「語」鼻化韻
+    - xform/b([aeiou]+)nn/m$1/
+    - xform/l([aeiou]+)nn/n$1/
+    - xform/g([aeiou]+)nn/ng$1/
+    #   標調
+    - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$3$2/
+    - xform/([aeo])([iueo])([1234578])/$1$3$2/
+    - "xform a1 a"
+    - "xform e1 e"
+    - "xform i1 i"
+    - "xform u1 u"
+    - "xform o1 o"
+    - "xform a2 á"
+    - "xform e2 é"
+    - "xform i2 í"
+    - "xform u2 ú"
+    - "xform o2 ó"
+    - "xform a3 à"
+    - "xform e3 è"
+    - "xform i3 ì"
+    - "xform u3 ù"
+    - "xform o3 ò"
+    - "xform a4 a"
+    - "xform e4 e"
+    - "xform i4 i"
+    - "xform u4 u"
+    - "xform o4 o"
+    - "xform a5 â"
+    - "xform e5 ê"
+    - "xform i5 î"
+    - "xform u5 û"
+    - "xform o5 ô"
+    - "xform a7 ā"
+    - "xform e7 ē"
+    - "xform i7 ī"
+    - "xform u7 ū"
+    - "xform o7 ō"
+    - "xform a8 a̍"
+    - "xform e8 e̍"
+    - "xform i8 i̍"
+    - "xform u8 u̍"
+    - "xform o8 o̍"
+    #   鼻化符號顯示成上標
+    - xform/nn(h?)(\d|\>)/ⁿ$1$2/
 
 key_binder:
   import_preset: default
@@ -137,6 +264,7 @@ key_binder:
     - { when: has_menu, accept: period, send: period }   
     #---------------------------------------------------
     # 翻頁
+    #---------------------------------------------------
     # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
     # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
     - { accept: "Control+p", send: Page_Up, when: composing }
@@ -149,10 +277,6 @@ key_binder:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
     #---------------------------------------------------
-    - {accept: "Control+1", select: .next, when: always}
-    - {accept: "Control+2", toggle: full_shape, when: always}
-    - {accept: "Control+3", toggle: simplification, when: always}
-    - {accept: "Control+4", toggle: extended_charset, when: always}
 
 editor:
   bindings:
@@ -162,21 +286,23 @@ editor:
     Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
     Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
 
-menu:
-  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
-  page_size: 5 #選單每䈎顯示個數
-
-style:
-  horizontal: false
-  font_face: "霞鶩文楷 TC, 新細明體"
-
 recognizer:
   import_preset: default
   patterns:
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
-    reverse_lookup: "`[a-z]*$"
+    punct: '`[^\s]$'
+    reverse_lookup: "`[a-z]*'?$"
+
+menu:
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  page_size: 5 #選單每䈎顯示個數
+
+style:
+  horizontal: false
+  font_face: "霞鶩文楷 TC, , 新細明體"
 
 punctuator:
   import_preset: keymap_piau_tian
+

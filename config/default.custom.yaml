@@ -59,9 +59,9 @@ patch:
     #------------------------------------------------------------------------
     # 反切輸入法（拼音字母）
     #------------------------------------------------------------------------
-    - { schema: huan_ciat_sip_ngoo_im } # 雅俗通十五音
-    - { schema: huan_ciat_zap_peh_im }  # 台灣改良之進階十五音
-    - { schema: huan_ciat_kong_un }     # 廣韻
+    - { schema: huan_ciat_kong_un }         # 廣韻
+    - { schema: huan_ciat_sip_ngoo_im }     # 台灣改良之進階十五音
+    - { schema: huan_ciat_nga_siok_thong }  # 雅俗通十五音
     #------------------------------------------------------------------------
   engine:
     translators:

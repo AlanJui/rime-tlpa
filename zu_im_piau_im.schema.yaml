@@ -112,6 +112,7 @@ translator:
       #-----------------------------------------
       # 左半邊：【十五音】
       - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im
+      - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im_Siann_Tiau
 
 jih_kian:
   #--------------------------------------------------------------------------
