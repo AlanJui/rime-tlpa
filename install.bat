@@ -14,6 +14,14 @@ if not exist "%RIME_DIR%" (
 :: ===========================================================
 :: 複製文件到 RIME 資料夾
 :: ===========================================================
+echo 正在安裝【輸入法模組共用組件】...
+copy lib_*.yaml "%RIME_DIR%"
+if %errorlevel% neq 0 (
+    echo 無法複製 lib_*.yaml，請確認文件是否存在。
+    pause
+    exit /b
+)
+
 echo 正在安裝【輸入法按鍵練習工具】...
 copy kb_*.schema.yaml "%RIME_DIR%"
 if %errorlevel% neq 0 (

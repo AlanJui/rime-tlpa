@@ -34,6 +34,7 @@ def install_rime_files(rime_dir):
         "lib_*.yaml",
         "tl_ji_khoo_*.dict.yaml",
         "config/default.custom.yaml",
+        "config/weasel.custom.yaml",
         "rime.lua",
         "lua/*.lua",
     ]
