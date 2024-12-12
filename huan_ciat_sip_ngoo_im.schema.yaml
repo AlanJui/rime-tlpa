@@ -5,7 +5,7 @@
 schema:
   schema_id: huan_ciat_sip_ngoo_im
   name: 反切輸入法【十五音】
-  version: "0.0.2.11"
+  version: "v0.1.0.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |

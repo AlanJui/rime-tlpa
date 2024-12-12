@@ -4,7 +4,7 @@
 schema:
   schema_id: my_hong_im
   name: 我的方音
-  version: '0.4'
+  version: "v0.1.0.0"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |

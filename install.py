@@ -1,3 +1,4 @@
+# version: "v0.1.0.0"
 import os
 import shutil
 import platform

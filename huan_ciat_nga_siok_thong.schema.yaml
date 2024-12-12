@@ -4,7 +4,7 @@
 schema:
   schema_id: huan_ciat_nga_siok_thong
   name: 反切輸入法【雅俗通十五音】
-  version: "v0.0.2.11"
+  version: "v0.1.0.0"
   author:
     - 居正中
   description: |

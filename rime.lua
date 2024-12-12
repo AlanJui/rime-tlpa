@@ -1,3 +1,4 @@
+-- v0.1.0.0
 number_translator = require("number")
 custom_commit_text_translator = require("custom")
 -- piau_im_translator = require("piau_im")

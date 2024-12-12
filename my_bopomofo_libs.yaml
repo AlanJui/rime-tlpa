@@ -1,4 +1,5 @@
 # my_bopomofo 輸入法模組程式館
+# version: "v0.1.0.0"
 
 zu_im_hu_ho_pinn_be:
   __append:

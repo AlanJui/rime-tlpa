@@ -5,7 +5,7 @@
 schema:
   schema_id: huan_ciat_kong_un
   name: 反切輸入法【廣韻】
-  version: "v0.0.2.11"
+  version: "v0.1.0.0"
   author: 居正中
   description: 
     【輸入類型】：十五音輸入法

@@ -4,7 +4,7 @@
 schema:
   schema_id: my_bopomofo
   name: 我的注音
-  version: '0.0.2.10'
+  version: "v0.1.0.0"
   author:
     - 居正中 AlanJui <alanjui.1960@gmail.com>
   description: |

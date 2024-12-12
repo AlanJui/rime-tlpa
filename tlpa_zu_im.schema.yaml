@@ -4,7 +4,7 @@
 schema:
   schema_id: tlpa_zu_im
   name: 拼音輸入法【注音符號】
-  version: "0.0.2.11"
+  version: "v0.1.0.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |

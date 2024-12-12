@@ -4,7 +4,7 @@
 schema:
   schema_id: my_Phing_Im
   name: 我的拼音輸入法
-  version: "0.0.3.0"
+  version: "v0.1.0.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
