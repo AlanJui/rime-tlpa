@@ -97,19 +97,20 @@ punctuator:
     "m" : { commit: "ㄇ" }
     "p" : { commit: "ㄣ" }
     "/" : { commit: "ㄥ" }
+    "r" : { commit: "ㆴ" }
+    "f" : { commit: "ㆵ" }
+    "v" : { commit: "ㆻ" }
+    "C" : { commit: "ㆷ" }
+    "_" : { commit: " " }
     " " : { commit: "ˉ" }
     "4" : { commit: "ˋ" }
     "3" : { commit: "ˇ" }
     "6" : { commit: "ˊ" }
     "5" : { commit: "+" }
-    "7" : { commit: "˙" }
-    "_" : { commit: " " }
-    "." : ["", "ⁿ", "ㄬ", "ㄯ"] 
+    "7" : { commit: "+", "ˉ", "˙" }
+    "Z": [ "ˉ", "ˋ", "ˇ", "+", "ˊ", "+", "ˉ", "˙" ]
     "z" : [ "ㆴ", "ㆵ", "ㆻ", "ㆷ" ]
-    "r" : { commit: "ㆴ" }
-    "f" : { commit: "ㆵ" }
-    "v" : { commit: "ㆻ" }
-    "C" : { commit: "ㆷ" }
+    "." : ["", "ⁿ", "ㄬ", "ㄯ"] 
 full_shape:
   ".": 。
 
