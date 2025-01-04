@@ -66,12 +66,12 @@ speller:
   use_space: true
   algebra:
     __patch:
-      # 定義【注音符號】之【注音編碼】
-      - lib_phing_im:/phing_im_tng_ji_be
+      # 定義【注音編碼】
+      - lib_sip_ngoo_im:/phing_im_tng_ji_be
       # 定義輸入時之【縮寫原則】
-      - lib_phing_im:/abbreviation
+      - lib_sip_ngoo_im:/abbreviation
       # 定義【注音編碼】與【鍵盤按鍵】對映關聯
-      - lib_phing_im:/ji_be_tng_jih_kian
+      - lib_sip_ngoo_im:/ji_be_tng_jih_kian
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -85,7 +85,8 @@ translator:
     #------------------------------------------------------
     __patch:
       # 定義鍵盤輸入【按鍵】，與【拼音字母】顯示對映關聯
-      - lib_phing_im:/jih_kian_tng_uann
+      # - lib_phing_im:/jih_kian_tng_uann
+      - lib_sip_ngoo_im:/jih_kian_tng_uann
   comment_format:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
@@ -94,7 +95,7 @@ translator:
       # 【候選字單】主體架構
       - lib_hau_suan_ji_tuann:/hau_suan_tuann
       #-----------------------------------------
-      # 右半邊：方音符號
+      # 右半邊：台語音標-注音
       # 【声母】
       - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
       # 【韻母】
@@ -102,9 +103,20 @@ translator:
       # 【声調】
       - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
       #-----------------------------------------
-      # 左半邊：【十五音】
-      - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im
-      - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im_Siann_Tiau
+      # 左半邊：台語音標-拼音
+      - lib_hau_suan_ji_tuann:/to_ping_tl
+      # #-----------------------------------------
+      # # 右半邊：方音符號
+      # # 【声母】
+      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
+      # # 【韻母】
+      # - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
+      # # 【声調】
+      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
+      # #-----------------------------------------
+      # # 左半邊：【十五音】
+      # - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im
+      # - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im_Siann_Tiau
 
 reverse_lookup:
   dictionary: luna_pinyin
