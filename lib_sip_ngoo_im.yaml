@@ -177,50 +177,49 @@ jih_kian_tng_uann:
     - xform/i(n|t)/巾/
     - xform/i(ng|k)/經/
     # 嘄 Niau / 嬌 iau
-    - xform/Niau/嘄/
-    - xform/iau/嬌/
+    - xform/Niauh?/嘄/
+    - xform/iauh?/嬌/
     # 驚 Nia / 迦 ia
-    - xform/Nia/驚/
-    - xform/ia/迦/
+    - xform/Nia/驚/       # 無入声
+    - xform/iah?/迦/
     # 恭 iong
     - xform/io(ng|k)/恭/
     # 薑 Nio / 茄 io
-    - xform/Nio/薑/
-    - xform/io/茄/
+    - xform/Nio/薑/       # 無入声
+    - xform/ioh?/茄/
     # 牛 Niu / 丩 iu
-    - xform/Niu/牛/
-    - xform/iu/丩/
+    - xform/Niu/牛/       # 無入声
+    - xform/iu/丩/        # 無入声
     # 泉腔
     # - xform/ir/ㄦ/	    # ㆨㄦ : 豬（ㄉㆨ tir，海口腔）、
     # - xform/ir/ㆨ/	    # ㆨㄦ : 豬（ㄉㆨ tir，海口腔）、
     # 梔 Ni / 居 i
-    # - xform/(N?)(i)/梔/
-    - xform/Ni/梔/
-    - xform/i/居/
+    - xform/Nih?/梔/
+    - xform/ih?/居/
     #------------------------------------------------------
     # u
     #------------------------------------------------------
     # 閂 Nuai / 乖 uai
-    - xform/Nuai/閂/
-    - xform/uai/乖/
+    - xform/Nuaih?/閂/
+    - xform/uaih?/乖/
     # 光 uang / 觀 uan
     - xform/ua(ng|k)/光/
     - xform/ua(n|t)/觀/
     # 官 Nua / 瓜 ua 
-    - xform/Nua/官/
-    - xform/ua/瓜/
+    - xform/Nua/官/       # 無入声
+    - xform/uah?/瓜/
     # # 褌 Nui / 規 ui
-    - xform/Nui/褌/
-    - xform/ui/規/
+    - xform/Nui/褌/       # 無入声
+    - xform/ui/規/        # 無入声
     # 糜 Nue / 檜 ue
-    - xform/Nue/糜/
-    - xform/ue/檜/
+    - xform/Nueh?/糜/
+    - xform/ueh?/檜/
     # 君 un
     - xform/u(n|t)/君/
     # 方音
     # - xform/ur/ㄨ/
     # 艍 u
-    - xform/u/艍/
+    - xform/uh?/艍/
     #------------------------------------------------------
     # a
     #------------------------------------------------------
@@ -229,14 +228,14 @@ jih_kian_tng_uann:
     - xform/a(n|t)/干/
     - xform/a(m|p)/甘/
     # 閒 Nai / 皆 ai
-    - xform/N?ai/閒/
-    - xform/ai/皆/
+    - xform/N?ai/閒/      # 無入声
+    - xform/ai/皆/        # 無入声
     # 爻 Nau / 交 au
-    - xform/Nau/爻/
-    - xform/au/交/
+    - xform/Nau/爻/       # 無入声
+    - xform/auh?/交/
     # 監 Na / 膠 a
-    - xform/Na/監/
-    - xform/a/膠/
+    - xform/Nah?/監/
+    - xform/ah?/膠/
     #------------------------------------------------------
     # e
     #------------------------------------------------------
@@ -246,11 +245,11 @@ jih_kian_tng_uann:
     # - xform/ere/ㄨㆤ/	      # 火【鷄】:kere1
     # - xform/er/ㄜ/	        # 【火】鷄: her2
     # 稽 ei / 嘉 ee
-    - xform/ei/稽/
-    - xform/ee/嘉/
+    - xform/ei/稽/      # 無入声
+    - xform/eeh?/嘉/
     # 更 Ne / 伽 e
-    - xform/Ne/更/
-    - xform/e/伽/
+    - xform/Neh?/更/
+    - xform/eh?/伽/
     #------------------------------------------------------
     # oo
     #------------------------------------------------------
@@ -258,27 +257,28 @@ jih_kian_tng_uann:
     - xform/o(ng|k)/公/
     - xform/o(m|p)/箴/
     # 姑 Noo / 沽 oo
-    - xform/Noo/v古/
-    - xform/oo/沽/
+    - xform/Noo/姑/     # 無入声
+    - xform/oo/沽/      # 無入声
+    - xform/ou/沽/      # 無入声
     #------------------------------------------------------
     # o
     #------------------------------------------------------
     # 扛 No / 高 o
-    - xform/No/扛/	  # 扛 No
-    - xform/o/高/	        # 高 o
+    - xform/Noh?/扛/
+    - xform/oh?/高/
     # 泉州腔
     # - xform/or/ㄜ/
     #------------------------------------------------------
     # 鼻音韻尾
     # 陽聲韻： 姆[m-] / 鋼[ng-] 
     #------------------------------------------------------
-    - xform/m/姆/
-    - xform/ng/鋼/
+    - xform/m/姆/       # 無入声
+    - xform/ng/鋼/      # 無入声
     #------------------------------------------------------
     # 校調
     #------------------------------------------------------
     # - xform/茄雅/恭/
-    - xform/膠居/皆/    # ai
+    - xform/膠居/皆/    # ai (無入声)
     - xform/膠艍/交/    # au
     - xform/艍居/規/    # ui
     - xform/巾g/經/     # ing
