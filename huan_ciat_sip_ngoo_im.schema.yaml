@@ -34,31 +34,37 @@ engine:
     - abc_segmentor
     - punct_segmentor
     - fallback_segmentor
+    - custom_segmentor  # 自定義 segmentor，用於處理連續輸入
   translators:
     - echo_translator
     - punct_translator
     - r10n_translator
     - reverse_lookup_translator
+    - custom_translator  # 自定義 translator，用於處理連續輸入
   filters:
     - simplifier
     - uniquifier
 
+custom_segmentor:
+  # 自定義 segmentor，用於分割連續輸入的拼音
+  # 例如：將 "thun1lun2" 分割為 "thun1" 和 "lun2"
+  rules:
+    - regexp: "^([a-z]+\\d)([a-z]+\\d)$"
+      tag: custom
+      preedit_format: "$1 $2"
+      comment_format: "$1 $2"
+
+custom_translator:
+  # 自定義 translator，用於處理連續輸入的拼音
+  # 例如：將 "thun1 lun2" 轉換為 "呑 忍"
+  dictionary: tl_ji_khoo_peh_ue
+  prism: huan_ciat_sip_ngoo_im
+  rules:
+    - regexp: "^([a-z]+\\d) ([a-z]+\\d)$"
+      preedit_format: "$1 $2"
+      comment_format: "$1 $2"
+
 speller:
-  #------------------------------------------------------
-  # 定義使用者按下鍵盤時，輸入法能接受的按鍵
-  #------------------------------------------------------
-  # 舒聲 [12357]
-  # 1: ;
-  # 2: \
-  # 3: _ （劃底線符號）
-  # 5: /
-  # 6: [N/A]
-  # 7: -
-  # 4: [
-  # 8: ]
-  # 輕聲及入聲 [48] = 0
-  # 0: .
-  #------------------------------------------------------
   alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
   initials: abcdefghijklmnopqrstuvwxyz
   finals: ;\_/-.[]
@@ -66,11 +72,8 @@ speller:
   use_space: true
   algebra:
     __patch:
-      # 定義【注音編碼】
       - lib_sip_ngoo_im:/phing_im_tng_ji_be
-      # 定義輸入時之【縮寫原則】
       - lib_sip_ngoo_im:/abbreviation
-      # 定義【注音編碼】與【鍵盤按鍵】對映關聯
       - lib_sip_ngoo_im:/ji_be_tng_jih_kian
 
 translator:
@@ -80,43 +83,15 @@ translator:
   always_show_comments: true
   initial_quality: 0.75
   preedit_format:
-    #------------------------------------------------------
-    # 定義【鍵盤輸入列】
-    #------------------------------------------------------
     __patch:
-      # 定義鍵盤輸入【按鍵】，與【拼音字母】顯示對映關聯
-      # - lib_phing_im:/jih_kian_tng_uann
       - lib_sip_ngoo_im:/jih_kian_tng_uann
   comment_format:
-    #--------------------------------------------------------------------------
-    # 定義【候選字清單】
-    #--------------------------------------------------------------------------
     __patch:
-      # 【候選字單】主體架構
       - lib_hau_suan_ji_tuann:/hau_suan_tuann
-      #-----------------------------------------
-      # 右半邊：台語音標-注音
-      # 【声母】
       - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
-      # 【韻母】
       - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
-      # 【声調】
       - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
-      #-----------------------------------------
-      # 左半邊：台語音標-拼音
       - lib_hau_suan_ji_tuann:/to_ping_tl
-      # #-----------------------------------------
-      # # 右半邊：方音符號
-      # # 【声母】
-      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
-      # # 【韻母】
-      # - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
-      # # 【声調】
-      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
-      # #-----------------------------------------
-      # # 左半邊：【十五音】
-      # - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im
-      # - lib_hau_suan_ji_tuann:/Sip_Ngoo_Im_Siann_Tiau
 
 reverse_lookup:
   dictionary: luna_pinyin
@@ -128,32 +103,18 @@ reverse_lookup:
 key_binder:
   import_preset: default
   bindings:
-    #---------------------------------------------------
-    # 使用【_】鍵，輸入【調號】：3 （低音調）
     - { when: composing, accept: underscore, send: underscore }
     - { when: has_menu, accept: underscore, send: underscore  }
-    #---------------------------------------------------
-    # 使用【-】鍵，輸入【調號】：7 （中音調）
     - { when: composing, accept: minus, send: minus }
     - { when: has_menu, accept: minus, send: minus  }
-    #---------------------------------------------------
-    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
     - { when: composing, accept: period, send: period }   
     - { when: has_menu, accept: period, send: period }   
-    #---------------------------------------------------
-    # 翻頁
-    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
-    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
     - { accept: "Control+p", send: Page_Up, when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
-    #---------------------------------------------------
-    # Vim Mode
-    #---------------------------------------------------
     - { when: has_menu, accept: "Control+h", send: Page_Up }
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
-    #---------------------------------------------------
     - {accept: "Control+1", select: .next, when: always}
     - {accept: "Control+2", toggle: full_shape, when: always}
     - {accept: "Control+3", toggle: simplification, when: always}
@@ -161,15 +122,15 @@ key_binder:
 
 editor:
   bindings:
-    space: commit                           # 選擇「備選漢字」
-    Return: commit_composition              # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
+    space: commit
+    Return: commit_composition
+    Control+Return: commit_script_text
+    Shift+Return: commit_comment
+    Control+Shift+Return: commit_raw_input
 
 menu:
-  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
-  page_size: 5 #選單每䈎顯示個數
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]
+  page_size: 5
 
 style:
   horizontal: false
