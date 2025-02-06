@@ -204,8 +204,8 @@ jih_kian_tng_uann:
     - xform/ia(m|p)/兼/
     # 經 ing / 巾 in / 金 im
     - xform/i(m|p)/金/
-    - xform/i(n|t)/巾/
     - xform/i(ng|k)/經/
+    - xform/i(n|t)/巾/
     # 嘄 Niau / 嬌 iau
     - xform/Niauh?/嘄/
     - xform/iaunnh?/嘄/
@@ -316,12 +316,10 @@ jih_kian_tng_uann:
     #------------------------------------------------------
     # 校調
     #------------------------------------------------------
-    # - xform/茄雅/恭/
     - xform/膠雅/江/    # ang
-    - xform/膠居/皆/    # ai (無入声)
+    - xform/膠居/皆/    # ai
     - xform/膠艍/交/    # au
     - xform/艍居/規/    # ui
-    - xform/巾g/經/     # ing
     #------------------------------------------------------
     # 鼻音韻尾
     # 陽聲韻： 姆[m-] / 鋼[ng-] 
