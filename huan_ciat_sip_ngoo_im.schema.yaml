@@ -45,30 +45,12 @@ engine:
     - simplifier
     - uniquifier
 
-# custom_segmentor:
-#   # 自定義 segmentor，用於分割連續輸入的拼音
-#   # 例如：將 "thun1lun2" 分割為 "thun1" 和 "lun2"
-#   rules:
-#     - regexp: "^([a-z]+\\d)([a-z]+\\d)$"
-#       tag: custom
-#       preedit_format: "$1 $2"
-#       comment_format: "$1 $2"
-#
-# custom_translator:
-#   # 自定義 translator，用於處理連續輸入的拼音
-#   # 例如：將 "thun1 lun2" 轉換為 "呑 忍"
-#   dictionary: tl_ji_khoo_peh_ue
-#   prism: huan_ciat_sip_ngoo_im
-#   rules:
-#     - regexp: "^([a-z]+\\d) ([a-z]+\\d)$"
-#       preedit_format: "$1 $2"
-#       comment_format: "$1 $2"
-
 speller:
   alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN;\_/-.[]
-  initials: 1234567890abcdefghijklmnopqrstuvwxyz
+  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
   finals: ;\_/-.[]
-  delimiter: "' "
+  # delimiter: "' "
+  delimiter: "'"
   use_space: true
   algebra:
     __patch:

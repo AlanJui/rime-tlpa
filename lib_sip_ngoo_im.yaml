@@ -16,6 +16,10 @@ phing_im_tng_ji_be:
     - xform/tsh/c/
     - xform/ts/z/
     #------------------------------------------------------------------
+    # 方音轉換
+    #------------------------------------------------------------------
+    - derive/ou/oo/
+    #------------------------------------------------------------------
     # 變調
     #------------------------------------------------------------------
     - xform/6/7/
@@ -32,7 +36,7 @@ phing_im_tng_ji_be:
     # 鼻音韻母
     # ann ==> nna ==> Na ==> ㄬㄚ ==> ㆩ
     #------------------------------------------------------
-    - derive/([iu]?(ai|au|[iuaoe]))nn/N$1/
+    - derive/([iu]?(ai|au|oo|[iuaoe]))nn/N$1/
     #--------------------------------------------------------------------------
     # 入聲韻尾轉換
     # -m  ==> -p = ㆴ
@@ -204,41 +208,50 @@ jih_kian_tng_uann:
     - xform/i(ng|k)/經/
     # 嘄 Niau / 嬌 iau
     - xform/Niauh?/嘄/
+    - xform/iaunnh?/嘄/
     - xform/iauh?/嬌/
     # 驚 Nia / 迦 ia
     - xform/Nia/驚/       # 無入声
+    - xform/iann/驚/       # 無入声
     - xform/iah?/迦/
     # 恭 iong
     - xform/io(ng|k)/恭/
     # 薑 Nio / 茄 io
     - xform/Nio/薑/       # 無入声
+    - xform/ionn/薑/       # 無入声
     - xform/ioh?/茄/
     # 牛 Niu / 丩 iu
     - xform/Niu/牛/       # 無入声
+    - xform/iunn/牛/       # 無入声
     - xform/iu/丩/        # 無入声
     # 泉腔
     # - xform/ir/ㄦ/	    # ㆨㄦ : 豬（ㄉㆨ tir，海口腔）、
     # - xform/ir/ㆨ/	    # ㆨㄦ : 豬（ㄉㆨ tir，海口腔）、
     # 梔 Ni / 居 i
     - xform/Nih?/梔/
+    - xform/innh?/梔/
     - xform/ih?/居/
     #------------------------------------------------------
     # u
     #------------------------------------------------------
     # 閂 Nuai / 乖 uai
     - xform/Nuaih?/閂/
+    - xform/uainnh?/閂/
     - xform/uaih?/乖/
     # 光 uang / 觀 uan
     - xform/ua(ng|k)/光/
     - xform/ua(n|t)/觀/
     # 官 Nua / 瓜 ua 
     - xform/Nua/官/       # 無入声
+    - xform/uann/官/       # 無入声
     - xform/uah?/瓜/
     # # 褌 Nui / 規 ui
     - xform/Nui/褌/       # 無入声
+    - xform/uinn/褌/       # 無入声
     - xform/ui/規/        # 無入声
     # 糜 Nue / 檜 ue
     - xform/Nueh?/糜/
+    - xform/uennh?/糜/
     - xform/ueh?/檜/
     # 君 un
     - xform/u(n|t)/君/
@@ -255,12 +268,15 @@ jih_kian_tng_uann:
     - xform/a(m|p)/甘/
     # 閒 Nai / 皆 ai
     - xform/N?ai/閒/      # 無入声
+    - xform/ainn/閒/      # 無入声
     - xform/ai/皆/        # 無入声
     # 爻 Nau / 交 au
     - xform/Nau/爻/       # 無入声
+    - xform/aunn/爻/       # 無入声
     - xform/auh?/交/
     # 監 Na / 膠 a
     - xform/Nah?/監/
+    - xform/annh?/監/
     - xform/ah?/膠/
     #------------------------------------------------------
     # e
@@ -275,6 +291,7 @@ jih_kian_tng_uann:
     - xform/eeh?/嘉/
     # 更 Ne / 伽 e
     - xform/Neh?/更/
+    - xform/ennh?/更/
     - xform/eh?/伽/
     #------------------------------------------------------
     # oo
@@ -284,6 +301,8 @@ jih_kian_tng_uann:
     - xform/o(m|p)/箴/
     # 姑 Noo / 沽 oo
     - xform/Noo/姑/     # 無入声
+    - xform/oonn/姑/     # 無入声
+    - xform/O/沽/      # 無入声
     - xform/oo/沽/      # 無入声
     - xform/ou/沽/      # 無入声
     #------------------------------------------------------
