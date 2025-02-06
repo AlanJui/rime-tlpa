@@ -65,8 +65,8 @@ engine:
 #       comment_format: "$1 $2"
 
 speller:
-  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
-  initials: abcdefghijklmnopqrstuvwxyz
+  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  initials: 1234567890abcdefghijklmnopqrstuvwxyz
   finals: ;\_/-.[]
   delimiter: "' "
   use_space: true
