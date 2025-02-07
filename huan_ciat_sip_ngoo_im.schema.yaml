@@ -78,14 +78,14 @@ translator:
       # - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
       # - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
       # - lib_hau_suan_ji_tuann:/to_ping_tlpa
-      # # 候選字視窗為單排標音：【方音符號】
-      # - lib_hau_suan_ji_tuann:/hau_suan_tuann
-      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
-      # - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
-      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
-      # 候選字視窗為單排標音：【台語拼音】
-      - lib_hau_suan_ji_tuann:/hau_suan_tuann_tlpa
-      - lib_hau_suan_ji_tuann:/to_ping_tlpa
+      # 候選字視窗為單排標音：【方音符號】
+      - lib_hau_suan_ji_tuann:/hau_suan_tuann
+      - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
+      - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
+      - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
+      # # 候選字視窗為單排標音：【台語拼音】
+      # - lib_hau_suan_ji_tuann:/hau_suan_tuann_tlpa
+      # - lib_hau_suan_ji_tuann:/to_ping_tlpa
 
 reverse_lookup:
   dictionary: luna_pinyin
