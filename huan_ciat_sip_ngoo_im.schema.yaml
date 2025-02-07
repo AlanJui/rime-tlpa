@@ -46,10 +46,13 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN;\_/-.[]
-  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
-  finals: ;\_/-.[]
+  # alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  # initials: 1234567890abcdefghijklmnopqrstuvwxyzN
+  # finals: ;\_/-.[]
   # delimiter: "' "
+  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN
+  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
+  finals: 1234567890
   delimiter: "'"
   use_space: true
   algebra:
@@ -69,11 +72,17 @@ translator:
       - lib_sip_ngoo_im:/jih_kian_tng_uann
   comment_format:
     __patch:
+      # 候選字視窗為雙排標音：【台語音標】、【方音符號】
+      # - lib_hau_suan_ji_tuann:/hau_suan_tuann_siang_piau_im
+      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
+      # - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
+      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
+      # - lib_hau_suan_ji_tuann:/to_ping_tlpa
+      # 候選字視窗為單排標音：【方音符號】
       - lib_hau_suan_ji_tuann:/hau_suan_tuann
       - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
       - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
       - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
-      - lib_hau_suan_ji_tuann:/to_ping_tl
 
 reverse_lookup:
   dictionary: luna_pinyin
