@@ -222,7 +222,8 @@ ziann_ping_siann_bu:       # 右邊-声母
     - xform/》l/ㄌ》/
     #------------------------------------------------------
     # 喉音
-    - xform/》h(?!\d)/ㄏ》/
+    - xform/^》h(?!\d)/ㄏ》/
+    #------------------------------------------------------
 
 
 ziann_ping_un_bu:       # 右邊-韻母
@@ -244,53 +245,35 @@ ziann_ping_un_bu:       # 右邊-韻母
     - xform/》i(n|t)/ㄧ》$1/
     - xform/》i(m|p)/ㄧ》$1/
     # 嘄 Niau / 嬌 iau
-    # - xform/》(N?)(iau)/Bㄧㄠ》/
-    - xform/》N(iau)/Bㄧㄠ》/
-    - xform/》(iau)/ㄧㄠ》/
+    - xform/》(N?)(iau)/$1ㄧㄠ》/
     # 驚 Nia / 迦 ia
-    # - xform/》(N?)(ia)/Bㄧㄚ》/
-    - xform/》N(ia)/Bㄧㄚ》/
-    - xform/》(ia)/ㄧㄚ》/
+    - xform/》(N?)(ia)/$1ㄧㄚ》/
     # 恭 iong
     - xform/》io(ng|k)/ㄧㆦ》$1/
     # 薑 Nio / 茄 io
-    # - xform/》(N?)(io)/Bㄧㄜ》/
-    - xform/》N(io)/Bㄧㄜ》/
-    - xform/》(io)/ㄧㄜ》/
+    - xform/》(N?)(io)/$1ㄧㄜ》/
     # 牛 Niu / 丩 iu
-    # - xform/》(N?)(iu)/Bㄧㄨ》/
-    - xform/》N(iu)/Bㄧㄨ》/
-    - xform/》(iu)/ㄧㄨ》/
+    - xform/》(N?)(iu)/$1ㄧㄨ》/
     # 泉腔
     # - xform/》ir/ㄦ》/	    # ㆨㄦ : 豬（ㄉㆨ tir，海口腔）、
     - xform/》ir/ㆨ》/	    # ㆨㄦ : 豬（ㄉㆨ tir，海口腔）、
     # 梔 Ni / 居 i
-    # - xform/》(N?)(i)/Bㄧ》/
-    - xform/》N(i)/Bㄧ》/
-    - xform/》(i)/Bㄧ》/
+    - xform/》(N?)(i)/$1ㄧ》/
     #------------------------------------------------------
     # u
     #------------------------------------------------------
     # 閂 Nuai / 乖 uai
-    # - xform/》(N?)(uai)/Bㄨㄞ》/
-    - xform/》N(uai)/Bㄨㄞ》/
-    - xform/》(uai)/ㄨㄞ》/
+    - xform/》(N?)(uai)/$1ㄨㄞ》/
     # 光 uang / 觀 uan
     - xform/》uang/ㄨㄤ》/
     - xform/》uan/ㄨㄢ》/
     - xform/》ua([kt])/ㄨㄚ》$1/
     # 官 Nua / 瓜 ua 
-    # - xform/》(N?)(ua)/Bㄨㄚ》/
-    - xform/》N(ua)/Bㄨㄚ》/
-    - xform/》(ua)/ㄨㄚ》/
+    - xform/》(N?)(ua)/$1ㄨㄚ》/
     # 褌 Nui / 規 ui
-    # - xform/》(N?)(ui)/Bㄨㄧ》/
-    - xform/》N(ui)/Bㄨㄧ》/
-    - xform/》(ui)/ㄨㄧ》/
+    - xform/》(N?)(ui)/$1ㄨㄧ》/
     # 糜 Nue / 檜 ue
-    # - xform/》(N?)(ue)/Bㄨㆤ》/
-    - xform/》N(ue)/Bㄨㄝ》/
-    - xform/》(ue)/ㄨㄝ》/
+    - xform/》(N?)(ue)/$1ㄨㆤ》/
     # 君 un
     - xform/》u(n|t)/ㄨ》$1/
     # 方音
@@ -306,17 +289,11 @@ ziann_ping_un_bu:       # 右邊-韻母
     - xform/》a([kt])/ㄚ》$1/
     - xform/》a(m|p)/ㄚ》$1/
     # 閒 Nai / 皆 ai
-    # - xform/》(N?)(ai)/Bㄞ》/
-    - xform/》N(ai)/Bㄞ》/
-    - xform/》(ai)/ㄞ》/
+    - xform/》(N?)(ai)/$1ㄞ》/
     # 爻 Nau / 交 au
-    # - xform/》(N?)(au)/Bㄠ》/
-    - xform/》N(au)/Bㄠ》/
-    - xform/》(au)/ㄠ》/
+    - xform/》(N?)(au)/$1ㄠ》/
     # 監 Na / 膠 a
-    # - xform/》(N?)(a)/Bㄚ》/
-    - xform/》N(a)/Bㄚ》/
-    - xform/》(a)/ㄚ》/
+    - xform/》(N?)(a)/$1ㄚ》/
     #------------------------------------------------------
     # e
     #------------------------------------------------------
@@ -329,8 +306,8 @@ ziann_ping_un_bu:       # 右邊-韻母
     - xform/》ei/ㆤ》/
     - xform/》ee/ㆤ》/
     # 更 Ne / 伽 e
-    # - xform/》(N?)(e)/Bㄝ》/
-    - xform/》N(e)/Bㆤ》/
+    # - xform/》(N?)(e)/$1ㄝ》/
+    - xform/》N(e)/$1ㆤ》/
     - xform/》(e)/ㆤ》/
     #------------------------------------------------------
     # oo
@@ -339,17 +316,17 @@ ziann_ping_un_bu:       # 右邊-韻母
     - xform/》o(ng|k)/ㆦ》$1/
     - xform/》o(m|p)/ㆦ》$1/
     # 姑 Noo / 沽 oo
-    # - xform/》(N?)(oo|o)/Bㄛ》/
-    # - xform/》(N?)(O)/Bㄛ》/
-    - xform/》N(O)/Bㆦ》/
-    - xform/》O/ㆦ》/
+    # - xform/》(N?)(oo|o)/$1ㄛ》/
+    - xform/》(N?)(O)/$1ㆦ》/
+    # - xform/》N(O)/$1ㆦ》/
+    # - xform/》O/ㆦ》/
     - xform/》oo/ㆦ》/
     #------------------------------------------------------
     # o
     #------------------------------------------------------
     # 姑 No / 高 o
-    # - xform/》(N?)(o)/$1ㄛ》/	  # 姑 No
-    - xform/》o/ㄜ》/	            # 高 o
+    - xform/》(N?)(o)/$1ㄜ》/	  # 姑 No
+    # - xform/》o/ㄜ》/	          # 高 o
     # 泉州腔
     - xform/》or/ㄜ》/
     #------------------------------------------------------
@@ -377,31 +354,31 @@ ziann_ping_un_bu:       # 右邊-韻母
     - xform/ㆦㆬ/ㆱ/
     #------------------------------------------------------
     # 鼻韻母符號轉換： 
-    # 【方音符號】： ㄬㄧㄚ = Bia = ㄧㆩ = i + ann = iann
-    # 【台語音標注音】： ㄬㄧㄚ = Bia = ⁰ㄧㄚ = ㄧㆩ = iann
+    # 【方音符號】： ㄬㄧㄚ = Nia = ㄧㆩ = i + ann = iann
+    # 【台語音標注音】： ㄬㄧㄚ = Nia = ⁰ㄧㄚ = ㄧㆩ = iann
     #
-    # Biau, Bia, BiO, Biu
-    # Buai, Bua, Bui, Bue
-    # Bi, Bu, Ba, BO, Be, Bai, Bau
+    # Niau, Nia, NiO, Niu
+    # Nuai, Nua, Nui, Nue
+    # Ni, Nu, Na, NO, Ne, Nai, Nau
     #------------------------------------------------------
     # 介音 i 開頭之鼻韻母
-    - xform/Bㄧㄠ/ㄧㆯ/   # Biau = iaunn
-    - xform/Bㄧㄚ/ㄧㆩ/   # Bia = iann
-    - xform/Bㄧㄛ/ㄧㆧ/   # BiO = iOnn
-    - xform/Bㄧㄨ/ㄧㆫ/   # Biu = iunn
+    - xform/Nㄧㄠ/ㄧㆯ/   # Niau = iaunn
+    - xform/Nㄧㄚ/ㄧㆩ/   # Nia = iann
+    - xform/Nㄧㄛ/ㄧㆧ/   # NiO = iOnn
+    - xform/Nㄧㄨ/ㄧㆫ/   # Niu = iunn
     # 介音 u 開頭之鼻韻母
-    - xform/Bㄨㄞ/ㄨㆮ/   # Buai = uainn
-    - xform/Bㄨㄚ/ㄨㆩ/   # Bua = uann
-    - xform/Bㄨㄧ/ㄨㆪ/   # Bui = uinn
-    - xform/Bㄨㆤ/ㄨㆥ/   # Bue = uenn
+    - xform/Nㄨㄞ/ㄨㆮ/   # Nuai = uainn
+    - xform/Nㄨㄚ/ㄨㆩ/   # Nua = uann
+    - xform/Nㄨㄧ/ㄨㆪ/   # Nui = uinn
+    - xform/Nㄨㆤ/ㄨㆥ/   # Nue = uenn
     # 元音/複合鼻韻母
-    - xform/Bㄧ/ㆪ/       # Bi = inn
-    - xform/Bㄨ/ㆫ/       # Bu = unn
-    - xform/Bㄚ/ㆩ/       # Ba = ann
-    - xform/Bㆦ/ㆧ/       # BO = Onn
-    - xform/Bㆤ/ㆥ/       # Be = enn
-    - xform/Bㄞ/ㆮ/       # Bai = ainn
-    - xform/Bㄠ/ㆯ/       # Bau = aunn
+    - xform/Nㄧ/ㆪ/       # Ni = inn
+    - xform/Nㄨ/ㆫ/       # Nu = unn
+    - xform/Nㄚ/ㆩ/       # Na = ann
+    - xform/Nㆦ/ㆧ/       # NO = Onn
+    - xform/Nㆤ/ㆥ/       # Ne = enn
+    - xform/Nㄞ/ㆮ/       # Nai = ainn
+    - xform/Nㄠ/ㆯ/       # Nau = aunn
 
 
 ziann_ping_siann_tiau:       # 右邊-声調
