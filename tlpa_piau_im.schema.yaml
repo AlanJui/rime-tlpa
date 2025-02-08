@@ -54,8 +54,11 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
-  initials: abcdefghijklmnopqrstuvwxyz
+  # alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  # initials: abcdefghijklmnopqrstuvwxyz
+  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN
+  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
+  finals: 1234567890
   delimiter: "'"
   use_space: true
   algebra:
