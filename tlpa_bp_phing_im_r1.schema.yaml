@@ -1,0 +1,242 @@
+# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: tlpa_bp_phing_im
+  name: 拼音輸入法【閩拼方案】
+  version: "v0.1.0.0"
+  author:
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    【輸入類型】：拼音輸入法
+    【拼音系統】：台語音標+
+    【字典編碼】：台羅音標
+    【注音輸入】：羅馬拼音字母（siaⁿ1：siann;）
+    【侯選清單】：〔siaⁿ¹〕【ㄙㄧㄚ¹】
+    【聲調標示】：
+      (1) 台羅八聲調；
+      (2) 使用數值標示聲調，以利閱讀。
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+    # - fluency_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - echo_translator
+    - punct_translator
+    - script_translator
+    - reverse_lookup_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  #------------------------------------------------------
+  # 定義使用者按下鍵盤時，輸入法能接受的按鍵
+  #------------------------------------------------------
+  # 舒聲 [12357]
+  # 1: ;
+  # 2: \
+  # 3: _ （劃底線符號）
+  # 5: /
+  # 6: [N/A]
+  # 7: -
+  # 4: [
+  # 8: ]
+  # 輕聲及入聲 [48] = 0
+  # 0: .
+  #------------------------------------------------------
+  # alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  # initials: abcdefghijklmnopqrstuvwxyz
+  # finals: ;\_/-.[]
+  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN
+  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
+  finals: 1234567890
+  delimiter: "'"
+  use_space: true
+  algebra:
+    - xform/ng/q/   #簡化ng旳輸入
+    - xform/^([mnq].*[aeiouAEIOU])(h?\d)$/$1nn$2/   #補全鼻聲母鼻化韵幖誌
+    - xform/^b/m/
+    - xform/^p/b/
+    - xform/^bh/p/
+    - xform/^n/l/
+    - xform/^t/d/
+    - xform/^dh/t/
+    - xform/^g/q/
+    - xform/^k/g/
+    - xform/^gh/k/
+    - xform/^c/z/
+    - xform/^zh/c/
+    - xform/^j/r/
+    - xform/([aeiouAEIOU].*)nn/n$1/   #將鼻化韵幖誌迻至韵母頭部
+    - derive/Ia/io/   #保持iang/iong差異
+    - xform/IR/ir/
+    - xform/ur/ir/
+    - xform/er(h?)(\d)/ur$1$2/
+    - xform/Er/ur/
+    - xform/ere/ue/   #將ere與ue在同一口音中不共存, 故規整爲ue
+    - derive/naI/iq/   #保持nai/ing差異
+    - derive/nuI/q/   #保持nui/ng差異
+    - derive/iO/or/   #保持矦韵文讀io/or差異
+    - xform/er([mnqptk])/ir$1/   #將erm/ern/erng及相應入聲規整爲ir韵腹
+    - xform/ee/er/
+    - xform/erh/eh/   #將eeh韵簡化爲eh韵
+    - xform/ner/ne/   #將nee韵簡化爲ne韵
+    - xform/oo/or/
+    - xform/nor/no/   #將noo韵簡化爲no韵
+    - xlit/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/   #把區別碼全部變爲小寫
+    - xform/^i/yi/   #i位于音卪起首注y
+    - xform/^yi([aeou])/y$1/
+    - xform/^u/wu/   #u位于音卪起首注w
+    - xform/^wu([aeio])/w$1/
+    - derive/^([a-z]+)\d$/$1/
+    # - 'xlit 12345678 []\[,.//'
+
+translator:
+  dictionary: tl_ji_khoo_peh_ue
+  prism: tlpa_bp_phing_im
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
+  #======================================================
+  # 【輸入編輯列(preedit_format)】：定義輸入按鍵與注音符號之對映定義
+  # 操作輸入法時，在輸入介面壓下的【按鍵】，與之對映的注音符號（ㄅㄆㄇ），
+  # 將根據此處的定義，於輸入介面顯示相對應的注音符號
+  #======================================================
+  preedit_format:
+    - 'xform q ng'   #顯眎還厡ng
+    # - 'xform ([aeiou])(r?m?n?h?g?p?t?k?)([\[\]\\\,\./]) $1$3$2'   #將調號由尾部迻至韵腹後
+    # - 'xform ([a])([iu])([\[\]\\\,\./]) $1$3$2'
+    # - 'xform a\[ a'
+    # - 'xform e\[ e'
+    # - 'xform i\[ i'
+    # - 'xform u\[ u'
+    # - 'xform o\[ o'
+    # - 'xform m\[ m'
+    # - 'xform ng\[ ng'
+    # - 'xform a\] á'
+    # - 'xform e\] é'
+    # - 'xform i\] í'
+    # - 'xform u\] ú'
+    # - 'xform o\] ó'
+    # - 'xform m\] ḿ'
+    # - 'xform ng\] ńg'
+    # - 'xform a\\ à'
+    # - 'xform e\\ è'
+    # - 'xform i\\ ì'
+    # - 'xform u\\ ù'
+    # - 'xform o\\ ò'
+    # - 'xform ng\\ ǹg'
+    # - 'xform mh\[ mh'
+    # - 'xform ngh\[ ngh'
+    # - 'xform a\, â'
+    # - 'xform e\, ê'
+    # - 'xform i\, î'
+    # - 'xform u\, û'
+    # - 'xform o\, ô'
+    # - 'xform m\, m̂'
+    # - 'xform ng\, n̂g'
+    # - 'xform a\. ǎ'
+    # - 'xform e\. ě'
+    # - 'xform i\. ǐ'
+    # - 'xform u\. ǔ'
+    # - 'xform o\. ǒ'
+    # - 'xform ng\. ňg'
+    # - 'xform a/ ạ'
+    # - 'xform e/ ẹ'
+    # - 'xform i/ ị'
+    # - 'xform u/ ụ'
+    # - 'xform o/ ọ'
+    # - 'xform m/ ṃ'
+    # - 'xform ng/ ṇg'
+    # - 'xform mh/ ṃh'
+    # - 'xform ngh/ ṇgh'
+
+reverse_lookup:
+  dictionary: luna_pinyin
+  prefix: "`"
+  tips: 〔拼音〕
+  preedit_format:
+    - xform/([nljqxy])v/$1ü/
+
+key_binder:
+  import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore  }
+    #---------------------------------------------------
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus  }
+    #---------------------------------------------------
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: composing, accept: period, send: period }   
+    - { when: has_menu, accept: period, send: period }   
+    #---------------------------------------------------
+    # 翻頁
+    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+
+editor:
+  bindings:
+    space: commit                           # 選擇「備選漢字」
+    Return: commit_composition              # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
+    reverse_lookup: "`[a-z]*$"
+
+menu:
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  alternative_select_keys: "ABCDE"
+  page_size: 5 #選單每䈎顯示個數
+
+style:
+  horizontal: false
+  font_face: "霞鶩文楷 TC, , 新細明體"
+
+punctuator:
+  import_preset: keymap_piau_tian
