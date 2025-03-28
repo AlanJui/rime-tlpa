@@ -50,10 +50,6 @@ engine:
     # - lua_filter@single_char_first_filter
 
 speller:
-  # alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN;\_/-.[]
-  # initials: 1234567890abcdefghijklmnopqrstuvwxyzN
-  # finals: ;\_/-.[]
-  # delimiter: "' "
   alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN
   initials: 1234567890abcdefghijklmnopqrstuvwxyzN
   finals: 1234567890
@@ -73,7 +69,6 @@ translator:
   initial_quality: 0.75
   preedit_format:
     __patch:
-      # - lib_sip_ngoo_im:/jih_kian_tng_uann
       - lib_sip_ngoo_im:/phah_ji_tng_uann
   comment_format:
     __patch:

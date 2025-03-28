@@ -17,6 +17,21 @@ schema:
     【聲調標示】：
       (1) 台羅八聲調；
       (2) 使用數值標示聲調，以利閱讀。
+  #------------------------------------------------------
+  # 定義使用者按下鍵盤時，輸入法能接受的按鍵
+  #------------------------------------------------------
+  # 舒聲 [12357]
+  # 1: ;
+  # 2: \
+  # 3: _ （劃底線符號）
+  # 5: /
+  # 6: [N/A]
+  # 7: -
+  # 4: [
+  # 8: ]
+  # 輕聲及入聲 [48] = 0
+  # 0: .
+  #------------------------------------------------------
 
 switches:
   - name: ascii_mode
@@ -53,27 +68,9 @@ engine:
     - uniquifier
 
 speller:
-  #------------------------------------------------------
-  # 定義使用者按下鍵盤時，輸入法能接受的按鍵
-  #------------------------------------------------------
-  # 舒聲 [12357]
-  # 1: ;
-  # 2: \
-  # 3: _ （劃底線符號）
-  # 5: /
-  # 6: [N/A]
-  # 7: -
-  # 4: [
-  # 8: ]
-  # 輕聲及入聲 [48] = 0
-  # 0: .
-  #------------------------------------------------------
-  # alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
-  # initials: abcdefghijklmnopqrstuvwxyz
-  # finals: ;\_/-.[]
-  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN
-  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
-  finals: 1234567890
+  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  initials: abcdefghijklmnopqrstuvwxyz
+  finals: ;\_/-.[]
   delimiter: "'"
   use_space: true
   algebra:
@@ -88,8 +85,8 @@ speller:
     # - derive/^ts/c/	          # 可與台語拼音相容
     # - derive/^c(?!h)/z/       # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
     # - derive/^ch/c/           # ㄘ
-    - derive/^ts(?!h)/z/       # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
-    - derive/^tsh/c/           # ㄘ
+    - derive/^ts(?!h)/z/ # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
+    - derive/^tsh/c/ # ㄘ
     #------------------------------------------------------------------
     # 變調
     #------------------------------------------------------------------
@@ -115,19 +112,19 @@ speller:
     # - xform/ere/ue/
     # - xform/er/e/
 
-    - derive/ei/e/	  # 漳州腔
-    - derive/ur/u/	  # 廈門腔
+    - derive/ei/e/ # 漳州腔
+    - derive/ur/u/ # 廈門腔
     - derive/ou/oo/
-    - derive/ee/e/	  # 漳州/泉州腔
+    - derive/ee/e/ # 漳州/泉州腔
     # --------------------------------------------------------------------------
     # ann ==> nna ==> Na ==> Ba ==> ㄥㄚ ==> ㆩ
     #------------------------------------------------------
     - derive/([iu]?(ai|au|[iuaoe]))nn/N$1/
     #--------------------------------------------------------------------------
     # 入聲韻尾轉換
-    # -m  ==> -p 
-    # -n  ==> -t 
-    # -ng ==> -k 
+    # -m  ==> -p
+    # -n  ==> -t
+    # -ng ==> -k
     - derive/p[48]/p0/
     - derive/t[48]/t0/
     - derive/k[48]/k0/
@@ -143,6 +140,10 @@ speller:
     - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).*$/$1/
     # 可只輸入【聲母】與【調號】
     - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
+    #------------------------------------------------------
+    # 定義聲調的「調號」與「按鍵」的對映規則
+    #------------------------------------------------------
+    - xlit|12357480|;\_/-[].|
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -175,7 +176,7 @@ translator:
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
     #------------------------------------------------------
-    # - xlit|;\_/-[].|12357480|
+    - xlit|;\_/-[].|12357480|
   comment_format:
     #======================================================
     # 拼音系統層級設定
@@ -184,7 +185,7 @@ translator:
     # - xform/'/ /
     - xform/'/ 》/
     # 特殊聲調轉換
-    - xform/6/7/            # 聲調 6 改為 7
+    - xform/6/7/ # 聲調 6 改為 7
     - xform/oo/O/
     #------------------------------------------------------
     # 為候選字之拼音字母，建立轉換格式
@@ -208,34 +209,34 @@ translator:
     # 定義【聲母】對映規則
     #======================================================
     # 齒齦音（舌尖前音）。塞擦音/擦音
-    - xform/》ts(?!h)/z》/    # 清音。不送氣
-    - xform/》tsh/c》/        # 清音。送氣  
-    - xform/》j/zz》/         # 濁音。不送氣
-    - xform/》s/s》/          # 清音。擦音  
+    - xform/》ts(?!h)/z》/ # 清音。不送氣
+    - xform/》tsh/c》/ # 清音。送氣
+    - xform/》j/zz》/ # 濁音。不送氣
+    - xform/》s/s》/ # 清音。擦音
     #------------------------------------------------------
     # 齦顎音（舌齒音）。塞擦音/擦音
-    - xform/》tsi/zi》/       # 清音。不送氣
-    - xform/》tshi/ci》/      # 清音。送氣  
-    - xform/》ji/zzi》/       # 濁音。不送氣
-    - xform/》si/si》/        # 清音。擦音  
+    - xform/》tsi/zi》/ # 清音。不送氣
+    - xform/》tshi/ci》/ # 清音。送氣
+    - xform/》ji/zzi》/ # 濁音。不送氣
+    - xform/》si/si》/ # 清音。擦音
     #------------------------------------------------------
     # 雙唇音。塞音/鼻音
-    - xform/》p(?!h)/b》/     # 清音。不送氣
-    - xform/》ph/p》/         # 清音。送氣  
-    - xform/》b/bb》/         # 濁音。不送氣
-    - xform/》m(?!\d)/bbn》/  # 濁音。鼻音  
+    - xform/》p(?!h)/b》/ # 清音。不送氣
+    - xform/》ph/p》/ # 清音。送氣
+    - xform/》b/bb》/ # 濁音。不送氣
+    - xform/》m(?!\d)/bbn》/ # 濁音。鼻音
     #------------------------------------------------------
     # 齒齦音。塞音/鼻音/邊音
-    - xform/》t(?!h)(?!\d)/d》/     # 清音。不送氣
-    - xform/》th/t》/               # 清音。送氣  
-    - xform/》l/l》/                # 濁音。邊音
-    - xform/》n(?!g)(?!\d)/ln》/    # 濁音。鼻音  
+    - xform/》t(?!h)(?!\d)/d》/ # 清音。不送氣
+    - xform/》th/t》/ # 清音。送氣
+    - xform/》l/l》/ # 濁音。邊音
+    - xform/》n(?!g)(?!\d)/ln》/ # 濁音。鼻音
     #------------------------------------------------------
     # 軟顎音（舌根音）。塞音/鼻音
-    - xform/》k(?!h)(?!\d)/g》/     # 清音。不送氣
-    - xform/》kh/k》/               # 清音。送氣
-    - xform/》g/gg》/               # 濁音。不送 
-    - xform/》ng(?!\d)/ggn》/       # 濁音。鼻音
+    - xform/》k(?!h)(?!\d)/g》/ # 清音。不送氣
+    - xform/》kh/k》/ # 清音。送氣
+    - xform/》g/gg》/ # 濁音。不送
+    - xform/》ng(?!\d)/ggn》/ # 濁音。鼻音
     #------------------------------------------------------
     # 聲門音（喉音）。擦音
     - xform/》h(?!\d)/h》/
@@ -247,45 +248,45 @@ translator:
     # a
     #------------------------------------------------------
     # 江 ang / 干 an / 甘 am
-    - xform/》a(ng|n|m)/a$1》/    # 鼻韻母
-    - xform/》a(k|t|p)/a》$1/     # 入聲韻母
+    - xform/》a(ng|n|m)/a$1》/ # 鼻韻母
+    - xform/》a(k|t|p)/a》$1/ # 入聲韻母
     # 閒 Nai / 皆 ai
-    - xform/》(N?)(aih)/$1ai》h/  # 入聲韻母
+    - xform/》(N?)(aih)/$1ai》h/ # 入聲韻母
     - xform/》(N?)(ai)/$1ai》/
     # 爻 Nau / 交 au
-    - xform/》(N?)(auh)/$1ao》h/  # 入聲韻母
+    - xform/》(N?)(auh)/$1ao》h/ # 入聲韻母
     - xform/》(N?)(au)/$1ao》/
     # 監 Na / 膠 a
-    - xform/》(N?)(ah)/$1a》h/    # 入聲韻母
+    - xform/》(N?)(ah)/$1a》h/ # 入聲韻母
     - xform/》(N?)(a)/$1a》/
     #------------------------------------------------------
     # e
     #------------------------------------------------------
     # 泉腔: erng, erk, eru, ere, ern er
-    - xform/》er(ng|n)/er$1》/    # 鼻韻母：等 [terng2], 德 [terk4]
-    - xform/》er(k|t)/er》$1/     # 入聲韻母：【恩】：ern1
-    - xform/》ere/ue》/	          # 火【鷄】:kere1
-    - xform/》er/o》/	            # 【火】鷄: her2
+    - xform/》er(ng|n)/er$1》/ # 鼻韻母：等 [terng2], 德 [terk4]
+    - xform/》er(k|t)/er》$1/ # 入聲韻母：【恩】：ern1
+    - xform/》ere/ue》/ # 火【鷄】:kere1
+    - xform/》er/o》/ # 【火】鷄: her2
     # 稽 ei / 嘉 ee
     - xform/》ei/e》/
     - xform/》ee/e》/
     # 更 Ne / 伽 e
-    - xform/》(N?)(eh)/$1e》h/    # 入聲韻母
+    - xform/》(N?)(eh)/$1e》h/ # 入聲韻母
     - xform/》(N?)(e)/$1e》/
     #------------------------------------------------------
     # i
     #------------------------------------------------------
     # 姜 iang / 堅 ian / 兼 iam
-    - xform/》ia(ng|n|m)/ia$1》/    # 鼻韻母
-    - xform/》ia(k|t|p)/i》$1/      # 入聲韻母
+    - xform/》ia(ng|n|m)/ia$1》/ # 鼻韻母
+    - xform/》ia(k|t|p)/i》$1/ # 入聲韻母
     # 經 ing / 巾 in / 金 im
-    - xform/》i(ng|n|m)/i$1》/      # 鼻韻母
-    - xform/》i(k|t|p)/i》$1/       # 入聲韻母
+    - xform/》i(ng|n|m)/i$1》/ # 鼻韻母
+    - xform/》i(k|t|p)/i》$1/ # 入聲韻母
     # 嘄 Niau / 嬌 iau
-    - xform/》(N?)(iauh)/$1iao》h/  # 入聲韻母
+    - xform/》(N?)(iauh)/$1iao》h/ # 入聲韻母
     - xform/》(N?)(iau)/$1iao》/
     # 驚 Nia / 迦 ia
-    - xform/》(N?)(iah)/$1ia》h/    # 入聲韻母
+    - xform/》(N?)(iah)/$1ia》h/ # 入聲韻母
     - xform/》(N?)(ia)/$1ia》/
     # 恭 iong
     - xform/》io(ng|k)/io》$1/
@@ -295,16 +296,16 @@ translator:
     - xform/》iuh/iu》$1/
     - xform/》(N?)(iu)/$1iu》/
     # 泉腔
-    - xform/》ir/i》/	            # ㆨㄦ : 豬（ㄉㆨ tir，海口腔）、
+    - xform/》ir/i》/ # ㆨㄦ : 豬（ㄉㆨ tir，海口腔）、
     # 梔 Ni / 居 i
-    - xform/》(N?)(ih)/$1i》h/    # 入聲韻母
+    - xform/》(N?)(ih)/$1i》h/ # 入聲韻母
     - xform/》(N?)(i)/$1i》/
     #------------------------------------------------------
     # o
     #------------------------------------------------------
     # 姑 No / 高 o
-    - xform/》oh/o》h/	        # 入聲韻母
-    - xform/》(N?)(o)/$1o》/	  # 姑 No / 高 o
+    - xform/》oh/o》h/ # 入聲韻母
+    - xform/》(N?)(o)/$1o》/ # 姑 No / 高 o
     # 泉州腔
     - xform/》or/o》/
     #------------------------------------------------------
@@ -323,23 +324,23 @@ translator:
     # 閂 Nuai / 乖 uai
     - xform/》(N?)(uai)/$1uai》/
     # 光 uang / 觀 uan
-    - xform/》ua(ng|n)/ua$1》/    # 鼻韻母
-    - xform/》ua(k|t)/ua$1》/     # 入聲韻母
-    # 官 Nua / 瓜 ua 
-    - xform/》uah/ua》h/          # 入聲韻母
+    - xform/》ua(ng|n)/ua$1》/ # 鼻韻母
+    - xform/》ua(k|t)/ua$1》/ # 入聲韻母
+    # 官 Nua / 瓜 ua
+    - xform/》uah/ua》h/ # 入聲韻母
     - xform/》(N?)(ua)/$1ua》/
     # 褌 Nui / 規 ui
-    - xform/》uih/ui》h/          # 入聲韻母
+    - xform/》uih/ui》h/ # 入聲韻母
     - xform/》(N?)(ui)/$1ui》/
     # 糜 Nue / 檜 ue
-    - xform/》(N?)(ueh)/$1ue》h/  # 入聲韻母
+    - xform/》(N?)(ueh)/$1ue》h/ # 入聲韻母
     - xform/》(N?)(ue)/$1ue》/
     # 君 un
     - xform/》u(n|t)/u》$1/
     # 方音
     - xform/》ur/u》/
     # 艍 u
-    - xform/》uh/u》h/              # 入聲韻母
+    - xform/》uh/u》h/ # 入聲韻母
     - xform/》(N?)(u)/$1u》/
     #------------------------------------------------------
     # 鼻音韻尾
@@ -358,15 +359,15 @@ translator:
     #------------------------------------------------------
     # 定義【聲調】對映規則
     #------------------------------------------------------
-    - xform/》0/⁰/   # 輕声： ⁰   0  ⁰  ˙   
-    - xform/》1/1/   # 陰平： ¹   1  ¹  ˉ  ˉ   
-    - xform/》5/2/   # 陽平： ²   5  ⁵  ˊ  ˊ
-    - xform/》2/3/   # 上声： ³   2  ²  ˋ  ˇ
-    - xform/》6/4/   # 上声： ⁴   6  ⁶  ˋ  ˇ
-    - xform/》3/5/   # 陰去： ⁵   3  ³  ˪  ˋ
-    - xform/》7/6/   # 陽去： ⁶   7  ⁷  ˫  ^
-    - xform/》4/7/   # 陰入： ⁷   4  ⁴     ˉ  
-    - xform/》8/8/   # 陽入： ⁸   8  ⁸  ˙  ˊ
+    - xform/》0/⁰/ # 輕声： ⁰   0  ⁰  ˙
+    - xform/》1/1/ # 陰平： ¹   1  ¹  ˉ  ˉ
+    - xform/》5/2/ # 陽平： ²   5  ⁵  ˊ  ˊ
+    - xform/》2/3/ # 上声： ³   2  ²  ˋ  ˇ
+    - xform/》6/4/ # 上声： ⁴   6  ⁶  ˋ  ˇ
+    - xform/》3/5/ # 陰去： ⁵   3  ³  ˪  ˋ
+    - xform/》7/6/ # 陽去： ⁶   7  ⁷  ˫  ^
+    - xform/》4/7/ # 陰入： ⁷   4  ⁴     ˉ
+    - xform/》8/8/ # 陽入： ⁸   8  ⁸  ˙  ˊ
     #------------------------------------------------------
     # 定義【校調】對映規則
     #------------------------------------------------------
@@ -388,15 +389,15 @@ key_binder:
     #---------------------------------------------------
     # 使用【_】鍵，輸入【調號】：3 （低音調）
     - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu, accept: underscore, send: underscore  }
+    - { when: has_menu, accept: underscore, send: underscore }
     #---------------------------------------------------
     # 使用【-】鍵，輸入【調號】：7 （中音調）
     - { when: composing, accept: minus, send: minus }
-    - { when: has_menu, accept: minus, send: minus  }
+    - { when: has_menu, accept: minus, send: minus }
     #---------------------------------------------------
     # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
-    - { when: composing, accept: period, send: period }   
-    - { when: has_menu, accept: period, send: period }   
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
     #---------------------------------------------------
     # 翻頁
     # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
@@ -414,11 +415,11 @@ key_binder:
 
 editor:
   bindings:
-    space: commit                           # 選擇「備選漢字」
-    Return: commit_composition              # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
+    space: commit # 選擇「備選漢字」
+    Return: commit_composition # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Shift+Return: commit_raw_input # 將 Control+Return 綁定到 Lua 函數
 
 recognizer:
   import_preset: default
@@ -430,8 +431,8 @@ recognizer:
     reverse_lookup: "`[a-z]*$"
 
 menu:
-  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
-  alternative_select_keys: "ABCDE"
+  alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
+  alternative_select_keys: "12345"
   page_size: 5 #選單每䈎顯示個數
 
 style:
