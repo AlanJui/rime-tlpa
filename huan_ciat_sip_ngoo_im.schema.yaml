@@ -50,9 +50,8 @@ engine:
     # - lua_filter@single_char_first_filter
 
 speller:
-  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN
-  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
-  finals: 1234567890
+  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  initials: abcdefghijklmnopqrstuvwxyz
   delimiter: "'"
   use_space: true
   algebra:
@@ -125,6 +124,7 @@ editor:
 
 menu:
   alternative_select_labels: [①, ②, ③, ④, ⑤]
+  alternative_select_keys: "12345"
   page_size: 5
 
 style:

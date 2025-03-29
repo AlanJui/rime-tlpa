@@ -51,15 +51,16 @@ engine:
     # - lua_filter@single_char_first_filter
 
 speller:
-  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
-  initials: abcdefghijklmnopqrstuvwxyz
+  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN
+  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
+  finals: 1234567890
   delimiter: "'"
   use_space: true
   algebra:
     __patch:
       - lib_sip_ngoo_im2:/phing_im_tng_ji_be
       - lib_sip_ngoo_im2:/abbreviation
-      - lib_sip_ngoo_im2:/ji_be_tng_jih_kian
+      # - lib_sip_ngoo_im2:/ji_be_tng_jih_kian
 
 translator:
   dictionary: tl_ji_khoo_peh_ue
@@ -117,7 +118,6 @@ editor:
 
 menu:
   alternative_select_labels: [①, ②, ③, ④, ⑤]
-  alternative_select_keys: "12345"
   page_size: 5
 
 style:
