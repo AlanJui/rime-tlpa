@@ -3,11 +3,13 @@
 
 schema:
   schema_id: kb_hong_im
-  name: 按鍵練習【方音符號】
-  version: "0.2"
+  name: 按鍵練習【方音符號】Rev.1
+  version: "0.1"
   author:
     - Alan Jui <AlanJui.1960@gmail.com>
   description: |
+    用「羅馬拼音字母」輸入「方音符號」
+
     方音符號：
       ㄅ ㄆ ㄇ       ㆠ
       ㄉ ㄊ ㄋ ㄌ
@@ -22,6 +24,12 @@ schema:
       ㄞ ㄠ          ㆮ ㆯ
       ㆰ ㆱ ㆬ
       ㄢ ㄣ ㄤ ㆲ ㄥ ㆭ
+
+    鍵盤對應：
+      ㄅ ㄉ ３ ２ ７ ５ ． ㄚ ㄞ ㄢ ｎ
+      ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
+      ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
+      ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
 
 switches:
   - name: ascii_mode
@@ -46,57 +54,59 @@ engine:
 
 punctuator:
   half_shape: &symtable
-    "1": { commit: "ㄅ" }  # /b/ ==> b
-    "q": { commit: "ㄆ" }  # /p/ ==> p
-    "!": { commit: "ㆠ" }  # /bb/ ==> B
-    "a": { commit: "ㄇ" }  # /m/ ==> m
-    "2": { commit: "ㄉ" }  # /d/ ==> d
-    "w": { commit: "ㄊ" }  # /t/ ==> t
-    "s": { commit: "ㄋ" }  # /n/ ==> n
-    "x": { commit: "ㄌ" }  # /l/ ==> l
-    "e": { commit: "ㄍ" }  # /g/ ==> g
-    "d": { commit: "ㄎ" }  # /k/ ==> k
-    "E": { commit: "ㆣ" }  # /gg/ ==> G
-    "c": { commit: "ㄏ" }  # /h/ ==> h
-    "y": { commit: "ㄗ" }  # /z/ ==> z
-    "h": { commit: "ㄘ" }  # /c/ ==> c
-    "Y": { commit: "ㆡ" }  # /zz/ ==> Z
-    "n": { commit: "ㄙ" }  # /s/ ==> s
-    "u": { commit: "ㄧ" }  # /i/ ==> i
-    "U": { commit: "ㆪ" }  # /inn/ ==> I
-    "j": { commit: "ㄨ" }  # /u/ ==> u
-    "J": { commit: "ㆫ" }  # /unn/ ==> U
-    "8": { commit: "ㄚ" }  # /a/ ==> a
-    "*": { commit: "ㆩ" }  # /ann/ ==> A
-    "i": { commit: "ㆦ" }  # /oo/ ==> O
-    "I": { commit: "ㆧ" }  # /oonn/ ==> Q
-    "k": { commit: "ㄜ" }  # /or/ ==> o
-    ",": { commit: "ㆤ" }  # /e/ ==> e
-    "<": { commit: "ㆥ" }  # /enn/ ==> E
-    "9": { commit: "ㄞ" }  # /ai/ ==> x
-    "(": { commit: "ㆮ" }  # /ainn/ ==> X
-    "l": { commit: "ㄠ" }  # /au/ ==> y
-    "L": { commit: "ㆯ" }  # /aunn/ ==> Y
-    "0": { commit: "ㄢ" }  # /an/ ==> @
-    "p": { commit: "ㄣ" }  # /en/ ==> N
-    ";": { commit: "ㄤ" }  # /ang/ ==> G
-    "-": { commit: "ㆨ" }  # /ir/ ==> R
-    "[": { commit: "ㆰ" }  # /am/ ==> [
-    "]": { commit: "ㆱ" }  # /om/ ==> ]
-    "'": { commit: "ㆲ" }  # /ong/ ==> H
-    "\\": { commit: "ㆭ" }  # /-ng/ ==> W
-    "z": { commit: "ㄫ" }  # /ng-/ ==> w
-    "m": { commit: "ㆬ" }  # /m/ ==> M
-    "r": { commit: "ㄐ" }  # /zi/ ==> zi
-    "f": { commit: "ㄑ" }  # /ci/ ==> ci
-    "R": { commit: "ㆢ" }  # /zzi/ ==> Zi
-    "v": { commit: "ㄒ" }  # /si/ ==> si
-    "b": { commit: "ㆴ" }  # /b0/ ==> R
-    "t": { commit: "ㆵ" }  # /d0/ ==> F
-    "g": { commit: "ㆻ" }  # /g0/ ==> V
-    "C": { commit: "ㆷ" }  # /h0/ ==> C
-    # "/": { commit: "ㄥ" }  # /(i)ng/ ==> L
-    "/": [ "ㄥ", "/" ]
+    "1": { commit: "ㄅ" }
+    "!": { commit: "ㆠ" }
+    "q": { commit: "ㄆ" }
+    "a": { commit: "ㄇ" }
+    "2": { commit: "ㄉ" }
+    "w": { commit: "ㄊ" }
+    "s": { commit: "ㄋ" }
+    "x": { commit: "ㄌ" }
+    "e": { commit: "ㄍ" }
+    "E": { commit: "ㆣ" }
+    "d": { commit: "ㄎ" }
+    "y": { commit: "ㄗ" }
+    "h": { commit: "ㄘ" }
+    "n": { commit: "ㄙ" }
+    "b": { commit: "ㆡ" }
+    "Y": { commit: "ㄐ" }
+    "H": { commit: "ㄑ" }
+    "N": { commit: "ㄒ" }
+    "r": { commit: "ㄐ" }
+    "f": { commit: "ㄑ" }
+    "v": { commit: "ㄒ" }
+    "B": { commit: "ㆢ" }
+    "c": { commit: "ㄏ" }
+    "7": { commit: "˙" }
+    "u": { commit: "ㄧ" }
+    "U": { commit: "ㆪ" }
+    "j": { commit: "ㄨ" }
+    "J": { commit: "ㆫ" }
+    "8": { commit: "ㄚ" }
+    "*": { commit: "ㆩ" }
+    "i": { commit: "ㆦ" }
+    "I": { commit: "ㆧ" }
+    "k": { commit: "ㄜ" }
+    ",": { commit: "ㆤ" }
+    "<": { commit: "ㆥ" }
+    "-": { commit: "ㆨ" }
+    "m": { commit: "ㆬ" }
+    "p": { commit: "ㄣ" }
+    "/": [ㆭ, ㄥ]
+    "?": { commit: "ㄫ" }
+    "9": { commit: "ㄞ" }
+    "(": { commit: "ㆮ" }
+    "l": { commit: "ㄠ" }
+    "L": { commit: "ㆯ" }
+    "0": { commit: "ㄢ" }
+    ";": { commit: "ㄤ" }
+    ":": { commit: "ㆲ" }
+    "O": { commit: "ㆱ" }
+    "A": { commit: "ㆰ" }
+    "[": { commit: "〔" }
+    "]": { commit: "〕" }
+    "{": { commit: "【" }
+    "}": { commit: "】" }
     "=": [ "〔〕", "【】" ]
     " ": [ "ˉ", "1", "¹" ]
     "4": [ "ˋ", "2", "²" ]
