@@ -1,30 +1,28 @@
-<<<<<<< HEAD
 # Rime schema
 # encoding: utf-8
 
 schema:
   schema_id: my_hong_im
   name: 我的方音
-  version: '0.4'
+  version: "0.4"
   author:
     - Yu-Ren Pan <YuRen.Pan.0117@gmail.com>
   description: |
     對 bopomofo 來修改
-    
+
     鍵盤對應：
       ㄅ ㄉ ３ ２ ７ ５ ． ㄚ ㄞ ㄢ ｎ
       ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
       ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
       ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
 
-
 switches:
   - name: ascii_mode
     reset: 0
-    states: [ 台文, ABC ]
+    states: [台文, ABC]
   - name: full_shape
     reset: 0
-    states: [ 半形, 全形 ]
+    states: [半形, 全形]
 
 engine:
   processors:
@@ -50,68 +48,68 @@ engine:
     - uniquifier
 
 menu:
-  alternative_select_labels: [ Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ ]
-  alternative_select_keys: 'ABCDEFGHIJ'
+  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
+  alternative_select_keys: "ABCDEFGHIJ"
 
 speller:
-  alphabet: '1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657'
-  initials: '1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-7'
-  finals: ' 43567'
+  alphabet: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657"
+  initials: "1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/-7"
+  finals: " 43567"
   delimiter: "'"
   use_space: true
   algebra:
     # 變調
-    - derive/1/7/  # 第一調 → 第七調
-    - derive/2/1/  # 第二調 → 第一調
-    - derive/3/2/  # 第三調 → 第二調
-    - derive/7/3/  # 第七調 → 第三調
-    - derive/5/7/  # 第五調 → 第七調
-    - derive/5/3/  # 第五調 → 第三調
-    - derive/(?<![BDG])4/2/  # -ㆷ 第四調 → 第二調
-    - derive/(?<![BDG])8/3/  # -ㆷ 第八調 → 第三調
-    - xform/[48]/0/  # 入聲調（第四調、第八調）合併
+    - derive/1/7/ # 第一調 → 第七調
+    - derive/2/1/ # 第二調 → 第一調
+    - derive/3/2/ # 第三調 → 第二調
+    - derive/7/3/ # 第七調 → 第三調
+    - derive/5/7/ # 第五調 → 第七調
+    - derive/5/3/ # 第五調 → 第三調
+    - derive/(?<![BDG])4/2/ # -ㆷ 第四調 → 第二調
+    - derive/(?<![BDG])8/3/ # -ㆷ 第八調 → 第三調
+    - xform/[48]/0/ # 入聲調（第四調、第八調）合併
     # 音變
-    - derive/z/d/         # ㆡ、ㆢ → ㄌ
-    - derive/z(N?i)/g$1/  # ㆢ → ㆣ
-    - derive/iaD/ieD/  # ㄧㄢ、ㄧㄚㆵ → ㄧㄢ、ㄧㆤㆵ
-    - derive/ieD/eD/   # ㄧㄢ、ㄧㆤㆵ → ㆤㄣ、ㆤㆵ
+    - derive/z/d/ # ㆡ、ㆢ → ㄌ
+    - derive/z(N?i)/g$1/ # ㆢ → ㆣ
+    - derive/iaD/ieD/ # ㄧㄢ、ㄧㄚㆵ → ㄧㄢ、ㄧㆤㆵ
+    - derive/ieD/eD/ # ㄧㄢ、ㄧㆤㆵ → ㆤㄣ、ㆤㆵ
     # 方言差
-    - derive/Ne/Ni/    # ㆥ → ㆪ
-    - derive/Niu/Nio/  # ㄧㆫ → ㄧㆧ
+    - derive/Ne/Ni/ # ㆥ → ㆪ
+    - derive/Niu/Nio/ # ㄧㆫ → ㄧㆧ
     # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
     #- xform/z(N?i)/Z$1/  # 毋過咱共 ㆢ 和 ㆡ 合併矣
-    - xform/c(N?i)/j$1/  # ㄐㄧ
-    - xform/C(N?i)/J$1/  # ㄑㄧ
-    - xform/s(N?i)/S$1/  # ㄒㄧ
+    - xform/c(N?i)/j$1/ # ㄐㄧ
+    - xform/C(N?i)/J$1/ # ㄑㄧ
+    - xform/s(N?i)/S$1/ # ㄒㄧ
     # 方音符號會分 ㄇㄋㄫ 和 ㆠㄌㆣ
-    - derive/bN/m/  # ㄇ
-    - derive/dN/n/  # ㄋ
-    - derive/gN/q/  # ㄫ
-    - derive/bG/mG/  # ㄇㆭ
-    - derive/dG/nG/  # ㄋㆭ
+    - derive/bN/m/ # ㄇ
+    - derive/dN/n/ # ㄋ
+    - derive/gN/q/ # ㄫ
+    - derive/bG/mG/ # ㄇㆭ
+    - derive/dG/nG/ # ㄋㆭ
     # 鼻音
-    - xform/N([iu]?[iuaoeIU])/$1N/  # 鼻音拍佇後壁
-    - derive/([iuaoeIU])N/$1$1/     # 拍兩擺韻母來拍鼻音
+    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
+    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
     # 注音
-    - derive/øG/G/  # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
-    - derive/(?<!i)oG/uG/  # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
-    - derive/ioG/BG/       # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
+    - derive/øG/G/ # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
+    - derive/(?<!i)oG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
+    - derive/ioG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
     # 入聲調
-    - derive/([iao])B0/$1p0/   # 用 ㄚㄅ． 來拍 ㄚㆴ
-    - derive/([iuae])D0/$1t0/  # 用 ㄚㄉ． 來拍 ㄚㆵ
-    - derive/([iaoø])G0/$1k0/  # 用 ㄚㄍ． 來拍 ㄚㆻ
+    - derive/([iao])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
+    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
+    - derive/([iaoø])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
     # 方音韻母
-    - derive/oB/aB/  # ㆦㆬ、ㆰ（併入）
-    - derive/aB/M/   # ㄚㆬ、ㆰ
-    - xform/aD/L/    # ㄢ
-    - xform/aG/Q/    # ㄤ
-    - derive/oG/Y/   # ㆦㆭ、ㆲ
+    - derive/oB/aB/ # ㆦㆬ、ㆰ（併入）
+    - derive/aB/M/ # ㄚㆬ、ㆰ
+    - xform/aD/L/ # ㄢ
+    - xform/aG/Q/ # ㄤ
+    - derive/oG/Y/ # ㆦㆭ、ㆲ
     # 簡拼
-    - abbrev/[iu]?[iuaoeIU]N/N/  # 用 ｎ 代表所有的鼻音母音
-    - abbrev/[iuaoøeIUMLQYBDG]+0/0/  # 用 ． 代表所有的入聲韻母
-    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/  # 會當干焦拍聲母
-    - abbrev/^(\D+)([123579])$/$1/  # 除了第四調、第八調，調號會當免拍
-    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/  # 會當干焦拍子音+調號
+    - abbrev/[iu]?[iuaoeIU]N/N/ # 用 ｎ 代表所有的鼻音母音
+    - abbrev/[iuaoøeIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
+    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/ # 會當干焦拍聲母
+    - abbrev/^(\D+)([123579])$/$1/ # 除了第四調、第八調，調號會當免拍
+    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/ # 會當干焦拍子音+調號
     - xlit|pPmbtTndkKhjJSgqzcCsiuBaoøMIeUYLDQGN123570|1qaz2wsxedcrfvtgbyhnujm8ik,9ol.0p;/- 43657|
 
 translator:
@@ -194,7 +192,7 @@ translator:
     - xform/ㄜㆭ/ㄥ/
 
 custom_phrase:
-  dictionary: ''
+  dictionary: ""
   user_dict: custom_phrase
   db_class: stabledb
   enable_completion: false
@@ -204,9 +202,9 @@ custom_phrase:
 key_binder:
   import_preset: default
   bindings:
-    - { when: has_menu, accept: comma, send: comma }      # ㆤ
-    - { when: has_menu, accept: period, send: period }    # ㆲ
-    - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { when: has_menu, accept: comma, send: comma } # ㆤ
+    - { when: has_menu, accept: period, send: period } # ㆲ
+    - { when: has_menu, accept: minus, send: minus } # ｎ
     - { when: paging, accept: minus, send: Page_Up }
     - { when: has_menu, accept: equal, send: Page_Down }
 
@@ -219,192 +217,3 @@ recognizer:
 
 punctuator:
   import_preset: keymap_piau_tian
-
-=======
-# Rime schema
-# encoding: utf-8
-
-schema:
-  schema_id: my_hong_im
-  name: 我的方音
-  version: "v0.1.0.0"
-  author:
-    - 居正中 AlanJui <alanjui.1960@gmail.com>
-  description: |
-    【拼音系統】：類閩拼方案（BP）
-    【注音編碼】：漢字讀音編碼採「台灣拼音+」（TLPA+）
-    鍵盤對應：
-      ㄅ ㄉ ３ ２ ７ ５ ． ㄚ ㄞ ㄢ ｎ
-      ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
-      ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
-      ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
-
-switches:
-  - name: ascii_mode
-    reset: 0
-    states: [ 台文, ABC ]
-  - name: full_shape
-    reset: 0
-    states: [ 半形, 全形 ]
-
-engine:
-  processors:
-    - ascii_composer
-    - recognizer
-    - key_binder
-    - speller
-    - punctuator
-    - selector
-    - navigator
-    - express_editor
-    # - fluency_editor
-    # - fluid_editor
-  segmentors:
-    - ascii_segmentor
-    - matcher
-    - abc_segmentor
-    - punct_segmentor
-    - fallback_segmentor
-  translators:
-    - punct_translator
-    - table_translator@custom_phrase
-    - script_translator
-  filters:
-    - uniquifier
-
-speller:
-  alphabet: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657'
-  initials: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm.'
-  finals:   ' 43657'
-  delimiter: "'"
-  use_space: true
-  algebra:
-    __patch:
-    #--------------------------------------------------------------------------
-    # 定義【注音符號】編碼及【鍵盤按鍵】對映之【】
-    #--------------------------------------------------------------------------
-      - my_bopomofo_libs:/zu_im_hu_ho_pinn_be
-
-translator:
-  dictionary: tl_ji_khoo_peh_ue
-  prism: my_hong_im
-  spelling_hints: 20
-  always_show_comments: true
-  initial_quality: 0.75
-  preedit_format:
-    #--------------------------------------------------------------------------
-    # 定義【鍵盤輸入列】
-    #--------------------------------------------------------------------------
-    __include: jih_kian
-    __append:
-      #------------------------------------------------------
-      # 按鍵轉調等：將按鍵之輸入轉換成【聲調符號】
-      #------------------------------------------------------
-      - xform/ /ˉ/   # ¹  ˉ   陰平
-      - xform/6/ˊ/   # ⁵  ˊ   陽平
-      - xform/4/ˋ/   # ²  ˋ   上声
-      - xform/3/˪/   # ³  ˪   陰去
-      - xform/5/˫/   # ⁷  ˫   陽去
-      - xform/7/˙/   # ⁰  ˙   陰入/陽入：輕聲標點符號表：入声字（陰入/陽入）
-      #------------------------------------------------------
-      # 入聲韻尾： ㄅ(p), ㄉ(t), ㄍ(k), ㄏ(h),  
-      #------------------------------------------------------
-      - xform/ㄅ(˙)/ㆴ$1/    # ㄅ = p
-      - xform/ㄉ(˙)/ㆵ$1/    # ㄉ = t
-      - xform/ㄍ(˙)/ㆻ$1/    # ㄍ = k
-      - xform/ㄏ(˙)/ㆷ$1/    # ㄏ = h
-
-  comment_format:
-    #--------------------------------------------------------------------------
-    # 定義【候選字清單】
-    #--------------------------------------------------------------------------
-    __patch:
-      # 【候選字單】主體架構
-      - my_bopomofo_libs:/hau_suan_tuann
-      #-----------------------------------------
-      # 右半邊：台語音標-注音
-      # 【声母】
-      - my_bopomofo_libs:/ziann_ping_siann_bu
-      # 【韻母】
-      - my_bopomofo_libs:/ziann_ping_un_bu
-      # 【声調】
-      - my_bopomofo_libs:/ziann_ping_siann_tiau
-      #-----------------------------------------
-      # 左半邊：台語音標-拼音
-      - my_bopomofo_libs:/to_ping_tl
-
-jih_kian:
-  #--------------------------------------------------------------------------
-  # 按鍵與方音符號對映
-  #--------------------------------------------------------------------------
-  __patch: 
-    - my_bopomofo_libs:/jih_kian_tng_uann
-
-custom_phrase:
-  dictionary: ''
-  user_dict: custom_phrase
-  db_class: stabledb
-  enable_completion: false
-  enable_sentence: false
-  initial_quality: 1
-
-key_binder:
-  import_preset: default
-  bindings:
-    #---------------------------------------------------
-    # # 使用【:】鍵，輸入【韻母】：ㆲ
-    # - { when: composing, accept: colon, send: colon }
-    # - { when: has_menu, accept: colon, send: colon  }
-    #---------------------------------------------------
-    # 使用【_】鍵，輸入【調號】：3 （低音調）
-    - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu, accept: underscore, send: underscore  }
-    #---------------------------------------------------
-    # 使用【-】鍵，輸入【調號】：7 （中音調）
-    - { when: composing, accept: minus, send: minus }
-    - { when: has_menu, accept: minus, send: minus  }
-    #---------------------------------------------------
-    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
-    - { when: composing, accept: period, send: period }   
-    - { when: has_menu, accept: period, send: period }   
-    #---------------------------------------------------
-    # 翻頁
-    #---------------------------------------------------
-    - { accept: "Control+p", send: Page_Up, when: composing }
-    - { accept: "Control+n", send: Page_Down, when: composing }
-    #---------------------------------------------------
-    # Vim Mode
-    #---------------------------------------------------
-    - { when: has_menu, accept: "Control+h", send: Page_Up }
-    - { when: has_menu, accept: "Control+l", send: Page_Down }
-    - { when: has_menu, accept: "Control+k", send: Up }
-    - { when: has_menu, accept: "Control+j", send: Down }
-
-editor:
-  bindings:
-    space: commit                           # 選擇「備選漢字」
-    Return: commit_composition              # 上屏原始的輸入：lau5
-    Shift+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
-    Control+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
-
-menu:
-  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
-  alternative_select_keys: 12345 #如編碼字符佔用數字鍵則須另設選字鍵
-  page_size: 5 #選單每䈎顯示個數
-
-style:
-  horizontal: false
-  font_face: "霞鶩文楷 TC, 新細明體"
-
-recognizer:
-  patterns:
-    email: ^[a-z][-_.0-9a-z]*@.*$
-    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
-    url: ^(www[.]|https?:|ftp:|mailto:).*$
-    punct: '`[^\s]$'
-
-punctuator:
-  import_preset: keymap_piau_tian
-
->>>>>>> cbda79a165c19c1447c20b066c502bcd1f710b16
