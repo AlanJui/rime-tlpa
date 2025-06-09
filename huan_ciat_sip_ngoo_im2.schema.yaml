@@ -1,0 +1,137 @@
+# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: huan_ciat_sip_ngoo_im2
+  name: 反切輸入法【十五音二式】
+  version: "v0.1.0.0"
+  author:
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    【輸入類型】：十五音輸入法
+    【拼音系統】：十五音反切（雅俗通十五音改良）
+      # - lib_sip_ngoo_im:/jih_kian_tng_uann
+    【字典編碼】：台羅音標
+    【注音輸入】：羅馬拼音字母（siaⁿ1：siann;）
+    【侯選清單】：〔siaⁿ¹〕 【時驚一】
+    【聲調標示】：
+      (1) 台羅八聲調；
+      (2) 使用數值標示聲調，以利閱讀。
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+    - lua_processor@*my_ime.my_processor # 使用 * 表示模組
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+    # - custom_segmentor  # 自定義 segmentor，用於處理連續輸入
+  translators:
+    - echo_translator
+    - punct_translator
+    - r10n_translator
+    - reverse_lookup_translator
+    - lua_translator@*number_translator
+    - lua_translator@*date_translator
+    # - custom_translator  # 自定義 translator，用於處理連續輸入
+  filters:
+    - simplifier
+    - uniquifier
+    # - lua_filter@single_char_first_filter
+
+speller:
+  alphabet: 1234567890abcdefghijklmnopqrstuvwxyzN
+  initials: 1234567890abcdefghijklmnopqrstuvwxyzN
+  finals: 1234567890
+  delimiter: "'"
+  use_space: true
+  algebra:
+    __patch:
+      - lib_sip_ngoo_im2:/phing_im_tng_ji_be
+      - lib_sip_ngoo_im2:/abbreviation
+      # - lib_sip_ngoo_im2:/ji_be_tng_jih_kian
+
+translator:
+  dictionary: tl_ji_khoo_peh_ue
+  prism: huan_ciat_sip_ngoo_im2
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
+  preedit_format:
+    __patch:
+      - lib_sip_ngoo_im2:/phah_ji_tng_uann
+  comment_format:
+    __patch:
+      # 候選字視窗為雙排標音：【台語音標】、【方音符號】
+      - lib_hau_suan_ji_tuann:/hau_suan_tuann_siang_piau_im
+      - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
+      - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
+      - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
+      - lib_hau_suan_ji_tuann:/to_ping_tlpa
+
+reverse_lookup:
+  dictionary: luna_pinyin
+  prefix: "`"
+  tips: 〔拼音〕
+  preedit_format:
+    - xform/([nljqxy])v/$1ü/
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore }
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus }
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    - { accept: "Control+1", select: .next, when: always }
+    - { accept: "Control+2", toggle: full_shape, when: always }
+    - { accept: "Control+3", toggle: simplification, when: always }
+    - { accept: "Control+4", toggle: extended_charset, when: always }
+
+editor:
+  bindings:
+    space: commit
+    Return: commit_composition
+    Shift+Return: commit_comment
+    Control+Shift+Return: commit_raw_input
+    # 不綁定 Control+Return ，以便令 Lua 處理
+    # Control+Return: commit_script_text
+
+menu:
+  alternative_select_labels: [①, ②, ③, ④, ⑤]
+  page_size: 5
+
+style:
+  horizontal: false
+  font_face: "霞鶩文楷 TC, 新細明體"
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
+    reverse_lookup: "`[a-z]*$"
+
+punctuator:
+  import_preset: keymap_piau_tian

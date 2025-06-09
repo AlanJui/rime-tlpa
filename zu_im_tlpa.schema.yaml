@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Rime schema
 # vim: set sw=2 sts=2 et:
 # encoding: utf-8
@@ -618,3 +619,234 @@ recognizer:
 
 punctuator:
   import_preset: keymap_piau_tian
+=======
+# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: zu_im_tlpa
+  name: 注音輸入法【台語音標】
+  version: "v0.1.0.0"
+  author: 居正中
+  description: |
+    【輸入類型】：注音輸入法
+    【拼音系統】：台語ㄅㄆㄇ
+    【字典編碼】：台羅音標
+    【鍵盤輸入】：台語注音符號（ㄒㄧㄚˉ : n.u8<SP>）
+    【侯選清單】：ㄒ广ㄧㄚˉ
+    【聲調標示】：
+      (1) 台羅八聲調；
+      (2) 使用數值標示聲調，以利閱讀。
+  dependencies:
+    - stroke
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+    # - fluency_editor
+    # - fluid_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - table_translator@custom_phrase
+    - script_translator
+  filters:
+    - uniquifier
+
+speller:
+  alphabet: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657'
+  initials: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm.'
+  finals:   ' 43657'
+  delimiter: "'"
+  use_space: true
+  algebra:
+    __patch:
+    #--------------------------------------------------------------------------
+    # 定義【注音符號】編碼及【鍵盤按鍵】對映之【注音編碼】
+    #--------------------------------------------------------------------------
+      - lib_zu_im:/zu_im_hu_ho_pinn_be
+
+translator:
+  dictionary: tl_ji_khoo_peh_ue
+  prism: zu_im_tlpa
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
+  preedit_format:
+    #--------------------------------------------------------------------------
+    # 定義【鍵盤輸入列】
+    #--------------------------------------------------------------------------
+    __include: jih_kian 
+    __append:
+      #==========================================================================
+      # 【方音符號】對映【台語音標-注音】
+      #==========================================================================
+      # 濁聲母轉換
+      - xform/ㆠ/万/      # b
+      - xform/ㆣ/兀/      # g
+      - xform/ㄫ/⁰兀/     # ng
+      - xform/ㆡ/ㄖ/      # j
+      - xform/ㆢ/ㄖ/      # ji-
+      #--------------------------------------------------------------------------
+      # 鼻音韻母轉換
+      #--------------------------------------------------------------------------
+      # 複合鼻音韻母： Nia, Niau, Niu; Nua, Nuai, Nui
+      - xform/ㄧㆩ/ㄬㄧㄚ/      # iann = Nia   
+      - xform/ㄧㆯ/ㄬㄧㄠ/      # iaunn = Niau
+      - xform/ㄧㆫ/ㄬㄧㄨ/      # iunn = Niu
+      - xform/ㄨㆩ/ㄬㄨㄚ/      # uann = Nua
+      - xform/ㄨㆮ/ㄬㄨㄞ/      # uainn = Nuai
+      - xform/ㄨㆪ/ㄬㄨㄧ/# uinn = Nui
+      # 元音/複合鼻音韻母
+      - xform/ㆪ/ㄬㄧ/
+      - xform/ㆫ/ㄬㄨ/
+      - xform/ㆩ/ㄬㄚ/
+      - xform/ㆧ/ㄬㆦ/
+      - xform/ㆥ/ㄬㄝ/
+      - xform/ㆮ/ㄬㄞ/
+      - xform/ㆯ/ㄬㄠ/
+      # 鼻化韻符號轉換
+      - xform/ㄬ/⁰/
+      #--------------------------------------------------------------------------
+      # 韻母校調
+      #--------------------------------------------------------------------------
+      - xform/ㄫ/ㄥ/          # ng-
+      #
+      - xform/ㆭ/ㄥ/          # -ng
+      - xform/ㆲ/ㄛㄥ/	      # ong
+      #
+      - xform/ㆬ/ㄇ/          # -m
+      - xform/ㆰ/ㄚㄇ/	      # am
+      - xform/ㆱ/ㄛㄇ/	      # om
+      #
+      - xform/ㆤ/ㄝ/          # e 	
+      - xform/ㆦ/ㄛ/          # oo	
+      #--------------------------------------------------------------------------
+      # 轉換成聲調符號
+      #--------------------------------------------------------------------------
+      - xform/ /¹/   # ¹ ˉ  ˉ   陰平
+      - xform/6/⁵/   # ⁵ ˊ  ˊ   陽平
+      - xform/4/²/   # ² ˋ  ˋ   上声
+      - xform/3/³/   # ³ ˇ  ˪   陰去
+      - xform/5/⁷/   # ⁷ +  ˫   陽去
+      - xform/7/⁰/   # ⁰ ˙  ˙   陰入/陽入：輕聲標點符號表：入声字（陰入/陽入）
+      #------------------------------------------------------
+      # 入聲韻尾： ㄅ(p), ㄉ(t), ㄍ(k), ㄏ(h),  
+      #------------------------------------------------------
+      - xform/ㄅ(˙)/ㆴ$1/    # ㄅ = p
+      - xform/ㄉ(˙)/ㆵ$1/    # ㄉ = t
+      - xform/ㄍ(˙)/ㆻ$1/    # ㄍ = k
+      - xform/ㄏ(˙)/ㆷ$1/    # ㄏ = h
+  comment_format:
+    #--------------------------------------------------------------------------
+    # 定義【候選字清單】
+    #--------------------------------------------------------------------------
+    __patch:
+      # 【候選字單】主體架構
+      - lib_hau_suan_ji_tuann:/hau_suan_tuann
+      #-----------------------------------------
+      # 右半邊：台語音標-注音
+      # 【声母】
+      # - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu_tlpa
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_siann_bu_tng_uann
+      # 【韻母】
+      - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
+      # - lib_hau_suan_ji_tuann:/ziann_ping_un_bu_tng_tlpa
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_un_bu_tng_uann
+      # 【声調】
+      - lib_hau_suan_ji_tuann:/TLPA_BoPoMo_siann_tiau
+      #-----------------------------------------
+      # 左半邊：台語音標-拼音
+      - lib_hau_suan_ji_tuann:/to_ping_tlpa
+
+jih_kian:
+  #--------------------------------------------------------------------------
+  # 按鍵與方音符號對映
+  #--------------------------------------------------------------------------
+  __patch: 
+    - lib_zu_im:/jih_kian_tng_uann
+
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+
+key_binder:
+  import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore  }
+    #---------------------------------------------------
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus  }
+    #---------------------------------------------------
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: composing, accept: period, send: period }   
+    - { when: has_menu, accept: period, send: period }   
+    #---------------------------------------------------
+    # 翻頁
+    #---------------------------------------------------
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+
+editor:
+  bindings:
+    space: commit                           # 選擇「備選漢字」
+    Return: commit_composition              # 上屏原始的輸入：lau5
+    Shift+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
+    Control+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
+
+menu:
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  alternative_select_keys: 12345 #如編碼字符佔用數字鍵則須另設選字鍵
+  page_size: 5 #選單每䈎顯示個數
+
+style:
+  horizontal: false
+  font_face: "霞鶩文楷 TC, 新細明體"
+
+recognizer:
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
+
+punctuator:
+  import_preset: keymap_piau_tian
+>>>>>>> cbda79a165c19c1447c20b066c502bcd1f710b16

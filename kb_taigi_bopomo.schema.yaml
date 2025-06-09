@@ -1,0 +1,116 @@
+# Rime schema
+# version: "v0.1.0.0"
+# encoding: utf-8
+
+schema:
+  schema_id: kb_taigi_bopomo
+  name: 按鍵練習【台語ㄅㄆㄇ】
+  version: "0.1"
+  author:
+    - Alan Jui <AlanJui.1960@gmail.com>
+  description: |
+    用「羅馬拼音字母」輸入「方音符號」
+
+    方音符號：
+      ㄅ ㄆ ㄇ       ㆠ
+      ㄉ ㄊ ㄋ ㄌ
+      ㄍ ㄎ ㄏ ㄫ    ㆣ
+
+      ㄗ ㄘ ㄙ       ㆡ
+      ㄐ ㄑ ㄒ       ㆢ
+
+      ㄧ ㄨ          ㆪ ㆫ
+      ㄚ ㆦ ㄜ ㆤ    ㆧ ㆩ ㆥ
+
+      ㄞ ㄠ          ㆮ ㆯ
+      ㆰ ㆱ ㆬ
+      ㄢ ㄣ ㄤ ㆲ ㄥ ㆭ
+
+    鍵盤對應：
+      ㄅ ㄉ ３ ２ ７ ５ ． ㄚ ㄞ ㄢ ｎ
+      ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
+      ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
+      ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+
+engine:
+  processors:
+    - punctuator
+    - selector
+    - express_editor
+  segmentors:
+    - punct_segmentor
+  translators:
+    - punct_translator
+
+punctuator:
+  half_shape: &symtable
+    "1" : { commit: "ㄅ" }
+    "q" : { commit: "ㄆ" }
+    "!" : { commit: "ㆠ" }
+    "a" : { commit: "ㄇ" }
+    "2" : { commit: "ㄉ" }
+    "w" : { commit: "ㄊ" }
+    "s" : { commit: "ㄋ" }
+    "x" : { commit: "ㄌ" }
+    "y" : { commit: "ㄗ" }
+    "h" : { commit: "ㄘ" }
+    "n" : { commit: "ㄙ" }
+    "b" : { commit: "ㆡ" }
+    "Y" : { commit: "ㄐ" }
+    "H" : { commit: "ㄑ" }
+    "N" : { commit: "ㄒ" }
+    "B" : { commit: "ㆢ" }
+    "e" : { commit: "ㄍ" }
+    "d" : { commit: "ㄎ" }
+    "E" : { commit: "ㆣ" }
+    "g" : { commit: "ㄥ" }
+    "c" : { commit: "ㄏ" }
+    "u" : { commit: "ㄧ" }
+    "j" : { commit: "ㄨ" }
+    "8" : { commit: "ㄚ" }
+    "i" : { commit: "ㆦ" }
+    "k" : { commit: "ㄜ" }
+    "," : { commit: "ㆤ" }
+    "9" : { commit: "ㄞ" }
+    "l" : { commit: "ㄠ" }
+    "U" : { commit: "ㆪ" }
+    "J" : { commit: "ㆫ" }
+    "*" : { commit: "ㆩ" }
+    "I" : { commit: "ㆧ" }
+    "<" : { commit: "ㆥ" }
+    "(" : { commit: "ㆮ" }
+    "L" : { commit: "ㆯ" }
+    "-" : { commit: "ㄦ" }
+    "M" : { commit: "ㄚㄇ" }
+    "0" : { commit: "ㄢ" }
+    ";" : { commit: "ㄤ" }
+    "O" : { commit: "ㄛㄇ" }
+    "o" : { commit: "ㄛㄥ" }
+    "m" : { commit: "ㄇ" }
+    "p" : { commit: "ㄣ" }
+    "/" : { commit: "ㄥ" }
+    "r" : { commit: "ㆴ" }
+    "f" : { commit: "ㆵ" }
+    "v" : { commit: "ㆻ" }
+    "C" : { commit: "ㆷ" }
+    "_" : { commit: " " }
+    " " : { commit: "ˉ" }
+    "4" : { commit: "ˋ" }
+    "3" : { commit: "ˇ" }
+    "6" : { commit: "ˊ" }
+    "5" : { commit: "+" }
+    "7" : { commit: "+", "ˉ", "˙" }
+    "Z": [ "ˉ", "ˋ", "ˇ", "+", "ˊ", "+", "ˉ", "˙" ]
+    "z" : [ "ㆴ", "ㆵ", "ㆻ", "ㆷ" ]
+    "." : ["", "ⁿ", "ㄬ", "ㄯ"] 
+full_shape:
+  ".": 。
+

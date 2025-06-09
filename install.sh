@@ -1,3 +1,4 @@
+# version: "v0.1.0.0"
 #!/bin/bash
 
 # 定義目標資料夾和文件路徑
@@ -5,7 +6,8 @@
 # Linux iBus-RIME: "HOME/.config/ibus/rime"
 # macOS: ~/Library/Rime
 #================================================================================
-RIME_USER_DIR="$HOME/.config/ibus/rime"  # Linux 路徑，macOS 改為 ~/Library/Rime
+# RIME_USER_DIR="$HOME/.config/ibus/rime"  # Linux 路徑，macOS 改為 ~/Library/Rime
+RIME_USER_DIR="$HOME/.config/rime"  # Linux 路徑，macOS 改為 ~/Library/Rime
 CUSTOM_FILE="$RIME_USER_DIR/default.custom.yaml"
 
 # 確保目標資料夾存在
@@ -16,10 +18,18 @@ fi
 
 # 複製方案文件到 RIME 資料夾
 echo "正在複製必要文件..."
-cp ./xxx.schema.yaml "$RIME_USER_DIR/"
-cp ./yyy.dict.yaml "$RIME_USER_DIR/"
-cp ./zzz.custom.yaml "$RIME_USER_DIR/"  # 如果有自定義配置文件
-cp ./my_script.lua "$RIME_USER_DIR/"   # 複製 Lua 腳本
+cp ./my_*.schema.yaml "$RIME_USER_DIR/"
+cp ./kb_*.schema.yaml "$RIME_USER_DIR/"
+cp ./zu_im_*.schema.yaml "$RIME_USER_DIR/"
+cp ./tlpa_*.schema.yaml "$RIME_USER_DIR/"
+cp ./huan_ciat_*.schema.yaml "$RIME_USER_DIR/"
+cp ./keymap_*.schema.yaml "$RIME_USER_DIR/"
+cp ./lib_*.yaml "$RIME_USER_DIR/"
+cp ./tl_ji_khoo_*.dict.yaml "$RIME_USER_DIR/"
+cp ./config/default.custom.yaml "$RIME_USER_DIR/"  # 如果有自定義配置文件
+cp ./config/weasel.custom.yaml "$RIME_USER_DIR/"  # 如果有自定義配置文件
+cp ./rime.lua "$RIME_USER_DIR/"   # 複製 Lua 腳本
+cp ./lua/*.lua "$RIME_USER_DIR/"   # 複製 Lua 腳本
 
 # 如果有其他必要的文件，也可以在此複製
 # cp ./other_file "$RIME_USER_DIR/"
@@ -37,41 +47,38 @@ else
   cat << EOF >> "$CUSTOM_FILE"
 
 #------------------------------------------------------------------------
-# 方音符號鍵盤練習
-#------------------------------------------------------------------------
-- { schema: kb_hong_im }     # 方音按鍵練習
-- { schema: kb_zu_im }       # 注音按鍵練習
-- { schema: kb_taigi_abc }   # 台語ABC按鍵練習
-#------------------------------------------------------------------------
 # 實驗/測試用
 #------------------------------------------------------------------------
-# - { schema: Tai_Gi_BoPoMo }       # 台語ㄅㄆㄇ
-- { schema: my_bopomofo }
-- { schema: my_hong_im }
+# - { schema: my_Tai_Gi_BoPoMo_Module }   # 台語ㄅㄆㄇ（模組結構）
+# - { schema: Tai_Gi_BoPoMo }             # 台語ㄅㄆㄇ
+# - { schema: my_bopomofo }
+# - { schema: my_hong_im }
 #------------------------------------------------------------------------
-# 類閩拼方案輸入法（方音符號/拼音字母）
+# 注音輸入法鍵盤練習
 #------------------------------------------------------------------------
-- { schema: BP_kb_zu_im }           # 類閩拼輸入法法鍵盤
-- { schema: BP_Zu_Im }              # 類閩拼輸入法法（使用方音符號輸入）
-- { schema: BP_Phing_Im }           # 類閩拼輸入法法（使用台語音標輸入）
+- { schema: kb_hong_im }        # 方音按鍵練習
+- { schema: kb_zu_im }          # 注音按鍵練習
+- { schema: kb_taigi_bopomo }   # 台語ㄅㄆㄇ按鍵練習
 #------------------------------------------------------------------------
 # 方音/注音符號輸入法
 #------------------------------------------------------------------------
 - { schema: zu_im_hong_im }         # 方音符號
-- { schema: zu_im_piau_im }         # 使用台語音標之注音符號
-- { schema: zu_im_tlpa }            # 候選字清單顯示台語音標
+- { schema: zu_im_piau_im }         # 十五音及方音符號
+- { schema: zu_im_tlpa }            # 台語音標-注音
+- { schema: zu_im_tai_gi_bopomo }   # 台語ㄅㄆㄇ
 #------------------------------------------------------------------------
 # TLPA 台語音標輸入法
 #------------------------------------------------------------------------
-- { schema: tlpa_phing_im } # 台語音標輸入法，使用拼音字母
-- { schema: tlpa_zu_im }    # 台語音標輸入法，候選字清單顯示：注音符號
-- { schema: tlpa_hong_im }  # 台語音標輸入法，候選字清單顯示：方音符號
+- { schema: tlpa_phing_im } # 拼音輸入法，台語音標（TLPA）
+- { schema: tlpa_piau_im }  # 拼音輸入法，十五音及方音符號
+- { schema: tlpa_zu_im }    # 拼音輸入法，台語音標-注音
+- { schema: tlpa_hong_im }  # 拼音輸入法，台語ㄅㄆㄇ
 #------------------------------------------------------------------------
 # 反切輸入法（拼音字母）
 #------------------------------------------------------------------------
-- { schema: huan_ciat_sip_ngoo_im } # 雅俗通十五音
-- { schema: huan_ciat_zap_peh_im }  # 台灣改良之進階十五音
-- { schema: huan_ciat_kong_un }     # 廣韻
+- { schema: huan_ciat_kong_un }         # 廣韻
+- { schema: huan_ciat_sip_ngoo_im }     # 台灣改良之進階十五音
+- { schema: huan_ciat_nga_siok_thong }  # 雅俗通十五音
 #------------------------------------------------------------------------
 
 EOF

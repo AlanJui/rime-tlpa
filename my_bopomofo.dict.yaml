@@ -2,7 +2,7 @@
 # encoding: utf-
 ---
 name: my_bopomofo
-version: "..."
+version: "v0.1.0.0"
 # sort: by_weight
 sort: original
 use_preset_vocabulary: false
