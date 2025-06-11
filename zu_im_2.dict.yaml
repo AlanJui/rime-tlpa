@@ -60,7 +60,7 @@ import_tables:
 扎	zah4	0.01	NA
 扎	zat4	0.01	NA
 斗	dau2	0.01	NA
-木	bak8	0.01	NA
+木	bbak8	0.01	NA
 欠	kiam3	0.1	NA
 歹	pai2	0.1	NA
 歹	painn2	0.1	NA
@@ -68,7 +68,7 @@ import_tables:
 爪	zau2	0.01	NA
 爪	zziau2	0.01	NA
 爻	ggau5	0.01	NA
-爻	ng-au5	0.01	NA
+爻	ngau5	0.01	NA
 爿	bainn5	0.01	NA
 片	pian3	0.01	NA
 牙	gga5	0.01	NA
@@ -93,7 +93,7 @@ import_tables:
 占	ziam1	0.01	NA
 卡	kah4	0.01	NA
 卡	kah8	0.01	NA
-卯	bau2	0.01	NA
+卯	bbau2	0.01	NA
 叫	giau3	0.01	NA
 召	diau3	0.01	NA
 台	tai1	0.01	NA
@@ -117,8 +117,8 @@ import_tables:
 田	dian5	0.05	NA
 甲	gah4	0.1	NA
 甲	gap4	0.01	NA
-目	bak8	0.01	NA
-矛	bau5	0.01	NA
+目	bbak8	0.01	NA
+矛	bbau5	0.01	NA
 矛	mau5	0.01	NA
 交	ga1	0.01	NA
 交	gau1	0.01	NA
@@ -146,7 +146,7 @@ import_tables:
 尖	ziam1	0.1	NA
 帆	pang5	0.01	NA
 年	lian5	0.8	NA
-忙	bang5	0.01	NA
+忙	bbang5	0.01	NA
 成	ziann5	0.01	NA
 成	ciann5	0.01	NA
 成	siann5	0.6	NA
@@ -162,7 +162,7 @@ import_tables:
 百	bah4	0.6	NA
 老	lau2	0.5	老練, 熟老老, 老 腔口; 老將; 老實.
 老	lau3	0.5	熟 làu-làu, 就是 真熟 ê 意思.
-肉	bah4	0.6	NA
+肉	bbah4	0.6	NA
 艾	ggai7	0.01	NA
 艾	hiann7	0.01	NA
 行	hang5	0.8	排列 成逝, 行伍, 排行, (讀hāng)=勇猛, 好膽, 次序.
@@ -175,7 +175,7 @@ import_tables:
 但	dan7	1	NA
 佔	ziam3	0.01	NA
 克	kat4	0.05	NA
-免	bian2	0.1	NA
+免	bbian2	0.1	NA
 兵	biann1	0.01	NA
 刣	tai5	0.1	NA
 別	bat8	0.6	NA
@@ -201,7 +201,7 @@ import_tables:
 坎	kam2	0.01	NA
 夾	giap4	0.8	NA
 妖	iau1	0.01	NA
-妙	biau7	0.8	NA
+妙	bbiau7	0.8	NA
 妙	miau7	0.6	NA
 孝	ha3	0.01	NA
 孝	hau3	0.01	NA
@@ -226,7 +226,7 @@ import_tables:
 汴	bian7	0.01	NA
 沃	ak4	0.01	NA
 沉	diam5	0.01	NA
-沐	bak4	0.01	NA
+沐	bbak4	0.01	NA
 沙	sa1	0.8	NA
 沛	pai3	0.8	NA
 灶	zau3	0.01	NA
@@ -239,7 +239,7 @@ import_tables:
 罕	han2	0.01	NA
 肖	siau3	0.01	NA
 肝	gan1	0.05	NA
-芒	bang5	0.01	NA
+芒	bbang5	0.01	NA
 角	gak4	0.01	NA
 豆	dau7	0.1	NA
 走	zau2	0.1	NA
@@ -287,10 +287,10 @@ import_tables:
 姍	san1	0.01	NA
 姒	sai7	0.01	NA
 定	diann7	0.6	NA
-屄	bai1	0.01	NA
+屄	bbai1	0.01	NA
 屆	gai3	0.01	NA
 岩	na5	0.01	NA
-岩	ng-a5	0.01	NA
+岩	nga5	0.01	NA
 岩	ggam5	0.01	NA
 岩	ggiam5	0.01	NA
 岱	dai7	0.01	NA
@@ -332,7 +332,7 @@ import_tables:
 板	ban2	0.01	NA
 枋	bang1	0.01	NA
 林	na5	0.6	NA
-氓	bang5	0.01	NA
+氓	bbang5	0.01	NA
 沓	dauh8	0.01	NA
 沓	dap8	0.01	NA
 沼	ziau2	0.01	NA
@@ -359,7 +359,7 @@ import_tables:
 肨	hang3	0.01	NA
 肩	gainn1	0.01	NA
 肴	ggau5	0.01	NA
-肴	ng-au5	0.01	NA
+肴	ngau5	0.01	NA
 芡	kiam3	0.01	NA
 芥	gai3	0.01	NA
 芫	ian5	0.01	NA
@@ -368,7 +368,7 @@ import_tables:
 芽	gga5	0.01	NA
 表	biau2	0.8	NA
 軋	at4	0.01	NA
-迎	ng-ia5	0.6	NA
+迎	ngia5	0.6	NA
 邰	tai1	0.01	NA
 邵	siau7	0.01	NA
 采	cai2	0.01	NA
@@ -380,7 +380,7 @@ import_tables:
 俠	giap4	0.01	NA
 前	zun5	0.5	前年, 落前年, 就是 指 過去 了 ê 年.
 剎	sat4	0.01	NA
-勉	bian2	0.01	NA
+勉	bbian2	0.01	NA
 南	lam5	0.1	NA
 厚	gau6	0.1	NA
 咤	da3	0.01	NA
@@ -409,7 +409,7 @@ import_tables:
 孩	hai5	0.01	NA
 封	bang1	0.01	NA
 屎	sai2	0.1	NA
-峇	ba7	0.01	NA
+峇	bba7	0.01	NA
 巷	hang7	0.1	NA
 彥	ggan7	0.01	NA
 待	tai7	0.01	NA
@@ -462,12 +462,12 @@ import_tables:
 相	sann1	0.01	NA
 盼	pan3	0.01	NA
 眈	dam1	0.01	NA
-眉	bai5	0.1	NA
+眉	bbai5	0.1	NA
 看	kan1	0.01	NA
 看	kan3	0.05	NA
 砍	kam2	0.01	NA
-研	ng-ai2	0.01	NA
-秒	biau2	0.01	NA
+研	ngai2	0.01	NA
+秒	bbiau2	0.01	NA
 竿	gan1	0.01	NA
 紅	ang5	0.1	NA
 耍	sa2	0.01	NA
@@ -477,14 +477,14 @@ import_tables:
 胞	bau1	0.01	NA
 苒	zziam5	0.01	NA
 苔	tai1	0.01	NA
-苗	biau5	0.01	NA
+苗	bbiau5	0.01	NA
 苞	bau1	0.01	NA
 若	na2	0.1	NA
 若	na7	0.6	NA
 茄	ga1	0.01	NA
-茅	bau5	0.01	NA
+茅	bbau5	0.01	NA
 茅	mau5	0.01	NA
-茆	bau2	0.01	NA
+茆	bbau2	0.01	NA
 虼	ga1	0.01	NA
 衍	ian2	0.01	NA
 衫	sann1	0.01	NA
@@ -502,7 +502,7 @@ import_tables:
 降	hong5	0.8	NA
 限	an6	0.01	NA
 限	han6	0.1	NA
-面	bian7	0.05	NA
+面	bbian7	0.05	NA
 𢼌	ba7	0.01	NA
 𥐵	piat4	0.01	NA
 㾀	kiap4	0.01	NA
@@ -526,7 +526,7 @@ import_tables:
 唅	hann5	0.01	NA
 唉	ai1	0.01	NA
 埃	ai1	0.01	NA
-埋	bai5	0.01	NA
+埋	bbai5	0.01	NA
 埋	dai5	0.01	NA
 埕	diann5	0.01	NA
 夏	ha7	0.6	NA
@@ -551,12 +551,12 @@ import_tables:
 拿	na2	0.01	NA
 挨	ai1	0.01	NA
 挺	tann2	0.01	NA
-挽	ban2	0.01	NA
+挽	bban2	0.01	NA
 挾	ggiap4	0.01	NA
 挾	hiap8	0.01	NA
 捀	pang5	0.1	NA
 捌	bat4	0.01	NA
-捌	bat4	 #异 	NA
+捌	bbat4	 #异 	NA
 捍	han7	0.01	NA
 捎	sa1	0.01	NA
 捎	sau1	0.01	NA
@@ -589,7 +589,7 @@ import_tables:
 疱	pa6	0.01	NA
 疸	tan2	0.01	NA
 疼	tiann3	0.01	NA
-眠	bian5	0.05	NA
+眠	bbian5	0.05	NA
 眨	zap4	0.01	NA
 砧	diam1	0.01	NA
 砲	pau3	0.01	NA
@@ -611,7 +611,7 @@ import_tables:
 臭	cau3	0.1	NA
 舨	ban2	0.01	NA
 航	hang5	0.1	NA
-茫	bang5	0.01	NA
+茫	bbang5	0.01	NA
 茭	ga1	0.01	NA
 草	cau2	0.8	NA
 荏	lam2	0.01	NA
@@ -646,7 +646,7 @@ import_tables:
 健	giann7	0.01	NA
 偷	tau1	0.01	NA
 兜	dau1	0.01	NA
-冕	bian2	0.01	NA
+冕	bbian2	0.01	NA
 動	dong7	0.8	NA
 勘	kam5	0.01	NA
 匾	bian2	0.01	NA
@@ -666,7 +666,7 @@ import_tables:
 婊	biau2	0.01	NA
 婕	ziap8	0.01	NA
 婪	lam5	0.01	NA
-密	bat8	0.01	NA
+密	bbat8	0.01	NA
 崖	ggai5	0.01	NA
 崗	gang1	0.01	NA
 崩	bang1	0.01	NA
@@ -695,8 +695,8 @@ import_tables:
 斬	zann2	0.01	NA
 斬	zam2	0.01	NA
 晝	dau3	0.01	NA
-曼	ban7	0.01	NA
-望	bang7	0.1	NA
+曼	bban7	0.01	NA
+望	bbang7	0.1	NA
 桶	tang2	0.01	NA
 條	diau5	0.1	NA
 條	liau5	0.05	NA
@@ -749,9 +749,9 @@ import_tables:
 袈	ga1	0.01	NA
 袋	dai7	0.01	NA
 袍	pau5	0.01	NA
-覓	bai7	0.1	NA
+覓	bbai7	0.1	NA
 訝	gga7	0.01	NA
-訝	ng-a7	0.01	NA
+訝	nga7	0.01	NA
 貧	ban5	0.01	NA
 貪	tam1	0.01	NA
 逍	siau1	0.01	NA
@@ -767,7 +767,7 @@ import_tables:
 陷	ham7	0.1	NA
 鳥	ziau2	0.1	NA
 鳥	niau2	0.01	NA
-麻	ba5	0.01	NA
+麻	bba5	0.01	NA
 𤶃	tiau5	0.01	NA
 𤶃	tiau7	0.01	NA
 㴙	cap8	0.01	NA
@@ -788,7 +788,7 @@ import_tables:
 堯	ggiau5	0.01	NA
 奠	dian7	0.01	NA
 婿	sai3	0.01	NA
-媌	ba5	0.01	NA
+媌	bba5	0.01	NA
 孱	can1	0.01	NA
 寒	han5	0.01	NA
 嵌	kann2	0.01	NA
@@ -802,7 +802,7 @@ import_tables:
 揀	gainn2	0.01	NA
 揀	gan2	0.01	NA
 揌	sai1	0.01	NA
-描	biau5	0.01	NA
+描	bbiau5	0.01	NA
 插	cah4	0.01	NA
 插	cap4	0.01	NA
 揜	iap4	0.01	NA
@@ -813,7 +813,7 @@ import_tables:
 摒	biann3	0.01	NA
 敢	gann2	0.6	NA
 敢	gam2	0.8	NA
-敢	giam2	0.1	异
+敢	giam2	0.1	异 
 散	san2	0.7	NA
 散	san3	0.8	NA
 敨	tau2	0.01	NA
@@ -821,7 +821,7 @@ import_tables:
 曾	zan1	0.05	NA
 朝	diau1	0.01	NA
 朝	diau5	0.01	NA
-棉	bian5	0.05	NA
+棉	bbian5	0.05	NA
 棑	bai5	0.01	NA
 棒	bang6	0.01	NA
 棕	zang1	0.01	NA
@@ -831,12 +831,12 @@ import_tables:
 殘	zan5	0.01	NA
 殼	kak4	0.01	NA
 毯	tan2	0.01	NA
-淼	biau2	0.01	NA
+淼	bbiau2	0.01	NA
 減	giam2	0.1	NA
 渥	ak4	0.01	NA
 港	gang2	0.01	NA
 渴	kat4	0.01	NA
-渺	biau2	0.01	NA
+渺	bbiau2	0.01	NA
 湃	pai3	0.01	NA
 湛	dam6	0.01	NA
 湳	lam3	0.01	NA
@@ -897,8 +897,8 @@ import_tables:
 貺	hainn7	0.01	NA
 貼	dah4	0.01	NA
 貼	tiap4	0.01	NA
-貿	bau7	0.01	NA
-貿	bauh8	0.01	NA
+貿	bbau7	0.01	NA
+貿	bbauh8	0.01	NA
 趁	tan3	0.1	NA
 超	tiau1	0.01	NA
 超	ciau1	0.01	NA
@@ -920,11 +920,11 @@ import_tables:
 間	gan3	0.7	分開, 隔斷, 遠遠; 空縫; 輪流; 相送, 病好.
 階	gai1	0.8	NA
 雁	ggan7	0.01	NA
-雅	ng-a2	0.01	NA
+雅	nga2	0.01	NA
 項	hang6	0.1	NA
 頇	han1	0.01	NA
 馮	bang5	0.01	NA
-㝥	bai2	0.01	NA
+㝥	bbai2	0.01	NA
 債	zai3	0.01	NA
 剾	kau1	0.01	NA
 剿	zau5	0.01	NA
@@ -965,14 +965,14 @@ import_tables:
 楂	za1	0.01	NA
 楝	lian7	0.01	NA
 楠	lam5	0.01	NA
-楣	bai5	0.01	NA
+楣	bbai5	0.01	NA
 業	ggiap8	0.1	NA
 楷	kai2	0.01	NA
 概	kai3	0.01	NA
 歁	kam2	0.01	NA
 殿	dian7	0.01	NA
 溝	gau1	0.01	NA
-滅	biat8	0.8	NA
+滅	bbiat8	0.8	NA
 滇	dian1	0.01	NA
 滓	dai2	0.05	NA
 煉	lian7	0.01	NA
@@ -1004,7 +1004,7 @@ import_tables:
 腩	lam2	0.01	NA
 腰	iau1	0.01	NA
 腹	bak4	0.1	NA
-萬	ban7	0.1	NA
+萬	bban7	0.1	NA
 落	lau3	0.01	NA
 落	lauh8	0.01	NA
 落	lak4	0.6	NA
@@ -1067,9 +1067,9 @@ import_tables:
 嘛	ma6	0.01	NA
 塹	ciam3	0.01	NA
 墊	diam7	0.01	NA
-夢	bang7	0.1	NA
+夢	bbang7	0.1	NA
 嫖	piau5	0.01	NA
-嫚	ban7	0.01	NA
+嫚	bban7	0.01	NA
 嫣	ian1	0.01	NA
 察	cat4	0.01	NA
 實	zat8	0.01	NA
@@ -1080,7 +1080,7 @@ import_tables:
 態	tai3	0.01	NA
 慘	cam2	0.01	NA
 慚	cam5	0.01	NA
-慢	ban7	0.1	NA
+慢	bban7	0.1	NA
 摠	zang2	0.01	NA
 摻	cam1	0.01	NA
 撇	piat4	0.01	NA
@@ -1103,7 +1103,7 @@ import_tables:
 漚	au3	0.01	NA
 漢	han3	0.1	NA
 漣	lian5	0.01	NA
-漫	ban7	0.01	NA
+漫	bban7	0.01	NA
 漸	ziam6	0.1	NA
 澈	tiat4	0.01	NA
 熁	hannh4	0.01	NA
@@ -1120,20 +1120,20 @@ import_tables:
 筵	ian5	0.01	NA
 粽	zang3	0.01	NA
 精	ziann1	0.01	NA
-網	bang6	0.01	NA
+網	bbang6	0.01	NA
 綵	cai2	0.01	NA
 綻	dian7	0.01	NA
-綿	bian5	0.05	NA
+綿	bbian5	0.05	NA
 肇	diau6	0.01	NA
 膋	la5	0.01	NA
 臺	dai5	0.01	NA
-艋	bang2	0.01	NA
+艋	bbang2	0.01	NA
 蓋	gah4	0.01	NA
 蓋	gai3	0.8	用 草 khàm 厝頂; thang 遮日 雨; 遮掩, 罩密, 庇佑.
 蜒	ian5	0.01	NA
 裱	biau2	0.01	NA
 誡	gai3	0.01	NA
-貌	bau7	0.01	NA
+貌	bbau7	0.01	NA
 貌	mau7	0.01	NA
 趕	gan2	0.01	NA
 趙	diau6	0.01	NA
@@ -1144,7 +1144,7 @@ import_tables:
 鉸	ga1	0.1	NA
 鉼	piann2	0.01	NA
 銅	dang5	0.01	NA
-閩	ban5	0.1	NA
+閩	bban5	0.1	NA
 靼	dat4	0.01	NA
 韶	siau5	0.01	NA
 頕	dam3	0.01	NA
@@ -1168,7 +1168,7 @@ import_tables:
 嘯	siau3	0.01	NA
 嘹	liau5	0.01	NA
 噎	iat4	0.01	NA
-墨	bak8	0.01	NA
+墨	bbak8	0.01	NA
 嫻	han5	0.01	NA
 嬈	hiau5	0.01	NA
 嬈	zziau5	0.01	NA
@@ -1177,7 +1177,7 @@ import_tables:
 層	zan5	0.01	NA
 屧	siap4	0.01	NA
 嶕	ziau5	0.01	NA
-廟	biau7	0.8	NA
+廟	bbiau7	0.8	NA
 彈	dan5	0.01	NA
 彈	dan6	0.01	NA
 影	iann2	0.6	NA
@@ -1194,7 +1194,7 @@ import_tables:
 數	siau3	0.3	數額, 數簿, 數目, 數條; 數櫃, 管數; 好 腳數.
 暫	ziam7	0.1	NA
 樂	ggau7	0.01	NA
-樂	ng-au7	0.8	樂 宴樂, 意愛, hàuⁿ, 樂 燒酒.
+樂	ngau7	0.8	樂 宴樂, 意愛, hàuⁿ, 樂 燒酒.
 樂	ggak8	0.65	NA
 樊	han5	0.01	NA
 樓	lau5	0.1	NA
@@ -1223,7 +1223,7 @@ import_tables:
 緘	gam1	0.01	NA
 緣	ian5	0.8	鑲袞, 袞條; 相接, 因為, 順趁, 順路, 緣故, 姻緣.
 編	bian1	0.01	NA
-緬	bian2	0.01	NA
+緬	bbian2	0.01	NA
 練	lian7	0.01	NA
 罵	ma7	0.1	NA
 罷	ba6	0.01	NA
@@ -1234,8 +1234,8 @@ import_tables:
 蓮	nai5	0.01	NA
 蓮	lian5	0.01	NA
 蓼	liau2	0.01	NA
-蔑	biat8	0.01	NA
-蔓	ban7	0.01	NA
+蔑	bbiat8	0.01	NA
+蔓	bban7	0.01	NA
 蔔	bak8	0.01	NA
 蔡	cai3	0.01	NA
 蔥	cang1	0.01	NA
@@ -1347,8 +1347,8 @@ import_tables:
 諺	ggan7	0.01	NA
 諾	hann3	0.01	NA
 謁	iat4	0.01	NA
-貓	ba5	0.01	NA
-貓	bau5	0.05	NA
+貓	bba5	0.01	NA
+貓	bbau5	0.05	NA
 貓	niau1	0.01	NA
 賴	lai7	0.01	NA
 蹁	pian5	0.01	NA
@@ -1380,7 +1380,7 @@ import_tables:
 鴨	ah4	0.01	NA
 鴨	ap4	0.05	NA
 黔	kiam5	0.01	NA
-䆀	bai2	0.01	NA
+䆀	bbai2	0.01	NA
 嚇	hiannh4	0.01	NA
 壏	na3	0.01	NA
 壓	ah4	0.01	NA
@@ -1414,12 +1414,12 @@ import_tables:
 礁	ziau1	0.01	NA
 篠	siau2	0.01	NA
 篷	pang5	0.01	NA
-篾	biat8	0.05	NA
+篾	bbiat8	0.05	NA
 糝	sam2	0.01	NA
 糟	zau1	0.01	NA
 縫	bang5	0.01	NA
 縫	pang7	0.1	NA
-縵	ban7	0.01	NA
+縵	bban7	0.01	NA
 罾	zan1	0.01	NA
 聯	lian5	0.01	NA
 聲	siann1	0.6	NA
@@ -1448,7 +1448,7 @@ import_tables:
 邀	iau1	0.01	NA
 邂	hai7	0.01	NA
 還	hainn5	0.01	NA
-錨	biau5	0.01	NA
+錨	bbiau5	0.01	NA
 鍊	lian7	0.01	NA
 鍘	zah8	0.01	NA
 鍬	ciau1	0.01	NA
@@ -1466,7 +1466,7 @@ import_tables:
 擲	dan3	0.1	NA
 擸	lap8	0.01	NA
 擺	bai2	0.1	NA
-擽	ng-iau1	0.01	NA
+擽	ngiau1	0.01	NA
 擾	zziau2	0.01	NA
 攆	lian2	0.01	NA
 曜	iau7	0.01	NA
@@ -1494,15 +1494,15 @@ import_tables:
 藍	na5	0.05	NA
 藍	lam5	0.1	NA
 藏	cang3	0.01	NA
-藐	biau2	0.01	NA
+藐	bbiau2	0.01	NA
 蟧	la5	0.01	NA
 蟯	zziau5	0.01	NA
-蟯	ng-iauh8	0.01	NA
+蟯	ngiauh8	0.01	NA
 蟲	tang5	0.01	NA
 襇	gainn2	0.01	NA
 覆	pak4	0.6	仆落, 頭殼 仆落; 覆手, 手覆; 覆模, 坦覆.
 謲	sam3	0.01	NA
-謾	ban7	0.01	NA
+謾	bban7	0.01	NA
 蹔	zam3	0.01	NA
 蹧	zau1	0.01	NA
 轍	diat8	0.01	NA
@@ -1535,7 +1535,7 @@ import_tables:
 繵	dan6	0.01	NA
 臘	lah8	0.01	NA
 臘	lap8	0.01	NA
-藕	ng-au6	0.01	NA
+藕	ngau6	0.01	NA
 蟶	tan1	0.01	NA
 蟹	hai6	0.01	NA
 蟾	siam5	0.01	NA
@@ -1570,7 +1570,7 @@ import_tables:
 耀	iau7	0.01	NA
 艦	lam7	0.01	NA
 藹	ai2	0.01	NA
-蠓	bang2	0.01	NA
+蠓	bbang2	0.01	NA
 襤	lam5	0.01	NA
 覺	gak4	0.01	NA
 觸	dak4	0.6	NA
@@ -1578,12 +1578,12 @@ import_tables:
 贏	iann5	0.01	NA
 躂	tat4	0.01	NA
 辮	bian6	0.01	NA
-顢	ban7	0.01	NA
+顢	bban7	0.01	NA
 飄	piau1	0.01	NA
 饒	zziau5	0.01	NA
 鹹	ham5	0.01	NA
 鹹	giam5	0.1	NA
-麵	bian7	0.05	NA
+麵	bbian7	0.05	NA
 囂	hiau1	0.01	NA
 懾	liap4	0.01	NA
 懾	siap4	0.01	NA
@@ -1624,7 +1624,7 @@ import_tables:
 讀	dau7	0.5	句讀, 好 句讀, m̄成 句讀.
 讀	tak8	0.6	NA
 鑑	gam3	0.01	NA
-霾	bai5	0.01	NA
+霾	bbai5	0.01	NA
 韃	dat4	0.01	NA
 驍	hiau1	0.01	NA
 驕	giau1	0.01	NA
@@ -1665,7 +1665,7 @@ import_tables:
 欖	lam2	0.01	NA
 籮	la5	0.01	NA
 糶	tiau3	0.01	NA
-蠻	ban5	0.01	NA
+蠻	bban5	0.01	NA
 饞	sai5	0.01	NA
 齻	zan1	0.01	NA
 讚	zan2	0.01	NA
@@ -1724,7 +1724,7 @@ import_tables:
 也	ia7	0.1	NA
 也	ia3	0.1	NA
 于	ir1	0.01	NA
-亡	bong5	0.01	NA
+亡	bbong5	0.01	NA
 兀	ggut8	0.01	NA
 凡	huan5	0.1	NA
 刃	zzim7	0.01	NA
@@ -1757,7 +1757,7 @@ import_tables:
 弓	ging1	0.1	NA
 不	but4	0.8	NA
 不	m7	0.6	NA
-不	bue7	0.5	NA
+不	bbue7	0.5	NA
 丑	tiu2	0.01	NA
 中	ding3	0.01	NA
 中	diong1	0.06	NA
@@ -1768,7 +1768,7 @@ import_tables:
 云	un5	0.01	NA
 互	hoo7	0.1	NA
 五	ggoo7	0.6	NA
-五	ng-oo2	0.8	NA
+五	ngoo2	0.8	NA
 五	u1	0.01	漢樂的音調
 井	zenn2	0.01	NA
 井	zing2	0.01	NA
@@ -1798,14 +1798,14 @@ import_tables:
 勻	un5	0.1	NA
 勼	giu1	0.01	NA
 勾	gio1	0.01	NA
-勿	but8	0.01	NA
+勿	bbut8	0.01	NA
 化	hua3	1	NA
 化	huee3	0.01	NA
 匹	pit4	0.01	NA
 升	zin1	0.01	NA
 升	sing1	0.01	NA
 午	ggoo6	0.01	NA
-午	ng-oo2	0.01	NA
+午	ngoo2	0.01	NA
 厄	eeh4	0.01	NA
 厄	ik4	0.01	NA
 及	gip8	0.01	NA
@@ -1815,7 +1815,7 @@ import_tables:
 天	tinn1	0.6	NA
 夫	hu1	0.01	NA
 孔	kang2	0.5	NA
-少	zior2	0.6	NA
+少	zio2	0.6	NA
 尤	iu5	0.01	NA
 尹	un2	0.01	NA
 尺	ce6	0.01	NA
@@ -1832,7 +1832,7 @@ import_tables:
 手	siu2	0.01	NA
 支	gi1	0.1	NA
 支	zi1	0.01	NA
-文	bun5	0.1	NA
+文	bbun5	0.1	NA
 斗	dio2	0.01	NA
 斤	gun1	0.1	NA
 方	buinn1	0.01	NA
@@ -1843,7 +1843,7 @@ import_tables:
 月	gguat8	0.01	NA
 月	ggerh8	0.01	NA
 月	ggueh8	0.06	NA
-木	bok8	0.01	NA
+木	bbok8	0.01	NA
 止	zi2	0.1	NA
 毋	m7	0.1	NA
 比	bi2	0.1	NA
@@ -1923,7 +1923,7 @@ import_tables:
 外	ggua7	0.01	NA
 外	ggue7	0.01	NA
 央	iang1	0.1	NA
-央	ng-1	0.01	NA
+央	ng1	0.01	NA
 失	sit4	0.1	NA
 奴	loo5	0.01	NA
 奶	nee1	0.01	NA
@@ -1943,28 +1943,28 @@ import_tables:
 平	bing5	0.8	NA
 幼	iu3	0.1	NA
 必	bit4	0.01	NA
-戊	boo7	0.01	NA
+戊	bboo7	0.01	NA
 扏	hiu3	0.01	NA
 扒	bee1	0.01	NA
 扒	bee5	0.01	NA
 斥	tik4	0.01	NA
 斥	cik4	0.01	NA
 旦	duann3	0.01	NA
-未	bi7	1	NA
-未	be7	0.6	NA
-未	bue7	0.5	漳
-末	buah8	0.01	NA
-末	buat8	0.01	NA
+未	bbi7	1	NA
+未	bbe7	0.6	NA
+未	bbue7	0.5	漳
+末	bbuah8	0.01	NA
+末	bbuat8	0.01	NA
 本	buinn2	0.01	NA
 本	bun2	0.8	NA
 朮	zut8	0.01	NA
 正	zing1	0.7	NA
 正	zing3	0.8	NA
-母	bio2	0.05	NA
-母	bu2	0.1	NA
-母	bo2	 10 #漳 	NA
+母	bbio2	0.05	NA
+母	bbu2	0.1	NA
+母	bbor2	 10 #漳 	NA
 氐	de1	0.01	NA
-民	bin5	0.1	NA
+民	bbin5	0.1	NA
 永	ing2	0.1	NA
 犯	huan7	1	NA
 玄	hian5	0.01	NA
@@ -1985,8 +1985,8 @@ import_tables:
 白	beh8	0.6	NA
 皮	pi5	0.01	NA
 皮	per5	0.1	NA
-皿	bing2	0.01	NA
-目	bok8	0.05	NA
+皿	bbing2	0.01	NA
+目	bbok8	0.05	NA
 矢	si2	0.01	NA
 石	sik8	0.01	NA
 石	zioh8	0.01	NA
@@ -2004,7 +2004,7 @@ import_tables:
 仰	ggiang2	0.01	NA
 仰	ggiong2	0.1	NA
 仰	iong2	0.1	NA
-仵	ng-oo2	0.01	NA
+仵	ngoo2	0.01	NA
 件	gian6	0.05	NA
 任	zzim5	0.01	NA
 任	zzim7	0.1	NA
@@ -2013,7 +2013,7 @@ import_tables:
 企	ki3	0.1	NA
 伉	kong3	0.01	NA
 伊	i1	0.8	NA
-伍	ng-oo2	0.01	NA
+伍	ngoo2	0.01	NA
 伎	gi6	0.01	NA
 伏	hok8	0.8	坦倒, 跪覆; bih, 收khǹg, 承受; 降伏, 屈伏, 埋伏.
 伏	hu7	0.7	bih, 收khǹg; 孵卵, 孵 雞卵, 孵 鴨卵.
@@ -2027,7 +2027,7 @@ import_tables:
 全	zuan5	0.1	NA
 全	zuinn5	0.01	NA
 冰	bing1	0.1	NA
-刎	bun2	0.01	NA
+刎	bbun2	0.01	NA
 刑	hing5	0.01	NA
 划	gor3	0.01	NA
 劣	luat8	0.01	NA
@@ -2044,13 +2044,13 @@ import_tables:
 吉	git4	0.01	NA
 吋	cun3	0.01	NA
 同	dong5	0.8	NA
-名	bing5	0.8	NA
+名	bbing5	0.8	NA
 后	hio6	0.01	NA
 吏	li7	0.01	NA
 吐	too2	0.01	NA
 吐	too3	0.01	NA
 向	hiong3	1	NA
-向	ng-3	0.5	相向, ǹg望, 向天, 向頓, 向北, 無向.
+向	ng3	0.5	相向, ǹg望, 向天, 向頓, 向北, 無向.
 回	hue5	0.8	NA
 回	her5	0.01	NA
 囟	sin3	0.01	NA
@@ -2070,9 +2070,9 @@ import_tables:
 好	hoonn3	0.05	NA
 好	hor2	0.1	NA
 如	zzir5	0.1	NA
-如	zzu5	1	NA
+如	ju5	1	NA
 妃	hui1	0.01	NA
-妄	bong7	0.01	NA
+妄	bbong7	0.01	NA
 字	zzi7	0.1	NA
 字	zur7	0.01	NA
 存	zun5	0.1	NA
@@ -2093,7 +2093,7 @@ import_tables:
 式	sik4	0.01	NA
 弛	si5	0.01	NA
 忖	cun2	0.01	NA
-忙	bong5	0.01	NA
+忙	bbong5	0.01	NA
 戌	sut4	0.01	NA
 戍	su3	0.01	NA
 成	sing5	0.8	NA
@@ -2123,7 +2123,7 @@ import_tables:
 汗	guann7	0.1	NA
 汛	sin3	0.01	NA
 汝	lir2	0.1	NA
-汝	zzu2	0.8	NA
+汝	ju2	0.8	0
 汝	li2	0.6	NA
 汝	lu2	0.7	NA
 池	di5	0.1	NA
@@ -2131,12 +2131,12 @@ import_tables:
 灰	hue1	0.01	NA
 灰	her1	0.01	NA
 牝	bin6	0.01	NA
-牟	bio5	0.01	NA
+牟	bbio5	0.01	NA
 甪	lut4	0.01	NA
 百	beeh4	0.01	NA
 百	bik4	0.8	NA
 竹	dik4	0.6	NA
-米	bi2	0.1	NA
+米	bbi2	0.1	NA
 羊	iang5	0.05	NA
 羊	iunn5	0.1	NA
 羽	u2	0.01	NA
@@ -2239,25 +2239,25 @@ import_tables:
 否	hoo2	0.8	m̄是; m̄-thang; 無, m̄准; 問 ê 話, 抑無, 抑m̄是.
 吩	huan1	0.01	NA
 吩	hun1	0.01	NA
-吪	ng-oo5	0.01	NA
+吪	ngoo5	0.01	NA
 吪	ggor5	0.01	NA
 吭	kngh4	0.01	NA
 吮	cuinn2	0.01	NA
 吮	sun6	0.01	NA
 吱	gi1	0.01	NA
 吳	ggoo5	0.01	NA
-吳	ng-oo5	0.01	NA
+吳	ngoo5	0.01	NA
 吸	kip4	0.01	NA
 吹	cui1	0.01	NA
 吹	cer1	0.01	NA
 吹	cue1	0.06	NA
-吻	bun2	0.01	NA
-吾	ng-oo5	0.1	NA
+吻	bbun2	0.01	NA
+吾	ngoo5	0.1	NA
 吾	ggoo5	0.1	NA
 呂	lir6	0.01	NA
 呂	li7	0.1	NA
 呃	erh4	0.01	NA
-呅	bun1	0.01	NA
+呅	bbun1	0.01	NA
 呈	ting5	0.01	NA
 告	gor3	0.8	牛 觸 柴 通知 人 ê 款式; 報名; 序細 稟 序大; 開拆; 告示.
 告	kok4	0.7	請令 kā 父母 講.
@@ -2280,8 +2280,8 @@ import_tables:
 坑	king1	0.01	NA
 壯	zong3	0.1	NA
 夾	ggereh4	0.01	NA
-夾	ng-ereh4	0.01	NA
-夾	ng-eh4	0.6	NA
+夾	ngereh4	0.01	NA
+夾	ngeh4	0.6	NA
 妊	zzim7	0.01	NA
 妍	ggian2	0.01	NA
 妒	doo3	0.01	NA
@@ -2297,7 +2297,7 @@ import_tables:
 宋	song3	0.01	NA
 完	uan5	0.1	NA
 宏	hong5	0.01	NA
-尾	ber2	0.01	NA
+尾	bber2	0.01	NA
 尿	zzior7	0.01	NA
 局	gik8	0.01	NA
 屁	pi3	0.01	NA
@@ -2306,7 +2306,7 @@ import_tables:
 岑	ggim5	0.01	NA
 岑	cim5	0.01	NA
 巡	sun5	0.1	NA
-巫	bu5	0.01	NA
+巫	bbu5	0.01	NA
 希	hi1	0.1	NA
 庇	bi3	0.01	NA
 床	cong5	0.8	NA
@@ -2330,18 +2330,18 @@ import_tables:
 忒	tik4	0.01	NA
 忒	terk4	0.01	NA
 志	zi3	0.1	NA
-忘	bong7	0.01	NA
+忘	bbong7	0.01	NA
 忤	ggoo2	0.01	NA
-忤	ng-oo2	0.01	NA
+忤	ngoo2	0.01	NA
 快	kuai3	0.01	NA
 快	kuann3	0.01	NA
 快	kue3	0.01	NA
 快	gere7	0.01	NA
 忳	tun3	0.01	NA
 我	ggua2	0.6	NA
-我	ng-oo2	0.8	NA
+我	ngoo2	0.8	NA
 扭	liu2	0.01	NA
-扭	ng-iu2	0.01	NA
+扭	ngiu2	0.01	NA
 扯	ce2	0.01	NA
 扱	kip8	0.01	NA
 扴	geeh8	0.01	NA
@@ -2394,7 +2394,7 @@ import_tables:
 汪	ong1	0.01	NA
 汰	tua7	0.01	NA
 汲	gip4	0.01	NA
-汶	bun7	0.01	NA
+汶	bbun7	0.01	NA
 決	guat4	0.01	NA
 汽	ki3	0.1	NA
 汾	hun5	0.01	NA
@@ -2404,8 +2404,8 @@ import_tables:
 沈	sim2	0.01	NA
 沉	dim5	0.01	NA
 沌	dun6	0.01	NA
-沐	bok8	0.01	NA
-沒	but8	0.01	NA
+沐	bbok8	0.01	NA
+沒	bbut8	0.01	NA
 沖	ciang5	0.01	NA
 沙	sua1	0.6	NA
 沢	cioh4	0.01	NA
@@ -2413,7 +2413,7 @@ import_tables:
 灸	gu3	0.01	NA
 灼	ziok4	0.8	NA
 災	zer1	0.01	NA
-牡	boo2	0.8	NA
+牡	bboo2	0.8	NA
 牢	lor5	0.01	NA
 狂	gong5	0.01	NA
 狄	dik8	0.01	NA
@@ -2441,7 +2441,7 @@ import_tables:
 芋	oo7	0.1	NA
 芋	u7	0.01	NA
 芒	mee5	0.01	NA
-芒	bong5	0.01	NA
+芒	bbong5	0.01	NA
 見	gian3	0.8	NA
 見	ginn3	0.6	NA
 言	ggian5	0.8	NA
@@ -2452,7 +2452,7 @@ import_tables:
 豸	di6	0.01	NA
 貝	bue3	0.01	NA
 赤	cik4	0.01	NA
-走	zior2	0.01	NA
+走	zio2	0.01	NA
 足	ziok4	0.8	NA
 身	sin1	0.1	NA
 車	gir1	0.05	NA
@@ -2468,7 +2468,7 @@ import_tables:
 酉	iu2	0.01	NA
 里	li2	0.01	NA
 阮	gguan2	0.8	NA
-阮	ng-2	0.5	NA
+阮	ng2	0.5	NA
 阮	ggun2	0.6	NA
 阱	zenn2	0.01	NA
 阱	zing2	0.01	NA
@@ -2477,7 +2477,7 @@ import_tables:
 並	bing3	0.8	NA
 並	ping7	0.6	NA
 乖	guai1	0.01	NA
-乳	zzu2	0.01	NA
+乳	ju2	0.01	NA
 事	sur7	0.1	NA
 事	su7	0.8	NA
 享	hiang2	0.01	NA
@@ -2541,13 +2541,13 @@ import_tables:
 呢	ni5	0.01	NA
 周	ziu1	0.01	NA
 呱	gua1	0.01	NA
-味	bi7	0.8	NA
+味	bbi7	0.8	NA
 呵	or1	0.01	NA
 呸	pui3	0.01	NA
 呻	sin1	0.01	NA
 呼	koo1	0.01	NA
 呼	hoo1	0.01	NA
-命	bing7	0.8	NA
+命	bbing7	0.8	NA
 呿	kuh4	0.01	NA
 咀	zir2	0.01	NA
 咄	dut4	0.01	NA
@@ -2578,7 +2578,7 @@ import_tables:
 妮	ni5	0.01	NA
 妹	muai7	0.01	NA
 妹	mue7	0.01	NA
-妹	ber7	0.01	NA
+妹	bber7	0.01	NA
 妻	ce1	0.01	NA
 姆	m2	0.01	NA
 姊	zi2	0.1	NA
@@ -2589,10 +2589,10 @@ import_tables:
 姓	senn3	0.01	NA
 姓	sing3	0.01	NA
 委	ui2	0.1	NA
-孟	bing7	0.01	NA
+孟	bbing7	0.01	NA
 季	gui3	0.1	NA
 孤	goo1	0.1	NA
-宓	bit8	0.01	NA
+宓	bbit8	0.01	NA
 宗	zong1	0.1	NA
 官	guann1	0.01	NA
 官	guan1	0.01	NA
@@ -2608,7 +2608,7 @@ import_tables:
 屈	kut4	0.01	NA
 岡	gong1	0.01	NA
 岫	siu7	0.1	NA
-岷	bin5	0.01	NA
+岷	bbin5	0.01	NA
 岸	huann7	0.6	NA
 帕	pee3	0.01	NA
 帚	ziu2	0.01	NA
@@ -2662,14 +2662,14 @@ import_tables:
 抱	por7	0.6	NA
 抵	de2	0.01	NA
 抵	di2	0.01	NA
-抹	buah4	0.01	NA
-抹	buat4	0.01	NA
+抹	bbuah4	0.01	NA
+抹	bbuat4	0.01	NA
 抽	tiu1	0.01	NA
 抾	kioh4	0.01	NA
-抿	bin2	0.01	NA
+抿	bbin2	0.01	NA
 拂	hut4	0.01	NA
 拄	du2	0.01	NA
-拇	bu2	0.01	NA
+拇	bbu2	0.01	NA
 拈	nee1	0.01	NA
 拋	pua1	0.01	NA
 拌	buann6	0.01	NA
@@ -2686,22 +2686,22 @@ import_tables:
 拖	tua1	0.01	NA
 拖	tor1	0.01	NA
 拙	zuat4	0.01	NA
-招	zior1	0.01	NA
+招	zio1	0.01	NA
 放	hong3	0.8	NA
 斧	boo2	0.01	NA
 斧	hu2	0.01	NA
 於	ir1	0.01	NA
 於	i5	0.5	NA
 旺	ong7	0.1	NA
-旻	bin5	0.01	NA
+旻	bbin5	0.01	NA
 昂	ggong5	0.01	NA
 昆	kun1	0.01	NA
 昇	sing1	0.1	NA
 昊	hor6	0.01	NA
 昌	ciang1	0.01	NA
 明	mua5	0.01	NA
-明	bin5	0.6	NA
-明	bing5	0.8	NA
+明	bbin5	0.6	NA
+明	bbing5	0.8	NA
 昏	huinn1	0.01	NA
 昏	hun1	0.1	NA
 易	i7	0.6	NA
@@ -2728,12 +2728,12 @@ import_tables:
 果	goo2	0.1	NA
 枝	gi1	0.1	NA
 枝	zi1	0.01	NA
-武	bu2	0.1	NA
+武	bbu2	0.1	NA
 歧	gi5	0.01	NA
-歿	but8	0.01	NA
+歿	bbut8	0.01	NA
 氛	hun1	0.01	NA
 沫	perh8	0.01	NA
-沬	bi7	0.01	NA
+沬	bbi7	0.01	NA
 沮	zir6	0.01	NA
 沱	dor5	0.01	NA
 河	hor5	0.01	NA
@@ -2759,7 +2759,7 @@ import_tables:
 注	du3	0.01	NA
 注	zu3	0.01	NA
 泮	puan3	0.01	NA
-泯	bin2	0.01	NA
+泯	bbin2	0.01	NA
 泱	iang1	0.01	NA
 泳	ing2	0.01	NA
 炅	gui3	0.01	NA
@@ -2770,9 +2770,9 @@ import_tables:
 爭	zinn1	0.1	NA
 爭	zing1	0.01	NA
 爭	zerng1	0.01	NA
-牧	bok8	0.01	NA
+牧	bbok8	0.01	NA
 物	mih8	0.6	NA
-物	but8	0.8	NA
+物	bbut8	0.8	NA
 物	mngh8	0.01	NA
 狀	ziang7	0.01	NA
 狀	zong7	0.1	NA
@@ -2787,7 +2787,7 @@ import_tables:
 的	dik4	0.8	NA
 盂	u5	0.01	NA
 盲	mee5	0.01	NA
-盲	bong5	0.01	NA
+盲	bbong5	0.01	NA
 直	dit8	0.01	NA
 直	dik8	0.01	NA
 知	di1	0.8	NA
@@ -2799,7 +2799,7 @@ import_tables:
 空	kong1	0.1	NA
 空	kong3	0.01	NA
 糾	giu3	0.1	NA
-罔	bong2	0.01	NA
+罔	bbong2	0.01	NA
 羌	kiang1	0.01	NA
 羌	giunn1	0.01	NA
 者	zia2	0.8	NA
@@ -2813,7 +2813,7 @@ import_tables:
 肯	kerng2	0.01	NA
 肱	gong1	0.01	NA
 肺	hui3	0.01	NA
-臥	ng-oo7	0.8	人臣, àⁿ腰 敬 君王; soah, 歇, 降服, 變化, 倒teh 睏.
+臥	ngoo7	0.8	人臣, àⁿ腰 敬 君王; soah, 歇, 降服, 變化, 倒teh 睏.
 臥	ggor7	0.7	倒teh, 撐teh, 睏, 睏 ê 所在.
 臥	kun3	0.6	歇睏, khiā睏, 睏 飽, 早睏, 愛睏; 睏夢.
 臾	u5	0.01	NA
@@ -2852,7 +2852,7 @@ import_tables:
 長	dng7	0.01	NA
 長	ziang2	0.5	銀 過長, 米 過長, 就是 起價 ê 意思.
 門	mui5	0.01	NA
-門	bun5	0.05	NA
+門	bbun5	0.05	NA
 門	mng5	0.06	NA
 阜	hu6	0.01	NA
 阻	zoo2	0.01	NA
@@ -2871,21 +2871,21 @@ import_tables:
 㧣	du1	0.01	NA
 亭	ding5	1	NA
 亮	liang7	0.01	NA
-侮	bu2	0.1	NA
+侮	bbu2	0.1	NA
 侯	hio5	0.01	NA
 侵	cim1	0.01	NA
 侶	lir6	0.01	NA
 係	he7	0.01	NA
 促	cik4	0.01	NA
-俄	ng-oo5	0.01	NA
+俄	ngoo5	0.01	NA
 俄	ggor5	0.01	NA
 俊	zun3	0.01	NA
 俎	zoo2	0.01	NA
-俏	cior3	0.01	NA
+俏	cio3	0.01	NA
 俐	li7	0.01	NA
 俚	li2	0.01	NA
 保	bor2	0.1	NA
-俞	zzu5	0.01	NA
+俞	ju5	0.01	NA
 俟	sur6	0.01	NA
 信	sin3	0.1	NA
 冑	diu6	0.01	NA
@@ -2916,7 +2916,7 @@ import_tables:
 咧	lerh4	0.01	NA
 咨	zur1	0.01	NA
 咩	meeh4	0.01	NA
-咪	bi1	0.01	NA
+咪	bbi1	0.01	NA
 咫	zi2	0.01	NA
 咿	i1	0.01	NA
 品	pin2	0.01	NA
@@ -2932,7 +2932,7 @@ import_tables:
 城	sing5	0.8	NA
 奎	ge1	0.01	NA
 奎	gui1	0.01	NA
-奏	zior3	0.01	NA
+奏	zio3	0.01	NA
 奐	huan3	0.01	NA
 契	ke3	0.8	NA
 契	kiat4	0.7	勤苦, 勤儉, 開闊; 刻削, 絕斷; 戲謔.
@@ -2973,7 +2973,7 @@ import_tables:
 度	dok8	0.7	phah算, 量比, 測度, chhē度, 鑒勘.
 建	gian3	0.1	NA
 弈	ik8	0.01	NA
-弭	bi2	0.01	NA
+弭	bbi2	0.01	NA
 很	hun2	0.01	NA
 徊	huai5	0.01	NA
 徊	hue5	0.01	NA
@@ -3045,7 +3045,7 @@ import_tables:
 柄	bing3	0.01	NA
 柏	beeh4	0.01	NA
 柏	bik4	0.01	NA
-某	boo2	0.1	NA
+某	bboo2	0.1	NA
 染	ni2	0.01	NA
 柔	zziu5	0.01	NA
 柚	iu7	0.01	NA
@@ -3126,7 +3126,7 @@ import_tables:
 盾	dun2	0.01	NA
 省	senn2	0.01	NA
 省	sing2	0.01	NA
-眉	bi5	0.01	NA
+眉	bbi5	0.01	NA
 看	kuann3	0.1	NA
 矜	ging1	0.01	NA
 矧	sin2	0.01	NA
@@ -3142,7 +3142,7 @@ import_tables:
 秋	ciu1	0.01	NA
 科	ker1	0.01	NA
 科	kor1	1	NA
-秒	bio2	0.01	NA
+秒	bbio2	0.01	NA
 穿	cuan1	0.05	NA
 穿	cing7	0.01	NA
 穿	cuinn1	0.05	NA
@@ -3156,8 +3156,8 @@ import_tables:
 紈	uan5	0.01	NA
 缸	gong1	0.01	NA
 缸	gng1	0.01	NA
-美	bi2	0.8	NA
-美	ber2	0.01	NA
+美	bbi2	0.8	NA
+美	bber2	0.01	NA
 耍	sng2	0.1	NA
 胃	ui7	0.01	NA
 胄	diu6	0.01	NA
@@ -3185,11 +3185,11 @@ import_tables:
 苴	cir1	0.01	NA
 苴	zu7	0.01	NA
 苹	ping5	0.01	NA
-茂	boo7	0.8	NA
+茂	bboo7	0.8	NA
 范	huan6	0.01	NA
 茄	gio5	0.01	NA
 茅	hm5	0.01	NA
-茉	buah8	0.01	NA
+茉	bbuah8	0.01	NA
 虐	ggiok8	0.8	NA
 虐	ggioh8	0.5	NA
 虹	king6	0.1	NA
@@ -3215,8 +3215,8 @@ import_tables:
 重	ding5	0.5	重倍, 重頭, 重koh, 重重 疊疊, 重換, 重耽.
 閂	cuann3	0.01	NA
 陋	lio7	0.01	NA
-陌	bik8	0.8	NA
-面	bin7	0.1	NA
+陌	bbik8	0.8	NA
+面	bbin7	0.1	NA
 革	gik4	0.01	NA
 韋	ui5	0.01	NA
 韭	gu2	0.01	NA
@@ -3245,7 +3245,7 @@ import_tables:
 個	gor3	0.1	NA
 倍	bue6	0.01	NA
 倍	ber6	0.1	NA
-們	bun5	0.01	NA
+們	bbun5	0.01	NA
 倒	dor2	0.01	NA
 倒	dor3	0.1	NA
 倔	gut8	0.01	NA
@@ -3269,7 +3269,7 @@ import_tables:
 值	dit8	0.8	NA
 值	di7	0.7	NA
 冤	uan1	0.1	NA
-冥	bing5	0.01	NA
+冥	bbing5	0.01	NA
 准	zun2	0.1	NA
 凊	cin3	0.1	NA
 凊	cing3	0.01	NA
@@ -3322,7 +3322,7 @@ import_tables:
 娟	guan1	0.01	NA
 娠	sin1	0.01	NA
 娣	de6	0.01	NA
-娥	ng-oo5	0.01	NA
+娥	ngoo5	0.01	NA
 娥	ggor5	0.01	NA
 孫	suinn1	0.01	NA
 孫	sun1	0.1	NA
@@ -3335,7 +3335,7 @@ import_tables:
 屑	siat4	0.05	NA
 屑	seeh4	0.01	NA
 屑	sut4	0.01	NA
-峨	ng-oo5	0.01	NA
+峨	ngoo5	0.01	NA
 峨	ggor5	0.01	NA
 峰	hong1	0.1	NA
 島	dor2	0.1	NA
@@ -3383,11 +3383,11 @@ import_tables:
 挵	long3	0.01	NA
 挹	ip4	0.01	NA
 挺	ting2	0.01	NA
-挼	zzer5	0.01	NA
+挼	jer5	0.01	NA
 挾	gueh8	0.01	NA
 挾	ggereh8	0.01	NA
-挾	ng-ereh8	0.01	NA
-挾	ng-eh8	0.01	NA
+挾	ngereh8	0.01	NA
+挾	ngeh8	0.01	NA
 捅	tong2	0.01	NA
 捆	kun2	0.01	NA
 捋	luah8	0.01	NA
@@ -3485,7 +3485,7 @@ import_tables:
 留	liu5	0.01	NA
 畚	bun3	0.01	NA
 畜	tik4	0.01	NA
-畝	boo2	0.01	NA
+畝	bboo2	0.01	NA
 疲	pi5	0.01	NA
 疶	cuah4	0.01	NA
 疹	zin2	0.01	NA
@@ -3498,7 +3498,7 @@ import_tables:
 益	ik4	0.1	NA
 眐	zing1	0.01	NA
 真	zin1	0.1	NA
-眠	bin5	0.01	NA
+眠	bbin5	0.01	NA
 眩	hin5	0.01	NA
 矩	gir2	0.01	NA
 砰	piang3	0.01	NA
@@ -3518,16 +3518,16 @@ import_tables:
 秤	bing5	0.01	NA
 秦	zin5	0.01	NA
 秧	iang1	0.01	NA
-秧	ng-1	0.01	NA
+秧	ng1	0.01	NA
 秩	dit8	0.01	NA
 秫	zut8	0.01	NA
 窄	zik4	0.01	NA
 笈	gip8	0.01	NA
-笑	cior3	0.1	NA
-粅	but4	0.01	NA
+笑	cio3	0.1	NA
+粅	bbut4	0.01	NA
 粉	hun2	0.1	NA
-紊	bun7	0.01	NA
-紋	bun5	0.01	NA
+紊	bbun7	0.01	NA
+紋	bbun5	0.01	NA
 紐	liu2	0.01	NA
 紓	sir1	0.01	NA
 純	sun5	0.01	NA
@@ -3567,9 +3567,9 @@ import_tables:
 脂	zi1	0.01	NA
 脆	cui3	0.01	NA
 脆	cer3	0.01	NA
-脈	beeh8	0.01	NA
+脈	bbeeh8	0.01	NA
 脈	meeh8	0.01	NA
-脈	bik8	0.01	NA
+脈	bbik8	0.01	NA
 脊	zit4	0.01	NA
 脊	zik4	0.01	NA
 臭	ciu3	0.05	NA
@@ -3582,9 +3582,9 @@ import_tables:
 般	buan1	0.01	NA
 般	buat4	0.01	NA
 茈	zinn2	0.01	NA
-茗	bing5	0.01	NA
+茗	bbing5	0.01	NA
 茜	cian3	0.01	NA
-茫	bong5	0.1	NA
+茫	bbong5	0.1	NA
 茱	zu1	0.01	NA
 茲	zur1	0.01	NA
 茵	in1	0.01	NA
@@ -3601,13 +3601,13 @@ import_tables:
 荒	hong1	0.01	NA
 荔	le7	0.01	NA
 虔	kian5	0.01	NA
-蚊	bun5	0.01	NA
+蚊	bbun5	0.01	NA
 蚓	un2	0.01	NA
 蚣	gong1	0.01	NA
 衰	sue1	0.01	NA
 袁	uan5	0.01	NA
-袂	be7	0.01	NA
-袂	bere6	0.1	NA
+袂	bbe7	0.01	NA
+袂	bbere6	0.1	NA
 訊	sin3	0.01	NA
 討	tor2	0.1	NA
 訓	hun3	0.1	NA
@@ -3622,7 +3622,7 @@ import_tables:
 軒	hian1	0.01	NA
 軔	zzin7	0.01	NA
 迴	hue5	0.01	NA
-迷	be5	0.01	NA
+迷	bbe5	0.01	NA
 迸	biang3	0.01	NA
 追	dui1	0.01	NA
 退	tue3	0.05	NA
@@ -3649,7 +3649,7 @@ import_tables:
 除	dir5	0.01	NA
 隻	zik4	0.01	NA
 飢	gi1	0.01	NA
-馬	bee2	0.01	NA
+馬	bbee2	0.01	NA
 骨	gut4	0.1	NA
 高	gor1	0.1	NA
 高	goo1	0.1	NA
@@ -3662,7 +3662,7 @@ import_tables:
 假	gee2	0.01	NA
 偈	ge7	0.01	NA
 偉	ui2	0.1	NA
-偌	zzua6	0.01	NA
+偌	jua6	0.01	NA
 偏	pinn1	0.01	NA
 做	zue3	0.1	NA
 做	zor3	0.1	NA
@@ -3674,7 +3674,7 @@ import_tables:
 健	gian7	0.01	NA
 側	cik4	0.01	NA
 偵	zing1	0.01	NA
-偶	ng-oo2	0.01	NA
+偶	ngoo2	0.01	NA
 偶	ggio2	0.01	NA
 偷	tio1	0.01	NA
 偽	ggui7	0.01	NA
@@ -3685,7 +3685,7 @@ import_tables:
 勒	lik4	0.01	NA
 勒	lik8	0.01	NA
 動	dang7	0.6	NA
-務	bu7	0.1	NA
+務	bbu7	0.1	NA
 匏	bu5	0.01	NA
 匐	hok8	0.01	NA
 匙	si5	0.01	NA
@@ -3704,7 +3704,7 @@ import_tables:
 商	siang1	0.01	NA
 啉	lim1	0.1	NA
 問	mui7	0.01	NA
-問	bun7	0.8	NA
+問	bbun7	0.8	NA
 問	mng7	0.6	NA
 啞	ee2	0.01	NA
 啟	ke2	0.01	NA
@@ -3749,7 +3749,7 @@ import_tables:
 寂	sioh8	0.01	NA
 寄	gi3	0.8	NA
 寅	in5	0.01	NA
-密	bit8	0.01	NA
+密	bbit8	0.01	NA
 寇	kio3	0.01	NA
 將	ziang1	0.5	NA
 將	ziang3	0.6	老將, 漢將, 好漢 將, 將爺, 大將.
@@ -3776,7 +3776,7 @@ import_tables:
 庶	sir3	0.01	NA
 康	kong1	0.1	NA
 康	kng1	0.01	NA
-庾	zzu2	0.01	NA
+庾	ju2	0.01	NA
 張	tsiang	0.5	躗張, 就是 固執 愛 趁 家己 ê 意思.
 張	diunn1	0.6	人 ê 字姓, 張三 李四, 張 天書, 張 天君, 張佑, 張掇.
 張	diong1	0.8	NA
@@ -3810,7 +3810,7 @@ import_tables:
 惇	dun1	0.01	NA
 惋	uan3	0.01	NA
 惕	tik4	0.01	NA
-惘	bong2	0.01	NA
+惘	bbong2	0.01	NA
 惚	hut4	0.01	NA
 惜	sik4	0.05	NA
 惜	sioh4	0.01	NA
@@ -3822,7 +3822,7 @@ import_tables:
 捧	pong2	0.01	NA
 捧	pang5	0.1	NA
 捩	lerh4	0.01	NA
-捫	bun5	0.01	NA
+捫	bbun5	0.01	NA
 据	gir1	0.01	NA
 捲	guan2	0.01	NA
 捲	guinn2	0.01	NA
@@ -3846,9 +3846,9 @@ import_tables:
 推	cui1	0.01	NA
 推	ter1	0.01	NA
 掩	om1	0.01	NA
-掩	ng-1	0.1	NA
+掩	ng1	0.1	NA
 措	coo3	0.01	NA
-敏	bin2	0.01	NA
+敏	bbin2	0.01	NA
 救	giu3	0.1	NA
 敕	tik4	0.01	NA
 敘	sir6	0.01	NA
@@ -3858,7 +3858,7 @@ import_tables:
 旋	zuinn7	0.01	NA
 旌	zing1	0.01	NA
 族	zok8	0.01	NA
-晚	buan2	0.01	NA
+晚	bbuan2	0.01	NA
 晚	mui2	0.01	NA
 晝	diu5	0.01	NA
 晞	hi1	0.01	NA
@@ -3867,7 +3867,7 @@ import_tables:
 晦	hue3	0.01	NA
 晨	sin5	0.01	NA
 曹	zor5	0.01	NA
-望	bong7	0.1	NA
+望	bbong7	0.1	NA
 桮	bue1	0.01	NA
 桸	hi1	0.01	NA
 梁	niu5	0.01	NA
@@ -3884,9 +3884,9 @@ import_tables:
 梯	tui1	0.01	NA
 梵	huan7	0.01	NA
 棄	ki3	0.01	NA
-欲	berh4	0.1	NA
-欲	beh4	0.6	异
-欲	boh4	0.1	异
+欲	bberh4	0.1	NA
+欲	bbeh4	0.6	异
+欲	bboh4	0.1	异
 欶	suh4	0.01	NA
 毫	hor5	0.01	NA
 毬	giu5	0.01	NA
@@ -3927,7 +3927,7 @@ import_tables:
 猊	gge5	0.01	NA
 猖	ciang1	0.01	NA
 猛	mee2	0.01	NA
-猛	bing2	0.01	NA
+猛	bbing2	0.01	NA
 猝	cut4	0.01	NA
 率	lut8	0.5	NA
 率	sut4	0.8	NA
@@ -3953,10 +3953,10 @@ import_tables:
 盔	kue1	0.01	NA
 盗	dor7	0.1	NA
 盛	sing7	0.01	NA
-眯	bi5	0.01	NA
+眯	bbi5	0.01	NA
 眶	kong1	0.01	NA
 眷	guan3	0.01	NA
-眸	bio5	0.01	NA
+眸	bbio5	0.01	NA
 眾	zing3	0.6	NA
 硃	zu1	0.01	NA
 硫	liu5	0.01	NA
@@ -4030,12 +4030,12 @@ import_tables:
 莞	guan2	0.01	NA
 莠	iu2	0.01	NA
 莢	ggereh4	0.01	NA
-莢	ng-ereh4	0.01	NA
-莢	ng-eh4	0.01	NA
+莢	ngereh4	0.01	NA
+莢	ngeh4	0.01	NA
 莧	hing6	0.01	NA
-莫	boh8	0.6	NA
-莫	bok8	0.8	NA
-莽	bong2	0.01	NA
+莫	bboh8	0.6	NA
+莫	bbok8	0.8	NA
+莽	bbong2	0.01	NA
 處	cir2	0.06	NA
 處	cir3	0.1	NA
 蚵	or5	0.1	NA
@@ -4054,7 +4054,7 @@ import_tables:
 被	bi6	0.01	NA
 被	per6	0.1	NA
 規	gui1	0.1	NA
-覓	bik8	0.01	NA
+覓	bbik8	0.01	NA
 覓	mai7	0.06	NA
 訣	guat4	0.01	NA
 訪	hong2	0.1	NA
@@ -4117,8 +4117,8 @@ import_tables:
 魚	hir5	0.1	NA
 鹵	loo2	0.01	NA
 鹿	lok8	0.01	NA
-麥	beeh8	0.01	NA
-麥	bik8	0.01	NA
+麥	bbeeh8	0.01	NA
+麥	bbik8	0.01	NA
 麻	mua5	0.01	NA
 䖳	tee7	0.01	NA
 傀	kui2	0.01	NA
@@ -4161,7 +4161,7 @@ import_tables:
 單	sian6	0.01	NA
 單	duann1	0.1	NA
 喲	io1	0.01	NA
-喻	zzu7	0.8	NA
+喻	ju7	0.8	NA
 圍	ui5	0.1	NA
 堝	or1	0.01	NA
 堡	bor2	0.01	NA
@@ -4177,13 +4177,13 @@ import_tables:
 婿	se3	0.05	NA
 媒	mue5	0.01	NA
 媒	hm5	0.01	NA
-媚	bi7	0.01	NA
+媚	bbi7	0.01	NA
 媛	uan7	0.01	NA
 媠	sui2	0.1	NA
 媧	gua1	0.01	NA
 富	bu3	0.5	NA
 富	hu3	1	NA
-寐	bi7	0.01	NA
+寐	bbi7	0.01	NA
 寒	guann5	0.1	NA
 寓	ggu7	0.01	NA
 尊	zun1	0.1	NA
@@ -4194,10 +4194,10 @@ import_tables:
 崴	uainn2	0.01	NA
 崴	uainnh4	0.01	NA
 崴	ue1	0.01	NA
-嵋	bi5	0.01	NA
+嵋	bbi5	0.01	NA
 嵙	kor1	0.01	NA
 巽	sun3	0.01	NA
-帽	bo7	0.01	NA
+帽	bbor7	0.01	NA
 幅	hok4	0.01	NA
 幾	gi2	0.01	NA
 幾	gui2	0.1	NA
@@ -4210,7 +4210,7 @@ import_tables:
 復	hok8	1	往來; 興起; 倒tńg; 應答; 白白; 覆命; 引魂 倒來; 復倒.
 循	sun5	0.01	NA
 悲	bi1	0.1	NA
-悶	bun7	0.01	NA
+悶	bbun7	0.01	NA
 惑	hik8	0.01	NA
 惠	hui7	0.01	NA
 惡	oo3	0.7	NA
@@ -4222,7 +4222,7 @@ import_tables:
 惱	lor2	0.01	NA
 惺	sing1	0.01	NA
 惻	cik4	0.01	NA
-愉	zzu5	0.01	NA
+愉	ju5	0.01	NA
 愎	bik8	0.01	NA
 愕	ggok8	0.01	NA
 愖	sim7	0.01	NA
@@ -4238,7 +4238,7 @@ import_tables:
 揆	gui5	0.01	NA
 揉	zziu5	0.01	NA
 揋	ere3	0.01	NA
-描	bio5	0.01	NA
+描	bbio5	0.01	NA
 提	te5	0.8	NA
 揖	ip4	0.01	NA
 揚	iang5	0.1	NA
@@ -4270,7 +4270,7 @@ import_tables:
 暑	sir2	0.01	NA
 曾	zing1	0.01	NA
 曾	zing5	0.1	NA
-曾	bat4	0.1	NA
+曾	bbat4	0.1	NA
 曾	zerng1	0.01	NA
 曾	zerng5	0.01	NA
 替	te3	0.01	NA
@@ -4297,7 +4297,7 @@ import_tables:
 植	sit8	0.01	NA
 植	sik8	0.01	NA
 椎	zui1	0.01	NA
-椒	zior1	0.01	NA
+椒	zio1	0.01	NA
 欺	ki1	0.01	NA
 欽	kim1	0.01	NA
 款	kuann2	0.01	NA
@@ -4307,7 +4307,7 @@ import_tables:
 殖	sik8	0.01	NA
 殘	zuann5	0.01	NA
 渙	huan3	0.01	NA
-渝	zzu5	0.01	NA
+渝	ju5	0.01	NA
 渠	gir5	0.01	NA
 渡	doo7	0.01	NA
 渣	zee1	0.01	NA
@@ -4319,8 +4319,8 @@ import_tables:
 渴	kuah4	0.01	NA
 游	iu5	0.1	NA
 渾	hun5	0.01	NA
-湄	bi5	0.01	NA
-湊	cior3	0.01	NA
+湄	bbi5	0.01	NA
+湊	cio3	0.01	NA
 湍	tuan1	0.01	NA
 湖	oo5	0.1	NA
 湖	hoo5	0.01	NA
@@ -4335,8 +4335,8 @@ import_tables:
 焚	hun5	0.01	NA
 焠	cui3	0.01	NA
 焠	cuh4	0.01	NA
-無	bo5	0.6	NA
-無	bu5	0.8	NA
+無	bbor5	0.6	NA
+無	bbu5	0.8	NA
 焮	kian3	0.01	NA
 然	zzian5	0.8	NA
 煮	zir2	0.1	NA
@@ -4390,7 +4390,7 @@ import_tables:
 硞	kok4	0.01	NA
 硞	kok8	0.01	NA
 硩	deeh4	0.01	NA
-硬	ng-ee6	0.01	NA
+硬	ngee6	0.01	NA
 硬	gging6	0.01	NA
 硯	hinn7	0.01	NA
 稀	hi1	0.01	NA
@@ -4461,7 +4461,7 @@ import_tables:
 菲	hui2	0.01	NA
 萃	zui7	0.01	NA
 萄	dor5	0.01	NA
-萌	bing5	0.01	NA
+萌	bbing5	0.01	NA
 萍	ping5	0.01	NA
 萎	ui2	0.01	NA
 著	dir3	0.01	NA
@@ -4474,7 +4474,7 @@ import_tables:
 街	gere1	0.1	NA
 袱	hok8	0.01	NA
 裂	lih8	0.6	NA
-覕	bih4	0.01	NA
+覕	bbih4	0.01	NA
 視	si7	0.1	NA
 訴	soo3	0.01	NA
 訶	or1	0.8	受氣; 大聲; 責備.
@@ -4491,11 +4491,11 @@ import_tables:
 貯	tir2	0.01	NA
 貯	dere2	0.01	NA
 貴	gui3	0.1	NA
-買	bere2	0.01	NA
+買	bbere2	0.01	NA
 費	bi3	0.05	NA
 費	hui3	0.1	NA
 貽	i5	0.01	NA
-貿	bio7	0.01	NA
+貿	bbio7	0.01	NA
 賀	hor7	0.01	NA
 趄	cir1	0.01	NA
 越	uat8	0.01	NA
@@ -4530,7 +4530,7 @@ import_tables:
 開	kui1	0.1	NA
 閏	2025-06-07 00:00:00	0.01	NA
 閒	ing5	0.6	NA
-閔	bin2	0.01	NA
+閔	bbin2	0.01	NA
 陽	iang5	0.1	NA
 陽	iong5	0.1	NA
 陽	iunn5	0.01	NA
@@ -4543,7 +4543,7 @@ import_tables:
 雄	hiong5	0.1	NA
 集	zip8	0.01	NA
 雇	goo3	0.01	NA
-雯	bun5	0.01	NA
+雯	bbun5	0.01	NA
 雰	hun1	0.01	NA
 雲	un5	0.7	NA
 雲	hun5	1	NA
@@ -4558,7 +4558,7 @@ import_tables:
 馭	ggir7	0.01	NA
 馮	hong5	0.01	NA
 馮	ping5	0.1	NA
-黃	ng-5	0.6	NA
+黃	ng5	0.6	NA
 黃	hong5	0.8	NA
 黍	sere2	0.01	NA
 黑	hik4	0.8	NA
@@ -4568,7 +4568,7 @@ import_tables:
 㽎	sim3	0.1	NA
 亂	luan7	0.01	NA
 催	cui1	0.01	NA
-傲	ng-oo7	0.1	NA
+傲	ngoo7	0.1	NA
 傲	ggor7	0.1	NA
 傳	duan7	0.7	所傳 ê 冊, 經傳; 福音傳; 左傳, 春秋傳.
 傳	tuan5	0.8	相續, 報揚, 交互, 召來, 流傳, 傳道.
@@ -4584,7 +4584,7 @@ import_tables:
 剸	duan5	0.01	NA
 剸	duinn5	0.01	NA
 剺	leeh8	0.01	NA
-募	boo7	0.01	NA
+募	bboo7	0.01	NA
 勢	se3	0.1	NA
 勢	si3	0.05	NA
 勤	kun5	0.1	NA
@@ -4598,8 +4598,8 @@ import_tables:
 嗜	si7	0.01	NA
 嗣	sur7	0.01	NA
 嗤	ci1	0.01	NA
-嗯	ng-1	0.01	NA
-嗯	ng-h8	0.01	NA
+嗯	ng1	0.01	NA
+嗯	ngh8	0.01	NA
 園	uan5	0.8	NA
 園	huinn5	0.01	NA
 圓	uan5	0.01	NA
@@ -4627,14 +4627,14 @@ import_tables:
 弒	si3	0.01	NA
 彙	lui7	0.01	NA
 徬	bong5	0.01	NA
-微	bi5	0.1	NA
-微	bui1	0.01	NA
-微	ber5	0.01	NA
+微	bbi5	0.1	NA
+微	bbui1	0.01	NA
+微	bber5	0.01	NA
 想	siang2	0.5	NA
 想	siunn7	0.6	NA
 愁	ciu5	0.1	NA
 愆	kian1	0.01	NA
-愈	zzu2	0.1	NA
+愈	ju2	0.1	NA
 愈	zzi2	0.01	NA
 意	i3	0.1	NA
 愚	ggu5	0.01	NA
@@ -4695,7 +4695,7 @@ import_tables:
 極	gik8	0.1	NA
 楹	enn5	0.01	NA
 楹	ing5	0.01	NA
-榆	zzu5	0.01	NA
+榆	ju5	0.01	NA
 榔	long5	0.01	NA
 榔	nng5	0.01	NA
 歇	hiat4	0.05	NA
@@ -4732,7 +4732,7 @@ import_tables:
 煥	huan3	0.01	NA
 煦	u3	0.01	NA
 煦	hu3	0.01	NA
-照	zior3	0.6	NA
+照	zio3	0.6	NA
 煨	ue1	0.01	NA
 煩	huan5	0.1	NA
 猷	iu5	0.01	NA
@@ -4742,7 +4742,7 @@ import_tables:
 瑙	lor2	0.01	NA
 瑚	oo5	0.01	NA
 瑛	ing1	0.01	NA
-瑜	zzu5	0.01	NA
+瑜	ju5	0.01	NA
 瑞	sui7	0.01	NA
 瑟	sit4	0.01	NA
 瑯	long1	0.01	NA
@@ -4755,10 +4755,10 @@ import_tables:
 痹	bi3	0.01	NA
 瘁	zui7	0.01	NA
 盞	zuann2	0.01	NA
-盟	bing5	0.01	NA
+盟	bbing5	0.01	NA
 睛	zing1	0.01	NA
 督	dok4	0.01	NA
-睦	bok8	0.01	NA
+睦	bbok8	0.01	NA
 睨	ggin5	0.01	NA
 睨	ggun5	0.01	NA
 睭	ziu1	0.01	NA
@@ -4849,7 +4849,7 @@ import_tables:
 號	hor7	0.1	NA
 號	hoo7	0.1	NA
 蛻	tue3	0.01	NA
-蛾	ng-oo5	0.01	NA
+蛾	ngoo5	0.01	NA
 蛾	ggor5	0.01	NA
 蜀	su2	0.1	NA
 蜀	siok8	0.1	NA
@@ -4864,7 +4864,7 @@ import_tables:
 衙	ggee5	0.01	NA
 裏	li2	0.01	NA
 裔	e7	0.01	NA
-裕	zzu7	0.01	NA
+裕	ju7	0.01	NA
 裘	giu5	0.01	NA
 裘	hiu5	0.01	NA
 裙	gun5	0.1	NA
@@ -4913,7 +4913,7 @@ import_tables:
 辟	pik4	0.8	NA
 農	long5	0.01	NA
 逼	bik4	0.8	NA
-逾	zzu5	0.01	NA
+逾	ju5	0.01	NA
 遁	dun7	0.01	NA
 遂	sui7	0.01	NA
 遇	ggu7	0.1	NA
@@ -4929,7 +4929,7 @@ import_tables:
 道	dor7	1	NA
 道	doo6	0.1	NA
 違	ui5	0.01	NA
-鄒	zior1	0.01	NA
+鄒	zio1	0.01	NA
 鄔	oo1	0.01	NA
 酬	siu5	0.01	NA
 鈴	ling5	0.1	NA
@@ -5002,17 +5002,17 @@ import_tables:
 塵	tun5	0.01	NA
 境	ging2	0.1	NA
 墅	su2	0.01	NA
-墓	boo7	0.1	NA
-墓	bong7	0.01	NA
+墓	bboo7	0.1	NA
+墓	bbong7	0.01	NA
 墘	ginn5	0.01	NA
 壽	siu7	0.8	NA
-夢	bong7	0.01	NA
+夢	bbong7	0.01	NA
 夥	her2	0.01	NA
 嫡	dik4	0.01	NA
 嫦	siang5	0.01	NA
 嫩	lun7	0.01	NA
 孵	hu1	0.01	NA
-寞	bok8	0.01	NA
+寞	bbok8	0.01	NA
 寡	gua2	0.1	NA
 寢	cim2	0.01	NA
 寤	ggoo7	0.01	NA
@@ -5023,7 +5023,7 @@ import_tables:
 屢	lu2	0.01	NA
 嶇	ku1	0.01	NA
 幔	mua1	0.01	NA
-幕	boo7	0.01	NA
+幕	bboo7	0.01	NA
 幗	gok4	0.01	NA
 幣	be7	0.01	NA
 廍	poo7	0.01	NA
@@ -5046,9 +5046,9 @@ import_tables:
 摘	dik4	0.01	NA
 摧	cui1	0.01	NA
 摵	cik8	0.01	NA
-摸	boo1	0.01	NA
-摸	boo5	0.1	NA
-摸	bong1	0.01	NA
+摸	bboo1	0.01	NA
+摸	bboo5	0.1	NA
+摸	bbong1	0.01	NA
 摺	zih4	0.01	NA
 摽	bio1	0.01	NA
 撇	puat4	0.01	NA
@@ -5085,7 +5085,7 @@ import_tables:
 滸	hoo2	0.01	NA
 滾	gun2	0.1	NA
 滿	mua2	0.6	NA
-滿	buan2	0.8	NA
+滿	bbuan2	0.8	NA
 漁	ggir5	0.01	NA
 漁	hir5	0.01	NA
 漂	pio3	0.01	NA
@@ -5095,7 +5095,7 @@ import_tables:
 漉	lok8	0.01	NA
 漏	lio7	0.01	NA
 漓	li5	0.01	NA
-漠	bok8	0.01	NA
+漠	bbok8	0.01	NA
 漪	i1	0.01	NA
 漲	diang3	0.01	NA
 漲	diunn3	0.01	NA
@@ -5117,7 +5117,7 @@ import_tables:
 爾	ni6	0.01	NA
 犒	kor3	0.01	NA
 瑣	sor2	0.01	NA
-瑪	bee2	0.01	NA
+瑪	bbee2	0.01	NA
 瑰	gui3	0.01	NA
 甄	zin1	0.01	NA
 疑	ggi5	0.01	NA
@@ -5130,7 +5130,7 @@ import_tables:
 睡	sui7	0.01	NA
 睡	zer7	0.01	NA
 睰	nih4	0.01	NA
-睿	zzue7	0.01	NA
+睿	jue7	0.01	NA
 碟	dih8	0.01	NA
 碧	pik4	0.01	NA
 碩	sik8	0.01	NA
@@ -5173,7 +5173,7 @@ import_tables:
 維	ui5	0.8	NA
 綰	guann1	0.01	NA
 綱	gong1	0.01	NA
-網	bong2	0.01	NA
+網	bbong2	0.01	NA
 綴	duat4	0.01	NA
 綴	due3	0.01	NA
 綴	der3	0.01	NA
@@ -5192,7 +5192,7 @@ import_tables:
 翠	cui3	0.01	NA
 翡	hui2	0.01	NA
 聚	zu6	0.01	NA
-聞	bun5	0.01	NA
+聞	bbun5	0.01	NA
 腐	hu2	0.1	NA
 腐	hu7	0.01	NA
 腿	tui2	0.01	NA
@@ -5202,8 +5202,8 @@ import_tables:
 膏	gor1	0.1	NA
 臧	zong1	0.01	NA
 與	ir2	0.01	NA
-舞	bu2	0.1	NA
-蒙	bong5	0.1	NA
+舞	bbu2	0.1	NA
+蒙	bbong5	0.1	NA
 蒜	suan3	0.01	NA
 蒞	li7	0.01	NA
 蒨	cian3	0.01	NA
@@ -5220,7 +5220,7 @@ import_tables:
 蓑	sui1	0.01	NA
 蓓	bue6	0.01	NA
 蜘	di1	0.01	NA
-蜜	bit8	0.01	NA
+蜜	bbit8	0.01	NA
 蜞	ki5	0.01	NA
 蜢	mee2	0.01	NA
 蜢	meeh4	0.01	NA
@@ -5243,7 +5243,7 @@ import_tables:
 誓	se7	0.1	NA
 誘	iu2	0.01	NA
 語	ggir2	0.01	NA
-誣	bu5	0.01	NA
+誣	bbu5	0.01	NA
 誤	ggoo7	0.1	NA
 誥	gor3	0.01	NA
 誨	hue3	0.01	NA
@@ -5279,13 +5279,13 @@ import_tables:
 銀	ggun5	0.01	NA
 銅	dong5	0.01	NA
 銎	king1	0.01	NA
-銘	bing5	0.01	NA
+銘	bbing5	0.01	NA
 銚	dio7	0.01	NA
 閣	goh4	0.01	NA
 閣	gok4	0.01	NA
 閥	huat8	0.01	NA
 閨	gui1	0.01	NA
-閩	bin5	0.01	NA
+閩	bbin5	0.01	NA
 隙	kik4	0.01	NA
 際	ze3	0.01	NA
 障	ziang1	0.6	NA
@@ -5304,7 +5304,7 @@ import_tables:
 魁	kue1	0.01	NA
 魂	hun5	0.1	NA
 鳳	hong7	0.1	NA
-鳴	bing5	0.01	NA
+鳴	bbing5	0.01	NA
 麼	moo2	0.01	NA
 鼻	pi7	0.1	NA
 鼻	pinn7	 #异 	NA
@@ -5339,7 +5339,7 @@ import_tables:
 增	zing1	0.1	NA
 增	zerng1	0.01	NA
 墟	hir1	0.01	NA
-墨	bik8	0.01	NA
+墨	bbik8	0.01	NA
 墩	dun1	0.01	NA
 墮	dor6	0.01	NA
 墮	dui7	0.1	NA
@@ -5356,7 +5356,7 @@ import_tables:
 幢	dong5	0.01	NA
 廚	doo5	0.01	NA
 廚	du5	0.01	NA
-廟	bio7	0.6	NA
+廟	bbio7	0.6	NA
 廠	ciunn2	0.01	NA
 廢	hue3	0.1	NA
 廣	guinn2	0.01	NA
@@ -5365,11 +5365,11 @@ import_tables:
 彈	duann5	0.1	NA
 彈	duann6	0.01	NA
 影	ing2	0.8	NA
-影	ng-2	0.5	蔭影, 歇蔭, 人á影, 火影, 傍人 涼傘 影.
+影	ng2	0.5	蔭影, 歇蔭, 人á影, 火影, 傍人 涼傘 影.
 徵	ding1	0.01	NA
 德	dik4	0.8	NA
 德	derk4	0.01	NA
-慕	boo7	0.01	NA
+慕	bboo7	0.01	NA
 慧	hui7	0.01	NA
 慮	lir7	0.01	NA
 慰	ui3	0.1	NA
@@ -5380,11 +5380,11 @@ import_tables:
 憎	zing1	0.1	NA
 憐	lin5	0.01	NA
 憤	hun6	0.01	NA
-憫	bin2	0.01	NA
+憫	bbin2	0.01	NA
 憬	ging2	0.01	NA
 摩	moo5	0.8	摸, 挲, 磨, lù, 滅, 佛 ê 名, chhē摩.
 摯	zi3	0.01	NA
-摹	boo5	0.01	NA
+摹	bboo5	0.01	NA
 撆	bih4	0.01	NA
 撋	nua2	0.01	NA
 撐	ting1	0.01	NA
@@ -5397,7 +5397,7 @@ import_tables:
 撥	buah4	0.01	NA
 撥	buat4	0.05	NA
 撩	lio5	0.01	NA
-撫	bu2	0.7	摸, 搓, 手扞, 捋, 安慰, 料理, 順順, 緊急.
+撫	bbu2	0.7	摸, 搓, 手扞, 捋, 安慰, 料理, 順順, 緊急.
 撫	hu2	0.8	手按, 摸, 嗦; 安慰, 勉勵; 順順, 緊急; 彈 樂器; 撫台, 撫養.
 播	boo3	0.01	NA
 播	bor3	0.01	NA
@@ -5407,7 +5407,7 @@ import_tables:
 敵	dik8	0.8	NA
 敷	hu1	0.01	NA
 數	soo3	0.8	NA
-暮	boo7	0.01	NA
+暮	bboo7	0.01	NA
 暱	lik8	0.01	NA
 暴	bor7	0.6	NA
 暴	boo7	0.01	NA
@@ -5425,7 +5425,7 @@ import_tables:
 樞	cu1	0.01	NA
 樟	ziang1	0.01	NA
 樟	ziunn1	0.01	NA
-模	boo5	0.01	NA
+模	bboo5	0.01	NA
 樣	iang7	0.05	NA
 樣	iunn7	0.1	NA
 歐	io1	0.01	NA
@@ -5467,13 +5467,13 @@ import_tables:
 瘡	cng1	0.01	NA
 瘤	liu5	0.01	NA
 瘦	sior3	0.01	NA
-皺	zior3	0.01	NA
+皺	zio3	0.01	NA
 盤	buann5	0.1	NA
 盤	puann5	0.05	NA
 盤	puan5	0.01	NA
 瞋	zin1	0.8	thí開 目睭; 受氣; 無 歡喜 teh 看 ê 意思.
 瞌	kereh4	0.01	NA
-碼	bee2	0.01	NA
+碼	bbee2	0.01	NA
 磅	bong7	0.8	NA
 磊	lui2	0.01	NA
 磐	puan5	0.01	NA
@@ -5519,8 +5519,8 @@ import_tables:
 羯	giat4	0.01	NA
 膚	hu1	0.01	NA
 膜	mooh8	0.01	NA
-膜	boh8	0.01	NA
-膜	bok8	0.01	NA
+膜	bboh8	0.01	NA
+膜	bbok8	0.01	NA
 膝	sik4	0.6	NA
 膝	cik4	0.8	NA
 膣	zi1	0.01	NA
@@ -5535,7 +5535,7 @@ import_tables:
 蔭	im3	0.01	NA
 蔻	kio3	0.01	NA
 蔽	be3	0.01	NA
-蝛	bui1	0.01	NA
+蝛	bbui1	0.01	NA
 蝠	hok4	0.01	NA
 蝣	iu5	0.01	NA
 蝦	hee5	0.01	NA
@@ -5562,7 +5562,7 @@ import_tables:
 請	cing2	0.8	NA
 諍	zenn3	0.01	NA
 諍	zing3	0.7	阻止 人 ê m̄-tio̍h, 相爭, 相告.
-諍	zerng3	0.01
+諍	zerng3	0.01	0
 諒	liang7	0.1	NA
 論	lun7	0.1	NA
 諛	u5	0.01	NA
@@ -5575,7 +5575,7 @@ import_tables:
 賠	bue5	0.01	NA
 賠	ber5	0.1	NA
 賢	hian5	0.01	NA
-賣	bere7	0.01	NA
+賣	bbere7	0.01	NA
 賤	zian7	0.01	NA
 賦	hu3	0.01	NA
 質	zit4	0.01	NA
@@ -5610,7 +5610,7 @@ import_tables:
 醇	sun5	0.01	NA
 醉	zui3	0.1	NA
 醋	coo3	0.01	NA
-銳	zzue7	0.01	NA
+銳	jue7	0.01	NA
 銼	cor3	0.01	NA
 鋁	lir6	0.01	NA
 鋒	hong1	0.01	NA
@@ -5645,7 +5645,7 @@ import_tables:
 駟	sur3	0.01	NA
 髮	huat4	0.01	NA
 魄	pik4	0.01	NA
-魅	bi7	0.01	NA
+魅	bbi7	0.01	NA
 魯	loo2	0.01	NA
 鴆	dim7	0.01	NA
 鴆	tim1	0.01	NA
@@ -5658,14 +5658,14 @@ import_tables:
 齒	ci2	0.01	NA
 𥰔	pin2	0.01	NA
 𪐞	doo3	0.01	NA
-儒	zzu5	0.01	NA
+儒	ju5	0.01	NA
 儔	diu5	0.01	NA
 儘	zin6	0.01	NA
 冀	gi3	0.01	NA
 凝	gging5	0.01	NA
 劑	ze1	0.01	NA
 勳	hun1	0.01	NA
-叡	zzue7	0.01	NA
+叡	jue7	0.01	NA
 噤	gim7	0.01	NA
 噤	kiunn7	0.01	NA
 器	ki3	0.1	NA
@@ -5740,29 +5740,29 @@ import_tables:
 燕	inn3	0.01	NA
 燖	dim7	0.01	NA
 燙	tng3	0.01	NA
-燜	bun7	0.01	NA
+燜	bbun7	0.01	NA
 獨	dok8	0.8	NA
 璞	pok4	0.01	NA
 璣	gi1	0.01	NA
 瓢	pio5	0.01	NA
-甍	bong3	0.01	NA
+甍	bbong3	0.01	NA
 瘰	lui3	0.01	NA
 瘸	ker5	0.01	NA
 瘼	mooh8	0.01	NA
-瘼	boh8	0.01	NA
+瘼	bboh8	0.01	NA
 盥	guan3	0.01	NA
 盧	loo5	0.01	NA
 瞞	mua5	0.01	NA
-瞞	buan5	0.01	NA
+瞞	bbuan5	0.01	NA
 瞠	ting1	0.01	NA
 瞠	terng1	0.01	NA
 磚	zuan1	0.01	NA
 磚	zuinn1	0.01	NA
-磨	bua5	0.01	NA
+磨	bbua5	0.01	NA
 磨	moo5	0.01	NA
-磨	bo7	0.01	NA
+磨	bbor7	0.01	NA
 禦	ggir7	0.01	NA
-穆	bok8	0.01	NA
+穆	bbok8	0.01	NA
 穌	soo1	0.01	NA
 積	zit4	0.01	NA
 積	zik4	0.01	NA
@@ -5778,7 +5778,7 @@ import_tables:
 縈	inn1	0.01	NA
 縈	ing1	0.01	NA
 縊	e3	0.01	NA
-縐	zior3	0.01	NA
+縐	zio3	0.01	NA
 縒	zuah8	0.01	NA
 縝	zin2	0.01	NA
 縣	hian7	0.05	NA
@@ -5786,7 +5786,7 @@ import_tables:
 縣	guan7	0.1	NA
 罹	li5	0.01	NA
 羲	hi1	0.01	NA
-翱	ng-oo5	0.01	NA
+翱	ngoo5	0.01	NA
 翱	gor6	0.01	NA
 翱	ggor5	0.01	NA
 耨	loo7	0.5	NA
@@ -5799,7 +5799,7 @@ import_tables:
 艙	cong1	0.01	NA
 艙	cng1	0.01	NA
 蕃	huan1	0.01	NA
-蕉	zior1	0.01	NA
+蕉	zio1	0.01	NA
 蕊	lui2	0.1	NA
 蕓	un5	0.01	NA
 蕙	hui7	0.01	NA
@@ -5809,7 +5809,7 @@ import_tables:
 蕭	sior1	0.01	NA
 薌	hiang1	0.01	NA
 蝹	un1	0.01	NA
-螟	bing5	0.01	NA
+螟	bbing5	0.01	NA
 衡	hing5	0.01	NA
 褪	tuinn3	0.01	NA
 褫	ti2	0.01	NA
@@ -5820,12 +5820,12 @@ import_tables:
 觱	bi1	0.01	NA
 諡	si7	0.01	NA
 諦	de3	0.01	NA
-諭	zzu7	0.01	NA
+諭	ju7	0.01	NA
 諮	zur1	0.01	NA
 諱	hui3	0.01	NA
 諷	hong2	0.01	NA
 諾	lok8	0.01	NA
-謀	bio5	0.3	泉
+謀	bbio5	0.3	泉
 謂	ui7	0.8	NA
 豫	ir7	0.01	NA
 賰	cun6	0.1	NA
@@ -5892,7 +5892,7 @@ import_tables:
 鴟	ci1	0.01	NA
 鴦	iang1	0.01	NA
 鴦	iunn1	0.01	NA
-默	bik8	0.01	NA
+默	bbik8	0.01	NA
 默	hmh8	0.01	NA
 龍	ling5	0.1	NA
 龍	liong5	0.1	NA
@@ -5913,19 +5913,19 @@ import_tables:
 嬪	bin5	0.01	NA
 嬰	enn1	0.1	NA
 嬰	ing1	0.01	NA
-孺	zzu5	0.01	NA
+孺	ju5	0.01	NA
 嶸	hing5	0.01	NA
 嶺	ling2	0.01	NA
 嶼	sir6	0.01	NA
 幫	bng1	0.01	NA
-彌	bi5	0.8	NA
+彌	bbi5	0.8	NA
 徽	hui1	0.01	NA
 懂	dong2	0.01	NA
 懇	kun2	0.01	NA
 應	in3	0.6	NA
 應	ing1	0.8	NA
 應	ing3	0.7	NA
-懋	bio7	0.01	NA
+懋	bbio7	0.01	NA
 懦	noo7	0.01	NA
 戲	hi3	0.1	NA
 戴	di3	0.1	NA
@@ -5948,11 +5948,11 @@ import_tables:
 氈	zian1	0.01	NA
 濕	sip4	0.8	NA
 濘	ling7	0.01	NA
-濛	bong5	0.01	NA
+濛	bbong5	0.01	NA
 濟	ze3	0.01	NA
 濟	zere7	0.01	NA
 濠	hor5	0.01	NA
-濡	zzu5	0.01	NA
+濡	ju5	0.01	NA
 濤	dor5	0.01	NA
 濬	zun3	0.01	NA
 濯	zok8	0.1	NA
@@ -5986,13 +5986,13 @@ import_tables:
 篱	li5	0.01	NA
 篱	lere5	0.01	NA
 篷	pong5	0.01	NA
-篾	bih8	0.01	NA
+篾	bbih8	0.01	NA
 簇	cok4	0.01	NA
 簍	lio2	0.01	NA
 糙	cor3	0.01	NA
 糜	muai5	0.01	NA
-糜	bi5	0.01	NA
-糜	ber5	0.01	NA
+糜	bbi5	0.01	NA
+糜	bber5	0.01	NA
 糞	bun3	0.01	NA
 糞	hun3	0.01	NA
 糠	kong1	0.01	NA
@@ -6006,7 +6006,7 @@ import_tables:
 績	zit4	0.01	NA
 績	zik4	0.01	NA
 繁	huan5	0.1	NA
-繆	biu7	0.01	NA
+繆	bbiu7	0.01	NA
 罅	hee1	0.01	NA
 翳	e3	0.01	NA
 翼	sit8	0.1	NA
@@ -6029,7 +6029,7 @@ import_tables:
 蕾	lui2	0.01	NA
 薄	boh8	0.6	NA
 薄	bok8	0.8	NA
-薇	bi5	0.8	NA
+薇	bbi5	0.8	NA
 薏	i3	0.01	NA
 薐	lun5	0.01	NA
 薑	giang1	0.05	NA
@@ -6047,7 +6047,7 @@ import_tables:
 蟀	sut4	0.01	NA
 蟄	dip8	0.01	NA
 蟋	sik4	0.01	NA
-蟒	bong2	0.01	NA
+蟒	bbong2	0.01	NA
 褸	lu2	0.01	NA
 褻	siat4	0.01	NA
 襀	zioh4	0.01	NA
@@ -6056,9 +6056,9 @@ import_tables:
 觳	kok4	0.01	NA
 謄	ting5	0.01	NA
 謊	hong2	0.01	NA
-謎	be5	0.01	NA
-謎	bi7	0.01	NA
-謐	bit8	0.01	NA
+謎	bbe5	0.01	NA
+謎	bbi7	0.01	NA
+謐	bbit8	0.01	NA
 謗	bong3	0.01	NA
 講	kiang2	0.01	NA
 講	gong2	0.1	NA
@@ -6131,8 +6131,8 @@ import_tables:
 斷	duan3	0.01	NA
 斷	duan6	0.01	NA
 斷	duinn6	0.01	NA
-朦	bong5	0.01	NA
-檬	bong2	0.01	NA
+朦	bbong5	0.01	NA
+檬	bbong2	0.01	NA
 檳	bin1	0.01	NA
 櫃	gui7	0.1	NA
 歟	ir5	0.01	NA
@@ -6180,9 +6180,9 @@ import_tables:
 蟳	zim5	0.1	NA
 覆	hok4	0.8	NA
 覲	gin7	0.01	NA
-謨	boo5	0.01	NA
+謨	bboo5	0.01	NA
 謫	dik4	0.01	NA
-謬	biu7	0.01	NA
+謬	bbiu7	0.01	NA
 謳	io1	0.01	NA
 謹	gin2	0.01	NA
 豐	pong1	0.01	NA
@@ -6200,7 +6200,7 @@ import_tables:
 轉	duinn2	0.01	NA
 邃	sui7	0.01	NA
 邇	ni2	0.01	NA
-邈	bok8	0.01	NA
+邈	bbok8	0.01	NA
 醪	lor5	0.1	NA
 醫	i1	0.1	NA
 醬	ziunn3	0.01	NA
@@ -6233,21 +6233,21 @@ import_tables:
 騎	gi7	0.05	NA
 鬆	song1	0.01	NA
 鬩	hik4	0.01	NA
-魍	bong2	0.01	NA
+魍	bbong2	0.01	NA
 魏	ggui7	0.01	NA
 鯉	li2	0.01	NA
 鯊	sua1	0.01	NA
 鯽	zit4	0.01	NA
 鵑	guan1	0.01	NA
-鵝	ng-oo5	0.01	NA
+鵝	ngoo5	0.01	NA
 鵝	ggor5	0.1	NA
 鼬	iu7	0.01	NA
-𪁎	cior1	0.01	NA
+𪁎	cio1	0.01	NA
 壢	lik8	0.01	NA
 寵	ting2	0.01	NA
 寵	tiong2	0.1	NA
 廬	loo5	0.01	NA
-懵	bong2	0.01	NA
+懵	bbong2	0.01	NA
 懷	huai5	0.01	NA
 懷	gui5	0.01	NA
 攏	long2	0.1	NA
@@ -6272,7 +6272,7 @@ import_tables:
 疆	giang1	0.01	NA
 疇	diu5	0.01	NA
 癡	ci1	0.01	NA
-矇	bong5	0.01	NA
+矇	bbong5	0.01	NA
 禱	dor2	0.01	NA
 穩	un2	0.1	NA
 穫	hok8	0.01	NA
@@ -6321,13 +6321,13 @@ import_tables:
 辭	si5	0.01	NA
 辭	sur5	0.01	NA
 邊	binn1	0.01	NA
-醮	zior3	0.01	NA
+醮	zio3	0.01	NA
 鏡	ging3	0.01	NA
 鏢	bio1	0.01	NA
 鏹	kiang6	0.01	NA
 關	guainn1	0.01	NA
 關	guan1	0.1	NA
-霧	bu7	0.1	NA
+霧	bbu7	0.1	NA
 韜	tor1	0.01	NA
 韻	un7	0.1	NA
 願	gguan7	0.1	NA
@@ -6338,7 +6338,7 @@ import_tables:
 鯤	kun1	0.01	NA
 鯧	ciunn1	0.01	NA
 鯨	king1	0.01	NA
-鵡	bu2	0.01	NA
+鵡	bbu2	0.01	NA
 鵬	ping5	0.01	NA
 鵰	diaunn1	0.6	NA
 鵲	ciok4	0.8	NA
@@ -6376,7 +6376,7 @@ import_tables:
 繽	bin1	0.01	NA
 繾	kian2	0.01	NA
 纂	zuan2	0.01	NA
-耀	cior7	0.01	NA
+耀	cio7	0.01	NA
 藺	lin7	0.01	NA
 藻	zor2	0.01	NA
 蘆	loo5	0.01	NA
@@ -6385,7 +6385,7 @@ import_tables:
 蘋	ping5	0.01	NA
 蘑	moo5	0.01	NA
 蠐	ze5	0.01	NA
-蠕	zzu5	0.01	NA
+蠕	ju5	0.01	NA
 蠘	cih8	0.01	NA
 警	ging3	0.1	NA
 譬	pi3	0.8	NA
@@ -6430,8 +6430,8 @@ import_tables:
 礴	bok8	0.8	NA
 纏	dinn5	0.01	NA
 蠢	cun2	0.01	NA
-襪	buat8	0.01	NA
-襪	berh8	0.01	NA
+襪	bbuat8	0.01	NA
+襪	bberh8	0.01	NA
 譴	kian3	0.01	NA
 護	hoo7	0.1	NA
 譽	ir7	0.01	NA
@@ -6545,7 +6545,7 @@ import_tables:
 靈	ling5	0.1	NA
 韆	cian1	0.01	NA
 顰	bin5	0.01	NA
-驟	zior7	0.01	NA
+驟	zio7	0.01	NA
 鬢	bin3	0.01	NA
 鷹	ing1	0.01	NA
 鷺	loo7	0.01	NA
@@ -6586,8 +6586,8 @@ import_tables:
 鬱	ut4	0.01	NA
 鱺	le7	0.01	NA
 鸞	luan5	0.01	NA
-𢪱	but4	0.01	NA
-𢪱	but8	0.01	NA
+𢪱	bbut4	0.01	NA
+𢪱	bbut8	0.01	NA
 𤺪	sian6	0.01	NA
 偈	ki3	0.6	NA
 舍	sia2	0.8	NA
@@ -6602,7 +6602,7 @@ import_tables:
 坐	ce7	0.5	NA
 善	hor2	0.6	1895《臺灣語》
 女	lu2	0.8	NA
-女	zzu2	0.6	NA
+女	ju2	0.6	NA
 降	gang3	0.6	NA
 欲	ai3	0.5	1895《臺灣語》
 欲	iok8	0.8	欣慕, 愛, 貪, beh, teh-beh; 婉轉 ê 款式; 私慾, 情慾
@@ -6646,12 +6646,12 @@ import_tables:
 書	su1	0.8	NA
 書	zu1	0.6	NA
 寫	sia2	0.8	NA
-要	beh4	0.6	NA
+要	bbeh4	0.6	NA
 間	han5	0.01	空空, 貧惰; 寬容, 安然 恬靜; 相近, 閒閒; 閒暇.
 恭	giong1	0.8	NA
 遶	zziau2	0.8	NA
 遶	zziau5	0.7	NA
-惡	bai2	0.5	NA
+惡	bbai2	0.5	NA
 值	dat8	0.6	NA
 事	sai7	0.5	服事
 事	dai7	0.6	tāi-chì, 好代, pháiⁿ代, 無 我 ê 代, 無 啥代, 無tī代.
@@ -6728,13 +6728,13 @@ import_tables:
 復	goh4	0.6	koh再, 又koh, koh活, koh來, 各樣.
 夭	iau1	0.8	歡喜 ê 面色; 媠, 茈, 軟, 少年, iáu-kú 茈; 茂盛 ê 款式, 災禍.
 灼	zik4	0.5	NA
-灼	cior7	0.6	NA
+灼	cio7	0.6	NA
 華	hua1	0.5	剖做 兩爿; 草木 ê 莓; 媠, 好看.
 于	u5	0.8	幫贊 ê 字, 論到, 屬tī我, chí, chiah, tī.
 于	u1	0.7	NA
 蕡	hun5	0.8	草木 濟濟 籽, 樹木 茂盛; 插雜 ê 芳草.
 人	lin5	0.5	NA
-靡	bi2	0.8	奢華, 媠, 盡頭, 無, 偃倒; 披開, 四散; 敗陣, 拚落.
+靡	bbi2	0.8	奢華, 媠, 盡頭, 無, 偃倒; 披開, 四散; 敗陣, 拚落.
 玁	hiam2	0.8	匈奴 ê 別號; 夷狄; 長嘴 狗, 烏狗, 黃頷.
 狁	un2	0.8	就是 匈奴 ê 別名; 番 ê 號.
 遑	hong5	0.8	無 tāi-chì, 閒閒, 無 要緊; 遑遑, 就是 tāi-chì 濟, 趕緊.
@@ -6747,7 +6747,7 @@ import_tables:
 車	gi1	0.5	NA
 車	cia1	0.6	NA
 戎	zziong5	1	NA
-牡	bu2	0.6	NA
+牡	bbu2	0.6	NA
 腓	hui5	0.8	腳 肚肉; 閃避, 遮閘; 破病, 變換.
 楊	iong5	1	NA
 雪	seh4	0.6	NA
@@ -6805,7 +6805,7 @@ import_tables:
 辟	piah8	0.6	NA
 沮	zu1	0.8	水名, 水 小khoá 流出; 就是; 字姓.
 沮	zoo2	0.7	阻止, soah, 懍懾, 半遂, 敗壞, 漏出.
-洳	zzu5	0.8	南郡 ê 水名; 浸水.
+洳	ju5	0.8	南郡 ê 水名; 浸水.
 樂	loh8	0.6	長樂, 就是 縣 ê 名, 離 福州 城 無 偌遠.
 曷	hat4	0.8	"啥事, 甚物, beh-thái, 啥事 m̄, 阻止, 哄; 忍凹, 怎樣.	"
 曷	at4	0.7	問 ê 意思; beh-thái; 甚物, 啥事; 阻止; 哄.
@@ -6878,12 +6878,12 @@ import_tables:
 酌	ziok4	0.8	NA
 治	di5	0.7	掌管, 料理, 治理, 管轄 ê 意思.
 罪	ze7	0.5	chē-kòa=罪過; 受罪; 洗罪; 死罪.
-謀	boo5	1	NA
+謀	bboo5	1	NA
 諏	zoo1	0.8	NA
 禕	i1	0.8	NA
 階	gue1	0.6	NA
 陛	be3	0.6	NA
-蕪	bu5	0.8	NA
+蕪	bbu5	0.8	NA
 役	ia5	0.5	"大爺, 門口 大爺; 將爺.	"
 役	iah8	0.6	差役, 衙役, 散役, 外役, 吏役.
 悵	diong3	0.8	NA
@@ -6893,7 +6893,7 @@ import_tables:
 迎	gging7	0.7	去 人兜 迎接 伊; 親迎.
 松	siong5	0.8	NA
 菊	giok4	0.8	NA
-眄	bian2	0.8	NA
+眄	bbian2	0.8	NA
 遐	ha5	0.8	遠遠, 長長, 福氣 ê 意思.
 遺	i5	0.6	NA
 言	gong2	0.5	NA
