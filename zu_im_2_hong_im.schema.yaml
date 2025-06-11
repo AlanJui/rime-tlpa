@@ -3,8 +3,8 @@
 # encoding: utf-8
 
 schema:
-  schema_id: zu_im_hong_im
-  name: 注音輸入法【方音符號】
+  schema_id: zu_im_2_hong_im
+  name: 注音輸入法【台語注音二式】
   version: "v0.1.0.0"
   author: 居正中
   description: |
@@ -66,8 +66,8 @@ speller:
       - lib_zu_im:/zu_im_hu_ho_pinn_be
 
 translator:
-  dictionary: tl_ji_khoo_peh_ue
-  prism: zu_im_hong_im
+  dictionary: zu_im_2
+  prism: zu_im_2_hong_im
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
