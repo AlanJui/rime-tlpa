@@ -53,8 +53,11 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: "ABCDE1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657"
-  initials: "ABCDE1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm."
+  # alphabet: "ABCDE1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657"
+  # initials: "ABCDE1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm."
+  # finals: " 43657"
+  alphabet: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC43657
+  initials: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -63,7 +66,7 @@ speller:
       #--------------------------------------------------------------------------
       # 定義【注音符號】編碼及【鍵盤按鍵】對映之【注音編碼】
       #--------------------------------------------------------------------------
-      - lib_zu_im:/zu_im_hu_ho_pinn_be
+      - zu_im_2_libs:/zu_im_hu_ho_pinn_be
 
 translator:
   dictionary: zu_im_2
@@ -97,27 +100,28 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
-    __patch:
-      # 【候選字單】主體架構
-      - lib_hau_suan_ji_tuann:/hau_suan_tuann
-      #-----------------------------------------
-      # 右半邊：台語音標-注音
-      # 【声母】
-      - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
-      # 【韻母】
-      - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
-      # 【声調】
-      - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
-      #-----------------------------------------
-      # 左半邊：台語音標-拼音
-      - lib_hau_suan_ji_tuann:/to_ping_tl
+    - xlit|bpBmdtnlgkGhzcZsjCJSiIuUaAOQoeExXyY@NGR[]HwWLMRFVD123570|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄏㄗㄘㆡㄙㄐㄑㆢㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㄣㄤㆨㆰㆱㆲㄫㆭㄥㆬㆴㆵㆻㆷˉˋ˪ˊ˫˙|
+    # __patch:
+    #   # 【候選字單】主體架構
+    #   - zu_im_2_hau_suan_zzi_duann:/hau_suan_tuann
+    #   #-----------------------------------------
+    #   # 右半邊：台語音標-注音
+    #   # 【声母】
+    #   - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_bu
+    #   # 【韻母】
+    #   - zu_im_2_hau_suan_zzi_duann:/ziann_ping_un_bu
+    #   # 【声調】
+    #   - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_tiau
+    #   #-----------------------------------------
+    #   # 左半邊：台語音標-拼音
+    #   - zu_im_2_hau_suan_zzi_duann:/to_ping_tl
 
 jih_kian:
   #--------------------------------------------------------------------------
   # 按鍵與方音符號對映
   #--------------------------------------------------------------------------
   __patch:
-    - lib_zu_im:/jih_kian_tng_uann
+    - zu_im_2_libs:/jih_kian_tng_uann
 
 custom_phrase:
   dictionary: ""
