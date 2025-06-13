@@ -106,25 +106,24 @@ translator:
     # - xform/b([48])/R$1/ # 將「b0」轉換成「R0」，用於注音輸入的聲調符號
     # - xform/d([48])/F$1/ # 將「d0」轉換成「F0」，用於注音輸入的聲調符號
     # - xform/g([48])/D$1/ # 將「d0」轉換成「F0」，用於注音輸入的聲調符號
-    - xlit|bpBmdtnlgkGhzcZsjCJSiIuUaAOQoeExXyY@NGR[]HwWLMRFVD123570|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄏㄗㄘㆡㄙㄐㄑㆢㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㄣㄤㆨㆰㆱㆲㄫㆭㄥㆬㆴㆵㆻㆷˉˋ˪ˊ˫˙|
+    # - xlit|bpBmdtnlgkGhzcZsjCJSiIuUaAOQoeExXyY@NGR[]HwWLMRFVD123570|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄏㄗㄘㆡㄙㄐㄑㆢㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㄣㄤㆨㆰㆱㆲㄫㆭㄥㆬㆴㆵㆻㆷˉˋ˪ˊ˫˙|
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
-
-    # __patch:
-    #   # 【候選字單】主體架構
-    #   - zu_im_2_hau_suan_zzi_duann:/hau_suan_tuann
-    #   #-----------------------------------------
-    #   # 右半邊：台語音標-注音
-    #   # 【声母】
-    #   - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_bu
-    #   # 【韻母】
-    #   - zu_im_2_hau_suan_zzi_duann:/ziann_ping_un_bu
-    #   # 【声調】
-    #   - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_tiau
-    #   #-----------------------------------------
-    #   # 左半邊：台語音標-拼音
-    #   - zu_im_2_hau_suan_zzi_duann:/to_ping_tl
+    __patch:
+      # 【候選字單】主體架構
+      - zu_im_2_hau_suan_zzi_duann:/hau_suan_tuann
+      #-----------------------------------------
+      # 右半邊：台語音標-注音
+      # 【声母】
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_bu
+      # 【韻母】
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_un_bu
+      # 【声調】
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_tiau
+      #-----------------------------------------
+      # 左半邊：台語音標-拼音
+      - zu_im_2_hau_suan_zzi_duann:/to_ping_zu_im_2
 
 jih_kian:
   #--------------------------------------------------------------------------
