@@ -194,36 +194,36 @@ jih_kian_tng_uann:
     - xform/ㄘ(ㄧ|ㆪ)/ㄑ$1/
     - xform/ㄙ(ㄧ|ㆪ)/ㄒ$1/
     - xform/ㆡ(ㄧ|ㆪ)/ㆢ$1/ # j
-    #--------------------------------------------------------------------------
-    # 鼻音韻母轉換
-    #--------------------------------------------------------------------------
-    # 介音 i 開頭之鼻韻母
-    - xform/ㄬㄧㄠ/ㄧㆯ/ # Niau = iaunn
-    - xform/ㄬㄧㄚ/ㄧㆩ/ # Nia = iann
-    - xform/ㄬㄧㄛ/ㄧㆧ/ # NiO = iOnn
-    - xform/ㄬㄧㄨ/ㄧㆫ/ # Niu = iunn
-    # 介音 u 開頭之鼻韻母
-    - xform/ㄬㄨㄞ/ㄨㆮ/ # Nuai = uainn
-    - xform/ㄬㄨㄚ/ㄨㆩ/ # Nua = uann
-    - xform/ㄬㄨㄧ/ㄨㆪ/ # Nui = uinn
-    - xform/ㄬㄨㆤ/ㄨㆥ/ # Nue = uenn
-    # 元音/複合鼻韻母
-    - xform/ㄬㄧ/ㆪ/ # Ni = inn
-    - xform/ㄬㄨ/ㆫ/ # Nu = unn
-    - xform/ㄬㄚ/ㆩ/ # Na = ann
-    - xform/ㄬㆦ/ㆧ/ # NO = Onn
-    - xform/ㄬㆤ/ㆥ/ # Ne = enn
-    - xform/ㄬㄞ/ㆮ/ # Nai = ainn
-    - xform/ㄬㄠ/ㆯ/ # Nau = aunn
-    #------------------------------------------------------
-    # 韻母校調
-    - xform/ㄚㄧ/ㄞ/ # ai
-    - xform/ㄚㄨ/ㄠ/ # au
-    - xform/ㄚㆭ/ㄤ/ # ang
-    - xform/ㄚㄣ/ㄢ/ # an
-    - xform/ㄚㆬ/ㆰ/ # am
-    #
-    # - xform/ㆦㆭ/ㆲ/ # ong
-    # - xform/ㆦㆬ/ㆱ/ # om
-    #
+    # #--------------------------------------------------------------------------
+    # # 鼻音韻母轉換
+    # #--------------------------------------------------------------------------
+    # # 介音 i 開頭之鼻韻母
+    # - xform/ㄬㄧㄠ/ㄧㆯ/ # Niau = iaunn
+    # - xform/ㄬㄧㄚ/ㄧㆩ/ # Nia = iann
+    # - xform/ㄬㄧㄛ/ㄧㆧ/ # NiO = iOnn
+    # - xform/ㄬㄧㄨ/ㄧㆫ/ # Niu = iunn
+    # # 介音 u 開頭之鼻韻母
+    # - xform/ㄬㄨㄞ/ㄨㆮ/ # Nuai = uainn
+    # - xform/ㄬㄨㄚ/ㄨㆩ/ # Nua = uann
+    # - xform/ㄬㄨㄧ/ㄨㆪ/ # Nui = uinn
+    # - xform/ㄬㄨㆤ/ㄨㆥ/ # Nue = uenn
+    # # 元音/複合鼻韻母
+    # - xform/ㄬㄧ/ㆪ/ # Ni = inn
+    # - xform/ㄬㄨ/ㆫ/ # Nu = unn
+    # - xform/ㄬㄚ/ㆩ/ # Na = ann
+    # - xform/ㄬㆦ/ㆧ/ # NO = Onn
+    # - xform/ㄬㆤ/ㆥ/ # Ne = enn
+    # - xform/ㄬㄞ/ㆮ/ # Nai = ainn
+    # - xform/ㄬㄠ/ㆯ/ # Nau = aunn
+    # #------------------------------------------------------
+    # # 韻母校調
+    # - xform/ㄚㄧ/ㄞ/ # ai
+    # - xform/ㄚㄨ/ㄠ/ # au
+    # - xform/ㄚㆭ/ㄤ/ # ang
+    # - xform/ㄚㄣ/ㄢ/ # an
+    # - xform/ㄚㆬ/ㆰ/ # am
+    # #
+    # # - xform/ㆦㆭ/ㆲ/ # ong
+    # # - xform/ㆦㆬ/ㆱ/ # om
+    # #
     - xform/ㄧㆭ/ㄧㄥ/ # ing
