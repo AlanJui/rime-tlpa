@@ -9,14 +9,14 @@ version: "v0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
 columns:
-  - text    # 漢字
-  - code    # 台灣音標（TLPA）拼音
-  - weight  # 常用度（優先顯示度）
-  - stem    # 用法舉例
-  - create  # 建立時間
+  - text # 漢字
+  - code # 台灣音標（TLPA）拼音
+  - weight # 常用度（優先顯示度）
+  - stem # 用法舉例
+  - create # 建立時間
 import_tables:
   - tl_ji_khoo_kah_kut_bun
-...
+---
 九	kau2	0.6	NA	2025-02-11 11:16:03
 了	liau2	0.1	NA	2025-02-11 11:16:03
 八	pat4	0.8	NA	2025-02-11 11:16:03
