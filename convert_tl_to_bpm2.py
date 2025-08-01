@@ -1,109 +1,126 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-convert_tl_to_bpm2_openpyxl.py
-
-功能：
-  1. 讀取同一支 Excel（漢字閩南語標音【台羅拼音】.xlsx）
-  2. 解析「台羅轉換注音二式規則」工作表，建立台羅音節的子項（聲母、韻母）→注音二式片段的對應字典
-  3. 讀取「tl_ji_khoo_phing」工作表，把「台羅拼音」欄切割成  (聲母 + 韻母 + 聲調)，
-     分別對應再組回「注音二式」字串
-  4. 只儲存回原檔，其餘工作表與格式不變
-"""
-
 import re
 
 import openpyxl
 
-# 1. 載入活頁簿
 excel_file = '漢字閩南語標音【台羅拼音】.xlsx'
 wb = openpyxl.load_workbook(excel_file)
 
-# 2. 解析規則表，建立 mapping
+# === 1. 解析規則表，建立初／韻母對應字典 ===
 rules_ws = wb['台羅轉換注音二式規則']
-
-# 2.1 找 header 列（第一列出現「台羅拼音」）
+# 找到 header
 header_row = None
 for row in rules_ws.iter_rows(min_row=1, max_row=20):
     if any(cell.value == '台羅拼音' for cell in row):
         header_row = row[0].row
         break
 if header_row is None:
-    raise RuntimeError('找不到「台羅拼音」欄位標頭')
+    raise RuntimeError('規則表找不到標頭「台羅拼音」')
 
-# 2.2 抓出「台羅拼音」與「注音二式」兩欄的欄號
-col_idx = {}
-for cell in rules_ws[header_row]:
-    if cell.value in ('台羅拼音', '注音二式'):
-        col_idx[cell.value] = cell.column  # openpyxl 1-based
+# 拿到各欄的 index
+cols = {cell.value: cell.column for cell in rules_ws[header_row]}
+tl_col_idx     = cols['台羅拼音']
+bpm2_col_idx   = cols['注音二式']
+kind_col_idx   = cols['音標種類']  # 新增欄：聲母 or 韻母
 
-if '台羅拼音' not in col_idx or '注音二式' not in col_idx:
-    raise RuntimeError('規則表缺少「台羅拼音」或「注音二式」欄')
-
-tl_col_idx   = col_idx['台羅拼音']
-bpm2_col_idx = col_idx['注音二式']
-
-# 2.3 讀 mapping：只要聲母或韻母片段不為空，就建立字典
-mapping = {}
+initial_map = {}
+final_map   = {}
 for row in rules_ws.iter_rows(min_row=header_row+1, max_row=rules_ws.max_row):
-    k = row[tl_col_idx-1].value
-    v = row[bpm2_col_idx-1].value
-    if k and v:
-        k = str(k).strip()
-        v = str(v).strip()
-        mapping[k] = v
+    key  = row[tl_col_idx-1].value
+    val  = row[bpm2_col_idx-1].value
+    kind = row[kind_col_idx-1].value
+    if key and val and kind:
+        key = str(key).strip()
+        val = str(val).strip()
+        if kind.strip() == '聲母':
+            initial_map[key] = val
+        elif kind.strip() == '韻母':
+            final_map[key] = val
 
-print(f'>>> 共建立 {len(mapping)} 筆子項對應規則')
+# 為了 longest‐match，先把聲母鍵由長到短排序
+initial_keys = sorted(initial_map.keys(), key=len, reverse=True)
 
-# 2.4 為了拆聲母，我們把所有 mapping key 依長度由大到小排序
-map_keys_sorted = sorted(mapping.keys(), key=lambda x: len(x), reverse=True)
+# === 2. 處理 tl_ji_khoo_phing 工作表 ===
+ws = wb['tl_ji_khoo_phing']
+# 找 header row 與所需欄位
+hdr = next(ws.iter_rows(min_row=1, max_row=1))
+header_cols = {cell.value: cell.column for cell in hdr}
 
-# 3. 處理 tl_ji_khoo_phing 表
-data_ws = wb['tl_ji_khoo_phing']
+if '台羅拼音' not in header_cols or '注音二式' not in header_cols:
+    raise RuntimeError('tl_ji_khoo_phing 表缺「台羅拼音」或「注音二式」')
 
-# 3.1 找 header row（假設在第 1 列）
-header = next(data_ws.iter_rows(min_row=1, max_row=1))
-data_cols = {cell.value: cell.column for cell in header}
-if '台羅拼音' not in data_cols or '注音二式' not in data_cols:
-    raise RuntimeError('資料表缺少「台羅拼音」或「注音二式」欄')
+src_col  = header_cols['台羅拼音']
+dst_col  = header_cols['注音二式']
 
-data_tl_col   = data_cols['台羅拼音']
-data_bpm2_col = data_cols['注音二式']
+# 如果沒有「訂正說明」欄，就在最右邊新增一欄
+if '訂正說明' not in header_cols:
+    new_col = ws.max_column + 1
+    ws.cell(row=1, column=new_col, value='訂正說明')
+    note_col = new_col
+else:
+    note_col = header_cols['訂正說明']
 
-def convert_syllable(tl_syl: str) -> str:
-    """將 tl_syl（如 'kau2'）拆成 聲母/韻母/聲調，分別對應後再組合回去。"""
-    if not tl_syl:
+def convert_one(syl):
+    """將一個台羅音節轉為注音二式。"""
+    if syl is None:
         return ''
-    s = str(tl_syl).strip()
-    # 分離尾端的數字聲調
-    m = re.match(r'^([a-z]+?)([0-9])$', s)
-    if m:
-        body, tone = m.group(1), m.group(2)
-    else:
-        body, tone = s, ''
-
-    # 找出最長匹配的聲母（mapping key）
+    s = str(syl).strip()
+    # 分離尾端數字
+    m = re.match(r'^(.+?)([0-9])$', s)
+    body, tone = (m.group(1), m.group(2)) if m else (s, '')
+    # 找最長匹配的聲母
     init = ''
-    for k in map_keys_sorted:
+    for k in initial_keys:
         if body.startswith(k):
             init = k
             break
-    finals = body[len(init):]  # 剩下就是韻母
-    # 對應
-    init_mapped  = mapping.get(init, '')
-    final_mapped = mapping.get(finals, '') if finals else ''
+    final = body[len(init):]
 
-    return init_mapped + final_mapped + tone
+    # Fallback：找不到就先用原字串
+    init_p  = initial_map.get(init, init)
+    final_p = final_map.get(final, final)
 
-# 3.2 逐列寫回
-for row in data_ws.iter_rows(min_row=2, max_row=data_ws.max_row):
-    src = row[data_tl_col-1].value
-    result = convert_syllable(src)
-    row[data_bpm2_col-1].value = result
-    # 可以開 debug
-    print(f'{src} → {result}')
+    # debug 輸出：細分哪個沒對上
+    if not init_p and not final_p:
+        print(f'⚠️ 無法轉換：{syl}')
+        return ''
+    else:
+        print(f'syl: {syl}, init: {init} -> {init_p}, final: {final} -> {final_p}, tone: {tone}')
 
-# 4. 儲存回原檔
+    missing = []
+    if init not in initial_map:
+        missing.append('聲母未轉換')
+    if final not in final_map:
+        missing.append('韻母未轉換')
+    if missing:
+        note = '、'.join(missing)
+        print(f'⚠️ {note}：{syl} → init:{init}->{init_p}, final:{final}->{final_p}, tone:{tone}')
+
+    return init_p + final_p + tone
+
+
+# # 逐列從第 2 到第 101 列
+# for r in range(2, 102):
+#     cell_src  = ws.cell(row=r, column=src_col).value
+#     result    = convert_one(cell_src)
+#     ws.cell(row=r, column=dst_col, value=result)
+#     if not result:
+#         # 沒對到就註記
+#         ws.cell(row=r, column=note_col,
+#                 value=f'缺規則：{cell_src}')
+# 轉換全部的【漢字標音】：逐列從第 2 列到最後一列
+for r in range(2, ws.max_row + 1):
+    cell_src  = ws.cell(row=r, column=src_col).value
+    result    = convert_one(cell_src)
+    ws.cell(row=r, column=dst_col, value=result)
+    if not result:
+        # 沒對到就註記
+        ws.cell(row=r, column=note_col,
+                value=f'缺規則：{cell_src}')
+
+
+# === 3. 存檔 ===
 wb.save(excel_file)
-print('✅ 轉換完成，已寫回「注音二式」欄，並儲存回原檔。')
+print('✅ 完成：前 100 列轉換並標註「訂正說明」。')
