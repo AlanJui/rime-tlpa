@@ -16,35 +16,50 @@ import pandas as pd
 # 1. Excel 檔案路徑
 excel_file = '漢字閩南語標音【台羅拼音】.xlsx'
 
-# 2. 先把規則表當純資料讀進來，找出真正的標頭列
-raw = pd.read_excel(excel_file,
-                    sheet_name='台羅轉換注音二式規則',
-                    header=None)
+# 1.1 先把規則表當純資料讀進來（不指定 header）
+raw = pd.read_excel(
+    excel_file,
+    sheet_name='台羅轉換注音二式規則',
+    header=None,
+    dtype=str
+)
 
-header_idx = None
-for i, row in raw.iterrows():
-    if row.astype(str).str.contains('台羅拼音').any():
-        header_idx = i
-        break
-if header_idx is None:
-    raise RuntimeError('在「台羅轉換注音二式規則」找不到「台羅拼音」標頭')
+# 1.2. 印出前 10 列，看看標頭列大概在第幾列（0-base）
+print("=== raw head ===")
+print(raw.head(10))
 
-# 重新以正確標頭讀
-df_rules = pd.read_excel(excel_file,
-                         sheet_name='台羅轉換注音二式規則',
-                         header=header_idx)
+# 1.3. 假設您看到第 2 列（index=1）才是欄位名稱，就改成 header=1；若是第 3 列，就 header=2……
+#    例如這裡示範用 header=1，請依您實際 raw.head() 結果做調整
+header_idx = 1
 
-# 自動抓「台羅」來源欄與「注音二式」目標欄
-src_cols = [c for c in df_rules.columns if '台羅' in c]
-dst_cols = [c for c in df_rules.columns if '注音二式' in c]
-if not src_cols or not dst_cols:
-    raise RuntimeError('無法在規則表找到「台羅」或「注音二式」欄位')
-tl_col    = src_cols[0]
-bpm2_col  = dst_cols[0]
+df_rules = pd.read_excel(
+    excel_file,
+    sheet_name='台羅轉換注音二式規則',
+    header=header_idx,
+    dtype=str
+)
 
-# 建映射字典
-mapping = pd.Series(df_rules[bpm2_col].values,
-                    index=df_rules[tl_col]).to_dict()
+# 1.4. 去除欄位前後空白，並印出最終欄位名稱確認
+df_rules.columns = df_rules.columns.str.strip()
+print("=== rules columns ===")
+print(df_rules.columns.tolist())
+
+# 1.5. 確定對應欄位的名稱──
+#    假設欄位就叫 '台羅拼音' 跟 '注音二式'，否則改成對應出的字串
+tl_col   = '台羅拼音'
+bpm2_col = '注音二式'
+
+# 1.6. 只取這兩欄並去掉空值，避免後面 mapping 出錯
+df_rules = df_rules[[tl_col, bpm2_col]].dropna(how='any')
+
+# 1.7. 再次 trim 每個值，確保沒有隱藏空白
+df_rules[tl_col]   = df_rules[tl_col].str.strip()
+df_rules[bpm2_col] = df_rules[bpm2_col].str.strip()
+
+# 1.8. 建立 mapping
+mapping = dict(zip(df_rules[tl_col], df_rules[bpm2_col]))
+print(f"映射筆數：{len(mapping)}，前 10 筆：{list(mapping.items())[:10]}")
+
 
 # 3. 讀取所有工作表
 all_sheets = pd.read_excel(excel_file, sheet_name=None)
