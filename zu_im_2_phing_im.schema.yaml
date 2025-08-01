@@ -70,7 +70,7 @@ speller:
   # initials: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC
   # finals: 43657
   alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
-  initials: abcdefghijklmnopqrstuvwxyz
+  initials: abcdefghijklmnopqrstuvwxyzN
   finals: ;\_/-[].
   delimiter: "'"
   use_space: true
@@ -88,11 +88,11 @@ speller:
     #------------------------------------------------------
     # 聲母
     #------------------------------------------------------
-    - derive/ik/iek/
+    # - derive/ik/iek/
     #------------------------------------------------------
     # 鼻音韻母轉換：ann ==> nna ==> Na ==> Nㄚ ==> ㆩ
     #------------------------------------------------------
-    - derive/([iu]?(ai|au|oo|[aiue]))nn/N$1/
+    - derive/([iu]?(ai|au|oo|or|[aiue]))nn/N$1/
     #------------------------------------------------------
     # 入聲韻尾
     # -m  ==> -p ==>
@@ -116,13 +116,11 @@ speller:
     # 台語注音二式 聲母簡化規則（只保留首個聲母或聯合聲母）
     #=======================================================================
     # 只輸入【聲母】搜尋漢字
-    - abbrev/^((?:ng|zz|[bpmtdnlgkhjcsz])).*$/$1/
-    # 輸入【聲母】與【調號】搜尋漢字
-    - abbrev/^((?:ng|zz|[bpmtdnlgkhjcsz])).+(\d)$/$1/
+    - abbrev/^((?:bb|gg|ng|ji|jj|chi|shi|zz|[bpmtdnlgkhzcs])).*$/$1/
     #=======================================================================
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #=======================================================================
-    - derive/^([A-Za-z]+)\d$/$1/
+    - derive/^([a-z]+)\d$/$1/
     #------------------------------------------------------
     # 定義聲調的「調號」與「按鍵」的對映規則
     #------------------------------------------------------
@@ -130,7 +128,7 @@ speller:
 
 translator:
   dictionary: zu_im_2
-  prism: zu_im_2_tai_gi
+  prism: tai_gi_zu_im_2
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -142,14 +140,12 @@ translator:
   preedit_format:
     - xform/'/ /
     #------------------------------------------------------
-    - xform/zzi/jji/ # ㆢ[ jji ]
-    - xform/zi/ji/ # ㄐ[ ji ]
-    #------------------------------------------------------
     # 處理鼻音化韻母
     # a/e/u/e/oo/uai/iau/ai/au/ia/io/iu/ua/ui
     #------------------------------------------------------
     # 鼻化符號以 ‘上標n’ 顯示
-    - xform/([iu]?(ai|au|[aiue]|oo))nn/N$1/
+    # - xform/([iu]?(ai|au|oo|or|[aiue]))nn/N$1/
+    - xform/([iu]?(ai|au|oo|or|[aiue]))nn/$1ⁿ/
     - xform/N/ⁿ/
     #------------------------------------------------------
     # 定義 ‘調號’ 的 '對映規則'
