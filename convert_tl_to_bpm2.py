@@ -2,93 +2,81 @@
 # -*- coding: utf-8 -*-
 
 """
-convert_tl_to_bpm2.py
+convert_tl_to_bpm2_openpyxl.py
 
 功能：
-  1. 在同一份 Excel 檔裡，讀取「台羅轉換注音二式規則」工作表並解析規則。
-  2. 建立映射字典：台羅拼音 → 注音二式。
-  3. 讀取「tl_ji_khoo_phing」工作表，把「台羅拼音」欄轉換後寫回「注音二式」欄。
-  4. 覆寫存檔。
+  1. 讀取同一支 Excel（漢字閩南語標音【台羅拼音】.xlsx）
+  2. 解析「台羅轉換注音二式規則」工作表，建立 台羅拼音 → 注音二式 的對應字典
+  3. 逐列讀取「tl_ji_khoo_phing」工作表，把「台羅拼音」轉換後寫回「注音二式」欄
+  4. 只儲存回原檔案，其餘工作表與格式不變
 """
 
-import pandas as pd
+import openpyxl
 
-# 1. Excel 檔案路徑
+# Excel 檔案名稱（與此 script 放同一目錄，或改成絕對路徑）
 excel_file = '漢字閩南語標音【台羅拼音】.xlsx'
 
-# 1.1 先把規則表當純資料讀進來（不指定 header）
-raw = pd.read_excel(
-    excel_file,
-    sheet_name='台羅轉換注音二式規則',
-    header=None,
-    dtype=str
-)
+# 1. 載入活頁簿
+wb = openpyxl.load_workbook(excel_file)
 
-# 1.2. 印出前 10 列，看看標頭列大概在第幾列（0-base）
-print("=== raw head ===")
-print(raw.head(10))
+# 2. 解析規則表，建立 mapping 字典
+rules_ws = wb['台羅轉換注音二式規則']
 
-# 1.3. 假設您看到第 2 列（index=1）才是欄位名稱，就改成 header=1；若是第 3 列，就 header=2……
-#    例如這裡示範用 header=1，請依您實際 raw.head() 結果做調整
-header_idx = 1
+# 2.1 找到 header 列（第一個包含「台羅拼音」字樣的那一列）
+header_row = None
+for row in rules_ws.iter_rows(min_row=1, max_row=20):
+    if any(cell.value == '台羅拼音' for cell in row):
+        header_row = row[0].row
+        break
+if header_row is None:
+    raise RuntimeError('在「台羅轉換注音二式規則」裡找不到欄位標頭「台羅拼音」')
 
-df_rules = pd.read_excel(
-    excel_file,
-    sheet_name='台羅轉換注音二式規則',
-    header=header_idx,
-    dtype=str
-)
+# 2.2 讀出 header 那列所有欄位，找出「台羅拼音」與「注音二式」的欄編號
+col_idx = {}
+for cell in rules_ws[header_row]:
+    if cell.value in ('台羅拼音', '注音二式'):
+        col_idx[cell.value] = cell.column  # 1-based
 
-# 1.4. 去除欄位前後空白，並印出最終欄位名稱確認
-df_rules.columns = df_rules.columns.str.strip()
-print("=== rules columns ===")
-print(df_rules.columns.tolist())
+if '台羅拼音' not in col_idx or '注音二式' not in col_idx:
+    raise RuntimeError('規則表缺少「台羅拼音」或「注音二式」欄')
 
-# 1.5. 確定對應欄位的名稱──
-#    假設欄位就叫 '台羅拼音' 跟 '注音二式'，否則改成對應出的字串
-tl_col   = '台羅拼音'
-bpm2_col = '注音二式'
+tl_col_idx  = col_idx['台羅拼音']
+bpm2_col_idx = col_idx['注音二式']
 
-# 1.6. 只取這兩欄並去掉空值，避免後面 mapping 出錯
-df_rules = df_rules[[tl_col, bpm2_col]].dropna(how='any')
+# 2.3 逐列讀取 mapping
+mapping = {}
+for row in rules_ws.iter_rows(min_row=header_row+1, max_row=rules_ws.max_row):
+    tl = row[tl_col_idx-1].value
+    bp = row[bpm2_col_idx-1].value
+    if tl and bp:
+        tl = str(tl).strip()
+        bp = str(bp).strip()
+        mapping[tl] = bp
 
-# 1.7. 再次 trim 每個值，確保沒有隱藏空白
-df_rules[tl_col]   = df_rules[tl_col].str.strip()
-df_rules[bpm2_col] = df_rules[bpm2_col].str.strip()
+# （可選）印出映射數量，確認有多少筆
+print(f'共讀取 {len(mapping)} 筆對應規則')
 
-# 1.8. 建立 mapping
-mapping = dict(zip(df_rules[tl_col], df_rules[bpm2_col]))
-print(f"映射筆數：{len(mapping)}，前 10 筆：{list(mapping.items())[:10]}")
+# 3. 處理 tl_ji_khoo_phing 表
+data_ws = wb['tl_ji_khoo_phing']
 
+# 3.1 假設 header 在第一列，取出欄位編號
+header = next(data_ws.iter_rows(min_row=1, max_row=1))
+data_cols = {cell.value: cell.column for cell in header}
 
-# 3. 讀取所有工作表
-all_sheets = pd.read_excel(excel_file, sheet_name=None)
+if '台羅拼音' not in data_cols or '注音二式' not in data_cols:
+    raise RuntimeError('資料表「tl_ji_khoo_phing」缺少「台羅拼音」或「注音二式」欄')
 
-# 確認要處理的資料表名稱
-data_sheet = 'tl_ji_khoo_phing'
-if data_sheet not in all_sheets:
-    # 若名稱有誤，可嘗試找含「hing」的
-    alt = [n for n in all_sheets if 'hing' in n]
-    if alt:
-        data_sheet = alt[0]
-    else:
-        raise RuntimeError(f'找不到工作表：{data_sheet}')
+data_tl_col   = data_cols['台羅拼音']
+data_bpm2_col = data_cols['注音二式']
 
-df = all_sheets[data_sheet]
+# 3.2 逐列轉換：從第 2 列到最後一列
+for row in data_ws.iter_rows(min_row=2, max_row=data_ws.max_row):
+    cell_tl   = row[data_tl_col-1]
+    cell_dest = row[data_bpm2_col-1]
+    val = cell_tl.value
+    key = str(val).strip() if val is not None else ''
+    cell_dest.value = mapping.get(key, '')
 
-# 定義轉換函式
-def to_bpm2(x):
-    return mapping.get(x, '')
-
-# 套用：直接寫回「注音二式」欄
-df[bpm2_col] = df['台羅拼音'].apply(to_bpm2)
-
-# 更新回字典
-all_sheets[data_sheet] = df
-
-# 4. 覆寫存回同一個檔案
-with pd.ExcelWriter(excel_file, engine='openpyxl') as writer:
-    for name, sheet in all_sheets.items():
-        sheet.to_excel(writer, sheet_name=name, index=False)
-
-print('✅ 轉換完成，結果已寫回「注音二式」欄，並儲存回原檔案。')
+# 4. 儲存回原檔
+wb.save(excel_file)
+print('✅ 轉換完成，只修改「tl_ji_khoo_phing」的注音二式欄，並已儲存回原檔。')
