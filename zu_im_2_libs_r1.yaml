@@ -24,30 +24,30 @@ zu_im_hu_ho_pinn_be:
     # --------------------------------------------------------------------------
     # 韻母編碼
     # --------------------------------------------------------------------------
-    - xform/oonn/Q/  # ㆧ [ oonn]
-    - xform/ainn/X/  # ㆮ [ ainn]
-    - xform/aunn/Y/  # ㆯ [ aunn]
-    - xform/inn/I/  # ㆪ [ inn]
-    - xform/unn/U/  # ㆫ [ unn]
-    - xform/ann/A/  # ㆩ [ ann]
-    - xform/enn/E/  # ㆥ [ enn]
-    - xform/ang/?/  # ㄤ [ ang]
-    - xform/ong/H/  # ㆲ [ ong]
-    - xform/oo/O/  # ㆦ [ oo]
-    - xform/or/o/  # ㄜ [ or]
-    - xform/ai/x/  # ㄞ [ ai]
-    - xform/au/y/  # ㄠ [ au]
-    - xform/an/@/  # ㄢ [ an]
-    - xform/ng/W/  # ㆭ [ ng]
-    - xform/ir/-/  # ㆨ [ ir]
-    - xform/am/[/  # ㆰ [ am]
-    - xform/om/]/  # ㆱ [ om]
-    # - xform/i/i/  # ㄧ [ i]
-    # - xform/u/u/  # ㄨ [ u]
-    # - xform/m/M/  # ㆬ [ m]
-    # - xform/a/a/  # ㄚ [ a]
-    # - xform/e/e/  # ㆤ [ e]
-    # - xform/n/N/  # ㄣ [ n]
+    - xform/oonn/Q/ # ㆧ[ oonn ]
+    - xform/ainn/X/ # ㆮ[ ainn ]
+    - xform/aunn/Y/ # ㆯ[ aunn ]
+    - xform/inn/I/ # ㆪ[ inn ]
+    - xform/unn/U/ # ㆫ[ unn ]
+    - xform/ann/A/ # ㆩ[ ann ]
+    - xform/enn/E/ # ㆥ[ enn ]
+    - xform/ang/G/ # ㄤ[ ang ]
+    - xform/ong/H/ # ㆲ[ ong ]
+    - xform/oo/O/ # ㆦ[ oo ]
+    - xform/or/o/ # ㄜ[ or ]
+    - xform/ai/x/ # ㄞ[ ai ]
+    - xform/au/y/ # ㄠ[ au ]
+    - xform/an/@/ # ㄢ[ an ]
+    - xform/en/N/ # ㄣ[ en ]
+    - xform/ir/R/ # ㆨ[ ir ]
+    - xform/am/[/ # ㆰ[ am ]
+    - xform/om/]/ # ㆱ[ om ]
+    - xform/ng/w/ # ㄫ[ ng ]
+    - xform/ng/W/ # ㆭ[ ng ]
+    - xform/i/i/ # ㄧ[ i ]
+    - xform/u/u/ # ㄨ[ u ]
+    - xform/a/a/ # ㄚ[ a ]
+    - xform/e/e/ # ㆤ[ e ]
     # --------------------------------------------------------------------------
     # 鼻音韻母格式一 ：
     # ann = aⁿ = ㆩ； uann = uaⁿ = ㄨㆩ ； iann = iaⁿ = ㄧㆩ
@@ -104,9 +104,9 @@ zu_im_hu_ho_pinn_be:
     # - xform/^ng(\D)/w/    # ㄫ (w) = ng ：ng 後面不接【數值】（即【調號】）
     - xform/^ng(?!\d)/w/ # ㄫ (w) = ng ：ng 後面不接【數值】（即【調號】）
     #--------------------------------------------------------------------------
-    - xform/^bb/B/ # ㆠ[ bb ]
     - xform/^b/b/ # ㄅ[ b ]
     - xform/^p/p/ # ㄆ[ p ]
+    - xform/^bb/B/ # ㆠ[ bb ]
     - xform/^m/m/ # ㄇ[ m ]
     #--------------------------------------------------------------------------
     - xform/^d/d/ # ㄉ[ d ]
@@ -114,16 +114,20 @@ zu_im_hu_ho_pinn_be:
     - xform/^n/n/ # ㄋ[ n ]
     - xform/^l/l/ # ㄌ[ l ]
     #--------------------------------------------------------------------------
-    - xform/^gg/G/ # ㆣ[ gg ]
     - xform/^g/g/ # ㄍ[ g ]
     - xform/^k/k/ # ㄎ[ k ]
+    - xform/^gg/G/ # ㆣ[ gg ]
     - xform/^h/h/ # ㄏ[ h ]
     #--------------------------------------------------------------------------
     # 舌尖前音（齒齦音）: z[c], c[ch], j[j], s[s]
+    # - xform/z(?=i)/Z/    # ㄗ --> ㄐ
+    # - xform/c(?=i)/C/    # ㄘ --> ㄑ
+    # - xform/j(?=i)/J/    # ㆡ --> ㆢ
+    # - xform/s(?=i)/S/    # ㄙ --> ㄒ
     - xform/^jji/Zi/ # ㆢ[ jji ]
     - xform/^ji/zi/ # ㄐ[ ji ]
-    - xform/^chi/chi/ # ㄑ[ chi ]
-    - xform/^shi/shi/ # ㄒ[ shi ]
+    - xform/^ci/ci/ # ㄑ[ ci ]
+    - xform/^si/si/ # ㄒ[ si ]
 
     - xform/^zz/Z/ # ㆡ[ zz ]
     - xform/^z/z/ # ㄗ[ z ]
@@ -141,9 +145,9 @@ zu_im_hu_ho_pinn_be:
     # (4) ah, ih, uh, eh, ooh, oh, aih, auh, iah, iuh, ioh, uah, uih, ueh, iauh, uaih
     #--------------------------------------------------------------------------
     # - derive/[48]/0/         # 設定【入聲】之【聲調】值，不論4或8，皆以0代
-    - derive/p[48]/p0/
-    - derive/t[48]/t0/
-    - derive/k[48]/k0/
+    - derive/b[48]/b0/
+    - derive/d[48]/d0/
+    - derive/g[48]/g0/
     - derive/h[48]/h0/
     #--------------------------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
@@ -154,7 +158,9 @@ zu_im_hu_ho_pinn_be:
     # 台語音標之拼音字母輸入【簡化規則】（abbreviation：縮寫詞）
     #=======================================================================
     # 只輸入【聲母】搜尋漢字
-    - abbrev/^([bBpmdtnlzZcsjJgGkwhw]).+$/$1/
+    - abbrev/^([bpBmdtnlzcZsjJgkGhw]).+$/$1/
+    # 輸入【聲母】與【調號】搜尋漢字
+    - abbrev/^([bpBmdtnlzcZsjJgkGhw]).+(\d)$/$1/
     # 舒聲調（平、上、去聲）之漢字，可免調號（1/2/3/5/7）；但【入聲】（調號：4/8）不適用。
     - abbrev/^(\D+)([12357])$/$1/
     #==========================================================================
@@ -162,8 +168,7 @@ zu_im_hu_ho_pinn_be:
     # 字典編碼轉換按鍵
     # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
     #==========================================================================
-    # - xlit|bpBmdtnlgkGhzcZsjCJSiIuUaAOQoeExXyY@NGR[]HwWLMRFVD123570|1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC 43657|
-    - xlit|bBpmwdtnl3gGkhC2$J{}7FVR5zZcs0iIuUMaAOQoeExXyY@N?WL-|1!qaz2wsx3eEdcC4rRfv5tgb6yYhn7uUjJm8*iIk,<9(lL0p;/?-|
+    - xlit|bpBmdtnlgkGhzcZsjCJSiIuUaAOQoeExXyY@NGR[]HwWLMRFVD123570|1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC 43657|
 
 jih_kian_tng_uann:
   #==============================================================================
@@ -173,8 +178,7 @@ jih_kian_tng_uann:
     #--------------------------------------------------------------------------
     # 定義【鍵盤按鍵】與【注音符號】對映關聯
     #--------------------------------------------------------------------------
-    # - xlit|1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC 43657|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄏㄗㄘㆡㄙㄐㄑㆢㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㄣㄤㆨㆰㆱㆲㄫㆭㄥㆬㆴㆵㆻㆷˉˋ˪ˊ˫˙|
-    - xlit|1!qaz2wsx3eEdcC4rRfv5tgb6yYhn7uUjJm8*iIk,<9(lL0p;/?-|ㄅㆠㄆㄇㄫㄉㄊㄋㄌ˪ㄍㆣㄎㄏㆷˋㄐㆢㄑㄒ˫ㆵㆻㆴˊㄗㆡㄘㄙ˙ㄧㆪㄨㆫㆬㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㄣㄤㆭㄥㆨ|
+    - xlit|1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC 43657|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄏㄗㄘㆡㄙㄐㄑㆢㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㄣㄤㆨㆰㆱㆲㄫㆭㄥㆬㆴㆵㆻㆷˉˋ˪ˊ˫˙|
     #--------------------------------------------------------------------------
     # 按鍵轉注音符號：定義鍵盤【按鍵】與【注音符號】的對映關聯
     # 操作輸入法時，在輸入介面壓下的【按鍵】，與之對映的注音符號（ㄅㄆㄇ），
@@ -211,15 +215,15 @@ jih_kian_tng_uann:
     # - xform/ㄬㆤ/ㆥ/ # Ne = enn
     # - xform/ㄬㄞ/ㆮ/ # Nai = ainn
     # - xform/ㄬㄠ/ㆯ/ # Nau = aunn
-    #------------------------------------------------------
-    # 韻母校調
-    - xform/ㄚㄧ/ㄞ/ # ai
-    - xform/ㄚㄨ/ㄠ/ # au
-    - xform/ㄚㆭ/ㄤ/ # ang
-    - xform/ㄚㄣ/ㄢ/ # an
-    - xform/ㄚㆬ/ㆰ/ # am
-    #
-    - xform/ㆦㆭ/ㆲ/ # ong
-    - xform/ㆦㆬ/ㆱ/ # om
-    #
+    # #------------------------------------------------------
+    # # 韻母校調
+    # - xform/ㄚㄧ/ㄞ/ # ai
+    # - xform/ㄚㄨ/ㄠ/ # au
+    # - xform/ㄚㆭ/ㄤ/ # ang
+    # - xform/ㄚㄣ/ㄢ/ # an
+    # - xform/ㄚㆬ/ㆰ/ # am
+    # #
+    # # - xform/ㆦㆭ/ㆲ/ # ong
+    # # - xform/ㆦㆬ/ㆱ/ # om
+    # #
     - xform/ㄧㆭ/ㄧㄥ/ # ing

@@ -3,8 +3,8 @@
 # encoding: utf-8
 
 schema:
-  schema_id: zu_im_hong_im
-  name: 注音輸入法【方音符號】
+  schema_id: zu_im_2_hong_im
+  name: 注音輸入法【台語注音二式】
   version: "v0.1.0.0"
   author: 居正中
   description: |
@@ -53,8 +53,11 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: "ABCDE1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657"
-  initials: "ABCDE1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm."
+  # alphabet: "ABCDE1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657"
+  # initials: "ABCDE1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm."
+  # finals: " 43657"
+  alphabet: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC43657
+  initials: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -67,7 +70,7 @@ speller:
 
 translator:
   dictionary: zu_im_2
-  prism: zu_im_hong_im
+  prism: zu_im_2_hong_im
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -89,35 +92,45 @@ translator:
       #------------------------------------------------------
       # 入聲韻尾： ㄅ(p), ㄉ(t), ㄍ(k), ㄏ(h),
       #------------------------------------------------------
-      - xform/ㄅ(˙)/ㆴ$1/ # ㄅ = p
-      - xform/ㄉ(˙)/ㆵ$1/ # ㄉ = t
-      - xform/ㄍ(˙)/ㆻ$1/ # ㄍ = k
+      - xform/ㄅ(˙)/ㆴ$1/ # ㄅ = b
+      - xform/ㄉ(˙)/ㆵ$1/ # ㄉ = d
+      - xform/ㄍ(˙)/ㆻ$1/ # ㄍ = g
       - xform/ㄏ(˙)/ㆷ$1/ # ㄏ = h
   comment_format:
+    # - xform/jji/Ji/
+    # - xform/ji/ji/
+    # - xform/ci/C/
+    # - xform/si/S/
+    # - xform/oo/O/ # 將「oo」轉換成「O」，用於注音輸入的聲調符號
+    # - xform/og/Og/ # 將「og0」轉換成「Og0」，用於注音輸入的聲調符號
+    # - xform/b([48])/R$1/ # 將「b0」轉換成「R0」，用於注音輸入的聲調符號
+    # - xform/d([48])/F$1/ # 將「d0」轉換成「F0」，用於注音輸入的聲調符號
+    # - xform/g([48])/D$1/ # 將「d0」轉換成「F0」，用於注音輸入的聲調符號
+    # - xlit|bpBmdtnlgkGhzcZsjCJSiIuUaAOQoeExXyY@NGR[]HwWLMRFVD123570|ㄅㄆㆠㄇㄉㄊㄋㄌㄍㄎㆣㄏㄗㄘㆡㄙㄐㄑㆢㄒㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄢㄣㄤㆨㆰㆱㆲㄫㆭㄥㆬㆴㆵㆻㆷˉˋ˪ˊ˫˙|
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
     __patch:
       # 【候選字單】主體架構
-      - lib_hau_suan_ji_tuann:/hau_suan_tuann
+      - zu_im_2_hau_suan_zzi_duann:/hau_suan_tuann
       #-----------------------------------------
       # 右半邊：台語音標-注音
       # 【声母】
-      - lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_bu
       # 【韻母】
-      - lib_hau_suan_ji_tuann:/ziann_ping_un_bu
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_un_bu
       # 【声調】
-      - lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_tiau
       #-----------------------------------------
       # 左半邊：台語音標-拼音
-      - lib_hau_suan_ji_tuann:/to_ping_tl
+      - zu_im_2_hau_suan_zzi_duann:/to_ping_zu_im_2
 
 jih_kian:
   #--------------------------------------------------------------------------
   # 按鍵與方音符號對映
   #--------------------------------------------------------------------------
   __patch:
-    - lib_zu_im:/jih_kian_tng_uann
+    - zu_im_2_libs:/jih_kian_tng_uann
 
 custom_phrase:
   dictionary: ""
