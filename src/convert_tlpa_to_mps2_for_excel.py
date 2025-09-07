@@ -23,6 +23,7 @@ import os
 import sys
 
 import pandas as pd
+from openpyxl import load_workbook
 
 from convert_tlpa_to_mps2 import convert_TLPA_to_MPS2
 
@@ -80,27 +81,33 @@ def convert_to_mps2(tlpa_im_piau):
 #    將台羅拼音逐一轉換為注音二式
 df_data['注音二式'] = df_data['台羅拼音'].apply(convert_to_mps2)
 
-# 5. 輸出結果
+# 使用 openpyxl 讀取原始 Excel 檔案
+workbook = load_workbook(input_file)
+
+# 更新指定工作表的內容
+if SOURCE_SHEET not in workbook.sheetnames:
+    print(f"工作表 '{SOURCE_SHEET}' 不存在，請確認檔案內容。")
+    sys.exit(1)
+
+sheet = workbook[SOURCE_SHEET]
+header_row = [cell.value for cell in sheet[1]]
+if '注音二式' not in header_row:
+    print("工作表中缺少 '注音二式' 欄位，請確認檔案格式。")
+    sys.exit(1)
+
+注音二式_col_index = header_row.index('注音二式') + 1
+台羅拼音_col_index = header_row.index('台羅拼音') + 1
+
+for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
+    台羅拼音_cell = row[台羅拼音_col_index - 1]
+    注音二式_cell = row[注音二式_col_index - 1]
+    注音二式_cell.value = convert_TLPA_to_MPS2(台羅拼音_cell.value)
+
+# 保存結果
 if output_file:
-    # 若指定輸出檔案，則另存
-    with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
-        for sheet_name in sheet_names:
-            if sheet_name == SOURCE_SHEET:
-                df_data.to_excel(writer, sheet_name=sheet_name, index=False)
-            else:
-                # 保留原始格式，避免新增 Unnamed 欄位
-                original_sheet = pd.read_excel(input_file, sheet_name=sheet_name, engine='openpyxl')
-                original_sheet.to_excel(writer, sheet_name=sheet_name, index=False, header=False)
+    workbook.save(output_file)
     print(f'轉換完成，結果已儲存至：{output_file}')
 else:
-    # 否則覆寫原檔案
-    with pd.ExcelWriter(input_file, engine='openpyxl') as writer:
-        for sheet_name in sheet_names:
-            if sheet_name == SOURCE_SHEET:
-                df_data.to_excel(writer, sheet_name=sheet_name, index=False)
-            else:
-                # 保留原始格式，避免新增 Unnamed 欄位
-                original_sheet = pd.read_excel(input_file, sheet_name=sheet_name, engine='openpyxl')
-                original_sheet.to_excel(writer, sheet_name=sheet_name, index=False, header=False)
+    workbook.save(input_file)
     print(f'轉換完成，結果已覆寫至原檔案：{input_file}')
 
