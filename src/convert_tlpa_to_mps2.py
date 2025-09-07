@@ -148,7 +148,7 @@ def main(infile: str, outfile: str):
         if len(parts) >= 2:
             # 將第 2 欄的台語音標進行轉換
             parts[1] = convert_TLPA_to_MPS2(parts[1])
-            # 將轉換後的音標附加到行末尾
+            # 將轉換後的音標附加到陣列資料的底端
             out_lines.append("\t".join(parts) + "\n")
         else:
             out_lines.append(line)
