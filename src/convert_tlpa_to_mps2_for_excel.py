@@ -27,8 +27,8 @@ import pandas as pd
 from convert_tlpa_to_mps2 import convert_TLPA_to_MPS2
 
 # 1. 設定輸入與輸出檔案名稱
-input_file = './src/tl_phing_im.xlsx'  # 預設輸入檔案
 # input_file = None
+input_file = './src/tl_phing_im.xlsx'  # 預設輸入檔案
 output_file = None  # 預設為 None，表示直接覆寫原檔案
 SOURCE_SHEET = 'tl_ji_khoo'  # 來源資料工作表名稱
 
@@ -88,7 +88,9 @@ if output_file:
             if sheet_name == SOURCE_SHEET:
                 df_data.to_excel(writer, sheet_name=sheet_name, index=False)
             else:
-                pd.read_excel(input_file, sheet_name=sheet_name, engine='openpyxl').to_excel(writer, sheet_name=sheet_name, index=False)
+                # 保留原始格式，避免新增 Unnamed 欄位
+                original_sheet = pd.read_excel(input_file, sheet_name=sheet_name, engine='openpyxl')
+                original_sheet.to_excel(writer, sheet_name=sheet_name, index=False, header=False)
     print(f'轉換完成，結果已儲存至：{output_file}')
 else:
     # 否則覆寫原檔案
@@ -97,6 +99,8 @@ else:
             if sheet_name == SOURCE_SHEET:
                 df_data.to_excel(writer, sheet_name=sheet_name, index=False)
             else:
-                pd.read_excel(input_file, sheet_name=sheet_name, engine='openpyxl').to_excel(writer, sheet_name=sheet_name, index=False)
+                # 保留原始格式，避免新增 Unnamed 欄位
+                original_sheet = pd.read_excel(input_file, sheet_name=sheet_name, engine='openpyxl')
+                original_sheet.to_excel(writer, sheet_name=sheet_name, index=False, header=False)
     print(f'轉換完成，結果已覆寫至原檔案：{input_file}')
 
