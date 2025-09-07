@@ -1,0 +1,237 @@
+# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: zu_im_2_phing_im
+  name: 拼音輸入法【台語注音二式】
+  version: "v0.1.0.0"
+  author:
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    【輸入類型】：拼音輸入法
+    【拼音系統】：台語注音二式【吳守禮方音符號延伸】
+    【字典編碼】：台羅音標
+    【注音輸入】：台語注音二式音標字母（寶島【bo2】【do2】）
+    【侯選清單】：〔siaⁿ¹〕【ㄙㄧㄚ¹】
+    【聲調標示】：台語四聲八調，以數值標示
+  #------------------------------------------------------
+  # 定義使用者按下鍵盤時，輸入法能接受的按鍵
+  #------------------------------------------------------
+  # 舒聲 [12357]
+  # 1: ;
+  # 2: \
+  # 3: _ （劃底線符號）
+  # 5: /
+  # 6: [N/A]
+  # 7: -
+  # 4: [
+  # 8: ]
+  # 輕聲及入聲 [48] = 0
+  # 0: .
+  #------------------------------------------------------
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+    # - fluency_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - echo_translator
+    - punct_translator
+    - script_translator
+    - reverse_lookup_translator
+  filters:
+    - simplifier
+    - uniquifier
+
+speller:
+  # alphabet: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC43657
+  # initials: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC
+  # finals: 43657
+  alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
+  initials: abcdefghijklmnopqrstuvwxyzN
+  finals: ;\_/-[].
+  delimiter: "'"
+  use_space: true
+  algebra:
+    #======================================================
+    # 調整字典台語音標字母
+    # 定義【台語音標】與【音標編碼】的對映關係
+    #======================================================
+    # 去除零聲母
+    # - derive/Ø//
+    #------------------------------------------------------
+    # 聲調
+    #------------------------------------------------------
+    - xform/6/7/ # 聲調 6 改為 7
+    #------------------------------------------------------
+    # 聲母
+    #------------------------------------------------------
+    # - derive/iek/ik/
+    #------------------------------------------------------
+    # 鼻音韻母轉換：ann ==> nna ==> Na ==> Nㄚ ==> ㆩ
+    #------------------------------------------------------
+    - derive/([iu]?(ai|au|oo|or|[aiue]))nn/N$1/
+    #------------------------------------------------------
+    # 入聲韻尾
+    # -m  ==> -p ==>
+    # -n  ==> -t
+    # -ng ==> -k
+    #------------------------------------------------------
+    - derive/p[48]/p0/
+    - derive/t[48]/t0/
+    - derive/k[48]/k0/
+    - derive/h[48]/h0/
+    #======================================================
+    # 定義【韻母】對映規則
+    #======================================================
+    # - derive/e(ng|k)/i$1/
+    # - derive/ou/oo/
+    # - derive/ei/e/
+    # - xform/ao(\d)$/au$1/
+    # - derive/^i/yi/
+    # - derive/^u/wu/
+    #=======================================================================
+    # 台語注音二式 聲母簡化規則（只保留首個聲母或聯合聲母）
+    #=======================================================================
+    # 只輸入【聲母】搜尋漢字
+    - abbrev/^((?:bb|gg|ng|j|jj|ch|sh|zz|[bpmtdnlgkhzcs])).*$/$1/
+    #=======================================================================
+    # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
+    #=======================================================================
+    - derive/^([a-z]+)\d$/$1/
+    #------------------------------------------------------
+    # 定義聲調的「調號」與「按鍵」的對映規則
+    #------------------------------------------------------
+    - xlit|12357480|;\_/-[].|
+
+translator:
+  dictionary: zu_im_2
+  prism: tai_gi_zu_im_2
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
+  #======================================================
+  # 【輸入編輯列(preedit_format)】：定義輸入按鍵與注音符號之對映定義
+  # 操作輸入法時，在輸入介面壓下的【按鍵】，與之對映的注音符號（ㄅㄆㄇ），
+  # 將根據此處的定義，於輸入介面顯示相對應的注音符號
+  #======================================================
+  preedit_format:
+    - xform/'/ /
+    #------------------------------------------------------
+    # 處理鼻音化韻母
+    # a/e/u/e/oo/uai/iau/ai/au/ia/io/iu/ua/ui
+    #------------------------------------------------------
+    # 鼻化符號以 ‘上標n’ 顯示
+    # - xform/([iu]?(ai|au|oo|or|[aiue]))nn/N$1/
+    - xform/([iu]?(ai|au|oo|[aiue]))nn/$1ⁿ/
+    - xform/N/ⁿ/
+    #------------------------------------------------------
+    # 定義 ‘調號’ 的 '對映規則'
+    #------------------------------------------------------
+    - xlit|;\_/-[].|12357480|
+  comment_format:
+    #--------------------------------------------------------------------------
+    # 定義【候選字清單】
+    #--------------------------------------------------------------------------
+    __patch:
+      # 【候選字單】主體架構
+      - zu_im_2_hau_suan_zzi_duann:/hau_suan_tuann
+      #-----------------------------------------
+      # 右半邊：方音符號-注音
+      # 【声母】
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_bu
+      # 【韻母】
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_un_bu
+      # 【声調】
+      - zu_im_2_hau_suan_zzi_duann:/ziann_ping_siann_tiau
+      #-----------------------------------------
+      # 左半邊：台語注音二式-拼音
+      - zu_im_2_hau_suan_zzi_duann:/to_ping_zu_im_2
+
+reverse_lookup:
+  dictionary: luna_pinyin
+  prefix: "`"
+  tips: 〔拼音〕
+  preedit_format:
+    - xform/([nljqxy])v/$1ü/
+
+key_binder:
+  import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore }
+    #---------------------------------------------------
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus }
+    #---------------------------------------------------
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
+    #---------------------------------------------------
+    # 翻頁
+    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+
+editor:
+  bindings:
+    space: commit # 選擇「備選漢字」
+    Return: commit_composition # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    Control+Shift+Return: commit_raw_input # 將 Control+Return 綁定到 Lua 函數
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
+    reverse_lookup: "`[a-z]*$"
+
+menu:
+  alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
+  alternative_select_keys: "12345"
+  page_size: 5 #選單每䈎顯示個數
+
+style:
+  horizontal: false
+  font_face: "霞鶩文楷 TC, , 新細明體"
+
+punctuator:
+  import_preset: keymap_piau_tian
