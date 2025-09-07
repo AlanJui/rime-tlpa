@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-convert_tl_to_bpm2.py
+convert_tl_to_mps2.py
 
 功能：
   1. 讀取同一份 Excel 中的兩個工作表：
@@ -14,7 +14,7 @@ convert_tl_to_bpm2.py
 
 使用方式：
   1. 將本檔與 Excel 放在同一目錄，或自行修改 input_file 與 output_file 變數為絕對路徑。
-  2. 執行：python convert_tl_to_bpm2.py
+  2. 執行：python convert_tl_to_mps2.py
 """
 
 import pandas as pd
@@ -38,7 +38,7 @@ mapping = pd.Series(
 ).to_dict()
 
 # 4. 定義轉換函式：若對應表中無此拼音，預設回傳空字串
-def convert_to_bpm2(tl_value):
+def convert_to_mps2(tl_value):
     """
     將單一台羅拼音字串轉為注音二式。
     tl_value：字串，如 'khua1'
@@ -47,7 +47,7 @@ def convert_to_bpm2(tl_value):
     return mapping.get(tl_value, '')
 
 # 5. 套用到原始資料
-df_data['台語注音二式音標'] = df_data['台羅拼音'].apply(convert_to_bpm2)
+df_data['台語注音二式音標'] = df_data['台羅拼音'].apply(convert_to_mps2)
 
 # 6. 輸出結果到新的 Excel
 with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
