@@ -1,0 +1,120 @@
+# Rime schema
+# version: "v0.1.0.0"
+# encoding: utf-8
+
+schema:
+  schema_id: zu_im_2_kb
+  name: 按鍵練習【台語注音二式】
+  version: "0.1"
+  author:
+    - Alan Jui <AlanJui.1960@gmail.com>
+  description: |
+    用「羅馬拼音字母」輸入「方音符號」
+
+    方音符號：
+      ㄅ ㄆ ㄇ       ㆠ
+      ㄉ ㄊ ㄋ ㄌ
+      ㄍ ㄎ ㄏ ㄫ    ㆣ
+
+      ㄗ ㄘ ㄙ       ㆡ
+      ㄐ ㄑ ㄒ       ㆢ
+
+      ㄧ ㄨ          ㆪ ㆫ
+      ㄚ ㆦ ㄜ ㆤ    ㆧ ㆩ ㆥ
+
+      ㄞ ㄠ          ㆮ ㆯ
+      ㆰ ㆱ ㆬ
+      ㄢ ㄣ ㄤ ㆲ ㄥ ㆭ
+
+    鍵盤對應：
+      ㄅ ㄉ ３ ２ ７ ５ ． ㄚ ㄞ ㄢ ｎ
+      ㄆ ㄊ ㄍ ㄐ ㆣ ㄗ ㄧ ㆦ ㆤ ㄣ
+      ㄇ ㄋ ㄎ ㄑ ㄫ ㄘ ㄨ ㄜ ㄠ ㄤ
+      ㆠ ㄌ ㄏ ㄒ Ｊ ㄙ ㆬ ㆰ ㆲ ㆭ
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文 ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形 全形]
+
+engine:
+  processors:
+    - punctuator
+    - selector
+    - express_editor
+  segmentors:
+    - punct_segmentor
+  translators:
+    - punct_translator
+
+punctuator:
+  half_shape: &symtable
+    "1": { commit: "ㄅ" }  # /b/ ==> b
+    "!": { commit: "ㆠ" }  # /bb/ ==> B
+    "q": { commit: "ㄆ" }  # /p/ ==> p
+    "a": { commit: "ㄇ" }  # /m/ ==> m
+    "2": { commit: "ㄉ" }  # /d/ ==> d
+    "w": { commit: "ㄊ" }  # /t/ ==> t
+    "s": { commit: "ㄋ" }  # /n/ ==> n
+    "x": { commit: "ㄌ" }  # /l/ ==> l
+    "e": { commit: "ㄍ" }  # /g/ ==> g
+    "E": { commit: "ㆣ" }  # /gg/ ==> G
+    "d": { commit: "ㄎ" }  # /k/ ==> k
+    "N": { commit: "ㄫ" }  # /ng/ ==> w
+    "c": { commit: "ㄏ" }  # /h/ ==> h
+    "r": { commit: "ㄐ" }  # /j/ ==> j
+    "R": { commit: "ㆢ" }  # /jj/ ==> J
+    "f": { commit: "ㄑ" }  # /ch/ ==> C
+    "v": { commit: "ㄒ" }  # /sh/ ==> S
+    "y": { commit: "ㄗ" }  # /z/ ==> z
+    "Y": { commit: "ㆡ" }  # /zz/ ==> Z
+    "h": { commit: "ㄘ" }  # /c/ ==> c
+    "n": { commit: "ㄙ" }  # /s/ ==> s
+    "u": { commit: "ㄧ" }  # /i/ ==> i
+    "U": { commit: "ㆪ" }  # /inn/ ==> I
+    "j": { commit: "ㄨ" }  # /u/ ==> u
+    "J": { commit: "ㆫ" }  # /unn/ ==> U
+    "8": { commit: "ㄚ" }  # /a/ ==> a
+    "*": { commit: "ㆩ" }  # /ann/ ==> A
+    "i": { commit: "ㆦ" }  # /oo/ ==> O
+    "I": { commit: "ㆧ" }  # /oonn/ ==> Q
+    "k": { commit: "ㄜ" }  # /or/ ==> o
+    ",": { commit: "ㆤ" }  # /e/ ==> e
+    "<": { commit: "ㆥ" }  # /enn/ ==> E
+    "9": { commit: "ㄞ" }  # /ai/ ==> x
+    "(": { commit: "ㆮ" }  # /ainn/ ==> X
+    "l": { commit: "ㄠ" }  # /au/ ==> y
+    "L": { commit: "ㆯ" }  # /aunn/ ==> Y
+    ";": { commit: "ㄤ" }  # /ang/ ==> P
+    "o": { commit: "ㆲ" }  # /ong/ ==> H
+    "M": { commit: "ㆰ" }  # /am/ ==> V
+    "O": { commit: "ㆱ" }  # /om/ ==> D
+    "0": { commit: "ㄢ" }  # /an/ ==> @
+    "m": { commit: "ㆬ" }  # /m/ ==> M
+    "p": { commit: "ㄣ" }  # /n/ ==> N
+    "/": { commit: "ㆭ" }  # /ng/ ==> W
+    "K": { commit: "ㆨ" }  # /ir/ ==> R
+    "b": { commit: "ㆴ" }  # /p/ ==> r
+    "t": { commit: "ㆵ" }  # /t/ ==> f
+    "g": { commit: "ㆻ" }  # /k/ ==> q
+    "z": { commit: "ㆷ" }  # /h/ ==> v
+    "4": { commit: "ˋ" }  # /2/ ==> 2
+    "3": { commit: "˪" }  # /3/ ==> 3
+    "6": { commit: "ˊ" }  # /5/ ==> 5
+    "5": { commit: "˫" }  # /7/ ==> 7
+    "7": { commit: "˙" }  # /0/ ==> 0
+
+    # " " : "¹"
+    # "4" : "²"
+    # "3" : "³"
+    # "6" : "⁵"
+    # "5" : "⁷"
+    # "7" : ["⁴", "⁸", "⁰"]
+    # "Z": [ "¹", "²", "³", "⁴", "⁵", "⁷", "⁸", "⁰" ]
+    # "z": [ "ㆴ", "ㆵ", "ㆻ", "ㆷ" ]
+    # "." : ["", "ⁿ", "ㄬ", "ㄯ"]
+full_shape:
+  ".": 。
