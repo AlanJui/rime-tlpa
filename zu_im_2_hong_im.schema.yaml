@@ -53,8 +53,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657"
-  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz"
+  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.43657"
+  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz."
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -95,7 +95,15 @@ speller:
     # ann = aⁿ = ㆩ； uann = uaⁿ = ㄨㆩ ； iann = iaⁿ = ㄧㆩ
     # --------------------------------------------------------------------------
     # 設定鼻音韻母代表拼音字母
-    - derive/([iu]?(ai|au|oo|[aiue]))nn/L$1/
+    # - derive/([iu]?(ai|au|oo|[aiue]))nn/L$1/
+    - derive/([iu]?(ai|au|oo|[aiue]))nn/ⁿ$1/
+    - derive/ⁿi/Li/  # ㆪ [inn]
+    - derive/ⁿu/Lu/  # ㆫ [unn]
+    - derive/ⁿa/La/  # ㆩ [ann]
+    - derive/ⁿe/Le/  # ㆥ [enn]
+    - derive/ⁿO/LO/  # ㆧ [oonn]
+    - derive/ⁿai/Lx/  # ㆮ [ainn]
+    - derive/ⁿau/Ly/  # ㆯ [aunn]
     # --------------------------------------------------------------------------
     # 声母編碼
     #  - 唇音/雙唇音: b, p, bb, m
@@ -197,7 +205,7 @@ speller:
     # 字典編碼轉換按鍵
     # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
     #==========================================================================
-    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv23570|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657|
+    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqvL23570|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.43657|
 
 translator:
   dictionary: zu_im_2
@@ -209,7 +217,7 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【鍵盤輸入列】：按鍵與方音符號對映
     #--------------------------------------------------------------------------
-    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷˋ˪ˊ˫˙|
+    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥˋ˪ˊ˫˙|
     #------------------------------------------------------
     # 按鍵轉調等：將按鍵之輸入轉換成【聲調符號】
     #------------------------------------------------------
@@ -218,9 +226,28 @@ translator:
     - xform/4/ˋ/ # ²  ˋ   上声
     - xform/3/˪/ # ³  ˪   陰去
     - xform/5/˫/ # ⁷  ˫   陽去
-    - xform/7/˙/ # ⁰  ˙   陰入/陽入：輕聲標點符號表：入声字（陰入/陽入）
+    - xform/7/˙/ # ⁰  ˙   陰入/陽入：輕聲標點符號表：入声字（    # 鼻音
     #------------------------------------------------------
-    # 韻母組合輸入
+    # 鼻音韻母輸入調整
+    #------------------------------------------------------
+    # - xform/ㄥㄧ/ㆪ/
+    # - xform/ㄥㄨ/ㆫ/
+    # - xform/ㄥㄚ/ㆩ/
+    # - xform/ㄥㆦ/ㆧ/
+    # - xform/ㄥㆤ/ㆥ/
+    # - xform/ㄥㄞ/ㆮ/
+    # - xform/ㄥㄠ/ㆯ/
+    # #------------------------------------------------------
+    # - xform/ㆪㄚ/ㄧㆩ/
+    # - xform/ㆪㄨ/ㄧㆫ/
+    # - xform/ㆪㆦ/ㄧㆧ/
+    # - xform/ㆪㄠ/ㄧㆯ/
+    # - xform/ㆫㄧ/ㄨㆪ/
+    # - xform/ㆫㄚ/ㄨㆩ/
+    # - xform/ㆫㆤ/ㄨㆥ/
+    # - xform/ㆫㄞ/ㄨㆮ/
+    #------------------------------------------------------
+    # 韻母組合輸入調整
     #------------------------------------------------------
     - xform/ㄧㆭ/ㄧㄥ/
     - xform/ㄚㆭ/ㄤ/
