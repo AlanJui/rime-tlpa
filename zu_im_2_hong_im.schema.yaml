@@ -53,8 +53,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.43657"
-  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz."
+  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-43657"
+  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-"
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -90,13 +90,14 @@ speller:
     - xform/t[48]/f0/
     - xform/k[48]/q0/
     - xform/h[48]/v0/
+    - abbrev/([rfqv])0/*/
     # --------------------------------------------------------------------------
     # 鼻音韻母格式一 ：
     # ann = aⁿ = ㆩ； uann = uaⁿ = ㄨㆩ ； iann = iaⁿ = ㄧㆩ
     # --------------------------------------------------------------------------
     # 設定鼻音韻母代表拼音字母
-    # - derive/([iu]?(ai|au|oo|[aiue]))nn/L$1/
     - derive/([iu]?(ai|au|oo|[aiue]))nn/ⁿ$1/
+    # --------------------------------------------------------------------------
     - derive/ⁿi/Li/  # ㆪ [inn]
     - derive/ⁿu/Lu/  # ㆫ [unn]
     - derive/ⁿa/La/  # ㆩ [ann]
@@ -104,6 +105,19 @@ speller:
     - derive/ⁿO/LO/  # ㆧ [oonn]
     - derive/ⁿai/Lx/  # ㆮ [ainn]
     - derive/ⁿau/Ly/  # ㆯ [aunn]
+    # --------------------------------------------------------------------------
+    - derive/ⁿia/Lia/  # Nia = iann
+    - derive/ⁿiu/Liu/  # Niu = iunn
+    - derive/ⁿiO/LiO/  # Nioo = ioonn
+    - derive/ⁿiy/Liy/  # Niau = iaunn
+    - derive/ⁿui/Lui/  # Nui = uinn
+    - derive/ⁿua/Lua/  # Nua = uann
+    - derive/ⁿue/Lue/  # Nue = uenn
+    - derive/ⁿux/Lux/  # Nuai = uainn
+    # --------------------------------------------------------------------------
+    - derive/ⁿ([iuaeOxy])/$1$1/ # 連續輸入兩個相同的韻母注音，視同鼻音化韻母
+    - derive/ⁿi([auOy])/i$1$1/  # 連續輸入兩個相同的韻母注音，視同鼻音化韻母
+    - derive/ⁿu([iaex])/u$1$1/  # 連續輸入兩個相同的韻母注音，視同鼻音化韻母
     # --------------------------------------------------------------------------
     # 声母編碼
     #  - 唇音/雙唇音: b, p, bb, m
@@ -205,7 +219,7 @@ speller:
     # 字典編碼轉換按鍵
     # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
     #==========================================================================
-    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqvL23570|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.43657|
+    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqvL*23570|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|
 
 translator:
   dictionary: zu_im_2
@@ -217,7 +231,7 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【鍵盤輸入列】：按鍵與方音符號對映
     #--------------------------------------------------------------------------
-    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥˋ˪ˊ˫˙|
+    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥ入ˋ˪ˊ˫˙|
     #------------------------------------------------------
     # 按鍵轉調等：將按鍵之輸入轉換成【聲調符號】
     #------------------------------------------------------
@@ -230,6 +244,14 @@ translator:
     #------------------------------------------------------
     # 鼻音韻母輸入調整
     #------------------------------------------------------
+    - xform/ㄧㄧ/ㆪ/
+    - xform/ㄨㄨ/ㆫ/
+    - xform/ㄚㄚ/ㆩ/
+    - xform/ㆦㆦ/ㆧ/
+    - xform/ㆤㆤ/ㆥ/
+    - xform/ㄞㄞ/ㆮ/
+    - xform/ㄠㄠ/ㆯ/
+    #------------------------------------------------------
     # - xform/ㄥㄧ/ㆪ/
     # - xform/ㄥㄨ/ㆫ/
     # - xform/ㄥㄚ/ㆩ/
@@ -237,15 +259,6 @@ translator:
     # - xform/ㄥㆤ/ㆥ/
     # - xform/ㄥㄞ/ㆮ/
     # - xform/ㄥㄠ/ㆯ/
-    # #------------------------------------------------------
-    # - xform/ㆪㄚ/ㄧㆩ/
-    # - xform/ㆪㄨ/ㄧㆫ/
-    # - xform/ㆪㆦ/ㄧㆧ/
-    # - xform/ㆪㄠ/ㄧㆯ/
-    # - xform/ㆫㄧ/ㄨㆪ/
-    # - xform/ㆫㄚ/ㄨㆩ/
-    # - xform/ㆫㆤ/ㄨㆥ/
-    # - xform/ㆫㄞ/ㄨㆮ/
     #------------------------------------------------------
     # 韻母組合輸入調整
     #------------------------------------------------------
@@ -366,7 +379,8 @@ translator:
     - xform/》(L?)(ia)/$1ㄧㄚ》/
     # 恭 iong
     # - xform/》io(ng|k)/ㄧㆦ》$1/
-    - xform/》io(ng|ok)/ㄧㆦ》$1/
+    - xform/》iong/ㄧㆲ》$1/
+    - xform/》ioo(k)/ㄧㆦ》$1/
     # 薑 Nio / 茄 io
     - xform/》(L?)(ior)/$1ㄧㄜ》/
     # 牛 Niu / 丩 iu
@@ -391,7 +405,7 @@ translator:
     # 糜 Nue / 檜 ue
     - xform/》(L?)(ue)/$1ㄨㆤ》/
     # 君 un
-    - xform/》u(n|d)/ㄨ》$1/
+    - xform/》u(n|t)/ㄨ》$1/
     # # 方音
     # - xform/》ur/ㄨ》/
     # 艍 u
@@ -427,11 +441,6 @@ translator:
     #------------------------------------------------------
     # oo
     #------------------------------------------------------
-    # 公 ong / 箴 om
-    # - xform/》o(ng|k)/ㆦ》$1/
-    # - xform/》o(m|p)/ㆦ》$1/
-    - xform/》o(ng|ok)/ㆦ》$1/
-    - xform/》oo(m|p)/ㆦ》$1/
     # 姑 Noo / 沽 oo
     - xform/》(L?)(oo)/$1ㆦ》/
     - xform/》oo/ㆦ》/
@@ -439,6 +448,13 @@ translator:
     # - xform/》O/ㆦ》/
     # - xform/》N(O)/$1ㆦ》/
     # - xform/》O/ㆦ》/
+    # 公 ong / 箴 om
+    # - xform/》o(ng|k)/ㆦ》$1/
+    # - xform/》o(m|p)/ㆦ》$1/
+    - xform/》ong/ㆲ》$1/
+    # - xform/》oo(k)/ㆦㆻ》/
+    - xform/》oo(k)/ㆦ》$1/
+    - xform/》oo(m|p)/ㆦ》$1/
     #------------------------------------------------------
     # or
     #------------------------------------------------------
