@@ -17,11 +17,11 @@ SIANN_BU_TNG_UANN_PIAU = {
     "ph": "p",  # ㄆ → p (雙唇音/清音：塞音/送氣)
     "th": "t",  # ㄊ → t (齒齦音/清音：塞音/送氣)
     "kh": "k",  # ㄎ → k（軟顎音/清音：塞音/送氣）
-    "ng": "ng", # ㄫ → ng（軟顎音/濁音：鼻音）
+    "ng": "ng",  # ㄫ → ng（軟顎音/濁音：鼻音）
     # 一字母
     # 雙唇音
     "p": "b",  # ㄅ → b（雙唇音/清音：塞音不送氣）
-    "b": "bb", # ㆠ → bb（雙唇音/濁音：塞音不送氣）
+    "b": "bb",  # ㆠ → bb（雙唇音/濁音：塞音不送氣）
     "m": "m",  # ㄇ → m（雙唇音/濁音：鼻音）
     # ------------------------------
     # 齒齦音
@@ -90,6 +90,8 @@ UN_BU_TNG_UANN_PIAU = {
     "o": "or",  # ㄜ
 }
 
+JI_KHOO_NAME = "bp_ji_khoo"
+
 
 def convert_TLPA_to_MPS2(TLPA_piau_im: str) -> str:
     """
@@ -139,6 +141,10 @@ def main(infile: str, outfile: str):
     out_lines = []
     in_entries = False
     for line in lines:
+        # name 欄位自動更換
+        if line.strip().startswith("name:"):
+            out_lines.append(f"name: {JI_KHOO_NAME}\n")
+            continue
         # 找到「...」之後即進入詞條區
         if not in_entries:
             out_lines.append(line)

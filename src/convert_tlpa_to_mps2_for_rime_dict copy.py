@@ -17,27 +17,27 @@ SIANN_BU_TNG_UANN_PIAU = {
     "ph": "p",  # ㄆ → p (雙唇音/清音：塞音/送氣)
     "th": "t",  # ㄊ → t (齒齦音/清音：塞音/送氣)
     "kh": "k",  # ㄎ → k（軟顎音/清音：塞音/送氣）
-    "ng": "ng", # ㄫ → ng（軟顎音/濁音：鼻音）
+    "ng": "ggn",  # ㄫ → ng（軟顎音/濁音：鼻音）
     # 一字母
     # 雙唇音
     "p": "b",  # ㄅ → b（雙唇音/清音：塞音不送氣）
-    "b": "bb", # ㆠ → bb（雙唇音/濁音：塞音不送氣）
-    "m": "m",  # ㄇ → m（雙唇音/濁音：鼻音）
+    "b": "bb",  # ㆠ → bb（雙唇音/濁音：塞音不送氣）
+    "m": "bbn",  # ㄇ → m（雙唇音/濁音：鼻音）
     # ------------------------------
     # 齒齦音
     "t": "d",  # ㄉ → d（齒齦音/清音：塞音/不送氣）
-    "n": "n",  # ㄋ → n（齒齦音/濁音：鼻音）
     "l": "l",  # ㄌ → l（齒齦音/濁音：邊音）
+    "n": "ln",  # ㄋ → n（齒齦音/濁音：鼻音）
+    # ------------------------------
+    # 軟顎音
+    "k": "g",  # ㄍ → g（軟顎音/清音：塞音/不送氣）
+    "g": "gg",  # ㆣ → gg（軟顎音/濁音：塞音/不送氣）
     # ------------------------------
     # 齒齦音
     "z": "z",  # ㄗ → z (齒齦音/清音：塞音/不送氣)
     "j": "zz",  # ㆡ → zz（齒齦音/濁音：塞擦音/不送氣）
     "c": "c",  # ㄘ → c (齒齦音/清音：塞音/送氣)
     "s": "s",  # ㄙ → s（齒齦音/清音：擦音）
-    # ------------------------------
-    # 軟顎音
-    "k": "g",  # ㄍ → g（軟顎音/清音：塞音/不送氣）
-    "g": "gg",  # ㆣ → gg（軟顎音/濁音：塞音/不送氣）
     # ------------------------------
     # 聲門音
     "h": "h",  # ㄏ → h（聲門音／擦音：聲門音／清音）
@@ -46,39 +46,40 @@ SIANN_BU_TNG_UANN_PIAU = {
 # 【齒音聲母+i】轉換對照表
 # 【齒音聲母】：TLPA: 舌尖前音/TL: 舌齒音
 CI_IM_TNG_UANN_PIAU = {
-    "zzi": "jji",  # ㆢ：ji → jj+i
-    "zi": "ji",  # ㄐ：z+i → j+i
-    "ci": "chi",  # ㄑ：c+i → ch+i
-    "si": "shi",  # ㄒ：s+i → sh+i
+    # "zzi": "zzii",  # ㆢ：ji → jj+i
+    # "zi": "ji",  # ㄐ：z+i → j+i
+    # "ci": "ci",  # ㄑ：c+i → ch+i
+    # "si": "si",  # ㄒ：s+i → sh+i
 }
 
 # 韻母轉換對照表（【索引】字串排序，需由長到短）
 UN_BU_TNG_UANN_PIAU = {
-    "oonn": "oonn",
-    # "ainn": "ainn",
-    # "aunn": "aunn",
+    "ainn": "nai",
+    "aunn": "nao",
+    "ennh": "naeh",
+    "onnh": "nooh",
+    "oonn": "noo",
+    "onn": "noo",
+    "ann": "na",
+    "inn": "ni",
+    "unn": "nu",
+    "enn": "ne",
     # "ang": "ang",
-    # "ann": "ann",
-    # "inn": "inn",
-    # "unn": "unn",
-    # "enn": "enn",
     # "ong": "ong",
     # "ing": "ing",
-    "ionn": "ioonn",
-    "ioh": "iorh",
-    "iok": "iook",
-    "io": "ior",
-    "onnh": "oonnh",
-    "onn": "oonn",
-    "ooh": "ooh",
-    "oo": "oo",
-    "oh": "orh",
-    "op": "oop",
-    "ok": "ook",
-    "om": "oom",
-    "ik": "iek",
+    # "ionn": "N/A",
+    # "ioh": "ioh",
+    # "iok": "iok",
+    # "io": "io",
+    # "ooh": "ooh",
+    # "oo": "oo",
+    # "oh": "oh",
+    # "op": "op",
+    # "ok": "ok",
+    # "om": "N/A",
+    # "ik": "ik",
     # "ai": "ai",
-    # "au": "au",
+    "au": "ao",
     # "an": "an",
     # "en": "en",
     # "ir": "ir",
@@ -87,14 +88,35 @@ UN_BU_TNG_UANN_PIAU = {
     # "i": "i",
     # "u": "u",
     # "e": "e",
-    "o": "or",  # ㄜ
+    # "o": "o",  # ㄜ
 }
 
-JI_KHOO_NAME = "zu_im_2"
+VOWELS = set("aeiou")  # 用於判斷「i/u 後是否接母音」
 
-def convert_TLPA_to_MPS2(TLPA_piau_im: str) -> str:
+TLPA_TIAU_HO_PIAU = {
+    "1": "陰平",
+    "2": "陰上",
+    "3": "陰去",
+    "4": "陰入",
+    "5": "陽平",
+    "6": "陽上",
+    "7": "陽去",
+    "8": "陽入",
+}
+BP_TIAU_HO_PIAU = {
+    "陰平": "1",
+    "陽平": "2",
+    "陰上": "3",
+    "陽上": "3",
+    "陰去": "5",
+    "陽去": "6",
+    "陰入": "7",
+    "陽入": "8",
+}
+
+def convert_TLPA_to_BP(TLPA_piau_im: str) -> str:
     """
-    將一個【台語音標/TLPA】（如 'tsiann1'）轉成【注音二式/MPS2】（'ziann1'）。
+    將一個【台語音標/TLPA】（如 'tsiann1'）轉成【閩拼/BP】（例如 'ziann1'）。
     保留後面的數字（聲調）。
     """
     # 確認傳入之【台語音標】符合格式=聲母+韻母+聲調=英文字母+數字
@@ -118,20 +140,35 @@ def convert_TLPA_to_MPS2(TLPA_piau_im: str) -> str:
     # 2. 轉韻母：整段比對
     if un in UN_BU_TNG_UANN_PIAU:
         un = UN_BU_TNG_UANN_PIAU[un]
-    # else:
-    #     # 若末尾是「o」卻不在 FINAL_MAP，做一次 o→or
-    #     if rest.endswith("o"):
-    #         rest = rest[:-1] + "or"
 
-    # 3. 處理【齒音連i】的特殊狀況：【齒音聲母】+ i（【韻母】首拼音字母）
-    if siann in ("z", "c", "s", "zz") and un.startswith("i"):
-        ci_im_lian_i = f"{siann}i"
-        if ci_im_lian_i in CI_IM_TNG_UANN_PIAU:
-            ci_im_result = CI_IM_TNG_UANN_PIAU[ci_im_lian_i]
-            siann = ci_im_result[:-1]  # 去掉最後的 i
+    # 3.【零聲母連i/u】特殊處理
+    if siann == "" and un:
+        first_lo_ma_ji_bu = un[0]
+
+        if first_lo_ma_ji_bu == "i":
+            # i 後面是母音：移到聲母 y，刪掉韻母開頭 i（1.2）
+            if len(un) >= 2 and un[1] in VOWELS:
+                siann = "y"
+                un = un[1:]
+            else:
+                # i 後面不是母音：移到聲母 y，但韻母保留 i（1.1）
+                siann = "y"
+                # un 保持以 i 起頭，例如 i / in / inn
+
+        elif first_lo_ma_ji_bu == "u":
+            # u 後面是母音：移到聲母 w，刪掉韻母開頭 u（2.2）
+            if len(un) >= 2 and un[1] in VOWELS:
+                siann = "w"
+                un = un[1:]
+            else:
+                # u 後面不是母音：移到聲母 w，但韻母保留 u（2.1）
+                siann = "w"
+                # un 保持以 u 起頭，例如 u / un / unn
+    # 4. 【台語音標】調號轉換成【閩拼音標】調號
+    tiau_mia = TLPA_TIAU_HO_PIAU.get(tiau, tiau)
+    tiau = BP_TIAU_HO_PIAU.get(tiau_mia, tiau_mia)
 
     return f"{siann}{un}{tiau}"
-
 
 def main(infile: str, outfile: str):
     with open(infile, "r", encoding="utf-8") as fin:
@@ -140,10 +177,6 @@ def main(infile: str, outfile: str):
     out_lines = []
     in_entries = False
     for line in lines:
-        # name 欄位自動更換
-        if line.strip().startswith("name:"):
-            out_lines.append(f"name: {JI_KHOO_NAME}\n")
-            continue
         # 找到「...」之後即進入詞條區
         if not in_entries:
             out_lines.append(line)
@@ -159,7 +192,7 @@ def main(infile: str, outfile: str):
         # 假設詞條以「欄位1\t欄位2\t...」格式，至少要有兩欄
         parts = line.rstrip("\n").split("\t")
         if len(parts) >= 2:
-            parts[1] = convert_TLPA_to_MPS2(parts[1])
+            parts[1] = convert_TLPA_to_BP(parts[1])
             out_lines.append("\t".join(parts) + "\n")
         else:
             out_lines.append(line)
@@ -172,7 +205,7 @@ def main(infile: str, outfile: str):
 if __name__ == "__main__":
     # 設定預設檔案名稱
     default_infile = "tl_ji_khoo_peh_ue.dict.yaml"
-    default_outfile = "zu_im_2.dict.yaml"
+    default_outfile = "bp.dict.yaml"
 
     # 解析命令列參數
     infile = sys.argv[1] if len(sys.argv) > 1 else default_infile
