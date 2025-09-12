@@ -1,9 +1,9 @@
 """
-convert_tlpa_to_mps2_for_rime_dict.py
+convert_tlpa_to_bp_for_rime_dict.py
 
-將【台語音標（TLPA+）】轉換成【台語注音二式（MPS2）】。
+將【台語音標（TLPA+）】轉換成【台語注音二式（bp）】。
 用法：
-    python convert_tlpa_to_mps2_for_rime_dict.py tl_ji_khoo_peh_ue.dict.yaml output.dict.yaml
+    python convert_tlpa_to_bp_for_rime_dict.py tl_ji_khoo_peh_ue.dict.yaml output.dict.yaml
 """
 
 import re
@@ -61,6 +61,7 @@ UN_BU_TNG_UANN_PIAU = {
     "ainn": "nai",
     "aunn": "nao",
     "ann": "na",
+    "iau": "iao",
     "inn": "ni",
     "unn": "nu",
     "enn": "ne",
@@ -133,10 +134,6 @@ def convert_TLPA_to_BP(TLPA_piau_im: str) -> str:
     # 2. 轉韻母：整段比對
     if un in UN_BU_TNG_UANN_PIAU:
         un = UN_BU_TNG_UANN_PIAU[un]
-    # else:
-    #     # 若末尾是「o」卻不在 FINAL_MAP，做一次 o→or
-    #     if rest.endswith("o"):
-    #         rest = rest[:-1] + "or"
 
     # 3.【零聲母連i/u】特殊處理
     if siann == "" and un:
@@ -206,8 +203,10 @@ def main(infile: str, outfile: str):
 
 if __name__ == "__main__":
     # 設定預設檔案名稱
-    default_infile = "tl_ji_khoo_peh_ue.dict.yaml"
-    default_outfile = "zu_im_2.dict.yaml"
+    # default_infile = "tl_ji_khoo_peh_ue.dict.yaml"
+    # default_outfile = "zu_im_2.dict.yaml"
+    default_infile = "./src/tlpa_ji_khoo.dict.yaml"
+    default_outfile = "bp_ji_khoo.dict.yaml"
 
     # 解析命令列參數
     infile = sys.argv[1] if len(sys.argv) > 1 else default_infile
