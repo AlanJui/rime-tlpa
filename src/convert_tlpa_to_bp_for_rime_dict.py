@@ -140,21 +140,29 @@ def convert_TLPA_to_BP(TLPA_piau_im: str) -> str:
         first_lo_ma_ji_bu = un[0]
 
         if first_lo_ma_ji_bu == "i":
+            # i 為【介音】，聲母變更為：[y]，韻母的首羅馬字 [i] 將之刪除。
+            # 【例】：腰 [iao] ==> [yao]，鞅 [iang] ==> [yang]，央 [iong] ==> [yong]
             # i 後面是母音：移到聲母 y，刪掉韻母開頭 i（1.2）
             if len(un) >= 2 and un[1] in VOWELS:
                 siann = "y"
                 un = un[1:]
             else:
+                # i 為【元音】韻母，聲母變更為：[y]，韻母維持不變。
+                # 【例】：伊 [i] ==> [yi]，音 [im] ==> [yim]，益 [ik] ==> [yik]
                 # i 後面不是母音：移到聲母 y，但韻母保留 i（1.1）
                 siann = "y"
                 # un 保持以 i 起頭，例如 i / in / inn
 
         elif first_lo_ma_ji_bu == "u":
+            # u 為【介音】，聲母變更為：[w]，韻母的首羅馬字 [u] 將之刪除。
+            # 【例】：彎 [uan] ==> [wan]，歪 [uai] ==> [wai]，位 [ui] ==> [wi]
             # u 後面是母音：移到聲母 w，刪掉韻母開頭 u（2.2）
             if len(un) >= 2 and un[1] in VOWELS:
                 siann = "w"
                 un = un[1:]
             else:
+                # u 為【元音】韻母，聲母變更為：[w]，韻母維持不變。
+                # 【例】：有 [u] ==> [wu]，溫 [un] ==> [wun]，鬱 [ut] ==> [wut]
                 # u 後面不是母音：移到聲母 w，但韻母保留 u（2.1）
                 siann = "w"
                 # un 保持以 u 起頭，例如 u / un / unn
