@@ -62,16 +62,28 @@ speller:
   # 定義【注音符號】編碼及【鍵盤按鍵】對映之【注音編碼】
   #==========================================================================
   algebra:
-    #==========================================================================
-    # 按鍵轉調等：將按鍵之輸入轉換成【聲調符號】
-    #==========================================================================
-    # - xform/1/1/ # ˉ   陰平
-    - derive/2/5/ # ˊ  陽平
-    - derive/3/2/ # ˋ  上声
-    - derive/5/3/ # ˪   陰去
-    - derive/6/7/ # ˫   陽去
-    - derive/7/4/ #     陰入
-    # - xform/8/8/ # ˙   陽入
+    #--------------------------------------------------------------------------
+    # 韻腹為： io /iɔ/ 之調整（台羅拼音：ioo）
+    # - 陰聲韻： io /iɔ/, ionn /iɔ̃/（閩拼方案無：ionn /iɔ̃/ 韻）
+    # - 陽聲韻： iong /iɔŋ/
+    # - 入聲韻： iok /iɔk/, iooh /iɔʔ/（閩拼方案無：iooh /iɔʔ/ 韻）
+    #--------------------------------------------------------------------------
+    - xform/iooh/iOh/
+    - xform/iong/iH/
+    - xform/iok/iOk/
+    #--------------------------------------------------------------------------
+    # 韻腹為： oo /ɔ/ 之調整
+    # - 陰聲韻： oo /ɔ/, onn /ɔ̃/
+    # - 陽聲韻： om /ɔm/, ong /ɔŋ/ (閩拼方案無 om /ɔm/ 韻)
+    # - 入聲韻： op /ɔp/, ok /ɔk/, ooh /ɔʔ/, onnh /ɔ̃ʔ/
+    #--------------------------------------------------------------------------
+    - xform/nooh/nOh/
+    - xform/ooh/Oh/
+    - xform/ong/H/  # ㆲ [ong]
+    - xform/op/Op/
+    - xform/ok/Ok/
+    - xform/oo/O/   # ㆦ [oo]
+    # - xform/o/o/    # ㄜ [o]
     #==========================================================================
     # 入聲韻尾轉換：設定【入聲】之【聲調】值，不論4或8，皆以0代
     # (1) -m  ==> -p
@@ -83,39 +95,11 @@ speller:
     # (3) ak, ik, ok, iak, iok
     # (4) ah, ih, uh, eh, ooh, oh, aih, auh, iah, iuh, ioh, uah, uih, ueh, iauh, uaih
     #==========================================================================
-    - xform/p[48]/r0/
-    - xform/t[48]/f0/
-    - xform/k[48]/q0/
-    - xform/h[48]/v0/
+    - xform/p[78]/r0/
+    - xform/t[78]/f0/
+    - xform/k[78]/q0/
+    - xform/h[78]/v0/
     - abbrev/([rfqv])0/*/
-    # --------------------------------------------------------------------------
-    # 鼻音韻母格式一 ：
-    # ann = aⁿ = ㆩ； uann = uaⁿ = ㄨㆩ ； iann = iaⁿ = ㄧㆩ
-    # --------------------------------------------------------------------------
-    # 設定鼻音韻母代表拼音字母
-    - derive/n([iu]?(ai|ao|oo|[aiue]))/ⁿ$1/
-    - derive/n([iu]?(ai|ao|oo|[aiue]))/$1ⁿ/
-    # --------------------------------------------------------------------------
-    - derive/ⁿi/Li/  # ㆪ [inn]
-    - derive/ⁿu/Lu/  # ㆫ [unn]
-    - derive/ⁿa/La/  # ㆩ [ann]
-    - derive/ⁿe/Le/  # ㆥ [enn]
-    - derive/ⁿO/LO/  # ㆧ [oonn]
-    - derive/ⁿai/Lx/  # ㆮ [ainn]
-    - derive/ⁿao/Ly/  # ㆯ [aunn]
-    # --------------------------------------------------------------------------
-    - derive/ⁿia/Lia/  # Nia = iann
-    - derive/ⁿiu/Liu/  # Niu = iunn
-    - derive/ⁿiO/LiO/  # Nioo = ioonn
-    - derive/ⁿiy/Liy/  # Niau = iaunn
-    - derive/ⁿui/Lui/  # Nui = uinn
-    - derive/ⁿua/Lua/  # Nua = uann
-    - derive/ⁿue/Lue/  # Nue = uenn
-    - derive/ⁿux/Lux/  # Nuai = uainn
-    # --------------------------------------------------------------------------
-    - derive/ⁿ([iuaeOxy])/$1$1/ # 連續輸入兩個相同的韻母注音，視同鼻音化韻母
-    - derive/ⁿi([auOy])/i$1$1/  # 連續輸入兩個相同的韻母注音，視同鼻音化韻母
-    - derive/ⁿu([iaex])/u$1$1/  # 連續輸入兩個相同的韻母注音，視同鼻音化韻母
     # --------------------------------------------------------------------------
     # 声母編碼
     #  - 唇音/雙唇音: b, p, bb, m
@@ -125,10 +109,11 @@ speller:
     #  - 牙音/舌根音（軟顎音）: g, k, gg, ng
     #  - 喉音（聲門音）：h
     # --------------------------------------------------------------------------
-    - xform/^bbn/m/ # ㄇ[ m ]
-    - xform/^bb/B/ # ㆠ[ bb ]
-    - xform/^b/b/ # ㄅ[ b ]
-    - xform/^p/p/ # ㄆ[ p ]
+    # 舌尖前音（齦顎音）: z[j], c[ch], zz[jj], s[sh]
+    # - xform/^zzi/Ji/ # ㆢ[ jj ]
+    # - xform/^zi/ji/  # ㄐ[ j ]
+    # - xform/^ci/Ci/  # ㄑ[ ch ]
+    # - xform/^si/Si/  # ㄒ[ sh ]
     #--------------------------------------------------------------------------
     # 舌尖前音（齒齦音）: z[j], c[ch], zz[jj], s[sh]
     - xform/^zz/Z/ # ㆡ[ zz ]
@@ -136,11 +121,10 @@ speller:
     - xform/^c/c/ # ㄘ[ c ]
     - xform/^s/s/ # ㄙ[ s ]
     #--------------------------------------------------------------------------
-    # 舌尖前音（齦顎音）: z[j], c[ch], zz[jj], s[sh]
-    - xform/^zzi/J/ # ㆢ[ jj ]
-    - xform/^zi/j/  # ㄐ[ j ]
-    - xform/^ci/C/  # ㄑ[ ch ]
-    - xform/^si/S/  # ㄒ[ sh ]
+    - xform/^bbn/m/ # ㄇ[ m ]
+    - xform/^bb/B/ # ㆠ[ bb ]
+    - xform/^b/b/ # ㄅ[ b ]
+    - xform/^p/p/ # ㄆ[ p ]
     #--------------------------------------------------------------------------
     - xform/^gg/G/  # ㆣ[ gg ]
     - xform/^ng/w/  # ㄫ (w) = ng ：ng 後面不接【數值】（即【調號】）
@@ -158,16 +142,13 @@ speller:
     # --------------------------------------------------------------------------
     - xform/noo/Q/  # ㆧ [oonn]
     - xform/nai/X/  # ㆮ [ai]
-    - xform/nau/Y/  # ㆯ [au]
+    - xform/nao/Y/  # ㆯ [au]
     - xform/ni/I/   # ㆪ [i]
     - xform/nu/U/   # ㆫ [u]
     - xform/na/A/   # ㆩ [a]
     - xform/nae/E/  # ㆥ [e]
     - xform/ang/P/  # ㄤ [ang]
-    - xform/ong/H/  # ㆲ [ong]
     # - xform/om/D/  # ㆱ [om]
-    - xform/oo/O/   # ㆦ [oo]
-    - xform/o/o/    # ㄜ [o]
     - xform/ai/x/   # ㄞ [ai]
     - xform/ao/y/   # ㄠ [ao]
     - xform/am/V/   # ㆰ [am]
@@ -221,7 +202,7 @@ speller:
     # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
     #==========================================================================
     # - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqvL*23570|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|
-    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqvL*&23570|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-'43657|
+    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv3526*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657|
 
 translator:
   dictionary: bp_ji_khoo
@@ -234,7 +215,7 @@ translator:
     # 定義【鍵盤輸入列】：按鍵與方音符號對映
     #--------------------------------------------------------------------------
     # - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥ入ˋ˪ˊ˫˙|
-    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-'43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥ入ñˋ˪ˊ˫˙|
+    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥ入ˋ˪ˊ˫˙|
     #------------------------------------------------------
     # 按鍵轉調等：將按鍵之輸入轉換成【聲調符號】
     #------------------------------------------------------
@@ -340,15 +321,15 @@ translator:
     - xform/》Ø/》/
     #------------------------------------------------------
     # 舌齒音 Zi-[zi-], Ci-[ci-], Si-[si-], Ji-[ji-]
-    - xform/》zzi/ㆢ》/
-    - xform/》zi/ㄐ》/
-    - xform/》ci/ㄑ》/
-    - xform/》si/ㄒ》/
+    - xform/》zzi/ㆢㄧ》/
+    - xform/》zi/ㄐㄧ》/
+    - xform/》ci/ㄑㄧ》/
+    - xform/》si/ㄒㄧ》/
     # 舌齒音（齒齦顎音）
-    - xform/》zz/ㆡㄧ》/
-    - xform/》z/ㄗㄧ》/
-    - xform/》c/ㄘㄧ》/
-    - xform/》s/ㄙㄧ》/
+    - xform/》zz/ㆡ》/
+    - xform/》z/ㄗ》/
+    - xform/》c/ㄘ》/
+    - xform/》s/ㄙ》/
     #------------------------------------------------------
     # 唇音(不送氣音/送氣音/濁音/鼻音)
     - xform/》bb/ㆠ》/
