@@ -86,7 +86,8 @@ speller:
     #--------------------------------------------------------------------------
     - xform/oo/O/   # ㆦ [oo]
     - xform/iok/iOk/
-    - xform/iong/iH/
+    - derive/iong/iH/
+    - xform/iong/iOng/
     - xform/iooh/iOh/
     #--------------------------------------------------------------------------
     - xform/nooh/nOh/
