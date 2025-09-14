@@ -114,19 +114,19 @@ speller:
     #--------------------------------------------------------------------------
     # 舌尖前音（齒齦音）: z[j], c[ch], zz[jj], s[sh]
     - xform/^zz/Z/ # ㆡ[ zz ]
-    - xform/^z/z/  # ㄗ[ z ]
-    - xform/^c/c/  # ㄘ[ c ]
-    - xform/^s/s/  # ㄙ[ s ]
+    - xform/^z/z/ # ㄗ[ z ]
+    - xform/^c/c/ # ㄘ[ c ]
+    - xform/^s/s/ # ㄙ[ s ]
     #--------------------------------------------------------------------------
     - derive/^zz(?i)/J/ # ㆡ[ zz ]
-    - derive/^z(?i)/j/  # ㄗ[ z ]
-    - derive/^c(?i)/C/  # ㄘ[ c ]
-    - derive/^s(?i)/S/  # ㄙ[ s ]
+    - derive/^z(?i)/j/ # ㄗ[ z ]
+    - derive/^c(?i)/C/ # ㄘ[ c ]
+    - derive/^s(?i)/S/ # ㄙ[ s ]
     #--------------------------------------------------------------------------
     - xform/^bbn/m/ # ㄇ[ m ]
-    - xform/^bb/B/  # ㆠ[ bb ]
-    - xform/^b/b/   # ㄅ[ b ]
-    - xform/^p/p/   # ㄆ[ p ]
+    - xform/^bb/B/ # ㆠ[ bb ]
+    - xform/^b/b/ # ㄅ[ b ]
+    - xform/^p/p/ # ㄆ[ p ]
     #--------------------------------------------------------------------------
     - xform/^gg/G/  # ㆣ[ gg ]
     - xform/^ng/w/  # ㄫ (w) = ng ：ng 後面不接【數值】（即【調號】）
@@ -153,7 +153,7 @@ speller:
     # - xform/e/e/  # ㆤ [e]
     # --------------------------------------------------------------------------
     # 鼻音韻母
-    - xform/nO/Q/   # ㆧ [oonn]
+    - xform/nO/Q/  # ㆧ [oonn]
     - xform/nai/X/  # ㆮ [ai]
     - xform/nao/Y/  # ㆯ [au]
     - xform/ni/I/   # ㆪ [i]
@@ -223,8 +223,7 @@ speller:
     # 字典編碼轉換按鍵
     # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
     #==========================================================================
-    # - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv&3526*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz-43657|
-    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqvn&3526*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|
+    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv&3526*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz-43657|
 
 translator:
   dictionary: bp_ji_khoo
@@ -243,7 +242,7 @@ translator:
     # 閩拼 5 ==> 方音 3 ˪ ，按鍵：【3】
     # 閩拼 6 ==> 方音 5 ˫，按鍵：【5】
     # 閩拼 7/8 ==> 方音 4/8 ˙，按鍵：【7】
-    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥｎˋ˪ˊ˫˙|
+    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥ入ˋ˪ˊ˫˙|
     #------------------------------------------------------
     # 鼻音韻母輸入調整
     #------------------------------------------------------
@@ -255,13 +254,13 @@ translator:
     - xform/ㄞㄞ/ㆮ/
     - xform/ㄠㄠ/ㆯ/
     #------------------------------------------------------
-    - xform/ㄥㄧ/ㆪ/
-    - xform/ㄥㄨ/ㆫ/
-    - xform/ㄥㄚ/ㆩ/
-    - xform/ㄥㆦ/ㆧ/
-    - xform/ㄥㆤ/ㆥ/
-    - xform/ㄥㄞ/ㆮ/
-    - xform/ㄥㄠ/ㆯ/
+    # - xform/ㄥㄧ/ㆪ/
+    # - xform/ㄥㄨ/ㆫ/
+    # - xform/ㄥㄚ/ㆩ/
+    # - xform/ㄥㆦ/ㆧ/
+    # - xform/ㄥㆤ/ㆥ/
+    # - xform/ㄥㄞ/ㆮ/
+    # - xform/ㄥㄠ/ㆯ/
     #------------------------------------------------------
     # 濁聲母轉換
     - xform/ㄗㄧ/ㄐㄧ/
