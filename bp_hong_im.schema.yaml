@@ -53,8 +53,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-'43657"
-  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-'"
+  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-=43657"
+  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-="
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -78,7 +78,10 @@ speller:
     - derive/ong(\d)$/H$1/  # ㆲ [ong] = /ɔŋ/
     - derive/om(\d)$/D$1/   # ㆱ [om]
     # 所有鼻音韻母
-    - derive/n([iu]?(ai|au|oo|[aiue]))/$1nn/
+    - derive/n([iu]?(ai|ao|a|i|u|e|oo))/$1nn/
+    - derive/n([iu]?(ai|ao|a|i|u|e|oo))/L$1/
+    # 連續輸入兩個相同韻母字母，視為【鼻音韻母】
+    - derive/(ai|ao|a|i|u|e|oo)/$1$1/
     # --------------------------------------------------------------------------
     # 声母編碼
     #  - 唇音/雙唇音: b, p, bb, m
@@ -120,9 +123,9 @@ speller:
     # 韻母編碼
     # --------------------------------------------------------------------------
     # 鼻音韻母
-    - xform/nai/X/
-    - xform/nao/Y/
-    - xform/noo/Q/
+    - xform/nai/X/    # nai
+    - xform/nao/Y/    # nao
+    - xform/noo/Q/    # noo
     - xform/ne/E/
     - xform/nu/U/
     - xform/na/A/
@@ -136,21 +139,20 @@ speller:
     - derive/ann/A/
     - derive/inn/I/
     # --------------------------------------------------------------------------
-    - xform/niaoh/niyh/
-    - xform/nuaih/nuxh/
+    - xform/niyh/niyh/
+    - xform/nuxh/nuxh/
     - xform/niah/niah/
-    - xform/niao/niy/
-    - xform/naoh/nyh/
-    - xform/nooh/nOh/
-    - xform/nua/nua/
-    - xform/nui/nui/
+    # - xform/niao/niy/
+    # - xform/naoh/nyh/
+    # - xform/nooh/nOh/
+    # - xform/nua/nua/
+    # - xform/nui/nui/
     # --------------------------------------------------------------------------
-    # - xform/iɑnɡ/iang/
+    # - xform/ianɡ/iang/
     - xform/iaoh/iyh/
-    - xform/iong/iOW/
     # - xform/neh/neh/
     - xform/aeh/aeh/
-    - xform/ang/@g/
+    - xform/ang/aW/
     - xform/aoh/yh/
     - xform/iah/iah/
     - xform/iak/iak/
@@ -161,15 +163,12 @@ speller:
     # - xform/iat/iat/
     # - xform/ing/ing/
     # - xform/ioh/ioh/
-    - xform/iok/iOk/
     # - xform/iuh/iuh/
     # - xform/nah/nah/
     # - xform/ngh/ngh/
     # - xform/nia/nia/
     # - xform/nih/nih/
     # - xform/niu/niu/
-    - xform/ong/OW/
-    - xform/ooh/Oh/
     # - xform/uah/uah/
     - xform/uai/ux/
     # - xform/uai/ux/
@@ -201,6 +200,10 @@ speller:
     # - xform/ng/ng/
     # - xform/oh/oh/
     - xform/oo/O/
+    - xform/ooh/Oh/
+    - xform/iong/iOW/
+    - xform/iok/iOk/
+    - xform/ong/OW/
     - xform/ok/Ok/
     - xform/op/Op/
     # - xform/ua/ua/
@@ -232,9 +235,9 @@ speller:
     - xform/m(\d)?/M$1/ # ㆬ (M) = -m： m  後接調號，當【韻尾韻母】ㆬ = ㄇ
     #--------------------------------------------------------------------------
     # 韻母組合輸入調整
-    # - derive/aW$/P/   # ㄤ [ang]
-    # - derive/OW$/H/   # ㆲ [ong] = /ɔŋ/
-    # - derive/OM$/D/   # ㆱ [om]
+    - derive/aW/P/   # ㄤ [ang]
+    - derive/OW/H/   # ㆲ [ong] = /ɔŋ/
+    - derive/OM/D/   # ㆱ [om]
     #==========================================================================
     # 入聲韻尾轉換：設定【入聲】之【聲調】值，不論4或8，皆以0代
     # (1) -m  ==> -p
@@ -250,7 +253,6 @@ speller:
     - xform/t[78]/f0/
     - xform/k[78]/q0/
     - xform/h[78]/v0/
-    - abbrev/([rfqv])0/*/
     #--------------------------------------------------------------------------
     # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
     #--------------------------------------------------------------------------
@@ -265,15 +267,25 @@ speller:
     # 舒聲調（平、上、去聲）之漢字，可免調號（1/2/3/5/6）；但【入聲】（調號：4/8）不適用。
     - abbrev/^(\D+)([12356])$/$1/
     # 所有鼻音韻母
-    # - derive/([iu]?(ai|au|oo|[aiue]))nn/$1ⁿ/
-    - abbrev/n[iu]?[xyOaiue]/&/
+    # - derive/n([iu]?(ai|au|oo|[aiue]))/$1nn/
+    # - derive/n([iu]?(ai|au|oo|[aiue]))/$1ⁿ/
+    - derive/n([iu]?[xyaiueO])/L$1/
+    # - abbrev/L([iu]?[xyaiueO])/*/
+    - abbrev/n([iu]?[xyaiueO])/*/
+    # 所有入聲韻尾
+    - abbrev/([rfqv])0/&/
     #==========================================================================
     # ji_be_tng_jih_kian:
     # 字典編碼轉換按鍵
     # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
+    #--------------------------------------------------------------------------
+    # 【鍵盤按鍵】/【注音編碼】/【注音符號】
+    # 【7】==>【&】==>【˙】 # 所有入聲韻尾
+    # 【=】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
+    # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
     #==========================================================================
     # - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv&3526*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz-43657|
-    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqvn&3526*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|
+    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv3526&L*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657=-|
 
 translator:
   dictionary: bp_ji_khoo
@@ -282,9 +294,9 @@ translator:
   always_show_comments: true
   initial_quality: 0.75
   preedit_format:
-    #--------------------------------------------------------------------------
+    #==========================================================================
     # 定義【鍵盤輸入列】：按鍵與方音符號對映
-    #--------------------------------------------------------------------------
+    #==========================================================================
     # 【注意】：閩拼方案（BP）之【調號】與傳統之【四聲八調】排列不同。故【方音符號】的【調符】需有所調整。
     # 43657 ==> ˋ˪ˊ˫˙
     # 閩拼 2 ==> 方音 6 ˊ，按鍵：【6】
@@ -292,7 +304,13 @@ translator:
     # 閩拼 5 ==> 方音 3 ˪ ，按鍵：【3】
     # 閩拼 6 ==> 方音 5 ˫，按鍵：【5】
     # 閩拼 7/8 ==> 方音 4/8 ˙，按鍵：【7】
-    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥｎˋ˪ˊ˫˙|
+    #--------------------------------------------------------------------------
+    # 【鍵盤按鍵】/【注音編碼】/【注音符號】
+    # 【7】==>【&】==>【˙】 # 所有入聲韻尾
+    # 【=】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
+    # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
+    #--------------------------------------------------------------------------
+    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657=-|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷˋ˪ˊ˫˙ㄥｎ|
     #------------------------------------------------------
     # 鼻音韻母輸入調整
     #------------------------------------------------------
@@ -303,7 +321,13 @@ translator:
     - xform/ㆤㆤ/ㆥ/
     - xform/ㄞㄞ/ㆮ/
     - xform/ㄠㄠ/ㆯ/
-    #------------------------------------------------------
+    # #------------------------------------------------------
+    # - xform/ㄥㄧㄨ/ㄧㆫ/
+    # - xform/ㄥㄧㄚ/ㄧㆩ/
+    # - xform/ㄥㄧㄠ/ㄧㆯ/
+    # - xform/ㄥㄨㄚ/ㄨㆩ/
+    # - xform/ㄥㄨㄞ/ㄨㆮ/
+    # #------------------------------------------------------
     # - xform/ㄥㄧ/ㆪ/
     # - xform/ㄥㄨ/ㆫ/
     # - xform/ㄥㄚ/ㆩ/
@@ -354,16 +378,24 @@ key_binder:
     # - { when: has_menu, accept: colon, send: colon  }
     #---------------------------------------------------
     # 使用【_】鍵，輸入【調號】：3 （低音調）
-    - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu, accept: underscore, send: underscore }
+    # - { when: composing, accept: underscore, send: underscore }
+    # - { when: has_menu, accept: underscore, send: underscore }
     #---------------------------------------------------
     # 使用【-】鍵，輸入【調號】：7 （中音調）
-    - { when: composing, accept: minus, send: minus }
-    - { when: has_menu, accept: minus, send: minus }
+    # - { when: composing, accept: minus, send: minus }
+    # - { when: has_menu, accept: minus, send: minus }
     #---------------------------------------------------
-    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
-    - { when: composing, accept: period, send: period }
-    - { when: has_menu, accept: period, send: period }
+    # # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    # - { when: composing, accept: period, send: period }
+    # - { when: has_menu, accept: period, send: period }
+    #---------------------------------------------------
+    # 使用【=】按鍵，輸入【鼻音韻母前綴符號】使用的【羅馬拼音字母】：【n】
+    # - { when: composing, accept: equal, send: n }
+    # - { when: has_menu,  accept: equal, send: n }
+    #---------------------------------------------------
+    # 使用【=】按鍵，輸入【鼻音韻母前綴符號】使用的【羅馬拼音字母】：【L】
+    # - { when: composing, accept: equal, send: L }
+    # - { when: has_menu,  accept: equal, send: L }
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------
