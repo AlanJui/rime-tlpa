@@ -77,8 +77,10 @@ speller:
     # - derive/ang(\d)$/P$1/  # ㄤ [ang]
     # - derive/ong(\d)$/H$1/  # ㆲ [ong] = /ɔŋ/
     # - derive/om(\d)$/D$1/   # ㆱ [om]
-    # 所有鼻音韻母
+    # 使之與【台羅拼音】相容： na = ann
     - derive/n([iu]?(ai|ao|a|i|u|e|oo))/$1nn/
+    # 變更鼻音韻母前綴羅馬拼音字母，自【n】改為【L】
+    # - xform/n([iu]?(ai|ao|a|i|u|e|oo))/L$1/
     - derive/n([iu]?(ai|ao|a|i|u|e|oo))/L$1/
     # 連續輸入兩個相同韻母字母，視為【鼻音韻母】
     - derive/(ai|ao|a|i|u|e|oo)/$1$1/
@@ -123,22 +125,6 @@ speller:
     # 韻母編碼
     # --------------------------------------------------------------------------
     # 鼻音韻母
-    - xform/nai/X/    # nai
-    - xform/nao/Y/    # nao
-    - xform/noo/Q/    # noo
-    - xform/ne/E/
-    - xform/nu/U/
-    - xform/na/A/
-    - xform/ni/I/
-    # --------------------------------------------------------------------------
-    - derive/Lai/X/    # nai
-    - derive/Lao/Y/    # nao
-    - derive/Loo/Q/    # noo
-    - derive/Le/E/
-    - derive/Lu/U/
-    - derive/La/A/
-    - derive/Li/I/
-    # --------------------------------------------------------------------------
     - derive/ainn/X/
     - derive/aonn/Y/
     - derive/oonn/Q/
@@ -147,18 +133,37 @@ speller:
     - derive/ann/A/
     - derive/inn/I/
     # --------------------------------------------------------------------------
-    - xform/niyh/niyh/
-    - xform/nuxh/nuxh/
-    - xform/niah/niah/
-    # - xform/niao/niy/
-    # - xform/naoh/nyh/
-    # - xform/nooh/nOh/
-    # - xform/nua/nua/
-    # - xform/nui/nui/
+    - xform/Lai/X/    # nai
+    - xform/Lao/Y/    # nao
+    - xform/Loo/Q/    # noo
+    - xform/Le/E/
+    - xform/Lu/U/
+    - xform/La/A/
+    - xform/Li/I/
+    # --------------------------------------------------------------------------
+    - xform/Liyh/Liyh/
+    - xform/Luxh/Luxh/
+    - xform/Liah/Liah/
+    # - xform/Liao/Liy/
+    # - xform/Lia/Lia/
+    # - xform/Lih/Lih/
+    # - xform/Liu/Liu/
+    # - xform/Laoh/Lyh/
+    # - xform/Looh/LOh/
+    # - xform/Lua/Lua/
+    # - xform/Lui/Lui/
+    # - xform/Lah/Lah/
+    # - xform/Leh/Leh/
+    # --------------------------------------------------------------------------
+    # - xform/a/a/
+    # - xform/e/e/
+    # - xform/i/i/
+    # - xform/m/m/
+    # - xform/o/o/
+    # - xform/u/u/
     # --------------------------------------------------------------------------
     # - xform/ianɡ/iang/
     - xform/iaoh/iyh/
-    # - xform/neh/neh/
     - xform/aeh/aeh/
     - xform/ang/aW/
     - xform/aoh/yh/
@@ -172,12 +177,7 @@ speller:
     # - xform/ing/ing/
     # - xform/ioh/ioh/
     # - xform/iuh/iuh/
-    # - xform/nah/nah/
     # - xform/ngh/ngh/
-    # - xform/nia/nia/
-    # - xform/nih/nih/
-    # - xform/niu/niu/
-    # - xform/uah/uah/
     - xform/uai/ux/
     # - xform/uai/ux/
     - xform/uan/u@/
@@ -220,12 +220,6 @@ speller:
     # - xform/ui/ui/
     # - xform/un/un/
     # - xform/ut/ut/
-    # - xform/a/a/
-    # - xform/e/e/
-    # - xform/i/i/
-    # - xform/m/m/
-    # - xform/o/o/
-    # - xform/u/u/
     #==========================================================================
     # 鼻音韻尾（m/ng/n）拼音字母編碼
     #==========================================================================
@@ -276,10 +270,7 @@ speller:
     - abbrev/^(\D+)([12356])$/$1/
     # 所有鼻音韻母
     # - derive/n([iu]?(ai|au|oo|[aiue]))/$1nn/
-    # - derive/n([iu]?(ai|au|oo|[aiue]))/$1ⁿ/
-    - derive/n([iu]?[xyaiueO])/L$1/
-    # - abbrev/L([iu]?[xyaiueO])/*/
-    - abbrev/n([iu]?[xyaiueO])/*/
+    - abbrev/L([iu]?[xyaiueO])/*/
     # 所有入聲韻尾
     - abbrev/([rfqv])0/&/
     #==========================================================================
@@ -336,11 +327,11 @@ translator:
     # - xform/ㄥㄨㄚ/ㄨㆩ/
     # - xform/ㄥㄨㄞ/ㄨㆮ/
     #------------------------------------------------------
-    - xform/ㄥㄚ/ㆩ/
     - xform/ㄥㄧ/ㆪ/
     - xform/ㄥㄨ/ㆫ/
-    - xform/ㄥㆤ/ㆥ/
+    - xform/ㄥㄚ/ㆩ/
     - xform/ㄥㆦ/ㆧ/
+    - xform/ㄥㆤ/ㆥ/
     - xform/ㄥㄞ/ㆮ/
     - xform/ㄥㄠ/ㆯ/
     #------------------------------------------------------
@@ -384,7 +375,12 @@ custom_phrase:
   initial_quality: 1
 
 key_binder:
+  # import_preset: symbols
   import_preset: default
+  half_shape:
+    "'": {pair: ["「", "」"]} #第一次按是「，第二次是」
+    ")": ["〔", "［"] #彈出選單
+    .: {commit: "。"} #無選單，直接上屛。優先級最高
   bindings:
     #---------------------------------------------------
     # 使用【:】鍵，輸入【韻母】：ㆲ
@@ -410,6 +406,10 @@ key_binder:
     # 使用【=】按鍵，輸入【鼻音韻母前綴符號】使用的【羅馬拼音字母】：【L】
     # - { when: composing, accept: equal, send: L }
     # - { when: has_menu,  accept: equal, send: L }
+    # - { when: composing, accept: equal, send: "L" }
+    # - { when: has_menu,  accept: equal, send: "L" }
+    # - { accept: equal, send: 'L', when: composing, }
+    # - { accept: equal, send: 'L', when: has_menu,  }
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------
@@ -446,7 +446,8 @@ recognizer:
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
-    # punct: '`[^\s]$'
+    # punct: "`[^\s]$"
+    punct: "'[a-z]*$"
 
 punctuator:
   import_preset: keymap_piau_tian
