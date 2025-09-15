@@ -71,14 +71,32 @@ speller:
     # 【u】
     - derive/^w(ang|ua|ue|ui|uai|an|at)/u$1/  # 彎[wan]==>[uan]，歪[wai]==>[uai]，位[wi]==>[ui]
     - derive/^w(un|ut|u)/$1/  # 有[wu]==>[u]，溫[wun]==>[un]，鬱[wut]==>[ut]
-    # --------------------------------------------------------------------------
-    # 組合韻母輸入調整
-    # --------------------------------------------------------------------------
-    - derive/ang(\d)$/P$1/  # ㄤ [ang]
-    - derive/ong(\d)$/H$1/  # ㆲ [ong] = /ɔŋ/
-    - derive/om(\d)$/D$1/   # ㆱ [om]
-    # 所有鼻音韻母
-    - derive/n([iu]?(ai|au|oo|[aiue]))/$1nn/
+    #--------------------------------------------------------------------------
+    # 韻母調整
+    #--------------------------------------------------------------------------
+    # 韻腹為： io /iɔ/ 之調整（台羅拼音：ioo）
+    # - 陰聲韻： io /iɔ/, ionn /iɔ̃/（閩拼方案無：ionn /iɔ̃/ 韻）
+    # - 陽聲韻： iong /iɔŋ/
+    # - 入聲韻： iok /iɔk/, iooh /iɔʔ/（閩拼方案無：iooh /iɔʔ/ 韻）
+    #--------------------------------------------------------------------------
+    # 韻腹為： oo /ɔ/ 之調整
+    # - 陰聲韻： oo /ɔ/, onn /ɔ̃/
+    # - 陽聲韻： om /ɔm/, ong /ɔŋ/ (閩拼方案無 om /ɔm/ 韻)
+    # - 入聲韻： op /ɔp/, ok /ɔk/, ooh /ɔʔ/, onnh /ɔ̃ʔ/
+    #--------------------------------------------------------------------------
+    - xform/oo/O/   # ㆦ [oo]
+    - xform/iok/iOk/
+    - derive/iong/iH/
+    - xform/iong/iOng/
+    - xform/iooh/iOh/
+    #--------------------------------------------------------------------------
+    - xform/nooh/nOh/
+    - xform/ooh/Oh/
+    - derive/ong/H/   # ㆲ [ong] = /ɔŋ/
+    - xform/ong/Ong/  # ㆲ [ong]
+    - xform/om/D/     # ㆱ [om]
+    - xform/op/Op/
+    - xform/ok/Ok/
     # --------------------------------------------------------------------------
     # 声母編碼
     #  - 唇音/雙唇音: b, p, bb, m
@@ -89,152 +107,84 @@ speller:
     #  - 喉音（聲門音）：h
     # --------------------------------------------------------------------------
     # 舌尖前音（齦顎音）: z[j], c[ch], zz[jj], s[sh]
-    - derive/^zz(?i)/J/ # ㆢ[ jj ]
-    - derive/^z(?i)/j/  # ㄐ[ j ]
-    - derive/^c(?i)/C/  # ㄑ[ ch ]
-    - derive/^s(?i)/S/  # ㄒ[ sh ]
+    # - xform/^zzi/Ji/ # ㆢ[ jj ]
+    # - xform/^zi/ji/  # ㄐ[ j ]
+    # - xform/^ci/Ci/  # ㄑ[ ch ]
+    # - xform/^si/Si/  # ㄒ[ sh ]
     #--------------------------------------------------------------------------
     # 舌尖前音（齒齦音）: z[j], c[ch], zz[jj], s[sh]
-    - xform/^zz/Z/      # ㆡ[ zz ]
-    - xform/^z/z/       # ㄗ[ z ]
-    - xform/^c/c/       # ㄘ[ c ]
-    - xform/^s/s/       # ㄙ[ s ]
+    - xform/^zz/Z/ # ㆡ[ zz ]
+    - xform/^z/z/  # ㄗ[ z ]
+    - xform/^c/c/  # ㄘ[ c ]
+    - xform/^s/s/  # ㄙ[ s ]
     #--------------------------------------------------------------------------
-    - xform/^bbn/m/     # ㄇ[ m ]
-    - xform/^bb/B/      # ㆠ[ bb ]
-    - xform/^b/b/       # ㄅ[ b ]
-    - xform/^p/p/       # ㄆ[ p ]
+    - derive/^zz(?i)/J/ # ㆡ[ zz ]
+    - derive/^z(?i)/j/  # ㄗ[ z ]
+    - derive/^c(?i)/C/  # ㄘ[ c ]
+    - derive/^s(?i)/S/  # ㄙ[ s ]
     #--------------------------------------------------------------------------
-    - xform/^gg/G/      # ㆣ[ gg ]
-    - xform/^ng/w/      # ㄫ (w) = ng ：ng 後面不接【數值】（即【調號】）
-    - xform/^g/g/       # ㄍ[ g ]
-    - xform/^k/k/       # ㄎ[ k ]
+    - xform/^bbn/m/ # ㄇ[ m ]
+    - xform/^bb/B/  # ㆠ[ bb ]
+    - xform/^b/b/   # ㄅ[ b ]
+    - xform/^p/p/   # ㄆ[ p ]
     #--------------------------------------------------------------------------
-    - xform/^d/d/       # ㄉ[ d ]
-    - xform/^t/t/       # ㄊ[ t ]
-    - xform/^ln/n/      # ㄋ[ n ]
-    - xform/^l/l/       # ㄌ[ l ]
+    - xform/^gg/G/  # ㆣ[ gg ]
+    - xform/^ng/w/  # ㄫ (w) = ng ：ng 後面不接【數值】（即【調號】）
+    - xform/^g/g/   # ㄍ[ g ]
+    - xform/^k/k/   # ㄎ[ k ]
+    #--------------------------------------------------------------------------
+    - xform/^d/d/   # ㄉ[ d ]
+    - xform/^t/t/   # ㄊ[ t ]
+    - xform/^ln/n/  # ㄋ[ n ]
+    - xform/^l/l/   # ㄌ[ l ]
     #--------------------------------------------------------------------------
     - xform/^h(?!\d)/h/ # ㄏ[ h ]
     # --------------------------------------------------------------------------
     # 韻母編碼
     # --------------------------------------------------------------------------
+    - xform/ang/P/  # ㄤ [ang]
+    - xform/ai/x/   # ㄞ [ai]
+    - xform/ao/y/   # ㄠ [ao]
+    - xform/am/V/   # ㆰ [am]
+    - xform/an/@/   # ㄢ [an]
+    # - xform/i/i/  # ㄧ [i]
+    # - xform/u/u/  # ㄨ [u]
+    # - xform/a/a/  # ㄚ [a]
+    # - xform/e/e/  # ㆤ [e]
+    # --------------------------------------------------------------------------
     # 鼻音韻母
-    - xform/nai/X/
-    - xform/nao/Y/
-    - xform/noo/Q/
-    - xform/ne/E/
-    - xform/nu/U/
-    - xform/na/A/
-    - xform/ni/I/
-    # --------------------------------------------------------------------------
-    - derive/ainn/X/
-    - derive/aonn/Y/
-    - derive/oonn/Q/
-    - derive/enn/E/
-    - derive/unn/U/
-    - derive/ann/A/
-    - derive/inn/I/
-    # --------------------------------------------------------------------------
-    - xform/niaoh/niyh/
-    - xform/nuaih/nuxh/
-    - xform/niah/niah/
-    - xform/niao/niy/
-    - xform/naoh/nyh/
-    - xform/nooh/nOh/
-    - xform/nua/nua/
-    - xform/nui/nui/
-    # --------------------------------------------------------------------------
-    # - xform/iɑnɡ/iang/
-    - xform/iaoh/iyh/
-    - xform/iong/iOW/
-    # - xform/neh/neh/
-    - xform/aeh/aeh/
-    - xform/ang/@g/
-    - xform/aoh/yh/
-    - xform/iah/iah/
-    - xform/iak/iak/
-    - xform/iam/iV/
-    - xform/ian/i@/
-    - xform/iao/iy/
-    # - xform/iap/iap/
-    # - xform/iat/iat/
-    # - xform/ing/ing/
-    # - xform/ioh/ioh/
-    - xform/iok/iOk/
-    # - xform/iuh/iuh/
-    # - xform/nah/nah/
-    # - xform/ngh/ngh/
-    # - xform/nia/nia/
-    # - xform/nih/nih/
-    # - xform/niu/niu/
-    - xform/ong/OW/
-    - xform/ooh/Oh/
-    # - xform/uah/uah/
-    - xform/uai/ux/
-    # - xform/uai/ux/
-    - xform/uan/u@/
-    # - xform/uat/uat/
-    - xform/ueh/ueh/
-    # - xform/ae/ae/
-    # - xform/ah/ah/
-    - xform/ai/x/
-    - xform/ak/ak/
-    - xform/am/V/
-    - xform/an/@/
-    - xform/ao/y/
-    # - xform/ap/ap/
-    # - xform/at/at/
-    # - xform/eh/eh/
-    # - xform/eu/eu/
-    # - xform/ia/ia/
-    # - xform/ie/ie/
-    # - xform/ih/ih/
-    # - xform/ik/ik/
-    # - xform/im/im/
-    # - xform/in/in/
-    # - xform/io/io/
-    # - xform/ip/ip/
-    # - xform/it/it/
-    # - xform/iu/iu/
-    # - xform/mh/mh/
-    # - xform/ng/ng/
-    # - xform/oh/oh/
-    - xform/oo/O/
-    - xform/ok/Ok/
-    - xform/op/Op/
-    # - xform/ua/ua/
-    # - xform/ue/ue/
-    # - xform/uh/uh/
-    # - xform/ui/ui/
-    # - xform/un/un/
-    # - xform/ut/ut/
-    # - xform/a/a/
-    # - xform/e/e/
-    # - xform/i/i/
-    # - xform/m/m/
-    # - xform/o/o/
-    # - xform/u/u/
+    - xform/nO/Q/   # ㆧ [oonn]
+    - xform/nai/X/  # ㆮ [ai]
+    - xform/nao/Y/  # ㆯ [au]
+    - xform/ni/I/   # ㆪ [i]
+    - xform/nu/U/   # ㆫ [u]
+    - xform/na/A/   # ㆩ [a]
+    # - xform/nae/E/  # ㆥ [e]
+    - xform/ne/E/   # ㆥ [e]
+    #--------------------------------------------------------------------------
+    # 地方腔韻母
+    #--------------------------------------------------------------------------
+    # 泉州腔韻母
+    - xform/ir/R/  # ir = ㆨ
+    # - derive/er(W|k)/i$1/ # erng/erk
+    # - derive/er(N|t)/u$1/ # ern/ert
+    # - derive/ere/ue/
+    # - derive/er/e/
+    # - derive/ee/e/ # 漳州/泉州腔
+    # - derive/ei/e/ # 漳州腔
+    # - derive/ou/O/ # ou = oo = O
+    # - derive/ur/u/ # 廈門腔
     #==========================================================================
     # 鼻音韻尾（m/ng/n）拼音字母編碼
     #==========================================================================
-    # # ng ：預設當【韻母ㆭ】
-    # - xform/ng(?=\d)/W/ # ㆭ (W) = -ng：ng 後接調號，當【韻尾韻母】ㆭ = ㄥ
-    # # n ：預設當【聲母ㄋ】)
-    # - xform/n(?=\d)/N/ # ㄣ (N) = -n： n  後接調號，當【韻尾韻母】ㄣ，
-    # # m ：預設當【聲母ㄇ】
-    # - xform/m(?=\d)/M/ # ㆬ (M) = -m： m  後接調號，當【韻尾韻母】ㆬ = ㄇ
     # ng ：預設當【韻母ㆭ】
-    - xform/ng(\d)?/W$1/ # ㆭ (W) = -ng：ng 後接調號，當【韻尾韻母】ㆭ = ㄥ
+    - xform/ng(?=\d)/W/ # ㆭ (W) = -ng：ng 後接調號，當【韻尾韻母】ㆭ = ㄥ
     # n ：預設當【聲母ㄋ】)
-    - xform/n(\d)?/N$1/ # ㄣ (N) = -n： n  後接調號，當【韻尾韻母】ㄣ，
+    - xform/n(?=\d)/N/ # ㄣ (N) = -n： n  後接調號，當【韻尾韻母】ㄣ，
     # m ：預設當【聲母ㄇ】
-    - xform/m(\d)?/M$1/ # ㆬ (M) = -m： m  後接調號，當【韻尾韻母】ㆬ = ㄇ
+    - xform/m(?=\d)/M/ # ㆬ (M) = -m： m  後接調號，當【韻尾韻母】ㆬ = ㄇ
     #--------------------------------------------------------------------------
-    # 韻母組合輸入調整
-    # - derive/aW$/P/   # ㄤ [ang]
-    # - derive/OW$/H/   # ㆲ [ong] = /ɔŋ/
-    # - derive/OM$/D/   # ㆱ [om]
+    # - xform/OW/H/  # ㆲ [ong]
     #==========================================================================
     # 入聲韻尾轉換：設定【入聲】之【聲調】值，不論4或8，皆以0代
     # (1) -m  ==> -p
@@ -265,6 +215,7 @@ speller:
     # 舒聲調（平、上、去聲）之漢字，可免調號（1/2/3/5/6）；但【入聲】（調號：4/8）不適用。
     - abbrev/^(\D+)([12356])$/$1/
     # 所有鼻音韻母
+    # - abbrev/L(ia|iu|iO|iy|ui|ua|ue|ux|[iuaeOxy])/&/
     # - derive/([iu]?(ai|au|oo|[aiue]))nn/$1ⁿ/
     - abbrev/n[iu]?[xyOaiue]/&/
     #==========================================================================
