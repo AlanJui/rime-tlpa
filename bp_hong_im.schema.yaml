@@ -53,8 +53,6 @@ engine:
     - uniquifier
 
 speller:
-  # alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-=43657"
-  # initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-="
   alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-[43657"
   initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzZ.-["
   finals: " 43657"
@@ -292,7 +290,7 @@ speller:
     #--------------------------------------------------------------------------
     # 【鍵盤按鍵】/【注音編碼】/【注音符號】
     # 【7】==>【&】==>【˙】 # 所有入聲韻尾
-    # 【[】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
+    # 【.】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
     # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
     #==========================================================================
     # - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv3526&L*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657[-|
@@ -318,7 +316,7 @@ translator:
     #--------------------------------------------------------------------------
     # 【鍵盤按鍵】/【注音編碼】/【注音符號】
     # 【7】==>【&】==>【˙】 # 所有入聲韻尾
-    # 【[】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
+    # 【.】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
     # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
     #--------------------------------------------------------------------------
     # - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657[-|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷˋ˪ˊ˫˙ㄥｎ|
