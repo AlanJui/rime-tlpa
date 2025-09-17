@@ -53,8 +53,8 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzP.-43657"
-  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/KbtgzP.-"
+  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657"
+  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-"
   finals: " 43657"
   delimiter: "'"
   use_space: true
@@ -62,19 +62,6 @@ speller:
   # 定義【注音符號】編碼及【鍵盤按鍵】對映之【注音編碼】
   #==========================================================================
   algebra:
-    # #==========================================================================
-    # # 變調
-    # #==========================================================================
-    # # 舒聲變調 (17325)
-    # - derive/1/7/ # 第一調 → 第七調
-    # - derive/7/3/ # 第七調 → 第三調
-    # - derive/3/2/ # 第三調 → 第二調
-    # - derive/2/1/ # 第二調 → 第一調
-    # - derive/5/7/ # 第五調 → 第七調
-    # # --------------------------------------------------------------------------
-    # # 入聲變調（4 8）
-    # - derive/(?<![ptkh])4/8/ # -ㆷ 第四調 → 第八調
-    # - derive/(?<![ptkh])8/4/ # -ㆷ 第八調 → 第四調
     #==========================================================================
     # 羅馬拼音字母替換
     #==========================================================================
@@ -248,11 +235,16 @@ speller:
     # 【鍵盤按鍵】/【注音編碼】/【注音符號】
     # 【7】==>【&】==>【˙】 # 所有入聲韻尾
     # 【.】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
-    # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
+    # 【P】==>【*】==>【ｎ】 # 所有鼻音韻母
     #==========================================================================
-    # - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqvL*23570|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|
-    # - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv2357&L*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.-|
-    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv2357&L*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.P|
+    # - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv2357&L*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.P|
+    #--------------------------------------------------------------------------
+    # 【鍵盤按鍵】/【注音編碼】/【注音符號】
+    # 【7】==>【&】==>【˙】 # 所有入聲韻尾
+    # 【.】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
+    # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
+    #--------------------------------------------------------------------------
+    - xlit|bBpmdtnlgGkwhjJCSzZcsiIuUaAOQoeExXyYPHVD@MNWRrfqv2357&L*|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.-|
 
 translator:
   dictionary: zu_im_2
@@ -267,11 +259,16 @@ translator:
     # 【鍵盤按鍵】/【注音編碼】/【注音符號】
     # 【7】==>【&】==>【˙】 # 所有入聲韻尾
     # 【.】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
+    # 【P】==>【*】==>【ｎ】 # 所有鼻音韻母
+    #==========================================================================
+    # - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.P|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷˋ˪ˊ˫˙ㄥñ|
+    #--------------------------------------------------------------------------
+    # 【鍵盤按鍵】/【注音編碼】/【注音符號】
+    # 【7】==>【&】==>【˙】 # 所有入聲韻尾
+    # 【.】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
     # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
     #==========================================================================
-    # - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-43657|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷㄥ入ˋ˪ˊ˫˙|
-    # - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.-|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷˋ˪ˊ˫˙ㄥñ|
-    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.P|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷˋ˪ˊ˫˙ㄥñ|
+    - xlit|1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.-|ㄅㆠㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄐㆢㄑㄒㄗㆡㄘㄙㄧㆪㄨㆫㄚㆩㆦㆧㄜㆤㆥㄞㆮㄠㆯㄤㆲㆰㆱㄢㆬㄣㆭㆨㆴㆵㆻㆷˋ˪ˊ˫˙ㄥñ|
     #==========================================================================
     # 按鍵轉調等：將按鍵之輸入轉換成【聲調符號】
     #==========================================================================
@@ -637,19 +634,21 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 使用【:】鍵，輸入【韻母】：ㆲ
+    # 注音輸入法：使用【:】鍵，輸入【韻母】：ㆲ
     # - { when: composing, accept: colon, send: colon }
     # - { when: has_menu, accept: colon, send: colon  }
     #---------------------------------------------------
-    # 使用【_】鍵，輸入【調號】：3 （低音調）
-    - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu, accept: underscore, send: underscore }
+    # 拼音輸入法：使用【_】鍵，輸入【調號】：3 （低音調）
+    # - { when: composing, accept: underscore, send: underscore }
+    # - { when: has_menu, accept: underscore, send: underscore }
     #---------------------------------------------------
-    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    # 注音輸入法：使用【-】鍵，輸入【所有鼻音韻母】
+    # 拼音輸入法：使用【-】鍵，輸入【調號】：7 （中音調）
     - { when: composing, accept: minus, send: minus }
     - { when: has_menu, accept: minus, send: minus }
     #---------------------------------------------------
-    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    # 注音輸入法：使用【.】鍵，輸入【鼻音韻母前綴識別】
+    # 拼音輸入法：使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
     - { when: composing, accept: period, send: period }
     - { when: has_menu, accept: period, send: period }
     #---------------------------------------------------
@@ -688,7 +687,7 @@ recognizer:
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
-    punct: '`[^\s]$'
+    # punct: '`[^\s]$'
 
 punctuator:
   import_preset: keymap_piau_tian
