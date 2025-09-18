@@ -29,10 +29,10 @@ switches:
 
 engine:
   processors:
+    - lua_processor@jump_select   # 務必置頂，用以攔截【快捷鍵】，如：<Ctrl>+<,> / <Ctrl>+<.>，轉送【代理鍵】：F20/F24
     - ascii_composer
     - recognizer
-    - key_binder                  # 將【快捷鍵】<Ctrl>+<.> 轉成 F24
-    - lua_processor@jump_select   # 執行 F24 ，令侯選字視窗中的游標跳到中間
+    - key_binder                  # 令【代理鍵】：F20/F24，觸發【侯選字游標】執行【Home/Down】功能
     - speller
     - punctuator
     - selector
@@ -679,20 +679,14 @@ key_binder:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
     #---------------------------------------------------
-    # 候選單開啟時：
+    # 候選字清單展開時（即 has_menu 為 true 時）
     #---------------------------------------------------
-    # 候選單開啟時：把 Control+逗號/句點/斜線 轉送成 F13/14/15
-    # - { when: has_menu, accept: "Control+comma",  send: F13 }  # 跳到底端
-    # - { when: has_menu, accept: "Control+period", send: F14 }  # 跳到中間
-    # - { when: has_menu, accept: "Control+slash",  send: F15 }  # 回到頂端
+    # 當【候選字清單】展開時，執行【代理鍵】F20/F24 之功能
+    - { when: has_menu, accept: F20, send: Home }    # F20：將【侯選游標】置於【頂端】(第一個候選字)
+    - { when: has_menu, accept: F24, send: Down }    # F24：將【候選游標】往下移動一行
+    # - { when: has_menu, accept: "Control+slash",  send: Home }  # 回到第 1 個
+    # - { when: has_menu, accept: "Control+comma",  send: End }   # 跳到本頁最後一個
     #---------------------------------------------------
-    - { when: has_menu, accept: "Control+Alt+j", send: F13 }  # 跳到底端
-    - { when: has_menu, accept: "Control+Alt+k", send: F14 }  # 跳到中間
-    - { when: has_menu, accept: "Control+Alt+h", send: F15 }  # 回到頂端
-    #---------------------------------------------------
-    # 代理鍵 → 真正的方向鍵（僅在 has_menu 時）
-    - { when: has_menu, accept: F23, send: Up }      # F23 代表「上一個候選」
-    - { when: has_menu, accept: F24, send: Down }    # F24 代表「下一個候選」
 
 editor:
   bindings:
@@ -703,9 +697,9 @@ editor:
     Control+Shift+Return: commit_raw_input # 將 Control+Return 綁定到 Lua 函數
 
 menu:
-  alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
-  alternative_select_keys: "ABCDE"
   page_size: 5 #選單每䈎顯示個數
+  alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
+  # alternative_select_keys: "ABCDE"
 
 style:
   horizontal: false

@@ -1,72 +1,40 @@
 -----------------------------------------------------------------------------------------
--- 【操作按鍵】：
--- function jump_select(key, env)
--- Lua 回傳值要用數字：1 = kAccepted（吃掉事件、不再往後傳）、2 = kNoop（放行）。
------------------------------------------------------------------------------------------
 -- jump_select：候選單快速跳轉（只移動高亮，不上屏）
--- Ctrl+Alt+J → 跳到本頁最後一個
--- Ctrl+Alt+K → 跳到本頁中間
--- Ctrl+Alt+H → 回到本頁頂端
 
--- -- 放在 rime.lua，暫時用來診斷：只要有候選單，就把收到的按鍵 repr 吐出來
--- function jump_select(key, env)
---   local context = env.engine.context
---   if not context:has_menu() then
---     return 2
---   end
---   env.engine:commit_text("[LUA:" .. key:repr() .. "]")
---   return 1
--- end
-
--- jump_select：候選單快速跳轉（只移動高亮，不上屏）
--- F13 → 跳到底端；F14 → 跳到中間；F15 → 回到頂端
--- 這些 F13~F15 由 key_binder 在 has_menu 時，將你的熱鍵轉送而來。
-
--- 只處理「跳中位」：F24 觸發 → Home 到頂 → Down 若干次
--- 配合 weasel.custom.yaml：
---   - Control+comma  → End   （到底，前端處理）
---   - Control+slash  → Home  （到頂，前端處理）
---   - Control+period → F24   （中位，交本函式處理）
-
+-- 固定對齊「畫面 5 行」：頂=Home；中=Home+Down×2；底=Home+Down×4
+-- 按（Ctrl+.）鍵，即可將高亮移動到候選頁中間位置
+-- 熱鍵：Ctrl+/（頂）、Ctrl+.（中）、Ctrl+,（底）
+-- 注意：F20/F24 是代理鍵，會在 schema 的 key_binder 被翻成 Home/Down
 local function press_key_n(env, key_name, n)
-  for _ = 1, n do
-    env.engine:process_key(KeyEvent(key_name))
-  end
+  for _ = 1, n do env.engine:process_key(KeyEvent(key_name)) end
 end
 
-local function normalize_repr(repr)
-  if repr:sub(1, 8) == "Release+" then
-    return repr:sub(9)
-  end
-  return repr
+local function norm(r)
+  if r:sub(1,8) == "Release+" then return r:sub(9) end
+  return r
 end
 
 function jump_select(key, env)
-  local context = env.engine.context
-  -- 僅在候選單開啟時作用
-  if not context:has_menu() then
-    return 2  -- kNoop
-  end
+  local ctx = env.engine.context
+  if not ctx:has_menu() then return 2 end
 
-  local r = normalize_repr(key:repr())
-  -- 只吃 F24（中位）；頂/底交給前端 Home/End，不在這裡處理
-  if r ~= "F24" then
-    return 2
-  end
+  local r = norm(key:repr())
 
-  local menu = context.menu
-  -- 讀取當前頁大小；若前端 style/page_size 已設為 5，這裡會反映為 5
-  local page_size = (menu and menu.page_size) or 9
-  -- 中位：ceil(page_size/2)，要按 Down 的次數 = 中位索引-1
-  local steps = math.max(0, math.ceil(page_size / 2) - 1)
+  -- 避免自觸發（忽略我們送出的代理鍵）
+  if r == "F20" or r == "F24" then return 2 end
 
-  -- 先到頂（Home），再往下走 steps 步
-  env.engine:process_key(KeyEvent("Home"))
-  -- Debug
-  env.engine:commit_text("{MID:" .. tostring(page_size) .. "}")
-  if steps > 0 then
-    press_key_n(env, "Down", steps)
-  end
+  -- 候選字視窗中游標移動快捷鍵：頂端/中位/底端
+  local go_top    = (r == "Control+comma")  or (r == "Control+,")
+  local go_middle = (r == "Control+period") or (r == "Control+.")
+  local go_bottom = (r == "Control+slash")
 
-  return 1  -- kAccepted：事件已處理並吃掉
+  if not (go_top or go_middle or go_bottom) then return 2 end
+
+  -- 回頂（F20 → Home）
+  env.engine:process_key(KeyEvent("F20"))
+
+  -- 固定步數：中=2、底=4（頂=0）
+  local steps = go_middle and 2 or (go_bottom and 4 or 0)
+  if steps > 0 then press_key_n(env, "F24", steps) end  -- F24 → Down
+  return 1
 end

@@ -1,4 +1,3 @@
-# version: v0.1.0.0
 customization:
   distribution_code_name: Weasel
   distribution_version: 0.16.0
@@ -6,23 +5,29 @@ customization:
   modified_time: "Tue May 21 13:16:43 2024"
   rime_version: 1.11.2
 patch:
+  # 候選視窗：每頁 5 個（前端設定，會覆蓋 schema 的 menu.page_size）
+  "style/page_size": 5
+  # 字型與外觀
   # "style/font_face": "Iansui 094, Noto Serif TC"
   # "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
   "style/font_face": "霞鶩文楷 TC, 新細明體"
   "style/comment_font_face": "霞鶩文楷 TC, 新細明體"
   "style/font_point": 28
   "style/horizontal": false
-  "tyle/inline_preedit": true  # 內嵌編碼（僅支持TSF）
+  "style/inline_preedit": true  # 內嵌編碼（僅支持TSF）
   "style/display_tray_icon": true  # 顯示托盤圖標
+  # 若要同時套用配色：
+  # "style/color_scheme": "starcraft"
   "key_binder/bindings":
-    - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
-    - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
-    # 翻頁
-    - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
-    - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
-    - { accept: "Control+p", send: Page_Up, when: composing }
-    - { accept: "Control+n", send: Page_Down, when: composing }
+    # 輸入【中音調】，在台羅拼音為聲調 7
+    # - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
+    # - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
+    # - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    - { when: composing, accept: minus,  send: minus }   # 調號 7
+    - { when: has_menu,  accept: minus,  send: minus }
+    # 翻頁（Page_Up=上一頁、Page_Down=下一頁）
+    - { when: has_menu, accept: "Control+p", send: Page_Up }
+    - { when: has_menu, accept: "Control+n", send: Page_Down }
     #---------------------------------------------------
     # Vim Mode
     #---------------------------------------------------
@@ -31,10 +36,20 @@ patch:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
     #---------------------------------------------------
-  "switcher/hotkeys":  # 這個列表裏每項定義一個快捷鍵，使哪個都中
-    - "Control+o"      # 輸入輕聲調符號
-    - "Control+n"      # 輸入鼻音韻母
-    - "Control+grave"  # 你看寫法並不  "style/color_scheme": starcraft    # 這項用於選中下面定義的新方案
+    # # 底端：直接交給前端（最穩）
+    # - { when: has_menu, accept: "Control+comma",  send: End }
+    # # 頂端：直接交給前端（最穩）
+    # - { when: has_menu, accept: "Control+slash",  send: Home }
+    # # 中位：轉送給 Lua 用 F24 處理（Home 後 Down N 次）
+    # - { when: has_menu, accept: "Control+period", send: F24 }
+    #---------------------------------------------------
+
+  # 切換器熱鍵（示範修正語法與破損的行）
+  "switcher/hotkeys":
+    - "Control+o"
+    - "Control+n"
+    - "Control+grave"
+
   "preset_color_schemes/starcraft":  # 在配色方案列表裏加入標識爲 starcraft 的新方案
     name: 星際我爭霸／StarCraft
     author: Contralisk <contralisk@gmail.com>, original artwork by Blizzard Entertainment
