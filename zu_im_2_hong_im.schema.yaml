@@ -55,6 +55,7 @@ engine:
     - table_translator@custom_phrase
     - script_translator
   filters:
+    # - lua_filter@supers_indicator   # ← 新增：在候選註解前顯示 〔上標〕 / 〔一般〕
     - uniquifier
 
 speller:
@@ -360,7 +361,7 @@ translator:
     #------------------------------------------------------
     # 聲調
     #------------------------------------------------------
-    # - xform/6/7/ # 聲調 6 改為 7
+    - xform/6/7/ # 聲調 6 改為 7
     #------------------------------------------------------
     # 聲母
     #------------------------------------------------------
@@ -685,6 +686,10 @@ key_binder:
     # - { when: has_menu, accept: "Control+comma",  send: End }   # 跳到本頁最後一個
     - { when: has_menu, accept: F20, send: Home }    # F20：將【侯選游標】置於【頂端】(第一個候選字)
     - { when: has_menu, accept: F24, send: Down }    # F24：將【候選游標】往下移動一行
+    #---------------------------------------------------
+    # 切換【帶調號值的方音符號】，其【調值】使用【一般格式】/【上標格式】
+    # - { when: always, accept: "Control+grave", toggle: supers_tone }
+    # - { when: has_menu, accept: "Control+grave", toggle: supers_tone }
 
 editor:
   bindings:
