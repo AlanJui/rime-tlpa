@@ -28,7 +28,8 @@ switches:
     states: [半形, 全形]
   - name: supers_tone
     reset: 0
-    states: [一般數字調, 上標數字調]
+    states: [上標數字調, 一般數字調]
+    # states: [一般數字調, 上標數字調]
 
 engine:
   processors:
@@ -353,7 +354,7 @@ translator:
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
     # 定義【雙標音模式】之【候選字單】
-    # 令候選字視窗，可顯示兩組「拼音/注音」
+    # 令候選字清單，可顯示兩組「拼音/注音」
     # 左邊：拼音（TLPA 拼音字母）；右邊：注音符號。
     #==============================================================================
     # 連續輸入用【拼音分隔符號】換成空白
@@ -667,19 +668,19 @@ key_binder:
     - { when: composing, accept: period, send: period }
     - { when: has_menu, accept: period, send: period }
     #---------------------------------------------------
-    # 翻頁
+    # 【候選字清單】翻頁快捷鍵設定
     #---------------------------------------------------
     - { accept: "Control+p", send: Page_Up, when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
     #---------------------------------------------------
-    # 候選字清單以 VIM 模式，操作【游標】之移動，達到【上/下/翻到前頁/翻到後頁】操作
+    # 【候選字清單】以 VIM 模式，操作【游標】之移動，達到【上/下/翻到前頁/翻到後頁】操作
     #---------------------------------------------------
     - { when: has_menu, accept: "Control+h", send: Page_Up }
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
     #---------------------------------------------------
-    # 候選字清單展開時（即 has_menu 為 true 時）
+    # 【候選字清單】展開時（即 has_menu 為 true 時）
     #---------------------------------------------------
     # 當【候選字清單】展開時，執行【代理鍵】F20/F24 之功能
     # - { when: has_menu, accept: "Control+slash",  send: Home }  # 回到第 1 個
@@ -693,11 +694,11 @@ key_binder:
 
 editor:
   bindings:
-    space: commit # 選擇「備選漢字」
+    space: commit # 以【候選字清單】中，被【候選游標】標示的【漢字】，將之輸出
     Control+Shift+Return: commit_comment  # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
-    # Return: noop    # 輸出【台語注音二式】的【羅馬拼音字母】（例如 hu5）
-    # Control+Return: noop  # 輸出【方音符號】的【注音符號】（例如 ㄏㄨˊ）
-    # Shift+Return: noop  # 輸出【帶調號值的方音符號】的【注音符號】
+    # Return: noop    # 輸出【台語注音二式】的【羅馬拼音字母】（例如 ：u5）
+    # Control+Return: noop  # 輸出【方音符號】的【注音符號】（例如：ㄏㄨˊ）
+    # Shift+Return: noop  # 輸出【帶調號的方音符號】的【注音符號】（例如：ㄏㄨ5／ㄏㄨ⁵）
 
 menu:
   page_size: 5 #選單每䈎顯示個數
@@ -707,6 +708,8 @@ menu:
 style:
   horizontal: false
   font_face: "霞鶩文楷 TC, 新細明體"
+  comment_font_face: "BopomofoRuby1909-v1, 新細明體"
+  comment_font_size: 18
 
 recognizer:
   patterns:

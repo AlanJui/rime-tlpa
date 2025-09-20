@@ -5,17 +5,17 @@ customization:
   modified_time: "Tue May 21 13:16:43 2024"
   rime_version: 1.11.2
 patch:
+  "style/inline_preedit": true  # 內嵌編碼（僅支持TSF）
   # 候選視窗：每頁 5 個（前端設定，會覆蓋 schema 的 menu.page_size）
+  "style/horizontal": false
   "style/page_size": 5
   # 字型與外觀
+  "style/font_point": 28
+  "style/display_tray_icon": true  # 顯示托盤圖標
   # "style/font_face": "Iansui 094, Noto Serif TC"
   # "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
-  "style/font_face": "霞鶩文楷 TC, 新細明體"
-  "style/comment_font_face": "霞鶩文楷 TC, 新細明體"
-  "style/font_point": 28
-  "style/horizontal": false
-  "style/inline_preedit": true  # 內嵌編碼（僅支持TSF）
-  "style/display_tray_icon": true  # 顯示托盤圖標
+  # "style/comment_font_face": "BopomofoRuby1909-v1, Iansui 094"
+  # "style/font_face": "霞鶩文楷 TC, 新細明體"
   # 若要同時套用配色：
   # "style/color_scheme": "starcraft"
   "key_binder/bindings":
@@ -35,14 +35,6 @@ patch:
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
-    #---------------------------------------------------
-    # # 底端：直接交給前端（最穩）
-    # - { when: has_menu, accept: "Control+comma",  send: End }
-    # # 頂端：直接交給前端（最穩）
-    # - { when: has_menu, accept: "Control+slash",  send: Home }
-    # # 中位：轉送給 Lua 用 F24 處理（Home 後 Down N 次）
-    # - { when: has_menu, accept: "Control+period", send: F24 }
-    #---------------------------------------------------
 
   # 切換器熱鍵（示範修正語法與破損的行）
   "switcher/hotkeys":
