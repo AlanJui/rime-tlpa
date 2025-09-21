@@ -160,3 +160,79 @@ function supers_indicator(input, env)
     yield(new)
   end
 end
+
+-----------------------------------------------------------------------
+-- filter Debug Tools
+-----------------------------------------------------------------------
+-- 驗證 FILTER　的觸發能被 RIME 攔截：不管候選內容是什麼，前面一律加上 [LUA] 標記
+function force_mark_filter(input, env)
+  for cand in input:iter() do
+    local old = cand.comment or ""
+    local nc = Candidate(cand.type, cand.start, cand._end, cand.text, "[LUA] " .. old)
+    nc.quality = cand.quality
+    yield(nc)
+  end
+end
+
+-- 最小測試：僅在 comment 後面加 " [OK]"，不重排不改 text
+-- 預期：
+-- (1)注音輸入列仍是【ㄅ'ㄙ】
+-- (2)候選照常彈出
+-- (3)註解末尾出現 [OK]
+function append_ok_filter(input, env)
+  for cand in input:iter() do
+    local old = cand.comment or ""
+    local nc = cand:clone()         -- 關鍵：clone 保留 preedit/屬性
+    nc.comment = old .. " [OK]"
+    yield(nc)
+  end
+end
+
+-----------------------------------------------------------------------
+-- 為注音符號的連續輸入，重排【候選字清單】中漢字的拼音字母、注音符號
+-- 將「〔TLPA〕 【注音】  〔TLPA2〕 【注音2】 …」
+-- 重排成「〔TLPA〕〔TLPA2〕 …  【注音】 【注音2】 …」
+
+local function regroup_pairs_safe(s)
+  if type(s) ~= "string" or s == "" then return s end
+  local tlpa, zh = {}, {}
+
+  -- 抓所有 〔...〕（最小擷取）
+  for t in s:gmatch("〔(.-)〕") do
+    table.insert(tlpa, t)
+  end
+
+  -- 抓所有 【...】（最小擷取）
+  for z in s:gmatch("【(.-)】") do
+    table.insert(zh, z)
+  end
+
+  if #tlpa >= 2 and #tlpa == #zh then
+    return "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+           .. "  "
+           .. "【" .. table.concat(zh, "】 【") .. "】"
+  end
+  return s
+end
+
+function reformat_comment_filter(input, env)
+  for cand in input:iter() do
+    local old = cand.comment or ""
+    local new = regroup_pairs_safe(old)
+
+    if new ~= old then
+      -- 關鍵：跟你現有的 supers_indicator 一樣的做法
+      local c = cand:get_genuine()
+      local nc = Candidate(c.type, c.start, c._end, c.text, new)
+      -- 保留原來資訊，避免 preedit/彈窗異常
+      nc.preedit  = cand.preedit
+      nc.quality  = cand.quality
+      -- 如你有自訂的屬性，也可在此補帶
+      yield(nc)
+    else
+      yield(cand)
+    end
+  end
+end
+
+-----------------------------------------------------------------------

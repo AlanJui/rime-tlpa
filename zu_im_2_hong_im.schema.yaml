@@ -58,6 +58,11 @@ engine:
   filters:
     # - lua_filter@supers_indicator   # ← 新增：在候選註解前顯示 〔上標〕 / 〔一般〕
     - uniquifier
+    - comment_filter
+    # 為 filter 除錯用
+    # - lua_filter@append_ok_filter
+    # - lua_filter@force_mark_filter
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.-=43657"
