@@ -1,10 +1,10 @@
 -----------------------------------------------------------------------------------------
--- jump_select：候選單快速跳轉（只移動高亮，不上屏）
-
+-- jump_select：令【候選字清單】中的【標示游標】移動，提供：到頂端/到中間/到底端的三種快捷鍵
+-----------------------------------------------------------------------------------------
 -- 固定對齊「畫面 5 行」：頂=Home；中=Home+Down×2；底=Home+Down×4
--- 按（Ctrl+.）鍵，即可將高亮移動到候選頁中間位置
--- 熱鍵：Ctrl+/（頂）、Ctrl+.（中）、Ctrl+,（底）
+-- 快捷鍵：Ctrl+/（頂）、Ctrl+.（中）、Ctrl+,（底）
 -- 注意：F20/F24 是代理鍵，會在 schema 的 key_binder 被翻成 Home/Down
+-----------------------------------------------------------------------------------------
 local function press_key_n(env, key_name, n)
   for _ = 1, n do env.engine:process_key(KeyEvent(key_name)) end
 end
@@ -16,10 +16,14 @@ end
 
 function jump_select(key, env)
   local ctx = env.engine.context
+
+  -- 若【候選字清單】尚未展開，終止處理
   if not ctx:has_menu() then return 2 end
 
+  -- 取得【輸入列】的【按鍵】
   local r = norm(key:repr())
 
+  -- 若【按鍵】為代理鍵：【F20】或【F24】，則終止處理
   -- 避免自觸發（忽略我們送出的代理鍵）
   if r == "F20" or r == "F24" then return 2 end
 
@@ -28,28 +32,34 @@ function jump_select(key, env)
   local go_middle = (r == "Control+period") or (r == "Control+.")
   local go_bottom = (r == "Control+slash")
 
+  -- 若【按鍵】不是【候選字清單】的快捷鍵，終止處理
   if not (go_top or go_middle or go_bottom) then return 2 end
 
-  -- 回頂（F20 → Home）
+  -- 為後續處理之便，先將【標示游標】移到頂端
+  -- 送出代理鍵：F20（Home）
   env.engine:process_key(KeyEvent("F20"))
 
-  -- 固定步數：中=2、底=4（頂=0）
+  -- 計算【標示游標】的【往下移動次數】
+  -- 移到：中間=2、底端=4（頂端=0）
   local steps = go_middle and 2 or (go_bottom and 4 or 0)
+  -- 透過代理鍵：F24（Down）及上述所得之【往下移動次數】，完成【標示游標】之移動
   if steps > 0 then press_key_n(env, "F24", steps) end  -- F24 → Down
   return 1
 end
 
 ------------------------------------------------------------------------------------------
--- Ctrl+Alt+R/T → 上屏 羅馬拼音（TLPA），如 hu3
--- Ctrl+Alt+B → 上屏 方音符號，如 ㄏㄨ˪
--- Ctrl+Alt+S/Y → 上屏 方音符號＋上標數字調，如 ㄏㄨ⁷
---
--- Enter → TLPA 羅馬拼音：hu5（維持不變）
--- Ctrl+Enter → 方音符號：ㄏㄨˊ（維持不變）
--- Shift+Enter → 方音＋數字調：ㄏㄨ5（新的要求；不再用上標）
--- Ctrl+Shift+Enter → 同時上屏兩段：〔hu5〕 【ㄏㄨˊ】
+-- aux_commit：提供輸入法的【輸出】，可選擇
+-- （1）漢字、（2）【羅馬拼音字母】、（3）【方音符號】、（4）【帶調號之方音符號】、
+-- （5）候選字清單顯示結果：【羅馬拼音字母】＋【方音符號】一起輸出（候選字清單的顯示結果）
+------------------------------------------------------------------------------------------
+-- 扶：〔hu5〕  【ㄏㄨˊ】
+-- Space → 漢字
+-- Enter → 羅馬拼音字母：hu5
+-- Ctrl+Enter → 方音符號：ㄏㄨˊ
+-- Shift+Enter → 帶調號方音符號：ㄏㄨ5
+-- Ctrl+Shift+Enter → 候選字清單顯示結果：〔hu5〕  【ㄏㄨˊ】
+------------------------------------------------------------------------------------------
 
--- ========= 已有的工具函式（保留你原本版本即可） =========
 local function get_forms_from_candidate(env)
   local ctx = env.engine.context
   local cand = ctx:get_selected_candidate()
@@ -71,10 +81,20 @@ local function get_inline_forms(env)
 end
 
 local TONE_MARKS = "[ˊˋ˪˫˙]"
-local function strip_bpmf_marks(bpmf) return bpmf and bpmf:gsub(TONE_MARKS, "") or bpmf end
+local function strip_bpmf_marks(bpmf)
+  return bpmf and bpmf:gsub(TONE_MARKS, "") or bpmf
+end
 
 -- 上標數字
-local supers_map = { ["ˊ"]="⁵", ["ˋ"]="²", ["˪"]="³", ["˫"]="⁷", ["˙"]="⁸" }
+local supers_map = {
+  ["ˊ"]="⁵",
+  ["ˋ"]="²",
+  ["˪"]="³",
+  ["˫"]="⁷",
+  ["˙"]="⁸"
+}
+
+-- 上標數字（將 ˊˋ˪˫˙ 換成 ⁵²³⁷⁸，接上 TLPA 的尾碼數字）
 local function bpmf_to_supers(bpmf, tlpa)
   if not bpmf then return nil end
   local out, had = bpmf, false
@@ -146,7 +166,9 @@ function aux_commit(key, env)
   return 2
 end
 
+------------------------------------------------------------------------------------------
 -- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
+------------------------------------------------------------------------------------------
 function supers_indicator(input, env)
   local on = env.engine.context:get_option("supers_tone")
   local tag = on and "〔上標〕 " or "〔一般〕 "
@@ -188,10 +210,15 @@ function append_ok_filter(input, env)
   end
 end
 
------------------------------------------------------------------------
--- 為注音符號的連續輸入，重排【候選字清單】中漢字的拼音字母、注音符號
--- 將「〔TLPA〕 【注音】  〔TLPA2〕 【注音2】 …」
--- 重排成「〔TLPA〕〔TLPA2〕 …  【注音】 【注音2】 …」
+--------------------------------------------------------------------------
+-- reformat_comment_filter：重排候選註解中的羅馬拼音與注音符號
+--------------------------------------------------------------------------
+-- 為處理【連續輸入】時，【候選字清單】中漢字的【羅馬拼音字母】、【注音符號】亦能正確顯示。
+-- 輸入法自【拼音/注音輸入列】接收：羅馬拼音字母/注音符號後，在【候選字清單】的顯示，格式為：
+-- 〔羅馬字母1〕 【注音符號1】  〔羅馬字母2〕 【注音符號2】 …
+-- 透過 Lua filter: reformat_comment_filter 重排成：
+-- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
+--------------------------------------------------------------------------
 
 local function regroup_pairs_safe(s)
   if type(s) ~= "string" or s == "" then return s end
