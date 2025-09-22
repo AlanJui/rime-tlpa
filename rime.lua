@@ -85,15 +85,17 @@ end
 -- Ctrl+Shift+Enter：輸出「候選雙欄格式」：〔tlpa1〕 〔tlpa2〕 … 【bpmf1】 【bpmf2】 …
 ------------------------------------------------------------------------------------------
 
--- ========= 連續輸入版：解析候選註解 / inline，並依快捷鍵提交 =========
--- 抓所有 〔...〕 與 【...】（支援你重排後的「雙欄」與原始「配對」）
+-- ========= 解析候選註解 / inline 的多音節工具 =========
+
+-- 從候選註解抓所有 〔...〕 與 【...】（相容你重排後的「雙欄」與原始「配對」）
 local function parse_comment_all(comment)
   if not comment or comment == "" then return {}, {} end
   local tlpa, zh = {}, {}
-  -- 先抓所有 〔...〕 / 【...】（應付「雙欄」）
+  -- 抓所有 TLPA
   for t in comment:gmatch("〔(.-)〕") do table.insert(tlpa, t) end
+  -- 抓所有注音
   for z in comment:gmatch("【(.-)】") do table.insert(zh, z) end
-  -- 若抓不到，嘗試抓「一對一對」：〔...〕【...】〔...〕【...】
+  -- 若抓不到，再試「一對一對」的樣式
   if #tlpa == 0 or #zh == 0 then
     for L, R in comment:gmatch("〔(.-)〕%s*【(.-)】") do
       table.insert(tlpa, L); table.insert(zh, R)
@@ -107,17 +109,18 @@ local function split_inline(ctx)
   local tl = ctx.input or ""
   local bp = (ctx.get_script_text and ctx:get_script_text()) or ""
   local tl_list, bp_list = {}, {}
+
   if tl ~= "" then
     for seg in tl:gmatch("[^']+") do table.insert(tl_list, seg) end
   end
+
   if bp ~= "" then
-    -- 先把 連續輸入用的 ' 變空白，再依空白切；並去掉殘留單引號
-    bp = bp:gsub("'", " ")
+    bp = bp:gsub("'", " ")  -- 將連續輸入分隔符號轉空白
     for seg in bp:gmatch("%S+") do
       seg = seg:gsub("'", "")
       table.insert(bp_list, seg)
     end
-    -- 某些佈景會用「ㄅ'ㄙ」但沒有空白，補救：直接逐段抓「注音字母+調號」
+    -- 若仍只得到一段但原始含 '，再保底拆
     if #bp_list <= 1 and bp:find("'", 1, true) then
       for seg in bp:gmatch("[^']+") do
         seg = seg:gsub("%s+", "")
@@ -128,21 +131,20 @@ local function split_inline(ctx)
   return tl_list, bp_list
 end
 
--- 去掉注音的聲調記號
+-- ========== 注音聲調處理 ==========
 local TONE_MARKS = "[ˊˋ˪˫˙]"
 local function strip_bpmf_marks_one(s) return s and s:gsub(TONE_MARKS, "") or s end
 
--- 數字 -> 上標數字
+-- 數字 -> 上標數字（含 1）
 local supers_digit = { ["1"]="¹", ["2"]="²", ["3"]="³", ["4"]="⁴",
                        ["5"]="⁵", ["6"]="⁶", ["7"]="⁷", ["8"]="⁸" }
 
--- 從 TLPA 取調號數字（最後一碼 1-8）
+-- 由 TLPA 取調號（最後一碼 1-8）
 local function tone_from_tlpa(tl)
   return tl and tl:match("([1-8])$") or nil
 end
 
--- 依 TLPA 的調號，把注音換成「上標數字調」
--- 例：ㄍㄧㆰ + 1 → ㄍㄧㆰ¹
+-- 注音 + TLPA 調號 → 上標數字調
 local function bpmf_with_supers_by_tl(bpmf, tlpa)
   if not bpmf then return nil end
   local base = strip_bpmf_marks_one(bpmf)
@@ -150,8 +152,7 @@ local function bpmf_with_supers_by_tl(bpmf, tlpa)
   return t and (base .. (supers_digit[t] or "")) or base
 end
 
--- 依 TLPA 的調號，把注音換成「尾隨數字調」
--- 例：ㄍㄧㆰ + 1 → ㄍㄧㆰ1
+-- 注音 + TLPA 調號 → 尾隨數字調
 local function bpmf_with_digit_by_tl(bpmf, tlpa)
   if not bpmf then return nil end
   local base = strip_bpmf_marks_one(bpmf)
@@ -159,7 +160,7 @@ local function bpmf_with_digit_by_tl(bpmf, tlpa)
   return t and (base .. t) or base
 end
 
--- 將一列音節做轉換（map）後，用空白接回
+-- 對列表逐一套函數，再用空白接回
 local function map_join(list, f)  -- f(elem, idx) -> string
   local out = {}
   for i, v in ipairs(list) do out[i] = f(v, i) or "" end
@@ -180,11 +181,10 @@ local function get_multiforms(env)
   if #tl_list == 0 and #bp_list == 0 then
     tl_list, bp_list = split_inline(ctx)
   end
-  -- 正規化：長度對齊（若其中一邊空，就容忍不齊）
   return tl_list, bp_list
 end
 
--- 快捷鍵規範化
+-- 快捷鍵字串正規化
 local function norm_repr(r)
   r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
   return r:lower()
@@ -204,9 +204,9 @@ function aux_commit(key, env)
 
   local tl_list, bp_list = get_multiforms(env)
 
-  -- Enter：TLPA（★不再用 '，直接無分隔串接）
+  -- Enter：TLPA（★音節之間「空白分隔」）
   if want_tlpa and #tl_list > 0 then
-    env.engine:commit_text(table.concat(tl_list, " "))  -- ← 由【空白】取代 "'"
+    env.engine:commit_text(table.concat(tl_list, " "))
     ctx:clear(); return 1
   end
 
@@ -230,16 +230,15 @@ function aux_commit(key, env)
 
   -- Ctrl+Shift+Enter：候選雙欄格式
   if want_both and (#tl_list > 0 or #bp_list > 0) then
-    local left = ""
-    if #tl_list > 0 then left = "〔" .. table.concat(tl_list, "〕 〔") .. "〕" end
-    local right = ""
-    if #bp_list > 0 then right = "  【" .. table.concat(bp_list, "】 【") .. "】" end
+    local left = (#tl_list > 0) and ("〔" .. table.concat(tl_list, "〕 〔") .. "〕") or ""
+    local right = (#bp_list > 0) and ("  【" .. table.concat(bp_list, "】 【") .. "】") or ""
     local out = (left .. right):gsub("^%s+", "")
     if #out > 0 then env.engine:commit_text(out); ctx:clear(); return 1 end
   end
 
   return 2
 end
+
 
 ------------------------------------------------------------------------------------------
 -- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
