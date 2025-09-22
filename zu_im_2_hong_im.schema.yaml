@@ -27,9 +27,8 @@ switches:
     reset: 0
     states: [半形, 全形]
   - name: supers_tone
-    reset: 0
-    states: [上標數字調, 一般數字調]
-    # states: [一般數字調, 上標數字調]
+    reset: 1
+    states: [一般, 上標]
 
 engine:
   processors:
