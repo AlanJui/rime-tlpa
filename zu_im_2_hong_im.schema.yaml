@@ -255,7 +255,7 @@ speller:
     # 為所有的【入聲韻尾】，洐生【羅馬拼音字母】：【0】
     - abbrev/([bdgh]|[rfqv])[48]/0/
     #--------------------------------------------------------------------------
-    # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
+    # 設定讀取【字典】漢字拼音的【解析格式】
     #--------------------------------------------------------------------------
     - derive/^([A-Za-z]+)\d$/$1/
     #=======================================================================
@@ -721,16 +721,18 @@ key_binder:
 
 editor:
   bindings:
+    # (1) 輸出拼音字母：Enter（supers_tone=ON） → giam¹ ga¹ ✅
+    # (2) 輸出拼音字母：Enter（supers_tone=OFF） → giam1 ga1 ✅
+    # (3) 輸出注音符號：Ctrl+Enter → ㄍㄧㆰ ㄍㄚ（不變）
+    # (4) 輸出帶調號的注音符號（上標）：Shift+Enter（supers_tone=ON） → ㄍㄧㆰ¹ ㄍㄚ¹（不變）
+    # (5) 輸出帶調號的注音符號（一般）：Shift+Enter（supers_tone=OFF） → ㄍㄧㆰ1 ㄍㄚ1（不變）
+    # (6) 輸入候選字清單之【拼音字母】及【注音符號】：Ctrl+Shift+Enter → 〔giam1〕 〔ga1〕 【ㄍㄧㆰ】 【ㄍㄚ】（不變）
     space: commit # 以【候選字清單】中，被【候選游標】標示的【漢字】，將之輸出
     Control+Shift+Return: commit_comment  # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
-    # Return: noop    # 輸出【台語注音二式】的【羅馬拼音字母】（例如 ：u5）
-    # Control+Return: noop  # 輸出【方音符號】的【注音符號】（例如：ㄏㄨˊ）
-    # Shift+Return: noop  # 輸出【帶調號的方音符號】的【注音符號】（例如：ㄏㄨ5／ㄏㄨ⁵）
 
 menu:
   page_size: 5 #選單每䈎顯示個數
   alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
-  # alternative_select_keys: "ABCDE"
 
 style:
   horizontal: false
