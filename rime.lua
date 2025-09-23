@@ -135,9 +135,24 @@ end
 local TONE_MARKS = "[ˊˋ˪˫˙]"
 local function strip_bpmf_marks_one(s) return s and s:gsub(TONE_MARKS, "") or s end
 
--- 數字 -> 上標數字（含 1）
+-- 使用【上標數字】標示聲調之【調號】值
 local supers_digit = { ["1"]="¹", ["2"]="²", ["3"]="³", ["4"]="⁴",
                        ["5"]="⁵", ["6"]="⁶", ["7"]="⁷", ["8"]="⁸" }
+
+local function tlpa_with_supers(tl)
+  if not tl then return tl end
+  local stem, tone = tl:match("^(.-)([1-8])$")
+  return stem and (stem .. (supers_digit[tone] or "")) or tl
+end
+
+-- 依 supers_tone 選擇 TLPA 的呈現（上標或數字）
+local function tlpa_render_by_option(tl, use_supers)
+  if use_supers then
+    return tlpa_with_supers(tl)
+  else
+    return tl -- 保持數字結尾
+  end
+end
 
 -- 由 TLPA 取調號（最後一碼 1-8）
 local function tone_from_tlpa(tl)
@@ -205,8 +220,16 @@ function aux_commit(key, env)
   local tl_list, bp_list = get_multiforms(env)
 
   -- Enter：TLPA（★音節之間「空白分隔」）
+  -- if want_tlpa and #tl_list > 0 then
+  --   env.engine:commit_text(table.concat(tl_list, " "))
+  --   ctx:clear(); return 1
+  -- end
+-- Enter：TLPA（依 supers_tone 輸出上標或數字；音節之間空白）
+
   if want_tlpa and #tl_list > 0 then
-    env.engine:commit_text(table.concat(tl_list, " "))
+    local use_supers = ctx:get_option("supers_tone")
+    local out = map_join(tl_list, function(tl) return tlpa_render_by_option(tl, use_supers) end)
+    env.engine:commit_text(out)
     ctx:clear(); return 1
   end
 
