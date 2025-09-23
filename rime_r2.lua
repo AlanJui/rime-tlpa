@@ -199,13 +199,9 @@ local function get_multiforms(env)
   return tl_list, bp_list
 end
 
--- 定義按受處理的快捷鍵：使用【正規表示式】判斷
+-- 定義按受處理的快捷鍵： Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
+-- 快捷鍵的判斷，採用【正規表示式】判斷
 local function norm_repr(r)
-  -- -- 能截獲的按鍵：Alt+Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
-  -- r = r:gsub("^Release%+", "")
-  --      :gsub("ISO_Enter$", "Return")
-  --      :gsub("Alt%+ISO_Enter$", "Alt+Return")
-  -- 能截獲的按鍵：Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
   r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
   return r:lower()
 end
@@ -216,7 +212,7 @@ function aux_commit(key, env)
   local r = norm_repr(key:repr())
 
   -- local want_tlpa   = (r == "return")                 -- Enter
-  local want_tlpa   = (r == "return")                 -- Enter
+  local want_tlpa   = (r == "alt+return")             -- Alt+Enter
   local want_bpmf   = (r == "control+return")         -- Ctrl+Enter
   local want_shift  = (r == "shift+return")           -- Shift+Enter（上標/數字）
   local want_both   = (r == "control+shift+return")   -- Ctrl+Shift+Enter（雙欄）

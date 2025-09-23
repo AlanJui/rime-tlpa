@@ -44,8 +44,8 @@ switches:
 
 engine:
   processors:
-    - lua_processor@aux_commit    # 可輸出【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
-    - lua_processor@jump_select   # 務必置頂，用以攔截【快捷鍵】，如：<Ctrl>+<,> / <Ctrl>+<.>，轉送【代理鍵】：F20/F24
+    - lua_processor@aux_commit    # 選擇【輸入法】的輸出：【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
+    - lua_processor@jump_select   # 在【候選字清單】移動【選擇游標】
     - ascii_composer
     - recognizer
     - key_binder
@@ -76,9 +76,6 @@ engine:
     - lua_filter@reformat_comment_filter
 
 speller:
-  # alphabet: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC43657
-  # initials: 1q!a2wsxedEcyhYnrfRvuUjJ8*iIk,<9(lL0p;-[]'z\/mbtgC
-  # finals: 43657
   alphabet: abcdefghijklmnopqrstuvwxyzN;\_/-.[]
   initials: abcdefghijklmnopqrstuvwxyzN
   finals: ;\_/-[].
@@ -123,7 +120,7 @@ speller:
     # - derive/^u/wu/
     #------------------------------------------------------
     # 入聲韻尾
-    # -m  ==> -p ==>
+    # -m  ==> -p
     # -n  ==> -t
     # -ng ==> -k
     #------------------------------------------------------
@@ -523,17 +520,14 @@ key_binder:
 
 editor:
   bindings:
-    # space: commit # 選擇「備選漢字」
-    # Return: commit_composition # 上屏原始的輸入：lau5
-    # Control+Return: commit_script_text # 上屏顯示的輸入：lau⁵ / lâu
-    # Shift+Return: commit_comment # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    # Control+Shift+Return: commit_raw_input # 將 Control+Return 綁定到 Lua 函數
-    #-------------------------------------------------------------------------
+    # (1) 輸出拼音字母：Enter（supers_tone=ON） → giam¹ ga¹ ✅
+    # (2) 輸出拼音字母：Enter（supers_tone=OFF） → giam1 ga1 ✅
+    # (3) 輸出注音符號：Ctrl+Enter → ㄍㄧㆰ ㄍㄚ（不變）
+    # (4) 輸出帶調號的注音符號（上標）：Shift+Enter（supers_tone=ON） → ㄍㄧㆰ¹ ㄍㄚ¹（不變）
+    # (5) 輸出帶調號的注音符號（一般）：Shift+Enter（supers_tone=OFF） → ㄍㄧㆰ1 ㄍㄚ1（不變）
+    # (6) 輸入候選字清單之【拼音字母】及【注音符號】：Ctrl+Shift+Enter → 〔giam1〕 〔ga1〕 【ㄍㄧㆰ】 【ㄍㄚ】（不變）
     space: commit # 以【候選字清單】中，被【候選游標】標示的【漢字】，將之輸出
     Control+Shift+Return: commit_comment  # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
-    # Return: noop    # 輸出【台語注音二式】的【羅馬拼音字母】（例如 ：u5）
-    # Control+Return: noop  # 輸出【方音符號】的【注音符號】（例如：ㄏㄨˊ）
-    # Shift+Return: noop  # 輸出【帶調號的方音符號】的【注音符號】（例如：ㄏㄨ5／ㄏㄨ⁵）
 
 recognizer:
   import_preset: default

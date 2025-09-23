@@ -42,8 +42,8 @@ engine:
     - selector
     - navigator
     - express_editor
-    # - fluid_editor
     # - fluency_editor
+    # - fluid_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -284,8 +284,8 @@ translator:
   prism: zu_im_2_hong_im
   spelling_hints: 20
   always_show_comments: true
-  # initial_quality: 0.75
-  initial_quality: 0.95
+  # initial_quality: 0.95
+  initial_quality: 0.75
   preedit_format:
     #==========================================================================
     # 定義【鍵盤輸入列】：按鍵與方音符號對映
@@ -718,14 +718,30 @@ key_binder:
     # 切換【帶調號值的方音符號】，其【調值】使用【一般格式】/【上標格式】
     # - { when: always, accept: "Control+grave", toggle: supers_tone }
     # - { when: has_menu, accept: "Control+grave", toggle: supers_tone }
+    #---------------------------------------------------
+    # # Alt+Enter 交給 aux_commit（原本你綁在 Enter 的功能）
+    # - { when: composing, accept: Alt+Return, send: function, func: aux_commit }
+    # - { when: has_menu,  accept: Alt+Return, send: function, func: aux_commit }
+    # #---------------------------------------------------
+    # # 其餘功能鍵照舊（若你原本就有，可保留）
+    # - { when: composing, accept: Control+Return,        send: function, func: aux_commit }
+    # - { when: composing, accept: Shift+Return,          send: function, func: aux_commit }
+    # - { when: composing, accept: Control+Shift+Return,  send: function, func: aux_commit }
+    # - { when: has_menu,  accept: Control+Return,        send: function, func: aux_commit }
+    # - { when: has_menu,  accept: Shift+Return,          send: function, func: aux_commit }
+    # - { when: has_menu,  accept: Control+Shift+Return,  send: function, func: aux_commit }
 
 editor:
   bindings:
-    space: commit # 以【候選字清單】中，被【候選游標】標示的【漢字】，將之輸出
+    space: confirm # 將【輸入列】已有的輸入結果送出
+    Return: commit # 將【候選字清單】中，被【候選游標】標示的項目送出
     Control+Shift+Return: commit_comment  # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
+    # space: commit # 以【候選字清單】中，被【候選游標】標示的【漢字】，將之輸出
+    # Return: confirm
     # Return: noop    # 輸出【台語注音二式】的【羅馬拼音字母】（例如 ：u5）
     # Control+Return: noop  # 輸出【方音符號】的【注音符號】（例如：ㄏㄨˊ）
     # Shift+Return: noop  # 輸出【帶調號的方音符號】的【注音符號】（例如：ㄏㄨ5／ㄏㄨ⁵）
+
 
 menu:
   page_size: 5 #選單每䈎顯示個數
