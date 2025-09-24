@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 # Rime schema
 # vim: set sw=2 sts=2 et:
 # encoding: utf-8
 
 schema:
   schema_id: zu_im_tlpa
-  name: 注音輸入法【台語音標】
+  name: 注音輸入法【台語拼音】
   version: "v0.0.2.11"
   author: 居正中
   description: |
@@ -27,6 +26,9 @@ switches:
   - name: full_shape
     reset: 0
     states: [半形, 全形]
+  - name: supers_tone
+    reset: 1
+    states: [一般, 上標]
 
 engine:
   processors:
@@ -54,9 +56,9 @@ engine:
     - uniquifier
 
 speller:
-  alphabet: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm. 43657'
-  initials: '1q!a2wsxyhbnedEgcuj8ik,9l0;-UJ*I<(LoM/pm.'
-  finals:   ' 43657'
+  alphabet: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz43657.=-"
+  initials: "1!qa2wsxeEdNcrRfvyYhnuUjJ8*iIk,<9(lL;oMO0mp/Kbtgz.=-"
+  finals: " 43657"
   delimiter: "'"
   use_space: true
   algebra:
@@ -111,9 +113,9 @@ speller:
     - xform/ok/Ok/            # ng / ok
     - xform/oo/O/             # ㆦ (O) = oo ==> oo [ɔ] = O
     - xform/Bo/Q/             # ㆦ (O) = oo ==> oo [ɔ] = O
-    # 以下韻母，拼音字母 o ，實為 oo 之縮寫，國際音標為：[ɔ] 
+    # 以下韻母，拼音字母 o ，實為 oo 之縮寫，國際音標為：[ɔ]
     - xform/io(?=(W|k))/iO/   # iong / iok
-    - xform/o(?=(M|p))/O/     # om / op 
+    - xform/o(?=(M|p))/O/     # om / op
     # --------------------------------------------------------------------------
     # 複合韻母
     - xform/ai/y/         # ㄞ (y) = ai
@@ -197,8 +199,8 @@ speller:
     # 台語音標之拼音字母輸入【簡化規則】
     #=======================================================================
     # 只輸入【聲母】搜尋漢字
-    # - abbrev/^([pPbmtTnlkKgwhzcsjZCSJ]).+$/$1/   
-    - abbrev/^([pPbmtTnlzcjskKgwh.+$/$1/   
+    # - abbrev/^([pPbmtTnlkKgwhzcsjZCSJ]).+$/$1/
+    - abbrev/^([pPbmtTnlzcjskKgwh.+$/$1/
     # 輸入【聲母】與【調號】搜尋漢字
     - abbrev/^([pPbmtTnlzcjskKgwh).+(\d)$/$1/
     # 舒聲調（平、上、去聲）之漢字，可免調號（1/2/3/5/7）；但【入聲】（調號：4/8）不適用。
@@ -427,7 +429,7 @@ translator:
     - xform/《uang/ㄨㄤ《/
     - xform/《uan/ㄨㄢ《/
     - xform/《ua([kt])/ㄨㄚ《$1/
-    # 官 Nua / 瓜 ua 
+    # 官 Nua / 瓜 ua
     - xform/《(B?)(ua)/$1ㄨㄚ《/
     # 褌 Nui / 規 ui
     - xform/《(B?)(ui)/$1ㄨㄧ《/
@@ -495,7 +497,7 @@ translator:
     #------------------------------------------------------
     # 入聲韻 h p t k
     # ㆻ: `u31BB
-    #  : `uF8D2    
+    #  : `uF8D2
     #------------------------------------------------------
     - xform/《h([48])/ㆷ《$1/
     - xform/《p([48])/ㆴ《$1/
@@ -577,8 +579,8 @@ key_binder:
     - { when: has_menu, accept: minus, send: minus  }
     #---------------------------------------------------
     # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
-    - { when: composing, accept: period, send: period }   
-    - { when: has_menu, accept: period, send: period }   
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------
@@ -697,7 +699,7 @@ translator:
     #--------------------------------------------------------------------------
     # 定義【鍵盤輸入列】
     #--------------------------------------------------------------------------
-    __include: jih_kian 
+    __include: jih_kian
     __append:
       #==========================================================================
       # 【方音符號】對映【台語音標-注音】
@@ -712,7 +714,7 @@ translator:
       # 鼻音韻母轉換
       #--------------------------------------------------------------------------
       # 複合鼻音韻母： Nia, Niau, Niu; Nua, Nuai, Nui
-      - xform/ㄧㆩ/ㄬㄧㄚ/      # iann = Nia   
+      - xform/ㄧㆩ/ㄬㄧㄚ/      # iann = Nia
       - xform/ㄧㆯ/ㄬㄧㄠ/      # iaunn = Niau
       - xform/ㄧㆫ/ㄬㄧㄨ/      # iunn = Niu
       - xform/ㄨㆩ/ㄬㄨㄚ/      # uann = Nua
@@ -740,8 +742,8 @@ translator:
       - xform/ㆰ/ㄚㄇ/	      # am
       - xform/ㆱ/ㄛㄇ/	      # om
       #
-      - xform/ㆤ/ㄝ/          # e 	
-      - xform/ㆦ/ㄛ/          # oo	
+      - xform/ㆤ/ㄝ/          # e
+      - xform/ㆦ/ㄛ/          # oo
       #--------------------------------------------------------------------------
       # 轉換成聲調符號
       #--------------------------------------------------------------------------
@@ -752,7 +754,7 @@ translator:
       - xform/5/⁷/   # ⁷ +  ˫   陽去
       - xform/7/⁰/   # ⁰ ˙  ˙   陰入/陽入：輕聲標點符號表：入声字（陰入/陽入）
       #------------------------------------------------------
-      # 入聲韻尾： ㄅ(p), ㄉ(t), ㄍ(k), ㄏ(h),  
+      # 入聲韻尾： ㄅ(p), ㄉ(t), ㄍ(k), ㄏ(h),
       #------------------------------------------------------
       - xform/ㄅ(˙)/ㆴ$1/    # ㄅ = p
       - xform/ㄉ(˙)/ㆵ$1/    # ㄉ = t
@@ -784,7 +786,7 @@ jih_kian:
   #--------------------------------------------------------------------------
   # 按鍵與方音符號對映
   #--------------------------------------------------------------------------
-  __patch: 
+  __patch:
     - lib_zu_im:/jih_kian_tng_uann
 
 custom_phrase:
@@ -808,8 +810,8 @@ key_binder:
     - { when: has_menu, accept: minus, send: minus  }
     #---------------------------------------------------
     # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
-    - { when: composing, accept: period, send: period }   
-    - { when: has_menu, accept: period, send: period }   
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
     #---------------------------------------------------
     # 翻頁
     #---------------------------------------------------
