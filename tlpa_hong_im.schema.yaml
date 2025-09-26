@@ -143,29 +143,25 @@ speller:
     # - xform/e/e/  # ㆤ [e]
     # - xform/oo/O/ # ㆦ [oo]
     # 【複合韻母】
-    - derive/ai/x/   # ㄞ [ai]
-    - derive/au/y/   # ㄠ [au]
+    - xform/ai/x/    # ㄞ [ai]
+    - xform/au/y/    # ㄠ [au]
     # --------------------------------------------------------------------------
     # 【鼻化韻母】
-    - derive/ainn/X/  # ㆮ [ainn]
-    - derive/aunn/Y/  # ㆯ [aunn]
-    - derive/unn/U/   # ㆫ [unn]
-    - derive/ann/A/   # ㆩ [ann]
-    - derive/inn/I/   # ㆪ [inn]
-    - derive/enn/E/   # ㆥ [enn]
-    - derive/Onn/Q/   # ㆧ [oonn]
+    - derive/xnn/X/  # ㆮ [ainn]
+    - derive/ynn/Y/  # ㆯ [aunn]
+    - derive/unn/U/  # ㆫ [unn]
+    - derive/ann/A/  # ㆩ [ann]
+    - derive/inn/I/  # ㆪ [inn]
+    - derive/enn/E/  # ㆥ [enn]
+    - derive/Onn/Q/  # ㆧ [oonn]
     # --------------------------------------------------------------------------
     # 【鼻化韻母】輸入，可用連續兩次的輸入達成
-    # - derive/([aiueOxy])nn/$1$1/
-    # - derive/([xyaiueO])nn/$1$1/
-    - derive/(ai|au|[aiueO])nn/$1$1/
+    - derive/([aiueOxy])nn/$1$1/
     # --------------------------------------------------------------------------
     # 為【鼻化韻母】建置【前綴識別】用【羅馬拼音字母】：【L】
-    # - derive/([iu]?[xyaiueO])nn/L$1/
-    - derive/(ai|au|[aiueO])nn/L$1/
+    - derive/([iu]?[xyaiueO])nn/L$1/
     # 為所有【鼻化韻母】建置【羅馬拼音字母】：【*】
-    # - derive/([iu]?[xyaiueO])nn/*/
-    - derive/([iu]?(ai|au|[aiueO]))nn/*/
+    - derive/([iu]?[xyaiueO])nn/*/
     # --------------------------------------------------------------------------
     # 衍生【地方腔韻母】
     # --------------------------------------------------------------------------
