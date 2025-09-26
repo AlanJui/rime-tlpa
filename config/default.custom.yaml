@@ -10,8 +10,8 @@ patch:
     #------------------------------------------------------------------------
     # RIME 官方輸入法
     #------------------------------------------------------------------------
-    - { schema: luna_pinyin }
-    - { schema: stroke }
+    # - { schema: luna_pinyin }
+    # - { schema: stroke }
     # - {schema: cangjie5}
     # - {schema: terra_pinyin}
     # - {schema: luna_pinyin_simp}
@@ -28,24 +28,24 @@ patch:
     # - {schema: moetaigi-tsuim}
     # - {schema: moetaigi.unspaced}
     # - {schema: moetaigi-tsuim}
-    - { schema: ngsth_bun }
+    # - {schema: ngsth_bun}
     #------------------------------------------------------------------------
     # 注音符號鍵盤練習
     #------------------------------------------------------------------------
-    - { schema: zu_im_2_kb } # 台語注音二式按鍵練習
+    # - { schema: kb_zu_im } # 注音按鍵練習
+    # - { schema: kb_taigi_bopomo } # 台語ㄅㄆㄇ按鍵練習
+    # - { schema: zu_im_2_kb } # 台語注音二式按鍵練習
     - { schema: kb_hong_im } # 方音按鍵練習
     - { schema: kb_ipa } # 國際音標按鍵練習
-    - { schema: kb_zu_im } # 注音按鍵練習
-    - { schema: kb_taigi_bopomo } # 台語ㄅㄆㄇ按鍵練習
     #------------------------------------------------------------------------
-    # 實驗/測試用
+    # TLPA 台語音標輸入法
     #------------------------------------------------------------------------
-    # - { schema: my_Tai_Gi_BoPoMo }  # 台語ㄅㄆㄇ
-    - { schema: test } # RIME Testing
-    - { schema: my_Tai_Gi_BoPoMo_Module } # 台語ㄅㄆㄇ
-    - { schema: my_bopomofo }
-    - { schema: my_hong_im } # 我的方音輸入法
-    - { schema: my_Phing_Im } # 我的拼音輸入法
+    # - { schema: tlpa_bpq_phing_im } # 拼音輸入法，閩拼查找（BP）
+    # - { schema: tlpa_bp_phing_im } # 拼音輸入法，閩拼方案（BP）
+    # - { schema: tlpa_piau_im } # 拼音輸入法，十五音及方音符號
+    # - { schema: tlpa_zu_im } # 拼音輸入法，台語音標-注音
+    - { schema: tlpa_phing_im } # 拼音輸入法，台語音標（TLPA）
+    - { schema: tlpa_hong_im }  # 注音輸入法，台語音標（TLPA）
     #------------------------------------------------------------------------
     # 吳守禮方音符號與注音二式輸入法
     #------------------------------------------------------------------------
@@ -57,29 +57,29 @@ patch:
     - { schema: bp_phing_im } # 閩拼方案輸入法
     - { schema: bp_hong_im } # 閩拼方案輸入法
     #------------------------------------------------------------------------
-    # 方音/注音符號輸入法
-    #------------------------------------------------------------------------
-    # - { schema: zu_im_hong_im } # 方音符號
-    - { schema: zu_im_piau_im } # 十五音及方音符號
-    - { schema: zu_im_tlpa } # 台語音標-注音
-    - { schema: zu_im_tai_gi_bopomo } # 台語ㄅㄆㄇ
-    #------------------------------------------------------------------------
-    # TLPA 台語音標輸入法
-    #------------------------------------------------------------------------
-    # - { schema: tlpa_hong_im } # 拼音輸入法，台語ㄅㄆㄇ
-    - { schema: tlpa_phing_im } # 拼音輸入法，台語音標（TLPA）
-    - { schema: tlpa_hong_im } # 十五音及方音符號
-    - { schema: tlpa_bpq_phing_im } # 拼音輸入法，閩拼查找（BP）
-    - { schema: tlpa_bp_phing_im } # 拼音輸入法，閩拼方案（BP）
-    - { schema: tlpa_piau_im } # 拼音輸入法，十五音及方音符號
-    - { schema: tlpa_zu_im } # 拼音輸入法，台語音標-注音
-    #------------------------------------------------------------------------
     # 反切輸入法（拼音字母）
     #------------------------------------------------------------------------
     - { schema: huan_ciat_kong_un } # 廣韻
     - { schema: huan_ciat_sip_ngoo_im } # 台灣改良之進階十五音
     - { schema: huan_ciat_nga_siok_thong } # 雅俗通十五音
     #------------------------------------------------------------------------
+    # 實驗/測試用
+    #------------------------------------------------------------------------
+    # - { schema: my_Tai_Gi_BoPoMo }  # 台語ㄅㄆㄇ
+    # - { schema: test } # RIME Testing
+    # - { schema: my_Tai_Gi_BoPoMo_Module } # 台語ㄅㄆㄇ
+    # - { schema: my_bopomofo }
+    # - { schema: my_hong_im } # 我的方音輸入法
+    # - { schema: my_Phing_Im } # 我的拼音輸入法
+    #------------------------------------------------------------------------
+    # 方音/注音符號輸入法
+    #------------------------------------------------------------------------
+    # - { schema: zu_im_hong_im } # 方音符號
+    # - { schema: zu_im_piau_im } # 十五音及方音符號
+    # - { schema: zu_im_tlpa } # 台語音標-注音
+    # - { schema: zu_im_tai_gi_bopomo } # 台語ㄅㄆㄇ
+    #------------------------------------------------------------------------
+
   # engine:
   #   processors:
   #     - lua_processor@sip_ngoo_im   # 添加到全局 processors

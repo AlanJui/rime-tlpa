@@ -1,0 +1,201 @@
+
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: my_bopomofo
+  name: 我的注音
+  version: '0.0.0.2'
+  author:
+    - 居正中 AlanJui <alanjui.1960@gmail.com>
+  description: |
+    實驗用專案。
+
+    本方案採用「無模式」設計，以大寫字母鍵或上下方向鍵、回車鍵選詞；
+    空格鍵輸入第一聲，標記爲「ˉ」。
+
+    請配合 librime>=1.3 使用。
+
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - fluency_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    # - table_translator
+    - table_translator@custom_phrase
+    - script_translator
+  filters:
+    - uniquifier
+
+speller:
+  alphabet: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567'
+  initials: '1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L'
+  finals: " 34567"
+  delimiter: "'"
+  use_space: true
+  algebra:
+    # __patch:
+    #   # - tlpa_piau_im_TLPA:/phing_im_tng_cu_im
+    #   # - tlpa_piau_im_TLPA:/abbreviation
+    #   # - tlpa_piau_im_TLPA:/ji_be_tng_jih_kian
+    #   - tlpa_piau_im:/phing_im_tng_cu_im
+    #   - tlpa_piau_im:/abbreviation
+    #   - tlpa_piau_im:/ji_be_tng_jih_kian
+    # 變調
+    - derive/1/7/ # 第一調 → 第七調
+    - derive/2/1/ # 第二調 → 第一調
+    - derive/3/2/ # 第三調 → 第二調
+    - derive/7/3/ # 第七調 → 第三調
+    - derive/5/7/ # 第五調 → 第七調
+    - derive/5/3/ # 第五調 → 第三調
+    - xform/[48]/0/ # 入聲調（第四調、第八調）合併
+    # 音變
+    - derive/z/d/ # ㆡ、ㆢ → ㄌ
+    - derive/z(N?i)/g$1/ # ㆢ → ㆣ
+    - derive/iaD/ieD/ # ㄧㄢ、ㄧㄚㆵ → ㄧㄢ、ㄧㆤㆵ
+    - derive/ieD/eD/ # ㄧㄢ、ㄧㆤㆵ → ㆤㄣ、ㆤㆵ
+    # 方言差
+    - derive/Ne/Ni/ # ㆥ → ㆪ
+    - derive/Niu/Nio/ # ㄧㆫ → ㄧㆧ
+    # 方音符號會分 ㆢㄐㄑㄒ 和 ㆡㄗㄘㄙ
+    #- xform/z(N?i)/Z$1/  # 毋過咱共 ㆢ 和 ㆡ 合併矣
+    - xform/c(N?i)/j$1/ # ㄐㄧ
+    - xform/C(N?i)/J$1/ # ㄑㄧ
+    - xform/s(N?i)/S$1/ # ㄒㄧ
+    # 方音符號會分 ㄇㄋㄫ 和 ㆠㄌㆣ
+    - derive/bN/m/ # ㄇ
+    - derive/dN/n/ # ㄋ
+    - derive/gN/q/ # ㄫ
+    - derive/bG/mG/ # ㄇㆭ
+    - derive/dG/nG/ # ㄋㆭ
+    # 鼻音
+    - xform/N([iu]?[iuaoeIU])/$1N/ # 鼻音拍佇後壁
+    - derive/([iuaoeIU])N/$1$1/ # 拍兩擺韻母來拍鼻音
+    # # 注音
+    # - derive/øG/G/ # 用 ㄧㆭ 來拍 ㄧㄥ（併入）
+    # - derive/(?<!i)oG/uG/ # 用 ㄨㆭ（注音的 ㄨㄥ）來拍 ㆲ
+    # - derive/ioG/BG/ # 用 ㆬㆭ（注音的 ㄩㄥ）來拍 ㄧㆲ
+    # 入聲調
+    - derive/([iao])B0/$1p0/ # 用 ㄚㄅ． 來拍 ㄚㆴ
+    - derive/([iuae])D0/$1t0/ # 用 ㄚㄉ． 來拍 ㄚㆵ
+    - derive/([iaoø])G0/$1k0/ # 用 ㄚㄍ． 來拍 ㄚㆻ
+    # 變調
+    - derive/(?<![BDG])4/2/ # -ㆷ 第四調 → 第二調
+    - derive/(?<![BDG])8/3/ # -ㆷ 第八調 → 第三調
+    # 方音韻母
+    - derive/oB/aB/ # ㆦㆬ、ㆰ（併入）
+    - derive/aB/M/ # ㄚㆬ、ㆰ
+    - xform/aD/L/ # ㄢ
+    - xform/aG/Q/ # ㄤ
+    - derive/oG/Y/ # ㆦㆭ、ㆲ
+    # 簡拼
+    - abbrev/[iu]?[iuaeOIU]N/N/ # 用 ｎ 代表所有的鼻音母音
+    - abbrev/[iuaoeeOIUMLQYBDG]+0/0/ # 用 ． 代表所有的入聲韻母
+    - abbrev/^(\D+)([123579])$/$1/ # 除了第四調、第八調，調號會當免拍
+    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+$/$1/ # 會當干焦拍聲母
+    - abbrev/^([pPbmtTdnkKgqcCzsjJSh]).+(\d)$/$1$2/ # 會當干焦拍子音+調號
+    - abbrev/^([A-Za-z]+)\d$/$1/
+    # 字典編碼轉換按鍵
+    - 'xlit|pPmtTnlkKhwcCsiuMaOoeIULDQWAbgjZXRSEVF132750|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L 34567|'
+
+translator:
+  dictionary: moetaigi.extended
+  # dictionary: tlpa_hong_im
+  # dictionary: tlpa_peh_ue
+  # dictionary: my_banlam
+  # dictionary: moetaigi
+  prism: my_bopomofo
+  spelling_hinc: 0
+  preedit_format:
+    - 'xlit|1qa2wsxedcvyhnujm8ik,9l0p;/z!EYUJ*I,(L34567|ㄅㄆㄇㄉㄊㄋㄌㄍㄎㄏㄫㄗㄘㄙㄧㄨㆬㄚㆦㄜㄝㄞㄠㄢㄣㄤㄥ声ㆠㆣㆡㆪㆫㆩㆧㆥㆮㆯ˪ˋ˫ˊ．|'
+    # __patch:
+    #   - tlpa_piau_im:/jih_kian_tng_cu_im_hu_ho
+    #   - tlpa_piau_im:/abbreviation
+    #   - tlpa_piau_im:/phah_phing_im
+  # comment_format:
+  #   __patch:
+  #     # - tlpa_piau_im_TLPA:/hau_suan_piau_cu_im
+  #     # - tlpa_piau_im:/ji_be_tng_cu_im_hu_ho
+  #     - tlpa_piau_im_TLPA:/ji_be_tng_cu_im_hu_ho
+
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 1
+
+punctuator:
+  # import_preset: tlpa_keymap_piau_tian
+  import_preset: tlpa_keymap_cu_im
+
+editor:
+  bindings:
+    # space: toggle_selection
+    space: commit                       # 選擇「備選漢字」
+    Return: commit_composition          # 上屏原始的輸入：lau5
+    Control+Return: commit_script_text  # 上屏顯示的輸入：lau⁵ / lâu
+    Shift+Return: commit_comment        # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+
+key_binder:
+  # import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 確保：按鍵 '-' 可當 '漢字拼音' 之第 7 調輸入
+    #---------------------------------------------------
+    - { when: has_menu, accept: comma, send: comma }      # ㆤ
+    - { when: has_menu, accept: period, send: period }    # ㆲ
+    - { when: has_menu, accept: minus, send: minus }      # ｎ
+    - { when: composing, accept: minus, send: minus }     # 確保 `-` 鍵用於聲調 7
+    #---------------------------------------------------
+    # 翻頁
+    #---------------------------------------------------
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+
+recognizer:
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    reverse_lookup: "`[a-z]*'?$"
+    # punct: '`[^\s]$'
+
+menu:
+  # alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
+  alternative_select_labels: [Ａ, Ｂ, Ｃ, Ｄ, Ｅ, Ｆ, Ｇ, Ｈ, Ｉ, Ｊ]
+  alternative_select_keys: "ABCDEFGHIJ"
+  page_size: 5 #選單每䈎顯示個數
+
+style:
+  horizontal: false
