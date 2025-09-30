@@ -117,6 +117,11 @@ jobs:
           done
           zip release.zip zu_im_2_libs.yaml zu_im_2_phing_im.schema.yaml
 
+          # -j：不保留路徑（根目錄本來就沒路徑）
+          zip -j "$ZIP" -@ < filelist.txt >/dev/null
+          echo "Created: $ZIP (files: $FOUND)"
+
+          (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
       - name: Create / Update GitHub Release and upload assets
         uses: softprops/action-gh-release@v2
         with:
