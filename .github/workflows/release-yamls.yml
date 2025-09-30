@@ -1,14 +1,14 @@
 name: Build & Release selected YAMLs
 
 on:
-  # 路線1：推 tag 自動觸發（例：v1.2.3 / kb-xxx / bp-xxx / zu-xxx）
+  # 只有推「tag」時才觸發（避免 push branch 造成混淆）
   push:
     tags:
       - "v*"
       - "kb-*"
       - "bp-*"
       - "zu-*"
-  # 路線2：手動觸發，可指定分支/commit 與 tag
+  # 也可手動觸發：填 ref（分支或 commit）與 tag_name
   workflow_dispatch:
     inputs:
       ref:
@@ -16,12 +16,16 @@ on:
         required: true
         default: "main"
       tag_name:
-        description: "要建立/更新的 Release tag（例：v0.9.0）"
+        description: "要建立/更新的 Release tag（例：v0.4.0）"
         required: true
       prerelease:
         description: "是否標記為 pre-release"
         required: false
         default: "false"
+
+# 讓 action 有權限建立/更新 release、上傳 assets
+permissions:
+  contents: write
 
 jobs:
   pack-yamls:
@@ -36,6 +40,7 @@ jobs:
             echo "TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=${{ github.event.inputs.prerelease }}" >> $GITHUB_OUTPUT
           else
+            # push tag 觸發時，github.ref_name 就是「tag 名稱」（例如 v0.4.0）
             echo "REF=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "TAG=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=false" >> $GITHUB_OUTPUT
@@ -47,19 +52,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ steps.meta.outputs.REF }}
 
-      - name: Prepare dist
-        run: mkdir -p dist
-
-      - name: Debug tree
-        run: |
-          pwd
-          git status
-          find . -maxdepth 3 -type f | sort
-
-      - name: Build zip with selected YAMLs (root-only)
+      - name: Build zip with selected YAMLs (root-only, bash-safe)
+        shell: bash
         env:
           TAG: ${{ steps.meta.outputs.TAG }}
-          # 只打包「專案根目錄」的這些檔；子資料夾一律忽略
+          # 只打包「專案根目錄」這些檔案（大小寫需精確）
           INCLUDE_LIST: |
             kb_hong_im.schema.yaml
             kb_ipa.schema.yaml
@@ -88,35 +85,36 @@ jobs:
             bp_libs.yaml
             bp_ji_khoo.dict.yaml
         run: |
-          set -u
+          set -euo pipefail
 
-          echo "== 根目錄 YAML 一覽 =="
+          echo "== 根目錄 YAML 一覽（便於對照）=="
           ls -la *.yaml || true
-          echo "======================"
+          echo "================================"
 
           mkdir -p dist
           ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
+          : > filelist.txt
 
-          # 僅在 repo 根目錄檢查與打包
+          # 讀白名單（去空行、去 CR）
+          mapfile -t FILES < <(printf '%s\n' "$INCLUDE_LIST" | sed -e 's/\r$//' -e '/^\s*$/d')
+
           FOUND=0
-          > filelist.txt
-          while IFS= read -r p; do
-            [ -z "$p" ] && continue
-            if [ -f "$p" ]; then
+          for p in "${FILES[@]}"; do
+            if [[ -f "$p" ]]; then
               echo "$p" >> filelist.txt
               echo "Added: $p"
-              FOUND=$((FOUND+1))
+              ((FOUND++))
             else
               echo "::warning::Missing (root only): $p"
             fi
-          done <<< "$INCLUDE_LIST"
+          done
 
-          if [ "$FOUND" -eq 0 ]; then
+          if (( FOUND == 0 )); then
             echo "::error::No files were added to the zip. Failing the job."
             exit 1
           fi
 
-          # -j：不保留路徑（根目錄本來就沒路徑）
+          # -j：不保留路徑（根目錄本來就無子路徑）
           zip -j "$ZIP" -@ < filelist.txt >/dev/null
           echo "Created: $ZIP (files: $FOUND)"
 
@@ -128,6 +126,7 @@ jobs:
           tag_name: ${{ steps.meta.outputs.TAG }}
           target_commitish: ${{ steps.meta.outputs.REF }}
           prerelease: ${{ steps.meta.outputs.PRERELEASE }}
+          generate_release_notes: true
           files: |
             dist/*.zip
             dist/*.sha256
