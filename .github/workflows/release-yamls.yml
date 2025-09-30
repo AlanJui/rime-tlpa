@@ -50,10 +50,11 @@ jobs:
       - name: Prepare dist
         run: mkdir -p dist
 
-      - name: Build zip with selected YAMLs
+      - name: Build zip with selected YAMLs (root-only, bash-safe)
+        shell: bash
         env:
           TAG: ${{ steps.meta.outputs.TAG }}
-          # 只打包「專案根目錄」的這些檔；子資料夾一律忽略
+          # 只打包「專案根目錄」這些檔案（大小寫需精確）
           INCLUDE_LIST: |
             kb_hong_im.schema.yaml
             kb_ipa.schema.yaml
@@ -82,39 +83,41 @@ jobs:
             bp_libs.yaml
             bp_ji_khoo.dict.yaml
         run: |
-          set -u
+          set -euo pipefail
 
           echo "== 根目錄 YAML 一覽 =="
           ls -la *.yaml || true
-          echo "==================="
+          echo "======================"
 
           mkdir -p dist
           ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
+          : > filelist.txt
 
-          # 僅在 repo 根目錄打包指定的檔案
+          # 讀取白名單（去空行、去掉 CR）
+          mapfile -t FILES < <(printf '%s\n' "$INCLUDE_LIST" | sed -e 's/\r$//' -e '/^\s*$/d')
+
           FOUND=0
-          > filelist.txt
-          while IFS = read -r p; do
-            [ -z "$p" ] && continue
-            if [ -f "$p" ]; then
+          for p in "${FILES[@]}"; do
+            if [[ -f "$p" ]]; then
               echo "$p" >> filelist.txt
               echo "Added: $p"
-              FOUND=$((FOUND + 1))
+              ((FOUND++))
             else
               echo "::warning::Missing (root only): $p"
             fi
-          done <<< "$INCLUDE_LIST"
+          done
 
-          if [ "$FOUND" -eq 0 ]; then
+          if (( FOUND == 0 )); then
             echo "::error::No files were added to the zip. Failing the job."
             exit 1
           fi
 
-          # -j：不保留路徑（根目錄本來就沒路徑）
+          # -j：不保留路徑（根目錄本來就無子路徑）
           zip -j "$ZIP" -@ < filelist.txt >/dev/null
           echo "Created: $ZIP (files: $FOUND)"
 
           (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
+
       - name: Create / Update GitHub Release and upload assets
         uses: softprops/action-gh-release@v2
         with:
