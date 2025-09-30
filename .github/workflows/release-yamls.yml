@@ -97,13 +97,11 @@ jobs:
           mapfile -t FILES < <(printf '%s\n' "$INCLUDE_LIST" | sed -e 's/\r$//' -e '/^\s*$/d')
 
           FOUND=0
-          for p in "${FILES[@]}"; do
-            if [[ -f "$p" ]]; then
-              echo "$p" >> filelist.txt
-              echo "Added: $p"
-              ((FOUND++))
-            else
-              echo "::warning::Missing (root only): $p"
+          for file in *.yaml; do
+            if [ -f "$file" ]; then
+              zip myarchive.zip "$file"
+              echo "Added: $file"
+              FOUND=$((FOUND + 1))
             fi
           done
 
