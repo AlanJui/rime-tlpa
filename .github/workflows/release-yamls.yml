@@ -50,6 +50,9 @@ jobs:
       - name: Prepare dist
         run: mkdir -p dist
 
+      - name: List files before zipping
+        run: ls -l zu_im_2_libs.yaml zu_im_2_phing_im.schema.yaml
+
       - name: Build zip with selected YAMLs (root-only, bash-safe)
         shell: bash
         env:
