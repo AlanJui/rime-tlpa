@@ -1,42 +1,41 @@
 name: Build & Release selected YAMLs
 
 on:
-  # 方式一：推一個 tag（建議用 v1.2.3 這類）
+  # 路線1：推 tag 自動觸發（例：v1.2.3 / kb-xxx / bp-xxx / zu-xxx）
   push:
     tags:
-      - 'v*'
-      - 'kb-*'
-      - 'bp-*'
-      - 'zu-*'
-  # 方式二：手動觸發（可填分支/commit與tag名稱）
+      - "v*"
+      - "kb-*"
+      - "bp-*"
+      - "zu-*"
+  # 路線2：手動觸發，可指定分支/commit 與 tag
   workflow_dispatch:
     inputs:
       ref:
-        description: '要打包的分支或 commit SHA（例：main 或 a1b2c3d）'
+        description: "要打包的分支或 commit SHA（例：main 或 a1b2c3d）"
         required: true
-        default: 'main'
+        default: "main"
       tag_name:
-        description: '要建立/更新的 Release tag（例：v0.9.0）'
+        description: "要建立/更新的 Release tag（例：v0.9.0）"
         required: true
       prerelease:
-        description: '是否標記為 pre-release'
+        description: "是否標記為 pre-release"
         required: false
-        default: 'false'
+        default: "false"
 
 jobs:
   pack-yamls:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Resolve ref / tag
+      - name: Set variables
         id: meta
-        shell: bash
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "REF=${{ github.event.inputs.ref }}" >> $GITHUB_OUTPUT
             echo "TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=${{ github.event.inputs.prerelease }}" >> $GITHUB_OUTPUT
           else
-            # push tag 觸發：用這次推送的 tag 與 ref
             echo "REF=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "TAG=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=false" >> $GITHUB_OUTPUT
@@ -52,69 +51,55 @@ jobs:
         run: mkdir -p dist
 
       - name: Build zip with selected YAMLs
-        shell: bash
+        env:
+          TAG: ${{ steps.meta.outputs.TAG }}
+          PREFIX: "" # 若檔案在子資料夾（例 rime/），改成 PREFIX: "rime/"
+          INCLUDE_LIST: |
+            kb_hong_im.schema.yaml
+            kb_ipa.schema.yaml
+            keymap_piau_tian.yaml
+            lib_hau_suan_ji_tuann.yaml
+            lib_phing_im.yaml
+            lib_sip_ngoo_im.yaml
+            lib_sip_ngoo_im2.yaml
+            lib_zu_im.yaml
+            tlpa_phing_im.schema.yaml
+            tlpa_hong_im.schema.yaml
+            tlpa_lib_hau_suan_ji_tuann.yaml
+            tl_ji_khoo_ciann_ji.dict.yaml
+            tl_ji_khoo_kah_kut_bun.dict.yaml
+            tl_ji_khoo_kong_un.dict.yaml
+            tl_ji_khoo_nga_siok_thong.dict.yaml
+            tl_ji_khoo_peh_ue.dict.yaml
+            tl_ji_khoo_peh_ue_zu_ting.dict.yaml
+            zu_im_2_phing_im.schema.yaml
+            zu_im_2_hong_im.schema.yaml
+            zu_im_2_libs.yaml
+            zu_im_2_hau_suan_zzi_duann.yaml
+            zu_im_2.dict.yaml
+            bp_hong_im.schema.yaml
+            bp_phing_im.schema.yaml
+            bp_libs.yaml
+            bp_ji_khoo.dict.yaml
         run: |
-          # 若你的 YAML 都在 repo 根目錄，維持空字首；
-          # 若在子資料夾（例如 rime/），把 PREFIX 換成 'rime/'
-          PREFIX=""
-          ZIP="dist/rime-tlpa-yamls-${{ steps.meta.outputs.TAG }}.zip"
-
-          # === 只打包你列出的這些檔（不存在就略過並列出告警）===
-          INCLUDE_LIST=$(cat <<'EOF'
-kb_hong_im.schema.yaml
-kb_ipa.schema.yaml
-
-keymap_piau_tian.yaml
-lib_hau_suan_ji_tuann.yaml
-lib_phing_im.yaml
-lib_sip_ngoo_im.yaml
-lib_sip_ngoo_im2.yaml
-lib_zu_im.yaml
-
-tlpa_phing_im.schema.yaml
-tlpa_hong_im.schema.yaml
-tlpa_lib_hau_suan_ji_tuann.yaml
-tl_ji_khoo_ciann_ji.dict.yaml
-tl_ji_khoo_kah_kut_bun.dict.yaml
-tl_ji_khoo_kong_un.dict.yaml
-tl_ji_khoo_nga_siok_thong.dict.yaml
-tl_ji_khoo_peh_ue.dict.yaml
-tl_ji_khoo_peh_ue_zu_ting.dict.yaml
-
-zu_im_2_phing_im.schema.yaml
-zu_im_2_hong_im.schema.yaml
-zu_im_2_libs.yaml
-zu_im_2_hau_suan_zzi_duann.yaml
-zu_im_2.dict.yaml
-
-bp_hong_im.schema.yaml
-bp_phing_im.schema.yaml
-bp_libs.yaml
-bp_ji_khoo.dict.yaml
-EOF
-)
-
+          ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
           touch "$ZIP"
           MISSING=0
-          while IFS= read -r p; do
-            [[ -z "$p" ]] && continue
+          echo "$INCLUDE_LIST" | while read -r p; do
+            [ -z "$p" ] && continue
             f="${PREFIX}${p}"
-            if [[ -f "$f" ]]; then
-              # -j：不保留目錄層級，純檔名
+            if [ -f "$f" ]; then
               zip -j "$ZIP" "$f" >/dev/null
               echo "Added: $f"
             else
               echo "::warning::Missing file (skipped): $f"
-              ((MISSING+=1))
+              MISSING=$((MISSING+1))
             fi
-          done <<< "$INCLUDE_LIST"
-
-          if [[ ! -s "$ZIP" ]]; then
+          done
+          if [ ! -s "$ZIP" ]; then
             echo "::error::No files were added to the zip. Failing the job."
             exit 1
           fi
-
-          # 產生 checksum
           (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
 
       - name: Create / Update GitHub Release and upload assets
