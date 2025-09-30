@@ -77,10 +77,6 @@ jobs:
             zu_im_2_libs.yaml
             zu_im_2_hau_suan_zzi_duann.yaml
             zu_im_2.dict.yaml
-            bp_hong_im.schema.yaml
-            bp_phing_im.schema.yaml
-            bp_libs.yaml
-            bp_ji_khoo.dict.yaml
         run: |
           ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
           touch "$ZIP"
