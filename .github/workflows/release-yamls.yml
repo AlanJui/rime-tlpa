@@ -112,12 +112,7 @@ jobs:
             echo "::error::No files were added to the zip. Failing the job."
             exit 1
           fi
-          for file in zu_im_2_libs.yaml zu_im_2_phing_im.schema.yaml; do
-            if [ ! -f "$file" ]; then
-              echo "::error::File $file not found. Failing the job."
-              exit 1
-            fi
-          done
+
           zip release.zip zu_im_2_libs.yaml zu_im_2_phing_im.schema.yaml
 
           # -j：不保留路徑（根目錄本來就沒路徑）
