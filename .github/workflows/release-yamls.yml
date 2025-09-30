@@ -51,7 +51,6 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ steps.meta.outputs.REF }}
-
       - name: Build zip with selected YAMLs (root-only, bash-safe)
         shell: bash
         env:
@@ -84,63 +83,46 @@ jobs:
             bp_libs.yaml
             bp_ji_khoo.dict.yaml
         run: |
-          set -u  # 暫時移除 -e，避免中斷
+          set -euo pipefail
 
           echo "== [DEBUG] 目前目錄：$(pwd) =="
           echo "== [DEBUG] 根目錄所有 YAML 檔案 =="
           ls -l *.yaml || true
-          echo "== [DEBUG] INCLUDE_LIST =="
+          echo "== [DEBUG] INCLUDE_LIST (raw) =="
           printf '%s\n' "$INCLUDE_LIST"
-          echo "== [DEBUG] repo 目錄所有檔案 =="
-          ls -l || true
           echo "================================"
 
           mkdir -p dist
           ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
           : > filelist.txt
 
-          mapfile -t FILES < <(printf '%s\n' "$INCLUDE_LIST" | sed -e 's/\r$//' -e '/^\s*$/d')
+          # 去掉 CR / 空行 / 行首行尾空白
+          mapfile -t FILES < <(printf '%s\n' "$INCLUDE_LIST" | sed -e 's/\r$//' -e '/^\s*$/d' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 
           FOUND=0
           for p in "${FILES[@]}"; do
+            echo "[DEBUG] checking: >$p<"
             if [[ -f "$p" ]]; then
               echo "$p" >> filelist.txt
               echo "[DEBUG] Added: $p"
               ((FOUND++))
             else
-              echo "[DEBUG] Not found: $p"
               echo "::warning::Missing (root only): $p"
             fi
           done
 
           echo "== [DEBUG] filelist.txt 內容 =="
-          cat filelist.txt
+          cat filelist.txt || true
 
           if (( FOUND == 0 )); then
             echo "::error::No files were added to the zip. Failing the job."
             exit 1
           fi
 
-          ZIP_OK=0
-          while read -r file; do
-            if [ -f "$file" ]; then
-              echo "[DEBUG] zip $file"
-              zip -j "$ZIP" "$file" || echo "[DEBUG] zip $file 失敗"
-              ZIP_OK=1
-            else
-              echo "[DEBUG] 檔案不存在: $file"
-            fi
-          done < filelist.txt
-
-          echo "[DEBUG] zip 完成，ZIP_OK=$ZIP_OK"
+          zip -j "$ZIP" -@ < filelist.txt >/dev/null
+          echo "Created: $ZIP (files: $FOUND)"
           ls -l dist
 
-          if (( ZIP_OK == 0 )); then
-            echo "::error::No files were zipped. Failing the job."
-            exit 1
-          fi
-
-          echo "Created: $ZIP (files: $FOUND)"
           (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
 
       - name: Create / Update GitHub Release and upload assets
