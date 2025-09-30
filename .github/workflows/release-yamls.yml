@@ -84,7 +84,7 @@ jobs:
             bp_libs.yaml
             bp_ji_khoo.dict.yaml
         run: |
-          set -euo pipefail
+          set -u  # 暫時移除 -e，避免中斷
 
           echo "== [DEBUG] 目前目錄：$(pwd) =="
           echo "== [DEBUG] 根目錄所有 YAML 檔案 =="
@@ -113,12 +113,15 @@ jobs:
             fi
           done
 
+          echo "== [DEBUG] filelist.txt 內容 =="
+          cat filelist.txt
+
           if (( FOUND == 0 )); then
             echo "::error::No files were added to the zip. Failing the job."
             exit 1
           fi
 
-          zip -j "$ZIP" -@ < filelist.txt >/dev/null
+          zip -j "$ZIP" -@ < filelist.txt
           echo "Created: $ZIP (files: $FOUND)"
 
           (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
