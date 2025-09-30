@@ -53,7 +53,7 @@ jobs:
       - name: Build zip with selected YAMLs
         env:
           TAG: ${{ steps.meta.outputs.TAG }}
-          PREFIX: "" # 若檔案在子資料夾（例 rime/），改成 PREFIX: "rime/"
+          # 只打包「專案根目錄」的這些檔；子資料夾一律忽略
           INCLUDE_LIST: |
             kb_hong_im.schema.yaml
             kb_ipa.schema.yaml
@@ -77,25 +77,43 @@ jobs:
             zu_im_2_libs.yaml
             zu_im_2_hau_suan_zzi_duann.yaml
             zu_im_2.dict.yaml
+            bp_hong_im.schema.yaml
+            bp_phing_im.schema.yaml
+            bp_libs.yaml
+            bp_ji_khoo.dict.yaml
         run: |
+          set -u
+
+          echo "== 根目錄 YAML 一覽 =="
+          ls -la *.yaml || true
+          echo "==================="
+
+          mkdir -p dist
           ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
-          touch "$ZIP"
-          MISSING=0
-          echo "$INCLUDE_LIST" | while read -r p; do
+
+          # 僅在 repo 根目錄打包指定的檔案
+          FOUND=0
+          > filelist.txt
+          while IFS = read -r p; do
             [ -z "$p" ] && continue
-            f="${PREFIX}${p}"
-            if [ -f "$f" ]; then
-              zip -j "$ZIP" "$f" >/dev/null
-              echo "Added: $f"
+            if [ -f "$p" ]; then
+              echo "$p" >> filelist.txt
+              echo "Added: $p"
+              FOUND=$((FOUND + 1))
             else
-              echo "::warning::Missing file (skipped): $f"
-              MISSING=$((MISSING+1))
+              echo "::warning::Missing (root only): $p"
             fi
-          done
-          if [ ! -s "$ZIP" ]; then
+          done <<< "$INCLUDE_LIST"
+
+          if [ "$FOUND" -eq 0 ]; then
             echo "::error::No files were added to the zip. Failing the job."
             exit 1
           fi
+
+          # -j：不保留路徑（根目錄本來就沒路徑）
+          zip -j "$ZIP" -@ < filelist.txt >/dev/null
+          echo "Created: $ZIP (files: $FOUND)"
+
           (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
       - name: Create / Update GitHub Release and upload assets
         uses: softprops/action-gh-release@v2
