@@ -101,19 +101,16 @@ jobs:
 
           FOUND=0
           for file in *.yaml; do
-            if [ -f "$file" ]; then
-              zip myarchive.zip "$file"
-              echo "Added: $file"
-              FOUND=$((FOUND + 1))
+            if [[ ! " ${files_to_zip[@]} " =~ " ${file} " ]]; then
+              files_to_zip+=("$file")
             fi
           done
+          zip archive.zip "${files_to_zip[@]}"
 
           if (( FOUND == 0 )); then
             echo "::error::No files were added to the zip. Failing the job."
             exit 1
           fi
-
-          zip release.zip zu_im_2_libs.yaml zu_im_2_phing_im.schema.yaml
 
           # -j：不保留路徑（根目錄本來就沒路徑）
           zip -j "$ZIP" -@ < filelist.txt >/dev/null
