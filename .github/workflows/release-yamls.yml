@@ -1,28 +1,29 @@
-name: Build & Release YAML bundles (ALL / TLPA / ZU2 / BP)
+name: "Build & Release YAML bundles (ALL / TLPA / ZU2 / BP)"
 
 permissions:
-  contents: write   # ★ 讓 GITHUB_TOKEN 可發 Release / 建 tag
+  contents: write # ★ 讓 GITHUB_TOKEN 可發 Release / 建 tag
 
 on:
   push:
     tags:
-      - 'v*'
-      - 'kb-*'
-      - 'bp-*'
-      - 'zu-*'
+      - "v*"
+      - "kb-*"
+      - "bp-*"
+      - "zu-*"
   workflow_dispatch:
     inputs:
       ref:
-        description: 'Branch 或 commit（例：main／a1b2c3d）'
+        description: "Branch 或 commit（例：main／a1b2c3d）"
         required: true
-        default: 'main'
+        default: "main"
       tag_name:
-        description: 'Release tag（例：v0.9.0）'
+        description: "Release tag（例：v0.9.0）"
         required: true
       prerelease:
-        description: '是否標示為 pre-release'
+        description: "是否標示為 pre-release"
+        type: boolean
         required: false
-        default: 'false"
+        default: false
 
 jobs:
   build-bundles:
@@ -188,10 +189,7 @@ jobs:
         with:
           tag_name: ${{ steps.meta.outputs.TAG }}
           target_commitish: ${{ steps.meta.outputs.REF }}
-          prerelease: ${{ steps.meta.outputs.PRERELEASE }}
+          prerelease: ${{ github.event.inputs.prerelease || false }} # ← 布林，不用字串
           files: |
             dist/*.zip
             dist/*.sha256
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-'
