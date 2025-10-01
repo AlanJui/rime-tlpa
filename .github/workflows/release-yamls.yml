@@ -1,4 +1,4 @@
-name: Build & Release selected YAMLs
+name: Build & Release YAML bundles (ALL / TLPA / ZU2 / BP)
 
 on:
   push:
@@ -10,29 +10,26 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: "要打包的分支或 commit SHA（例：main 或 a1b2c3d）"
+        description: "Branch 或 commit（例：main／a1b2c3d）"
         required: true
         default: "main"
       tag_name:
-        description: "要建立/更新的 Release tag（例：v0.5）"
+        description: "Release tag（例：v0.9.0）"
         required: true
       prerelease:
-        description: "是否標記為 pre-release"
+        description: "是否標示為 pre-release"
         required: false
         default: "false"
 
-permissions:
-  contents: write
-
 jobs:
-  pack-yamls:
+  build-bundles:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Set variables
+      - name: Resolve ref / tag
         id: meta
+        shell: bash
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "REF=${{ github.event.inputs.ref }}" >> $GITHUB_OUTPUT
             echo "TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=${{ github.event.inputs.prerelease }}" >> $GITHUB_OUTPUT
@@ -41,79 +38,154 @@ jobs:
             echo "TAG=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=false" >> $GITHUB_OUTPUT
           fi
+          echo "Resolved REF=$(cat $GITHUB_OUTPUT | sed -n 's/^REF=//p'), TAG=$(cat $GITHUB_OUTPUT | sed -n 's/^TAG=//p')"
 
-      - name: Checkout repository
+      - name: Checkout repository at ref
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ steps.meta.outputs.REF }}
 
-      - name: Build release zip from root list (bash-safe)
+      - name: Build 4 bundles (ALL/TLPA/ZU2/BP)
         shell: bash
         env:
           TAG: ${{ steps.meta.outputs.TAG }}
-          LIST_FILE: release-include.txt
         run: |
           set -euo pipefail
+          shopt -s nullglob nocaseglob
 
           echo "== [DEBUG] pwd: $(pwd) =="
-          if [ ! -f "$LIST_FILE" ]; then
-            echo "::error::$LIST_FILE 不存在（請確認已提交到 repo 根目錄）"
-            exit 1
-          fi
-
-          echo "== [DEBUG] 根目錄所有 YAML（供你對照）=="
           ls -l *.yaml || true
-          echo "== [DEBUG] $LIST_FILE 內容（前 200 行）=="
-          sed -n '1,200p' "$LIST_FILE" || true
-          echo "====================================="
+
+          PREFIX=""   # 若檔案不在根目錄，改成例如：PREFIX="rime/"
 
           mkdir -p dist
-          ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
-          : > filelist.txt
 
-          # 從清單讀入檔名：
-          # 1) 去 BOM（第一行可能有 \xEF\xBB\xBF）
-          # 2) 去 CR（Windows \r）
-          # 3) 去前後空白
-          # 4) 去空行與註解（# 開頭）
-          mapfile -t FILES < <(
-            awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}{print}' "$LIST_FILE" \
-            | sed -e 's/\r$//' \
-            | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
-            | sed -e '/^$/d' -e '/^#/d'
-          )
+          make_zip() {
+            local name="$1"; shift
+            local listfile="$1"; shift
+            local zip="dist/rime-tlpa-${name}-${TAG}.zip"
 
-          FOUND=0
-          for p in "${FILES[@]}"; do
-            echo "[DEBUG] checking: >$p<"
-            if [[ -f "$p" ]]; then
-              echo "$p" >> filelist.txt
-              echo "Added: $p"
-              FOUND=$((FOUND + 1))   # ★ 修正這行
+            if [[ -s "$listfile" ]]; then
+              echo ">>> Packing ${name} ($(wc -l < "$listfile") files)"
+              zip -j "$zip" -@ < "$listfile" >/dev/null
+              (cd dist && sha256sum "$(basename "$zip")" > "$(basename "$zip").sha256")
+              ls -lh "dist/$(basename "$zip")"
             else
-              echo "::warning::Missing (root only): $p"
+              echo "::warning::Skip ${name} (no files)"
             fi
-          done
+          }
 
-          if (( FOUND == 0 )); then
-            echo "::error::清單中的檔案在根目錄都找不到；請檢查 $LIST_FILE 與檔名大小寫。"
-            exit 1
+          # ---------- ALL ----------
+          # 1) 優先使用 release-include.txt；2) 不存在就抓根目錄所有 *.yaml
+          ALL_LIST="dist/_all.list"
+          if [[ -f release-include.txt ]]; then
+            echo "Use release-include.txt for ALL"
+            awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}{print}' release-include.txt \
+              | sed -e 's/\r$//' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
+              | sed -e '/^$/d' -e '/^#/d' \
+              | while read -r p; do
+                  [[ -z "$p" ]] && continue
+                  f="${PREFIX}${p}"
+                  [[ -f "$f" ]] && echo "$f"
+                done > "$ALL_LIST"
+          else
+            echo "No release-include.txt, fallback to *.yaml"
+            : > "$ALL_LIST"
+            for f in ${PREFIX}*.yaml; do
+              [[ -f "$f" ]] && echo "$f" >> "$ALL_LIST"
+            done
           fi
 
-          zip -j "$ZIP" -@ < filelist.txt >/dev/null
-          echo "Created: $ZIP (files: $FOUND)"
-          ls -l dist
+          # ---------- COMMON：各方案共用 ----------
+          COMMON_LIST="dist/_common.list"
+          : > "$COMMON_LIST"
+          for p in \
+            keymap_piau_tian.yaml \
+            lib_hau_suan_ji_tuann.yaml \
+            lib_phing_im.yaml \
+            lib_sip_ngoo_im.yaml \
+            lib_sip_ngoo_im2.yaml \
+            lib_zu_im.yaml
+          do
+            f="${PREFIX}${p}"
+            [[ -f "$f" ]] && echo "$f" >> "$COMMON_LIST" || echo "::warning::Missing COMMON: $f"
+          done
 
-          (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
+          # ---------- TLPA 專屬 ----------
+          TLPA_LIST="dist/_tlpa.list"
+          : > "$TLPA_LIST"
+          for pat in \
+            tlpa_*.yaml tlpa_*.schema.yaml \
+            tl_ji_khoo_*.dict.yaml
+          do
+            for f in ${PREFIX}${pat}; do
+              [[ -f "$f" ]] && echo "$f" >> "$TLPA_LIST"
+            done
+          done
+          # 排除任何 *kb*（鍵盤練習工具）
+          sed -i -e '/kb.*\.schema\.yaml/Id' "$TLPA_LIST" || true
 
-      - name: Create / Update GitHub Release
+          # ---------- 注音二式（ZU2）專屬 ----------
+          ZU2_LIST="dist/_zu2.list"
+          : > "$ZU2_LIST"
+          for pat in \
+            zu_im_2*.yaml zu_im_2*.schema.yaml
+          do
+            for f in ${PREFIX}${pat}; do
+              [[ -f "$f" ]] && echo "$f" >> "$ZU2_LIST"
+            done
+          done
+          sed -i -e '/kb.*\.schema\.yaml/Id' "$ZU2_LIST" || true
+
+          # ---------- BP 專屬 ----------
+          BP_LIST="dist/_bp.list"
+          : > "$BP_LIST"
+          for pat in \
+            bp_*.yaml bp_*.schema.yaml
+          do
+            for f in ${PREFIX}${pat}; do
+              [[ -f "$f" ]] && echo "$f" >> "$BP_LIST"
+            done
+          done
+          sed -i -e '/kb.*\.schema\.yaml/Id' "$BP_LIST" || true
+
+          # ---------- 鍵盤練習工具（只放 All） ----------
+          KB_LIST="dist/_kb.list"
+          : > "$KB_LIST"
+          for pat in \
+            kb_*.schema.yaml \
+            *_kb*.schema.yaml
+          do
+            for f in ${PREFIX}${pat}; do
+              [[ -f "$f" ]] && echo "$f" >> "$KB_LIST"
+            done
+          done
+
+          # --------- 合併清單 ----------
+          sort -u "$ALL_LIST" > dist/all.final
+          cat "$COMMON_LIST" "$TLPA_LIST" | sort -u > dist/tlpa.final
+          cat "$COMMON_LIST" "$ZU2_LIST"  | sort -u > dist/zu2.final
+          cat "$COMMON_LIST" "$BP_LIST"   | sort -u > dist/bp.final
+
+          # All 另外把 KB 也併進去
+          cat dist/all.final "$KB_LIST" | sort -u > dist/all.plus
+
+          echo "== COUNT =="
+          echo "ALL: $(wc -l < dist/all.plus) | TLPA: $(wc -l < dist/tlpa.final) | ZU2: $(wc -l < dist/zu2.final) | BP: $(wc -l < dist/bp.final)"
+
+          # --------- 打包 ----------
+          make_zip "all"  "dist/all.plus"
+          make_zip "tlpa" "dist/tlpa.final"
+          make_zip "zu2"  "dist/zu2.final"
+          make_zip "bp"   "dist/bp.final"
+
+      - name: Create / Update GitHub Release + upload 4 assets
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.meta.outputs.TAG }}
           target_commitish: ${{ steps.meta.outputs.REF }}
           prerelease: ${{ steps.meta.outputs.PRERELEASE }}
-          generate_release_notes: true
           files: |
             dist/*.zip
             dist/*.sha256
