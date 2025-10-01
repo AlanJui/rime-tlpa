@@ -189,8 +189,9 @@ jobs:
           tag_name: ${{ steps.meta.outputs.TAG }}
           target_commitish: ${{ steps.meta.outputs.REF }}
           prerelease: ${{ steps.meta.outputs.PRERELEASE }}
-          files: |            # ★ 用區塊字面量，兩行都屬於 files
+          files: |
             dist/*.zip
             dist/*.sha256
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # 可留可不留，預設會用 github.token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+'
