@@ -90,7 +90,7 @@ jobs:
             if [[ -f "$p" ]]; then
               echo "$p" >> filelist.txt
               echo "Added: $p"
-              ((FOUND++))
+              FOUND=$((FOUND + 1))   # ★ 修正這行
             else
               echo "::warning::Missing (root only): $p"
             fi
