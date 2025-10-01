@@ -1,0 +1,142 @@
+name: Build & Release selected YAMLs
+
+on:
+    push:
+        tags:
+            - "v*"
+            - "kb-*"
+            - "bp-*"
+            - "zu-*"
+    workflow_dispatch:
+        inputs:
+            ref:
+                description: "要打包的分支或 commit SHA（例：main 或 a1b2c3d）"
+                required: true
+                default: "main"
+            tag_name:
+                description: "要建立/更新的 Release tag（例：v0.5）"
+                required: true
+            prerelease:
+                description: "是否標記為 pre-release"
+                required: false
+                default: "false"
+
+permissions:
+    contents: write
+
+jobs:
+    pack-yamls:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Set variables
+              id: meta
+              run: |
+                  if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+                    echo "REF=${{ github.event.inputs.ref }}" >> $GITHUB_OUTPUT
+                    echo "TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
+                    echo "PRERELEASE=${{ github.event.inputs.prerelease }}" >> $GITHUB_OUTPUT
+                  else
+                    echo "REF=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+                    echo "TAG=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+                    echo "PRERELEASE=false" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  ref: ${{ steps.meta.outputs.REF }}
+
+            - name: DEBUG – who/where/what
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  echo "Actor: $GITHUB_ACTOR"
+                  echo "Repo:  $GITHUB_REPOSITORY"
+                  echo "Event: $GITHUB_EVENT_NAME"
+                  echo "Workspace: $GITHUB_WORKSPACE"
+                  echo "HEAD commit:"
+                  git rev-parse HEAD
+                  echo
+                  echo "HEAD commit files (top-level):"
+                  ls -la
+                  echo
+                  echo "Git-tracked match for release-include.txt:"
+                  git ls-files | sed -n '/release-include.txt/Ip'
+                  echo
+                  echo "Try print release-include.txt via git show (HEAD):"
+                  git show HEAD:release-include.txt | sed -n '1,10p' || echo "[WARN] git show HEAD:release-include.txt failed"
+                  echo
+
+            - name: Build release zip from root list (bash-safe)
+              shell: bash
+              env:
+                  TAG: ${{ steps.meta.outputs.TAG }}
+                  LIST_FILE: release-include.txt
+              run: |
+                  set -euo pipefail
+
+                  echo "pwd: $(pwd)"
+                  if [ ! -f "$LIST_FILE" ]; then
+                    echo "::error::$LIST_FILE 不存在（請確認已提交到 repo 根目錄，且本次 checkout 的 commit 含此檔）"
+                    echo "Top-level files for reference:"
+                    ls -la
+                    echo "git ls-files (tracked):"
+                    git ls-files | sed -n '1,200p'
+                    exit 1
+                  fi
+
+                  echo "== $LIST_FILE preview (first 30 lines) =="
+                  sed -n '1,30p' "$LIST_FILE" || true
+                  echo "========================================="
+
+                  mkdir -p dist
+                  ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
+                  : > filelist.txt
+
+                  # 去 BOM / CR / 空白 / 註解
+                  mapfile -t FILES < <(
+                    awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}{print}' "$LIST_FILE" \
+                    | sed -e 's/\r$//' \
+                    | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
+                    | sed -e '/^$/d' -e '/^#/d'
+                  )
+
+                  echo "[DEBUG] normalized entries:"
+                  printf ' - "%s"\n' "${FILES[@]}" || true
+
+                  FOUND=0
+                  for p in "${FILES[@]}"; do
+                    if [[ -f "$p" ]]; then
+                      echo "$p" >> filelist.txt
+                      echo "Added: $p"
+                      ((FOUND++))
+                    else
+                      echo "::warning::Missing (root only): $p"
+                    fi
+                  done
+
+                  if (( FOUND == 0 )); then
+                    echo "::error::清單中的檔案在根目錄都找不到；請檢查 $LIST_FILE（大小寫/換行/BOM）與目前 checkout 的 commit。"
+                    exit 1
+                  fi
+
+                  zip -j "$ZIP" -@ < filelist.txt >/dev/null
+                  echo "Created: $ZIP (files: $FOUND)"
+                  ls -l dist
+
+                  (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
+
+            - name: Create / Update GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ steps.meta.outputs.TAG }}
+                  target_commitish: ${{ steps.meta.outputs.REF }}
+                  prerelease: ${{ steps.meta.outputs.PRERELEASE }}
+                  generate_release_notes: true
+                  files: |
+                      dist/*.zip
+                      dist/*.sha256
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
