@@ -1,14 +1,13 @@
 name: Build & Release selected YAMLs
 
 on:
-  # 只有推「tag」時才觸發（避免 push branch 造成混淆）
+  # 只在「推 tag」或「手動觸發」時執行
   push:
     tags:
       - "v*"
       - "kb-*"
       - "bp-*"
       - "zu-*"
-  # 也可手動觸發：填 ref（分支或 commit）與 tag_name
   workflow_dispatch:
     inputs:
       ref:
@@ -16,14 +15,13 @@ on:
         required: true
         default: "main"
       tag_name:
-        description: "要建立/更新的 Release tag（例：v0.4.0）"
+        description: "要建立/更新的 Release tag（例：v0.5）"
         required: true
       prerelease:
         description: "是否標記為 pre-release"
         required: false
         default: "false"
 
-# 讓 action 有權限建立/更新 release、上傳 assets
 permissions:
   contents: write
 
@@ -40,82 +38,59 @@ jobs:
             echo "TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=${{ github.event.inputs.prerelease }}" >> $GITHUB_OUTPUT
           else
-            # push tag 觸發時，github.ref_name 就是「tag 名稱」（例如 v0.4.0）
+            # push tag 觸發時，ref_name 就是 tag 名稱（例如 v0.5）
             echo "REF=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "TAG=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Checkout repository at ref
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ steps.meta.outputs.REF }}
-      - name: Build zip with selected YAMLs (root-only, bash-safe)
+
+      - name: Build release zip from root list (bash-safe)
         shell: bash
         env:
           TAG: ${{ steps.meta.outputs.TAG }}
-          INCLUDE_LIST: |
-            kb_hong_im.schema.yaml
-            kb_ipa.schema.yaml
-            keymap_piau_tian.yaml
-            lib_hau_suan_ji_tuann.yaml
-            lib_phing_im.yaml
-            lib_sip_ngoo_im.yaml
-            lib_sip_ngoo_im2.yaml
-            lib_zu_im.yaml
-            tlpa_phing_im.schema.yaml
-            tlpa_hong_im.schema.yaml
-            tlpa_lib_hau_suan_ji_tuann.yaml
-            tl_ji_khoo_ciann_ji.dict.yaml
-            tl_ji_khoo_kah_kut_bun.dict.yaml
-            tl_ji_khoo_kong_un.dict.yaml
-            tl_ji_khoo_nga_siok_thong.dict.yaml
-            tl_ji_khoo_peh_ue.dict.yaml
-            tl_ji_khoo_peh_ue_zu_ting.dict.yaml
-            zu_im_2_phing_im.schema.yaml
-            zu_im_2_hong_im.schema.yaml
-            zu_im_2_libs.yaml
-            zu_im_2_hau_suan_zzi_duann.yaml
-            zu_im_2.dict.yaml
-            bp_hong_im.schema.yaml
-            bp_phing_im.schema.yaml
-            bp_libs.yaml
-            bp_ji_khoo.dict.yaml
+          LIST_FILE: release-include.txt # ← 讀你剛剛新增的清單檔
         run: |
           set -euo pipefail
-
           echo "== [DEBUG] 目前目錄：$(pwd) =="
-          echo "== [DEBUG] 根目錄所有 YAML 檔案 =="
+          test -f "$LIST_FILE" || { echo "::error::$LIST_FILE 不存在"; exit 1; }
+
+          echo "== [DEBUG] 根目錄所有 YAML（供你對照）=="
           ls -l *.yaml || true
-          echo "== [DEBUG] INCLUDE_LIST (raw) =="
-          printf '%s\n' "$INCLUDE_LIST"
-          echo "================================"
+          echo "== [DEBUG] 使用清單：$LIST_FILE =="
+          sed -n '1,200p' "$LIST_FILE" || true
+          echo "====================================="
 
           mkdir -p dist
           ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
           : > filelist.txt
 
-          # 去掉 CR / 空行 / 行首行尾空白
-          mapfile -t FILES < <(printf '%s\n' "$INCLUDE_LIST" | sed -e 's/\r$//' -e '/^\s*$/d' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+          # 從清單中讀檔名：去 CR、去空行、去註解(# 開頭)、去前後空白
+          mapfile -t FILES < <(
+            sed -e 's/\r$//' "$LIST_FILE" \
+            | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
+            | sed -e '/^$/d' -e '/^#/d'
+          )
 
           FOUND=0
           for p in "${FILES[@]}"; do
             echo "[DEBUG] checking: >$p<"
             if [[ -f "$p" ]]; then
               echo "$p" >> filelist.txt
-              echo "[DEBUG] Added: $p"
+              echo "Added: $p"
               ((FOUND++))
             else
               echo "::warning::Missing (root only): $p"
             fi
           done
 
-          echo "== [DEBUG] filelist.txt 內容 =="
-          cat filelist.txt || true
-
           if (( FOUND == 0 )); then
-            echo "::error::No files were added to the zip. Failing the job."
+            echo "::error::清單中的檔案在根目錄都找不到；停止打包。"
             exit 1
           fi
 
@@ -125,7 +100,7 @@ jobs:
 
           (cd dist && sha256sum "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")
 
-      - name: Create / Update GitHub Release and upload assets
+      - name: Create / Update GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.meta.outputs.TAG }}
