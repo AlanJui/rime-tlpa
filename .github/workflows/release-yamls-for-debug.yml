@@ -1,4 +1,4 @@
-name: Build & Release selected YAMLs
+name: Build & Release selected YAMLs for Debugging
 
 on:
     push:
