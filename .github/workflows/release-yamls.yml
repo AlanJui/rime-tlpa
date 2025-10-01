@@ -1,7 +1,6 @@
 name: Build & Release selected YAMLs
 
 on:
-  # 只在「推 tag」或「手動觸發」時執行
   push:
     tags:
       - "v*"
@@ -38,7 +37,6 @@ jobs:
             echo "TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=${{ github.event.inputs.prerelease }}" >> $GITHUB_OUTPUT
           else
-            # push tag 觸發時，ref_name 就是 tag 名稱（例如 v0.5）
             echo "REF=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "TAG=${{ github.ref_name }}" >> $GITHUB_OUTPUT
             echo "PRERELEASE=false" >> $GITHUB_OUTPUT
@@ -54,15 +52,19 @@ jobs:
         shell: bash
         env:
           TAG: ${{ steps.meta.outputs.TAG }}
-          LIST_FILE: release-include.txt # ← 讀你剛剛新增的清單檔
+          LIST_FILE: release-include.txt
         run: |
           set -euo pipefail
-          echo "== [DEBUG] 目前目錄：$(pwd) =="
-          test -f "$LIST_FILE" || { echo "::error::$LIST_FILE 不存在"; exit 1; }
+
+          echo "== [DEBUG] pwd: $(pwd) =="
+          if [ ! -f "$LIST_FILE" ]; then
+            echo "::error::$LIST_FILE 不存在（請確認已提交到 repo 根目錄）"
+            exit 1
+          fi
 
           echo "== [DEBUG] 根目錄所有 YAML（供你對照）=="
           ls -l *.yaml || true
-          echo "== [DEBUG] 使用清單：$LIST_FILE =="
+          echo "== [DEBUG] $LIST_FILE 內容（前 200 行）=="
           sed -n '1,200p' "$LIST_FILE" || true
           echo "====================================="
 
@@ -70,9 +72,14 @@ jobs:
           ZIP="dist/rime-tlpa-yamls-${TAG}.zip"
           : > filelist.txt
 
-          # 從清單中讀檔名：去 CR、去空行、去註解(# 開頭)、去前後空白
+          # 從清單讀入檔名：
+          # 1) 去 BOM（第一行可能有 \xEF\xBB\xBF）
+          # 2) 去 CR（Windows \r）
+          # 3) 去前後空白
+          # 4) 去空行與註解（# 開頭）
           mapfile -t FILES < <(
-            sed -e 's/\r$//' "$LIST_FILE" \
+            awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}{print}' "$LIST_FILE" \
+            | sed -e 's/\r$//' \
             | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
             | sed -e '/^$/d' -e '/^#/d'
           )
@@ -90,7 +97,7 @@ jobs:
           done
 
           if (( FOUND == 0 )); then
-            echo "::error::清單中的檔案在根目錄都找不到；停止打包。"
+            echo "::error::清單中的檔案在根目錄都找不到；請檢查 $LIST_FILE 與檔名大小寫。"
             exit 1
           fi
 
