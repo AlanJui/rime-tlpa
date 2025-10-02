@@ -129,3 +129,48 @@ git filter-repo --path secret.txt --invert-paths
 # 推送重寫後歷史（請注意會影響所有人）
 git push origin --force --tags
 ```
+
+## del tags ```bash
+
+使用方式
+
+編輯陣列
+打開腳本，把 TAGS=( ... ) 內的 tag 名稱改成你要刪的清單。
+
+### 試跑（不動真格）
+
+```bash
+bash delete-tags.sh -n
+```
+
+### 正式刪遠端 tags（預設 origin）
+
+```bash
+bash delete-tags.sh -y
+```
+
+### 也刪本機 tag
+
+```bash
+bash delete-tags.sh -y --also-local
+```
+
+### 也刪同名 GitHub Release（需 gh 已登入）
+
+```bash
+bash delete-tags.sh -y --also-release
+```
+
+### 指定遠端（如果不是 origin）
+
+```bash
+bash delete-tags.sh -y --remote upstream
+```
+
+【補註】：
+
+(1) 若遇到 保護的 tag 規則（Protected tags） 或權限不足，刪遠端會失敗；需調整 repo 設定或用有權限的帳號。
+
+(2) --also-release 需要 gh 登入：gh auth login。
+
+(3) 在 Windows Git Bash 上執行沒問題；若是 PowerShell 直接跑，請用 bash delete-tags.sh ...。

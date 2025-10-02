@@ -5,6 +5,7 @@ tests/             export-ignore
 huan_ciat/          export-ignore
 docs/              export-ignore
 src/              export-ignore
+tools/              export-ignore
 *.xlsx             export-ignore
 *.csv              export-ignore
 settings_to_append.txt export-ignore
