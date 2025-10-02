@@ -1,5 +1,9 @@
 # 減肥示例：把測試、文件、開發腳本排除
 # BP_kb_zu_im.schema.yaml export-ignore
+.github/          export-ignore
+.gitignore        export-ignore
+.gitlab-ci.yml   export-ignore
+.gitattributes    export-ignore
 _archived/         export-ignore
 .vscode/           export-ignore
 tests/             export-ignore
