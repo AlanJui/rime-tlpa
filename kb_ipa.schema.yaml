@@ -5,7 +5,7 @@
 schema:
   schema_id: kb_ipa
   name: 按鍵練習【國際音標注音】
-  version: "0.1"
+  version: "0.1.0.0"
   author:
     - Alan Jui <AlanJui.1960@gmail.com>
   description: |
