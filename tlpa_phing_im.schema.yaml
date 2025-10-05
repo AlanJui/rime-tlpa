@@ -108,7 +108,7 @@ speller:
       - lib_phing_im:/phing_im_tng_ji_be
       # 定義輸入時之【縮寫原則】
       - lib_phing_im:/abbreviation
-      # 定義【注音編碼】與【鍵盤按鍵】對映關聯
+      # 定義【拼音字母編碼】與【鍵盤按鍵】對映關聯
       - lib_phing_im:/ji_be_tng_jih_kian
 
 translator:
@@ -120,14 +120,14 @@ translator:
   preedit_format:
     #------------------------------------------------------
     # 定義【鍵盤輸入列】
+    # 定義鍵盤輸入【按鍵】，與【拼音字母】顯示對映關聯
+    # - lib_phing_im:/jih_kian_tng_uann
     #------------------------------------------------------
     __patch:
-      # # 定義鍵盤輸入【按鍵】，與【拼音字母】顯示對映關聯
-      # - lib_phing_im:/jih_kian_tng_uann
+      # 鍵盤輸入列，使用【調號】標示【聲調】
+      # - lib_phing_im:/Phing_Im_Iong_Tiau_Ho
       # 鍵盤輸入列，使用【調符】標示【聲調】
-      # - lib_phing_im:/Phing_Im_Iong_Tiau_Hu
-      # 先定義【鍵盤按鍵】與【拼音字母】對映關聯
-      - lib_phing_im:/Phing_Im_Iong_Tiau_Hu2
+      - lib_phing_im:/Phing_Im_Iong_Tiau_Hu
   comment_format:
     #--------------------------------------------------------------------------
     # 定義【候選字清單】
