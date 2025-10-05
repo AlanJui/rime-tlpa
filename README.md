@@ -83,7 +83,7 @@ ZIP 壓縮檔案**；
    3. rime-tlpa-tlpa-v0.1.zip: 漢字庫採【台語拼音】拼音系統之輸入法
    4. rime-tlpa-zu2-v0.1.zip: 漢字庫採【台語注音二式】拼音系統之輸入法
 
-![輸入法建構項目配置表](./docs/static/img/輸入法建構項目配置表.png)
+![輸入方案套件包](./docs/static/img/輸入方案套件包.png)
 
 ### 聲調按鍵
 
