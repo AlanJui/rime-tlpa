@@ -173,8 +173,16 @@ jobs:
           cat "$COMMON_LIST" "$ZU2_LIST"  | sort -u > dist/zu2.final
           cat "$COMMON_LIST" "$BP_LIST"   | sort -u > dist/bp.final
 
-          # All 另外把 KB 也併進去
-          cat dist/all.final "$KB_LIST" | sort -u > dist/all.plus
+          # All 另外把 KB 與 COMMON 也併進去（確保 rime.lua 等共用檔被包含）
+          cat dist/all.final "$COMMON_LIST" "$KB_LIST" | sort -u > dist/all.plus
+
+          # 簡易偵測：確認 rime.lua 是否出現在各包清單
+          for pkg in tlpa zu2 bp; do
+            echo "[DEBUG] ${pkg}.final lines: $(wc -l < dist/${pkg}.final)"
+            grep -n "rime\.lua" "dist/${pkg}.final" || echo "[DEBUG] rime.lua not found in dist/${pkg}.final"
+          done
+          echo "[DEBUG] all.plus lines: $(wc -l < dist/all.plus)"
+          grep -n "rime\.lua" dist/all.plus || echo "[DEBUG] rime.lua not found in all.plus (will still proceed)"
 
           echo "== COUNT =="
           echo "ALL: $(wc -l < dist/all.plus) | TLPA: $(wc -l < dist/tlpa.final) | ZU2: $(wc -l < dist/zu2.final) | BP: $(wc -l < dist/bp.final)"

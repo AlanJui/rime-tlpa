@@ -3,6 +3,7 @@ kb_hong_im.schema.yaml
 kb_ipa.schema.yaml
 
 # --- 共用函式庫/工具 ---
+rime.lua
 keymap_piau_tian.yaml
 lib_hau_suan_ji_tuann.yaml
 lib_phing_im.yaml
