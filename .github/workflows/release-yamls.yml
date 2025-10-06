@@ -105,6 +105,7 @@ jobs:
           COMMON_LIST="dist/_common.list"
           : > "$COMMON_LIST"
           for p in \
+            rime.lua \
             keymap_piau_tian.yaml \
             lib_hau_suan_ji_tuann.yaml \
             lib_phing_im.yaml \
