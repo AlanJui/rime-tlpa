@@ -1,0 +1,93 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.16.0
+  generator: "Rime::SwitcherSettings"
+  modified_time: "Tue May 21 13:16:35 2024"
+  rime_version: 1.11.2
+patch:
+  "log/level": "info"
+  schema_list:
+    #------------------------------------------------------------------------
+    # RIME 官方輸入法
+    #------------------------------------------------------------------------
+    # - { schema: luna_pinyin }
+    # - { schema: stroke }
+    # - {schema: cangjie5}
+    # - {schema: terra_pinyin}
+    # - {schema: luna_pinyin_simp}
+    # - {schema: luna_pinyin_fluency}
+    # - {schema: cangjie5_express}
+    # - {schema: bopomofo}
+    # - {schema: bopomofo_express}
+    # - {schema: bopomofo_tw}
+    # - {schema: luna_pinyin_tw}
+    #------------------------------------------------------------------------
+    # 個人常用 RIME 輸入法
+    #------------------------------------------------------------------------
+    # - {schema: taigi_tps}
+    # - {schema: moetaigi-tsuim}
+    # - {schema: moetaigi.unspaced}
+    # - {schema: moetaigi-tsuim}
+    # - {schema: ngsth_bun}
+    #------------------------------------------------------------------------
+    # 注音符號鍵盤練習
+    #------------------------------------------------------------------------
+    # - { schema: kb_zu_im } # 注音按鍵練習
+    # - { schema: kb_taigi_bopomo } # 台語ㄅㄆㄇ按鍵練習
+    # - { schema: zu_im_2_kb } # 台語注音二式按鍵練習
+    - { schema: kb_hong_im } # 方音按鍵練習
+    - { schema: kb_ipa } # 國際音標按鍵練習
+    #------------------------------------------------------------------------
+    # TLPA 台語拼音輸入法
+    #------------------------------------------------------------------------
+    # - { schema: tlpa_bpq_phing_im } # 拼音輸入法，閩拼查找（BP）
+    # - { schema: tlpa_bp_phing_im } # 拼音輸入法，閩拼方案（BP）
+    # - { schema: tlpa_piau_im } # 拼音輸入法，十五音及方音符號
+    # - { schema: tlpa_zu_im } # 拼音輸入法，台語拼音-注音
+    - { schema: tlpa_phing_im } # 拼音輸入法，台語拼音（TLPA）
+    - { schema: tlpa_hong_im }  # 注音輸入法，台語拼音（TLPA）
+    #------------------------------------------------------------------------
+    # 吳守禮方音符號與注音二式輸入法
+    #------------------------------------------------------------------------
+    - { schema: zu_im_2_phing_im } # 台語注音二式輸入法
+    - { schema: zu_im_2_hong_im } # 台語注音二式輸入法
+    #------------------------------------------------------------------------
+    # 閩拼方案（BP）輸入法
+    #------------------------------------------------------------------------
+    - { schema: bp_phing_im } # 閩拼方案輸入法
+    - { schema: bp_hong_im } # 閩拼方案輸入法
+    #------------------------------------------------------------------------
+    # 反切輸入法（拼音字母）
+    #------------------------------------------------------------------------
+    - { schema: huan_ciat_kong_un } # 廣韻
+    - { schema: huan_ciat_sip_ngoo_im } # 台灣改良之進階十五音
+    - { schema: huan_ciat_nga_siok_thong } # 雅俗通十五音
+    #------------------------------------------------------------------------
+    # 實驗/測試用
+    #------------------------------------------------------------------------
+    # - { schema: my_Tai_Gi_BoPoMo }  # 台語ㄅㄆㄇ
+    # - { schema: test } # RIME Testing
+    # - { schema: my_Tai_Gi_BoPoMo_Module } # 台語ㄅㄆㄇ
+    # - { schema: my_bopomofo }
+    # - { schema: my_hong_im } # 我的方音輸入法
+    # - { schema: my_Phing_Im } # 我的拼音輸入法
+    #------------------------------------------------------------------------
+    # 方音/注音符號輸入法
+    #------------------------------------------------------------------------
+    # - { schema: zu_im_hong_im } # 方音符號
+    # - { schema: zu_im_piau_im } # 十五音及方音符號
+    # - { schema: zu_im_tlpa } # 台語拼音-注音
+    # - { schema: zu_im_tai_gi_bopomo } # 台語ㄅㄆㄇ
+    #------------------------------------------------------------------------
+
+  # engine:
+  #   processors:
+  #     - lua_processor@sip_ngoo_im   # 添加到全局 processors
+  # translators:
+  #   - lua_processor@custom_processor
+  # lua_translator:
+  #   # script_dir: "$HOME/.config/rime"
+  #   script_dir: "C:\\Users\\AlanJ\\AppData\\Roaming\\Rime"
+  #   custom_processor:
+  #     - custom.lua
+  #     - sip_ngoo_im.lua
