@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台語漢拼 → 135拼音轉換</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 { 
+            font-size: 1.5em; 
+            margin-bottom: 5px;
+        }
+        
+        .header p { 
+            opacity: 0.9; 
+            font-size: 0.9em;
+        }
+        
+        .content { 
+            padding: 20px;
+        }
+        
+        .input-section {
+            margin-bottom: 15px;
+        }
+        
+        .input-section label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 1em;
+        }
+        
+        .input-section textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-family: "Courier New", monospace;
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .input-section textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .option-group > label {
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-weight: normal;
+            font-size: 0.85em;
+        }
+        
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        button {
+            padding: 12px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+        }
+        
+        .btn-convert {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-convert:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-copy {
+            background: #28a745;
+        }
+        
+        .btn-copy:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-clear {
+            background: #e74c3c;
+        }
+        
+        .btn-clear:hover {
+            background: #c0392b;
+        }
+        
+        .result-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-top: 15px;
+        }
+        
+        .result-section h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .result-box {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 1.3em;
+            font-weight: normal;
+            color: #2c3e50;
+            min-height: 50px;
+            font-family: "Microsoft JhengHei", sans-serif;
+            border: 2px solid #e9ecef;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.8;
+        }
+        
+        .result-box sub {
+            font-size: 0.67em;
+            vertical-align: sub;
+            line-height: 0;
+        }
+        
+        .alert-box {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .alert-red {
+            background: #ffe6e6;
+            border-left: 4px solid #e74c3c;
+            color: #c0392b;
+        }
+        
+        .alert-green {
+            background: #e6f7ed;
+            border-left: 4px solid #28a745;
+            color: #1e7e34;
+        }
+        
+        .hint {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 15px;
+            padding: 12px;
+            background: #fff3cd;
+            border-radius: 6px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .hint strong {
+            color: #856404;
+        }
+        
+        .examples {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e7f3ff;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .examples h4 {
+            color: #1976D2;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        
+        .example-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 8px;
+        }
+        
+        .example-item {
+            background: white;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85em;
+            text-align: center;
+        }
+        
+        .example-item:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.3em; }
+            .options { grid-template-columns: 1fr; }
+            .result-box { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>台語漢拼 → 135拼音轉換工具</h1>
+            <p>台語改良漢拼 • 七聲調系統</p>
+        </div>
+        
+        <div class="content">
+            <div class="options">
+                <div class="option-group">
+                    <label>輸出符號：</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="symbol" value="original" checked> 原創("')</label>
+                        <label><input type="radio" name="symbol" value="standard"> 標準(+_)</label>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <label>不標調號代表：</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="noTone" value="light"> 輕聲(台語漢拼)</label>
+                        <label><input type="radio" name="noTone" value="tone1" checked> 一聲(相容模式)</label>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <label>ê 輸出格式：</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="eFormat" value="ê" checked> ê(帽子版)</label>
+                        <label><input type="radio" name="eFormat" value="eh"> eh(e+h版)</label>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <label>輸出內容：</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="output" value="both" checked> 注音+漢拼</label>
+                        <label><input type="radio" name="output" value="bopomofo"> 僅注音</label>
+                        <label><input type="radio" name="output" value="hanpin"> 僅漢拼</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-section">
+                <label for="hanpin-input">輸入台語漢拼(空格分隔)：</label>
+                <textarea id="hanpin-input" placeholder="範例：gua9 ai4 tsia1 gu1 ba4&#10;或：m0 bat4 ng2"></textarea>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn-convert" onclick="convert()">轉換</button>
+                <button class="btn-copy" onclick="copyResult()">複製結果</button>
+                <button class="btn-clear" onclick="clearAll()">清空</button>
+            </div>
+            
+            <div class="result-section">
+                <h3>轉換結果：</h3>
+                <div class="result-box" id="result">請輸入台語漢拼後點擊轉換</div>
+                <div id="alerts"></div>
+            </div>
+            
+            <div class="hint">
+                <strong>聲調輸入方式：</strong><br>
+                • <strong>數字調號：</strong>1=一聲 2=二聲 3=三聲 4=四聲 5=輕聲 9=低聲 0=中聲<br>
+                • <strong>符號調號：</strong>_ 或 ' =低聲, + 或 " =中聲, ˊ=二聲, ˇ=三聲, ˋ=四聲, ˙=輕聲<br>
+                • <strong>特殊規則：</strong>iw=ㄧㄨ, wi=ㄨㄧ, iau=ㄧㄠ, ê/eh=ㄝ(輸入二者皆可;輸出可選擇), 入聲 -p -t -k -m
+            </div>
+            
+            <div class="examples">
+                <h4>範例(點擊測試)：</h4>
+                <div class="example-list">
+                    <div class="example-item" onclick="fillExample('huat4 lut0')">法律(數字版)</div>
+                    <div class="example-item" onclick="fillExample('lut9 su1')">律師(數字版)</div>
+                    <div class="example-item" onclick="fillExample('ghua1 aiˋ jia_ ghu+ ba5')">我愛食牛肉(混合)</div>
+                    <div class="example-item" onclick="fillExample('xngia0 qi+')">城市</div>
+                    <div class="example-item" onclick="fillExample('tngia0 lang+ gongˋ')">聽人講(混合)</div>
+                    <div class="example-item" onclick="fillExample('m9 bhat5')">毋識</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ONSET = {
+            'bh': 'ㄅ<sub>ㄏ</sub>', 'gh': 'ㄍ<sub>ㄏ</sub>',
+            'tsh': 'ㄘ', 'ts': 'ㄗ',
+            'ng': 'ㄥ',
+            'ph': 'ㄆ', 'th': 'ㄊ', 'kh': 'ㄎ',
+            'zh': 'ㄓ', 'ch': 'ㄔ', 'sh': 'ㄕ',
+            'b': 'ㄅ', 'p': 'ㄆ', 'm': 'ㄇ',
+            'd': 'ㄉ', 't': 'ㄊ', 'n': 'ㄋ', 'l': 'ㄌ',
+            'g': 'ㄍ', 'k': 'ㄎ', 'h': 'ㄏ',
+            'j': 'ㄐ', 'q': 'ㄑ', 'x': 'ㄒ',
+            'r': 'ㄖ', 'z': 'ㄗ', 'c': 'ㄘ', 's': 'ㄙ'
+        };
+
+        const RIME = {
+            'a': 'ㄚ', 'o': 'ㄛ', 'e': 'ㄜ', 'ê': 'ㄝ', 'eh': 'ㄝ',
+            'i': 'ㄧ', 'u': 'ㄨ', 'ü': 'ㄩ', 'v': 'ㄩ',
+            'ai': 'ㄞ', 'ei': 'ㄟ', 'ao': 'ㄠ', 'ou': 'ㄡ',
+            'an': 'ㄢ', 'en': 'ㄣ', 'ang': 'ㄤ', 'eng': 'ㄥ', 'ong': 'ㄛㄥ',
+            'er': 'ㄦ',
+            'ia': 'ㄧㄚ', 'iê': 'ㄧㄝ', 'ie': 'ㄧㄜ', 'io': 'ㄧㄜ', 'iai': 'ㄧㄞ', 'iau': 'ㄧㄠ',
+            'iu': 'ㄧㄡ', 'iw': 'ㄧㄨ',
+            'ian': 'ㄧㄢ', 'in': 'ㄧㄣ', 'iang': 'ㄧㄤ', 'ing': 'ㄧㄥ', 'iong': 'ㄧㄛㄥ',
+            'ua': 'ㄨㄚ', 'uo': 'ㄨㄛ', 'uai': 'ㄨㄞ', 'ui': 'ㄨㄟ', 'wi': 'ㄨㄧ',
+            'uan': 'ㄨㄢ', 'un': 'ㄨㄣ', 'uang': 'ㄨㄤ', 'ueng': 'ㄨㄥ',
+            'ue': 'ㄨㄝ',
+            'üe': 'ㄩㄝ', 'üan': 'ㄩㄢ', 'ün': 'ㄩㄣ',
+            'am': 'ㄚㄇ', 'im': 'ㄧㄇ',
+            'ngia': 'ㄥㄧㄚ', 'ngio': 'ㄥㄧㄜ', 'ngiau': 'ㄥㄧㄠ',
+            'nga': 'ㄥㄚ', 'ngo': 'ㄥㄛ', 'nge': 'ㄥㄜ'
+        };
+
+        const NUMBER_TONE = {
+            '1': '', '2': 'ˊ', '3': 'ˇ', '4': 'ˋ', '5': '˙',
+            '9': '_', '0': '+'
+        };
+
+        const TONE_MARKS = {
+            '˙': '˙', 'ˊ': 'ˊ', 'ˇ': 'ˇ', 'ˋ': 'ˋ',
+            '_': '_', '+': '+', '"': '+', "'": '_'
+        };
+
+        const RUSHENG = {
+            'm': 'ㄇ', 'p': 'ㄆ', 't': 'ㄊ', 'k': 'ㄎ'
+        };
+        
+        const TONE_DIACRITICS = {
+            'a': { '1': 'ā', '2': 'á', '3': 'ǎ', '4': 'à' },
+            'e': { '1': 'ē', '2': 'é', '3': 'ě', '4': 'è' },
+            'i': { '1': 'ī', '2': 'í', '3': 'ǐ', '4': 'ì' },
+            'o': { '1': 'ō', '2': 'ó', '3': 'ǒ', '4': 'ò' },
+            'u': { '1': 'ū', '2': 'ú', '3': 'ǔ', '4': 'ù' },
+            'ê': { '2': 'ế', '3': 'ê\u030C', '4': 'ề' }
+        };
+
+        function convertHanpinTo135(hanpin, options) {
+            hanpin = hanpin.trim().toLowerCase();
+            if (!hanpin) return { bopomofo: '', hanpin: '', alerts: [] };
+            
+            const alerts = [];
+            const originalInput = hanpin;
+            
+            // ========== 最優先：直接處理 m/ng/n + 聲調符號 ==========
+            if(hanpin === 'm_' || hanpin === "m'") return { bopomofo: 'ㄇ_', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'm+' || hanpin === 'm"') return { bopomofo: 'ㄇ+', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'mˊ') return { bopomofo: 'ㄇˊ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'mˇ') return { bopomofo: 'ㄇˇ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'mˋ') return { bopomofo: 'ㄇˋ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'm˙') return { bopomofo: 'ㄇ˙', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'm' || hanpin === 'm1') return { bopomofo: 'ㄇ', hanpin: 'm', alerts: [] };
+            
+            if(hanpin === 'ng_' || hanpin === "ng'") return { bopomofo: 'ㄥ_', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'ng+' || hanpin === 'ng"') return { bopomofo: 'ㄥ+', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'ngˊ') return { bopomofo: 'ㄥˊ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'ngˇ') return { bopomofo: 'ㄥˇ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'ngˋ') return { bopomofo: 'ㄥˋ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'ng˙') return { bopomofo: 'ㄥ˙', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'ng' || hanpin === 'ng1') return { bopomofo: 'ㄥ', hanpin: 'ng', alerts: [] };
+            
+            if(hanpin === 'n_' || hanpin === "n'") return { bopomofo: 'ㄣ_', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'n+' || hanpin === 'n"') return { bopomofo: 'ㄣ+', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'nˊ') return { bopomofo: 'ㄣˊ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'nˇ') return { bopomofo: 'ㄣˇ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'nˋ') return { bopomofo: 'ㄣˋ', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'n˙') return { bopomofo: 'ㄣ˙', hanpin: hanpin, alerts: [] };
+            if(hanpin === 'n' || hanpin === 'n1') return { bopomofo: 'ㄣ', hanpin: 'n', alerts: [] };
+            // ========== 結束直接處理 ==========
+            
+            // 容錯：au → ao（排除 iau 和 ngiau）
+            if (hanpin.includes('au') && !hanpin.includes('iau') && !hanpin.includes('ngiau')) {
+                alerts.push({ type: 'red', msg: `✗ ${originalInput}: 已自動更正au→ao` });
+                hanpin = hanpin.replace(/au/g, 'ao');
+            }
+            // 容錯：ian 提示
+            if (hanpin.match(/^ian/)) {
+                alerts.push({ type: 'red', msg: `✗ ${originalInput}: 標準漢拼應寫 yan(已容錯接受)` });
+            }
+            // 容錯：uan 提示
+            if (hanpin.match(/^uan/)) {
+                alerts.push({ type: 'red', msg: `✗ ${originalInput}: 標準漢拼應寫 wan(已容錯接受)` });
+            }
+            
+            const numberMatch = hanpin.match(/^(.+?)([0-9])$/);
+            const symbolMatch = hanpin.match(/^(.+?)([ˊˇˋ˙_+'"]+)$/);
+            
+            let body = hanpin;
+            let toneNumber = '';
+            let tone = '';
+            let hasToneMark = false;
+            
+            if (numberMatch) {
+                body = numberMatch[1];
+                toneNumber = numberMatch[2];
+                
+                // 漢拼 m/ng/n 數字調特別處理
+                if ((body === 'm' || body === 'ng' || body === 'n')) {
+                    const tone135Map = {
+                        '0': '+',   '1': '',    '2': 'ˊ',   '3': 'ˇ',
+                        '4': 'ˋ',   '5': '˙',   '9': '_'
+                    };
+                    const bopomofo = body === 'm' ? 'ㄇ' : (body === 'ng' ? 'ㄥ' : 'ㄣ');
+                    return { 
+                        bopomofo: bopomofo + tone135Map[toneNumber], 
+                        hanpin: body + (toneNumber === '1' ? '' : tone135Map[toneNumber]), 
+                        alerts: alerts 
+                    };
+                }
+                
+                tone = NUMBER_TONE[toneNumber] || '';
+                hasToneMark = true;
+            } else if (symbolMatch) {
+                body = symbolMatch[1];
+                const toneChar = symbolMatch[2];
+                tone = TONE_MARKS[toneChar] || toneChar;
+                hasToneMark = true;
+                if (tone === '') toneNumber = '1';
+                else if (tone === 'ˊ') toneNumber = '2';
+                else if (tone === 'ˇ') toneNumber = '3';
+                else if (tone === 'ˋ') toneNumber = '4';
+                else if (tone === '˙') toneNumber = '5';
+                else if (tone === '_') toneNumber = '9';
+                else if (tone === '+') toneNumber = '0';
+            }
+            
+            let rusheng = '';
+            const lastBodyChar = body.slice(-1);
+            
+            if (RUSHENG[lastBodyChar]) {
+                rusheng = RUSHENG[lastBodyChar];
+                body = body.slice(0, -1);
+            }
+            
+            if (!hasToneMark) {
+                if (options.noToneMode === 'tone1') {
+                    tone = '';
+                    toneNumber = '1';
+                } else {
+                    tone = '˙';
+                    toneNumber = '5';
+                }
+            }
+            
+            let onset = '';
+            let rime = body;
+            
+            const onsetKeys = Object.keys(ONSET).sort((a, b) => b.length - a.length);
+            for (let key of onsetKeys) {
+                if (body.startsWith(key)) {
+                    onset = ONSET[key];
+                    rime = body.slice(key.length);
+                    break;
+                }
+            }
+            
+            // iw 提示（排除 iau 和 ngiau）
+            if (body.includes('iu') && !body.includes('iw') && !body.includes('iau') && !body.includes('ngiau') && body !== 'wi') {
+                alerts.push({ type: 'green', msg: `💡 ${originalInput}: 若要 ㄧㄨ 應輸入 iw` });
+            }
+            
+            let bopomofoRime = '';
+            if (rime === '') {
+                if (onset === 'ㄇ' || onset === 'ㄋ' || onset === 'ㄥ') {
+                    bopomofoRime = '';
+                } else if (onset === '') {
+                    bopomofoRime = '(缺聲母與韻母)';
+                } else {
+                    bopomofoRime = '(缺韻母)';
+                }
+            } else {
+                const rimeKeys = Object.keys(RIME).sort((a, b) => b.length - a.length);
+                let found = false;
+                for (let key of rimeKeys) {
+                    if (rime === key) {
+                        bopomofoRime = RIME[key];
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    bopomofoRime = `(查無:${rime})`;
+                }
+                
+                if (onset && onset !== 'ㄥ' && bopomofoRime.startsWith('ㄥ')) {
+                    bopomofoRime = bopomofoRime.replace(/^ㄥ/, '<sub>ㄥ</sub>');
+                }
+            }
+            
+            let bopomofoTone = '';
+            if (tone === '˙') bopomofoTone = '˙';
+            else if (tone === 'ˊ') bopomofoTone = 'ˊ';
+            else if (tone === 'ˇ') bopomofoTone = 'ˇ';
+            else if (tone === 'ˋ') bopomofoTone = 'ˋ';
+            else if (tone === '_') bopomofoTone = '_';
+            else if (tone === '+') bopomofoTone = '+';
+            
+            const result135 = onset + bopomofoRime + rusheng + bopomofoTone;
+            
+            let hanpinOutput = generateHanpinOutput(body, rime, rusheng, toneNumber, tone, options);
+            
+            return { 
+                bopomofo: result135, 
+                hanpin: hanpinOutput, 
+                alerts: alerts
+            };
+        }
+
+        function generateHanpinOutput(body, rime, rusheng, toneNumber, tone, options) {
+            const isErime = (rime === 'ê' || rime === 'eh');
+            let output = body;
+            
+            if (isErime) {
+                if (options.eFormat === 'ê') {
+                    output = output.replace(/eh/g, 'ê');
+                } else {
+                    output = output.replace(/ê/g, 'eh');
+                }
+            }
+            
+            if (rusheng === 'ㄇ') output += 'm';
+            else if (rusheng === 'ㄆ') output += 'p';
+            else if (rusheng === 'ㄊ') output += 't';
+            else if (rusheng === 'ㄎ') output += 'k';
+            
+            if (isErime && options.eFormat === 'ê') {
+                if (options.noToneMode === 'tone1') {
+                    if (toneNumber === '1') output += '';
+                    else if (toneNumber === '2') output += '\u0301';
+                    else if (toneNumber === '3') output += '\u030C';
+                    else if (toneNumber === '4') output += '\u0300';
+                    else if (toneNumber === '5') output += '˙';
+                    else if (tone === '_') output += '_';
+                    else if (tone === '+') output += '+';
+                } else {
+                    if (toneNumber === '1') output += '˙';
+                    else if (toneNumber === '2') output += '\u0301';
+                    else if (toneNumber === '3') output += '\u030C';
+                    else if (toneNumber === '4') output += '\u0300';
+                    else if (toneNumber === '5') output += '';
+                    else if (tone === '_') output += '_';
+                    else if (tone === '+') output += '+';
+                }
+            } else if (isErime && options.eFormat === 'eh') {
+                const baseOutput = output.slice(0, -2);
+                let eWithTone = 'e';
+                
+                if (options.noToneMode === 'tone1') {
+                    if (toneNumber === '1') eWithTone = 'e';
+                    else if (toneNumber === '2') eWithTone = 'é';
+                    else if (toneNumber === '3') eWithTone = 'ě';
+                    else if (toneNumber === '4') eWithTone = 'è';
+                } else {
+                    if (toneNumber === '1') eWithTone = 'ē';
+                    else if (toneNumber === '2') eWithTone = 'é';
+                    else if (toneNumber === '3') eWithTone = 'ě';
+                    else if (toneNumber === '4') eWithTone = 'è';
+                }
+                
+                output = baseOutput + eWithTone + 'h';
+                
+                if (toneNumber === '5' && options.noToneMode === 'tone1') output += '˙';
+                else if (tone === '_') output += '_';
+                else if (tone === '+') output += '+';
+            } else {
+                let mainVowel = '';
+                let vowelPos = -1;
+                
+                const vowels = ['a', 'o', 'e', 'i', 'u'];
+                for (let v of vowels) {
+                    const pos = output.indexOf(v);
+                    if (pos !== -1) {
+                        mainVowel = v;
+                        vowelPos = pos;
+                        break;
+                    }
+                }
+                
+                if (mainVowel && TONE_DIACRITICS[mainVowel]) {
+                    let vowelWithTone = mainVowel;
+                    
+                    if (options.noToneMode === 'tone1') {
+                        if (toneNumber === '1') vowelWithTone = mainVowel;
+                        else if (TONE_DIACRITICS[mainVowel][toneNumber]) {
+                            vowelWithTone = TONE_DIACRITICS[mainVowel][toneNumber];
+                        }
+                    } else {
+                        if (TONE_DIACRITICS[mainVowel][toneNumber]) {
+                            vowelWithTone = TONE_DIACRITICS[mainVowel][toneNumber];
+                        }
+                    }
+                    
+                    output = output.substring(0, vowelPos) + vowelWithTone + output.substring(vowelPos + 1);
+                }
+                
+                if (toneNumber === '5') {
+                    if (options.noToneMode === 'tone1') output += '˙';
+                } else if (tone === '_') {
+                    output += '_';
+                } else if (tone === '+') {
+                    output += '+';
+                }
+            }
+            
+            return output;
+        }
+
+        function convert() {
+            const input = document.getElementById('hanpin-input').value;
+            const resultDiv = document.getElementById('result');
+            const alertsDiv = document.getElementById('alerts');
+            
+            const symbolType = document.querySelector('input[name="symbol"]:checked').value;
+            const noToneMode = document.querySelector('input[name="noTone"]:checked').value;
+            const eFormat = document.querySelector('input[name="eFormat"]:checked').value;
+            const outputType = document.querySelector('input[name="output"]:checked').value;
+            
+            if (!input.trim()) {
+                resultDiv.innerHTML = '請輸入台語漢拼';
+                alertsDiv.innerHTML = '';
+                return;
+            }
+            
+            const options = { noToneMode, eFormat, symbolType };
+            const syllables = input.trim().split(/\s+/);
+            const results = syllables.map(syl => convertHanpinTo135(syl, options));
+            
+            const bopomofoLine = results.map(r => r.bopomofo).join(' ');
+            const hanpinLine = results.map(r => r.hanpin).join(' ');
+            
+            let finalBopomofo = bopomofoLine;
+            let finalHanpin = hanpinLine;
+            
+            if (symbolType === 'original') {
+                finalBopomofo = finalBopomofo.replace(/\+/g, '"').replace(/_/g, "'");
+                finalHanpin = finalHanpin.replace(/\+/g, '"').replace(/_/g, "'");
+            }
+            
+            if (outputType === 'both') {
+                resultDiv.innerHTML = finalBopomofo + '\n' + finalHanpin;
+            } else if (outputType === 'bopomofo') {
+                resultDiv.innerHTML = finalBopomofo;
+            } else {
+                resultDiv.innerHTML = finalHanpin;
+            }
+            
+            const allAlerts = results.flatMap(r => r.alerts);
+            const redAlerts = allAlerts.filter(a => a.type === 'red').map(a => a.msg);
+            const greenAlerts = allAlerts.filter(a => a.type === 'green').map(a => a.msg);
+            
+            let alertHTML = '';
+            if (redAlerts.length > 0) {
+                alertHTML += '<div class="alert-box alert-red">' + redAlerts.join('<br>') + '</div>';
+            }
+            if (greenAlerts.length > 0) {
+                alertHTML += '<div class="alert-box alert-green">' + greenAlerts.join('<br>') + '</div>';
+            }
+            
+            alertsDiv.innerHTML = alertHTML;
+        }
+
+        function clearAll() {
+            document.getElementById('hanpin-input').value = '';
+            document.getElementById('result').innerHTML = '請輸入台語漢拼後點擊轉換';
+            document.getElementById('alerts').innerHTML = '';
+        }
+
+        function copyResult() {
+            const resultDiv = document.getElementById('result');
+            const resultText = resultDiv.textContent;
+            
+            if (resultText === '請輸入台語漢拼後點擊轉換' || resultText === '請輸入台語漢拼') {
+                alert('沒有可複製的結果');
+                return;
+            }
+            
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(resultDiv);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            
+            try {
+                const successful = document.execCommand('copy');
+                selection.removeAllRanges();
+                
+                if (successful) {
+                    const btn = event.target;
+                    const originalText = btn.textContent;
+                    btn.textContent = '已複製!';
+                    btn.style.background = '#218838';
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '#28a745';
+                    }, 1500);
+                } else {
+                    alert('複製失敗，請手動選取文字後按 Ctrl+C');
+                }
+            } catch (err) {
+                selection.removeAllRanges();
+                alert('複製失敗，請手動選取文字後按 Ctrl+C');
+            }
+        }
+
+        function fillExample(example) {
+            document.getElementById('hanpin-input').value = example;
+            convert();
+        }
+
+        document.getElementById('hanpin-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                convert();
+            }
+        });
+    </script>
+</body>
+</html>

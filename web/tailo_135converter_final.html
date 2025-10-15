@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臺羅→135拼音 Final</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        .header h1 { font-size: 1.8em; margin-bottom: 8px; }
+        .header p { opacity: 0.95; font-size: 1em; }
+        .content { padding: 25px; }
+        .hint {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+            margin-bottom: 20px;
+        }
+        .input-section { margin-bottom: 20px; }
+        .input-section label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .input-section textarea {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.15em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: "Courier New", monospace;
+            min-height: 100px;
+        }
+        .options {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 14px;
+            font-size: 1.05em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+        }
+        .btn-convert { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .btn-copy { background: #28a745; }
+        .btn-clear { background: #e74c3c; }
+        .result-section {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-top: 20px;
+        }
+        .result-box {
+            background: white;
+            padding: 18px;
+            border-radius: 6px;
+            font-size: 1.4em;
+            min-height: 60px;
+            border: 2px solid #e9ecef;
+            line-height: 1.7;
+        }
+        .result-box sub { font-size: 0.65em; }
+        .examples {
+            margin-top: 25px;
+            padding: 18px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        .example-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 10px;
+        }
+        .example-item {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .example-item:hover {
+            background: #667eea;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>臺羅 → 135拼音轉換工具</h1>
+            <p>Final 完整版 • m/ng/n 已修正</p>
+        </div>
+        
+        <div class="content">
+            <div class="hint">
+                <strong>支援格式:</strong> 符號版、數字版、半數字版<br>
+                <strong>可用符號:</strong> _ + ˊ ˇ ˋ ˙
+            </div>
+
+            <div class="input-section">
+                <label>輸入臺羅拼音(空格分隔):</label>
+                <textarea id="input" placeholder="範例: m7 ng5 n2"></textarea>
+            </div>
+            
+            <div class="options">
+                <label><input type="radio" name="symbol" value="standard" checked> 標準(+_)</label>
+                <label><input type="radio" name="symbol" value="original"> 原創("')</label>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn-convert" onclick="convert()">轉換</button>
+                <button class="btn-copy" onclick="copy()">複製</button>
+                <button class="btn-clear" onclick="clearAll()">清空</button>
+            </div>
+            
+            <div class="result-section">
+                <h3>結果:</h3>
+                <div class="result-box" id="result">請輸入後轉換</div>
+            </div>
+            
+            <div class="examples">
+                <h4>範例:</h4>
+                <div class="example-list">
+                    <div class="example-item" onclick="test('m7 ng5 n2')">m/ng/n測試</div>
+                    <div class="example-item" onclick="test('m_')">m_</div>
+                    <div class="example-item" onclick="test('m_ bat')">毋識</div>
+                    <div class="example-item" onclick="test('huat2 lut8')">法律</div>
+                    <div class="example-item" onclick="test('siann+ tshi+')">城市</div>
+                    <div class="example-item" onclick="test('gua ai2 tsiah_ gu+ ba˙')">我愛食牛肉</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ONSET = {
+            'tsh':'ㄘ','ts':'ㄗ','ng':'ㄥ','ph':'ㄆ','th':'ㄊ','kh':'ㄎ',
+            'p':'ㄅ','t':'ㄉ','k':'ㄍ','m':'ㄇ','n':'ㄋ','l':'ㄌ',
+            's':'ㄙ','h':'ㄏ','j':'ㄖ','b':'ㄅ<sub>ㄏ</sub>','g':'ㄍ<sub>ㄏ</sub>'
+        };
+        const RIME = {
+            'a':'ㄚ','i':'ㄧ','u':'ㄨ','e':'ㄝ','o':'ㄜ','oo':'ㄛ',
+            'ai':'ㄞ','au':'ㄠ','ia':'ㄧㄚ','io':'ㄧㄜ','iu':'ㄧㄨ',
+            'ua':'ㄨㄚ','ue':'ㄨㄝ','ui':'ㄨㄧ','iau':'ㄧㄠ','uai':'ㄨㄞ',
+            'am':'ㄚㄇ','an':'ㄢ','ang':'ㄤ','im':'ㄧㄇ','in':'ㄧㄣ',
+            'ing':'ㄧㄥ','un':'ㄨㄣ','ong':'ㄛㄥ','eng':'ㄥ',
+            'ian':'ㄧㄢ','uan':'ㄨㄢ','iang':'ㄧㄤ','uang':'ㄨㄤ',
+            'iong':'ㄧㄛㄥ','iam':'ㄧㄚㄇ',
+            'm':'ㄇ','ng':'ㄥ','n':'ㄣ'
+        };
+
+        function cvt(s) {
+            s = s.trim().toLowerCase();
+            if(!s) return '';
+            
+            // 直接處理 m/ng/n
+            if(s==='m_'||s==="m'") return 'ㄇ_';
+            if(s==='m+'||s==='m"') return 'ㄇ+';
+            if(s==='mˊ') return 'ㄇˊ';
+            if(s==='mˇ') return 'ㄇˇ';
+            if(s==='mˋ') return 'ㄇˋ';
+            if(s==='m˙') return 'ㄇ˙';
+            if(s==='m') return 'ㄇ';
+            if(s==='ng_'||s==="ng'") return 'ㄥ_';
+            if(s==='ng+'||s==='ng"') return 'ㄥ+';
+            if(s==='ngˊ') return 'ㄥˊ';
+            if(s==='ngˇ') return 'ㄥˇ';
+            if(s==='ngˋ') return 'ㄥˋ';
+            if(s==='ng˙') return 'ㄥ˙';
+            if(s==='ng') return 'ㄥ';
+            if(s==='n_'||s==="n'") return 'ㄣ_';
+            if(s==='n+'||s==='n"') return 'ㄣ+';
+            if(s==='nˊ') return 'ㄣˊ';
+            if(s==='nˇ') return 'ㄣˇ';
+            if(s==='nˋ') return 'ㄣˋ';
+            if(s==='n˙') return 'ㄣ˙';
+            if(s==='n') return 'ㄣ';
+            
+            // 數字轉符號
+            let m = s.match(/^(.+?)([1-9])$/);
+            if(m) {
+                let [,body,toneNum] = m;
+                
+                // m/ng/n 特別處理
+                if(body==='m'||body==='ng'||body==='n') {
+                    let tm = {'1':'','2':'ˋ','3':'_','4':'˙','5':'ˇ','7':'+','8':'+','9':'ˊ'};
+                    return (body==='m'?'ㄇ':body==='ng'?'ㄥ':'ㄣ') + tm[toneNum];
+                }
+                
+                // 一般音節：把數字轉成 Unicode 組合符號
+                let toneMarks = {'2':'\u0301','3':'\u0300','5':'\u0302','7':'\u0304','8':'\u030D','9':'\u030B'};
+                if(toneMarks[toneNum]) {
+                    // 找最後一個元音加符號
+                    let vowels = 'aeiou';
+                    let lastV = -1;
+                    for(let i=body.length-1; i>=0; i--) {
+                        if(vowels.includes(body[i])) {
+                            lastV = i;
+                            break;
+                        }
+                    }
+                    if(lastV >= 0) {
+                        s = body.slice(0,lastV) + body[lastV] + toneMarks[toneNum] + body.slice(lastV+1);
+                    } else {
+                        s = body;
+                    }
+                } else {
+                    s = body;
+                }
+            }
+            
+            // 處理半數字台羅（_+˙等符號）
+            let halfMap = {'_':'\u0300','+':'\u0304','ˊ':'\u030B','ˇ':'\u0302','ˋ':'\u0301','˙':'˙',"'":'\u0300','"':'\u0304'};
+            let lastChar = s.slice(-1);
+            if(halfMap[lastChar] && lastChar !== '˙') {
+                let body = s.slice(0,-1);
+                let vowels = 'aeiou';
+                let lastV = -1;
+                for(let i=body.length-1; i>=0; i--) {
+                    if(vowels.includes(body[i])) {
+                        lastV = i;
+                        break;
+                    }
+                }
+                if(lastV >= 0) {
+                    s = body.slice(0,lastV) + body[lastV] + halfMap[lastChar] + body.slice(lastV+1);
+                } else {
+                    s = body;
+                }
+            }
+            
+            // 提取聲調符號
+            let toneMark = '';
+            let nfd = s.normalize('NFD');
+            for(let c of nfd) {
+                let code = c.charCodeAt(0);
+                if(code >= 0x0300 && code <= 0x036f) {
+                    let toneMap = {'\u0301':'ˋ','\u0300':'_','\u0302':'ˇ','\u0304':'+','\u030D':'+','\u030B':'ˊ'};
+                    if(toneMap[c]) toneMark = toneMap[c];
+                }
+            }
+            if(s.endsWith('˙')) {
+                toneMark = '˙';
+                s = s.slice(0,-1);
+            }
+            
+            // 移除聲調符號
+            let body = s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').normalize('NFC');
+            body = body.replace(/[ˊˇˋ˙_+'"]/g,'');
+            
+            // 處理鼻化音 nn
+            let nasalized = false;
+            if(body.endsWith('nn')) {
+                body = body.slice(0,-2);
+                nasalized = true;
+            }
+            
+            // 處理入聲
+            let coda = '';
+            if(/[hptk]$/.test(body)) {
+                let tail = body.slice(-1);
+                body = body.slice(0,-1);
+                if(tail==='h') coda = '';
+                else if(tail==='p') coda = 'ㄆ';
+                else if(tail==='t') coda = 'ㄊ';
+                else if(tail==='k') coda = 'ㄎ';
+                
+                // 入聲特殊處理聲調
+                if(!toneMark) toneMark = '˙';
+            }
+            
+            // 提取聲母
+            let onset='', rest=body;
+            for(let k of Object.keys(ONSET).sort((a,b)=>b.length-a.length)) {
+                if(body.startsWith(k)) {
+                    onset=ONSET[k];
+                    rest=body.slice(k.length);
+                    break;
+                }
+            }
+            
+            // i 前面變化
+            if(rest.startsWith('i')) {
+                if(onset==='ㄙ') onset='ㄒ';
+                else if(onset==='ㄗ') onset='ㄐ';
+                else if(onset==='ㄘ') onset='ㄑ';
+            }
+            
+            // 處理鼻化音標記
+            if(nasalized) {
+                if(onset === '') {
+                    onset = 'ㄥ';  // 無聲母時，ㄥ作為聲母
+                } else {
+                    onset = onset.replace(/<sub>.*?<\/sub>/, '') + '<sub>ㄥ</sub>';  // 鼻化音用下標
+                }
+            }
+            
+            // 查找韻母
+            let rime = RIME[rest];
+            if(!rime) return `(查無:${rest})`;
+            
+            return onset + rime + coda + toneMark;
+        }
+
+        function convert() {
+            let input = document.getElementById('input').value;
+            if(!input.trim()) {
+                document.getElementById('result').innerHTML = '請輸入';
+                return;
+            }
+            let syls = input.trim().split(/\s+/);
+            let results = syls.map(s => cvt(s));
+            
+            let sym = document.querySelector('input[name="symbol"]:checked').value;
+            if(sym === 'original') {
+                results = results.map(r => r.replace(/\+/g,'"').replace(/_/g,"'"));
+            }
+            
+            document.getElementById('result').innerHTML = results.join(' ');
+        }
+
+        function copy() {
+            let text = document.getElementById('result').textContent;
+            if(text === '請輸入後轉換' || text === '請輸入') {
+                alert('沒有可複製的結果');
+                return;
+            }
+            let ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                
+                let btn = event.target;
+                let orig = btn.textContent;
+                btn.textContent = '已複製!';
+                btn.style.background = '#218838';
+                setTimeout(() => {
+                    btn.textContent = orig;
+                    btn.style.background = '#28a745';
+                }, 1500);
+            } catch(e) {
+                document.body.removeChild(ta);
+                alert('複製失敗');
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('input').value = '';
+            document.getElementById('result').innerHTML = '請輸入後轉換';
+        }
+
+        function test(s) {
+            document.getElementById('input').value = s;
+            convert();
+        }
+        
+        // Enter 鍵轉換
+        document.getElementById('input').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                convert();
+            }
+        });
+    </script>
+</body>
+</html>
