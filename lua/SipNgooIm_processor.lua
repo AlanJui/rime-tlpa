@@ -25,7 +25,7 @@ local function processor(key_event, env)
                 }
                 -- 韻母映射
                 local finals = {
-                    ing = "經", im = "金", in = "巾",
+                    ing = "經", im = "金", ["in"] = "巾",
                     ang = "江", an = "干", am = "甘"
                     -- 可擴展其他韻母...
                 }

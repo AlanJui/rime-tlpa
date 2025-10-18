@@ -247,7 +247,7 @@ class RimeTLPAInstaller:
         print("2. 切換到 TLPA 台語輸入法方案")
         print("3. 開始使用台語輸入法")
 
-        print(f"\n📊 安裝統計:")
+        print("\n📊 安裝統計:")
         print(f"   - 成功複製檔案: {copied_count} 個")
         print(f"   - 失敗檔案: {len(failed_files)} 個")
         print(f"   - RIME 配置目錄: {self.rime_dir}")

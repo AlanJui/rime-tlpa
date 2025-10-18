@@ -5,7 +5,6 @@ RIME TLPA 工具完整建置腳本
 包含：編譯、打包、創建安裝程式
 """
 
-import os
 import shutil
 import subprocess
 import sys
@@ -159,7 +158,7 @@ class RimeBuildSystem:
         if default_custom.exists():
             dst_file = resource_dir / "default.custom.yaml"
             shutil.copy2(default_custom, dst_file)
-            print(f"   📄 複製配置檔案: config/default.custom.yaml")
+            print("   📄 複製配置檔案: config/default.custom.yaml")
         else:
             print("   ⚠️  config/default.custom.yaml 不存在")
 

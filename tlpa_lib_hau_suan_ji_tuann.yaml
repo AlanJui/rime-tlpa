@@ -20,11 +20,9 @@ hau_suan_tuann:
     #------------------------------------------------------
     # 韻母
     #------------------------------------------------------
-    # - derive/(oo|o)nn/Onn/
-    # - xform/oo/O/
     - derive/ur/u/
     - derive/or/o/
-    - derive/ir/i/
+    # - derive/ir/i/
     #------------------------------------------------------
     # 聲調
     #------------------------------------------------------
@@ -135,7 +133,8 @@ ziann_ping_un_bu: # 右邊-韻母
     # 恭 iong
     - xform/》io(ng|k)/ㄧㆦ》$1/
     # 薑 Nio / 茄 io
-    - xform/》(L?)(io)/$1ㄧㄜ》/
+    - xform/》(io)/ㄧㄜ》/
+    - xform/》(L)(io)/$1ㄧㆦ》/
     # 牛 Niu / 丩 iu
     - xform/》(L?)(iu)/$1ㄧㄨ》/
     # 泉腔
@@ -226,7 +225,7 @@ ziann_ping_un_bu: # 右邊-韻母
     # 介音 i 開頭之鼻韻母
     - xform/Lㄧㄠ/ㄧㆯ/ # Liau = iaunn
     - xform/Lㄧㄚ/ㄧㆩ/ # Lia = iann
-    - xform/Lㄧㄛ/ㄧㆧ/ # LiO = iOnn
+    - xform/Lㄧㆦ/ㄧㆧ/ # LiO = iOnn
     - xform/Lㄧㄨ/ㄧㆫ/ # Liu = iunn
     # 介音 u 開頭之鼻韻母
     - xform/Lㄨㄞ/ㄨㆮ/ # Luai = uainn

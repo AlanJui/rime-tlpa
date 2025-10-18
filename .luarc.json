@@ -1,0 +1,53 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "diagnostics": {
+        "globals": [
+            "KeyEvent",
+            "Candidate",
+            "yield",
+            "Projection",
+            "Component",
+            "Processor",
+            "Segmentor",
+            "Translator",
+            "Filter",
+            "Formatter",
+            "Schema",
+            "Context",
+            "Composition",
+            "Preedit",
+            "Menu",
+            "Engine",
+            "Config",
+            "UserConfig",
+            "Switcher",
+            "NotificationManager",
+            "Deployer",
+            "Session",
+            "commit_history",
+            "log",
+            "rime_api",
+            "librime",
+            "env",
+            "input",
+            "kAccepted",
+            "kRejected",
+            "kNoop",
+            "kNext"
+        ],
+        "disable": [
+            "undefined-global",
+            "duplicate-set-field",
+            "redefined-local"
+        ]
+    },
+    "workspace": {
+        "library": [
+            ".vscode/rime-api.lua"
+        ],
+        "checkThirdParty": false
+    },
+    "completion": {
+        "callSnippet": "Both"
+    }
+}

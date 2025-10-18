@@ -1,4 +1,9 @@
 -- C:\Users\AlanJui\AppData\Roaming\Rime\lua\sip_ngoo_im.lua
+
+---@diagnostic disable: undefined-global
+
+-- RIME 全域變數聲明（避免 Lua Language Server 警告）
+---@type fun(key_event: KeyEvent, env: Environment): number
 local function processor(key_event, env)
     local engine = env.engine
     local context = engine.context
@@ -25,7 +30,7 @@ local function processor(key_event, env)
                 }
                 -- 韻母映射
                 local finals = {
-                    ing = "經", im = "金", in = "巾",
+                    ing = "經", im = "金", ["in"] = "巾",
                     ang = "江", an = "干", am = "甘",
                     -- 可擴展其他韻母...
                 }
