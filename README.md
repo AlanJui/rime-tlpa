@@ -195,5 +195,3 @@ ZIP 壓縮檔案**；
 
 - [中州韻輸入法引擎(RIME)官網](https://rime.im/)
 
-<img alt="W聲調圖" src="https://github.com/user-attachments/assets/5c54a2b7-54be-453e-b549-7e960a4956d4" />
-
