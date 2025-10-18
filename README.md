@@ -19,7 +19,9 @@
 ## 專案目標
 
 【漢字標音】方法，大致有幾下幾種：
+
 （1）【反切法】：自古流傳下來之反切呼音法，如【廣韻】、【彙集雅俗通十五音】；
+![2025-10-18_19-08-00](https://github.com/user-attachments/assets/4dc0bbe6-5080-409e-be56-b020c13d0a1e)
 
 （2）【注音輸入法】：使用【注音符號】之注音法，如【方音符號】；
 ![2025-10-18_18-34-20](https://github.com/user-attachments/assets/c7abebbb-2e37-4b30-bd80-4fa130456f9e)
