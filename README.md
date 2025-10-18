@@ -109,7 +109,6 @@ ZIP 壓縮檔案**；
 為使注音輸入法的【注音符號】能正常顯示，建議使用 Windows 作用系統預設的新細明體字型；或在
 作業系統安裝以下之開源中文字型：
 
-
 3. **編輯 RIME 設定檔，啟用專案之輸入法**；
 
    RIME 設定檔名稱為：`default.custom.yaml`，各作業系統之 RIME 設定檔存放
@@ -172,7 +171,6 @@ ZIP 壓縮檔案**；
 | 8    | 陽入 (ㄚ˙) | 7        |  毒  |  tok8    |ㄊㆦㆻ˙   |
 
 
-
 ## 字形
 
 為使注音輸入法的【注音符號】能正常顯示，建議使用 Windows 作用系統預設的新細明體字型；或在
@@ -199,50 +197,3 @@ ZIP 壓縮檔案**；
 
 <img alt="W聲調圖" src="https://github.com/user-attachments/assets/5c54a2b7-54be-453e-b549-7e960a4956d4" />
 
-## 注音輸入法
-
-漢字之輸入，使用【[方音符號](https://zh.wikipedia.org/zh-tw/%E8%87%BA%E7%81%A3%E6%96%B9%E9%9F%B3%E7%AC%A6%E8%99%9F)】作為輸入法之【按鍵】。由於【方音符號】源自
-【注音符號】，經改良後使之適用於閩南話標音。故此輸入法適用於已熟悉【注音符號】之人。
-
-### 輸入鍵盤
-
-![方音符號鍵盤](./docs/static/img/hong_im_gian_buann.png)
-
-### 聲調按鍵
-
-| 調號 | 四聲八調   | 聲調按鍵 | 漢字 | 台語音標 | 按鍵輸入 |
-| :--: | :--------- | :------: | :--: | :------- | :------- |
-| 1    | 陰平 (ㄚ) | \<SP\>   |  東  |  tong1   |ㄊㆲ     |
-| 2    | 陰上 (ㄚˋ) | 4        |  黨  |  tong2   |ㄊㆲˋ     |
-| 3    | 陰去 (ㄚ˪) | 3        |  棟  |  tong3   |ㄊㆲ˪     |
-| 4    | 陰入 (ㄚ˙) | 7        |  督  |  tok4    |ㄊㆦㆻ    |
-| 5    | 陽平 (ㄚˊ) | 6        |  同  |  tong5   |ㄊㆲˊ     |
-| 6    | 陽上 (ㄚˋ) | 4        |  動  |  tong6   |ㄊㆲˋ     |
-| 7    | 陽去 (ㄚ˫) | 5        |  洞  |  tong7   |ㄊㆲ˫     |
-| 8    | 陽入 (ㄚ˙) | 7        |  毒  |  tok8    |ㄊㆦㆻ˙   |
-
-
-
-## 字形
-
-為使注音輸入法的【注音符號】能正常顯示，建議使用 Windows 作用系統預設的新細明體字型；或在
-作業系統安裝以下之開源中文字型：
-
-- [霞鶩文楷TC](https://github.com/lxgw/LxgwWenkaiTC)
-
-- [字咍](https://github.com/ButTaiwan/taigivs/releases)
-
-- [豆腐烏](https://github.com/glll4678/tshiuthau)
-
-
-## 參考資料
-
-- [方音符號](https://zh.wikipedia.org/zh-tw/%E8%87%BA%E7%81%A3%E6%96%B9%E9%9F%B3%E7%AC%A6%E8%99%9F)
-
-- [台灣語言音標方案（TLPA）維基百科簡介](https://zh.wikipedia.org/zh-tw/%E8%87%BA%E7%81%A3%E8%AA%9E%E8%A8%80%E9%9F%B3%E6%A8%99%E6%96%B9%E6%A1%88)
-
-- [閩南話拼音方案維基百科簡介](https://zh.wikipedia.org/wiki/%E9%96%A9%E5%8D%97%E8%A9%B1%E6%8B%BC%E9%9F%B3%E6%96%B9%E6%A1%88)
-
-- [彙集雅侻通十五音維基百科簡介](https://zh.wikipedia.org/wiki/%E5%BD%99%E9%9B%86%E9%9B%85%E4%BF%97%E9%80%9A%E5%8D%81%E4%BA%94%E9%9F%B3)
-
-- [中州韻輸入法引擎(RIME)官網](https://rime.im/)
