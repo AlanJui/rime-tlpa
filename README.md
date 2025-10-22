@@ -170,18 +170,53 @@ ZIP 壓縮檔案**；
 | 7    | 陽去 (ㄚ˫) | 5        |  洞  |  tong7   |ㄊㆲ˫     |
 | 8    | 陽入 (ㄚ˙) | 7        |  毒  |  tok8    |ㄊㆦㆻ˙   |
 
+## 方音符號與 Unidoce 編碼
+
+### Unicode 編碼區段
+
+「方音符號」有專屬的 Unicode 區段：
+
+方音符號：U+31A0 ～ U+31BF
+
+注音符號：U+3100 ～ U+312F
+
+注音符號擴充：U+31A0 ～ U+31BF
+
+台灣方音符號補充（部分符號會在 Unicode Extensions 或 CJK 擴充區裡）
+
+### 瀏覽字型對方音符號的支援
+
+某些字型不支援【方音符號】；或是會發顯示錯誤之問題。
+
+- 無法顯示【台語注音調號】
+
+  - 陰去調：˪ U+02EA MODIFIER LETTER YIN DEPARTING TONE MARK
+  - 陽去調：˫ U+02EB MODIFIER LETTER YANG DEPARTING TONE MARK
+
+- 無法顯示入聲韻尾符號/或是將 ㆻ 顯示成 ㆶ
+
+  - ㆴ U+31B4 BOPOMOFO FINAL LETTER P
+  - ㆵ U+31B5 BOPOMOFO FINAL LETTER T
+  - ㆶ U+31B6 BOPOMOFO FINAL LETTER K
+  - ㆷ U+31B7 BOPOMOFO FINAL LETTER H
+  - ㆻ  U+31BB BOPOMOFO FINAL LETTER G（收錄於2020年Unicode v.13，當下多數作業系統內建字體都尚未添加此字）
 
 ## 字形
 
 為使注音輸入法的【注音符號】能正常顯示，建議使用 Windows 作用系統預設的新細明體字型；或在
 作業系統安裝以下之開源中文字型：
 
-- [霞鶩文楷TC](https://github.com/lxgw/LxgwWenkaiTC)
+- [吳守禮台語注音字型](https://xiaoxue.iis.sinica.edu.tw/download/wsl_tps_font.htm)
 
-- [字咍](https://github.com/ButTaiwan/taigivs/releases)
+- [思源宋體字（Noto Serif Traditional Chinese](https://fonts.google.com/noto/specimen/Noto+Serif+TC)
+
+- [思源黑體字（Noto Sans Traditional Chinese）](https://fonts.google.com/noto/specimen/Noto+Sans+TC)
+
+- [字咍字咍台語字型](https://buttaiwan.github.io/taigivs/intro)
 
 - [豆腐烏](https://github.com/glll4678/tshiuthau)
 
+- [霞鶩文楷](https://github.com/lxgw/LxgwWenkaiTC)
 
 ## 參考資料
 
