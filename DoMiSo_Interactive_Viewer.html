@@ -1,0 +1,1488 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DoMiSo 造字檔案互動查看器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        .font-selector {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .control-group label {
+            font-size: 12px;
+            font-weight: bold;
+            color: #333;
+        }
+        select, input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .char-grid {
+            display: grid;
+            grid-template-columns: repeat(16, 1fr);
+            gap: 2px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background: white;
+        }
+        .char-cell {
+            border: 1px solid #ccc;
+            text-align: center;
+            padding: 5px;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: white;
+            transition: all 0.2s;
+        }
+        .char-cell:hover {
+            background-color: #e6f3ff;
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+        .unicode-label {
+            font-size: 9px;
+            color: #666;
+            position: absolute;
+            bottom: 2px;
+            font-family: monospace;
+        }
+        .header-cell {
+            background-color: #4a5568;
+            color: white;
+            font-weight: bold;
+            font-size: 11px;
+            font-family: monospace;
+        }
+        .row-header {
+            background-color: #2d3748;
+            color: white;
+            font-weight: bold;
+            font-size: 11px;
+            font-family: monospace;
+        }
+        .char-info {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            background: white;
+            border: 3px solid #4a5568;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            z-index: 1000;
+            min-width: 200px;
+        }
+        .char-display {
+            font-size: 48px;
+            text-align: center;
+            margin: 10px 0;
+            padding: 20px;
+            border: 2px solid #eee;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .range-info {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4a5568;
+        }
+        .used-chars {
+            background: #e6ffed;
+            color: #22543d;
+            font-weight: bold;
+        }
+        .empty-chars {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            border-radius: 5px;
+            color: white;
+        }
+        .stat-used { background: #48bb78; }
+        .stat-empty { background: #f56565; }
+        .stat-total { background: #4a5568; }
+    </style>
+    <script>
+        let currentFont = 'Arial';
+        let fontSize = 24;
+
+        function showCharInfo(unicode, char, element) {
+            const info = document.getElementById('char-info');
+            const decimal = parseInt(unicode.replace('U+',''), 16);
+
+            document.getElementById('info-unicode').textContent = unicode;
+            document.getElementById('info-char').textContent = char;
+            document.getElementById('info-decimal').textContent = decimal;
+            document.getElementById('info-font').textContent = currentFont;
+
+            // 設定顯示字元的字型
+            const charDisplay = document.getElementById('info-char');
+            charDisplay.style.fontFamily = currentFont;
+
+            info.style.display = 'block';
+        }
+
+        function hideCharInfo() {
+            document.getElementById('char-info').style.display = 'none';
+        }
+
+        function changeFont() {
+            const fontSelect = document.getElementById('font-select');
+            currentFont = fontSelect.value;
+
+            // 更新所有字元的字型
+            const cells = document.querySelectorAll('.char-cell:not(.header-cell):not(.row-header)');
+            cells.forEach(cell => {
+                cell.style.fontFamily = currentFont;
+            });
+
+            updateStats();
+        }
+
+        function changeFontSize() {
+            const sizeInput = document.getElementById('font-size');
+            fontSize = parseInt(sizeInput.value);
+
+            const cells = document.querySelectorAll('.char-cell:not(.header-cell):not(.row-header)');
+            cells.forEach(cell => {
+                cell.style.fontSize = fontSize + 'px';
+            });
+        }
+
+        function updateStats() {
+            // 這裡可以添加統計功能
+            console.log('字型已更改為:', currentFont);
+        }
+
+        window.onload = function() {
+            changeFont();
+        }
+    </script>
+</head>
+<body onload="changeFont()">
+    <div class="container">
+        <div class="header">
+            <h1>🔤 DoMiSo 造字檔案互動查看器</h1>
+            <p>檔案來源：C:\work\DoMiSo_Zu_Im\EUDC.TTE</p>
+            <p>生成時間：2025-10-25 00:20:56</p>
+        </div>
+
+        <div class="font-selector">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="font-select">選擇字型：</label>
+                    <select id="font-select" onchange="changeFont()">
+                        <option value="Arial">Arial</option>
+                        <option value="新細明體, SimSun">新細明體</option>
+                        <option value="標楷體, DFKai-SB">標楷體</option>
+                        <option value="微軟正黑體, Microsoft JhengHei">微軟正黑體</option>
+                        <option value="Consolas, monospace">Consolas</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="font-size">字型大小：</label>
+                    <input type="range" id="font-size" min="12" max="48" value="24" onchange="changeFontSize()">
+                    <span id="size-display">24px</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box stat-total">
+                <div style="font-size: 24px; margin-bottom: 5px;">📊</div>
+                <div>總範圍</div>
+                <div style="font-size: 18px; font-weight: bold;">1024 個位置</div>
+            </div>
+            <div class="stat-box stat-used">
+                <div style="font-size: 24px; margin-bottom: 5px;">✅</div>
+                <div>已使用</div>
+                <div style="font-size: 18px; font-weight: bold;" id="used-count">檢查中...</div>
+            </div>
+            <div class="stat-box stat-empty">
+                <div style="font-size: 24px; margin-bottom: 5px;">⬜</div>
+                <div>未使用</div>
+                <div style="font-size: 18px; font-weight: bold;" id="empty-count">檢查中...</div>
+            </div>
+        </div>
+
+        <div id="char-info" class="char-info">
+            <h4>📝 字元詳細資訊</h4>
+            <p><strong>Unicode：</strong><span id="info-unicode"></span></p>
+            <div class="char-display" id="info-char"></div>
+            <p><strong>十進位：</strong><span id="info-decimal"></span></p>
+            <p><strong>當前字型：</strong><span id="info-font"></span></p>
+        </div>
+        <div class='range-info'>
+            <h3>🔤 私人使用區域 A (U+E000-U+E0FF)</h3>
+            <p>範圍：U+E000-U+E0FF，共 256 個字元位置</p>
+        </div>
+        <div class='char-grid'>
+            <div class='char-cell header-cell'></div>
+            <div class='char-cell header-cell'>+0</div>
+            <div class='char-cell header-cell'>+1</div>
+            <div class='char-cell header-cell'>+2</div>
+            <div class='char-cell header-cell'>+3</div>
+            <div class='char-cell header-cell'>+4</div>
+            <div class='char-cell header-cell'>+5</div>
+            <div class='char-cell header-cell'>+6</div>
+            <div class='char-cell header-cell'>+7</div>
+            <div class='char-cell header-cell'>+8</div>
+            <div class='char-cell header-cell'>+9</div>
+            <div class='char-cell header-cell'>+A</div>
+            <div class='char-cell header-cell'>+B</div>
+            <div class='char-cell header-cell'>+C</div>
+            <div class='char-cell header-cell'>+D</div>
+            <div class='char-cell header-cell'>+E</div>
+            <div class='char-cell header-cell'>+F</div>
+            <div class='char-cell row-header'>E000</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E000", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E000</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E001", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E001</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E002", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E002</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E003", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E003</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E004", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E004</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E005", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E005</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E006", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E006</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E007", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E007</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E008", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E008</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E009", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E009</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E00A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E00A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E00B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E00B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E00C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E00C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E00D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E00D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E00E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E00E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E00F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E00F</span></div>
+            <div class='char-cell row-header'>E010</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E010", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E010</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E011", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E011</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E012", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E012</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E013", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E013</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E014", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E014</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E015", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E015</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E016", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E016</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E017", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E017</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E018", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E018</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E019", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E019</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E01A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E01A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E01B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E01B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E01C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E01C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E01D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E01D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E01E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E01E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E01F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E01F</span></div>
+            <div class='char-cell row-header'>E020</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E020", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E020</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E021", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E021</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E022", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E022</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E023", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E023</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E024", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E024</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E025", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E025</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E026", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E026</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E027", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E027</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E028", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E028</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E029", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E029</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E02A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E02A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E02B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E02B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E02C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E02C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E02D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E02D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E02E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E02E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E02F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E02F</span></div>
+            <div class='char-cell row-header'>E030</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E030", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E030</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E031", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E031</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E032", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E032</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E033", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E033</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E034", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E034</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E035", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E035</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E036", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E036</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E037", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E037</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E038", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E038</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E039", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E039</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E03A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E03A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E03B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E03B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E03C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E03C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E03D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E03D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E03E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E03E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E03F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E03F</span></div>
+            <div class='char-cell row-header'>E040</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E040", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E040</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E041", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E041</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E042", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E042</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E043", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E043</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E044", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E044</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E045", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E045</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E046", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E046</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E047", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E047</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E048", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E048</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E049", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E049</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E04A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E04A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E04B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E04B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E04C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E04C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E04D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E04D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E04E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E04E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E04F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E04F</span></div>
+            <div class='char-cell row-header'>E050</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E050", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E050</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E051", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E051</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E052", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E052</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E053", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E053</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E054", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E054</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E055", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E055</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E056", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E056</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E057", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E057</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E058", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E058</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E059", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E059</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E05A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E05A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E05B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E05B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E05C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E05C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E05D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E05D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E05E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E05E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E05F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E05F</span></div>
+            <div class='char-cell row-header'>E060</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E060", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E060</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E061", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E061</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E062", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E062</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E063", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E063</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E064", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E064</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E065", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E065</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E066", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E066</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E067", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E067</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E068", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E068</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E069", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E069</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E06A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E06A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E06B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E06B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E06C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E06C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E06D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E06D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E06E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E06E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E06F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E06F</span></div>
+            <div class='char-cell row-header'>E070</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E070", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E070</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E071", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E071</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E072", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E072</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E073", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E073</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E074", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E074</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E075", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E075</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E076", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E076</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E077", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E077</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E078", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E078</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E079", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E079</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E07A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E07A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E07B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E07B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E07C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E07C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E07D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E07D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E07E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E07E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E07F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E07F</span></div>
+            <div class='char-cell row-header'>E080</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E080", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E080</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E081", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E081</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E082", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E082</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E083", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E083</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E084", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E084</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E085", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E085</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E086", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E086</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E087", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E087</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E088", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E088</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E089", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E089</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E08A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E08A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E08B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E08B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E08C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E08C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E08D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E08D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E08E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E08E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E08F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E08F</span></div>
+            <div class='char-cell row-header'>E090</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E090", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E090</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E091", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E091</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E092", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E092</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E093", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E093</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E094", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E094</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E095", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E095</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E096", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E096</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E097", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E097</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E098", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E098</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E099", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E099</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E09A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E09A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E09B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E09B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E09C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E09C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E09D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E09D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E09E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E09E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E09F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E09F</span></div>
+            <div class='char-cell row-header'>E0A0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0A9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0A9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0AA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0AA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0AB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0AB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0AC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0AC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0AD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0AD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0AE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0AE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0AF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0AF</span></div>
+            <div class='char-cell row-header'>E0B0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0B9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0B9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0BA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0BA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0BB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0BB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0BC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0BC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0BD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0BD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0BE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0BE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0BF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0BF</span></div>
+            <div class='char-cell row-header'>E0C0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0C9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0C9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0CA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0CA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0CB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0CB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0CC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0CC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0CD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0CD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0CE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0CE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0CF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0CF</span></div>
+            <div class='char-cell row-header'>E0D0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0D9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0D9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0DA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0DA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0DB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0DB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0DC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0DC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0DD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0DD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0DE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0DE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0DF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0DF</span></div>
+            <div class='char-cell row-header'>E0E0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0E9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0E9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0EA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0EA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0EB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0EB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0EC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0EC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0ED", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0ED</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0EE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0EE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0EF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0EF</span></div>
+            <div class='char-cell row-header'>E0F0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0F9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0F9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0FA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0FA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0FB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0FB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0FC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0FC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0FD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0FD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0FE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0FE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E0FF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E0FF</span></div>
+        </div>
+
+        <div class='range-info'>
+            <h3>🔤 私人使用區域 B (U+E100-U+E1FF)</h3>
+            <p>範圍：U+E100-U+E1FF，共 256 個字元位置</p>
+        </div>
+        <div class='char-grid'>
+            <div class='char-cell header-cell'></div>
+            <div class='char-cell header-cell'>+0</div>
+            <div class='char-cell header-cell'>+1</div>
+            <div class='char-cell header-cell'>+2</div>
+            <div class='char-cell header-cell'>+3</div>
+            <div class='char-cell header-cell'>+4</div>
+            <div class='char-cell header-cell'>+5</div>
+            <div class='char-cell header-cell'>+6</div>
+            <div class='char-cell header-cell'>+7</div>
+            <div class='char-cell header-cell'>+8</div>
+            <div class='char-cell header-cell'>+9</div>
+            <div class='char-cell header-cell'>+A</div>
+            <div class='char-cell header-cell'>+B</div>
+            <div class='char-cell header-cell'>+C</div>
+            <div class='char-cell header-cell'>+D</div>
+            <div class='char-cell header-cell'>+E</div>
+            <div class='char-cell header-cell'>+F</div>
+            <div class='char-cell row-header'>E100</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E100", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E100</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E101", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E101</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E102", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E102</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E103", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E103</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E104", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E104</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E105", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E105</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E106", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E106</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E107", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E107</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E108", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E108</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E109", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E109</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E10A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E10A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E10B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E10B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E10C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E10C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E10D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E10D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E10E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E10E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E10F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E10F</span></div>
+            <div class='char-cell row-header'>E110</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E110", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E110</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E111", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E111</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E112", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E112</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E113", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E113</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E114", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E114</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E115", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E115</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E116", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E116</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E117", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E117</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E118", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E118</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E119", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E119</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E11A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E11A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E11B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E11B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E11C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E11C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E11D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E11D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E11E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E11E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E11F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E11F</span></div>
+            <div class='char-cell row-header'>E120</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E120", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E120</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E121", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E121</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E122", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E122</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E123", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E123</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E124", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E124</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E125", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E125</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E126", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E126</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E127", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E127</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E128", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E128</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E129", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E129</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E12A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E12A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E12B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E12B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E12C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E12C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E12D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E12D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E12E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E12E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E12F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E12F</span></div>
+            <div class='char-cell row-header'>E130</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E130", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E130</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E131", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E131</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E132", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E132</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E133", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E133</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E134", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E134</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E135", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E135</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E136", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E136</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E137", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E137</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E138", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E138</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E139", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E139</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E13A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E13A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E13B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E13B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E13C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E13C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E13D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E13D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E13E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E13E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E13F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E13F</span></div>
+            <div class='char-cell row-header'>E140</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E140", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E140</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E141", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E141</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E142", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E142</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E143", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E143</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E144", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E144</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E145", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E145</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E146", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E146</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E147", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E147</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E148", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E148</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E149", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E149</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E14A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E14A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E14B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E14B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E14C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E14C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E14D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E14D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E14E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E14E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E14F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E14F</span></div>
+            <div class='char-cell row-header'>E150</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E150", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E150</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E151", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E151</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E152", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E152</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E153", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E153</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E154", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E154</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E155", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E155</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E156", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E156</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E157", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E157</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E158", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E158</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E159", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E159</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E15A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E15A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E15B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E15B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E15C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E15C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E15D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E15D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E15E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E15E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E15F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E15F</span></div>
+            <div class='char-cell row-header'>E160</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E160", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E160</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E161", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E161</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E162", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E162</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E163", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E163</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E164", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E164</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E165", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E165</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E166", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E166</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E167", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E167</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E168", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E168</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E169", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E169</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E16A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E16A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E16B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E16B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E16C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E16C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E16D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E16D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E16E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E16E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E16F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E16F</span></div>
+            <div class='char-cell row-header'>E170</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E170", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E170</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E171", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E171</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E172", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E172</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E173", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E173</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E174", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E174</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E175", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E175</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E176", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E176</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E177", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E177</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E178", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E178</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E179", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E179</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E17A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E17A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E17B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E17B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E17C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E17C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E17D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E17D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E17E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E17E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E17F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E17F</span></div>
+            <div class='char-cell row-header'>E180</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E180", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E180</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E181", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E181</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E182", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E182</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E183", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E183</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E184", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E184</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E185", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E185</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E186", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E186</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E187", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E187</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E188", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E188</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E189", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E189</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E18A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E18A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E18B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E18B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E18C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E18C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E18D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E18D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E18E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E18E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E18F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E18F</span></div>
+            <div class='char-cell row-header'>E190</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E190", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E190</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E191", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E191</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E192", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E192</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E193", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E193</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E194", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E194</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E195", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E195</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E196", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E196</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E197", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E197</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E198", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E198</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E199", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E199</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E19A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E19A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E19B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E19B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E19C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E19C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E19D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E19D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E19E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E19E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E19F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E19F</span></div>
+            <div class='char-cell row-header'>E1A0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1A9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1A9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1AA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1AA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1AB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1AB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1AC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1AC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1AD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1AD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1AE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1AE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1AF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1AF</span></div>
+            <div class='char-cell row-header'>E1B0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1B9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1B9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1BA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1BA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1BB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1BB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1BC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1BC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1BD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1BD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1BE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1BE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1BF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1BF</span></div>
+            <div class='char-cell row-header'>E1C0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1C9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1C9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1CA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1CA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1CB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1CB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1CC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1CC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1CD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1CD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1CE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1CE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1CF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1CF</span></div>
+            <div class='char-cell row-header'>E1D0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1D9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1D9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1DA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1DA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1DB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1DB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1DC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1DC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1DD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1DD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1DE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1DE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1DF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1DF</span></div>
+            <div class='char-cell row-header'>E1E0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1E9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1E9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1EA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1EA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1EB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1EB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1EC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1EC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1ED", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1ED</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1EE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1EE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1EF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1EF</span></div>
+            <div class='char-cell row-header'>E1F0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1F9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1F9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1FA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1FA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1FB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1FB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1FC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1FC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1FD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1FD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1FE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1FE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E1FF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E1FF</span></div>
+        </div>
+
+        <div class='range-info'>
+            <h3>🔤 私人使用區域 C (U+E200-U+E2FF)</h3>
+            <p>範圍：U+E200-U+E2FF，共 256 個字元位置</p>
+        </div>
+        <div class='char-grid'>
+            <div class='char-cell header-cell'></div>
+            <div class='char-cell header-cell'>+0</div>
+            <div class='char-cell header-cell'>+1</div>
+            <div class='char-cell header-cell'>+2</div>
+            <div class='char-cell header-cell'>+3</div>
+            <div class='char-cell header-cell'>+4</div>
+            <div class='char-cell header-cell'>+5</div>
+            <div class='char-cell header-cell'>+6</div>
+            <div class='char-cell header-cell'>+7</div>
+            <div class='char-cell header-cell'>+8</div>
+            <div class='char-cell header-cell'>+9</div>
+            <div class='char-cell header-cell'>+A</div>
+            <div class='char-cell header-cell'>+B</div>
+            <div class='char-cell header-cell'>+C</div>
+            <div class='char-cell header-cell'>+D</div>
+            <div class='char-cell header-cell'>+E</div>
+            <div class='char-cell header-cell'>+F</div>
+            <div class='char-cell row-header'>E200</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E200", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E200</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E201", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E201</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E202", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E202</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E203", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E203</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E204", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E204</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E205", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E205</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E206", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E206</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E207", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E207</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E208", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E208</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E209", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E209</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E20A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E20A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E20B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E20B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E20C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E20C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E20D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E20D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E20E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E20E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E20F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E20F</span></div>
+            <div class='char-cell row-header'>E210</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E210", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E210</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E211", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E211</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E212", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E212</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E213", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E213</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E214", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E214</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E215", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E215</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E216", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E216</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E217", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E217</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E218", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E218</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E219", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E219</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E21A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E21A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E21B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E21B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E21C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E21C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E21D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E21D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E21E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E21E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E21F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E21F</span></div>
+            <div class='char-cell row-header'>E220</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E220", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E220</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E221", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E221</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E222", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E222</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E223", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E223</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E224", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E224</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E225", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E225</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E226", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E226</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E227", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E227</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E228", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E228</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E229", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E229</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E22A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E22A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E22B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E22B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E22C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E22C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E22D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E22D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E22E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E22E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E22F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E22F</span></div>
+            <div class='char-cell row-header'>E230</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E230", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E230</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E231", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E231</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E232", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E232</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E233", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E233</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E234", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E234</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E235", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E235</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E236", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E236</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E237", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E237</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E238", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E238</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E239", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E239</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E23A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E23A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E23B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E23B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E23C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E23C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E23D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E23D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E23E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E23E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E23F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E23F</span></div>
+            <div class='char-cell row-header'>E240</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E240", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E240</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E241", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E241</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E242", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E242</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E243", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E243</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E244", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E244</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E245", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E245</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E246", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E246</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E247", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E247</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E248", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E248</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E249", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E249</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E24A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E24A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E24B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E24B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E24C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E24C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E24D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E24D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E24E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E24E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E24F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E24F</span></div>
+            <div class='char-cell row-header'>E250</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E250", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E250</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E251", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E251</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E252", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E252</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E253", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E253</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E254", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E254</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E255", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E255</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E256", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E256</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E257", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E257</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E258", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E258</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E259", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E259</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E25A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E25A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E25B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E25B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E25C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E25C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E25D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E25D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E25E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E25E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E25F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E25F</span></div>
+            <div class='char-cell row-header'>E260</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E260", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E260</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E261", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E261</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E262", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E262</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E263", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E263</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E264", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E264</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E265", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E265</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E266", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E266</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E267", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E267</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E268", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E268</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E269", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E269</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E26A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E26A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E26B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E26B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E26C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E26C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E26D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E26D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E26E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E26E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E26F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E26F</span></div>
+            <div class='char-cell row-header'>E270</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E270", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E270</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E271", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E271</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E272", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E272</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E273", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E273</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E274", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E274</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E275", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E275</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E276", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E276</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E277", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E277</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E278", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E278</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E279", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E279</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E27A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E27A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E27B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E27B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E27C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E27C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E27D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E27D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E27E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E27E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E27F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E27F</span></div>
+            <div class='char-cell row-header'>E280</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E280", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E280</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E281", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E281</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E282", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E282</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E283", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E283</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E284", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E284</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E285", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E285</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E286", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E286</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E287", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E287</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E288", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E288</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E289", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E289</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E28A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E28A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E28B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E28B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E28C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E28C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E28D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E28D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E28E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E28E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E28F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E28F</span></div>
+            <div class='char-cell row-header'>E290</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E290", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E290</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E291", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E291</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E292", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E292</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E293", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E293</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E294", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E294</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E295", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E295</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E296", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E296</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E297", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E297</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E298", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E298</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E299", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E299</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E29A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E29A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E29B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E29B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E29C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E29C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E29D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E29D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E29E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E29E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E29F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E29F</span></div>
+            <div class='char-cell row-header'>E2A0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2A9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2A9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2AA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2AA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2AB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2AB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2AC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2AC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2AD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2AD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2AE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2AE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2AF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2AF</span></div>
+            <div class='char-cell row-header'>E2B0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2B9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2B9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2BA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2BA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2BB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2BB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2BC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2BC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2BD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2BD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2BE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2BE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2BF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2BF</span></div>
+            <div class='char-cell row-header'>E2C0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2C9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2C9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2CA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2CA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2CB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2CB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2CC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2CC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2CD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2CD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2CE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2CE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2CF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2CF</span></div>
+            <div class='char-cell row-header'>E2D0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2D9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2D9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2DA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2DA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2DB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2DB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2DC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2DC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2DD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2DD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2DE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2DE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2DF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2DF</span></div>
+            <div class='char-cell row-header'>E2E0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2E9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2E9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2EA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2EA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2EB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2EB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2EC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2EC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2ED", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2ED</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2EE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2EE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2EF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2EF</span></div>
+            <div class='char-cell row-header'>E2F0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2F9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2F9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2FA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2FA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2FB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2FB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2FC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2FC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2FD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2FD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2FE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2FE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E2FF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E2FF</span></div>
+        </div>
+
+        <div class='range-info'>
+            <h3>🔤 私人使用區域 D (U+E300-U+E3FF)</h3>
+            <p>範圍：U+E300-U+E3FF，共 256 個字元位置</p>
+        </div>
+        <div class='char-grid'>
+            <div class='char-cell header-cell'></div>
+            <div class='char-cell header-cell'>+0</div>
+            <div class='char-cell header-cell'>+1</div>
+            <div class='char-cell header-cell'>+2</div>
+            <div class='char-cell header-cell'>+3</div>
+            <div class='char-cell header-cell'>+4</div>
+            <div class='char-cell header-cell'>+5</div>
+            <div class='char-cell header-cell'>+6</div>
+            <div class='char-cell header-cell'>+7</div>
+            <div class='char-cell header-cell'>+8</div>
+            <div class='char-cell header-cell'>+9</div>
+            <div class='char-cell header-cell'>+A</div>
+            <div class='char-cell header-cell'>+B</div>
+            <div class='char-cell header-cell'>+C</div>
+            <div class='char-cell header-cell'>+D</div>
+            <div class='char-cell header-cell'>+E</div>
+            <div class='char-cell header-cell'>+F</div>
+            <div class='char-cell row-header'>E300</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E300", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E300</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E301", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E301</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E302", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E302</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E303", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E303</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E304", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E304</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E305", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E305</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E306", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E306</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E307", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E307</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E308", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E308</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E309", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E309</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E30A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E30A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E30B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E30B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E30C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E30C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E30D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E30D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E30E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E30E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E30F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E30F</span></div>
+            <div class='char-cell row-header'>E310</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E310", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E310</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E311", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E311</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E312", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E312</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E313", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E313</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E314", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E314</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E315", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E315</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E316", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E316</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E317", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E317</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E318", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E318</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E319", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E319</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E31A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E31A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E31B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E31B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E31C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E31C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E31D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E31D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E31E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E31E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E31F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E31F</span></div>
+            <div class='char-cell row-header'>E320</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E320", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E320</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E321", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E321</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E322", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E322</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E323", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E323</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E324", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E324</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E325", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E325</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E326", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E326</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E327", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E327</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E328", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E328</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E329", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E329</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E32A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E32A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E32B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E32B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E32C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E32C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E32D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E32D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E32E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E32E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E32F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E32F</span></div>
+            <div class='char-cell row-header'>E330</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E330", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E330</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E331", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E331</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E332", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E332</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E333", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E333</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E334", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E334</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E335", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E335</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E336", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E336</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E337", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E337</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E338", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E338</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E339", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E339</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E33A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E33A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E33B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E33B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E33C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E33C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E33D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E33D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E33E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E33E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E33F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E33F</span></div>
+            <div class='char-cell row-header'>E340</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E340", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E340</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E341", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E341</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E342", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E342</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E343", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E343</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E344", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E344</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E345", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E345</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E346", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E346</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E347", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E347</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E348", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E348</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E349", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E349</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E34A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E34A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E34B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E34B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E34C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E34C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E34D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E34D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E34E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E34E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E34F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E34F</span></div>
+            <div class='char-cell row-header'>E350</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E350", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E350</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E351", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E351</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E352", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E352</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E353", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E353</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E354", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E354</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E355", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E355</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E356", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E356</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E357", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E357</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E358", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E358</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E359", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E359</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E35A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E35A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E35B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E35B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E35C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E35C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E35D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E35D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E35E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E35E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E35F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E35F</span></div>
+            <div class='char-cell row-header'>E360</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E360", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E360</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E361", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E361</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E362", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E362</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E363", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E363</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E364", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E364</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E365", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E365</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E366", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E366</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E367", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E367</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E368", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E368</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E369", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E369</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E36A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E36A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E36B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E36B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E36C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E36C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E36D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E36D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E36E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E36E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E36F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E36F</span></div>
+            <div class='char-cell row-header'>E370</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E370", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E370</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E371", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E371</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E372", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E372</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E373", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E373</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E374", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E374</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E375", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E375</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E376", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E376</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E377", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E377</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E378", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E378</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E379", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E379</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E37A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E37A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E37B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E37B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E37C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E37C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E37D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E37D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E37E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E37E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E37F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E37F</span></div>
+            <div class='char-cell row-header'>E380</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E380", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E380</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E381", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E381</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E382", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E382</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E383", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E383</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E384", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E384</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E385", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E385</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E386", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E386</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E387", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E387</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E388", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E388</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E389", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E389</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E38A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E38A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E38B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E38B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E38C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E38C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E38D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E38D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E38E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E38E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E38F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E38F</span></div>
+            <div class='char-cell row-header'>E390</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E390", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E390</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E391", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E391</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E392", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E392</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E393", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E393</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E394", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E394</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E395", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E395</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E396", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E396</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E397", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E397</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E398", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E398</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E399", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E399</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E39A", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E39A</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E39B", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E39B</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E39C", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E39C</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E39D", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E39D</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E39E", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E39E</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E39F", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E39F</span></div>
+            <div class='char-cell row-header'>E3A0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3A9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3A9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3AA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3AA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3AB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3AB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3AC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3AC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3AD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3AD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3AE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3AE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3AF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3AF</span></div>
+            <div class='char-cell row-header'>E3B0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3B9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3B9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3BA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3BA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3BB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3BB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3BC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3BC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3BD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3BD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3BE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3BE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3BF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3BF</span></div>
+            <div class='char-cell row-header'>E3C0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3C9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3C9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3CA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3CA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3CB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3CB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3CC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3CC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3CD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3CD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3CE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3CE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3CF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3CF</span></div>
+            <div class='char-cell row-header'>E3D0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3D9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3D9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3DA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3DA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3DB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3DB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3DC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3DC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3DD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3DD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3DE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3DE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3DF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3DF</span></div>
+            <div class='char-cell row-header'>E3E0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3E9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3E9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3EA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3EA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3EB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3EB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3EC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3EC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3ED", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3ED</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3EE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3EE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3EF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3EF</span></div>
+            <div class='char-cell row-header'>E3F0</div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F0", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F0</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F1", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F1</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F2", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F2</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F3", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F3</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F4", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F4</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F5", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F5</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F6", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F6</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F7", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F7</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F8", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F8</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3F9", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3F9</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3FA", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3FA</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3FB", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3FB</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3FC", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3FC</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3FD", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3FD</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3FE", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3FE</span></div>
+            <div class='char-cell' onmouseover='showCharInfo("U+E3FF", "", this)' onmouseout='hideCharInfo()'><span class='unicode-label'>E3FF</span></div>
+        </div>
+
+        <div class="range-info">
+            <h3>📋 使用說明</h3>
+            <ul>
+                <li><strong>滑鼠懸停</strong>任意字元格查看詳細資訊</li>
+                <li><strong>更換字型</strong>可能顯示不同的造字內容</li>
+                <li><strong>調整字型大小</strong>以獲得最佳查看效果</li>
+                <li><strong>有字形顯示</strong>表示該 Unicode 位置有造字</li>
+                <li><strong>空白或方框</strong>表示該位置沒有造字</li>
+            </ul>
+
+            <h4>💡 提示</h4>
+            <p>如果字元無法正確顯示，請嘗試：</p>
+            <ul>
+                <li>更換不同的字型選項</li>
+                <li>使用 BabelPad 等專業 Unicode 編輯器</li>
+                <li>確認造字檔案已正確安裝到系統</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 更新字型大小顯示
+        document.getElementById('font-size').oninput = function() {
+            document.getElementById('size-display').textContent = this.value + 'px';
+            changeFontSize();
+        }
+    </script>
+</body>
+</html>
