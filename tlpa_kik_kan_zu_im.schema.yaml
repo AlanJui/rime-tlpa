@@ -420,8 +420,8 @@ translator:
     # - xform/4//
     #------------------------------------------------------------------------------
     __patch:
-      # - tlpa_hong_im:/comment_format
-      - tlpa_kik_kan_zu_im_lib_hau_suan_ji_tuann:/hau_suan_tuann
+      # - tlpa_kik_kan_zu_im_lib_hau_suan_ji_tuann:/hau_suan_tuann
+      - tlpa_lib_hau_suan_tuann:/hau_suan_tuann
 
 # reverse_lookup:
 #   dictionary: luna_pinyin
