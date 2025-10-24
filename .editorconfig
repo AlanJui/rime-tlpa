@@ -1,0 +1,17 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+max_line_length = off
+wrap_width = off
+
+[tlpa_*.yaml]
+wrap_width = off
+max_line_length = off
