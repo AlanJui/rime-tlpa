@@ -234,27 +234,27 @@ hau_suan_tuann:
     # Li, Lu, La, LO, Le, Lai, Lau
     #======================================================
     #
-    # #------------------------------------------------------
-    # # （1）無【鼻化韻母前綴符號】之【方音符號】
-    # #------------------------------------------------------
-    # # 介音 i 開頭之鼻韻母
-    # - xform/Lㄧㄠ/ㄧㆯ/ # Liau = iaunn
-    # - xform/Lㄧㄚ/ㄧㆩ/ # Lia = iann
-    # - xform/Lㄧㆦ/ㄧㆧ/ # LiO = iOnn
-    # - xform/Lㄧㄨ/ㄧㆫ/ # Liu = iunn
-    # # 介音 u 開頭之鼻韻母
-    # - xform/Lㄨㄞ/ㄨㆮ/ # Luai = uainn
-    # - xform/Lㄨㄚ/ㄨㆩ/ # Lua = uann
-    # - xform/Lㄨㄧ/ㄨㆪ/ # Lui = uinn
-    # - xform/Lㄨㆤ/ㄨㆥ/ # Lue = uenn
-    # # 元音/複合鼻韻母
-    # - xform/Lㄧ/ㆪ/ # Li = inn
-    # - xform/Lㄨ/ㆫ/ # Lu = unn
-    # - xform/Lㄚ/ㆩ/ # La = ann
-    # - xform/Lㆦ/ㆧ/ # LO = Onn
-    # - xform/Lㆤ/ㆥ/ # Le = enn
-    # - xform/Lㄞ/ㆮ/ # Lai = ainn
-    # - xform/Lㄠ/ㆯ/ # Lau = aunn
+    #------------------------------------------------------
+    # （1）無【鼻化韻母前綴符號】之【方音符號】
+    #------------------------------------------------------
+    # 介音 i 開頭之鼻韻母
+    - xform/Lㄧㄠ/ㄧㆯ/ # Liau = iaunn
+    - xform/Lㄧㄚ/ㄧㆩ/ # Lia = iann
+    - xform/Lㄧㆦ/ㄧㆧ/ # LiO = iOnn
+    - xform/Lㄧㄨ/ㄧㆫ/ # Liu = iunn
+    # 介音 u 開頭之鼻韻母
+    - xform/Lㄨㄞ/ㄨㆮ/ # Luai = uainn
+    - xform/Lㄨㄚ/ㄨㆩ/ # Lua = uann
+    - xform/Lㄨㄧ/ㄨㆪ/ # Lui = uinn
+    - xform/Lㄨㆤ/ㄨㆥ/ # Lue = uenn
+    # 元音/複合鼻韻母
+    - xform/Lㄧ/ㆪ/ # Li = inn
+    - xform/Lㄨ/ㆫ/ # Lu = unn
+    - xform/Lㄚ/ㆩ/ # La = ann
+    - xform/Lㆦ/ㆧ/ # LO = Onn
+    - xform/Lㆤ/ㆥ/ # Le = enn
+    - xform/Lㄞ/ㆮ/ # Lai = ainn
+    - xform/Lㄠ/ㆯ/ # Lau = aunn
     #------------------------------------------------------
     # （2）無【鼻化韻母前綴符號】之【閩拼方案】
     #------------------------------------------------------
