@@ -71,12 +71,27 @@ hau_suan_tuann:
     - derive/([iu]?(ai|au|oo|[aiueo]))nn/$1ⁿ/
     - derive/([iu]?(ai|au|oo|[aiueo]))nn/L$1/
     #------------------------------------------------------
+    # ㆦ [oo] 韻替換調整：[oo/ong/ok/op] ==> [O] ==> ㆦ /ɔ/
+    - xform/ionn/iOnn/
+    - xform/iong/iOng/
+    - xform/iok/iOk/ # 台語注音二式無此韻母，其拼音為：[iook] ==> [iOk] ==> ㄧㆦㄍ
+    - xform/om/Om/
+    - xform/op/Op/
+    - xform/ong/Ong/
+    - xform/ok/Ok/
+    # 變更【元音韻母】的羅馬拼音字母： oo 為 O
+    - xform/onn/Onn/ # ㆧ [oonn] = O + nn
+    - xform/oo/OO/ # ㆦ [oo]
+    #------------------------------------------------------
     # o 之【字典編碼】改為： ə
     # 非以下之【韻母】，將【羅馬拼音字母】：自 o 變更為 ə
     # 【判斷條件】： oonn|onn|iong|iok|ong|ok|om|op
-    - xform/o(?!onn|nn|ng|k|m|p)/ə/ # ㄜ [ə] - 只轉換獨立的 o
+    # - xform/o(?!onn|nn|ng|k|m|p)/ə/ # ㄜ [ə] - 只轉換獨立的 o
+    - xform/o/ə/ # ㄜ [ə] - 只轉換獨立的 o
     # 變更 ㄜ /o/ 韻的羅馬拼音字母：[or] ==> [o] ==> ㄜ [or]
     - derive/or/ə/
+    # 校調回復
+    - xform/O/o/
     #======================================================
     # 右邊：注音符號。
     # 定義【聲母】與【方音符號】對映規則
@@ -214,8 +229,8 @@ hau_suan_tuann:
     - xform/》o(ng|k)/ㆦ》$1/
     - xform/》o(m|p)/ㆦ》$1/
     # 姑 Noo / 沽 oo
-    # - xform/》(L?)(oo)/$1ㆦ》/
-    - xform/》(L?)(o)/$1ㆦ》/
+    # - xform/》(L?)(o)/$1ㆦ》/
+    - xform/》(L?)(oo)/$1ㆦ》/
     #------------------------------------------------------
     # o
     #------------------------------------------------------

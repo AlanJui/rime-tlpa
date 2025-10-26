@@ -1,4 +1,3 @@
-# vim: set nowrap nolinebreak:
 # Rime schema
 # vim: set sw=2 sts=2 et nowrap:
 # encoding: utf-8
@@ -168,7 +167,8 @@ speller:
     # 為【鼻化韻母】建置【前綴識別】用【羅馬拼音字母】：【L】
     - derive/([iu]?[aiueoIU])nn/L$1/
     # 為所有【鼻化韻母】建置【字典編碼】：【*】
-    - derive/L([iu]?[aiueoIU])/*/
+    # - derive/L([iu]?[aiueoIU])/*/
+    - derive/([iu]?[aiueoIU])nn/*/
     # -------------------------------------------------------------------------
     # 鼻音韻尾（m/ng/n）的【羅馬拼音字母】替換
     # -------------------------------------------------------------------------
