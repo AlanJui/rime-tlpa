@@ -15,6 +15,7 @@ columns:
   - stem # 用法舉例
   - create # 建立時間
 import_tables:
+  - tl_ji_khoo_zu_ting
   - tl_ji_khoo_kah_kut_bun
 ...
 玫	mui5	0.6	NA	2025-10-26 11:16:04
