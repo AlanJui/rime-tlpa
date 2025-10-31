@@ -274,12 +274,14 @@ hau_suann_tuann:
     - xform/〉ph/頗〉/
     - xform/〉p(?!h)/邊〉/
     - xform/〉b/門〉/
-    - xform/〉m(?!\d)/毛〉/
+    # - xform/〉m(?!\d)/毛〉/
+    - xform/〉m(?!\d)/門/  # m【a】 ==>  [m]
     # 舌根音
     - xform/〉kh/氣〉/
     - xform/〉k(?!h)/求〉/
     - xform/〉g/語〉/
-    - xform/〉ng(?!\d)/雅〉/
+    # - xform/〉ng(?!\d)/雅〉/
+    - xform/〉ng(?!\d)/語〉/
     # 舌尖音
     - xform/〉th/他〉/
     - xform/〉t(?!h)/地〉/
