@@ -275,7 +275,7 @@ hau_suann_tuann:
     - xform/〉p(?!h)/邊〉/
     - xform/〉b/門〉/
     # - xform/〉m(?!\d)/毛〉/
-    - xform/〉m(?!\d)/門/  # m【a】 ==>  [m]
+    - xform/〉m(?!\d)/門〉/  # m【a】 ==>  [m]
     # 舌根音
     - xform/〉kh/氣〉/
     - xform/〉k(?!h)/求〉/
