@@ -67,8 +67,6 @@ hau_suan_tuann:
     #------------------------------------------------------
     # 【鼻音韻母】使用【鼻音前綴識別符號】：
     # a/i/u/e/oo/iau/uai/ai/au/ia/io/iu/ua/ui
-    # - derive/(oo)nn/onn/ # ㆧ [oonn] = O + nn
-    - derive/([iu]?(ai|au|oo|[aiueo]))nn/$1ⁿ/
     - derive/([iu]?(ai|au|oo|[aiueo]))nn/L$1/
     #------------------------------------------------------
     # ㆦ [oo] 韻替換調整：[oo/ong/ok/op] ==> [O] ==> ㆦ /ɔ/
