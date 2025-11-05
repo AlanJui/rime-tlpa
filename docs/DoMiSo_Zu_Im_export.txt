@@ -1,0 +1,6 @@
+# Rime user dictionary export
+#@/db_name	DoMiSo_Zu_Im
+#@/db_type	userdb
+#@/rime_version	1.13.1
+#@/tick	0
+#@/user_id	unknown
