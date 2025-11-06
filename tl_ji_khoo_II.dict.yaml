@@ -5,7 +5,7 @@
 # 漢字讀者：白話音
 # 漢字標音：使用【台羅音標（TL）】
 ---
-name: DoMiSo_cu_ting
+name: tl_ji_khoo_II
 version: "0.1.0.0"
 sort: by_weight
 use_preset_vocabulary: false
