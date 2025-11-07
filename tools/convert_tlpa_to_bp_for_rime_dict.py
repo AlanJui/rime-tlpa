@@ -9,16 +9,16 @@ convert_tlpa_to_bp_for_rime_dict.py
 參數：
     input_file  (可選): 輸入檔案路徑
                        預設值：專案根目錄下的 tl_ji_khoo_peh_ue.dict.yaml
-    output_file (可選): 輸出檔案路徑  
+    output_file (可選): 輸出檔案路徑
                        預設值：專案根目錄下的 bp_ji_khoo.dict.yaml
 
 範例：
     # 使用預設檔案
     python convert_tlpa_to_bp_for_rime_dict.py
-    
+
     # 指定輸入檔案，使用預設輸出檔案
     python convert_tlpa_to_bp_for_rime_dict.py custom_input.dict.yaml
-    
+
     # 指定輸入和輸出檔案
     python convert_tlpa_to_bp_for_rime_dict.py input.dict.yaml output.dict.yaml
 """
@@ -188,13 +188,26 @@ def convert_TLPA_to_BP(TLPA_piau_im: str) -> str:
     mo_tiau_piau_im, tiau = m.group(1), m.group(2)
 
     # 1. 轉聲母：從長到短比對 prefix
+    # 特殊處理：韻化聲母 m、ng（後面直接接聲調，不轉換）
     siann = ""
     un = mo_tiau_piau_im
-    for key in sorted(SIANN_BU_TNG_UANN_PIAU.keys(), key=lambda x: -len(x)):
-        if mo_tiau_piau_im.startswith(key):
-            siann = SIANN_BU_TNG_UANN_PIAU[key]
-            un = mo_tiau_piau_im[len(key) :]
-            break
+
+    # 檢查是否為韻化聲母：m 或 ng 後面沒有韻母（整個無調號標音就是 m 或 ng）
+    if mo_tiau_piau_im == "m":
+        # 韻化聲母 m：毋 [m7] 保持為 m，不轉換成 bbn
+        siann = ""
+        un = "m"
+    elif mo_tiau_piau_im == "ng":
+        # 韻化聲母 ng：黃 [ng5] 保持為 ng，不轉換成 ggn
+        siann = ""
+        un = "ng"
+    else:
+        # 正常聲母轉換邏輯
+        for key in sorted(SIANN_BU_TNG_UANN_PIAU.keys(), key=lambda x: -len(x)):
+            if mo_tiau_piau_im.startswith(key):
+                siann = SIANN_BU_TNG_UANN_PIAU[key]
+                un = mo_tiau_piau_im[len(key) :]
+                break
 
     # 2. 轉韻母：整段比對
     if un in UN_BU_TNG_UANN_PIAU:
@@ -301,11 +314,11 @@ def main(infile: str, outfile: str):
 
 if __name__ == "__main__":
     import os
-    
+
     # 取得專案根目錄（假設此工具在 tools/ 目錄下）
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)  # 上一層目錄即為專案根目錄
-    
+
     # 設定預設檔案路徑（相對於專案根目錄）
     default_infile = os.path.join(project_root, "tl_ji_khoo_peh_ue.dict.yaml")
     default_outfile = os.path.join(project_root, "bp_ji_khoo.dict.yaml")
@@ -317,7 +330,7 @@ if __name__ == "__main__":
     # 顯示使用的檔案路徑
     print(f"輸入檔案：{infile}")
     print(f"輸出檔案：{outfile}")
-    
+
     # 檢查輸入檔案是否存在
     if not os.path.exists(infile):
         print(f"錯誤：輸入檔案不存在 - {infile}")
