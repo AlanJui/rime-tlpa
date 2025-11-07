@@ -80,30 +80,31 @@ speller:
   delimiter: "'"
   use_space: true
   algebra:
-    #======================================================
+    #==========================================================================
     # 調整字典台語音標字母
     # 定義【台語音標】與【音標編碼】的對映關係
-    #======================================================
     #==========================================================================
+    #
+    #--------------------------------------------------------------------------
     # 【閩拼方案零聲母自動轉換】
     # 允許使用者輸入台語音標格式，自動轉換成 BP 格式
-    #==========================================================================
+    #--------------------------------------------------------------------------
     # i 開頭的零聲母自動轉換
-    - derive/^i(ong|ok)(\d)$/y$1$2/      # iong2 → yong2, iok8 → yok8
-    - derive/^i(ang|ak)(\d)$/y$1$2/      # iang1 → yang1, iak8 → yak8
-    - derive/^i(a[omp]?)(\d)$/y$1$2/     # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
-    - derive/^i(ng|k)(\d)$/yi$1$2/       # ing1 → ying1, ik8 → yik8
-    - derive/^i(n|t)(\d)$/yi$1$2/        # in1 → yin1, it8 → yit8
-    - derive/^i(m|p)(\d)$/yi$1$2/        # im1 → yim1, ip8 → yip8
-    - derive/^i(a)(\d)$/yi$1$2/          # ia1 → ya1
-    - derive/^i(\d)$/yi$1/               # i1 → yi1
+    - derive/^y(ong|ok)(\d)$/i$1$2/     # iong2 → yong2, iok8 → yok8
+    - derive/^y(ang|ak)(\d)$/i$1$2/     # iang1 → yang1, iak8 → yak8
+    - derive/^y(a[omp]?)(\d)$/i$1$2/    # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
+    - derive/^y(ng|k)(\d)$/i$1$2/       # ing1 → ying1, ik8 → yik8
+    - derive/^yi(n|t)(\d)$/i$1$2/       # in1 → yin1, it8 → yit8
+    - derive/^yi(m|p)(\d)$/i$1$2/       # im1 → yim1, ip8 → yip8
+    - derive/^y(a)(\d)$/i$1$2/          # ia1 → ya1
+    - derive/^y(\d)$/i$1/               # i1 → yi1
     # u 開頭的零聲母自動轉換
-    - derive/^u(\d)$/wu$1/               # u3 → wu3
-    - derive/^u(n|t)(\d)$/wu$1$2/        # un2 → wun2, ut8 → wut8
-    - derive/^u(h)(\d)$/wu$1$2/          # uh4 → wuh4
-    - derive/^u(a[inp]?)(\d)$/w$1$2/     # uan2 → wan2, uai7 → wai7, uap8 → wap8
-    - derive/^u(a)(ng|k)(\d)$/w$1$2$3/   # uang1 → wang1, uak8 → wak8
-    - derive/^u([ei])(\d)$/w$1$2/        # ue3 → we3, ui7 → wi7
+    - derive/^w(\d)$/u$1/               # u3 → wu3
+    - derive/^w(n|t)(\d)$/u$1$2/        # un2 → wun2, ut8 → wut8
+    - derive/^w(h)(\d)$/u$1$2/          # uh4 → wuh4
+    - derive/^w(a[inp]?)(\d)$/u$1$2/    # uan2 → wan2, uai7 → wai7, uap8 → wap8
+    - derive/^w(a)(ng|k)(\d)$/u$1$2$3/  # uang1 → wang1, uak8 → wak8
+    - derive/^w([ei])(\d)$/u$1$2/       # ue3 → we3, ui7 → wi7
     #--------------------------------------------------------------------------
     # 去除零聲母
     # - derive/Ø//
@@ -255,7 +256,10 @@ translator:
     # - xform/\bu(a)(ng|k)/w$1$3/    # uang1 → wang1, uak8 → wak8
     # - xform/\bu([ei])/w$1/         # ue3 → we3, ui7 → wi7
     #------------------------------------------------------
-    # - xform/i(a)/y$1/            # ia1 → ya1
+    - xform/^i/y/
+    - xform/'i/y/
+    - xform/^u/w/
+    - xform/'u/w/
 
   comment_format:
     __patch:
