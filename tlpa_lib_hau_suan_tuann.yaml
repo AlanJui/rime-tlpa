@@ -360,7 +360,8 @@ hau_suan_tuann:
     # 拆解【聲母】+【韻母】+【聲調】
     #------------------------------------------------------
     # 有聲母（含雙字母聲母 ng、zz），後面接任意字元，並以數字作結尾
-    - xform/^((?:bb|ln|ggn|gg|zz|[bpmtdlgkzcsjh]).*\d)$/〔〉Ø$1〕/
+    # - xform/^((?:bb|ln|ggn|gg|zz|[bpmtdlgkzcsjh]).*\d)$/〔〉Ø$1〕/
+    - xform/^((?:ph|th|ng|[bpmtnlgkzcsjh]).*\d)$/〔〉Ø$1〕/
     #------------------------------------------------------
     # 清除【零聲母】：【零聲母】組合型式
     # 1. 零聲母 + 元音韻母 + 調號，如：Øu5, Øi1, ...
@@ -370,7 +371,8 @@ hau_suan_tuann:
     - xform/〔〉Ø/〔〉/
     #------------------------------------------------------
     # 聲母處理
-    - xform/〉([bpPmtTnlgkKwhJZCSjzcs])/$1〉/
+    # - xform/〉([bpPmtTnlgkKwhJZCSjzcs])/$1〉/
+    - xform/〉(ph|th|ng|ji|zi|ci|si|[bpmtnlgkjzcsh])/$1〉/
     #------------------------------------------------------
     # 處理【鼻化韻母】轉換： Na = ㄬㄚ = ㆩ = ann
     # a/e/i/O/u/uai/iau/ai/au/ia/io/iu/ua/ui
