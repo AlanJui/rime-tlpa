@@ -71,7 +71,8 @@ engine:
     # 為 filter 除錯用
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
-    # - lua_filter@reformat_comment_filter  # 暫時註解，避免錯誤
+    # 重組【候選字清單】中的【羅馬拼音字母】及【注音符號】
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyzN;-_\/[]7.
@@ -337,3 +338,30 @@ punctuator:
 #   tips: 〔拼音〕
 #   preedit_format:
 #     - xform/([nljqxy])v/$1ü/
+
+# =============================================================
+# Lua 模組宣告區
+# 過濾器：重組候選字註解（羅馬拼音字母 + 方音符號）
+# =============================================================
+# 檔案路徑： lua/group_tlpa_bpmf.lua
+# 如果你把檔案放在 lua/group_tlpa_bpmf.lua，lua_path 寫 group_tlpa_bpmf 就好；
+# 若你是集中寫在 rime.lua，就把 lua_path 改成 rime，func 保持 group_tlpa_bpmf。
+group_tlpa_bpmf:
+  lua_path: group_tlpa_bpmf   # 對映【檔名】： group_tlpa_bpmf.lua（不含副檔名）
+  func: filter                # ★ 指向模組回傳表的 "filter" 欄位
+
+# 羅馬拼音反查過濾器設定
+tlpa_lookup:
+  dictionary: bp_ji_khoo       # 你的主字典名稱
+  comment_format:
+    # - "〔{{spelling}}〕"
+    - xform/^/〔/
+    - xform/$/〕/
+
+# 注音符號反查過濾器設定
+bpmf_lookup:
+  dictionary: bp_ji_khoo_bpmf   # 若你沒有這本字典，可暫時用同一本 bp_ji_khoo
+  comment_format:
+    # - "【{{spelling}}】"
+    - xform/^/【/
+    - xform/$/】/

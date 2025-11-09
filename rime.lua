@@ -329,7 +329,7 @@ end
 
 local function regroup_pairs_safe(s)
   if type(s) ~= "string" or s == "" then return s end
-  local tlpa, zh = {}, {}
+  local tlpa, zu_im = {}, {}
 
   -- 抓所有 〔...〕（最小擷取）
   for t in s:gmatch("〔(.-)〕") do
@@ -337,14 +337,14 @@ local function regroup_pairs_safe(s)
   end
 
   -- 抓所有 【...】（最小擷取）
-  for z in s:gmatch("【(.-)】") do
-    table.insert(zh, z)
+  for zu_im_hu_ho in s:gmatch("【(.-)】") do
+    table.insert(zu_im, zu_im_hu_ho)
   end
 
-  if #tlpa >= 2 and #tlpa == #zh then
+  if #tlpa >= 2 and #tlpa == #zu_im then
     return "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
            .. "  "
-           .. "【" .. table.concat(zh, "】 【") .. "】"
+           .. "【" .. table.concat(zu_im, "】 【") .. "】"
   end
   return s
 end
