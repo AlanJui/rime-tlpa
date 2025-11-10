@@ -267,8 +267,12 @@ translator:
 
   comment_format:
     __patch:
-      # 閩拼方案（BP）候選字清單
-      - bp_libs:/hau_suan_ji_tuann
+      # # 閩拼方案（BP）候選字清單
+      # - bp_libs:/hau_suan_ji_tuann
+      # # 閩拼方案（BP）候選字清單：注音
+      # - bp_libs_hst_zu_im:/hau_suan_ji_tuann
+      # 閩拼方案（BP）候選字清單：拼音
+      - bp_libs_hst_phing_im:/hau_suan_ji_tuann
 
 key_binder:
   import_preset: default
