@@ -261,18 +261,16 @@ translator:
     # - xform/\bu([ei])/w$1/         # ue3 → we3, ui7 → wi7
     #------------------------------------------------------
     - xform/^i/y/
-    - xform/'i/y/
     - xform/^u/w/
-    - xform/'u/w/
 
   comment_format:
     __patch:
       # # 閩拼方案（BP）候選字清單
       # - bp_libs:/hau_suan_ji_tuann
-      # # 閩拼方案（BP）候選字清單：注音
-      # - bp_libs_hst_zu_im:/hau_suan_ji_tuann
-      # 閩拼方案（BP）候選字清單：拼音
-      - bp_libs_hst_phing_im:/hau_suan_ji_tuann
+      # # 閩拼方案（BP）候選字清單：拼音
+      # - bp_libs_hst_phing_im:/hau_suan_ji_tuann
+      # 閩拼方案（BP）候選字清單：注音
+      - bp_libs_hst_zu_im:/hau_suan_ji_tuann
 
 key_binder:
   import_preset: default
@@ -337,37 +335,3 @@ style:
 
 punctuator:
   import_preset: keymap_piau_tian
-
-# reverse_lookup:
-#   dictionary: luna_pinyin
-#   prefix: "`"
-#   tips: 〔拼音〕
-#   preedit_format:
-#     - xform/([nljqxy])v/$1ü/
-
-# =============================================================
-# Lua 模組宣告區
-# 過濾器：重組候選字註解（羅馬拼音字母 + 方音符號）
-# =============================================================
-# 檔案路徑： lua/group_tlpa_bpmf.lua
-# 如果你把檔案放在 lua/group_tlpa_bpmf.lua，lua_path 寫 group_tlpa_bpmf 就好；
-# 若你是集中寫在 rime.lua，就把 lua_path 改成 rime，func 保持 group_tlpa_bpmf。
-group_tlpa_bpmf:
-  lua_path: group_tlpa_bpmf   # 對映【檔名】： group_tlpa_bpmf.lua（不含副檔名）
-  func: filter                # ★ 指向模組回傳表的 "filter" 欄位
-
-# 羅馬拼音反查過濾器設定
-tlpa_lookup:
-  dictionary: bp_ji_khoo       # 你的主字典名稱
-  comment_format:
-    # - "〔{{spelling}}〕"
-    - xform/^/〔/
-    - xform/$/〕/
-
-# 注音符號反查過濾器設定
-bpmf_lookup:
-  dictionary: bp_ji_khoo_bpmf   # 若你沒有這本字典，可暫時用同一本 bp_ji_khoo
-  comment_format:
-    # - "【{{spelling}}】"
-    - xform/^/【/
-    - xform/$/】/
