@@ -63,7 +63,7 @@ engine:
     - echo_translator
     - punct_translator
     - script_translator
-    - reverse_lookup_translator
+    # - reverse_lookup_translator
   filters:
     - simplifier
     - uniquifier
@@ -159,7 +159,7 @@ speller:
     # -ng ==> -k
     #--------------------------------------------------------------------------
     # 入聲調
-    # 【字典編碼】：【&】，以【按鍵】：【.】，輸入所有【入聲韻尾】：-p/-t/-k [78]
+    # 【字典編碼】：【9】，以【按鍵】：【.】，輸入所有【入聲韻尾】：-p/-t/-k [78]
     - derive/[78]/9/
     # 【字典編碼】：【9】，代表所有【入聲韻尾】：-p/-t/-k [78]，輸入用【按鍵】：【.】
     - abbrev/(ang|ong|oo|ai|au|am|an|ng|n|m|[iuaoe])+9/9/
