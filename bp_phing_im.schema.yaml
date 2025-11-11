@@ -72,7 +72,7 @@ engine:
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
     # 重組【候選字清單】中的【羅馬拼音字母】及【注音符號】
-    # - lua_filter@reformat_comment_filter
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyzN;-_\/[]7.
@@ -235,17 +235,15 @@ translator:
     # 輸入校調
     #------------------------------------------------------
     - xform/iek/ik/
-    - xform/^i/y/
-    - xform/^u/w/
 
   comment_format:
     __patch:
-      # # 閩拼方案（BP）候選字清單：雙欄顯示：（1）左為【拼音字母】、（2）右為【注音符號】
-      # - bp_libs:/hau_suan_ji_tuann
-      # # 閩拼方案（BP）候選字清單：顯示拼音字母
+      # 閩拼方案（BP）候選字清單：雙欄顯示：（1）左為【拼音字母】、（2）右為【注音符號】
+      - bp_libs:/hau_suan_ji_tuann
+      # 閩拼方案（BP）候選字清單：顯示拼音字母
       # - bp_libs_hst_phing_im:/hau_suan_ji_tuann
       # 閩拼方案（BP）候選字清單：顯示注音符號
-      - bp_libs_hst_zu_im:/hau_suan_ji_tuann
+      # - bp_libs_hst_zu_im:/hau_suan_ji_tuann
 
 key_binder:
   import_preset: default

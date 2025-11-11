@@ -335,6 +335,7 @@ translator:
     - xform/ㄉ'入/ㆵ/ # ㄉ = t = f
     - xform/ㄍ'入/ㆻ/ # ㄍ = k = q
     - xform/ㄏ'入/ㆷ/ # ㄏ = h = v
+
   comment_format:
     __patch:
       # 閩拼方案（BP）候選字清單
