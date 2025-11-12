@@ -300,7 +300,7 @@ speller:
     # 【.】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
     # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
     #==========================================================================
-    - xlit|mBbpndtlŋvgkZzcsJjCShaiwueOoIURDXEQxyMNGY@AWHPTKV732581409L*|a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz5346]'[7.=-|
+    - xlit|mBbpndtlŋvgkZzcsJjCShaiwueOoIURDXEQxyMNGY@AWHPTKV176532809L*|a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz'[5346]7.=-|
 
 
 translator:
@@ -332,7 +332,7 @@ translator:
     # - xform/一/ˉ/   # 陽平調（第 1 聲），聲調符號省略
     # - xform/七/ˉ/   # 陰入調（第 7 聲），聲調符號省略
     # - xform/八/ˊ/   # 陰入調（第 7 聲），聲調符號省略
-    - xlit|a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz5346]'[7.=-|ㄇㆠㄅㄆㄋㄉㄊㄌㄫㆣㄍㄎㆡㄗㄘㄙㆢㄐㄑㄒㄏㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㄣㆭㆰㄢㄤㆱㆲㆴㆵㆻㆷ˫˪ˋˊˊˉˉ˙入ㄥñ|
+    - xlit|a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz'[5346]7.=-|ㄇㆠㄅㄆㄋㄉㄊㄌㄫㆣㄍㄎㆡㄗㄘㄙㆢㄐㄑㄒㄏㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㄣㆭㆰㄢㄤㆱㆲㆴㆵㆻㆷˉˉ^ˋˇˊˊ˙入ㄥñ|
 
 
     #------------------------------------------------------
