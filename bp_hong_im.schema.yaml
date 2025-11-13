@@ -64,9 +64,12 @@ engine:
     - lua_filter@reformat_comment_filter
 
 speller:
-  alphabet: "a!1qs2wxNEedYyhnRrfvc8uKj,i0k9l*UJ<I(Lmp/M0;Oobtgz7.=5346]'["
-  initials: "a!1qs2wxNEedYyhnRrfvc8uKj,i0k9l*UJ<I(Lmp/M0;Oobtgz7.="
-  finals: "5346]'["
+  # alphabet: "a!1qs2wxNEedYyhnRrfvc8uKj,i0k9l*UJ<I(Lmp/M0;Oobtgz7.=5346]'["
+  # initials: "a!1qs2wxNEedYyhnRrfvc8uKj,i0k9l*UJ<I(Lmp/M0;Oobtgz7.="
+  # finals: "5346]'["
+  alphabet: "a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz.?-'[5346]7"
+  initials: "a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz.?-"
+  finals: "'[5346]7"
   delimiter: "'"
   use_space: true
   #==========================================================================
@@ -125,7 +128,6 @@ speller:
     # 零聲母調整
     #--------------------------------------------------------------------------
     # i 開頭的零聲母自動轉換
-    - xform/^y(i)?/i/    # 以【yi】開頭的音節，保留【i】
     # - derive/^y(ong|ok)(\d)$/i$1$2/     # iong2 → yong2, iok8 → yok8
     # - derive/^y(ang|ak)(\d)$/i$1$2/     # iang1 → yang1, iak8 → yak8
     # - derive/^y(a[omp]?)(\d)$/i$1$2/    # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
@@ -134,15 +136,16 @@ speller:
     # - derive/^yi(m|p)(\d)$/i$1$2/       # im1 → yim1, ip8 → yip8
     # - derive/^y(a)(\d)$/i$1$2/          # ia1 → ya1
     # - derive/^y(\d)$/i$1/               # i1 → yi1
+    - xform/^y(i)?/i/    # 以【yi】開頭的音節，保留【i】
     #--------------------------------------------------------------------------
     # u 開頭的零聲母自動轉換
-    - xform/w(u)?/u/    # 以【wu】開頭的音節，保留【u】
     # - derive/^w(\d)$/u$1/               # u3 → wu3
     # - derive/^w(n|t)(\d)$/u$1$2/        # un2 → wun2, ut8 → wut8
     # - derive/^w(h)(\d)$/u$1$2/          # uh4 → wuh4
     # - derive/^w(a[inp]?)(\d)$/u$1$2/    # uan2 → wan2, uai7 → wai7, uap8 → wap8
     # - derive/^w(a)(ng|k)(\d)$/u$1$2$3/  # uang1 → wang1, uak8 → wak8
     # - derive/^w([ei])(\d)$/u$1$2/       # ue3 → we3, ui7 → wi7
+    - xform/w(u)?/u/    # 以【wu】開頭的音節，保留【u】
     # --------------------------------------------------------------------------
     # 【声母】羅馬拼音字母替換/衍生
     #  - 唇音/雙唇音: b, p, bb, m
@@ -151,14 +154,6 @@ speller:
     #  - 齒音/舌尖前音（齦顎音）: j, ch, jj, sh
     #  - 牙音/舌根音（軟顎音）: g, k, gg, ng
     #  - 喉音（聲門音）：h
-    # --------------------------------------------------------------------------
-    - xform/^bbn/m/   # 【a】 ==> 聲： ㄇ [bbn]
-    - xform/^bb/B/    # 【!】 ==> 聲： ㆠ [bb]
-    - xform/^ggn/ŋ/   # 【N】 ==> 聲： ㄫ [ggn]
-    - xform/^gg/v/    # 【E】 ==> 聲： ㆣ [gg]
-    - xform/^ln/n/    # 【s】 ==> 聲： ㄋ [ln]
-    - xform/^zz/Z/    # 【Y】 ==> 聲： ㆡ [zz]
-
     # --------------------------------------------------------------------------
     # # 舌尖前音（齦顎音）: z[j], c[ch], zz[jj], s[sh]
     # - derive/^zz(?i)/J/ # ㆢ[ jj ]（入）
@@ -188,6 +183,14 @@ speller:
     # # - xform/^l/l/       # ㄌ[ l ]（柳）
     # #--------------------------------------------------------------------------
     # - xform/^h(?!\d)/h/ # ㄏ[ h ]（喜）：後接【調號】，當【入聲韻尾】-h 或【輕聲】用
+    # --------------------------------------------------------------------------
+    - xform/^bbn/m/   # 【a】 ==> 聲： ㄇ [bbn]
+    - xform/^bb/B/    # 【!】 ==> 聲： ㆠ [bb]
+    - xform/^ggn/ŋ/   # 【N】 ==> 聲： ㄫ [ggn]
+    - xform/^gg/v/    # 【E】 ==> 聲： ㆣ [gg]
+    - xform/^ln/n/    # 【s】 ==> 聲： ㄋ [ln]
+    - xform/^zz/Z/    # 【Y】 ==> 聲： ㆡ [zz]
+
     #==========================================================================
     # 【韻母】羅馬拼音字母替換/衍生
     #==========================================================================
@@ -213,38 +216,38 @@ speller:
     # --------------------------------------------------------------------------
     # 【鼻化韻母】
     # --------------------------------------------------------------------------
-    # 為【鼻化韻母】建置【後綴識別符號】：【nn】
-    - derive/n([iu]?[aiueoIU])/$1nn/
-    # 【鼻化元音韻母】輸入，可用連續兩次相同的輸入，等同輸入【鼻化元音韻母】
-    - derive/([aiueoIU])nn/$1$1/
-    # 為【鼻化元音韻母】衍生【字典編碼】
-    - derive/ann/R/   # ㆩ [ann]
-    - derive/inn/D/   # ㆪ [inn]
-    - derive/unn/X/   # ㆫ [unn]
-    - derive/enn/E/   # ㆥ [enn]
-    - derive/onn/Q/   # ㆧ [oonn]
-    - derive/xnn/x/   # ㆮ [ainn]
-    - derive/ynn/y/   # ㆯ [aunn]
-    # 為所有【鼻化韻母】建置【羅馬拼音字母】：【*】
-    # - abbrev/([iu]?[aiueoIU])nn/*/
-    - abbrev/L([iu]?[aiueoIU])/*/
-    # --------------------------------------------------------------------------
-    # # 【鼻化元音韻母】輸入，可用連續兩次相同的輸入，等同輸入【鼻化元音韻母】
-    # - derive/n([aiueoIU])/$1$1/
-    # # 為【鼻化韻母】建置【前綴識別】用【羅馬拼音字母】：【L】
+    # # 為【鼻化韻母】建置【後綴識別符號】：【nn】
     # - derive/n([iu]?[aiueoIU])/L$1/
-    # # 為所有【鼻化韻母】建置【羅馬拼音字母】：【*】
-    # # - derive/n([iu]?[aiueoIU])/*/
-    # - abbrev/n([iu]?[aiueoIU])/*/
-    # # -------------------------------------------------------------------------
-    # - derive/OO/no/  # 韻 ㆧ [no]
-    # - derive/La/R/  # 韻 ㆩ [na]
-    # - derive/Li/D/  # 韻 ㆪ [ni]
-    # - derive/Lu/X/  # 韻 ㆫ [nu]
-    # - derive/Le/E/  # 韻 ㆥ [ne]
-    # - derive/Lo/Q/  # 韻 ㆧ [no]
-    # - derive/LI/x/  # 韻 ㆮ [nai]
-    # - derive/LU/y/  # 韻 ㆯ [nau]
+    # # 【鼻化元音韻母】輸入，可用連續兩次相同的輸入，等同輸入【鼻化元音韻母】
+    # - derive/([aiueoIU])nn/$1$1/
+    # # 為【鼻化元音韻母】衍生【字典編碼】
+    # - derive/ann/R/   # ㆩ [ann]
+    # - derive/inn/D/   # ㆪ [inn]
+    # - derive/unn/X/   # ㆫ [unn]
+    # - derive/enn/E/   # ㆥ [enn]
+    # - derive/onn/Q/   # ㆧ [oonn]
+    # - derive/xnn/x/   # ㆮ [ainn]
+    # - derive/ynn/y/   # ㆯ [aunn]
+    # --------------------------------------------------------------------------
+    # 為【鼻化韻母】建置【後綴識別符號】：【nn】
+    - derive/n([iu]?[aiueoIU])/L$1/
+    # 【鼻化元音韻母】輸入，可用連續兩次相同的輸入，等同輸入【鼻化元音韻母】
+    - derive/L([aiueoIU])/$1$1/
+    # 為【鼻化元音韻母】衍生【字典編碼】
+    - derive/La/R/   # ㆩ [ann]
+    - derive/Li/D/   # ㆪ [inn]
+    - derive/Lu/X/   # ㆫ [unn]
+    - derive/Le/E/   # ㆥ [enn]
+    - derive/Lo/Q/   # ㆧ [onn]
+    - derive/Lx/x/   # ㆮ [ainn]
+    - derive/Ly/y/   # ㆯ [aunn]
+    # --------------------------------------------------------------------------
+    - derive/OO/Q/   # ㆧ [onn]
+    - derive/II/x/   # ㆮ [ainn]
+    - derive/UU/y/   # ㆯ [aunn]
+    # --------------------------------------------------------------------------
+    # 為所有【鼻化韻母】建置【羅馬拼音字母】：【*】
+    - abbrev/L([iu]?[aiueoIU])/L/
     # --------------------------------------------------------------------------
     # 鼻音韻尾（m/ng/n）的【羅馬拼音字母】替換
     # -------------------------------------------------------------------------
@@ -311,7 +314,7 @@ speller:
     # 【.】==>【L】==>【ㄥ】 # 鼻音韻母前綴符號
     # 【-】==>【*】==>【ｎ】 # 所有鼻音韻母
     #==========================================================================
-    - xlit|mBbpndtlŋvgkZzcsJjCShaiwueOoIURDXEQxyMNGY@AWHPTKV176532809L*|a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz'[5346]7.=-|
+    - xlit|mBbpndtlŋvgkZzcsJjCShaiwueOoIURDXEQxyMNGY@AWHPTKV176532809L*|a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz'[5346]7.?-|
 
 
 translator:
@@ -343,8 +346,7 @@ translator:
     # - xform/一/ˉ/   # 陽平調（第 1 聲），聲調符號省略
     # - xform/七/ˉ/   # 陰入調（第 7 聲），聲調符號省略
     # - xform/八/ˊ/   # 陰入調（第 7 聲），聲調符號省略
-    - xlit|a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz'[5346]7.=-|ㄇㆠㄅㄆㄋㄉㄊㄌㄫㆣㄍㄎㆡㄗㄘㄙㆢㄐㄑㄒㄏㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㄣㆭㆰㄢㄤㆱㆲㆴㆵㆻㆷˉˉ^ˋˇˊˊ˙入ㄥñ|
-
+    - xlit|a!1qs2wxNEedYyhnRrfvc8uKj,ik9l*UJ<I(Lmp/M0;Oobtgz'[5346]7.?-|ㄇㆠㄅㄆㄋㄉㄊㄌㄫㆣㄍㄎㆡㄗㄘㄙㆢㄐㄑㄒㄏㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㄣㆭㆰㄢㄤㆱㆲㆴㆵㆻㆷˉˉ^ˋˇˊˊ˙入ㄥñ|
 
     #------------------------------------------------------
     # 聲母輸入校調
