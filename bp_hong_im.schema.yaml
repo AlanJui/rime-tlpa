@@ -228,14 +228,6 @@ speller:
     - derive/([aiueoIU])nn/$1$1/
     # --------------------------------------------------------------------------
     # 為【鼻化元音韻母】衍生【字典編碼】
-    # - derive/La/R/   # ㆩ [ann]
-    # - derive/Li/D/   # ㆪ [inn]
-    # - derive/Lu/X/   # ㆫ [unn]
-    # - derive/Le/E/   # ㆥ [enn]
-    # - derive/Lo/Q/   # ㆧ [onn]
-    # - derive/Lx/x/   # ㆮ [ainn]
-    # - derive/Ly/y/   # ㆯ [aunn]
-    # --------------------------------------------------------------------------
     - derive/ann/R/   # ㆩ [ann]
     - derive/inn/D/   # ㆪ [inn]
     - derive/unn/X/   # ㆫ [unn]
