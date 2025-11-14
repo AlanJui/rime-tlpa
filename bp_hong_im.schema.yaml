@@ -221,20 +221,28 @@ speller:
     # --------------------------------------------------------------------------
     # 為【鼻化韻母】建置【鼻化韻母後綴識別符號】：【nn】，以利【輸入】時期，可完成如下校調......
     # - xform/ㄧㆫ/ㄥㄧㄨ/
-    - derive/n([iu]?[aiueoIU])/$1nn/
+    - derive/n([iu]?[aiueoIU])/${1}nn/
     # --------------------------------------------------------------------------
     # 【鼻化元音韻母】輸入，可用連續兩次相同的輸入，等同輸入【鼻化元音韻母】
     # - derive/L([aiueoIU])/$1$1/
     - derive/([aiueoIU])nn/$1$1/
     # --------------------------------------------------------------------------
     # 為【鼻化元音韻母】衍生【字典編碼】
-    - derive/La/R/   # ㆩ [ann]
-    - derive/Li/D/   # ㆪ [inn]
-    - derive/Lu/X/   # ㆫ [unn]
-    - derive/Le/E/   # ㆥ [enn]
-    - derive/Lo/Q/   # ㆧ [onn]
-    - derive/Lx/x/   # ㆮ [ainn]
-    - derive/Ly/y/   # ㆯ [aunn]
+    # - derive/La/R/   # ㆩ [ann]
+    # - derive/Li/D/   # ㆪ [inn]
+    # - derive/Lu/X/   # ㆫ [unn]
+    # - derive/Le/E/   # ㆥ [enn]
+    # - derive/Lo/Q/   # ㆧ [onn]
+    # - derive/Lx/x/   # ㆮ [ainn]
+    # - derive/Ly/y/   # ㆯ [aunn]
+    # --------------------------------------------------------------------------
+    - derive/ann/R/   # ㆩ [ann]
+    - derive/inn/D/   # ㆪ [inn]
+    - derive/unn/X/   # ㆫ [unn]
+    - derive/enn/E/   # ㆥ [enn]
+    - derive/onn/Q/   # ㆧ [onn]
+    - derive/xnn/x/   # ㆮ [ainn]
+    - derive/ynn/y/   # ㆯ [aunn]
     # --------------------------------------------------------------------------
     - derive/OO/Q/   # ㆧ [onn]
     - derive/II/x/   # ㆮ [ainn]
