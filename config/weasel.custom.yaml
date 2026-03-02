@@ -10,12 +10,15 @@ patch:
   "style/horizontal": false
   "style/page_size": 5
   # 字型與外觀
-  "style/font_point": 28
   "style/display_tray_icon": true  # 顯示托盤圖標
+  # "style/font_face": "霞鶩文楷 TC, 新細明體"
   # "style/font_face": "Iansui 094, Noto Serif TC"
   # "style/font_face": "BopomofoRuby1909-v1, Iansui 094"
   # "style/comment_font_face": "BopomofoRuby1909-v1, Iansui 094"
-  # "style/font_face": "霞鶩文楷 TC, 新細明體"
+  "style/font_face": "Noto Serif TC"
+  "style/font_point": 28
+  "style/comment_font_face": "霞鶩文楷 TC"
+  "style/comment_font_size": 18
   # 若要同時套用配色：
   # "style/color_scheme": "starcraft"
   "key_binder/bindings":

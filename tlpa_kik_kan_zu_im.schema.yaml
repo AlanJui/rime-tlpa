@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_kik_kan_zu_im
   name: 極簡注音符號【台語音標】
-  version: "v0.1.0.0"
+  version: "v0.1.0.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -325,7 +325,7 @@ speller:
     - xlit|bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy8732541L&*|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.>|
 
 translator:
-  dictionary: tl_ji_khoo_peh_ue
+  dictionary: tl_han_ji_khoo
   prism: tlpa_kik_kan_zu_im
   spelling_hints: 20
   always_show_comments: true
@@ -445,8 +445,7 @@ translator:
     # - xform/4//
     #------------------------------------------------------------------------------
     __patch:
-      # - tlpa_lib_hau_suan_tuann:/hau_suan_tuann
-      - tlpa_kik_kan_zu_im_lib_hau_suan_ji_tuann:/hau_suan_tuann
+      - tlpa_kik_kan_zu_im2_lib_hau_suan_ji_tuann:/hau_suan_tuann
 
 # reverse_lookup:
 #   dictionary: luna_pinyin
@@ -522,9 +521,9 @@ menu:
 
 style:
   horizontal: false
-  font_face: "霞鶩文楷 TC, 新細明體"
-  comment_font_face: "BopomofoRuby1909-v1, 新細明體"
-  comment_font_size: 18
+  # font_face: "霞鶩文楷 TC, 新細明體"
+  # comment_font_face: "BopomofoRuby1909-v1, 新細明體"
+  # comment_font_size: 18
 
 recognizer:
   import_preset: default

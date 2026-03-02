@@ -326,7 +326,7 @@ speller:
     - xlit|bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy8732541L&*|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.>|
 
 translator:
-  dictionary: tl_ji_khoo_peh_ue
+  dictionary: tl_han_ji_khoo
   prism: tlpa_hong_im
   spelling_hints: 20
   always_show_comments: true

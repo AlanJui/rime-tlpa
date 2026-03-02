@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_phing_im
   name: 拼音輸入法【台語音標】
-  version: "v0.1.0.0"
+  version: "v0.1.0.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -197,7 +197,7 @@ speller:
     - xlit|123574890N|;\_/-[].7N|
 
 translator:
-  dictionary: tl_ji_khoo_peh_ue
+  dictionary: tl_han_ji_khoo
   prism: tlpa_phing_im
   spelling_hints: 20
   always_show_comments: true
