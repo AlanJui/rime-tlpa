@@ -355,18 +355,72 @@ end
 -- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
 --------------------------------------------------------------------------
 
-local function regroup_pairs_safe(s)
+local sheng_mu_dict = {
+  ["邊"]="p", ["頗"]="ph", ["門"]="b", ["毛"]="m", ["地"]="t", ["他"]="th",
+  ["耐"]="n", ["柳"]="l", ["曾"]="z", ["出"]="c", ["時"]="s", ["入"]="j",
+  ["求"]="k", ["去"]="kh", ["語"]="g", ["雅"]="ng", ["喜"]="h", ["英"]=""
+}
+
+local yun_mu_dict = {
+  ["君"]={"un", "ut"}, ["堅"]={"ian", "iat"}, ["金"]={"im", "ip"}, ["規"]={"ui", ""},
+  ["嘉"]={"ee", "eeh"}, ["干"]={"an", "at"}, ["公"]={"ong", "ok"}, ["乖"]={"uai", "uaih"},
+  ["經"]={"ing", "ik"}, ["觀"]={"uan", "uat"}, ["沽"]={"oo", ""}, ["嬌"]={"iau", "iauh"},
+  ["稽"]={"ei", ""}, ["恭"]={"iong", "iok"}, ["高"]={"o", "oh"}, ["皆"]={"ai", ""},
+  ["巾"]={"in", "it"}, ["姜"]={"iang", "iak"}, ["甘"]={"am", "ap"}, ["瓜"]={"ua", "uah"},
+  ["江"]={"ang", "ak"}, ["兼"]={"iam", "iap"}, ["交"]={"au", "auh"}, ["迦"]={"ia", "iah"},
+  ["檜"]={"ue", "ueh"}, ["監"]={"ann", "ahnn"}, ["艍"]={"u", "uh"}, ["膠"]={"a", "ah"},
+  ["居"]={"i", "ih"}, ["丩"]={"iu", ""}, ["更"]={"enn", "ehnn"}, ["褌"]={"uinn", ""},
+  ["茄"]={"io", "ioh"}, ["梔"]={"inn", "ihnn"}, ["薑"]={"ionn", ""}, ["驚"]={"iann", ""},
+  ["官"]={"uann", ""}, ["鋼"]={"ng", ""}, ["伽"]={"e", "eh"}, ["閒"]={"ainn", ""},
+  ["姑"]={"oonn", ""}, ["姆"]={"m", ""}, ["光"]={"uang", "uak"}, ["閂"]={"uainn", "uaihnn"},
+  ["糜"]={"uenn", ""}, ["嘄"]={"iaunn", "iauhnn"}, ["箴"]={"om", "op"}, ["爻"]={"aunn", ""},
+  ["扛"]={"onn", "ohnn"}, ["牛"]={"iunn", ""}
+}
+
+local tone_map = {
+  ["一"]=1, ["二"]=2, ["三"]=3, ["四"]=4,
+  ["五"]=5, ["六"]=6, ["七"]=7, ["八"]=8
+}
+
+local function convert_15_to_roman(s)
+  local chars = {}
+  for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+    table.insert(chars, uchar)
+  end
+  if #chars ~= 3 then return nil end
+  
+  local yun = chars[1]
+  local tone = chars[2]
+  local sheng = chars[3]
+  
+  local tone_num = tone_map[tone]
+  local sheng_roman = sheng_mu_dict[sheng]
+  local yun_romans = yun_mu_dict[yun]
+  
+  if not tone_num or not sheng_roman or not yun_romans then return nil end
+  
+  local is_entering = (tone_num == 4 or tone_num == 8)
+  local yun_roman = is_entering and yun_romans[2] or yun_romans[1]
+  
+  return sheng_roman .. yun_roman .. tone_num
+end
+
+local function format_comment(s, display_roman)
   if type(s) ~= "string" or s == "" then return s end
   local tlpa, zu_im = {}, {}
 
-  -- 抓所有 〔...〕（最小擷取）
-  for t in s:gmatch("〔(.-)〕") do
-    table.insert(tlpa, t)
-  end
+  for t in s:gmatch("〔(.-)〕") do table.insert(tlpa, t) end
+  for z in s:gmatch("【(.-)】") do table.insert(zu_im, z) end
+  
+  if #tlpa == 0 then return s end
 
-  -- 抓所有 【...】（最小擷取）
-  for zu_im_hu_ho in s:gmatch("【(.-)】") do
-    table.insert(zu_im, zu_im_hu_ho)
+  if display_roman then
+      local new_zu_im = {}
+      for i, t in ipairs(tlpa) do
+          local roman = convert_15_to_roman(t)
+          new_zu_im[i] = roman and roman or (zu_im[i] or "")
+      end
+      zu_im = new_zu_im
   end
 
   if #tlpa >= 2 and #tlpa == #zu_im then
@@ -374,22 +428,28 @@ local function regroup_pairs_safe(s)
            .. "  "
            .. "【" .. table.concat(zu_im, "】 【") .. "】"
   end
+  
+  -- 單字處理時，如果有切換模式，也要套用新格式
+  local prefix = s:match("^(%s*)") or ""
+  if display_roman and #tlpa == 1 and #zu_im == 1 then
+    return prefix .. "〔" .. tlpa[1] .. "〕【" .. zu_im[1] .. "】"
+  end
+
   return s
 end
 
 function reformat_comment_filter(input, env)
+  -- 取得模式設定（開關 dict_mode 是否為開啟狀態）
+  local display_roman = env.engine.context:get_option("dict_mode")
   for cand in input:iter() do
     local old = cand.comment or ""
-    local new = regroup_pairs_safe(old)
+    local new = format_comment(old, display_roman)
 
     if new ~= old then
-      -- 關鍵：跟你現有的 supers_indicator 一樣的做法
       local c = cand:get_genuine()
       local nc = Candidate(c.type, c.start, c._end, c.text, new)
-      -- 保留原來資訊，避免 preedit/彈窗異常
       nc.preedit  = cand.preedit
       nc.quality  = cand.quality
-      -- 如你有自訂的屬性，也可在此補帶
       yield(nc)
     else
       yield(cand)
