@@ -20,34 +20,44 @@ end
 
 function jump_select(key, env)
   local ctx = env.engine.context
+  if not ctx:has_menu() then return 2 end -- kNoop
 
-  -- 若【候選字清單】尚未展開，終止處理
-  if not ctx:has_menu() then return 2 end
+  local r = key:repr()
+  if r:sub(1,8) == "Release+" then return 2 end
 
-  -- 取得【輸入列】的【按鍵】
-  local r = norm(key:repr())
+  local offset = -1
+  if r == "Control+1" then 
+    offset = 0
+  elseif r == "Control+3" then 
+    offset = 2
+  elseif r == "Control+5" then 
+    offset = 4
+  end
 
-  -- 若【按鍵】為代理鍵：【F20】或【F24】，則終止處理
-  -- 避免自觸發（忽略我們送出的代理鍵）
-  if r == "F20" or r == "F24" then return 2 end
+  if offset == -1 then return 2 end
 
-  -- 候選字視窗中游標移動快捷鍵：頂端/中位/底端
-  local go_top    = (r == "Control+comma")  or (r == "Control+,")
-  local go_middle = (r == "Control+period") or (r == "Control+.")
-  local go_bottom = (r == "Control+slash")
+  local comp = ctx.composition
+  if comp:empty() then return 1 end
+  local seg = comp:back()
+  if not seg.menu then return 1 end
 
-  -- 若【按鍵】不是【候選字清單】的快捷鍵，終止處理
-  if not (go_top or go_middle or go_bottom) then return 2 end
+  local page_size = env.engine.schema.page_size
+  local selected_index = seg.selected_index
+  local page_start = math.floor(selected_index / page_size) * page_size
+  local target_index = page_start + offset
 
-  -- 為後續處理之便，先將【標示游標】移到頂端
-  -- 送出代理鍵：F20（Home）
-  env.engine:process_key(KeyEvent("F20"))
+  local available = seg.menu:prepare(target_index + 1)
+  if target_index >= available then
+    target_index = available - 1
+  end
 
-  -- 計算【標示游標】的【往下移動次數】
-  -- 移到：中間=2、底端=4（頂端=0）
-  local steps = go_middle and 2 or (go_bottom and 4 or 0)
-  -- 透過代理鍵：F24（Down）及上述所得之【往下移動次數】，完成【標示游標】之移動
-  if steps > 0 then press_key_n(env, "F24", steps) end  -- F24 → Down
+  env.engine:process_key(KeyEvent("Page_Up"))
+
+  local steps = target_index - page_start
+  for i = 1, steps do
+    env.engine:process_key(KeyEvent("Down"))
+  end
+
   return 1
 end
 

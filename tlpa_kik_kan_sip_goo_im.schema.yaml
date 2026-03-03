@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_kik_kan_sip_goo_im
   name: 極簡注音符號【十五音】
-  version: "v0.1.0.1"
+  version: "v0.1.0.2"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -40,7 +40,7 @@ switches:
 engine:
   processors:
     - lua_processor@aux_commit # 可輸出【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
-    # - lua_processor@jump_select # 務必置頂，用以攔截【快捷鍵】，如：<Ctrl>+<,> / <Ctrl>+<.>，轉送【代理鍵】：F20/F24
+    - lua_processor@jump_select # 務必置頂，用以攔截【快捷鍵】，如：<Ctrl>+<,> / <Ctrl>+<.>，轉送【代理鍵】：F20/F24
     - ascii_composer
     - recognizer
     - key_binder
@@ -773,7 +773,6 @@ key_binder:
     # - { when: has_menu, accept: "Control+comma",  send: End }   # 跳到本頁最後一個
     - { when: has_menu, accept: F20, send: Home } # F20：將【侯選游標】置於【頂端】(第一個候選字)
     - { when: has_menu, accept: F24, send: Down } # F24：將【候選游標】往下移動一行
-    #---------------------------------------------------
     # 切換【帶調號值的方音符號】，其【調值】使用【一般格式】/【上標格式】
     # - { when: always, accept: "Control+grave", toggle: supers_tone }
     # - { when: has_menu, accept: "Control+grave", toggle: supers_tone }
