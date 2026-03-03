@@ -10,6 +10,99 @@
 -- 快捷鍵：Ctrl+/（頂）、Ctrl+.（中）、Ctrl+,（底）
 -- 注意：F20/F24 是代理鍵，會在 schema 的 key_binder 被翻成 Home/Down
 -----------------------------------------------------------------------------------------
+
+-- === DICTIONARIES ===
+
+
+
+-- === END DICTIONARIES ===
+
+
+-- === DICTIONARIES ===
+local sheng_mu_dict = {
+  ["邊"]="p", ["頗"]="ph", ["門"]="b", ["毛"]="m", ["地"]="t", ["他"]="th",
+  ["耐"]="n", ["柳"]="l", ["曾"]="z", ["出"]="c", ["時"]="s", ["入"]="j",
+  ["求"]="k", ["去"]="kh", ["語"]="g", ["雅"]="ng", ["喜"]="h", ["英"]=""
+}
+
+local yun_mu_dict = {
+  ["君"]={"un", "ut"}, ["堅"]={"ian", "iat"}, ["金"]={"im", "ip"}, ["規"]={"ui", ""},
+  ["嘉"]={"ee", "eeh"}, ["干"]={"an", "at"}, ["公"]={"ong", "ok"}, ["乖"]={"uai", "uaih"},
+  ["經"]={"ing", "ik"}, ["觀"]={"uan", "uat"}, ["沽"]={"oo", ""}, ["嬌"]={"iau", "iauh"},
+  ["稽"]={"ei", ""}, ["恭"]={"iong", "iok"}, ["高"]={"o", "oh"}, ["皆"]={"ai", ""},
+  ["巾"]={"in", "it"}, ["姜"]={"iang", "iak"}, ["甘"]={"am", "ap"}, ["瓜"]={"ua", "uah"},
+  ["江"]={"ang", "ak"}, ["兼"]={"iam", "iap"}, ["交"]={"au", "auh"}, ["迦"]={"ia", "iah"},
+  ["檜"]={"ue", "ueh"}, ["監"]={"ann", "ahnn"}, ["艍"]={"u", "uh"}, ["膠"]={"a", "ah"},
+  ["居"]={"i", "ih"}, ["丩"]={"iu", ""}, ["更"]={"enn", "ehnn"}, ["褌"]={"uinn", ""},
+  ["茄"]={"io", "ioh"}, ["梔"]={"inn", "ihnn"}, ["薑"]={"ionn", ""}, ["驚"]={"iann", ""},
+  ["官"]={"uann", ""}, ["鋼"]={"ng", ""}, ["伽"]={"e", "eh"}, ["閒"]={"ainn", ""},
+  ["姑"]={"oonn", ""}, ["姆"]={"m", ""}, ["光"]={"uang", "uak"}, ["閂"]={"uainn", "uaihnn"},
+  ["糜"]={"uenn", ""}, ["嘄"]={"iaunn", "iauhnn"}, ["箴"]={"om", "op"}, ["爻"]={"aunn", ""},
+  ["扛"]={"onn", "ohnn"}, ["牛"]={"iunn", ""}
+}
+
+local tone_map = {
+  ["一"]=1, ["二"]=2, ["三"]=3, ["四"]=4,
+  ["五"]=5, ["六"]=6, ["七"]=7, ["八"]=8
+}
+
+local function convert_15_to_roman(s)
+  local chars = {}
+  for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+    table.insert(chars, uchar)
+  end
+  if #chars ~= 3 then return nil end
+  
+  local yun = chars[1]
+  local tone = chars[2]
+  local sheng = chars[3]
+  
+  local tone_num = tone_map[tone]
+  local sheng_roman = sheng_mu_dict[sheng]
+  local yun_romans = yun_mu_dict[yun]
+  
+  if not tone_num or not sheng_roman or not yun_romans then return nil end
+  
+  local is_entering = (tone_num == 4 or tone_num == 8)
+  local yun_roman = is_entering and yun_romans[2] or yun_romans[1]
+  
+  return sheng_roman .. yun_roman .. tone_num
+end
+
+local POJ_TONE_MARKS = {
+  ["1"] = "",
+  ["2"] = "́", -- U+0301
+  ["3"] = "̀", -- U+0300
+  ["4"] = "",
+  ["5"] = "̂", -- U+0302
+  ["6"] = "̌", -- U+030C
+  ["7"] = "̄", -- U+0304
+  ["8"] = "̍", -- U+030D
+}
+
+local function apply_poj_tone_mark(syllable)
+  local base, tone = syllable:match("^(.-)([1-8])$")
+  if not base or not tone then return syllable end
+  local mark = POJ_TONE_MARKS[tone]
+  if not mark or mark == "" then return base end
+
+  local res = base
+  if base:find("a") then res = base:gsub("a", "a" .. mark, 1)
+  elseif base:find("oo") then res = base:gsub("oo", "o" .. mark .. "o", 1)
+  elseif base:find("ee") then res = base:gsub("ee", "e" .. mark .. "e", 1)
+  elseif base:find("e") then res = base:gsub("e", "e" .. mark, 1)
+  elseif base:find("o") then res = base:gsub("o", "o" .. mark, 1)
+  elseif base:find("iu") then res = base:gsub("iu", "i" .. "u" .. mark, 1)
+  elseif base:find("ui") then res = base:gsub("ui", "u" .. "i" .. mark, 1)
+  elseif base:find("i") then res = base:gsub("i", "i" .. mark, 1)
+  elseif base:find("u") then res = base:gsub("u", "u" .. mark, 1)
+  elseif base:find("m") then res = base:gsub("m", "m" .. mark, 1)
+  elseif base:find("ng") then res = base:gsub("ng", "n" .. mark .. "g", 1)
+  else res = base .. mark end
+  return res
+end
+-- === END DICTIONARIES ===
+
 local function press_key_n(env, key_name, n)
   for _ = 1, n do env.engine:process_key(KeyEvent(key_name)) end
 end
@@ -243,63 +336,57 @@ local function norm_repr(r)
 end
 
 -- ============= 主函式：aux_commit（多音節友善） =============
+
+
+
 function aux_commit(key, env)
   local ctx = env.engine.context
-  local r = norm_repr(key:repr())
+  local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
-  -- local want_tlpa   = (r == "return")                 -- Enter
-  local want_tlpa   = (r == "return")                 -- Enter
-  local want_bpmf   = (r == "control+return")         -- Ctrl+Enter
-  local want_shift  = (r == "shift+return")           -- Shift+Enter（上標/數字）
-  local want_both   = (r == "control+shift+return")   -- Ctrl+Shift+Enter（雙欄）
+  if r == "return" or r == "kp_enter" then
+    if not ctx:has_menu() then return 2 end
+    local cand = ctx:get_selected_candidate()
+    if not cand then return 2 end
 
-  if not (want_tlpa or want_bpmf or want_shift or want_both) then return 2 end
+    local gen_comm = cand:get_genuine().comment or ""
+    local tlpa_15_list, bpmf_list = {}, {}
+    for t in gen_comm:gmatch("〔(.-)〕") do table.insert(tlpa_15_list, t) end
+    for z in gen_comm:gmatch("【(.-)】") do table.insert(bpmf_list, z) end
 
-  local tl_list, bp_list = get_multiforms(env)
+    if #tlpa_15_list == 0 then return 2 end
 
-  -- Enter：TLPA（★音節之間「空白分隔」）
-  -- if want_tlpa and #tl_list > 0 then
-  --   env.engine:commit_text(table.concat(tl_list, " "))
-  --   ctx:clear(); return 1
-  -- end
--- Enter：TLPA（依 supers_tone 輸出上標或數字；音節之間空白）
+    local p_15 = ctx:get_option("piau_im_format_15")
+    local p_bp = ctx:get_option("piau_im_format_bpmf")
+    local p_tlpa = ctx:get_option("piau_im_format_tlpa")
+    
+    local out_list = {}
 
-  if want_tlpa and #tl_list > 0 then
-    local use_supers = ctx:get_option("supers_tone")
-    local out = map_join(tl_list, function(tl) return tlpa_render_by_option(tl, use_supers) end)
-    env.engine:commit_text(out)
-    ctx:clear(); return 1
-  end
-
-  -- Ctrl+Enter：注音（保留符號；音節間一格空白）
-  if want_bpmf and #bp_list > 0 then
-    env.engine:commit_text(table.concat(bp_list, " "))
-    ctx:clear(); return 1
-  end
-
-  -- Shift+Enter：依 supers_tone 選「上標」或「尾隨數字」
-  if want_shift and #bp_list > 0 then
-    local use_supers = ctx:get_option("supers_tone")
-    local out
-    if use_supers then
-      out = map_join(bp_list, function(x, i) return bpmf_with_supers_by_tl(x, tl_list[i]) end)
+    if p_15 then
+      for i, v in ipairs(tlpa_15_list) do out_list[i] = v end
+    elseif p_bp then
+      for i, v in ipairs(bpmf_list) do out_list[i] = v end
     else
-      out = map_join(bp_list, function(x, i) return bpmf_with_digit_by_tl(x, tl_list[i]) end)
+      local is_tiau = ctx:get_option("tiau_mark")
+      for i, v in ipairs(tlpa_15_list) do
+        local roman = convert_15_to_roman(v)
+        if roman then
+          out_list[i] = is_tiau and apply_poj_tone_mark(roman) or roman
+        else
+          out_list[i] = v
+        end
+      end
     end
-    if out and #out > 0 then env.engine:commit_text(out); ctx:clear(); return 1 end
-  end
 
-  -- Ctrl+Shift+Enter：候選雙欄格式
-  if want_both and (#tl_list > 0 or #bp_list > 0) then
-    local left = (#tl_list > 0) and ("〔" .. table.concat(tl_list, "〕 〔") .. "〕") or ""
-    local right = (#bp_list > 0) and ("  【" .. table.concat(bp_list, "】 【") .. "】") or ""
-    local out = (left .. right):gsub("^%s+", "")
-    if #out > 0 then env.engine:commit_text(out); ctx:clear(); return 1 end
+    local out_str = table.concat(out_list, " ")
+    if #out_str > 0 then
+      env.engine:commit_text(out_str)
+      ctx:clear()
+      return 1
+    end
+    return 2
   end
-
   return 2
 end
-
 
 ------------------------------------------------------------------------------------------
 -- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
@@ -354,56 +441,6 @@ end
 -- 透過 Lua filter: reformat_comment_filter 重排成：
 -- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
 --------------------------------------------------------------------------
-
-local sheng_mu_dict = {
-  ["邊"]="p", ["頗"]="ph", ["門"]="b", ["毛"]="m", ["地"]="t", ["他"]="th",
-  ["耐"]="n", ["柳"]="l", ["曾"]="z", ["出"]="c", ["時"]="s", ["入"]="j",
-  ["求"]="k", ["去"]="kh", ["語"]="g", ["雅"]="ng", ["喜"]="h", ["英"]=""
-}
-
-local yun_mu_dict = {
-  ["君"]={"un", "ut"}, ["堅"]={"ian", "iat"}, ["金"]={"im", "ip"}, ["規"]={"ui", ""},
-  ["嘉"]={"ee", "eeh"}, ["干"]={"an", "at"}, ["公"]={"ong", "ok"}, ["乖"]={"uai", "uaih"},
-  ["經"]={"ing", "ik"}, ["觀"]={"uan", "uat"}, ["沽"]={"oo", ""}, ["嬌"]={"iau", "iauh"},
-  ["稽"]={"ei", ""}, ["恭"]={"iong", "iok"}, ["高"]={"o", "oh"}, ["皆"]={"ai", ""},
-  ["巾"]={"in", "it"}, ["姜"]={"iang", "iak"}, ["甘"]={"am", "ap"}, ["瓜"]={"ua", "uah"},
-  ["江"]={"ang", "ak"}, ["兼"]={"iam", "iap"}, ["交"]={"au", "auh"}, ["迦"]={"ia", "iah"},
-  ["檜"]={"ue", "ueh"}, ["監"]={"ann", "ahnn"}, ["艍"]={"u", "uh"}, ["膠"]={"a", "ah"},
-  ["居"]={"i", "ih"}, ["丩"]={"iu", ""}, ["更"]={"enn", "ehnn"}, ["褌"]={"uinn", ""},
-  ["茄"]={"io", "ioh"}, ["梔"]={"inn", "ihnn"}, ["薑"]={"ionn", ""}, ["驚"]={"iann", ""},
-  ["官"]={"uann", ""}, ["鋼"]={"ng", ""}, ["伽"]={"e", "eh"}, ["閒"]={"ainn", ""},
-  ["姑"]={"oonn", ""}, ["姆"]={"m", ""}, ["光"]={"uang", "uak"}, ["閂"]={"uainn", "uaihnn"},
-  ["糜"]={"uenn", ""}, ["嘄"]={"iaunn", "iauhnn"}, ["箴"]={"om", "op"}, ["爻"]={"aunn", ""},
-  ["扛"]={"onn", "ohnn"}, ["牛"]={"iunn", ""}
-}
-
-local tone_map = {
-  ["一"]=1, ["二"]=2, ["三"]=3, ["四"]=4,
-  ["五"]=5, ["六"]=6, ["七"]=7, ["八"]=8
-}
-
-local function convert_15_to_roman(s)
-  local chars = {}
-  for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
-    table.insert(chars, uchar)
-  end
-  if #chars ~= 3 then return nil end
-  
-  local yun = chars[1]
-  local tone = chars[2]
-  local sheng = chars[3]
-  
-  local tone_num = tone_map[tone]
-  local sheng_roman = sheng_mu_dict[sheng]
-  local yun_romans = yun_mu_dict[yun]
-  
-  if not tone_num or not sheng_roman or not yun_romans then return nil end
-  
-  local is_entering = (tone_num == 4 or tone_num == 8)
-  local yun_roman = is_entering and yun_romans[2] or yun_romans[1]
-  
-  return sheng_roman .. yun_roman .. tone_num
-end
 
 local function format_comment(s, display_roman)
   if type(s) ~= "string" or s == "" then return s end

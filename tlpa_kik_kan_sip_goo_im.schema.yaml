@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_kik_kan_sip_goo_im
   name: 極簡注音符號【十五音】
-  version: "v0.1.0.3"
+  version: "v0.2"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -39,6 +39,12 @@ switches:
   - name: dict_mode
     reset: 0
     states: [方音, 台拼]
+  - options: [ piau_im_format_15, piau_im_format_bpmf, piau_im_format_tlpa ]
+    reset: 0
+    states: [ 單出十五音, 單出方音, 單出台拼 ]
+  - options: [ tiau_mark, tiau_num ]
+    reset: 1
+    states: [ 調符, 調號 ]
 
 engine:
   processors:
