@@ -5,7 +5,7 @@
 schema:
   schema_id: tlpa_kik_kan_sip_goo_im
   name: 極簡注音符號【十五音】
-  version: "v0.2"
+  version: "v0.2.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -448,7 +448,7 @@ translator:
     - xform/ㄌ/柳/  # l【x】 ==>  [l]
     - xform/ㆣ/語/  # g【E】 ==>  [g]
     - xform/ㄍ/求/  # k【e】 ==>  [k]
-    - xform/ㄎ/氣/  # K【d】 ==>  [kh]
+    - xform/ㄎ/去/  # K【d】 ==>  [kh]
     # - xform/ㄫ/雅/  # ŋ【G】 ==>  [ng]
     - xform/ㄫ/語/  # ŋ【G】 ==>  [ng]
     - xform/ㆡ/入/  # j【Y】 ==>  [j]
