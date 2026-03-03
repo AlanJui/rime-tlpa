@@ -1,3 +1,4 @@
+-- Version: 0.2 (2026-3-3)
 -- RIME API 依賴於運行時環境，無需顯式引入
 
 ---@diagnostic disable: undefined-global
@@ -26,11 +27,24 @@ function jump_select(key, env)
   if r:sub(1,8) == "Release+" then return 2 end
 
   local offset = -1
-  if r == "Control+1" then 
+  local auto_commit = false
+
+  -- 【直接選用】(Move and Commit)
+  if r == "Control+1" then offset = 0; auto_commit = true
+  elseif r == "Control+2" then offset = 1; auto_commit = true
+  elseif r == "Control+3" then offset = 2; auto_commit = true
+  elseif r == "Control+4" then offset = 3; auto_commit = true
+  elseif r == "Control+5" then offset = 4; auto_commit = true
+
+  -- 【移動選擇游標】(Move only)
+  elseif r == "Control+comma" or r == "Control+less" or r == "Control+<" then
+    -- 移到第1個 (Ctrl + ,)
     offset = 0
-  elseif r == "Control+3" then 
+  elseif r == "Control+period" or r == "Control+greater" or r == "Control+>" or r == "Control+." then
+    -- 移到第3個 (Ctrl + .)
     offset = 2
-  elseif r == "Control+5" then 
+  elseif r == "Control+slash" or r == "Control+?" then
+    -- 移到第5個 (Ctrl + /)
     offset = 4
   end
 
@@ -58,7 +72,11 @@ function jump_select(key, env)
     env.engine:process_key(KeyEvent("Down"))
   end
 
-  return 1
+  if auto_commit then
+    env.engine:process_key(KeyEvent("space"))
+  end
+
+  return 1 -- kAccepted
 end
 
 ------------------------------------------------------------------------------------------
