@@ -1,0 +1,25 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.16.0
+  generator: "Rime::SwitcherSettings"
+  modified_time: "Sat Mar 08 15:30:00 2026"
+  rime_version: 1.11.2
+
+patch:
+  "log/level": "info"
+  schema_list:
+    # 台語拼音輸入法 (TLPA)
+    - { schema: tlpa_phing_im }     # 拼音輸入法【台語音標】
+    - { schema: tlpa_hong_im }      # 注音輸入法【台語音標】
+    - { schema: tlpa_khau_ik_zu_im } # 巧易注音輸入法
+    
+    # 極簡注音
+    - { schema: sgi_zu_im }         # 極簡注音符號【十五音】
+    
+    # 台語注音二式
+    - { schema: zu_im_2_phing_im }  # 台語注音二式拼音輸入法
+    - { schema: zu_im_2_hong_im }   # 台語注音二式注音輸入法
+    
+    # 閩拼方案 (BP)
+    - { schema: bp_phing_im }       # 閩拼方案拼音輸入法
+    - { schema: bp_hong_im }        # 閩拼方案注音輸入法
