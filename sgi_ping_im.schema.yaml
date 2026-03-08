@@ -805,6 +805,7 @@ editor:
     # (4) 輸出帶調號的注音符號（上標）：Shift+Enter（supers_tone=ON） → ㄍㄧㆰ¹ ㄍㄚ¹（不變）
     # (5) 輸出帶調號的注音符號（一般）：Shift+Enter（supers_tone=OFF） → ㄍㄧㆰ1 ㄍㄚ1（不變）
     # (6) 輸入候選字清單之【拼音字母】及【注音符號】：Ctrl+Shift+Enter → 〔giam1〕 〔ga1〕 【ㄍㄧㆰ】 【ㄍㄚ】（不變）
+    Return: commit_composition             # 讓 Enter 鍵，可直接輸出【編輯區】的【標音】
     space: commit                           # 選擇「備選漢字」
     Control+Shift+Return: commit_comment # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
     # Return: commit_composition              # 上屏原始的輸入：lau5

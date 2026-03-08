@@ -348,7 +348,8 @@ function aux_commit(key, env)
     local cand = ctx:get_selected_candidate()
     if not cand then return 2 end
 
-    local gen_comm = cand:get_genuine().comment or ""
+    local gen_comm = cand.comment
+      if not gen_comm or gen_comm == "" then gen_comm = cand:get_genuine().comment or "" end
     local tlpa_15_list, bpmf_list = {}, {}
     for t in gen_comm:gmatch("〔(.-)〕") do table.insert(tlpa_15_list, t) end
     for z in gen_comm:gmatch("【(.-)】") do table.insert(bpmf_list, z) end
@@ -482,7 +483,7 @@ function reformat_comment_filter(input, env)
     local old = cand.comment or ""
     local new = format_comment(old, display_roman)
 
-    if new ~= old then
+    if true then
       local c = cand:get_genuine()
       local nc = Candidate(c.type, c.start, c._end, c.text, new)
       nc.preedit  = cand.preedit
