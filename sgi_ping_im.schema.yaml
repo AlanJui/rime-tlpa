@@ -4,22 +4,44 @@
 
 schema:
   schema_id: sgi_ping_im
-  name: 十五音輸入法【羅馬拼音】
+  name: 十五音輸入法【TLPA】
   version: "0.0.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
-    【輸入類型】：使用【羅馬拼音字母】輸入台語漢字的【十五音輸入法】。
-    【拼音系統】：十八音反切（雅俗通十五音改良）
-    【字典編碼】：台語音標
-    【注音輸入】：羅馬拼音字母（siaⁿ1：siann;）
-    【侯選清單】：〔交七英〕 【au7】
-    【聲調標示】：
-      (1) 台羅八聲調；
-      (2) 使用數值標示聲調，以利閱讀。
+    【輸入類型】：使用【台語音標（TLPA+）】之羅馬字母拼音輸入法。
+    【拼音系統】：十五音（TLPA改良用途）
+    【字典編碼】：TLPA標音
+    【TLPA符號輸入】：支持直讀拼音輸入方式（例：siann）
+    【候選清單】：顯示【漢字】及【相關音符】TLPA羅馬拼音。
+    【特性】包括：
+      1. 支持15音調映射
+      2. 多樣化拼音兼容性配置（方音與兩岸著重特徵）。
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+  - name: supers_tone
+    reset: 1
+    states: [一般, 上標]
+  - name: dict_mode
+    reset: 0
+    states: [方音, 台拼]
+  - options: [ piau_im_format_15, piau_im_format_bpmf, piau_im_format_tlpa ]
+    reset: 0
+    states: [ 單出十五音, 單出方音, 單出台拼 ]
+  - options: [ tiau_mark, tiau_num ]
+    reset: 1
+    states: [ 調符, 調號 ]
 
 engine:
   processors:
+    - lua_processor@aux_commit # 可輸出【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
+    - lua_processor@jump_select # 務必置頂，用以攔截【快捷鍵】，如：<Ctrl>+<,> / <Ctrl>+<.>，轉送【代理鍵】：F20/F24
     - ascii_composer
     - recognizer
     - key_binder
@@ -35,13 +57,16 @@ engine:
     - punct_segmentor
     - fallback_segmentor
   translators:
-    - echo_translator
+    # - echo_translator
+    # - punct_translator
+    # - r10n_translator
+    # - reverse_lookup_translator
     - punct_translator
-    - r10n_translator
-    - reverse_lookup_translator
+    - script_translator
   filters:
     - simplifier
     - uniquifier
+    - lua_filter@reformat_comment_filter
 
 speller:
   #------------------------------------------------------
@@ -729,12 +754,12 @@ translator:
     - xform/〉7/七/   # 下去
     - xform/〉8/八/   # 下入
 
-reverse_lookup:
-  dictionary: luna_pinyin
-  prefix: "`"
-  tips: 〔拼音〕
-  preedit_format:
-    - xform/([nljqxy])v/$1ü/
+# reverse_lookup:
+#   dictionary: luna_pinyin
+#   prefix: "`"
+#   tips: 〔拼音〕
+#   preedit_format:
+#     - xform/([nljqxy])v/$1ü/
 
 key_binder:
   import_preset: default
@@ -765,18 +790,27 @@ key_binder:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
     #---------------------------------------------------
-    - {accept: "Control+1", select: .next, when: always}
-    - {accept: "Control+2", toggle: full_shape, when: always}
-    - {accept: "Control+3", toggle: simplification, when: always}
-    - {accept: "Control+4", toggle: extended_charset, when: always}
+    # - {accept: "Control+1", select: .next, when: always}
+    # - {accept: "Control+2", toggle: full_shape, when: always}
+    # - {accept: "Control+3", toggle: simplification, when: always}
+    # - {accept: "Control+4", toggle: extended_charset, when: always}
+    # 切換第3欄為：方音符號/台語音標 (羅馬拼音)
+    - { when: always, accept: "Control+m", toggle: dict_mode }
 
 editor:
   bindings:
+    # (1) 輸出拼音字母：Enter（supers_tone=ON） → giam¹ ga¹ ✅
+    # (2) 輸出拼音字母：Enter（supers_tone=OFF） → giam1 ga1 ✅
+    # (3) 輸出注音符號：Ctrl+Enter → ㄍㄧㆰ ㄍㄚ（不變）
+    # (4) 輸出帶調號的注音符號（上標）：Shift+Enter（supers_tone=ON） → ㄍㄧㆰ¹ ㄍㄚ¹（不變）
+    # (5) 輸出帶調號的注音符號（一般）：Shift+Enter（supers_tone=OFF） → ㄍㄧㆰ1 ㄍㄚ1（不變）
+    # (6) 輸入候選字清單之【拼音字母】及【注音符號】：Ctrl+Shift+Enter → 〔giam1〕 〔ga1〕 【ㄍㄧㆰ】 【ㄍㄚ】（不變）
     space: commit                           # 選擇「備選漢字」
-    Return: commit_composition              # 上屏原始的輸入：lau5
-    Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
+    Control+Shift+Return: commit_comment # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
+    # Return: commit_composition              # 上屏原始的輸入：lau5
+    # Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
+    # Shift+Return: commit_comment            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
+    # Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
 
 menu:
   alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤
@@ -784,19 +818,19 @@ menu:
 
 style:
   horizontal: false
-  font_face: "霞鶩文楷 TC, 新細明體"
-  comment_font_face: "BopomofoRuby1909-v1, Noto Serif TC Black"
-  comment_font_size: 18
+  # font_face: "霞鶩文楷 TC, 新細明體"
+  # comment_font_face: "BopomofoRuby1909-v1, Noto Serif TC Black"
+  # comment_font_size: 18
 
 
 recognizer:
   import_preset: default
   patterns:
+    # reverse_lookup: "`[a-z]*$"
+    punct: '`[^\s]$'
     email: ^[a-z][-_.0-9a-z]*@.*$
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
-    punct: '`[^\s]$'
-    reverse_lookup: "`[a-z]*$"
 
 punctuator:
   import_preset: keymap_piau_tian

@@ -816,15 +816,18 @@ style:
 recognizer:
   import_preset: default
   patterns:
-    email: ^[a-z][-_.0-9a-z]*@.*$
-    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
-    url: ^(www[.]|https?:|ftp:|mailto:).*$
-    reverse_lookup: "`[a-z]*$"
     # 用來辨識【輸入】是否為【標點符號】：「反引號開頭、接一字元的輸入」
     # (1) 「反引號」【`】表：觸發便捷輸入；
     # (2) [^\s] → 後面接一個「不是空白」的字元；
     # (3) $ → 且該字元必須剛好在字串的結尾。
     punct: '`[^\s]$'
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    # reverse_lookup: "`[a-z]*$"
+
+punctuator:
+  import_preset: keymap_piau_tian
 
 # custom_phrase:
 #   dictionary: ""
@@ -834,5 +837,3 @@ recognizer:
 #   enable_sentence: false
 #   initial_quality: 1
 
-punctuator:
-  import_preset: keymap_piau_tian
