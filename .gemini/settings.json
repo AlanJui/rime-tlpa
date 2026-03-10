@@ -1,0 +1,9 @@
+{
+    "general": {
+        "theme": "dark",
+        "previewFeatures": {
+            "newUI": true,
+            "betaFeatures": false
+        }
+    }
+}

@@ -1,0 +1,364 @@
+# Rime schema
+# vim: set sw=2 sts=2 et nowrap:
+# encoding: utf-8
+
+schema:
+  schema_id: sgi_zu_im
+  name: 十五音輸入法【注音反切】
+  version: "v0.1.3"
+  author:
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    【修復版】：基於 sgi_zu_im_bak.schema.yaml 還原。
+    修正：1 -> ㄅ 顯示錯誤。
+    優化：Ctrl+m 改為 Ctrl+Shift+M。
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+  - name: supers_tone
+    reset: 1
+    states: [一般, 上標]
+  - name: dict_mode
+    reset: 0
+    states: [方音, 台拼]
+  - options: [ piau_im_format_15, piau_im_format_bpmf, piau_im_format_tlpa ]
+    reset: 0
+    states: [ 單出十五音, 單出方音, 單出台拼 ]
+  - options: [ tiau_mark, tiau_num ]
+    reset: 1
+    states: [ 調符, 調號 ]
+
+engine:
+  processors:
+    - lua_processor@aux_commit
+    - lua_processor@jump_select
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+  filters:
+    - simplifier
+    - uniquifier
+    - lua_filter@reformat_comment_filter
+
+speller:
+  alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(LN.-:75346]["
+  initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(LN.-:"
+  finals: "75346]["
+  delimiter: "'"
+  use_space: true
+  algebra:
+    - xform/6/7/
+    - xform/oo/O/
+    - xform/onn/Onn/
+    - xform/ionn/iOnn/
+    - xform/iong/iOng/
+    - xform/iok/iOk/
+    - xform/om/Om/
+    - xform/op/Op/
+    - xform/ong/Ong/
+    - xform/ok/Ok/
+    - xform/o/ə/
+    - derive/or/ə/
+    - derive/ai/I/
+    - derive/au/U/
+    - derive/ann/d/
+    - derive/inn/f/
+    - derive/unn/q/
+    - derive/enn/r/
+    - derive/Onn/v/
+    - derive/Inn/x/
+    - derive/Unn/y/
+    - derive/([aiueOIU])nn/$1$1/
+    - derive/([iu]?[aiueOIU])nn/L$1/
+    - derive/1/7/
+    - derive/7/3/
+    - derive/3/2/
+    - derive/2/1/
+    - derive/5/7/
+    - derive/(?<![ptk])4/2/
+    - derive/(?<![ptk])8/3/
+    - derive/[ptk]4/8/
+    - derive/[ptk]8/4/
+    - xform/^ph/P/
+    - xform/^th/T/
+    - xform/^kh/K/
+    - xform/^ng(?!\d)/ŋ/
+    - xform/ts(?!h)/z/
+    - xform/tsh/c/
+    - derive/^j(?i)/J/
+    - derive/^z(?i)/Z/
+    - derive/^c(?i)/C/
+    - derive/^s(?i)/S/
+    - xform/ir/w/
+    - derive/er(ng|k)/i$1/
+    - derive/er(G|k)/i$1/
+    - derive/er(n|t)/u$1/
+    - derive/er/e/
+    - derive/ir(ng|k)/i$1/
+    - derive/ir(n|t)/u$1/
+    - derive/ire/ue/
+    - derive/ir/e/
+    - derive/ou/O/
+    - derive/ei/e/
+    - derive/ee/e/
+    - derive/ur/u/
+    - xform/ng(?=\d)/G/
+    - xform/n(?=\d)/N/
+    - xform/m(?=\d)/M/
+    - derive/aG/A/
+    - derive/aN/@/
+    - derive/aM/Y/
+    - derive/OG/H/
+    - derive/OM/W/
+    - derive/([iaO])M([480])/$1p$2/
+    - derive/([iuae])N([480])/$1t$2/
+    - derive/([iaOə])G([480])/$1k$2/
+    - derive/h([480])/h$1/
+    - derive/p([480])/P$1/
+    - derive/t([480])/T$1/
+    - derive/k([480])/K$1/
+    - derive/[pP]([480])/R$1/
+    - derive/[tT]([480])/F$1/
+    - derive/[kK]([480])/Q$1/
+    - derive/h([480])/V$1/
+    - derive/[48]/&/
+    - derive/^([A-Za-z]+)\d$/$1/
+    - abbrev/^([bpPmtTnlgkKwhJZCSjzcs]).+$/$1/
+    - abbrev/^([bpPmtTnlgkKwhJZCSjzcs]).+([1235780])$/$1$2/
+    - abbrev/^(\D+)([12357])$/$1/
+    - abbrev/L([iu]?[aiueOIU])/*/
+    - abbrev/(\w+0|[ptkh]8)/0/
+    - abbrev/[imuaOəeIUY@AHWMNG]+[48]/&/
+    - derive/[48]/!/
+    - xlit|!bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy8732541L&*|:!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.>|
+
+translator:
+  dictionary: tl_han_ji_khoo
+  prism: sgi_zu_im
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
+  preedit_format:
+    - xlit|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.-|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ八七三二五四一ㄥ入ñ|
+    - xform/^(ㄚ|ㄞ|ㄠ|ㄢ|ㄤ|ㆤ|ㆥ|ㆮ|ㆯ|ㄧ|ㆪ|ㄨ|ㆫ|ㆦ|ㆧ|ㄜ|ㆬ|ㆭ)/英$1/
+    - xform/^(ㄧㄚ|ㄧㄞ|ㄧㄠ|ㄧㄢ|ㄧㄤ|ㄧㄜ|ㄧㆦ|ㄧㄨ)/英$1/
+    - xform/^(ㄨㄞ|ㄨㄚ|ㄨㄢ|ㄨㄤ|ㄨㄧ|ㄨㆤ)/英$1/
+    - xform/'(ㄚ|ㄞ|ㄠ|ㄢ|ㄤ|ㆤ|ㆥ|ㆮ|ㆯ|ㄧ|ㆪ|ㄨ|ㆫ|ㆦ|ㆧ|ㄜ|ㆬ|ㆭ)/英$1/
+    - xform/'(ㄧㄚ|ㄧㄞ|ㄧㄠ|ㄧㄢ|ㄧㄤ|ㄧㄜ|ㄧㆦ|ㄧㄨ)/英$1/
+    - xform/'(ㄨㄞ|ㄨㄚ|ㄨㄢ|ㄨㄤ|ㄨㄧ|協助ㄨㆤ)/英$1/
+    - xform/ㄗ((ㄥ)?ㄧ)/ㄐ$1/
+    - xform/ㄘ((ㄥ)?ㄧ)/ㄑ$1/
+    - xform/ㄙ((ㄥ)?ㄧ)/ㄒ$1/
+    - xform/ㆡ((ㄥ)?ㄧ)/ㆢ$1/
+    - xform/ㄧㄧ/ㆪ/
+    - xform/ㄨㄨ/ㆫ/
+    - xform/ㄚㄚ/ㆩ/
+    - xform/ㆦㆦ/ㆧ/
+    - xform/ㆤㆤ/ㆥ/
+    - xform/ㄞㄞ/ㆮ/
+    - xform/ㄠㄠ/ㆯ/
+    - xform/ㄥㄧ/ㆪ/
+    - xform/ㄥㄨ/ㆫ/
+    - xform/ㄥㄚ/ㆩ/
+    - xform/ㄥㆦ/ㆧ/
+    - xform/ㄥㆤ/ㆥ/
+    - xform/ㄥㄞ/ㆮ/
+    - xform/ㄥㄠ/ㆯ/
+    - xform/ㆪㆦ/ㄧㆧ/
+    - xform/ㆪㄨ/ㄧㆫ/
+    - xform/ㆪㄚ/ㄧㆩ/
+    - xform/ㆪㄠ/ㄧㆯ/
+    - xform/ㆫㄚ/ㄨㆩ/
+    - xform/ㆫㄞ/ㄨㆮ/
+    - xform/ㄚㄧ/ㄞ/
+    - xform/ㄚㄣ/ㄢ/
+    - xform/ㄚㄨ/ㄠ/
+    - xform/ㄚㆭ/ㄤ/
+    - xform/ㄚㆬ/ㆰ/
+    - xform/ㆦㆭ/ㆲ/
+    - xform/ㆦㆬ/ㆱ/
+    - xform/ㆠ/門/
+    - xform/ㄅ/邊/
+    - xform/ㄆ/頗/
+    - xform/ㄇ/門/
+    - xform/ㄋ/柳/
+    - xform/ㄉ/地/
+    - xform/ㄊ/他/
+    - xform/ㄌ/柳/
+    - xform/ㆣ/語/
+    - xform/ㄍ/求/
+    - xform/ㄎ/去/
+    - xform/ㄫ/語/
+    - xform/ㆡ/入/
+    - xform/ㄗ/曾/
+    - xform/ㄘ/出/
+    - xform/ㄙ/時/
+    - xform/ㄏ/喜/
+    - xform/ㆢ/入/
+    - xform/ㄐ/曾/
+    - xform/ㄑ/出/
+    - xform/ㄒ/時/
+    - xform/ㄚ/膠/
+    - xform/ㆩ/監/
+    - xform/ㄧ/居/
+    - xform/ㆪ/梔/
+    - xform/ㄨ/艍/
+    - xform/ㆫ/楊/
+    - xform/ㆤ/伽/
+    - xform/ㆥ/更/
+    - xform/ㆦ/沽/
+    - xform/ㆧ/姑/
+    - xform/ㄜ/高/
+    - xform/ㄞ/皆/
+    - xform/ㆮ/閒/
+    - xform/ㄠ/交/
+    - xform/ㆯ/爻/
+    - xform/ㆬ/姆/
+    - xform/ㆭ/鋼/
+    - xform/ㆰ/甘/
+    - xform/ㄤ/江/
+    - xform/ㄢ/干/
+    - xform/ㆲ/公/
+    - xform/ㆱ/箴/
+    - xform/ㆨ/豬/
+    - xform/膠ㆷ/膠/
+    - xform/監ㆷ/監/
+    - xform/膠姆/甘/
+    - xform/膠ㆴ/甘/
+    - xform/膠ㄣ/干/
+    - xform/膠ㆵ/干/
+    - xform/膠鋼/江/
+    - xform/膠ㆻ/江/
+    - xform/皆ㆷ/皆/
+    - xform/閒ㆷ/閒/
+    - xform/交ㆷ/交/
+    - xform/爻ㆷ/爻/
+    - xform/伽ㆷ/伽/
+    - xform/更ㆷ/更/
+    - xform/沽ㆷ/沽/
+    - xform/姑ㆷ/姑/
+    - xform/沽姆/箴/
+    - xform/沽ㆴ/箴/
+    - xform/沽鋼/公/
+    - xform/沽ㆻ/公/
+    - xform/高ㆷ/高/
+    - xform/居ㆷ/居/
+    - xform/梔ㆷ/梔/
+    - xform/居姆/金/
+    - xform/金ㆴ/金/
+    - xform/居ㄣ/巾/
+    - xform/居ㆵ/巾/
+    - xform/居鋼/經/
+    - xform/居ㆻ/經/
+    - xform/居膠/迦/
+    - xform/居監/驚/
+    - xform/迦ㆷ/迦/
+    - xform/居甘/兼/
+    - xform/居膠ㆴ/兼/
+    - xform/居干/堅/
+    - xform/居膠ㆵ/堅/
+    - xform/迦鋼/姜/
+    - xform/居膠ㆻ/姜/
+    - xform/居交/嬌/
+    - xform/居爻/嘄/
+    - xform/嬌ㆷ/嬌/
+    - xform/嘄ㆷ/嘄/
+    - xform/居高/茄/
+    - xform/茄ㆷ/茄/
+    - xform/居姑/薑/
+    - xform/居公/恭/
+    - xform/居沽ㆻ/恭/
+    - xform/居艍/丩/
+    - xform/居楊/牛/
+    - xform/丩ㆷ/丩/
+    - xform/牛ㆷ/牛/
+    - xform/艍ㆷ/艍/
+    - xform/艍ㄣ/君/
+    - xform/艍ㆵ/君/
+    - xform/艍膠/瓜/
+    - xform/艍監/官/
+    - xform/瓜ㆷ/瓜/
+    - xform/官ㆷ/官/
+    - xform/瓜鋼/光/
+    - xform/瓜ㆻ/光/
+    - xform/瓜ㄣ/觀/
+    - xform/瓜ㆵ/觀/
+    - xform/艍江/光/
+    - xform/艍干/觀/
+    - xform/艍皆/乖/
+    - xform/乖ㆷ/乖/
+    - xform/艍閒/閂/
+    - xform/閂ㆷ/閂/
+    - xform/艍伽/檜/
+    - xform/檜ㆷ/檜/
+    - xform/艍更/糜/
+    - xform/糜ㆷ/糜/
+    - xform/艍居/規/
+    - xform/艍梔/褌/
+    - xform/(門)英(艍)/$1$2/
+
+  comment_format:
+    __patch:
+      - tlpa_kik_kan_sip_goo_im_libs:/hau_suann_tuann
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { when: composing, accept: equal, send: equal }
+    - { when: has_menu, accept: equal, send: equal }
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus }
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
+    - { accept: "Control+p", send: Page_Up, when: has_menu }
+    - { accept: "Control+n", send: Page_Down, when: has_menu }
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    - { when: has_menu, accept: F20, send: Home }
+    - { when: has_menu, accept: F24, send: Down }
+    - { when: always, accept: "Control+Shift+M", toggle: dict_mode }
+
+editor:
+  bindings:
+    Return: commit_composition
+    space: commit
+    Control+Shift+Return: commit_comment
+
+menu:
+  page_size: 5
+  alternative_select_labels: [①, ②, ③, ④, ⑤]
+
+style:
+  horizontal: false
+
+recognizer:
+  import_preset: default
+  patterns:
+    punct: '`[^\s]$'
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+
+punctuator:
+  import_preset: keymap_piau_tian
