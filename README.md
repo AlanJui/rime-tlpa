@@ -68,26 +68,25 @@
 1. **下載及安裝 [RIME 中州韻輸入法引擎](http://rime.im)**；
 
    RIME 可於不同之作業系統運作，且各有其名稱，使用者該擇用何者，請參考如下之說明：
-
    - macOS: 鼠鬚管
    - Windows: 小狼毫
    - Linux: 中州韻 (ibus-rime, fcitx-rime, fcitx5-rime)
 
    【註】： 由於 Linux 作業系統發布版眾多（如：Ubuntu, LinuxMint, ArchLinux）...，
-            且 Linux 的各個發布版又有不同的【輸入法框架】，如：iBus, Fcitx 和 Gcin...。
-            目前 RIME 在 Linux 作業系統可運作的輸入法框架，有：ibus-rime, fcitx-rime
-            及 fcit5-rime 共三種。所以，在安裝 RIME 之前，得先確認 Linux 作業
-            系統安裝的【輸入法框架】為何者。
+   且 Linux 的各個發布版又有不同的【輸入法框架】，如：iBus, Fcitx 和 Gcin...。
+   目前 RIME 在 Linux 作業系統可運作的輸入法框架，有：ibus-rime, fcitx-rime
+   及 fcit5-rime 共三種。所以，在安裝 RIME 之前，得先確認 Linux 作業
+   系統安裝的【輸入法框架】為何者。
 
 2. **下載及安裝 [輸入法發行套件包](https://github.com/AlanJui/rime-taigi/releases)
-ZIP 壓縮檔案**；
+   ZIP 壓縮檔案**；
 
 ![發行套件包](./docs/static/img/github_release.png)
 
-   1. rime-tlpa-all-v0.1.zip: 專案産出之所有輸入法
-   2. rime-tlpa-bp-v0.1.zip: 漢字庫採【閩拼方案】拼音系統之輸入法
-   3. rime-tlpa-tlpa-v0.1.zip: 漢字庫採【台語拼音】拼音系統之輸入法
-   4. rime-tlpa-zu2-v0.1.zip: 漢字庫採【台語注音二式】拼音系統之輸入法
+1.  rime-tlpa-all-v0.1.zip: 專案産出之所有輸入法
+2.  rime-tlpa-bp-v0.1.zip: 漢字庫採【閩拼方案】拼音系統之輸入法
+3.  rime-tlpa-tlpa-v0.1.zip: 漢字庫採【台語拼音】拼音系統之輸入法
+4.  rime-tlpa-zu2-v0.1.zip: 漢字庫採【台語注音二式】拼音系統之輸入法
 
 ![輸入方案套件包](./docs/static/img/輸入方案套件包.png)
 
@@ -95,14 +94,14 @@ ZIP 壓縮檔案**；
 
 | 調號 | 四聲八調   | 聲調按鍵 | 漢字 | 台語音標 | 按鍵輸入 |
 | :--: | :--------- | :------: | :--: | :------- | :------- |
-| 1    | 陰平 (ㄚ) | \<SP\>   |  東  |  tong1   |ㄊㆲ     |
-| 2    | 陰上 (ㄚˋ) | 4        |  黨  |  tong2   |ㄊㆲˋ     |
-| 3    | 陰去 (ㄚ˪) | 3        |  棟  |  tong3   |ㄊㆲ˪     |
-| 4    | 陰入 (ㄚ˙) | 7        |  督  |  tok4    |ㄊㆦㆻ    |
-| 5    | 陽平 (ㄚˊ) | 6        |  同  |  tong5   |ㄊㆲˊ     |
-| 6    | 陽上 (ㄚˋ) | 4        |  動  |  tong6   |ㄊㆲˋ     |
-| 7    | 陽去 (ㄚ˫) | 5        |  洞  |  tong7   |ㄊㆲ˫     |
-| 8    | 陽入 (ㄚ˙) | 7        |  毒  |  tok8    |ㄊㆦㆻ˙   |
+|  1   | 陰平 (ㄚ)  |  \<SP\>  |  東  | tong1    | ㄊㆲ     |
+|  2   | 陰上 (ㄚˋ) |    4     |  黨  | tong2    | ㄊㆲˋ    |
+|  3   | 陰去 (ㄚ˪) |    3     |  棟  | tong3    | ㄊㆲ˪    |
+|  4   | 陰入 (ㄚ˙) |    7     |  督  | tok4     | ㄊㆦㆻ   |
+|  5   | 陽平 (ㄚˊ) |    6     |  同  | tong5    | ㄊㆲˊ    |
+|  6   | 陽上 (ㄚˋ) |    4     |  動  | tong6    | ㄊㆲˋ    |
+|  7   | 陽去 (ㄚ˫) |    5     |  洞  | tong7    | ㄊㆲ˫    |
+|  8   | 陽入 (ㄚ˙) |    7     |  毒  | tok8     | ㄊㆦㆻ˙  |
 
 ## 字形
 
@@ -113,7 +112,6 @@ ZIP 壓縮檔案**；
 
    RIME 設定檔名稱為：`default.custom.yaml`，各作業系統之 RIME 設定檔存放
    `目錄路徑（資料夾）`條列如下：
-
    - 鼠鬚管(macOS)：`~/Library/Rime/`
 
    - 小狼毫(Windows)：`"%APPDATA%\Rime"`
@@ -136,17 +134,17 @@ ZIP 壓縮檔案**；
 
 ![W聲調圖](./docs/static/img/W聲調圖.png)
 
-| 調號 | 四聲八調   | W聲調圖   | 聲調按鍵 |  漢字 | 台語音標  | 按鍵輸入 |
-| :--: | :--------- | :------ | :------: | :--: | :------- | :------- |
-| 1    | 陰平 (a)   | 高音調   | ;        |  東  |  tong1   | tong;    |
-| 7    | 陽去 (ā)   | 中音調   | -        |  洞  |  tong7   | tong-    |
-| 3    | 陰去 (à)   | 低音調   | _        |  棟  |  tong3   | tong_    |
-| 2    | 陰上 (á)   | 高降調   | \        |  黨  |  tong2   | tong\\   |
-| 5    | 陽平 (â)   | 低升調   | /        |  同  |  tong5   | tong/    |
-| 4    | 陰入 (ah)  | 低促調   | [        |  督  |  tok4    | tok[     |
-| 8    | 陽入 (a̍h)  | 高促調   | ]        |  毒  |  tok8    | tok]     |
-| 0    | 陰入 (ah)  | 低促調   | .        |  督  |  tok0    | tok.     |
-| 0    | 陽入 (a̍h)  | 高促調   | .        |  毒  |  tok0    | tok.     |
+| 調號 | 四聲八調  | W聲調圖 | 聲調按鍵 | 漢字 | 台語音標 | 按鍵輸入 |
+| :--: | :-------- | :------ | :------: | :--: | :------- | :------- |
+|  1   | 陰平 (a)  | 高音調  |    ;     |  東  | tong1    | tong;    |
+|  7   | 陽去 (ā)  | 中音調  |    -     |  洞  | tong7    | tong-    |
+|  3   | 陰去 (à)  | 低音調  |    \_    |  棟  | tong3    | tong\_   |
+|  2   | 陰上 (á)  | 高降調  |    \     |  黨  | tong2    | tong\\   |
+|  5   | 陽平 (â)  | 低升調  |    /     |  同  | tong5    | tong/    |
+|  4   | 陰入 (ah) | 低促調  |    [     |  督  | tok4     | tok[     |
+|  8   | 陽入 (a̍h) | 高促調  |    ]     |  毒  | tok8     | tok]     |
+|  0   | 陰入 (ah) | 低促調  |    .     |  督  | tok0     | tok.     |
+|  0   | 陽入 (a̍h) | 高促調  |    .     |  毒  | tok0     | tok.     |
 
 ## 注音輸入法
 
@@ -161,14 +159,14 @@ ZIP 壓縮檔案**；
 
 | 調號 | 四聲八調   | 聲調按鍵 | 漢字 | 台語音標 | 按鍵輸入 |
 | :--: | :--------- | :------: | :--: | :------- | :------- |
-| 1    | 陰平 (ㄚ) | \<SP\>   |  東  |  tong1   |ㄊㆲ     |
-| 2    | 陰上 (ㄚˋ) | 4        |  黨  |  tong2   |ㄊㆲˋ     |
-| 3    | 陰去 (ㄚ˪) | 3        |  棟  |  tong3   |ㄊㆲ˪     |
-| 4    | 陰入 (ㄚ˙) | 7        |  督  |  tok4    |ㄊㆦㆻ    |
-| 5    | 陽平 (ㄚˊ) | 6        |  同  |  tong5   |ㄊㆲˊ     |
-| 6    | 陽上 (ㄚˋ) | 4        |  動  |  tong6   |ㄊㆲˋ     |
-| 7    | 陽去 (ㄚ˫) | 5        |  洞  |  tong7   |ㄊㆲ˫     |
-| 8    | 陽入 (ㄚ˙) | 7        |  毒  |  tok8    |ㄊㆦㆻ˙   |
+|  1   | 陰平 (ㄚ)  |  \<SP\>  |  東  | tong1    | ㄊㆲ     |
+|  2   | 陰上 (ㄚˋ) |    4     |  黨  | tong2    | ㄊㆲˋ    |
+|  3   | 陰去 (ㄚ˪) |    3     |  棟  | tong3    | ㄊㆲ˪    |
+|  4   | 陰入 (ㄚ˙) |    7     |  督  | tok4     | ㄊㆦㆻ   |
+|  5   | 陽平 (ㄚˊ) |    6     |  同  | tong5    | ㄊㆲˊ    |
+|  6   | 陽上 (ㄚˋ) |    4     |  動  | tong6    | ㄊㆲˋ    |
+|  7   | 陽去 (ㄚ˫) |    5     |  洞  | tong7    | ㄊㆲ˫    |
+|  8   | 陽入 (ㄚ˙) |    7     |  毒  | tok8     | ㄊㆦㆻ˙  |
 
 ## 方音符號與 Unidoce 編碼
 
@@ -189,17 +187,15 @@ ZIP 壓縮檔案**；
 某些字型不支援【方音符號】；或是會發顯示錯誤之問題。
 
 - 無法顯示【台語注音調號】
-
   - 陰去調：˪ U+02EA MODIFIER LETTER YIN DEPARTING TONE MARK
   - 陽去調：˫ U+02EB MODIFIER LETTER YANG DEPARTING TONE MARK
 
 - 無法顯示入聲韻尾符號/或是將 ㆻ 顯示成 ㆶ
-
   - ㆴ U+31B4 BOPOMOFO FINAL LETTER P
   - ㆵ U+31B5 BOPOMOFO FINAL LETTER T
   - ㆶ U+31B6 BOPOMOFO FINAL LETTER K
   - ㆷ U+31B7 BOPOMOFO FINAL LETTER H
-  - ㆻ  U+31BB BOPOMOFO FINAL LETTER G（收錄於2020年Unicode v.13，當下多數作業系統內建字體都尚未添加此字）
+  - ㆻ U+31BB BOPOMOFO FINAL LETTER G（收錄於2020年Unicode v.13，當下多數作業系統內建字體都尚未添加此字）
 
 ## 字形
 
@@ -230,3 +226,9 @@ ZIP 壓縮檔案**；
 
 - [中州韻輸入法引擎(RIME)官網](https://rime.im/)
 
+## 授權條款 / License
+
+Copyright 2025 Alan Jui (居正中) <AlanJui.1960@gmail.com>
+
+本專案採用 [Apache License 2.0](LICENSE) 授權條款。
+This project is licensed under the [Apache License 2.0](LICENSE).
