@@ -56,7 +56,6 @@ engine:
     - script_translator
   filters:
     - uniquifier
-    - comment_filter
     # 為 filter 除錯用
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter

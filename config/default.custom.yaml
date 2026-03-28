@@ -10,6 +10,77 @@ patch:
     #------------------------------------------------------------------------
     # 注音符號鍵盤練習
     #------------------------------------------------------------------------
+    - { schema: kb_hong_im }  # 方音符號按鍵練習
+    - { schema: kb_ipa }      # 國際音標按鍵練習
+    #------------------------------------------------------------------------
+    # 拼音輸入法
+    #------------------------------------------------------------------------
+    - { schema: phing_im_tlpa }   # 拼音輸入法。台語音標（TLPA）
+    # - { schema: phing_im_bp }     # 拼音輸入法。閩拼方案（BP）
+    # - { schema: phing_im_bpm2 }   # 拼音輸入法。台語注音二式（BPM2）
+    #------------------------------------------------------------------------
+    # 注音輸入法
+    #------------------------------------------------------------------------
+    # - { schema: zu_im_tps } # 注音輸入法。方音符號（TPS）
+    #------------------------------------------------------------------------
+    # 反切輸入法（拼音字母）
+    #------------------------------------------------------------------------
+    # - { schema: huan_ciat_tlpa }  # 反切輸入法。台語音標（TLPA）
+    # - { schema: huan_ciat_tps }   # 反切輸入法。方音符號（TPS）
+    #------------------------------------------------------------------------
+    # RIME 官方輸入法
+    #------------------------------------------------------------------------
+    # - { schema: luna_pinyin }
+    # - { schema: stroke }
+    # - {schema: cangjie5}
+    # - {schema: terra_pinyin}
+    # - {schema: luna_pinyin_simp}
+    # - {schema: luna_pinyin_fluency}
+    # - {schema: cangjie5_express}
+    # - {schema: bopomofo}
+    # - {schema: bopomofo_express}
+    # - {schema: bopomofo_tw}
+    # - {schema: luna_pinyin_tw}
+
+  # engine:
+  #   processors:
+  #     - lua_processor@sip_ngoo_im   # 添加到全局 processors
+  # translators:
+  #   - lua_processor@custom_processor
+  # lua_translator:
+  #   # script_dir: "$HOME/.config/rime"
+  #   script_dir: "C:\\Users\\AlanJ\\AppData\\Roaming\\Rime"
+  #   custom_processor:
+  #     - custom.lua
+  #     - sip_ngoo_im.lua
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.16.0
+  generator: "Rime::SwitcherSettings"
+  modified_time: "Tue May 21 13:16:35 2024"
+  rime_version: 1.11.2
+patch:
+  "log/level": "info"
+  schema_list:
+    #------------------------------------------------------------------------
+    # 注音符號鍵盤練習
+    #------------------------------------------------------------------------
     - { schema: kb_hong_im } # 方音按鍵練習
     - { schema: kb_ipa } # 國際音標按鍵練習
     #------------------------------------------------------------------------

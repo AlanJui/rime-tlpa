@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(lua lua/tlpa_converter.lua)",
+      "Bash(echo \"exit code: $?\")"
+    ]
+  }
+}

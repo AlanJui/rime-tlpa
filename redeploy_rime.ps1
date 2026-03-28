@@ -1,6 +1,12 @@
-# redeploy_rime.ps1 v0.1.1
-# "C:\Program Files\Rime\weasel-0.17.4\WeaselDeployer.exe" /deploy
-# RIME 重新部署腳本 (強制指定用戶目錄版)
+# redeploy_rime.ps1 v0.2
+# RIME 重新部署腳本
+#
+# 說明：
+#   WeaselDeployer.exe 在兩種情況下會自動開啟【輸入法設定】視窗：
+#   (1) 未傳入 /deploy 參數
+#   (2) 工作目錄中找不到 default.custom.yaml（即非 Rime 使用者設定目錄）
+#   因此，執行時必須：指定 /deploy 參數，並將工作目錄切換至 Rime 使用者設定目錄。
+
 Write-Host "正在重新部署 RIME..." -ForegroundColor Yellow
 
 # 1. 停止服務
@@ -8,41 +14,83 @@ Stop-Process -Name "WeaselServer" -Force -ErrorAction SilentlyContinue
 Start-Sleep -Seconds 1
 
 # 2. 定位路徑
+#    $env:APPDATA 可自動對應目前登入使用者的 AppData\Roaming，不需寫死使用者帳號
 $rimeRoot = "C:\Program Files\Rime"
-$userDir = "C:\Users\AlanJui\AppData\Roaming\Rime" # 您指定的用戶目錄
+$userDir = "$env:APPDATA\Rime"
 
-# 找出最新的版本目錄
 $versionDir = Get-ChildItem -Path $rimeRoot -Directory |
-               Where-Object { $_.Name -like "weasel-*" } |
-               Sort-Object LastWriteTime -Descending |
-               Select-Object -First 1
+Where-Object { $_.Name -like "weasel-*" } |
+Sort-Object LastWriteTime -Descending |
+Select-Object -First 1
 
-if ($versionDir) {
-    $fullPath = Join-Path $versionDir.FullName "WeaselDeployer.exe"
+if (-not $versionDir) {
+    Write-Host "找不到 RIME 安裝目錄！" -ForegroundColor Red
+    exit 1
+}
 
-    if (Test-Path $fullPath) {
-        Write-Host "執行部署器：$fullPath" -ForegroundColor Green
-        Write-Host "用戶目錄：$userDir" -ForegroundColor Cyan
+$deployerPath = Join-Path $versionDir.FullName "WeaselDeployer.exe"
+$serverPath = Join-Path $versionDir.FullName "WeaselServer.exe"
 
-        # 關鍵繞行邏輯：
-        # /deploy 觸發部署
-        # /p 指定用戶資料夾位址，防止跳出設定選單
-        $deployArgs = "/deploy /p `"$userDir`""
+if (-not (Test-Path $deployerPath)) {
+    Write-Host "找不到 WeaselDeployer.exe！" -ForegroundColor Red
+    exit 1
+}
 
-        Start-Process -FilePath $fullPath `
-                      -ArgumentList $deployArgs `
-                      -WorkingDirectory $versionDir.FullName `
-                      -Wait
+if (-not (Test-Path $userDir)) {
+    Write-Host "找不到 Rime 使用者設定目錄：$userDir" -ForegroundColor Red
+    exit 1
+}
 
-        Write-Host "重新部署完成！" -ForegroundColor Green
+Write-Host "部署器：$deployerPath" -ForegroundColor Green
+Write-Host "用戶目錄：$userDir" -ForegroundColor Cyan
+
+# 3. 複製設定檔至 Rime 使用者設定目錄
+$sourceDir = $PSScriptRoot
+$files = @(
+    "phing_im_tlpa.schema.yaml",
+    # "hau_suan_tuann_tlpa_and_tps.yaml",
+    "hau_suan_tuann_tlpa.yaml",
+    "ji_khoo_tl.dict.yaml",
+    "keymap_piau_tian.yaml",
+    "rime.lua",
+    "lua\tlpa_converter.lua"
+)
+
+foreach ($file in $files) {
+    $src = Join-Path $sourceDir $file
+    $dst = Join-Path $userDir $file
+    $dstFolder = Split-Path $dst -Parent
+    if (-not (Test-Path $dstFolder)) {
+        New-Item -ItemType Directory -Path $dstFolder | Out-Null
+    }
+    if (Test-Path $src) {
+        Copy-Item -Path $src -Destination $dst -Force
+        Write-Host "已複製：$file" -ForegroundColor Cyan
+    }
+    else {
+        Write-Host "找不到來源檔：$file" -ForegroundColor Red
     }
 }
 
-# 3. 重啟服務
-$serverExe = Join-Path $versionDir.FullName "WeaselServer.exe"
-if (Test-Path $serverExe) {
-    Start-Process -FilePath $serverExe -WorkingDirectory $versionDir.FullName
+# 4. 切換工作目錄至 Rime 使用者設定目錄，再執行部署
+#    WeaselDeployer.exe 會檢查 Shell 本身的工作目錄是否含 default.custom.yaml，
+#    必須在 Shell 層級先 cd，而非僅透過 Start-Process -WorkingDirectory 指定。
+$originalDir = Get-Location
+Set-Location $userDir
+
+& $deployerPath /deploy
+
+Set-Location $originalDir
+
+Write-Host "重新部署完成！" -ForegroundColor Green
+
+# 5. 重啟服務
+if (Test-Path $serverPath) {
+    Write-Host "正在重啟小狼毫服務（WeaselServer）..." -ForegroundColor Yellow
+    Start-Process -FilePath $serverPath
 }
 
-Write-Host "按任意鍵繼續..." -ForegroundColor Cyan
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+# Write-Host "完成！按任意鍵結束..." -ForegroundColor Cyan
+# $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
+Write-Host "小狼毫服務重啟已完成！" -ForegroundColor Green
