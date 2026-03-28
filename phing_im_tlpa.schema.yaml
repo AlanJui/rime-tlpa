@@ -240,25 +240,14 @@ translator:
     # 定義【候選字清單】
     #--------------------------------------------------------------------------
     __patch:
-      # - hau_suan_tuann_tlpa_and_tps:/hau_suan_tuann
-      - hau_suan_tuann_tlpa:/hau_suan_tuann
-      # # 【候選字單】主體架構
-      # - tlpa_lib_hau_suan_ji_tuann:/hau_suan_tuann
-      # #-----------------------------------------
-      # # 右半邊：方音符號
-      # # 【声母】
-      # - tlpa_lib_hau_suan_ji_tuann:/ziann_ping_siann_bu
-      # # 【韻母】
-      # - tlpa_lib_hau_suan_ji_tuann:/ziann_ping_un_bu
-      # # 【声調】
-      # - tlpa_lib_hau_suan_ji_tuann:/ziann_ping_siann_tiau
-      # #-----------------------------------------
-      # # 左半邊：【台語拼音】（TLPA 拼音字母）
-      # - tlpa_lib_hau_suan_ji_tuann:/to_ping_tlpa
-      #-----------------------------------------
-      # # 左半邊：【十五音】
-      # - tlpa_lib_hau_suan_ji_tuann:/Sip_Ngoo_Im
-      # - tlpa_lib_hau_suan_ji_tuann:/Sip_Ngoo_Im_Siann_Tiau
+      #---------------------------------------------
+      # 左半邊：【台語音標】（TLPA）
+      #---------------------------------------------
+      # - hau_suan_tuann_tlpa:/hau_suan_tuann
+      #---------------------------------------------
+      # 左半邊：【台語音標】（TLPA）+【方音符號】（TPS）
+      #---------------------------------------------
+      - hau_suan_tuann_tlpa_and_tps:/hau_suan_tuann
 
 # reverse_lookup:
 #   dictionary: luna_pinyin

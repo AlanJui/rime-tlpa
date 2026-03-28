@@ -48,8 +48,8 @@ Write-Host "用戶目錄：$userDir" -ForegroundColor Cyan
 $sourceDir = $PSScriptRoot
 $files = @(
     "phing_im_tlpa.schema.yaml",
-    # "hau_suan_tuann_tlpa_and_tps.yaml",
     "hau_suan_tuann_tlpa.yaml",
+    "hau_suan_tuann_tlpa_and_tps.yaml",
     "ji_khoo_tl.dict.yaml",
     "keymap_piau_tian.yaml",
     "rime.lua",
