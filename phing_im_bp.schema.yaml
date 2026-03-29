@@ -5,28 +5,28 @@
 schema:
   schema_id: phing_im_bp
   name: 拼音輸入法【閩拼方案】
-  version: "v0.1.0.0"
+  version: "v0.2.0.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
     【輸入類型】：拼音輸入法
     【拼音系統】：閩拼方案（BP）
-    【字典編碼】：閩拼方案（BP）
-    【侯選清單】：〔siaⁿ¹〕【ㄙㄧㄚ¹】
-    【聲調標示】：台語四聲八調，以數值標示
+    【字典編碼】：台羅音標（TLPA）
+    【注音輸入】：閩拼字母（znia5：z+n+i+a+_）
+    【侯選清單】：〔zniā〕
+    【聲調標示】：閩拼八調（以數值標示）
   #------------------------------------------------------
-  # 定義使用者按下鍵盤時，輸入法能接受的按鍵
-  #------------------------------------------------------
-  # 6: [N/A]
-  # 1: 陰平調（高音調）;
-  # 7: 陽去調（中音調）-
-  # 3: 陰去調（低音調）_ （劃底線符號）
-  # 2: 上聲調（高降調）\
-  # 5: 陽平調（低升調）/
-  # 4: 陰入調（低促調）[
-  # 8: 陽入調（高促調）]
-  # 輕聲及入聲 [48] = 0
-  # 0: .
+  # 閩拼聲調與按鍵對映
+  # BP 1: 上平（陰平）   ;
+  # BP 2: 下平（陽平）   /
+  # BP 3: 上聲（陰上）   \
+  # BP 4: 下聲（陽上）   （少用）
+  # BP 5: 上去（陰去）   _
+  # BP 6: 下去（陽去）   -
+  # BP 7: 上入（陰入）   [
+  # BP 8: 下入（陽入）   ]
+  # BP 0: 輕聲           7（數字鍵7）
+  # BP 9: 入聲縮寫       .
   #------------------------------------------------------
 
 switches:
@@ -42,8 +42,8 @@ switches:
 
 engine:
   processors:
-    - lua_processor@aux_commit    # 選擇【輸入法】的輸出：【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
-    # - lua_processor@jump_select   # 在【候選字清單】移動【選擇游標】
+    - lua_processor@aux_commit    # 選擇【輸入法】輸出：羅馬拼音字母
+    # - lua_processor@jump_select
     - ascii_composer
     - recognizer
     - key_binder
@@ -52,7 +52,6 @@ engine:
     - selector
     - navigator
     - express_editor
-    # - fluency_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -63,137 +62,105 @@ engine:
     - echo_translator
     - punct_translator
     - script_translator
-    # - reverse_lookup_translator
+    - reverse_lookup_translator
   filters:
     - simplifier
     - uniquifier
-    # - comment_filter  # 暫時註解，避免錯誤
-    # 為 filter 除錯用
-    # - lua_filter@append_ok_filter
-    # - lua_filter@force_mark_filter
-    # 重組【候選字清單】中的【羅馬拼音字母】及【注音符號】
     - lua_filter@reformat_comment_filter
 
 speller:
-  alphabet: abcdefghijklmnopqrstuvwxyzN;-_\/[]7.
-  initials: abcdefghijklmnopqrstuvwxyzN
+  alphabet: abcdefghijklmnopqrstuvwxyz;-_\/[]7.
+  initials: abcdefghijklmnopqrstuvwxyz
   finals: ;-_\/[]7.
   delimiter: "'"
   use_space: true
   algebra:
     #==========================================================================
-    # 調整字典台語音標字母
-    # 定義【台語音標】與【音標編碼】的對映關係
+    # Step 1: TLPA → BP 聲母轉換
+    # 原則：多字母先處理；同起首字母者，「目標」先於「來源」以避免雙重轉換
     #==========================================================================
-    #
-    #--------------------------------------------------------------------------
-    # 字典拼音字母調整
-    #--------------------------------------------------------------------------
-    # 去除零聲母
-    # - derive/Ø//
-    # 與白話字相容
-    # - derive/^c/chh/
-    # - derive/^z/ch/
-    # 與台羅拼音相容
-    # - derive/^c/tsh/
-    # - derive/^z/ts/
-    - derive/ao/au/
-    #--------------------------------------------------------------------------
-    # 【輸入容錯】輸入可用【台語音標】自動轉換成【閩拼（BP）】
-    #--------------------------------------------------------------------------
-    # i 開頭的零聲母自動轉換
-    - derive/^y(ong|ok)(\d)$/i$1$2/     # iong2 → yong2, iok8 → yok8
-    - derive/^y(ang|ak)(\d)$/i$1$2/     # iang1 → yang1, iak8 → yak8
-    - derive/^y(a[omp]?)(\d)$/i$1$2/    # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
-    - derive/^y(ng|k)(\d)$/i$1$2/       # ing1 → ying1, ik8 → yik8
-    - derive/^yi(n|t)(\d)$/i$1$2/       # in1 → yin1, it8 → yit8
-    - derive/^yi(m|p)(\d)$/i$1$2/       # im1 → yim1, ip8 → yip8
-    - derive/^y(a)(\d)$/i$1$2/          # ia1 → ya1
-    - derive/^y(\d)$/i$1/               # i1 → yi1
-    # u 開頭的零聲母自動轉換
-    - derive/^w(\d)$/u$1/               # u3 → wu3
-    - derive/^w(n|t)(\d)$/u$1$2/        # un2 → wun2, ut8 → wut8
-    - derive/^w(h)(\d)$/u$1$2/          # uh4 → wuh4
-    - derive/^w(a[inp]?)(\d)$/u$1$2/    # uan2 → wan2, uai7 → wai7, uap8 → wap8
-    - derive/^w(a)(ng|k)(\d)$/u$1$2$3/  # uang1 → wang1, uak8 → wak8
-    - derive/^w([ei])(\d)$/u$1$2/       # ue3 → we3, ui7 → wi7
+    # 舌尖前音
+    - xform/^tsh/c/          # tsh(ㄘ) → c
+    - xform/^ts(?!h)/z/      # ts(ㄗ) → z（不含 tsh）
+    # 鼻音聲母（多字母先處理）
+    - xform/^ng/ggn/         # ng(ㄫ) → ggn
+    # 唇音
+    - xform/^b/bb/           # b(ㆠ) → bb  ← 須先於 p→b
+    - xform/^p(?!h)/b/       # p(ㄅ) → b   ← 不含 ph
+    - xform/^ph/p/           # ph(ㄆ) → p  ← 在 p→b 之後
+    - xform/^m/bbn/          # m(ㄇ) → bbn
+    # 舌尖音
+    - xform/^t(?!h)/d/       # t(ㄉ) → d   ← 不含 th
+    - xform/^th/t/           # th(ㄊ) → t  ← 在 t→d 之後
+    - xform/^n/ln/           # n(ㄋ) → ln  ← ng 已處理
+    # 舌根音
+    - xform/^g(?!g)/gg/      # g(ㆣ) → gg  ← 須先於 k→g
+    - xform/^k(?!h)/g/       # k(ㄍ) → g   ← 不含 kh
+    - xform/^kh/k/           # kh(ㄎ) → k  ← 在 k→g 之後
+    # 其他
+    - xform/^j/zz/           # j(ㆡ) → zz
+    # l, s, h, c(tsh), z(ts), zi, ci, ji, si 不變
     #==========================================================================
-    # 【閩南話變調規則】
-    # 為強化使用者輸入之便利性，即便輸入【變調】，仍能反推漢字之【本調】
-    # 使用字典的【本調】衍生【變調】拼音
+    # Step 2: TLPA → BP 韻母轉換
     #==========================================================================
-    # 舒聲變調規則 (1653278)
-    - derive/1/6/  # 陰平調(1) → 陽去調(6) (kim1 → kim6)
-    - derive/6/5/  # 陽去調(6) → 陰去調(5)
-    - derive/5/3/  # 陰去調(5) → 上聲調(3)
-    - derive/3/2/  # 上聲調(3) → 陽平調(2)
-    - derive/2/6/  # 陽平調(2) → 陽去調(6)
-    #--------------------------------------------------------------------------
-    # 入聲變調規則 (48)
-    # 入聲尾韻為 h 的變調
-    - derive/(?<![ptk])7/3/      # -h 陰入調(7) → 上聲調(3)
-    - derive/(?<![ptk])8/5/      # -h 陽入調(8) → 陰去調(5)
-    #--------------------------------------------------------------------------
-    # 入聲尾韻為 p/t/k 的變調
-    - derive/[ptk]7/8/  # -p/-t/-k 陰入調(7) → 陽入調(8)
-    - derive/[ptk]8/7/  # -p/-t/-k 陽入調(8) → 陰入調(7)
+    - xform/ir/eu/            # ir(ㆨ) → eu
+    - xform/au/ao/            # au(ㄠ) → ao
+    # 鼻化韻母：去 nn 後綴，加 n 前綴
+    - xform/onn/noo/          # onn(ㆧ) → noo（須先於一般規則）
+    - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/  # ann→na, inn→ni, unn→nu 等
     #==========================================================================
-    # 【韻母】相容衍生
+    # Step 3: TLPA → BP 聲調轉換（同步替換，無衝突）
+    # TLPA: 1  2  3  4  5  6  7  8
+    # BP:   1  3  5  7  2  4  6  8
     #==========================================================================
-    # 鼻音韻母轉換：ann ==> nna ==> Na ==> Nㄚ ==> ㆩ
-    # - derive/n([iu]?(ai|ao|oo|[aiue]))/L$1/
-    # - abbrev/L([iu]?(ai|ao|oo|[aiue]))/N/
-    #------------------------------------------------------
-    # 與白話字相容
-    - derive/i(ng|k)/e$1/
-    - derive/ao/au/
-    # 與漳州腔相容
-    - derive/oo/ou/
-    - derive/ei/e/
-    # 其它
-    - derive/iek/ik/
-    #--------------------------------------------------------------------------
-    # 入聲韻尾
-    # -m  ==> -p
-    # -n  ==> -t
-    # -ng ==> -k
-    #--------------------------------------------------------------------------
-    # 入聲調
-    # 【字典編碼】：【9】，以【按鍵】：【.】，輸入所有【入聲韻尾】：-p/-t/-k [78]
-    - derive/[78]/9/
-    # 【字典編碼】：【9】，代表所有【入聲韻尾】：-p/-t/-k [78]，輸入用【按鍵】：【.】
-    - abbrev/(ang|ong|oo|ai|au|am|an|ng|n|m|[iuaoe])+9/9/
-    # 入聲調替代輸入
-    # - derive/([iao])m[78]/$1p9/   # 用 ㄚㄅ． 來拍 ㄚㆴ
-    # - derive/([iuae])n[78]/$1t9/  # 用 ㄚㄉ． 來拍 ㄚㆵ
-    # - derive/([iao])ng[78]/$1k9/  # 用 ㄚㄍ． 來拍 ㄚㆻ
-    #--------------------------------------------------------------------------
-    # 【字典編碼】：
-    #    - 【0】代表【輕聲調】：【調號】：第 0 聲
-    #    - 【8】代表【陽入調】：【調號】：第 8 聲
-    # 【鍵盤按鍵】：【7】，可輸入：【輕聲調】（【0】）與【陽入調】：（【8】）
-    - derive/8/0/
+    - xlit|234567|357246|
     #==========================================================================
-    # 輸入簡化設定
+    # Step 4: 閩南話變調規則（BP 調號）
+    # 舒聲變調循環：1→6→5→3→2→6
     #==========================================================================
-    # 只用【聲母】便可輸入整個音節
-    - abbrev/^(bbn|bb|ln|ggn|gg|zz|[bpmtdlgkhzcsyw]).+$/$1/
-    #=======================================================================
-    # 設定讀取 ‘字典’ 漢字拼音的 ‘解析格式'
-    #=======================================================================
+    - derive/1/6/
+    - derive/6/5/
+    - derive/5/3/
+    - derive/3/2/
+    - derive/2/6/
+    #--------------------------------------------------------------------------
+    # 入聲變調
+    - derive/(?<![ptk])7/3/    # -h 陰入(7) → 上聲(3)
+    - derive/(?<![ptk])8/5/    # -h 陽入(8) → 陰去(5)
+    - derive/[ptk]7/8/         # -ptk 陰入(7) → 陽入(8)
+    - derive/[ptk]8/7/         # -ptk 陽入(8) → 陰入(7)
+    #==========================================================================
+    # Step 5: 入聲縮寫與輕聲
+    #==========================================================================
+    - derive/([ptkh])[78]$/${1}9/    # 入聲韻尾 + 調號縮寫為 9
+    - derive/8/0/                    # 陽入(8) 可用 0（輕聲鍵）輸入
+    #==========================================================================
+    # Step 6: 零聲母 i/u 的 y/w 相容輸入
+    #==========================================================================
+    # i 為介音
+    - derive/^ia/ya/
+    - derive/^io/yo/
+    - derive/^iu/yu/
+    # i 為主要元音
+    - derive/^i(\d)/yi$1/
+    # u 為介音
+    - derive/^ua/wa/
+    - derive/^ui/wi/
+    - derive/^ue/we/
+    # u 為主要元音
+    - derive/^u(\d)/wu$1/
+    #==========================================================================
+    # Step 7: 聲母縮寫輸入（只打聲母）
+    #==========================================================================
+    - abbrev/^(bbn|bb|ln|ggn|gg|zz|[bpdtlgkhzcsjyw]).+$/$1/
+    #==========================================================================
+    # Step 8: 無調號輸入
+    #==========================================================================
     - derive/^([a-z]+)\d$/$1/
-    #------------------------------------------------------
-    # 定義聲調的「調號」與「按鍵」的對映規則
-    #------------------------------------------------------
-    # 1 (1) : 陰平調（高音調）【;】
-    # 6 (7) : 陽去調（中音調）【-】
-    # 5 (3) : 陰去調（低音調）【_】 （劃底線符號）
-    # 3 (2) : 上聲調（高降調）【\】
-    # 2 (5) : 陽平調（低升調）【/】
-    # 7 (4) : 陰入調（低促調）【[】
-    # 8 (8) : 陽入調（高促調）【]】
-    # 0 (0) : 輕聲調及入聲調 [90] 【7】
-    # 9 (9) : 入聲調 [48]=9  【.】
+    #==========================================================================
+    # Step 9: BP 聲調按鍵對映
+    # 1(上平); 6(下去)- 5(上去)_ 3(上聲)\ 2(下平)/ 7(上入)[ 8(下入)] 0(輕聲)7 9(入聲).
+    #==========================================================================
     - xlit|165327809|;-_\/[]7.|
 
 translator:
@@ -202,90 +169,206 @@ translator:
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
-  #======================================================
-  # 【輸入編輯列(preedit_format)】：定義輸入按鍵與注音符號之對映定義
-  # 操作輸入法時，在輸入介面壓下的【按鍵】，與之對映的注音符號（ㄅㄆㄇ），
-  # 將根據此處的定義，於輸入介面顯示相對應的注音符號
-  #======================================================
+  comment_format:
+    # comment_format 直接接收字典原碼（TLPA 拼音 + 數字調號 1-8）
+    # ---- 1. 聲母：TLPA → BP ----
+    - xform/^tsh/c/
+    - xform/^ts(?!h)/z/
+    - xform/^ng/ggn/
+    - xform/^b/bb/
+    - xform/^p(?!h)/b/
+    - xform/^ph/p/
+    - xform/^m/bbn/
+    - xform/^t(?!h)/d/
+    - xform/^th/t/
+    - xform/^n/ln/
+    - xform/^g(?!g)/gg/
+    - xform/^k(?!h)/g/
+    - xform/^kh/k/
+    - xform/^j/zz/
+    # ---- 2. 韻母：TLPA → BP ----
+    - xform/ir/eu/
+    - xform/au/ao/
+    - xform/onn/noo/
+    - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/
+    # ---- 3. 聲調：TLPA → BP ----
+    - xlit|234567|357246|
+    # ---- 3b. 零聲母：i/u 開頭加 y/w（BP 規範） ----
+    # i 為介音（ia, io, iu...）→ i 改成 y
+    - xform/^ia/ya/
+    - xform/^io/yo/
+    - xform/^iu/yu/
+    # i 為主要元音（i + 調號）→ 前加 y
+    - xform/^i(\d)/yi$1/
+    # u 為介音（ua, ui, ue...）→ u 改成 w
+    - xform/^ua/wa/
+    - xform/^ui/wi/
+    - xform/^ue/we/
+    # u 為主要元音（u + 調號）→ 前加 w
+    - xform/^u(\d)/wu$1/
+    # ---- 4. 調符移位 ----
+    - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$3$2/
+    - xform/([ae])([iueo])([12345678])/$1$3$2/
+    # ---- 5. oo 韻母整體處理（須先於單 o 規則）----
+    - xform/oo1/ōo/
+    - xform/oo2/óo/
+    - xform/oo3/ǒo/
+    - xform/oo4/ǒo/
+    - xform/oo5/òo/
+    - xform/oo6/ôo/
+    - xform/oo7/ōo/
+    - xform/oo8/óo/
+    # ---- 6. 調符代換（BP 調符） ----
+    # BP 1: ā（上平/陰平，macron U+0304）
+    - xform/a1/ā/
+    - xform/e1/ē/
+    - xform/i1/ī/
+    - xform/u1/ū/
+    - xform/o1/ō/
+    - xform/m1/m̄/
+    - xform/ng1/n̄g/
+    # BP 2: á（下平/陽平，acute U+0301）
+    - xform/a2/á/
+    - xform/e2/é/
+    - xform/i2/í/
+    - xform/u2/ú/
+    - xform/o2/ó/
+    - xform/m2/ḿ/
+    - xform/ng2/ńg/
+    # BP 3: ǎ（上聲，caron U+030C）
+    - xform/a3/ǎ/
+    - xform/e3/ě/
+    - xform/i3/ǐ/
+    - xform/u3/ǔ/
+    - xform/o3/ǒ/
+    # BP 4: ǎ（下聲/陽上，同上聲，少用）
+    - xform/a4/ǎ/
+    - xform/e4/ě/
+    - xform/i4/ǐ/
+    - xform/u4/ǔ/
+    - xform/o4/ǒ/
+    # BP 5: à（上去/陰去，grave U+0300）
+    - xform/a5/à/
+    - xform/e5/è/
+    - xform/i5/ì/
+    - xform/u5/ù/
+    - xform/o5/ò/
+    # BP 6: â（下去/陽去，circumflex U+0302）
+    - xform/a6/â/
+    - xform/e6/ê/
+    - xform/i6/î/
+    - xform/u6/û/
+    - xform/o6/ô/
+    - xform/ng6/n̂g/
+    # BP 7: ā（上入/陰入，macron U+0304，同上平）
+    - xform/a7/ā/
+    - xform/e7/ē/
+    - xform/i7/ī/
+    - xform/u7/ū/
+    - xform/o7/ō/
+    # BP 8: á（下入/陽入，acute U+0301，同下平）
+    - xform/a8/á/
+    - xform/e8/é/
+    - xform/i8/í/
+    - xform/u8/ú/
+    - xform/o8/ó/
+
   preedit_format:
-    # - xform/'/ /
-    #------------------------------------------------------
-    # 定義【調號】的【對映規則】
-    #------------------------------------------------------
-    # 【按鍵】與【輸入法調號】對映表
-    #  ; ==> 1 (1)
-    #  - ==> 6 (7)
-    #  _ ==> 5 (3)
-    #  \ ==> 3 (2)
-    #  / ==> 2 (5)
-    #  [ ==> 7 (4)
-    #  ] ==> 8 (8)
-    #  7 ==> 0 (0)
-    #  . ==> 9 (9)
+    # 1. 分隔符號
+    - xform/'/ /
+    # 2. Reverse xlit：按鍵 → BP 調號數字
+    # - xlit|;-_\/[]7|16532780|
     - xlit|;-_\/[]7.|165327809|
+    # 3. 輕聲/入聲縮寫顯示
     - xform/0/˙/
     - xform/9/˙/
-    #------------------------------------------------------
-    # 處理鼻音化韻母：鼻化符號以【上標n】顯示
-    # a/e/u/e/oo/uai/iau/ai/au/ia/io/iu/ua/ui
-    #------------------------------------------------------
-    # 鼻化韻標示符號以【上標n】顯示
-    - xform/n([iu]?(ai|ao|oo|[aiue]))/ⁿ$1/
-    #------------------------------------------------------
-    # 輸入校調
-    #------------------------------------------------------
-    - xform/iek/ik/
-
-  comment_format:
-    __patch:
-      # 閩拼方案（BP）候選字清單：雙欄顯示：（1）左為【拼音字母】、（2）右為【注音符號】
-      - hau_suan_tuann_bp:/hau_suan_tuann
-      # 閩拼方案（BP）候選字清單：顯示拼音字母
-      # - bp_libs_hst_phing_im:/hau_suan_ji_tuann
-      # 閩拼方案（BP）候選字清單：顯示注音符號
-      # - bp_libs_hst_zu_im:/hau_suan_ji_tuann
+    # 4. 調符移位：將調號數字移至主要元音後
+    - xform/([aeiou])(r?m?n*h?g?p?t?k?)([1652378])/$1$3$2/
+    - xform/([ae])([iueo])([1652378])/$1$3$2/
+    # 5. oo 韻母整體處理（須先於單 o 規則）
+    - xform/oo1/ōo/
+    - xform/oo2/óo/
+    - xform/oo3/ǒo/
+    - xform/oo4/ǒo/
+    - xform/oo5/òo/
+    - xform/oo6/ôo/
+    - xform/oo7/ōo/
+    - xform/oo8/óo/
+    # 6. 調符代換（BP 調符）
+    # BP 1: ā（macron）
+    - xform/a1/ā/
+    - xform/e1/ē/
+    - xform/i1/ī/
+    - xform/u1/ū/
+    - xform/o1/ō/
+    - xform/m1/m̄/
+    - xform/ng1/n̄g/
+    # BP 2: á（acute）
+    - xform/a2/á/
+    - xform/e2/é/
+    - xform/i2/í/
+    - xform/u2/ú/
+    - xform/o2/ó/
+    - xform/m2/ḿ/
+    - xform/ng2/ńg/
+    # BP 3: ǎ（caron）
+    - xform/a3/ǎ/
+    - xform/e3/ě/
+    - xform/i3/ǐ/
+    - xform/u3/ǔ/
+    - xform/o3/ǒ/
+    # BP 4: ǎ（陽上，少用）
+    - xform/a4/ǎ/
+    - xform/e4/ě/
+    - xform/i4/ǐ/
+    - xform/u4/ǔ/
+    - xform/o4/ǒ/
+    # BP 5: à（grave）
+    - xform/a5/à/
+    - xform/e5/è/
+    - xform/i5/ì/
+    - xform/u5/ù/
+    - xform/o5/ò/
+    # BP 6: â（circumflex）
+    - xform/a6/â/
+    - xform/e6/ê/
+    - xform/i6/î/
+    - xform/u6/û/
+    - xform/o6/ô/
+    - xform/ng6/n̂g/
+    # BP 7: ā（macron，入聲）
+    - xform/a7/ā/
+    - xform/e7/ē/
+    - xform/i7/ī/
+    - xform/u7/ū/
+    - xform/o7/ō/
+    # BP 8: á（acute，入聲）
+    - xform/a8/á/
+    - xform/e8/é/
+    - xform/i8/í/
+    - xform/u8/ú/
+    - xform/o8/ó/
 
 key_binder:
   import_preset: default
   bindings:
-    #---------------------------------------------------
-    # 使用【_】鍵，輸入【調號】：3 （低音調）
     - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu, accept: underscore, send: underscore }
-    #---------------------------------------------------
-    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: has_menu,  accept: underscore, send: underscore }
     - { when: composing, accept: minus, send: minus }
-    - { when: has_menu, accept: minus, send: minus }
-    #---------------------------------------------------
-    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: has_menu,  accept: minus, send: minus }
     - { when: composing, accept: period, send: period }
-    - { when: has_menu, accept: period, send: period }
-    #---------------------------------------------------
-    # 翻頁
-    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
-    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
-    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { when: has_menu,  accept: period, send: period }
+    - { accept: "Control+p", send: Page_Up,   when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
-    #---------------------------------------------------
-    # Vim Mode
-    #---------------------------------------------------
     - { when: has_menu, accept: "Control+h", send: Page_Up }
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
-    #---------------------------------------------------
 
 editor:
   bindings:
-    # (1) 輸出拼音字母：Enter（supers_tone=ON） → giam¹ ga¹ ✅
-    # (2) 輸出拼音字母：Enter（supers_tone=OFF） → giam1 ga1 ✅
-    # (3) 輸出注音符號：Ctrl+Enter → ㄍㄧㆰ ㄍㄚ（不變）
-    # (4) 輸出帶調號的注音符號（上標）：Shift+Enter（supers_tone=ON） → ㄍㄧㆰ¹ ㄍㄚ¹（不變）
-    # (5) 輸出帶調號的注音符號（一般）：Shift+Enter（supers_tone=OFF） → ㄍㄧㆰ1 ㄍㄚ1（不變）
-    # (6) 輸入候選字清單之【拼音字母】及【注音符號】：Ctrl+Shift+Enter → 〔giam1〕 〔ga1〕 【ㄍㄧㆰ】 【ㄍㄚ】（不變）
-    # space: commit # 以【候選字清單】中，被【候選游標】標示的【漢字】，將之輸出
-    space: commit_text # 以【候選字清單】中，被【候選游標】標示的【漢字】，將之輸出
-    Control+Shift+Return: commit_comment  # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
+    space: commit
+    Control+Shift+Return: commit_comment
 
 recognizer:
   import_preset: default
@@ -294,17 +377,17 @@ recognizer:
     uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
     url: ^(www[.]|https?:|ftp:|mailto:).*$
     punct: '`[^\s]$'
-    # reverse_lookup: "`[a-z]*$"
+    reverse_lookup: "`[a-z]*$"
 
 menu:
-  alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
+  alternative_select_labels: [①, ②, ③, ④, ⑤]
   alternative_select_keys: "12345"
-  page_size: 5 #選單每䈎顯示個數
+  page_size: 5
 
 style:
   horizontal: false
-  font_face: "霞鶩文楷 TC, , 新細明體"
-  comment_font_face: "BopomofoRuby1909-v1, 新細明體"
+  font_face: "霞鶩文楷 TC, 新細明體"
+  comment_font_face: "霞鶩文楷 TC, 新細明體"
   comment_font_size: 18
 
 punctuator:
