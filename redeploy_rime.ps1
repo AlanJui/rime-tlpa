@@ -48,15 +48,19 @@ Write-Host "用戶目錄：$userDir" -ForegroundColor Cyan
 $sourceDir = $PSScriptRoot
 $files = @(
     # 輸入方案：拼音
+    "phing_im_tl.schema.yaml",
     "phing_im_tlpa.schema.yaml",
     "phing_im_bp.schema.yaml",
     "phing_im_bpm2.schema.yaml",
+    "phing_im_poj.schema.yaml",
     # 輸入方案：注音
     "zu_im_tlpa.schema.yaml",
     "zu_im_bpm2.schema.yaml",
     # 輸入方案：反切
     "huan_ciat_tps.schema.yaml",
     "huan_ciat_tlpa.schema.yaml",
+    # 輸入方案功能模組
+    "lib_phing_im.yaml",
     # 候選字清單
     "hau_suan_tuann_bp.yaml",
     "hau_suan_tuann_bpm2.yaml",
