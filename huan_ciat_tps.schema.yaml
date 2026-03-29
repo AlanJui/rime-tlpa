@@ -343,8 +343,8 @@ speller:
     - xlit|!bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy8732541L&*|:!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.>|
 
 translator:
-  dictionary: tl_han_ji_khoo
-  prism: sgi_zu_im
+  dictionary: ji_khoo_tl
+  prism: huan_ciat_tlpa
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -728,7 +728,7 @@ translator:
     # - xform/4//
     #------------------------------------------------------------------------------
     __patch:
-      - tlpa_kik_kan_sip_goo_im_libs:/hau_suann_tuann
+      - hau_suan_tuann_tlpa_and_tps:/hau_suan_tuann
 
 # reverse_lookup:
 #   dictionary: luna_pinyin

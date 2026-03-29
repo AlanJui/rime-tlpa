@@ -197,8 +197,8 @@ speller:
     - xlit|165327809|;-_\/[]7.|
 
 translator:
-  dictionary: bp_ji_khoo
-  prism: bp_phing_im
+  dictionary: ji_khoo_tl
+  prism: phing_im_bp
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -239,7 +239,7 @@ translator:
   comment_format:
     __patch:
       # 閩拼方案（BP）候選字清單：雙欄顯示：（1）左為【拼音字母】、（2）右為【注音符號】
-      - bp_libs:/hau_suan_ji_tuann
+      - hau_suan_tuann_bp:/hau_suan_tuann
       # 閩拼方案（BP）候選字清單：顯示拼音字母
       # - bp_libs_hst_phing_im:/hau_suan_ji_tuann
       # 閩拼方案（BP）候選字清單：顯示注音符號

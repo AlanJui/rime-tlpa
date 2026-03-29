@@ -47,11 +47,28 @@ Write-Host "用戶目錄：$userDir" -ForegroundColor Cyan
 # 3. 複製設定檔至 Rime 使用者設定目錄
 $sourceDir = $PSScriptRoot
 $files = @(
+    # 輸入方案：拼音
     "phing_im_tlpa.schema.yaml",
+    "phing_im_bp.schema.yaml",
+    "phing_im_bpm2.schema.yaml",
+    # 輸入方案：注音
+    "zu_im_tlpa.schema.yaml",
+    "zu_im_bpm2.schema.yaml",
+    # 輸入方案：反切
+    "huan_ciat_tps.schema.yaml",
+    "huan_ciat_tlpa.schema.yaml",
+    # 候選字清單
+    "hau_suan_tuann_bp.yaml",
+    "hau_suan_tuann_bpm2.yaml",
     "hau_suan_tuann_tlpa.yaml",
     "hau_suan_tuann_tlpa_and_tps.yaml",
+    "hau_suan_tuann_tps.yaml",
+    # 詞典
     "ji_khoo_tl.dict.yaml",
+    "ji_khoo_bpm2.dict.yaml",
+    # 鍵盤映射
     "keymap_piau_tian.yaml",
+    # Lua 腳本
     "rime.lua",
     "lua\tlpa_converter.lua"
 )

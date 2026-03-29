@@ -191,8 +191,8 @@ speller:
     - xlit|123574890N|;\_/-[].7N|
 
 translator:
-  dictionary: zu_im_2
-  prism: tai_gi_zu_im_2
+  dictionary: ji_khoo_bpm2
+  prism: phing_im_bpm2.prism.yaml
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -234,7 +234,7 @@ translator:
     # 定義【候選字清單】
     #==============================================================================
     __patch:
-      - zu_im_2_hau_suan_zzi_duann:/hau_suan_tuann
+      - hau_suan_tuann_bpm2:/hau_suan_tuann
 
 key_binder:
   import_preset: default

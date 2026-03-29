@@ -3,14 +3,14 @@
 # encoding: utf-8
 
 schema:
-  schema_id: zu_im_tps
-  name: 注音輸入法【方音符號】
+  schema_id: zu_im_bpm2
+  name: 注音輸入法【台語注音二式】
   version: "v0.1.0.0"
   author: 居正中
   description: |
     【輸入類型】：注音輸入法
     【拼音系統】：方音符號
-    【字典編碼】：台羅音標
+    【字典編碼】：台語注音二式音標
     【注音輸入】：方音符號（聲：ㄒㄧㆩˉ：nu*<SP>）
     【侯選清單】：〔sⁿia¹〕\n 【ㄒㄧㆩˉ】
     【聲調標示】：
@@ -336,8 +336,8 @@ speller:
 
 
 translator:
-  dictionary: zu_im_2
-  prism: zu_im_2_hong_im
+  dictionary: ji_khoo_bpm2
+  prism: zu_im_bpm2.prism.yaml
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -455,7 +455,7 @@ translator:
     # 定義【候選字清單】
     #==============================================================================
     __patch:
-      - zu_im_2_hau_suan_zzi_duann:/hau_suan_tuann
+      - hau_suan_tuann_bpm2:/hau_suan_tuann
 
 key_binder:
   import_preset: default
