@@ -64,6 +64,7 @@ $files = @(
     # 候選字清單
     "hau_suan_tuann_bp.yaml",
     "hau_suan_tuann_bpm2.yaml",
+    "hau_suan_tuann_sni_and_tps.yaml",
     "hau_suan_tuann_tlpa.yaml",
     "hau_suan_tuann_tlpa_and_tps.yaml",
     "hau_suan_tuann_tps.yaml",

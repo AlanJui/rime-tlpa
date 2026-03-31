@@ -728,7 +728,7 @@ translator:
     # - xform/4//
     #------------------------------------------------------------------------------
     __patch:
-      - hau_suan_tuann_tlpa_and_tps:/hau_suan_tuann
+      - hau_suan_tuann_sni_and_tps:/hau_suan_tuann
 
 # reverse_lookup:
 #   dictionary: luna_pinyin

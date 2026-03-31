@@ -314,6 +314,63 @@ end
 -- Ctrl+Shift+Enter：輸出「候選雙欄格式」：〔tlpa1〕 〔tlpa2〕 … 【bpmf1】 【bpmf2】 …
 ------------------------------------------------------------------------------------------
 
+-- ========= 解析候選註解 / inline 的多音節工具 =========
+
+-- 從候選註解抓所有 〔...〕 與 【...】（相容你重排後的「雙欄」與原始「配對」）
+local function parse_comment_all(comment)
+	if not comment or comment == "" then
+		return {}, {}
+	end
+	local tlpa, zh = {}, {}
+	-- 抓所有 TLPA
+	for t in comment:gmatch("〔(.-)〕") do
+		table.insert(tlpa, t)
+	end
+	-- 抓所有注音
+	for z in comment:gmatch("【(.-)】") do
+		table.insert(zh, z)
+	end
+	-- 若抓不到，再試「一對一對」的樣式
+	if #tlpa == 0 or #zh == 0 then
+		for L, R in comment:gmatch("〔(.-)〕%s*【(.-)】") do
+			table.insert(tlpa, L)
+			table.insert(zh, R)
+		end
+	end
+	return tlpa, zh
+end
+
+-- 從 inline 抓多音節：TLPA 用 ' 拆；注音用 ' 或空白拆，並去掉多餘分隔
+local function split_inline(ctx)
+	local tl = ctx.input or ""
+	local bp = (ctx.get_script_text and ctx:get_script_text()) or ""
+	local tl_list, bp_list = {}, {}
+
+	if tl ~= "" then
+		for seg in tl:gmatch("[^']+") do
+			table.insert(tl_list, seg)
+		end
+	end
+
+	if bp ~= "" then
+		bp = bp:gsub("'", " ") -- 將連續輸入分隔符號轉空白
+		for seg in bp:gmatch("%S+") do
+			seg = seg:gsub("'", "")
+			table.insert(bp_list, seg)
+		end
+		-- 若仍只得到一段但原始含 '，再保底拆
+		if #bp_list <= 1 and bp:find("'", 1, true) then
+			for seg in bp:gmatch("[^']+") do
+				seg = seg:gsub("%s+", "")
+				if #seg > 0 then
+					table.insert(bp_list, seg)
+				end
+			end
+		end
+	end
+	return tl_list, bp_list
+end
+
 -- ========== 注音聲調處理 ==========
 local TONE_MARKS = "[ˊˋ˪˫˙]"
 local function strip_bpmf_marks_one(s)
@@ -331,6 +388,85 @@ local supers_digit = {
 	["7"] = "⁷",
 	["8"] = "⁸",
 }
+
+local function tlpa_with_supers(tl)
+	if not tl then
+		return tl
+	end
+	local stem, tone = tl:match("^(.-)([1-8])$")
+	return stem and (stem .. (supers_digit[tone] or "")) or tl
+end
+
+-- 依 supers_tone 選擇 TLPA 的呈現（上標或數字）
+local function tlpa_render_by_option(tl, use_supers)
+	if use_supers then
+		return tlpa_with_supers(tl)
+	else
+		return tl -- 保持數字結尾
+	end
+end
+
+-- 由 TLPA 取調號（最後一碼 1-8）
+local function tone_from_tlpa(tl)
+	return tl and tl:match("([1-8])$") or nil
+end
+
+-- 注音 + TLPA 調號 → 上標數字調
+local function bpmf_with_supers_by_tl(bpmf, tlpa)
+	if not bpmf then
+		return nil
+	end
+	local base = strip_bpmf_marks_one(bpmf)
+	local t = tone_from_tlpa(tlpa)
+	return t and (base .. (supers_digit[t] or "")) or base
+end
+
+-- 注音 + TLPA 調號 → 尾隨數字調
+local function bpmf_with_digit_by_tl(bpmf, tlpa)
+	if not bpmf then
+		return nil
+	end
+	local base = strip_bpmf_marks_one(bpmf)
+	local t = tone_from_tlpa(tlpa)
+	return t and (base .. t) or base
+end
+
+-- 對列表逐一套函數，再用空白接回
+local function map_join(list, f) -- f(elem, idx) -> string
+	local out = {}
+	for i, v in ipairs(list) do
+		out[i] = f(v, i) or ""
+	end
+	return table.concat(out, " ")
+end
+
+-- 從「候選」拿多音節；失敗就退回 inline
+local function get_multiforms(env)
+	local ctx = env.engine.context
+	local tl_list, bp_list = {}, {}
+
+	if ctx:has_menu() then
+		local cand = ctx:get_selected_candidate()
+		if cand then
+			tl_list, bp_list = parse_comment_all(cand.comment or "")
+		end
+	end
+	if #tl_list == 0 and #bp_list == 0 then
+		tl_list, bp_list = split_inline(ctx)
+	end
+	return tl_list, bp_list
+end
+
+-- 定義按受處理的快捷鍵：使用【正規表示式】判斷
+local function norm_repr(r)
+	-- -- 能截獲的按鍵：Alt+Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
+	-- r = r:gsub("^Release%+", "")
+	--      :gsub("ISO_Enter$", "Return")
+	--      :gsub("Alt%+ISO_Enter$", "Alt+Return")
+	-- 能截獲的按鍵：Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
+	r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
+	return r:lower()
+end
 
 -- ============= 主函式：aux_commit（多音節友善） =============
 
@@ -429,13 +565,11 @@ function force_mark_filter(input, env)
 	end
 end
 
-------------------------------------------------------------------------------------------
 -- 最小測試：僅在 comment 後面加 " [OK]"，不重排不改 text
 -- 預期：
 -- (1)注音輸入列仍是【ㄅ'ㄙ】
 -- (2)候選照常彈出
 -- (3)註解末尾出現 [OK]
-------------------------------------------------------------------------------------------
 function append_ok_filter(input, env)
 	for cand in input:iter() do
 		local old = cand.comment or ""
@@ -454,6 +588,7 @@ end
 -- 透過 Lua filter: reformat_comment_filter 重排成：
 -- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
 --------------------------------------------------------------------------
+
 local function format_comment(s, display_roman)
 	if type(s) ~= "string" or s == "" then
 		return s
@@ -499,9 +634,6 @@ local function format_comment(s, display_roman)
 	return s
 end
 
---------------------------------------------------------------------------
--- reformat_comment_filter：重排候選註解中的羅馬拼音與注音符號
---------------------------------------------------------------------------
 function reformat_comment_filter(input, env)
 	-- 取得模式設定（開關 dict_mode 是否為開啟狀態）
 	local display_roman = env.engine.context:get_option("dict_mode")
@@ -521,141 +653,4 @@ function reformat_comment_filter(input, env)
 	end
 end
 
--- ####################################################################
--- 可能已棄用之函數
--- ####################################################################
-
-local function tlpa_with_supers(tl)
-	if not tl then
-		return tl
-	end
-	local stem, tone = tl:match("^(.-)([1-8])$")
-	return stem and (stem .. (supers_digit[tone] or "")) or tl
-end
-
--- 依 supers_tone 選擇 TLPA 的呈現（上標或數字）
-local function tlpa_render_by_option(tl, use_supers)
-	if use_supers then
-		return tlpa_with_supers(tl)
-	else
-		return tl -- 保持數字結尾
-	end
-end
-
--- 由 TLPA 取調號（最後一碼 1-8）
-local function tone_from_tlpa(tl)
-	return tl and tl:match("([1-8])$") or nil
-end
-
--- 注音 + TLPA 調號 → 上標數字調
-local function bpmf_with_supers_by_tl(bpmf, tlpa)
-	if not bpmf then
-		return nil
-	end
-	local base = strip_bpmf_marks_one(bpmf)
-	local t = tone_from_tlpa(tlpa)
-	return t and (base .. (supers_digit[t] or "")) or base
-end
-
--- 注音 + TLPA 調號 → 尾隨數字調
-local function bpmf_with_digit_by_tl(bpmf, tlpa)
-	if not bpmf then
-		return nil
-	end
-	local base = strip_bpmf_marks_one(bpmf)
-	local t = tone_from_tlpa(tlpa)
-	return t and (base .. t) or base
-end
-
--- 對列表逐一套函數，再用空白接回
-local function map_join(list, f) -- f(elem, idx) -> string
-	local out = {}
-	for i, v in ipairs(list) do
-		out[i] = f(v, i) or ""
-	end
-	return table.concat(out, " ")
-end
-
--- 從「候選」拿多音節；失敗就退回 inline
-local function get_multiforms(env)
-	local ctx = env.engine.context
-	local tl_list, bp_list = {}, {}
-
-	if ctx:has_menu() then
-		local cand = ctx:get_selected_candidate()
-		if cand then
-			tl_list, bp_list = parse_comment_all(cand.comment or "")
-		end
-	end
-	if #tl_list == 0 and #bp_list == 0 then
-		tl_list, bp_list = split_inline(ctx)
-	end
-	return tl_list, bp_list
-end
-
--- 定義按受處理的快捷鍵：使用【正規表示式】判斷
-local function norm_repr(r)
-	-- -- 能截獲的按鍵：Alt+Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
-	-- r = r:gsub("^Release%+", "")
-	--      :gsub("ISO_Enter$", "Return")
-	--      :gsub("Alt%+ISO_Enter$", "Alt+Return")
-	-- 能截獲的按鍵：Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
-	r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
-	return r:lower()
-end
--- ========= 解析候選註解 / inline 的多音節工具 =========
-
--- 從候選註解抓所有 〔...〕 與 【...】（相容你重排後的「雙欄」與原始「配對」）
-local function parse_comment_all(comment)
-	if not comment or comment == "" then
-		return {}, {}
-	end
-	local tlpa, zh = {}, {}
-	-- 抓所有 TLPA
-	for t in comment:gmatch("〔(.-)〕") do
-		table.insert(tlpa, t)
-	end
-	-- 抓所有注音
-	for z in comment:gmatch("【(.-)】") do
-		table.insert(zh, z)
-	end
-	-- 若抓不到，再試「一對一對」的樣式
-	if #tlpa == 0 or #zh == 0 then
-		for L, R in comment:gmatch("〔(.-)〕%s*【(.-)】") do
-			table.insert(tlpa, L)
-			table.insert(zh, R)
-		end
-	end
-	return tlpa, zh
-end
-
--- 從 inline 抓多音節：TLPA 用 ' 拆；注音用 ' 或空白拆，並去掉多餘分隔
-local function split_inline(ctx)
-	local tl = ctx.input or ""
-	local bp = (ctx.get_script_text and ctx:get_script_text()) or ""
-	local tl_list, bp_list = {}, {}
-
-	if tl ~= "" then
-		for seg in tl:gmatch("[^']+") do
-			table.insert(tl_list, seg)
-		end
-	end
-
-	if bp ~= "" then
-		bp = bp:gsub("'", " ") -- 將連續輸入分隔符號轉空白
-		for seg in bp:gmatch("%S+") do
-			seg = seg:gsub("'", "")
-			table.insert(bp_list, seg)
-		end
-		-- 若仍只得到一段但原始含 '，再保底拆
-		if #bp_list <= 1 and bp:find("'", 1, true) then
-			for seg in bp:gmatch("[^']+") do
-				seg = seg:gsub("%s+", "")
-				if #seg > 0 then
-					table.insert(bp_list, seg)
-				end
-			end
-		end
-	end
-	return tl_list, bp_list
-end
+-----------------------------------------------------------------------
