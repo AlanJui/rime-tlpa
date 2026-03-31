@@ -337,7 +337,7 @@ speller:
 
 translator:
   dictionary: ji_khoo_bpm2
-  prism: zu_im_bpm2.prism.yaml
+  prism: zu_im_bpm2
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
