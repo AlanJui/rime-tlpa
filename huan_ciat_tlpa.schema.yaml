@@ -254,6 +254,31 @@ translator:
     # 定義 ‘按鍵’ 與 '韻母' 的 '對映規則'
     #======================================================
     #
+    #--------------------------------------------------------------------------
+    # 鼻音化韻母特例：i/u + (ai/au/ia/io/iu/ua/ui/a/i/u/e/oo) + nn
+    # ==> N + i/u + (ai/au/ia/io/iu/ua/ui/a/i/u/e/oo)
+    #--------------------------------------------------------------------------
+    - xform/iauhnn/嘄/
+    - xform/uaihnn/閂/
+    - xform/iaunn/嘄/
+    - xform/uainn/閂/
+    - xform/ahnn/監/
+    - xform/ainn/閒/
+    - xform/aunn/爻/
+    - xform/ehnn/更/
+    - xform/iann/驚/
+    - xform/ihnn/梔/
+    - xform/ionn/薑/
+    - xform/iunn/牛/
+    - xform/ohnn/扛/
+    - xform/oonn/姑/
+    - xform/uann/官/
+    - xform/uenn/糜/
+    - xform/uinn/褌/
+    - xform/ann/監/
+    - xform/enn/更/
+    - xform/inn/梔/
+    - xform/onn/扛/
     #------------------------------------------------------
     # i
     #------------------------------------------------------
@@ -460,7 +485,10 @@ translator:
     #------------------------------------------------------
     # 鼻韻符號轉換 Na = 鼻ㄚ = ㆩ
     #------------------------------------------------------
-    - xform/》N/ㄬ》/
+    # - xform/》N/ㄬ》/
+    # - "xform/》N/\u0303》/"
+    # - xform/》N/》/̃    # 使用 Unicode 組合符號 ̃（U+0303）表示鼻化
+    - xform/》N/n》/
     #------------------------------------------------------
     # i
     #------------------------------------------------------
@@ -806,6 +834,7 @@ key_binder:
     # - {accept: "Control+4", toggle: extended_charset, when: always}
     # 切換第3欄為：方音符號/台語音標 (羅馬拼音)
     - { when: always, accept: "Control+m", toggle: dict_mode }
+    - { when: has_menu, accept: space, send: Return }  # 空白鍵選字（有候選清單時）
 
 editor:
   bindings:
@@ -816,7 +845,6 @@ editor:
     # (5) 輸出帶調號的注音符號（一般）：Shift+Enter（supers_tone=OFF） → ㄍㄧㆰ1 ㄍㄚ1（不變）
     # (6) 輸入候選字清單之【拼音字母】及【注音符號】：Ctrl+Shift+Enter → 〔giam1〕 〔ga1〕 【ㄍㄧㆰ】 【ㄍㄚ】（不變）
     Return: commit_composition             # 讓 Enter 鍵，可直接輸出【編輯區】的【標音】
-    space: commit                           # 選擇「備選漢字」
     Control+Shift+Return: commit_comment # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
     # Return: commit_composition              # 上屏原始的輸入：lau5
     # Control+Return: commit_script_text      # 上屏顯示的輸入：lau⁵ / lâu
