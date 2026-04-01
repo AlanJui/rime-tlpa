@@ -854,7 +854,7 @@ key_binder:
     # - {accept: "Control+4", toggle: extended_charset, when: always}
     # 切換第3欄為：方音符號/台語音標 (羅馬拼音)
     - { when: always, accept: "Control+m", toggle: dict_mode }
-    - { when: has_menu, accept: space, send: Return }  # 空白鍵選字（有候選清單時）
+    # 空白鍵選字：由 speller 的 use_space: true 自然處理，勿用 send: Return（會觸發 commit_composition）
 
 editor:
   bindings:

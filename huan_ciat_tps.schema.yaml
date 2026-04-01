@@ -77,8 +77,8 @@ engine:
     - lua_filter@reformat_comment_filter
 
 speller:
-  alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(LN.-:75346]["
-  initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(LN.-:"
+  alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(LN.-:=75346]["
+  initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(LN.-:="
   finals: "75346]["
   delimiter: "'"
   use_space: true
@@ -279,21 +279,21 @@ speller:
     # 【入聲調】併入【輕聲調】，可使用【按鍵】：【7】（國語注音符號之輕聲調），輸入【字典編碼】：0
     # - derive/[480]/0/
     - derive/[48]/&/
-    #--------------------------------------------------------------------------
-    # 設定讀取【字典】漢字拼音的【解析格式】
-    #--------------------------------------------------------------------------
-    - derive/^([A-Za-z]+)\d$/$1/
-    #=======================================================================
-    # abbreviation:
-    # 台語音標之拼音字母輸入【簡化規則】（abbreviation：縮寫詞）
-    #=======================================================================
-    # 可只用【聲母】輸入
-    - abbrev/^([bpPmtTnlgkKwhJZCSjzcs]).+$/$1/
-    # 可只用【聲母】+【調號】輸入
-    - abbrev/^([bpPmtTnlgkKwhJZCSjzcs]).+([1235780])$/$1$2/
-    # 注音輸入，可只輸入：【聲母】+【韻母】，【調號】則可略去；但只適用於【舒聲調】（平、上、去聲）。
-    # 平聲調：1/5、上聲調：2、去聲調：5/6；但【入聲調】（調號：4/8）不適用。
-    - abbrev/^(\D+)([12357])$/$1/
+    # #--------------------------------------------------------------------------
+    # # 設定讀取【字典】漢字拼音的【解析格式】
+    # #--------------------------------------------------------------------------
+    # - derive/^([A-Za-z]+)\d$/$1/
+    # #=======================================================================
+    # # abbreviation:
+    # # 台語音標之拼音字母輸入【簡化規則】（abbreviation：縮寫詞）
+    # #=======================================================================
+    # # 可只用【聲母】輸入
+    # - abbrev/^([bpPmtTnlgkKwhJZCSjzcs]).+$/$1/
+    # # 可只用【聲母】+【調號】輸入
+    # - abbrev/^([bpPmtTnlgkKwhJZCSjzcs]).+([1235780])$/$1$2/
+    # # 注音輸入，可只輸入：【聲母】+【韻母】，【調號】則可略去；但只適用於【舒聲調】（平、上、去聲）。
+    # # 平聲調：1/5、上聲調：2、去聲調：5/6；但【入聲調】（調號：4/8）不適用。
+    # - abbrev/^(\D+)([12357])$/$1/
     #--------------------------------------------------------------------------
     # 為所有【鼻化韻母】建置【字典編碼】：【*】
     # - derive/([iu]?[aiueOIU])nn/*/
@@ -340,7 +340,8 @@ speller:
     # 【&】==>【.】==>【入】  # 按鍵【.】輸入：入【所有之入聲韻尾】
     # 【*】==>【-】==>【ñ】   # 按鍵【-】輸入：ñ【所有之鼻化韻母】
     #--------------------------------------------------------------------------
-    - xlit|!bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy8732541L&*|:!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.>|
+    # - xlit|!bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy8732541L&*|:!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.>|
+    - xlit|!bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy8732541L&*|:!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.-|
 
 translator:
   dictionary: ji_khoo_tl
@@ -356,7 +357,10 @@ translator:
     #--------------------------------------------------------------------------
     # 全對映：（1）【注音符號按鍵】；（2）【調號按鍵】；（3）【功能按鍵】
     #==========================================================================
-    - xlit|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.-|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ八七三二五四一ㄥ入ñ|
+    # ! 1 q a s 2 w x E e d G Y y h n c R r f v 8 u K j , i k m p / b t g z 9lM0;Oo*UJ<I(L75346][N.-|
+    # ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ八七三二五四一ㄥ入ñ|
+    # - xlit|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.-|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ八七三二五四一ㄥ入ñ|
+    - xlit|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][=.N|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ八七三二五四一ㄥ入ñ|
     #==========================================================================
     # 定義【零聲母】處理：為沒有聲母的音節添加「英」字符號
     #--------------------------------------------------------------------------
@@ -796,7 +800,8 @@ key_binder:
     #---------------------------------------------------
     # - { when: always, accept: "Control+grave", toggle: supers_tone }
     # - { when: has_menu, accept: "Control+grave", toggle: supers_tone }
-    - { when: has_menu, accept: space, send: Return }  # 空白鍵選字（有候選清單時）
+    # 空白鍵選字：由 speller 的 use_space: true 自然處理，勿用 send: Return（會觸發 commit_composition）
+    # - { when: has_menu, accept: space, send: Return }  # 空白鍵選字（有候選清單時）
 
 editor:
   bindings:
