@@ -77,8 +77,10 @@ engine:
     - lua_filter@reformat_comment_filter
 
 speller:
-  alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(LN.-:75346]["
-  initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(LN.-:"
+  # alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(0LN.-:75346]["
+  # initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(0LN.-:"
+  alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7N"
+  initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"
   finals: "75346]["
   delimiter: "'"
   use_space: true
@@ -145,23 +147,14 @@ speller:
     # ㆧ [oonn] = O + nn
     # --------------------------------------------------------------------------
     # oo = O = ㆦ
-    - xform/oo/O/
+    - xform/(oo|ou)/O/
     # onn = o + nn = O + nn = ㆧ = O + O
-    # - dervie/onn/OO/
-    # - derive/ionn/iOnn/
-    # # 韻尾：ng ==> i + ong = i + Ong = i + O + ng = ㆲ
-    # - derive/iong(?=\d)/iOng/
-    # - derive/iok/iOk/
+    - derive/onn/OO/ # ㆧ [onn] = o + nn = O + nn = ㆧ
     # 韻尾：ng ==> ong = o + ng = O + ng = ㆲ
-    # ong
     - derive/ong(?=\d)/Ong/
-    # - derive/Ong/H/
     - derive/ok/Ok/     # 韻尾 ng 入聲：k ==> ok = o + k = O + k = ㆻ
-    # ang
-    # - derive/ang(?=\d)/A/
     # 韻尾：m
-    - derive/om(?=\d)/Om$1/      # oM入 = om[48]
-    # - derive/Om/W/                  # ㆱ OM [oom] = o + m
+    - derive/om(?=\d)/Om/      # oM入 = om[48]
     - derive/op/Op/     # 韻尾：m 入聲：p ==> op = o + p = O + p = ㆱ
     # --------------------------------------------------------------------------
     # o 之【字典編碼】改為： ə
@@ -179,11 +172,15 @@ speller:
     #==========================================================================
     # 【複合韻母】
     #==========================================================================
-    - derive/ai/I/    # ㄞ [ai]
-    - derive/au/U/    # ㄠ [au]
+    - derive/aN/@/     # ㄢ aN [an] = a + n
+    # - derive/iaN/i@/     # ㄢ aN [an] = a + n
+    # - derive/uaN/u@/     # ㄢ aN [an] = a + n
+    - xform/ai/I/     # ㄞ [ai]
+    - xform/au/U/     # ㄠ [au]
     # 校調【複合韻母】改成【國/台語共用注音符號】
+    # - xform/aG/A/ # ㄤ aG [ang] = a + ng
     - derive/aG/A/ # ㄤ aG [ang] = a + ng
-    - derive/aN/@/ # ㄢ aN [an] = a + n
+    # - derive/aN/@/ # ㄢ aN [an] = a + n
     # 校調【複合韻母】改成【方音符號】
     - derive/aM/Y/ # ㆰ aM [am] = a + m
     - derive/OG/H/ # ㆲ OG [ong] = o + ng
@@ -249,16 +246,16 @@ speller:
     # --------------------------------------------------------------------------
     # 衍生【地方腔韻母】
     # --------------------------------------------------------------------------
-    - derive/er(ng|k)/i$1/
-    - derive/er(n|t)/u$1/
+    - derive/er(G|k)/i$1/   # erng/erk
+    - derive/er(N|T)/u$1/   # ern/ert
     - derive/er/e/
     # 泉州腔
-    - derive/ir(ng|k)/i$1/
+    - derive/ir(G|k)/i$1/
     - derive/ir(n|t)/u$1/
     - derive/ire/ue/
     - derive/ir/e/
     # 漳州腔
-    - derive/ou/O/
+    # - derive/ou/O/
     - derive/ei/e/
     - derive/ee/e/ # 漳州/泉州腔
     # 廈門腔
@@ -370,8 +367,6 @@ translator:
     #--------------------------------------------------------------------------
     # 全對映：（1）【注音符號按鍵】；（2）【調號按鍵】；（3）【功能按鍵】
     #==========================================================================
-    # - xlit|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.-|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ˙˫˪ˋˊ四一ㄥ入ñ|
-    #--------------------------------------------------------------------------
     # （1）【注音符號按鍵】
     - xlit|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7N|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ一七三二五八四入ㄥ|
     #--------------------------------------------------------------------------
@@ -400,6 +395,17 @@ translator:
     - xform/五/ˊ/
     - xform/八/˙/
     - xform/四//
+    #--------------------------------------------------------------------------
+    # 拆韻母
+    #--------------------------------------------------------------------------
+    # - xform/ㄢ/ㄚㄣ/
+    # - xform/ㆰ/ㄚㆬ/
+    # - xform/ㄤ/ㄚㆭ/
+    # - xform/ㆲ/ㆦㆭ/
+    # - xform/ㄨㆭ/ㆦㆭ/
+    # - xform/ㆬㆭ/ㄧㆦㆭ/
+    # - xform/ㄧㆭ/ㄧㄜㆭ/
+    # - xform/ㄧㄚㄣ/ㄧㄢ/
     #--------------------------------------------------------------------------
     # 【鼻化之元音韻母】（方音符號：ñ）輸入校調
     #--------------------------------------------------------------------------
@@ -441,8 +447,17 @@ translator:
     - xform/ㆦㆭ/ㆲ/    # ong
     - xform/ㆦㆬ/ㆱ/    # om
     #--------------------------------------------------------------------------
-    # 聲母輸入校調（務必置於【鼻化韻母】校調之後）
+    # 校調
     #--------------------------------------------------------------------------
+    # 預期：
+    # ian = i + an = ㄧ + ㄢ = ㄧㄢ
+    # 實際 = ㄧ‘ㄢ
+    # 改走以下作法，亦可行：
+    # ian = i + a + n = ㄧ + ㄚ + ㄣ  = ㄧ + (ㄚ + ㄣ) = ㄧ + ㄢ = ㄧㄢ
+    # 【註】： uan 也有同樣的現象，預期：ㄨㄢ；實際：ㄨ'ㄢ
+    # - xform/ㄧ'ㄢ/ㄧㄢ/
+    # - xform/ㄨ'ㄢ/ㄨㄢ/
+    # 聲母輸入校調（務必置於【鼻化韻母】校調之後）
     # - derive/ji/Ji/  # Ji(ㆢ) = j(ㆡ) + i
     # - derive/zi/Zi/  # ji(ㄐ) = z(ㄗ) + i
     # - derive/ci/Ci/  # Ci(ㄑ) = c(ㄘ) + i
