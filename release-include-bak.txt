@@ -1,0 +1,36 @@
+# --- 鍵盤按鍵練習工具 ---
+kb_hong_im.schema.yaml
+kb_ipa.schema.yaml
+
+# --- 共用函式庫/工具 ---
+rime.lua
+keymap_piau_tian.yaml
+lib_hau_suan_ji_tuann.yaml
+lib_phing_im.yaml
+lib_sip_ngoo_im.yaml
+lib_sip_ngoo_im2.yaml
+lib_zu_im.yaml
+
+# --- 支援【台語拼音（TLPA）】 ---
+tlpa_phing_im.schema.yaml
+tlpa_hong_im.schema.yaml
+tlpa_lib_hau_suan_ji_tuann.yaml
+tl_ji_khoo_ciann_ji.dict.yaml
+tl_ji_khoo_kah_kut_bun.dict.yaml
+tl_ji_khoo_kong_un.dict.yaml
+tl_ji_khoo_nga_siok_thong.dict.yaml
+tl_ji_khoo_peh_ue.dict.yaml
+tl_ji_khoo_peh_ue_zu_ting.dict.yaml
+
+# --- 支援【台語注音二式】 ---
+zu_im_2_phing_im.schema.yaml
+zu_im_2_hong_im.schema.yaml
+zu_im_2_libs.yaml
+zu_im_2_hau_suan_zzi_duann.yaml
+zu_im_2.dict.yaml
+
+# --- 支援【閩拼方案】 ---
+bp_hong_im.schema.yaml
+bp_phing_im.schema.yaml
+bp_libs.yaml
+bp_ji_khoo.dict.yaml

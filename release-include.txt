@@ -2,35 +2,42 @@
 kb_hong_im.schema.yaml
 kb_ipa.schema.yaml
 
-# --- 共用函式庫/工具 ---
-rime.lua
+# --- 輸入方案共用模組 ---
 keymap_piau_tian.yaml
-lib_hau_suan_ji_tuann.yaml
 lib_phing_im.yaml
-lib_sip_ngoo_im.yaml
-lib_sip_ngoo_im2.yaml
-lib_zu_im.yaml
 
-# --- 支援【台語拼音（TLPA）】 ---
-tlpa_phing_im.schema.yaml
-tlpa_hong_im.schema.yaml
-tlpa_lib_hau_suan_ji_tuann.yaml
-tl_ji_khoo_ciann_ji.dict.yaml
-tl_ji_khoo_kah_kut_bun.dict.yaml
-tl_ji_khoo_kong_un.dict.yaml
-tl_ji_khoo_nga_siok_thong.dict.yaml
-tl_ji_khoo_peh_ue.dict.yaml
-tl_ji_khoo_peh_ue_zu_ting.dict.yaml
+# --- 輸入方案共用模組：【候選字清單】 ---
+hau_suan_tuann_bp.yaml
+hau_suan_tuann_bpm2.yaml
+hau_suan_tuann_sni_and_tps.yaml
+hau_suan_tuann_tlpa_and_tps.yaml
+hau_suan_tuann_tlpa.yaml
+hau_suan_tuann_tps.yaml
 
-# --- 支援【台語注音二式】 ---
-zu_im_2_phing_im.schema.yaml
-zu_im_2_hong_im.schema.yaml
-zu_im_2_libs.yaml
-zu_im_2_hau_suan_zzi_duann.yaml
-zu_im_2.dict.yaml
+# --- 輸入方案插件函式庫 ---
+rime.lua
+lua\tlpa_converter.lua
 
-# --- 支援【閩拼方案】 ---
-bp_hong_im.schema.yaml
-bp_phing_im.schema.yaml
-bp_libs.yaml
-bp_ji_khoo.dict.yaml
+# --- 輸入方案用字典 ---
+ji_khoo_bpm2.dict.yaml
+ji_khoo_tl.dict.yaml
+
+# --- 拼音輸入法 ---
+phing_im_bp.schema.yaml
+phing_im_bpm2.schema.yaml
+phing_im_poj.schema.yaml
+phing_im_tl.schema.yaml
+phing_im_tlpa.schema.yaml
+
+# --- 注音輸入法 ---
+zu_im_bpm2.schema.yaml
+zu_im_tlpa.schema.yaml
+
+# --- 反切輸入法 ---
+huan_ciat_tlpa.schema.yaml
+huan_ciat_tps.schema.yaml
+
+# --- 按鍵輔助工具 ---
+kb_hong_im.schema.yaml
+kb_ipa.schema.yaml
+
