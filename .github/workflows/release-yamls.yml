@@ -28,6 +28,9 @@ on:
 jobs:
   build-bundles:
     runs-on: ubuntu-latest
+    outputs:
+      TAG: ${{ steps.meta.outputs.TAG }}
+      REF: ${{ steps.meta.outputs.REF }}
     steps:
       - name: Resolve ref / tag
         id: meta
@@ -72,7 +75,7 @@ jobs:
 
             if [[ -s "$listfile" ]]; then
               echo ">>> Packing ${name} ($(wc -l < "$listfile") files)"
-              zip -j "$zip" -@ < "$listfile" >/dev/null
+              zip "$zip" -@ < "$listfile" >/dev/null
               (cd dist && sha256sum "$(basename "$zip")" > "$(basename "$zip").sha256")
               ls -lh "dist/$(basename "$zip")"
             else
@@ -88,6 +91,7 @@ jobs:
             awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}{print}' release-include.txt \
               | sed -e 's/\r$//' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
               | sed -e '/^$/d' -e '/^#/d' \
+              | tr '\\' '/' \
               | while read -r p; do
                   [[ -z "$p" ]] && continue
                   f="${PREFIX}${p}"
@@ -101,66 +105,73 @@ jobs:
             done
           fi
 
-          # ---------- COMMON：各方案共用 ----------
+          # ---------- COMMON：輸入方案共用模組及插件函式庫 ----------
           COMMON_LIST="dist/_common.list"
           : > "$COMMON_LIST"
           for p in \
             rime.lua \
-            keymap_piau_tian.yaml \
-            lib_hau_suan_ji_tuann.yaml \
+            lua/*.lua \
+            hau_suan_tuann_bp.yaml \
+            hau_suan_tuann_bpm2.yaml \
+            hau_suan_tuann_sni_and_tps.yaml \
+            hau_suan_tuann_tlpa_and_tps.yaml \
+            hau_suan_tuann_tlpa.yaml \
+            hau_suan_tuann_tps.yaml \
             lib_phing_im.yaml \
-            lib_sip_ngoo_im.yaml \
-            lib_sip_ngoo_im2.yaml \
-            lib_zu_im.yaml
+            keymap_piau_tian.yaml
           do
             f="${PREFIX}${p}"
             [[ -f "$f" ]] && echo "$f" >> "$COMMON_LIST" || echo "::warning::Missing COMMON: $f"
           done
 
-          # ---------- TLPA 專屬 ----------
-          TLPA_LIST="dist/_tlpa.list"
-          : > "$TLPA_LIST"
+          # ---------- 【拼音輸入方案】 ----------
+          PhingIm_LIST="dist/_PhingIm.list"
+          : > "$PhingIm_LIST"
           for pat in \
-            tlpa_*.yaml tlpa_*.schema.yaml \
-            tl_ji_khoo_*.dict.yaml
+            phing_im_*.schema.yaml \
+            ji_khoo_tl.dict.yaml \
+            ji_khoo_bpm2.dict.yaml
           do
             for f in ${PREFIX}${pat}; do
-              [[ -f "$f" ]] && echo "$f" >> "$TLPA_LIST"
+              [[ -f "$f" ]] && echo "$f" >> "$PhingIm_LIST"
             done
           done
           # 排除任何 *kb*（鍵盤練習工具）
-          sed -i -e '/kb.*\.schema\.yaml/Id' "$TLPA_LIST" || true
+          sed -i -e '/kb.*\.schema\.yaml/Id' "$PhingIm_LIST" || true
 
-          # ---------- 注音二式（ZU2）專屬 ----------
-          ZU2_LIST="dist/_zu2.list"
-          : > "$ZU2_LIST"
+          # ---------- 【注音輸入方案】 ----------
+          ZuIm_LIST="dist/_ZuIm.list"
+          : > "$ZuIm_LIST"
           for pat in \
-            zu_im_2*.yaml zu_im_2*.schema.yaml
+            zu_im_*.schema.yaml \
+            ji_khoo_tl.dict.yaml \
+            ji_khoo_bpm2.dict.yaml
           do
             for f in ${PREFIX}${pat}; do
-              [[ -f "$f" ]] && echo "$f" >> "$ZU2_LIST"
+              [[ -f "$f" ]] && echo "$f" >> "$ZuIm_LIST"
             done
           done
-          sed -i -e '/kb.*\.schema\.yaml/Id' "$ZU2_LIST" || true
+          sed -i -e '/kb.*\.schema\.yaml/Id' "$ZuIm_LIST" || true
 
-          # ---------- BP 專屬 ----------
-          BP_LIST="dist/_bp.list"
-          : > "$BP_LIST"
+          # ---------- 【反切輸入方案】 ----------
+          HuanCiat_LIST="dist/_HuanCiat.list"
+          : > "$HuanCiat_LIST"
           for pat in \
-            bp_*.yaml bp_*.schema.yaml
+            huan_ciat_*.schema.yaml \
+            ji_khoo_tl.dict.yaml \
+            ji_khoo_bpm2.dict.yaml
           do
             for f in ${PREFIX}${pat}; do
-              [[ -f "$f" ]] && echo "$f" >> "$BP_LIST"
+              [[ -f "$f" ]] && echo "$f" >> "$HuanCiat_LIST"
             done
           done
-          sed -i -e '/kb.*\.schema\.yaml/Id' "$BP_LIST" || true
+          sed -i -e '/kb.*\.schema\.yaml/Id' "$HuanCiat_LIST" || true
 
           # ---------- 鍵盤練習工具（只放 All） ----------
           KB_LIST="dist/_kb.list"
           : > "$KB_LIST"
           for pat in \
-            kb_*.schema.yaml \
-            *_kb*.schema.yaml
+            kb_*.schema.yaml
           do
             for f in ${PREFIX}${pat}; do
               [[ -f "$f" ]] && echo "$f" >> "$KB_LIST"
@@ -169,15 +180,15 @@ jobs:
 
           # --------- 合併清單 ----------
           sort -u "$ALL_LIST" > dist/all.final
-          cat "$COMMON_LIST" "$TLPA_LIST" | sort -u > dist/tlpa.final
-          cat "$COMMON_LIST" "$ZU2_LIST"  | sort -u > dist/zu2.final
-          cat "$COMMON_LIST" "$BP_LIST"   | sort -u > dist/bp.final
+          cat "$COMMON_LIST" "$PhingIm_LIST" | sort -u > dist/phing_im.final
+          cat "$COMMON_LIST" "$ZuIm_LIST"  | sort -u > dist/zu_im.final
+          cat "$COMMON_LIST" "$HuanCiat_LIST"   | sort -u > dist/huan_ciat.final
 
           # All 另外把 KB 與 COMMON 也併進去（確保 rime.lua 等共用檔被包含）
           cat dist/all.final "$COMMON_LIST" "$KB_LIST" | sort -u > dist/all.plus
 
           # 簡易偵測：確認 rime.lua 是否出現在各包清單
-          for pkg in tlpa zu2 bp; do
+          for pkg in phing_im zu_im huan_ciat; do
             echo "[DEBUG] ${pkg}.final lines: $(wc -l < dist/${pkg}.final)"
             grep -n "rime\.lua" "dist/${pkg}.final" || echo "[DEBUG] rime.lua not found in dist/${pkg}.final"
           done
@@ -185,13 +196,13 @@ jobs:
           grep -n "rime\.lua" dist/all.plus || echo "[DEBUG] rime.lua not found in all.plus (will still proceed)"
 
           echo "== COUNT =="
-          echo "ALL: $(wc -l < dist/all.plus) | TLPA: $(wc -l < dist/tlpa.final) | ZU2: $(wc -l < dist/zu2.final) | BP: $(wc -l < dist/bp.final)"
+          echo "ALL: $(wc -l < dist/all.plus) | PHING_IM: $(wc -l < dist/phing_im.final) | ZU_IM: $(wc -l < dist/zu_im.final) | HUAN_CIAT: $(wc -l < dist/huan_ciat.final)"
 
           # --------- 打包 ----------
           make_zip "all"  "dist/all.plus"
-          make_zip "tlpa" "dist/tlpa.final"
-          make_zip "zu2"  "dist/zu2.final"
-          make_zip "bp"   "dist/bp.final"
+          make_zip "phing_im" "dist/phing_im.final"
+          make_zip "zu_im"  "dist/zu_im.final"
+          make_zip "huan_ciat"   "dist/huan_ciat.final"
 
       - name: Create / Update GitHub Release + upload 4 assets
         uses: softprops/action-gh-release@v2
@@ -202,3 +213,30 @@ jobs:
           files: |
             dist/*.zip
             dist/*.sha256
+
+  build-installer:
+    needs: build-bundles
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository at ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.build-bundles.outputs.REF }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build RIME_TLPA_Installer.exe
+        run: pyinstaller RIME_TLPA_Installer.spec
+
+      - name: Upload installer to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.build-bundles.outputs.TAG }}
+          files: dist/RIME_TLPA_Installer.exe

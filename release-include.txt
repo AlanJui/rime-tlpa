@@ -1,7 +1,3 @@
-# --- 鍵盤按鍵練習工具 ---
-kb_hong_im.schema.yaml
-kb_ipa.schema.yaml
-
 # --- 輸入方案共用模組 ---
 keymap_piau_tian.yaml
 lib_phing_im.yaml
@@ -40,4 +36,3 @@ huan_ciat_tps.schema.yaml
 # --- 按鍵輔助工具 ---
 kb_hong_im.schema.yaml
 kb_ipa.schema.yaml
-
