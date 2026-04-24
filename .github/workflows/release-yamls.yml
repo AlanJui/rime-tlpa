@@ -1,4 +1,4 @@
-name: "Build & Release YAML bundles (ALL / TLPA / ZU2 / BP)"
+name: "Build & Release YAML bundles (ALL / Phing-Im / Zu-Im / Huan-Ciat)"
 
 permissions:
   contents: write # ★ 讓 GITHUB_TOKEN 可發 Release / 建 tag
