@@ -5,7 +5,13 @@ a = Analysis(
     ['tools\\rime_installer.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[
+        ('release-include.txt', '.'),          # 安裝清單
+        ('*.yaml', '.'),                       # 根目錄所有 YAML 配置
+        ('rime.lua', '.'),                     # 根目錄 Lua 主入口
+        ('lua/*.lua', 'lua'),                  # lua/ 子目錄所有 Lua 插件
+        ('config/default.custom.yaml', 'config'),  # 預設輸入法選單設定
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

@@ -53,7 +53,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ steps.meta.outputs.REF }}
 
-      - name: Build 4 bundles (ALL/TLPA/ZU2/BP)
+      - name: Build 4 bundles (ALL/Phing-Im/Zu-Im/Huan-Ciat)
         shell: bash
         env:
           TAG: ${{ steps.meta.outputs.TAG }}
