@@ -190,33 +190,74 @@ class RimeTLPAInstaller:
             return False
 
     def deploy_rime(self):
-        """觸發 RIME 重新部署"""
+        """RIME 重新部署
+         1. 部署程式檔名為： WeaselDeployer.exe
+         2. 部署程式存放目錄路徑為： C:\Program Files\Rime\weasel-<version>\WeaselDeployer.exe
+            如： C:\Program Files\Rime\weasel-0.17.4\WeaselDeployer.exe
+         3. 執行參數為： /deploy
+         4. 執行前需先切換到 RIME 配置目錄，確保部署程式執行時能讀取配置檔案： default.custom.yaml。
+        """
         self._log("🔄 嘗試觸發 RIME 重新部署...")
 
-        # 查找 RIME 部署程式
-        possible_paths = [
-            Path("C:/Program Files/Rime/weasel-*/WeaselDeployer.exe"),
-            Path("C:/Program Files (x86)/Rime/weasel-*/WeaselDeployer.exe")
+        # 查找最新版本的 WeaselDeployer.exe
+        # 作法：遍歷【子目錄】，尋找 weasel-* 最近版本資料夾，並檢查其中是否存在 WeaselDeployer.exe
+        rime_install_roots = [
+            Path("C:/Program Files/Rime"),
+            Path("C:/Program Files (x86)/Rime"),
         ]
 
         deployer_path = None
-        for path_pattern in possible_paths:
-            matches = list(path_pattern.parent.parent.glob(path_pattern.name))
-            if matches:
-                deployer_path = matches[0]
-                break
+        server_path = None
+        for rime_root in rime_install_roots:
+            if not rime_root.exists():
+                continue
+            version_dirs = sorted(
+                [d for d in rime_root.iterdir() if d.is_dir() and d.name.startswith("weasel-")],
+                key=lambda d: d.stat().st_mtime,
+                reverse=True
+            )
+            if version_dirs:
+                candidate = version_dirs[0] / "WeaselDeployer.exe"
+                if candidate.exists():
+                    deployer_path = candidate
+                    server_path = version_dirs[0] / "WeaselServer.exe"
+                    break
 
-        if deployer_path and deployer_path.exists():
-            try:
-                subprocess.run([str(deployer_path), "/deploy"], check=True)
-                self._log("✅ RIME 重新部署成功")
-                return True
-            except subprocess.CalledProcessError:
-                self._log("⚠️  自動部署失敗，請手動重新部署")
-                return False
-        else:
+        if not deployer_path:
             self._log("⚠️  找不到 RIME 部署程式，請手動重新部署")
             return False
+
+        # 1. 停止 WeaselServer
+        try:
+            subprocess.run(["taskkill", "/F", "/IM", "WeaselServer.exe"],
+                           capture_output=True)
+            self._log("🛑 已停止 WeaselServer")
+        except Exception:
+            pass
+
+        # 2. 切換工作目錄至 Rime 使用者設定目錄後執行部署
+        #    WeaselDeployer.exe 會檢查工作目錄是否含 default.custom.yaml；
+        #    若工作目錄不正確，會開啟【輸入法設定】視窗而非執行部署。
+        try:
+            subprocess.run(
+                [str(deployer_path), "/deploy"],
+                check=True,
+                cwd=str(self.rime_dir)
+            )
+            self._log("✅ RIME 重新部署成功")
+        except subprocess.CalledProcessError:
+            self._log("⚠️  自動部署失敗，請手動重新部署")
+            return False
+
+        # 3. 重啟 WeaselServer
+        if server_path and server_path.exists():
+            try:
+                subprocess.Popen([str(server_path)])
+                self._log("🚀 已重啟 WeaselServer")
+            except Exception as e:
+                self._log(f"⚠️  重啟 WeaselServer 失敗: {e}")
+
+        return True
 
     def install(self):
         """執行完整安裝流程"""

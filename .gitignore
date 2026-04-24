@@ -15,6 +15,9 @@ env/
 __pycache__/
 .pyc
 static_collected/
+# PyInstaller build artifacts
+build/
+dist/
 # Temporary files
 *.kate-swp
 *.swp
