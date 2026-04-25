@@ -5,44 +5,37 @@ customization:
   modified_time: "Tue May 21 13:16:43 2024"
   rime_version: 1.11.2
 patch:
-  # 將內嵌編碼關閉，讓輸入編輯列回到 Rime 自己的 UI 面板上顯示，這樣就能完美套用 Rime 自己的字型設定
+  # 顯示托盤圖標
+  "style/display_tray_icon": true
+  # 關閉[inline_preedit]功能，避免【輸入編輯列】與【候選清單】顯示易生問題
   "style/inline_preedit": false
-  # 候選視窗：每頁 5 個（前端設定，會覆蓋 schema 的 menu.page_size）
+  # 【候選清單】視窗：每頁顯示 5 個漢字
   "style/horizontal": false
   "style/page_size": 5
-  # 字型與外觀
-  "style/display_tray_icon": true  # 顯示托盤圖標
-
-  # 設定 Rime 輸入編輯列及候選字的字型（支援多字型 fallback，首選微軟正黑體）
+  # 設定【操作介面】、【輸入編輯列】使用之字型
   # "style/font_face": "Microsoft JhengHei, Noto Serif TC"
   "style/font_face": "Noto Serif TC, Microsoft JhengHei"
   "style/font_point": 28
+  # 設定【候選清單】使用之字型
   "style/comment_font_face": "霞鶩文楷 TC"
   "style/comment_font_size": 18
-  # 若要同時套用配色：
-  # "style/color_scheme": "starcraft"
+  # 設定操作按鍵
   "key_binder/bindings":
-    # 輸入【中音調】，在台羅拼音為聲調 7
-    # - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
-    # - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    # 輸入【中音調】按鍵，在台羅拼音為聲調 7
     - { when: composing, accept: minus,  send: minus }   # 調號 7
     - { when: has_menu,  accept: minus,  send: minus }
     # 翻頁（Page_Up=上一頁、Page_Down=下一頁）
     - { when: has_menu, accept: "Control+p", send: Page_Up }
     - { when: has_menu, accept: "Control+n", send: Page_Down }
     #---------------------------------------------------
-    # Vim Mode
+    # 【候選清單】中【選擇游標】按鍵（仿 Vim 編輯器的 hjkl）
     #---------------------------------------------------
     - { when: has_menu, accept: "Control+h", send: Page_Up }
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
-
   # 切換器熱鍵（示範修正語法與破損的行）
   "switcher/hotkeys":
-    - "Control+o"
-    - "Control+n"
     - "Control+grave"
 
   "preset_color_schemes/starcraft":  # 在配色方案列表裏加入標識爲 starcraft 的新方案

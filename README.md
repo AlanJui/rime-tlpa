@@ -65,7 +65,7 @@
 安裝作業之主要流程，各步驟之執行要點摘要說明如下。如需操作細節之詳細說明，請參考
 [Wiki](https://github.com/AlanJui/rime-tlpa/wiki) 之安裝作業指引文件。
 
-1. **下載及安裝 [RIME 中州韻輸入法引擎](http://rime.im)**；
+1. **下載及安裝 [RIME 中州韻輸入法引擎](http://rime.im)**。
 
    RIME 可於不同之作業系統運作，且各有其名稱，使用者該擇用何者，請參考如下之說明：
    - macOS: 鼠鬚管
@@ -78,17 +78,40 @@
    及 fcit5-rime 共三種。所以，在安裝 RIME 之前，得先確認 Linux 作業
    系統安裝的【輸入法框架】為何者。
 
-2. **下載及安裝 [輸入法發行套件包](https://github.com/AlanJui/rime-taigi/releases)
-   ZIP 壓縮檔案**；
 
-![發行套件包](./docs/static/img/github_release.png)
+2. **下載及安裝 [輸入方案套件包](https://github.com/AlanJui/rime-taigi/releases)。**
 
-1.  rime-tlpa-all-v0.1.zip: 專案産出之所有輸入法
-2.  rime-tlpa-bp-v0.1.zip: 漢字庫採【閩拼方案】拼音系統之輸入法
-3.  rime-tlpa-tlpa-v0.1.zip: 漢字庫採【台語拼音】拼音系統之輸入法
-4.  rime-tlpa-zu2-v0.1.zip: 漢字庫採【台語注音二式】拼音系統之輸入法
+<img alt="image" src="https://github.com/user-attachments/assets/7d387177-9777-4ebf-8484-39673bdad2a5" />
 
-![輸入方案套件包](./docs/static/img/輸入方案套件包.png)
+   1. rime-tlpa-all-v0.1.zip: 專案産出所有的輸入方案（包函：反切/拼音/注音，所有的輸入方案）
+   2. rime-tlpa-huan_ciat-v0.1.zip：【反切輸入方案】壓縮包
+   3. rime-tlpa-phing_im-v0.1.zip：【拼音輸入方案】壓縮包
+   4. rime-tlpa-zu_im-v0.1.zip：【注音輸入方案】壓縮包
+   5. RIME_TLPA_Installer.exe：輸入方案安裝程式執行檔
+
+**【輸入方案套件包清單】**
+
+本專案之【輸入方案】，可分以下三大類：
+
+- 拼音類輸入法：使用【羅馬拼音字母】當作【音標】之輸入法
+
+- 注音類輸入法：使用【注音符號】改良後適用於閩南話之【注音】輸入法
+
+- 反切類輸入法：使用閩南十五音（指《彙集雅俗通十五音》）之【反切】輸入法
+
+**`輸入方案對照表`**
+
+| 輸入法類別 | 輸入方案名稱               | 輸入方案識別號 | 字典編碼     | 漢字標音系統全寫   |
+| --------- | -------------------------- | -------------- | ------------ | ------------------ |
+| 拼音輸入法 | 拼音輸入法【台語音標】     | phing_im_tlpa  | 台羅拼音     | 台語音標(TLPA+)    |
+| 拼音輸入法 | 拼音輸入法【台羅拼音】     | phing_im_tl    | 台羅拼音     | 台羅拼音(TL)       |
+| 拼音輸入法 | 拼音輸入法【白話字】       | phing_im_poj   | 台羅拼音     | 白話字(POJ)        |
+| 拼音輸入法 | 拼音輸入法【閩拼方案】     | phing_im_bp    | 台羅拼音     | 閩拼方案(BP)       |
+| 拼音輸入法 | 拼音輸入法【台語注音二式】 | phing_im_bpm2  | 台語注音二式 | 台語注音二式(BPM2) |
+| 注音輸入法 | 注音輸入法【台語音標】     | zu_im_tlpa     | 台羅拼音     | 台語音標(TLPA+)    |
+| 注音輸入法 | 注音輸入法【台語注音二式】 | zu_im_bpm2     | 台語注音二式 | 台語注音二式(BPM2) |
+| 反切輸入法 | 反切輸入法【方音符號】     | huan_ciat_tps  | 台羅拼音     | 方音符號(TFS)      |
+| 反切輸入法 | 反切輸入法【台語音標】     | huan_ciat_tlpa | 台羅拼音     | 台語音標(TLPA+)    |
 
 ### 聲調按鍵
 
