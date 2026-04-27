@@ -73,6 +73,9 @@ $files = @(
     "ji_khoo_bpm2.dict.yaml",
     # 輸入方案附屬模組之【鍵盤映射】
     "keymap_piau_tian.yaml",
+    # 輸入方案附屬工具
+    "kb_hong_im.schema.yaml",
+    "kb_ipa.schema.yaml",
     # 輸入方案使用之【功能插件（Lua 腳本）】
     "rime.lua",
     "lua\tlpa_converter.lua"

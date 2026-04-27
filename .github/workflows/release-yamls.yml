@@ -109,16 +109,22 @@ jobs:
           COMMON_LIST="dist/_common.list"
           : > "$COMMON_LIST"
           for p in \
-            rime.lua \
-            lua/*.lua \
+            # --- 輸入方案共用模組：【候選字清單】 ---
             hau_suan_tuann_bp.yaml \
             hau_suan_tuann_bpm2.yaml \
             hau_suan_tuann_sni_and_tps.yaml \
             hau_suan_tuann_tlpa_and_tps.yaml \
             hau_suan_tuann_tlpa.yaml \
             hau_suan_tuann_tps.yaml \
+            # --- 輸入方案共用模組 ---
+            keymap_piau_tian.yaml \
             lib_phing_im.yaml \
-            keymap_piau_tian.yaml
+            # --- 按鍵輔助工具 ---
+            kb_hong_im.schema.yaml \
+            kb_ipa.schema.yaml \
+            # --- 輸入方案插件函式庫 ---
+            rime.lua \
+            lua/*.lua
           do
             f="${PREFIX}${p}"
             [[ -f "$f" ]] && echo "$f" >> "$COMMON_LIST" || echo "::warning::Missing COMMON: $f"
