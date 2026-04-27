@@ -499,31 +499,32 @@ function aux_commit(key, env)
 			return 2
 		end
 
-		local p_15 = ctx:get_option("piau_im_format_15")
-		local p_bp = ctx:get_option("piau_im_format_bpmf")
-		local p_tlpa = ctx:get_option("piau_im_format_tlpa")
+		-- [停用] piau_im_format_* / tiau_mark — 預計依 310.md 重構
+		-- local p_15 = ctx:get_option("piau_im_format_15")
+		-- local p_bp = ctx:get_option("piau_im_format_bpmf")
+		-- local p_tlpa = ctx:get_option("piau_im_format_tlpa")
 
 		local out_list = {}
 
-		if p_15 then
-			for i, v in ipairs(tlpa_15_list) do
-				out_list[i] = v
-			end
-		elseif p_bp then
-			for i, v in ipairs(bpmf_list) do
-				out_list[i] = v
-			end
-		else
-			local is_tiau = ctx:get_option("tiau_mark")
-			for i, v in ipairs(tlpa_15_list) do
-				local roman = convert_15_to_roman(v)
-				if roman then
-					out_list[i] = is_tiau and apply_poj_tone_mark(roman) or roman
-				else
-					out_list[i] = v
-				end
-			end
-		end
+		-- if p_15 then
+		-- 	for i, v in ipairs(tlpa_15_list) do
+		-- 		out_list[i] = v
+		-- 	end
+		-- elseif p_bp then
+		-- 	for i, v in ipairs(bpmf_list) do
+		-- 		out_list[i] = v
+		-- 	end
+		-- else
+		-- 	local is_tiau = ctx:get_option("tiau_mark")
+		-- 	for i, v in ipairs(tlpa_15_list) do
+		-- 		local roman = convert_15_to_roman(v)
+		-- 		if roman then
+		-- 			out_list[i] = is_tiau and apply_poj_tone_mark(roman) or roman
+		-- 		else
+		-- 			out_list[i] = v
+		-- 		end
+		-- 	end
+		-- end
 
 		local out_str = table.concat(out_list, " ")
 		if #out_str > 0 then
@@ -635,8 +636,9 @@ local function format_comment(s, display_roman)
 end
 
 function reformat_comment_filter(input, env)
-	-- 取得模式設定（開關 dict_mode 是否為開啟狀態）
-	local display_roman = env.engine.context:get_option("dict_mode")
+	-- [停用] dict_mode — 預計依 310.md 重構
+	-- local display_roman = env.engine.context:get_option("dict_mode")
+	local display_roman = false
 	for cand in input:iter() do
 		local old = cand.comment or ""
 		local new = format_comment(old, display_roman)

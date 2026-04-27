@@ -1,6 +1,7 @@
 # Rime schema
 # vim: set sw=2 sts=2 et:
 # encoding: utf-8
+# v0.1.1 (2026/4/27)：依據 310.md 重構。
 
 schema:
   schema_id: huan_ciat_tlpa
@@ -28,15 +29,16 @@ switches:
   - name: supers_tone
     reset: 1
     states: [一般, 上標]
-  - name: dict_mode
-    reset: 0
-    states: [方音, 台拼]
-  - options: [ piau_im_format_15, piau_im_format_bpmf, piau_im_format_tlpa ]
-    reset: 0
-    states: [ 單出十五音, 單出方音, 單出台拼 ]
-  - options: [ tiau_mark, tiau_num ]
-    reset: 1
-    states: [ 調符, 調號 ]
+  # [停用] dict_mode / piau_im_format_* / tiau_mark — 預計依 310.md 重構
+  # - name: dict_mode
+  #   reset: 0
+  #   states: [方音, 台拼]
+  # - options: [ piau_im_format_15, piau_im_format_bpmf, piau_im_format_tlpa ]
+  #   reset: 0
+  #   states: [ 單出十五音, 單出方音, 單出台拼 ]
+  # - options: [ tiau_mark, tiau_num ]
+  #   reset: 1
+  #   states: [ 調符, 調號 ]
 
 engine:
   processors:
