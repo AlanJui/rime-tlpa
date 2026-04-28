@@ -1,7 +1,7 @@
 # Rime schema
 # vim: set sw=2 sts=2 et:
 # encoding: utf-8
-# v0.1.1 (2026/4/27)：依據 310.md 重構。
+# v0.1.2 (2026/4/27)：依據 310.md 重構。
 
 schema:
   schema_id: huan_ciat_tlpa
@@ -29,20 +29,26 @@ switches:
   - name: supers_tone
     reset: 1
     states: [一般, 上標]
-  # [停用] dict_mode / piau_im_format_* / tiau_mark — 預計依 310.md 重構
+  # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
+  # reset: 0 → 第一個選項為預設 → 十五音
+  - options:
+      [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
+        key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
+        key_in_piau_im_bpm2, key_in_piau_im_ipa ]
+    reset: 0
+    states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
+  # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
+  # reset: 0 → 第一個選項為預設 → 方音符號
+  - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
+    reset: 0
+    states: [ 方音符號, 台語音標 ]
   # - name: dict_mode
   #   reset: 0
-  #   states: [方音, 台拼]
-  # - options: [ piau_im_format_15, piau_im_format_bpmf, piau_im_format_tlpa ]
-  #   reset: 0
-  #   states: [ 單出十五音, 單出方音, 單出台拼 ]
-  # - options: [ tiau_mark, tiau_num ]
-  #   reset: 1
-  #   states: [ 調符, 調號 ]
+  #   states: [方音符號, 台語音標]
 
 engine:
   processors:
-    - lua_processor@aux_commit # 可輸出【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
+    - lua_processor@aux_commit # 控制【輸入方案】輸出之【漢字格音】格式
     - lua_processor@jump_select # 務必置頂，用以攔截【快捷鍵】，如：<Ctrl>+<,> / <Ctrl>+<.>，轉送【代理鍵】：F20/F24
     - ascii_composer
     - recognizer
@@ -68,7 +74,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
-    - lua_filter@reformat_comment_filter
+    - lua_filter@reformat_comment_filter  # 控制【候選清單】顯示之【漢字標音】
 
 speller:
   #------------------------------------------------------

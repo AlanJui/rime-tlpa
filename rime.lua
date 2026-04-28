@@ -1,4 +1,4 @@
--- Version: 0.2 (2026-3-3)
+-- Version: 0.2.1 (2026/4/28)
 -- RIME API 依賴於運行時環境，無需顯式引入
 
 ---@diagnostic disable: undefined-global
@@ -8,7 +8,7 @@
 -- === END DICTIONARIES ===
 
 -- === DICTIONARIES ===
-local sheng_mu_dict = {
+local siann_bu_dict = {
 	["邊"] = "p",
 	["頗"] = "ph",
 	["門"] = "b",
@@ -29,7 +29,7 @@ local sheng_mu_dict = {
 	["英"] = "",
 }
 
-local yun_mu_dict = {
+local un_bu_dict = {
 	["君"] = { "un", "ut" },
 	["堅"] = { "ian", "iat" },
 	["金"] = { "im", "ip" },
@@ -82,7 +82,7 @@ local yun_mu_dict = {
 	["牛"] = { "iunn", "" },
 }
 
-local tone_map = {
+local tiau_ho_map = {
 	["一"] = 1,
 	["二"] = 2,
 	["三"] = 3,
@@ -93,7 +93,8 @@ local tone_map = {
 	["八"] = 8,
 }
 
-local function convert_15_to_roman(s)
+local function convert_sni_to_tlpa(s)
+	-- 將【十五音】轉換成【台語音標】
 	local chars = {}
 	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
 		table.insert(chars, uchar)
@@ -102,25 +103,27 @@ local function convert_15_to_roman(s)
 		return nil
 	end
 
-	local yun = chars[1]
-	local tone = chars[2]
-	local sheng = chars[3]
+	local un = chars[1]
+	local tiau = chars[2]
+	local siann = chars[3]
 
-	local tone_num = tone_map[tone]
-	local sheng_roman = sheng_mu_dict[sheng]
-	local yun_romans = yun_mu_dict[yun]
+	local tiau_ho = tiau_ho_map[tiau]	-- 調號：tiau_ho
+	local siann_bu = siann_bu_dict[siann]
+	local un_bu = un_bu_dict[un]
 
-	if not tone_num or not sheng_roman or not yun_romans then
+	if not tiau_ho or not siann_bu or not un_bu then
 		return nil
 	end
 
-	local is_entering = (tone_num == 4 or tone_num == 8)
-	local yun_roman = is_entering and yun_romans[2] or yun_romans[1]
+	-- 依據【調號】選用【舒聲】或【促聲】韻母：調號為 4 或 8 時，使用促聲韻母；其他調號則使用舒聲韻母
+	local jip_siann_tiau = (tiau_ho == 4 or tiau_ho == 8)  -- 入聲調號為 4 或 8 時，才使用 un_bu_dict 中的第二個元素（入聲調）
+	un_bu = jip_siann_tiau and un_bu[2] or un_bu[1]  -- 根據是否為入聲調，選擇 un_bu_dict 中的對應元素
 
-	return sheng_roman .. yun_roman .. tone_num
+	return siann_bu .. un_bu .. tiau_ho
 end
 
-local POJ_TONE_MARKS = {
+-- 【白話字】與【台羅拼音】使用之聲調符號（調符）對照表
+local POJ_TIAU_HU = {
 	["1"] = "",
 	["2"] = "́", -- U+0301
 	["3"] = "̀", -- U+0300
@@ -131,12 +134,12 @@ local POJ_TONE_MARKS = {
 	["8"] = "̍", -- U+030D
 }
 
-local function apply_poj_tone_mark(syllable)
+local function apply_poj_tiau_hu(syllable)
 	local base, tone = syllable:match("^(.-)([1-8])$")
 	if not base or not tone then
 		return syllable
 	end
-	local mark = POJ_TONE_MARKS[tone]
+	local mark = POJ_TIAU_HU[tone]
 	if not mark or mark == "" then
 		return base
 	end
@@ -276,44 +279,6 @@ function jump_select(key, env)
 	return 1 -- kAccepted
 end
 
-------------------------------------------------------------------------------------------
--- aux_commit：提供輸入法的【輸出】，可選擇
--- （1）漢字、（2）【羅馬拼音字母】、（3）【方音符號】、（4）【帶調號之方音符號】、
--- （5）候選字清單顯示結果：【羅馬拼音字母】＋【方音符號】一起輸出（候選字清單的顯示結果）
-------------------------------------------------------------------------------------------
--- 扶：〔hu5〕  【ㄏㄨˊ】
--- Space → 漢字
--- Enter → 羅馬拼音字母：hu5
--- Ctrl+Enter → 方音符號：ㄏㄨˊ
--- Shift+Enter → 帶調號方音符號：ㄏㄨ5
--- Ctrl+Shift+Enter → 候選字清單顯示結果：〔hu5〕  【ㄏㄨˊ】
-------------------------------------------------------------------------------------------
--- 注意：本功能須配合 schema 的 key_binder，將 Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter 綁定到 lua_aux_commit
--- 例如：
---   "key_binder/bindings/accept": "lua_aux_commit"
---   "key_binder/bindings/accept_next": "lua_aux_commit"
---   "key_binder/bindings/accept_previous": "lua_aux_commit"
---   "key_binder/bindings/accept_alternate": "lua_aux_commit"
-------------------------------------------------------------------------------------------
--- 另外，請在 schema 的 switches 中加入「supers_tone」選項
--- 例如：
---  "switches": [
---    { "name": "supers_tone", "reset": 1, "states": ["上標", "一般"] }
---  ]
-------------------------------------------------------------------------------------------
--- 這樣 Shift+Enter 輸出時，會依「supers_tone」選項，決定輸出「上標」或「一般數字」
-------------------------------------------------------------------------------------------
--- 【程式處理指引】：
--- 能從候選註解（不論是原本「配對顯示」或你剛重排後的「左 TLPA、右注音」）解析出所有音節。
-
--- 沒候選單時，改從 inline 取資料：TLPA 取 ctx.input（自動依 ' 切音節）、注音取 ctx:get_script_text()（會是像 ㄅ'ㄙ，自動拆成 ㄅ、ㄙ）。
-
--- Enter：輸出 TLPA（多音節用 ' 連接）
--- Ctrl+Enter：輸出注音（保留聲調符號，音節間一格空白）
--- Shift+Enter：依 supers_tone 輸出上標或數字（每個音節各自轉換，再以空白連接）
--- Ctrl+Shift+Enter：輸出「候選雙欄格式」：〔tlpa1〕 〔tlpa2〕 … 【bpmf1】 【bpmf2】 …
-------------------------------------------------------------------------------------------
-
 -- ========= 解析候選註解 / inline 的多音節工具 =========
 
 -- 從候選註解抓所有 〔...〕 與 【...】（相容你重排後的「雙欄」與原始「配對」）
@@ -372,9 +337,9 @@ local function split_inline(ctx)
 end
 
 -- ========== 注音聲調處理 ==========
-local TONE_MARKS = "[ˊˋ˪˫˙]"
+local TPS_TIAU_HU = "[ˊˋ˪˫˙]"
 local function strip_bpmf_marks_one(s)
-	return s and s:gsub(TONE_MARKS, "") or s
+	return s and s:gsub(TPS_TIAU_HU, "") or s
 end
 
 -- 使用【上標數字】標示聲調之【調號】值
@@ -412,7 +377,7 @@ local function tone_from_tlpa(tl)
 end
 
 -- 注音 + TLPA 調號 → 上標數字調
-local function bpmf_with_supers_by_tl(bpmf, tlpa)
+local function tps_with_supers_by_tl(bpmf, tlpa)
 	if not bpmf then
 		return nil
 	end
@@ -422,7 +387,7 @@ local function bpmf_with_supers_by_tl(bpmf, tlpa)
 end
 
 -- 注音 + TLPA 調號 → 尾隨數字調
-local function bpmf_with_digit_by_tl(bpmf, tlpa)
+local function tps_with_digit_by_tl(bpmf, tlpa)
 	if not bpmf then
 		return nil
 	end
@@ -468,9 +433,14 @@ local function norm_repr(r)
 	return r:lower()
 end
 
--- ============= 主函式：aux_commit（多音節友善） =============
+------------------------------------------------------------------------------------------
+-- aux_commit：切換輸入方案【輸出】之【漢字標音】格式
+-- Space → 漢字
+-- Enter → 漢字標音（格式依選項而定）
+------------------------------------------------------------------------------------------
 
 function aux_commit(key, env)
+	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
 	local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
@@ -487,44 +457,68 @@ function aux_commit(key, env)
 		if not gen_comm or gen_comm == "" then
 			gen_comm = cand:get_genuine().comment or ""
 		end
-		local tlpa_15_list, bpmf_list = {}, {}
-		for t in gen_comm:gmatch("〔(.-)〕") do
-			table.insert(tlpa_15_list, t)
+		-- [DBG] 觀察 Enter 鍵按下時的候選 comment 原始內容
+		log.info("[aux_commit] cand.text=" .. (cand.text or "?") .. " comment=[" .. gen_comm .. "]")
+
+		-- 【候選清單】兩欄式：左欄【十五音】，右欄【方音符號音】
+		local tlpa_sni_list, tps_list = {}, {}
+		-- 左邊
+		for zo_pinn in gen_comm:gmatch("〔(.-)〕") do
+			table.insert(tlpa_sni_list, zo_pinn)
 		end
-		for z in gen_comm:gmatch("【(.-)】") do
-			table.insert(bpmf_list, z)
+		-- 右邊（正邊）
+		for ziann_pinn in gen_comm:gmatch("【(.-)】") do
+			table.insert(tps_list, ziann_pinn)
 		end
 
-		if #tlpa_15_list == 0 then
+		-- [DBG] 確認解析結果
+		log.info("[aux_commit] tlpa_sni_list count=" .. #tlpa_sni_list .. " tps_list count=" .. #tps_list)
+		for i, v in ipairs(tlpa_sni_list) do
+			log.info("[aux_commit] tlpa_sni_list[" .. i .. "]=[" .. v .. "]")
+		end
+
+		if #tlpa_sni_list == 0 then
+			log.info("[aux_commit] tlpa_sni_list is empty, returning kNoop")
 			return 2
 		end
 
-		-- [停用] piau_im_format_* / tiau_mark — 預計依 310.md 重構
-		-- local p_15 = ctx:get_option("piau_im_format_15")
-		-- local p_bp = ctx:get_option("piau_im_format_bpmf")
-		-- local p_tlpa = ctx:get_option("piau_im_format_tlpa")
+		-- [DBG] 測試 convert_sni_to_tlpa 的轉換結果
+		for i, v in ipairs(tlpa_sni_list) do
+			local test = convert_sni_to_tlpa(v)
+			log.info("[aux_commit] convert_sni_to_tlpa([" .. v .. "])=" .. tostring(test))
+		end
 
+		-- [DBG] 確認目前 switch 狀態
+		log.info("[aux_commit] key_in_piau_im_tps=" .. tostring(ctx:get_option("key_in_piau_im_tps")))
+		log.info("[aux_commit] key_in_piau_im_tlpa=" .. tostring(ctx:get_option("key_in_piau_im_tlpa")))
+		log.info("[aux_commit] key_in_piau_im_sni=" .. tostring(ctx:get_option("key_in_piau_im_sni")))
+
+		-- key_in_piau_im_* 決定 Enter 鍵輸出格式（310.md §輸入編輯列之漢字標音格式）
 		local out_list = {}
 
-		-- if p_15 then
-		-- 	for i, v in ipairs(tlpa_15_list) do
-		-- 		out_list[i] = v
-		-- 	end
-		-- elseif p_bp then
-		-- 	for i, v in ipairs(bpmf_list) do
-		-- 		out_list[i] = v
-		-- 	end
-		-- else
-		-- 	local is_tiau = ctx:get_option("tiau_mark")
-		-- 	for i, v in ipairs(tlpa_15_list) do
-		-- 		local roman = convert_15_to_roman(v)
-		-- 		if roman then
-		-- 			out_list[i] = is_tiau and apply_poj_tone_mark(roman) or roman
-		-- 		else
-		-- 			out_list[i] = v
-		-- 		end
-		-- 	end
-		-- end
+		if ctx:get_option("key_in_piau_im_tps") then
+			-- 方音符號：直接取 【...】 內容
+			for i, v in ipairs(tps_list) do
+				out_list[i] = v
+			end
+		elseif ctx:get_option("key_in_piau_im_tlpa") then
+			-- 台語音標：十五音 → TLPA 羅馬字母（數字調號）
+			for i, v in ipairs(tlpa_sni_list) do
+				local roman = convert_sni_to_tlpa(v)
+				out_list[i] = roman and roman or v
+			end
+		elseif ctx:get_option("key_in_piau_im_tl") or ctx:get_option("key_in_piau_im_poj") then
+			-- 台羅拼音 / 白話字：十五音 → TLPA → 加聲調符號（POJ 式）
+			for i, v in ipairs(tlpa_sni_list) do
+				local roman = convert_sni_to_tlpa(v)
+				out_list[i] = roman and apply_poj_tiau_hu(roman) or v
+			end
+		else
+			-- 預設（key_in_piau_im_sni）及其他尚未實作之格式：直接輸出十五音
+			for i, v in ipairs(tlpa_sni_list) do
+				out_list[i] = v
+			end
+		end
 
 		local out_str = table.concat(out_list, " ")
 		if #out_str > 0 then
@@ -590,68 +584,100 @@ end
 -- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
 --------------------------------------------------------------------------
 
-local function format_comment(s, display_roman)
+local function format_comment(s, mode)
+	-- mode: "tps"（方音符號）、"tlpa"（台語音標）、"sni"（十五音）
 	if type(s) ~= "string" or s == "" then
 		return s
 	end
-	local tlpa, zu_im = {}, {}
+	local tlpa, tps = {}, {}
 
 	for t in s:gmatch("〔(.-)〕") do
 		table.insert(tlpa, t)
 	end
 	for z in s:gmatch("【(.-)】") do
-		table.insert(zu_im, z)
+		table.insert(tps, z)
 	end
 
 	if #tlpa == 0 then
 		return s
 	end
 
-	if display_roman then
-		local new_zu_im = {}
+	-- 決定右欄（【...】）的內容
+	local right
+	if mode == "tlpa" then
+		-- 台語音標：十五音 → TLPA 羅馬字母
+		right = {}
 		for i, t in ipairs(tlpa) do
-			local roman = convert_15_to_roman(t)
-			new_zu_im[i] = roman and roman or (zu_im[i] or "")
+			local roman = convert_sni_to_tlpa(t)
+			right[i] = roman and roman or (tps[i] or "")
 		end
-		zu_im = new_zu_im
+	elseif mode == "sni" then
+		-- 僅十五音：不顯示右欄
+		right = nil
+	else
+		-- 預設（bpmf）：方音符號
+		right = tps
 	end
 
-	if #tlpa >= 2 and #tlpa == #zu_im then
+	local prefix = s:match("^(%s*)") or ""
+
+	if right == nil then
+		-- 僅顯示十五音
+		if #tlpa >= 2 then
+			return "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+		else
+			return prefix .. "〔" .. tlpa[1] .. "〕"
+		end
+	end
+
+	if #tlpa >= 2 and #tlpa == #right then
 		return "〔"
 			.. table.concat(tlpa, "〕 〔")
 			.. "〕"
 			.. "  "
 			.. "【"
-			.. table.concat(zu_im, "】 【")
+			.. table.concat(right, "】 【")
 			.. "】"
 	end
 
-	-- 單字處理時，如果有切換模式，也要套用新格式
-	local prefix = s:match("^(%s*)") or ""
-	if display_roman and #tlpa == 1 and #zu_im == 1 then
-		return prefix .. "〔" .. tlpa[1] .. "〕【" .. zu_im[1] .. "】"
+	-- 單字（或右欄數量不符時）
+	if #tlpa == 1 then
+		local r = right[1] or ""
+		if r ~= "" then
+			return prefix .. "〔" .. tlpa[1] .. "〕【" .. r .. "】"
+		else
+			return prefix .. "〔" .. tlpa[1] .. "〕"
+		end
 	end
 
 	return s
 end
 
 function reformat_comment_filter(input, env)
-	-- [停用] dict_mode — 預計依 310.md 重構
-	-- local display_roman = env.engine.context:get_option("dict_mode")
-	local display_roman = false
+	-- hau_suan_piau_im_* 決定候選清單【漢字標音】顯示格式（310.md §候選清單之漢字標音格式）
+	local ctx = env.engine.context
+	local mode
+	if ctx:get_option("hau_suan_piau_im_tlpa") then
+		mode = "tlpa"	-- 台語音標
+	else
+		mode = "tps"	-- 預設：方音符號 (hau_suan_piau_im_tps)
+	end
+
+	-- [DBG] 確認 filter 被呼叫，及當前 mode
+	log.info("[reformat_comment_filter] mode=" .. mode)
+
 	for cand in input:iter() do
 		local old = cand.comment or ""
-		local new = format_comment(old, display_roman)
-
-		if true then
-			local c = cand:get_genuine()
-			local nc = Candidate(c.type, c.start, c._end, c.text, new)
-			nc.preedit = cand.preedit
-			nc.quality = cand.quality
-			yield(nc)
-		else
-			yield(cand)
-		end
+		-- [DBG] 觀察每個候選的原始 comment 內容
+		log.info("[reformat_comment_filter] raw comment=[" .. old .. "] text=" .. (cand.text or "?"))
+		local new = format_comment(old, mode)
+		-- [DBG] 觀察格式化後的結果
+		log.info("[reformat_comment_filter] new comment=[" .. new .. "]")
+		local c = cand:get_genuine()
+		local nc = Candidate(c.type, c.start, c._end, c.text, new)
+		nc.preedit = c.preedit  -- 修正：應取 genuine 的 preedit
+		nc.quality = cand.quality
+		yield(nc)
 	end
 end
 
