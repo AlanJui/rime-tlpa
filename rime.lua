@@ -231,14 +231,14 @@ function jump_select(key, env)
 		auto_commit = true
 
 	-- 【移動選擇游標】(Move only) - 調整為右到左順序
-	elseif r == "Control+slash" or r == "Control+?" then
-		-- 移到第1個 (Ctrl + /) -> 頂端
-		offset = 0
-	elseif r == "Control+period" or r == "Control+greater" or r == "Control+>" or r == "Control+." then
-		-- 移到第3個 (Ctrl + .) -> 中間
+	elseif r == "Control+m" then
+		-- 移到第3個 (Ctrl + M) -> 中間
 		offset = 2
 	elseif r == "Control+comma" or r == "Control+less" or r == "Control+<" then
-		-- 移到第5個 (Ctrl + ,) -> 底端
+		-- 移到第1個 (Ctrl + ,) -> 頂端
+		offset = 0
+	elseif r == "Control+period" or r == "Control+greater" or r == "Control+>" or r == "Control+." then
+		-- 移到第5個 (Ctrl + .) -> 底端
 		offset = 4
 	end
 
