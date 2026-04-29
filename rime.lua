@@ -584,55 +584,75 @@ end
 -- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
 --------------------------------------------------------------------------
 
-local function format_comment(s, mode)
+local function format_comment(comment_string, mode)
+	-- comment_string: 原始 comment 字串
+	--   左欄 〔...〕 為十五音，原始格式：【聲+韻+調】（如：柳君二）
+	--   右欄 【...】 為方音符號
 	-- mode: "tps"（方音符號）、"tlpa"（台語音標）、"sni"（十五音）
-	if type(s) ~= "string" or s == "" then
-		return s
+	if type(comment_string) ~= "string" or comment_string == "" then
+		return comment_string
 	end
-	local tlpa, tps = {}, {}
+	local left_col, right_col = {}, {}
 
-	for t in s:gmatch("〔(.-)〕") do
-		table.insert(tlpa, t)
+	-- 取左欄的所有音節（輸入方案支援【連續輸入】，故音節數不一定為單一）
+	for left in comment_string:gmatch("〔(.-)〕") do
+		table.insert(left_col, left)
 	end
-	for z in s:gmatch("【(.-)】") do
-		table.insert(tps, z)
+	for right in comment_string:gmatch("【(.-)】") do
+		table.insert(right_col, right)
 	end
 
-	if #tlpa == 0 then
-		return s
+	if #left_col == 0 then
+		return comment_string
+	end
+
+	-- 將左欄每個音節從【聲+韻+調】重排為【韻+調+聲】（傳統十五音順序）
+	-- 【例】：柳君二（聲+韻+調）→ 君二柳（韻+調+聲）
+	local display_left = {}
+	for _, s in ipairs(left_col) do
+		local chars = {}
+		for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+			table.insert(chars, uchar)
+		end
+		if #chars == 3 then
+			-- 聲[1] + 韻[2] + 調[3]  →  韻[2] + 調[3] + 聲[1]
+			table.insert(display_left, chars[2] .. chars[3] .. chars[1])
+		else
+			table.insert(display_left, s)
+		end
 	end
 
 	-- 決定右欄（【...】）的內容
 	local right
 	if mode == "tlpa" then
-		-- 台語音標：十五音 → TLPA 羅馬字母
+		-- 台語音標：將已重排（韻+調+聲）之十五音傳入 convert_sni_to_tlpa
 		right = {}
-		for i, t in ipairs(tlpa) do
+		for i, t in ipairs(display_left) do
 			local roman = convert_sni_to_tlpa(t)
-			right[i] = roman and roman or (tps[i] or "")
+			right[i] = roman and roman or (right_col[i] or "")
 		end
 	elseif mode == "sni" then
 		-- 僅十五音：不顯示右欄
 		right = nil
 	else
-		-- 預設（bpmf）：方音符號
-		right = tps
+		-- 預設（tps）：方音符號，直接沿用右欄原始值
+		right = right_col
 	end
 
-	local prefix = s:match("^(%s*)") or ""
+	local prefix = comment_string:match("^(%s*)") or ""
 
 	if right == nil then
-		-- 僅顯示十五音
-		if #tlpa >= 2 then
-			return "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+		-- 僅顯示十五音（韻+調+聲）
+		if #display_left >= 2 then
+			return "〔" .. table.concat(display_left, "〕 〔") .. "〕"
 		else
-			return prefix .. "〔" .. tlpa[1] .. "〕"
+			return prefix .. "〔" .. display_left[1] .. "〕"
 		end
 	end
 
-	if #tlpa >= 2 and #tlpa == #right then
+	if #display_left >= 2 and #display_left == #right then
 		return "〔"
-			.. table.concat(tlpa, "〕 〔")
+			.. table.concat(display_left, "〕 〔")
 			.. "〕"
 			.. "  "
 			.. "【"
@@ -641,16 +661,16 @@ local function format_comment(s, mode)
 	end
 
 	-- 單字（或右欄數量不符時）
-	if #tlpa == 1 then
+	if #display_left == 1 then
 		local r = right[1] or ""
 		if r ~= "" then
-			return prefix .. "〔" .. tlpa[1] .. "〕【" .. r .. "】"
+			return prefix .. "〔" .. display_left[1] .. "〕【" .. r .. "】"
 		else
-			return prefix .. "〔" .. tlpa[1] .. "〕"
+			return prefix .. "〔" .. display_left[1] .. "〕"
 		end
 	end
 
-	return s
+	return comment_string
 end
 
 function reformat_comment_filter(input, env)
@@ -666,17 +686,18 @@ function reformat_comment_filter(input, env)
 	-- [DBG] 確認 filter 被呼叫，及當前 mode
 	log.info("[reformat_comment_filter] mode=" .. mode)
 
-	for cand in input:iter() do
-		local old = cand.comment or ""
+	-- 【候選清單】逐項處理：重排 comment 中左欄【十五音】與右欄【注音符號】
+	for hau_suan in input:iter() do
+		local old = hau_suan.comment or ""
 		-- [DBG] 觀察每個候選的原始 comment 內容
-		log.info("[reformat_comment_filter] raw comment=[" .. old .. "] text=" .. (cand.text or "?"))
+		log.info("[reformat_comment_filter] raw comment=[" .. old .. "] text=" .. (hau_suan.text or "?"))
 		local new = format_comment(old, mode)
 		-- [DBG] 觀察格式化後的結果
 		log.info("[reformat_comment_filter] new comment=[" .. new .. "]")
-		local c = cand:get_genuine()
+		local c = hau_suan:get_genuine()
 		local nc = Candidate(c.type, c.start, c._end, c.text, new)
 		nc.preedit = c.preedit  -- 修正：應取 genuine 的 preedit
-		nc.quality = cand.quality
+		nc.quality = hau_suan.quality
 		yield(nc)
 	end
 end

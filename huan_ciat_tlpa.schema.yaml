@@ -29,6 +29,11 @@ switches:
   - name: supers_tone
     reset: 1
     states: [一般, 上標]
+  # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
+  # reset: 0 → 第一個選項為預設 → 方音符號
+  - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
+    reset: 0
+    states: [ 方音符號, 台語音標 ]
   # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
   # reset: 0 → 第一個選項為預設 → 十五音
   - options:
@@ -37,14 +42,6 @@ switches:
         key_in_piau_im_bpm2, key_in_piau_im_ipa ]
     reset: 0
     states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
-  # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 方音符號
-  - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
-    reset: 0
-    states: [ 方音符號, 台語音標 ]
-  # - name: dict_mode
-  #   reset: 0
-  #   states: [方音符號, 台語音標]
 
 engine:
   processors:
