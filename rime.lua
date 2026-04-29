@@ -1,3 +1,4 @@
+-- Version: 0.2.2 (2026/4/29)
 -- Version: 0.2.1 (2026/4/28)
 -- RIME API 依賴於運行時環境，無需顯式引入
 
@@ -5,9 +6,7 @@
 
 -- === DICTIONARIES ===
 
--- === END DICTIONARIES ===
-
--- === DICTIONARIES ===
+-- 十五音【聲母】與【台語音標】之對映關係
 local siann_bu_dict = {
 	["邊"] = "p",
 	["頗"] = "ph",
@@ -29,6 +28,9 @@ local siann_bu_dict = {
 	["英"] = "",
 }
 
+-- 十五音【韻母】與【台語音標】之對映對映關係
+-- 前為【舒聲】韻母：調號為 1、2、3、5、6、7
+-- 後為【促聲】韻母：調號為 4 或 8
 local un_bu_dict = {
 	["君"] = { "un", "ut" },
 	["堅"] = { "ian", "iat" },
@@ -82,6 +84,7 @@ local un_bu_dict = {
 	["牛"] = { "iunn", "" },
 }
 
+-- 十五音【聲調】在【中文調號】與【阿拉伯字調號】之對映關係
 local tiau_ho_map = {
 	["一"] = 1,
 	["二"] = 2,
@@ -92,6 +95,41 @@ local tiau_ho_map = {
 	["七"] = 7,
 	["八"] = 8,
 }
+
+-- 【白話字】與【台羅拼音】使用之聲調符號（調符）對照表
+local POJ_TIAU_HU = {
+	["1"] = "",
+	["2"] = "́", -- U+0301
+	["3"] = "̀", -- U+0300
+	["4"] = "",
+	["5"] = "̂", -- U+0302
+	["6"] = "̌", -- U+030C
+	["7"] = "̄", -- U+0304
+	["8"] = "̍", -- U+030D
+}
+
+-- 方音符號之調符對映關係
+local TPS_TIAU_HU = {
+	["2"] = "ˋ",
+	["3"] = "˪",
+	["5"] = "ˊ",
+	["7"] = "˫",
+	["8"] = "˙",
+}
+
+-- 【上標數字】標示聲調之【調號】值
+local supers_digit = {
+	["1"] = "¹",
+	["2"] = "²",
+	["3"] = "³",
+	["4"] = "⁴",
+	["5"] = "⁵",
+	["6"] = "⁶",
+	["7"] = "⁷",
+	["8"] = "⁸",
+}
+
+-- === END DICTIONARIES ===
 
 local function convert_sni_to_tlpa(s)
 	-- 將【十五音】轉換成【台語音標】
@@ -122,19 +160,9 @@ local function convert_sni_to_tlpa(s)
 	return siann_bu .. un_bu .. tiau_ho
 end
 
--- 【白話字】與【台羅拼音】使用之聲調符號（調符）對照表
-local POJ_TIAU_HU = {
-	["1"] = "",
-	["2"] = "́", -- U+0301
-	["3"] = "̀", -- U+0300
-	["4"] = "",
-	["5"] = "̂", -- U+0302
-	["6"] = "̌", -- U+030C
-	["7"] = "̄", -- U+0304
-	["8"] = "̍", -- U+030D
-}
-
 local function apply_poj_tiau_hu(syllable)
+	-- 【台語音標】轉換成【白話字】或【台羅拼音】時，
+	-- 原先之【調號】需轉換成【調符】，並套於【羅馬拼音字母】之上。
 	local base, tone = syllable:match("^(.-)([1-8])$")
 	if not base or not tone then
 		return syllable
@@ -171,266 +199,6 @@ local function apply_poj_tiau_hu(syllable)
 		res = base .. mark
 	end
 	return res
-end
--- === END DICTIONARIES ===
-
-local function press_key_n(env, key_name, n)
-	for _ = 1, n do
-		env.engine:process_key(KeyEvent(key_name))
-	end
-end
-
-local function norm(r)
-	if r:sub(1, 8) == "Release+" then
-		return r:sub(9)
-	end
-	return r
-end
-
------------------------------------------------------------------------------------------
--- jump_select：【候選字清單】每一頁可顯示：5個選項。為求選字的操作便利性。
--- 能在【候選字清單】中，以快捷鍵移動【選擇游標】，能將選擇游標，快速移到：
--- 頂端（第1個選項）/中間（第3個選項）/底端（第5個選項）三種快捷鍵。
------------------------------------------------------------------------------------------
--- 邏輯：先發送 Page_Up 重置到頁首，再依位移量補送 Down 鍵。
--- 快捷鍵（由右至左）：
--- （1）Ctrl+/（頂端 1st）
--- （2）Ctrl+.（中間 3rd）
--- （3）Ctrl+,（底端 5th）
--- 注意：已廢棄 F20/F24 代理鍵機制，直接使用系統原生鍵以提高相容性。
------------------------------------------------------------------------------------------
-function jump_select(key, env)
-	local ctx = env.engine.context
-	if not ctx:has_menu() then
-		return 2
-	end -- kNoop
-
-	local r = key:repr()
-	if r:sub(1, 8) == "Release+" then
-		return 2
-	end
-
-	local offset = -1
-	local auto_commit = false
-
-	-- 【直接選用】(Move and Commit)
-	if r == "Control+1" then
-		offset = 0
-		auto_commit = true
-	elseif r == "Control+2" then
-		offset = 1
-		auto_commit = true
-	elseif r == "Control+3" then
-		offset = 2
-		auto_commit = true
-	elseif r == "Control+4" then
-		offset = 3
-		auto_commit = true
-	elseif r == "Control+5" then
-		offset = 4
-		auto_commit = true
-
-	-- 【移動選擇游標】(Move only) - 調整為右到左順序
-	elseif r == "Control+m" then
-		-- 移到第3個 (Ctrl + M) -> 中間
-		offset = 2
-	elseif r == "Control+comma" or r == "Control+less" or r == "Control+<" then
-		-- 移到第1個 (Ctrl + ,) -> 頂端
-		offset = 0
-	elseif r == "Control+period" or r == "Control+greater" or r == "Control+>" or r == "Control+." then
-		-- 移到第5個 (Ctrl + .) -> 底端
-		offset = 4
-	end
-
-	if offset == -1 then
-		return 2
-	end
-
-	local comp = ctx.composition
-	if comp:empty() then
-		return 1
-	end
-	local seg = comp:back()
-	if not seg.menu then
-		return 1
-	end
-
-	local page_size = env.engine.schema.page_size
-	local selected_index = seg.selected_index
-	local page_start = math.floor(selected_index / page_size) * page_size
-	local target_index = page_start + offset
-
-	local available = seg.menu:prepare(target_index + 1)
-	if target_index >= available then
-		target_index = available - 1
-	end
-
-	env.engine:process_key(KeyEvent("Page_Up"))
-
-	local steps = target_index - page_start
-	for i = 1, steps do
-		env.engine:process_key(KeyEvent("Down"))
-	end
-
-	if auto_commit then
-		env.engine:process_key(KeyEvent("space"))
-	end
-
-	return 1 -- kAccepted
-end
-
--- ========= 解析候選註解 / inline 的多音節工具 =========
-
--- 從候選註解抓所有 〔...〕 與 【...】（相容你重排後的「雙欄」與原始「配對」）
-local function parse_comment_all(comment)
-	if not comment or comment == "" then
-		return {}, {}
-	end
-	local tlpa, zh = {}, {}
-	-- 抓所有 TLPA
-	for t in comment:gmatch("〔(.-)〕") do
-		table.insert(tlpa, t)
-	end
-	-- 抓所有注音
-	for z in comment:gmatch("【(.-)】") do
-		table.insert(zh, z)
-	end
-	-- 若抓不到，再試「一對一對」的樣式
-	if #tlpa == 0 or #zh == 0 then
-		for L, R in comment:gmatch("〔(.-)〕%s*【(.-)】") do
-			table.insert(tlpa, L)
-			table.insert(zh, R)
-		end
-	end
-	return tlpa, zh
-end
-
--- 從 inline 抓多音節：TLPA 用 ' 拆；注音用 ' 或空白拆，並去掉多餘分隔
-local function split_inline(ctx)
-	local tl = ctx.input or ""
-	local bp = (ctx.get_script_text and ctx:get_script_text()) or ""
-	local tl_list, bp_list = {}, {}
-
-	if tl ~= "" then
-		for seg in tl:gmatch("[^']+") do
-			table.insert(tl_list, seg)
-		end
-	end
-
-	if bp ~= "" then
-		bp = bp:gsub("'", " ") -- 將連續輸入分隔符號轉空白
-		for seg in bp:gmatch("%S+") do
-			seg = seg:gsub("'", "")
-			table.insert(bp_list, seg)
-		end
-		-- 若仍只得到一段但原始含 '，再保底拆
-		if #bp_list <= 1 and bp:find("'", 1, true) then
-			for seg in bp:gmatch("[^']+") do
-				seg = seg:gsub("%s+", "")
-				if #seg > 0 then
-					table.insert(bp_list, seg)
-				end
-			end
-		end
-	end
-	return tl_list, bp_list
-end
-
--- ========== 注音聲調處理 ==========
-local TPS_TIAU_HU = "[ˊˋ˪˫˙]"
-local function strip_bpmf_marks_one(s)
-	return s and s:gsub(TPS_TIAU_HU, "") or s
-end
-
--- 使用【上標數字】標示聲調之【調號】值
-local supers_digit = {
-	["1"] = "¹",
-	["2"] = "²",
-	["3"] = "³",
-	["4"] = "⁴",
-	["5"] = "⁵",
-	["6"] = "⁶",
-	["7"] = "⁷",
-	["8"] = "⁸",
-}
-
-local function tlpa_with_supers(tl)
-	if not tl then
-		return tl
-	end
-	local stem, tone = tl:match("^(.-)([1-8])$")
-	return stem and (stem .. (supers_digit[tone] or "")) or tl
-end
-
--- 依 supers_tone 選擇 TLPA 的呈現（上標或數字）
-local function tlpa_render_by_option(tl, use_supers)
-	if use_supers then
-		return tlpa_with_supers(tl)
-	else
-		return tl -- 保持數字結尾
-	end
-end
-
--- 由 TLPA 取調號（最後一碼 1-8）
-local function tone_from_tlpa(tl)
-	return tl and tl:match("([1-8])$") or nil
-end
-
--- 注音 + TLPA 調號 → 上標數字調
-local function tps_with_supers_by_tl(bpmf, tlpa)
-	if not bpmf then
-		return nil
-	end
-	local base = strip_bpmf_marks_one(bpmf)
-	local t = tone_from_tlpa(tlpa)
-	return t and (base .. (supers_digit[t] or "")) or base
-end
-
--- 注音 + TLPA 調號 → 尾隨數字調
-local function tps_with_digit_by_tl(bpmf, tlpa)
-	if not bpmf then
-		return nil
-	end
-	local base = strip_bpmf_marks_one(bpmf)
-	local t = tone_from_tlpa(tlpa)
-	return t and (base .. t) or base
-end
-
--- 對列表逐一套函數，再用空白接回
-local function map_join(list, f) -- f(elem, idx) -> string
-	local out = {}
-	for i, v in ipairs(list) do
-		out[i] = f(v, i) or ""
-	end
-	return table.concat(out, " ")
-end
-
--- 從「候選」拿多音節；失敗就退回 inline
-local function get_multiforms(env)
-	local ctx = env.engine.context
-	local tl_list, bp_list = {}, {}
-
-	if ctx:has_menu() then
-		local cand = ctx:get_selected_candidate()
-		if cand then
-			tl_list, bp_list = parse_comment_all(cand.comment or "")
-		end
-	end
-	if #tl_list == 0 and #bp_list == 0 then
-		tl_list, bp_list = split_inline(ctx)
-	end
-	return tl_list, bp_list
-end
-
--- 定義按受處理的快捷鍵：使用【正規表示式】判斷
-local function norm_repr(r)
-	-- -- 能截獲的按鍵：Alt+Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
-	-- r = r:gsub("^Release%+", "")
-	--      :gsub("ISO_Enter$", "Return")
-	--      :gsub("Alt%+ISO_Enter$", "Alt+Return")
-	-- 能截獲的按鍵：Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
-	r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
-	return r:lower()
 end
 
 ------------------------------------------------------------------------------------------
@@ -544,33 +312,6 @@ function supers_indicator(input, env)
 		-- 保留原本的屬性
 		new.preedit = cand.preedit
 		yield(new)
-	end
-end
-
------------------------------------------------------------------------
--- filter Debug Tools
------------------------------------------------------------------------
--- 驗證 FILTER　的觸發能被 RIME 攔截：不管候選內容是什麼，前面一律加上 [LUA] 標記
-function force_mark_filter(input, env)
-	for cand in input:iter() do
-		local old = cand.comment or ""
-		local nc = Candidate(cand.type, cand.start, cand._end, cand.text, "[LUA] " .. old)
-		nc.quality = cand.quality
-		yield(nc)
-	end
-end
-
--- 最小測試：僅在 comment 後面加 " [OK]"，不重排不改 text
--- 預期：
--- (1)注音輸入列仍是【ㄅ'ㄙ】
--- (2)候選照常彈出
--- (3)註解末尾出現 [OK]
-function append_ok_filter(input, env)
-	for cand in input:iter() do
-		local old = cand.comment or ""
-		local nc = cand:clone() -- 關鍵：clone 保留 preedit/屬性
-		nc.comment = old .. " [OK]"
-		yield(nc)
 	end
 end
 
@@ -702,4 +443,281 @@ function reformat_comment_filter(input, env)
 	end
 end
 
+-----------------------------------------------------------------------------------------
+-- jump_select：【候選字清單】每一頁可顯示：5個選項。為求選字的操作便利性。
+-- 能在【候選字清單】中，以快捷鍵移動【選擇游標】，能將選擇游標，快速移到：
+-- 頂端（第1個選項）/中間（第3個選項）/底端（第5個選項）三種快捷鍵。
+-----------------------------------------------------------------------------------------
+-- 邏輯：先發送 Page_Up 重置到頁首，再依位移量補送 Down 鍵。
+-- 快捷鍵（由右至左）：
+-- （1）Ctrl+M（頂端 1st）
+-- （2）Ctrl+,（中間 3rd）
+-- （3）Ctrl+.（底端 5th）
+-----------------------------------------------------------------------------------------
+function jump_select(key, env)
+	local ctx = env.engine.context
+	if not ctx:has_menu() then
+		return 2
+	end -- kNoop
+
+	local r = key:repr()
+	if r:sub(1, 8) == "Release+" then
+		return 2
+	end
+
+	local offset = -1
+	local auto_commit = false
+
+	-- 【直接選用】(Move and Commit)
+	if r == "Control+1" then
+		offset = 0
+		auto_commit = true
+	elseif r == "Control+2" then
+		offset = 1
+		auto_commit = true
+	elseif r == "Control+3" then
+		offset = 2
+		auto_commit = true
+	elseif r == "Control+4" then
+		offset = 3
+		auto_commit = true
+	elseif r == "Control+5" then
+		offset = 4
+		auto_commit = true
+
+	-- 【移動選擇游標】(Move only) - 調整為右到左順序
+	elseif r == "Control+m" then
+		-- 移到第3個 (Ctrl + M) -> 中間
+		offset = 2
+	elseif r == "Control+comma" or r == "Control+less" or r == "Control+<" then
+		-- 移到第1個 (Ctrl + ,) -> 頂端
+		offset = 0
+	elseif r == "Control+period" or r == "Control+greater" or r == "Control+>" or r == "Control+." then
+		-- 移到第5個 (Ctrl + .) -> 底端
+		offset = 4
+	end
+
+	if offset == -1 then
+		return 2
+	end
+
+	local comp = ctx.composition
+	if comp:empty() then
+		return 1
+	end
+	local seg = comp:back()
+	if not seg.menu then
+		return 1
+	end
+
+	local page_size = env.engine.schema.page_size
+	local selected_index = seg.selected_index
+	local page_start = math.floor(selected_index / page_size) * page_size
+	local target_index = page_start + offset
+
+	local available = seg.menu:prepare(target_index + 1)
+	if target_index >= available then
+		target_index = available - 1
+	end
+
+	env.engine:process_key(KeyEvent("Page_Up"))
+
+	local steps = target_index - page_start
+	for i = 1, steps do
+		env.engine:process_key(KeyEvent("Down"))
+	end
+
+	if auto_commit then
+		env.engine:process_key(KeyEvent("space"))
+	end
+
+	return 1 -- kAccepted
+end
+
 -----------------------------------------------------------------------
+-- 疑似已棄用之程式碼
+-----------------------------------------------------------------------
+
+local function press_key_n(env, key_name, n)
+	for _ = 1, n do
+		env.engine:process_key(KeyEvent(key_name))
+	end
+end
+
+local function norm(r)
+	if r:sub(1, 8) == "Release+" then
+		return r:sub(9)
+	end
+	return r
+end
+
+-----------------------------------------------------------------------
+-- filter Debug Tools
+-----------------------------------------------------------------------
+-- 驗證 FILTER　的觸發能被 RIME 攔截：不管候選內容是什麼，前面一律加上 [LUA] 標記
+function force_mark_filter(input, env)
+	for cand in input:iter() do
+		local old = cand.comment or ""
+		local nc = Candidate(cand.type, cand.start, cand._end, cand.text, "[LUA] " .. old)
+		nc.quality = cand.quality
+		yield(nc)
+	end
+end
+
+-- 最小測試：僅在 comment 後面加 " [OK]"，不重排不改 text
+-- 預期：
+-- (1)注音輸入列仍是【ㄅ'ㄙ】
+-- (2)候選照常彈出
+-- (3)註解末尾出現 [OK]
+function append_ok_filter(input, env)
+	for cand in input:iter() do
+		local old = cand.comment or ""
+		local nc = cand:clone() -- 關鍵：clone 保留 preedit/屬性
+		nc.comment = old .. " [OK]"
+		yield(nc)
+	end
+end
+
+-- ========= 解析候選註解 / inline 的多音節工具 =========
+
+-- 從候選註解抓所有 〔...〕 與 【...】（相容你重排後的「雙欄」與原始「配對」）
+local function parse_comment_all(comment)
+	if not comment or comment == "" then
+		return {}, {}
+	end
+	local tlpa, zh = {}, {}
+	-- 抓所有 TLPA
+	for t in comment:gmatch("〔(.-)〕") do
+		table.insert(tlpa, t)
+	end
+	-- 抓所有注音
+	for z in comment:gmatch("【(.-)】") do
+		table.insert(zh, z)
+	end
+	-- 若抓不到，再試「一對一對」的樣式
+	if #tlpa == 0 or #zh == 0 then
+		for L, R in comment:gmatch("〔(.-)〕%s*【(.-)】") do
+			table.insert(tlpa, L)
+			table.insert(zh, R)
+		end
+	end
+	return tlpa, zh
+end
+
+-- 從 inline 抓多音節：TLPA 用 ' 拆；注音用 ' 或空白拆，並去掉多餘分隔
+local function split_inline(ctx)
+	local tl = ctx.input or ""
+	local bp = (ctx.get_script_text and ctx:get_script_text()) or ""
+	local tl_list, bp_list = {}, {}
+
+	if tl ~= "" then
+		for seg in tl:gmatch("[^']+") do
+			table.insert(tl_list, seg)
+		end
+	end
+
+	if bp ~= "" then
+		bp = bp:gsub("'", " ") -- 將連續輸入分隔符號轉空白
+		for seg in bp:gmatch("%S+") do
+			seg = seg:gsub("'", "")
+			table.insert(bp_list, seg)
+		end
+		-- 若仍只得到一段但原始含 '，再保底拆
+		if #bp_list <= 1 and bp:find("'", 1, true) then
+			for seg in bp:gmatch("[^']+") do
+				seg = seg:gsub("%s+", "")
+				if #seg > 0 then
+					table.insert(bp_list, seg)
+				end
+			end
+		end
+	end
+	return tl_list, bp_list
+end
+
+-----------------------------------------------------------------------
+-- 可能已棄用之漢字標音轉換處理函數
+-----------------------------------------------------------------------
+local TPS_TIAU_HU = "[ˊˋ˪˫˙]"
+local function strip_bpmf_marks_one(s)
+	return s and s:gsub(TPS_TIAU_HU, "") or s
+end
+
+local function tlpa_with_supers(tl)
+	if not tl then
+		return tl
+	end
+	local stem, tone = tl:match("^(.-)([1-8])$")
+	return stem and (stem .. (supers_digit[tone] or "")) or tl
+end
+
+-- 依 supers_tone 選擇 TLPA 的呈現（上標或數字）
+local function tlpa_render_by_option(tl, use_supers)
+	if use_supers then
+		return tlpa_with_supers(tl)
+	else
+		return tl -- 保持數字結尾
+	end
+end
+
+-- 由 TLPA 取調號（最後一碼 1-8）
+local function tone_from_tlpa(tl)
+	return tl and tl:match("([1-8])$") or nil
+end
+
+-- 注音 + TLPA 調號 → 上標數字調
+local function tps_with_supers_by_tl(bpmf, tlpa)
+	if not bpmf then
+		return nil
+	end
+	local base = strip_bpmf_marks_one(bpmf)
+	local t = tone_from_tlpa(tlpa)
+	return t and (base .. (supers_digit[t] or "")) or base
+end
+
+-- 注音 + TLPA 調號 → 尾隨數字調
+local function tps_with_digit_by_tl(bpmf, tlpa)
+	if not bpmf then
+		return nil
+	end
+	local base = strip_bpmf_marks_one(bpmf)
+	local t = tone_from_tlpa(tlpa)
+	return t and (base .. t) or base
+end
+
+-- 對列表逐一套函數，再用空白接回
+local function map_join(list, f) -- f(elem, idx) -> string
+	local out = {}
+	for i, v in ipairs(list) do
+		out[i] = f(v, i) or ""
+	end
+	return table.concat(out, " ")
+end
+
+-- 從「候選」拿多音節；失敗就退回 inline
+local function get_multiforms(env)
+	local ctx = env.engine.context
+	local tl_list, bp_list = {}, {}
+
+	if ctx:has_menu() then
+		local cand = ctx:get_selected_candidate()
+		if cand then
+			tl_list, bp_list = parse_comment_all(cand.comment or "")
+		end
+	end
+	if #tl_list == 0 and #bp_list == 0 then
+		tl_list, bp_list = split_inline(ctx)
+	end
+	return tl_list, bp_list
+end
+
+-- 定義按受處理的快捷鍵：使用【正規表示式】判斷
+local function norm_repr(r)
+	-- -- 能截獲的按鍵：Alt+Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
+	-- r = r:gsub("^Release%+", "")
+	--      :gsub("ISO_Enter$", "Return")
+	--      :gsub("Alt%+ISO_Enter$", "Alt+Return")
+	-- 能截獲的按鍵：Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
+	r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
+	return r:lower()
+end
