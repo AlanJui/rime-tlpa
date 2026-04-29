@@ -1,4 +1,4 @@
--- Version: 0.2.2 (2026/4/29)
+-- Version: 0.2.3 (2026/4/29)
 -- Version: 0.2.1 (2026/4/28)
 -- RIME API 依賴於運行時環境，無需顯式引入
 
@@ -225,65 +225,114 @@ function aux_commit(key, env)
 		if not gen_comm or gen_comm == "" then
 			gen_comm = cand:get_genuine().comment or ""
 		end
-		-- [DBG] 觀察 Enter 鍵按下時的候選 comment 原始內容
 		log.info("[aux_commit] cand.text=" .. (cand.text or "?") .. " comment=[" .. gen_comm .. "]")
 
-		-- 【候選清單】兩欄式：左欄【十五音】，右欄【方音符號音】
-		local tlpa_sni_list, tps_list = {}, {}
-		-- 左邊
+		-- 【候選清單】兩欄式：左欄 〔韻+調+聲〕，右欄 【方音符號】
+		local sni_list, tps_list = {}, {}
 		for zo_pinn in gen_comm:gmatch("〔(.-)〕") do
-			table.insert(tlpa_sni_list, zo_pinn)
+			table.insert(sni_list, zo_pinn)
 		end
-		-- 右邊（正邊）
 		for ziann_pinn in gen_comm:gmatch("【(.-)】") do
 			table.insert(tps_list, ziann_pinn)
 		end
 
-		-- [DBG] 確認解析結果
-		log.info("[aux_commit] tlpa_sni_list count=" .. #tlpa_sni_list .. " tps_list count=" .. #tps_list)
-		for i, v in ipairs(tlpa_sni_list) do
-			log.info("[aux_commit] tlpa_sni_list[" .. i .. "]=[" .. v .. "]")
+		log.info("[aux_commit] sni_list count=" .. #sni_list .. " tps_list count=" .. #tps_list)
+		for i, v in ipairs(sni_list) do
+			log.info("[aux_commit] sni_list[" .. i .. "]=[" .. v .. "]")
 		end
 
-		if #tlpa_sni_list == 0 then
-			log.info("[aux_commit] tlpa_sni_list is empty, returning kNoop")
+		if #sni_list == 0 then
+			log.info("[aux_commit] sni_list is empty, returning kNoop")
 			return 2
 		end
 
-		-- [DBG] 測試 convert_sni_to_tlpa 的轉換結果
-		for i, v in ipairs(tlpa_sni_list) do
-			local test = convert_sni_to_tlpa(v)
-			log.info("[aux_commit] convert_sni_to_tlpa([" .. v .. "])=" .. tostring(test))
+		-- 取得 tlpa_converter 模組（含 convert / split / INITIALS / FINALS）
+		local conv = require("tlpa_converter")
+
+		-- BPM2（台語注音二式）聲母對照表：TLPA 聲母 → BPM2 聲母（依 100_閩南語聲韻調對映指引.md）
+		local BPM2_SIANN = {
+			p="b",   ph="p",  b="bb",  m="m",
+			t="d",   th="t",  n="n",   l="l",
+			z="z",   c="c",   j="zz",  s="s",
+			k="g",   kh="k",  g="gg",  ng="ng",
+			h="h",
+			-- 顎化聲母
+			zi="j",  ci="ch", ji="jj", si="sh",
+		}
+
+		-- TLPA 數字調 → BPM2 數字調（與 TLPA 同，皆用 1-8）
+		local function to_bpm2(tlpa)
+			local parts = conv.split(tlpa)
+			if not parts then return tlpa end
+			local zero = (parts.siann == "\195\184" or parts.siann == "\195\152")
+			local b2 = zero and "" or (BPM2_SIANN[parts.siann] or parts.siann)
+			return b2 .. parts.un .. parts.tiau
 		end
 
 		-- [DBG] 確認目前 switch 狀態
-		log.info("[aux_commit] key_in_piau_im_tps=" .. tostring(ctx:get_option("key_in_piau_im_tps")))
+		log.info("[aux_commit] key_in_piau_im_tps="  .. tostring(ctx:get_option("key_in_piau_im_tps")))
 		log.info("[aux_commit] key_in_piau_im_tlpa=" .. tostring(ctx:get_option("key_in_piau_im_tlpa")))
-		log.info("[aux_commit] key_in_piau_im_sni=" .. tostring(ctx:get_option("key_in_piau_im_sni")))
+		log.info("[aux_commit] key_in_piau_im_tl="   .. tostring(ctx:get_option("key_in_piau_im_tl")))
+		log.info("[aux_commit] key_in_piau_im_poj="  .. tostring(ctx:get_option("key_in_piau_im_poj")))
+		log.info("[aux_commit] key_in_piau_im_bp="   .. tostring(ctx:get_option("key_in_piau_im_bp")))
+		log.info("[aux_commit] key_in_piau_im_bpm2=" .. tostring(ctx:get_option("key_in_piau_im_bpm2")))
+		log.info("[aux_commit] key_in_piau_im_ipa="  .. tostring(ctx:get_option("key_in_piau_im_ipa")))
+		log.info("[aux_commit] key_in_piau_im_sni="  .. tostring(ctx:get_option("key_in_piau_im_sni")))
 
 		-- key_in_piau_im_* 決定 Enter 鍵輸出格式（310.md §輸入編輯列之漢字標音格式）
 		local out_list = {}
 
 		if ctx:get_option("key_in_piau_im_tps") then
-			-- 方音符號：直接取 【...】 內容
+			-- 方音符號：直接取右欄 【...】 內容
 			for i, v in ipairs(tps_list) do
 				out_list[i] = v
 			end
+
 		elseif ctx:get_option("key_in_piau_im_tlpa") then
-			-- 台語音標：十五音 → TLPA 羅馬字母（數字調號）
-			for i, v in ipairs(tlpa_sni_list) do
-				local roman = convert_sni_to_tlpa(v)
-				out_list[i] = roman and roman or v
+			-- 台語音標（數字調號）：十五音 → TLPA
+			for i, v in ipairs(sni_list) do
+				local tlpa = convert_sni_to_tlpa(v)
+				out_list[i] = tlpa and conv.convert(tlpa, "台語音標") or v
 			end
-		elseif ctx:get_option("key_in_piau_im_tl") or ctx:get_option("key_in_piau_im_poj") then
-			-- 台羅拼音 / 白話字：十五音 → TLPA → 加聲調符號（POJ 式）
-			for i, v in ipairs(tlpa_sni_list) do
-				local roman = convert_sni_to_tlpa(v)
-				out_list[i] = roman and apply_poj_tiau_hu(roman) or v
+
+		elseif ctx:get_option("key_in_piau_im_tl") then
+			-- 台羅拼音（調符）：十五音 → TLPA → 台羅
+			for i, v in ipairs(sni_list) do
+				local tlpa = convert_sni_to_tlpa(v)
+				out_list[i] = tlpa and conv.convert(tlpa, "台羅拼音") or v
 			end
+
+		elseif ctx:get_option("key_in_piau_im_poj") then
+			-- 白話字（調符）：十五音 → TLPA → POJ
+			for i, v in ipairs(sni_list) do
+				local tlpa = convert_sni_to_tlpa(v)
+				out_list[i] = tlpa and conv.convert(tlpa, "白話字") or v
+			end
+
+		elseif ctx:get_option("key_in_piau_im_bp") then
+			-- 閩拼方案（調符）：十五音 → TLPA → BP
+			for i, v in ipairs(sni_list) do
+				local tlpa = convert_sni_to_tlpa(v)
+				out_list[i] = tlpa and conv.convert(tlpa, "閩拼方案") or v
+			end
+
+		elseif ctx:get_option("key_in_piau_im_bpm2") then
+			-- 台語注音二式（數字調號）：十五音 → TLPA → BPM2
+			for i, v in ipairs(sni_list) do
+				local tlpa = convert_sni_to_tlpa(v)
+				out_list[i] = tlpa and to_bpm2(tlpa) or v
+			end
+
+		elseif ctx:get_option("key_in_piau_im_ipa") then
+			-- 國際音標：十五音 → TLPA → IPA
+			for i, v in ipairs(sni_list) do
+				local tlpa = convert_sni_to_tlpa(v)
+				out_list[i] = tlpa and conv.convert(tlpa, "國際音標") or v
+			end
+
 		else
-			-- 預設（key_in_piau_im_sni）及其他尚未實作之格式：直接輸出十五音
-			for i, v in ipairs(tlpa_sni_list) do
+			-- 預設（key_in_piau_im_sni）：十五音（韻+調+聲）原樣輸出
+			for i, v in ipairs(sni_list) do
 				out_list[i] = v
 			end
 		end

@@ -1,4 +1,5 @@
 -- lua/tlpa_converter.lua
+-- V0.1.2 (2026/4/29)：修訂【國際音標】轉換。
 -- TLPA（台語音標）→ 各閩南話標音系統 轉換模組
 -- 相容 Lua 5.1（使用 \NNN 十進位跳脫，不使用 \xNN）
 --
@@ -94,7 +95,7 @@ local FINALS = {
     uan    = {sni="觀", tps="ㄨㄢ",   ipa="uan"       },
     uat    = {sni="觀", tps="ㄨㄚㆵ", ipa="uat".._ua  },
     -- 沽韻
-    oo     = {sni="沽", tps="ㆦ",     ipa="ou"        },
+    oo     = {sni="沽", tps="ㆦ",     ipa="\201\148"  },  -- ɔ
     -- 嬌韻
     iau    = {sni="嬌", tps="ㄧㄠ",   ipa="iau"       },
     iauh   = {sni="嬌", tps="ㄧㄠㆷ", ipa="iau\202\148" }, -- iauʔ
@@ -417,7 +418,13 @@ local function convert_tlpa(tlpa, target)
         local i_ipa = (ini_match and ini_match.ipa) or ""
         local f_ipa = (fin_match and fin_match.ipa) or parts.un
         if i_ipa == "\195\152" or i_ipa == "\195\184" then i_ipa = "" end
-        result = i_ipa .. f_ipa .. parts.tiau  -- 調號以數字附於末尾
+        -- 調號以上標數字附於末尾（¹²³⁴⁵⁶⁷⁸）
+        local ipa_supers = {
+            ["1"]="\194\185", ["2"]="\194\178", ["3"]="\194\179",
+            ["4"]="\226\129\180", ["5"]="\226\129\181", ["6"]="\226\129\182",
+            ["7"]="\226\129\183", ["8"]="\226\129\184",
+        }
+        result = i_ipa .. f_ipa .. (ipa_supers[parts.tiau] or parts.tiau)
 
     -- ---- 台語音標（TLPA 原文還原）----
     elseif target == "台語音標" then
