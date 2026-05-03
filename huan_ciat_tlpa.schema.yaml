@@ -6,7 +6,7 @@
 schema:
   schema_id: huan_ciat_tlpa
   name: 反切輸入法【台語音標】
-  version: "0.0.1"
+  version: "0.0.1.2"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -32,7 +32,7 @@ switches:
   # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
   # reset: 0 → 第一個選項為預設 → 方音符號
   - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
-    reset: 0
+    reset: 1
     states: [ 方音符號, 台語音標 ]
   # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
   # reset: 0 → 第一個選項為預設 → 十五音
@@ -40,7 +40,7 @@ switches:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
         key_in_piau_im_bpm2, key_in_piau_im_ipa ]
-    reset: 0
+    reset: 2
     states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
 
 engine:

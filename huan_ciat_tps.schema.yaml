@@ -5,7 +5,7 @@
 schema:
   schema_id: huan_ciat_tps
   name: 反切輸入法【方音符號】
-  version: "v0.0.1.1"
+  version: "v0.0.1.2"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
