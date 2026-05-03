@@ -5,7 +5,7 @@
 schema:
   schema_id: zu_im_tps
   name: 注音輸入法【方音符號】
-  version: "v0.1.0.1"
+  version: "v0.1.0.2"
   author: 居正中
   description: |
     【輸入類型】：注音輸入法
@@ -34,7 +34,7 @@ switches:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
         key_in_piau_im_bpm2, key_in_piau_im_ipa ]
-    reset: 0
+    reset: 1
     states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
 
 engine:

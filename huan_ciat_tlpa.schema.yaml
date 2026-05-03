@@ -26,9 +26,6 @@ switches:
   - name: full_shape
     reset: 0
     states: [半形, 全形]
-  - name: supers_tone
-    reset: 1
-    states: [一般, 上標]
   # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
   # reset: 0 → 第一個選項為預設 → 方音符號
   - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
