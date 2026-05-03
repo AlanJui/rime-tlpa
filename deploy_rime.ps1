@@ -54,8 +54,9 @@ $files = @(
     "phing_im_bpm2.schema.yaml",
     "phing_im_poj.schema.yaml",
     # 注音輸入方案：
-    "zu_im_tlpa.schema.yaml",
     "zu_im_bpm2.schema.yaml",
+    "zu_im_tps.schema.yaml",
+    "zu_im_tlpa.schema.yaml",
     # 反切輸入方案：
     "huan_ciat_tps.schema.yaml",
     "huan_ciat_tlpa.schema.yaml",

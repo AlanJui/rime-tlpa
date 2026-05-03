@@ -5,7 +5,7 @@
 schema:
   schema_id: zu_im_tlpa
   name: 注音輸入法【台語音標】
-  version: "v0.1.0.0"
+  version: "v0.1.0.1"
   author: 居正中
   description: |
     【輸入類型】：注音輸入法
@@ -24,23 +24,24 @@ switches:
   - name: full_shape
     reset: 0
     states: [半形, 全形]
-  - name: supers_tone
-    reset: 1
-    states: [一般, 上標]
-  - name: dict_mode
+  # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
+  # reset: 0 → 第一個選項為預設 → 方音符號
+  - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
     reset: 0
-    states: [方音, 台拼]
-  - options: [ piau_im_format_15, piau_im_format_bpmf, piau_im_format_tlpa ]
+    states: [ 方音符號, 台語音標 ]
+  # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
+  # reset: 0 → 第一個選項為預設 → 十五音
+  - options:
+      [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
+        key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
+        key_in_piau_im_bpm2, key_in_piau_im_ipa ]
     reset: 0
-    states: [ 單出十五音, 單出方音, 單出台拼 ]
-  - options: [ tiau_mark, tiau_num ]
-    reset: 1
-    states: [ 調符, 調號 ]
+    states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
 
 engine:
   processors:
-    - lua_processor@aux_commit    # 可輸出【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
-    - lua_processor@jump_select   # 務必置頂，用以攔截【快捷鍵】，如：<Ctrl>+<,> / <Ctrl>+<.>，轉送【代理鍵】：F20/F24
+    - lua_processor@aux_commit    # 輸出【漢字標音】，而非【漢字】
+    - lua_processor@jump_select   # 務必置頂，用以攔截【快捷鍵】，如：Ctrl+M, Ctrl+<, Ctrl+>
     - ascii_composer
     - recognizer
     - key_binder
@@ -57,7 +58,6 @@ engine:
     - fallback_segmentor
   translators:
     - punct_translator
-    # - table_translator@custom_phrase
     - script_translator
   filters:
     - simplifier
@@ -68,11 +68,9 @@ engine:
     - lua_filter@reformat_comment_filter
 
 speller:
-  # alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(0LN.-:75346]["
-  # initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(0LN.-:"
   alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7N"
   initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"
-  finals: "75346]["
+  finals: ":5346][7"
   delimiter: "'"
   use_space: true
   #==========================================================================
@@ -337,11 +335,14 @@ speller:
     # 【字典編碼】與【鍵盤按鍵】對映
     #==========================================================================
     # 【字典編碼】/【鍵盤按鍵】/【注音符號】
-    # 【0】==>【7】==>【˙】   # 按鍵【7】輸入：輕聲調符號：第8調（陽入調）與第0調（輕聲調）
-    # 【7】==>【5】==>【˫】   # 按鍵【5】輸入：第7調（陽入調）的【中音調】符號
-    # 【3】==>【3】==>【˪】   # 按鍵【3】輸入：第3調（陰入調）的【低音調】符號
+    # 【1】==>【:】==>【ˉ】   # 按鍵【[】輸入：第1調（陰平調）的【高平調】符號
+    # 【7】==>【5】==>【˫】   # 按鍵【5】輸入：第7調（陽去調）的【中平調】符號
+    # 【3】==>【3】==>【˪】   # 按鍵【3】輸入：第3調（陰去調）的【低平調】符號
     # 【2】==>【4】==>【ˋ】   # 按鍵【4】輸入：第2調（上聲調）的【高降調】符號
-    # 【5】==>【6】==>【ˊ】   # 按鍵【6】輸入：第5調（陽平調）的【低聲調】符號
+    # 【5】==>【6】==>【ˊ】   # 按鍵【6】輸入：第5調（陽平調）的【低升調】符號
+    # 【4】==>【[】==>【ˉ】   # 按鍵【[】輸入：第4調（陰入調）的【低促聲調】符號
+    # 【8】==>【]】==>【˙】   # 按鍵【]】輸入：第4調（陽入調）的【高促聲調】符號
+    # 【0】==>【7】==>【˙】   # 按鍵【7】輸入：第4/8調，入声調
     #--------------------------------------------------------------------------
     # 【L】==>【N】==>【ㄥ】  # 按鍵【N】輸入：ㄥ【鼻化韻母前綴符號】
     # 【&】==>【.】==>【入】  # 按鍵【.】輸入：入【所有之入聲韻尾】
@@ -359,7 +360,7 @@ translator:
     # 將連續輸入的分隔符號：【'】換成空白
     # - xform/'/ /
     #==========================================================================
-    # 定義【鍵盤輸入列】：按鍵與方音符號對映
+    # 定義【鍵盤輸入列】：鍵盤按鍵與方音符號對映
     #--------------------------------------------------------------------------
     # 全對映：（1）【注音符號按鍵】；（2）【調號按鍵】；（3）【功能按鍵】
     #==========================================================================

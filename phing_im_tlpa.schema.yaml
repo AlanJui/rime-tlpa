@@ -4,7 +4,7 @@
 
 schema:
   schema_id: phing_im_tlpa
-  name: 拼音輸入法【台語音標（TLPA）】
+  name: 拼音輸入法【台語音標】
   version: "v0.1.0.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
