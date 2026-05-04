@@ -374,6 +374,54 @@ end
 -- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
 --------------------------------------------------------------------------
 
+
+local function convert_tlpa_to_tps(tlpa_str)
+	if type(tlpa_str) ~= "string" or tlpa_str == "" then return "" end
+	local tones = { ["1"]="", ["2"]="ˋ", ["3"]="˪", ["4"]="", ["5"]="ˊ", ["6"]="ˋ", ["7"]="˫", ["8"]="˙" }
+	local initials = { ["tsh"]="ㄘ", ["ph"]="ㄆ", ["kh"]="ㄎ", ["th"]="ㄊ", ["ts"]="ㄗ", ["ng"]="ㄫ", ["p"]="ㄅ", ["b"]="ㆠ", ["m"]="ㄇ", ["t"]="ㄉ", ["n"]="ㄋ", ["l"]="ㄌ", ["k"]="ㄍ", ["g"]="ㆣ", ["h"]="ㄏ", ["s"]="ㄙ", ["j"]="ㆡ" }
+	local finals = { ["aunn"]="ㆯ", ["ainn"]="ㆮ", ["iann"]="ㄧㆩ", ["iunn"]="ㄧㆫ", ["uann"]="ㄨㆩ", ["uenn"]="ㄨㆥ", ["oonn"]="ㆧ", ["ann"]="ㆩ", ["inn"]="ㆪ", ["unn"]="ㆫ", ["enn"]="ㆥ", ["onn"]="ㆧ", ["iong"]="ㄧㆲ", ["iang"]="ㄧㄤ", ["uang"]="ㄨㄤ", ["ong"]="ㆲ", ["ang"]="ㄤ", ["iam"]="ㄧㆰ", ["am"]="ㆰ", ["om"]="ㆱ", ["ian"]="ㄧㄢ", ["uan"]="ㄨㄢ", ["an"]="ㄢ", ["ing"]="ㄧㄥ", ["in"]="ㄧㄣ", ["un"]="ㄨㄣ", ["iai"]="ㄧㄞ", ["iau"]="ㄧㄠ", ["uai"]="ㄨㄞ", ["ai"]="ㄞ", ["au"]="ㄠ", ["ia"]="ㄧㄚ", ["io"]="ㄧㄜ", ["iu"]="ㄧㄨ", ["ua"]="ㄨㄚ", ["ue"]="ㄨㆤ", ["ui"]="ㄨㄧ", ["ioo"]="ㄧㆦ", ["ng"]="ㆭ", ["m"]="ㆬ", ["oo"]="ㆦ", ["a"]="ㄚ", ["i"]="ㄧ", ["u"]="ㄨ", ["e"]="ㆤ", ["o"]="ㄜ", ["ir"]="ㆨ" }
+	local codas = { ["p"]="ㆴ", ["t"]="ㆵ", ["k"]="ㆻ", ["h"]="ㆷ" }
+
+	local tone_num = tlpa_str:match("%d$")
+	local s = tlpa_str:gsub("%d$", "")
+
+	local coda_char = s:match("[ptkh]$")
+	local initial_str = ""
+	for _, len in ipairs({3, 2, 1}) do
+		local pre = s:sub(1, len)
+		if initials[pre] then
+			if (pre == "ng" or pre == "m") and s:len() == len then break end
+			if (pre == "ng" or pre == "m") and coda_char == "h" and s:len() == len + 1 then break end
+			initial_str = initials[pre]
+			s = s:sub(len + 1)
+			break
+		end
+	end
+
+	local coda_str = ""
+	if coda_char and #s > 0 then
+        local base = s:sub(1, -2)
+        if base ~= "" and finals[base] then
+            coda_str = codas[coda_char]
+            s = base
+        elseif base == "i" or base == "e" or base == "o" or base == "a" or base == "u" then
+            coda_str = codas[coda_char]
+            s = base
+        end
+	end
+
+	if s:sub(1, 1) == "i" then
+		if initial_str == "ㆡ" then initial_str = "ㆢ" end
+		if initial_str == "ㄗ" then initial_str = "ㄐ" end
+		if initial_str == "ㄘ" then initial_str = "ㄑ" end
+		if initial_str == "ㄙ" then initial_str = "ㄒ" end
+	end
+
+	local final_str = finals[s] or s
+	local tone_str = tone_num and tones[tone_num] or ""
+	return initial_str .. final_str .. coda_str .. tone_str
+end
+
 local function format_comment(comment_string, mode, schema_id)
 	-- comment_string: 原始 comment 字串
 	--   左欄 〔...〕 為十五音，原始格式：【聲+韻+調】（如：柳君二）
@@ -420,15 +468,27 @@ local function format_comment(comment_string, mode, schema_id)
 		-- 台語音標：將已重排（韻+調+聲）之十五音傳入 convert_sni_to_tlpa
 		right = {}
 		for i, t in ipairs(display_left) do
-			local roman = convert_sni_to_tlpa(t)
-			right[i] = roman and roman or (right_col[i] or "")
+			if is_sni then
+				local roman = convert_sni_to_tlpa(t)
+				right[i] = roman and roman or (right_col[i] or "")
+			else
+				right[i] = right_col[i] or ""
+			end
 		end
 	elseif mode == "sni" then
 		-- 僅十五音：不顯示右欄
 		right = nil
 	else
-		-- 預設（tps）：方音符號，直接沿用右欄原始值
-		right = right_col
+		-- 預設（tps）：方音符號，嘗試將右欄（預設為 TLPA）轉換為 TPS
+		right = {}
+		for i, v in ipairs(right_col) do
+			if is_sni then
+				right[i] = v -- 對於 SNI 如果有右欄，可能不適用 TLPA->TPS，維持原樣
+			else
+				local tps = convert_tlpa_to_tps(v)
+				right[i] = (tps ~= "") and tps or v
+			end
+		end
 	end
 
 	local prefix = comment_string:match("^(%s*)") or ""

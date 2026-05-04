@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_bp
   name: 拼音輸入法【閩拼方案】
-  version: "v0.2.0.0"
+  version: "v0.2.0.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -179,110 +179,6 @@ translator:
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
-  comment_format:
-    # comment_format 直接接收字典原碼（TLPA 拼音 + 數字調號 1-8）
-    # ---- 1. 聲母：TLPA → BP ----
-    - xform/^tsh/c/
-    - xform/^ts(?!h)/z/
-    - xform/^ng/ggn/
-    - xform/^b/bb/
-    - xform/^p(?!h)/b/
-    - xform/^ph/p/
-    - xform/^m/bbn/
-    - xform/^t(?!h)/d/
-    - xform/^th/t/
-    - xform/^n/ln/
-    - xform/^g(?!g)/gg/
-    - xform/^k(?!h)/g/
-    - xform/^kh/k/
-    - xform/^j/zz/
-    # ---- 2. 韻母：TLPA → BP ----
-    - xform/ir/eu/
-    - xform/au/ao/
-    - xform/onn/noo/
-    - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/
-    # ---- 3. 聲調：TLPA → BP ----
-    - xlit|234567|357246|
-    # ---- 3b. 零聲母：i/u 開頭加 y/w（BP 規範） ----
-    # i 為介音（ia, io, iu...）→ i 改成 y
-    - xform/^ia/ya/
-    - xform/^io/yo/
-    - xform/^iu/yu/
-    # i 為主要元音（i + 調號）→ 前加 y
-    - xform/^i(\d)/yi$1/
-    # u 為介音（ua, ui, ue...）→ u 改成 w
-    - xform/^ua/wa/
-    - xform/^ui/wi/
-    - xform/^ue/we/
-    # u 為主要元音（u + 調號）→ 前加 w
-    - xform/^u(\d)/wu$1/
-    # ---- 4. 調符移位 ----
-    - xform/([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/$1$3$2/
-    - xform/([ae])([iueo])([12345678])/$1$3$2/
-    # ---- 5. oo 韻母整體處理（須先於單 o 規則）----
-    - xform/oo1/ōo/
-    - xform/oo2/óo/
-    - xform/oo3/ǒo/
-    - xform/oo4/ǒo/
-    - xform/oo5/òo/
-    - xform/oo6/ôo/
-    - xform/oo7/ōo/
-    - xform/oo8/óo/
-    # ---- 6. 調符代換（BP 調符） ----
-    # BP 1: ā（上平/陰平，macron U+0304）
-    - xform/a1/ā/
-    - xform/e1/ē/
-    - xform/i1/ī/
-    - xform/u1/ū/
-    - xform/o1/ō/
-    - xform/m1/m̄/
-    - xform/ng1/n̄g/
-    # BP 2: á（下平/陽平，acute U+0301）
-    - xform/a2/á/
-    - xform/e2/é/
-    - xform/i2/í/
-    - xform/u2/ú/
-    - xform/o2/ó/
-    - xform/m2/ḿ/
-    - xform/ng2/ńg/
-    # BP 3: ǎ（上聲，caron U+030C）
-    - xform/a3/ǎ/
-    - xform/e3/ě/
-    - xform/i3/ǐ/
-    - xform/u3/ǔ/
-    - xform/o3/ǒ/
-    # BP 4: ǎ（下聲/陽上，同上聲，少用）
-    - xform/a4/ǎ/
-    - xform/e4/ě/
-    - xform/i4/ǐ/
-    - xform/u4/ǔ/
-    - xform/o4/ǒ/
-    # BP 5: à（上去/陰去，grave U+0300）
-    - xform/a5/à/
-    - xform/e5/è/
-    - xform/i5/ì/
-    - xform/u5/ù/
-    - xform/o5/ò/
-    # BP 6: â（下去/陽去，circumflex U+0302）
-    - xform/a6/â/
-    - xform/e6/ê/
-    - xform/i6/î/
-    - xform/u6/û/
-    - xform/o6/ô/
-    - xform/ng6/n̂g/
-    # BP 7: ā（上入/陰入，macron U+0304，同上平）
-    - xform/a7/ā/
-    - xform/e7/ē/
-    - xform/i7/ī/
-    - xform/u7/ū/
-    - xform/o7/ō/
-    # BP 8: á（下入/陽入，acute U+0301，同下平）
-    - xform/a8/á/
-    - xform/e8/é/
-    - xform/i8/í/
-    - xform/u8/ú/
-    - xform/o8/ó/
-
   preedit_format:
     # 1. 分隔符號
     - xform/'/ /
@@ -359,6 +255,12 @@ translator:
     - xform/u8/ú/
     - xform/o8/ó/
 
+  comment_format:
+    __patch:
+      # 【候選清單】使用【單欄】：【閩拼方案】
+      # - lib_comment_bp:/hau_suan_tuann
+      # 【候選清單】使用【雙欄】：【閩拼方案】+【注音符號】或【TLPA】
+      - lib_comment_bp:/hau_suan_tuann
 key_binder:
   import_preset: default
   bindings:
