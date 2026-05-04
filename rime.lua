@@ -374,7 +374,7 @@ end
 -- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
 --------------------------------------------------------------------------
 
-local function format_comment(comment_string, mode)
+local function format_comment(comment_string, mode, schema_id)
 	-- comment_string: 原始 comment 字串
 	--   左欄 〔...〕 為十五音，原始格式：【聲+韻+調】（如：柳君二）
 	--   右欄 【...】 為方音符號
@@ -396,6 +396,7 @@ local function format_comment(comment_string, mode)
 		return comment_string
 	end
 
+	local is_sni = schema_id and (schema_id:match("hau_suan") or schema_id:match("huan_ciat"))
 	-- 將左欄每個音節從【聲+韻+調】重排為【韻+調+聲】（傳統十五音順序）
 	-- 【例】：柳君二（聲+韻+調）→ 君二柳（韻+調+聲）
 	local display_left = {}
@@ -404,7 +405,8 @@ local function format_comment(comment_string, mode)
 		for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
 			table.insert(chars, uchar)
 		end
-		if #chars == 3 then
+		-- 只有十五音（反切/校算）才需要倒裝字元順序
+		if is_sni and #chars == 3 then
 			-- 聲[1] + 韻[2] + 調[3]  →  韻[2] + 調[3] + 聲[1]
 			table.insert(display_left, chars[2] .. chars[3] .. chars[1])
 		else
@@ -476,12 +478,14 @@ function reformat_comment_filter(input, env)
 	-- [DBG] 確認 filter 被呼叫，及當前 mode
 	log.info("[reformat_comment_filter] mode=" .. mode)
 
+	local schema_id = env.engine.schema.schema_id
+
 	-- 【候選清單】逐項處理：重排 comment 中左欄【十五音】與右欄【注音符號】
 	for hau_suan in input:iter() do
 		local old = hau_suan.comment or ""
 		-- [DBG] 觀察每個候選的原始 comment 內容
 		log.info("[reformat_comment_filter] raw comment=[" .. old .. "] text=" .. (hau_suan.text or "?"))
-		local new = format_comment(old, mode)
+		local new = format_comment(old, mode, schema_id)
 		-- [DBG] 觀察格式化後的結果
 		log.info("[reformat_comment_filter] new comment=[" .. new .. "]")
 		local c = hau_suan:get_genuine()
