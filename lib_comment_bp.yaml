@@ -6,194 +6,210 @@ hau_suan_tuann:
   __append:
     # ---- 0. 複製原始音標（左欄使用〔〕進行後續轉換，右欄【】保持原樣） ----
     - xform/^(.*)$/〔》$1〕【$1】/
+
     # ---- 1. 聲母：TLPA → BP ----
+    # 齒音/舌齒音（多字母先處理）
     - xform/》tsh/c》/
     - xform/》ts(?!h)/z》/
+    - xform/》j/zz》/
+    - xform/》s/s》/
+    # 舌根音/鼻音（濁音）
     - xform/》ng/ggn》/
+    # 舌根音
+    - xform/》g(?!g)/gg》/
+    - xform/》k(?!h)/g》/
+    - xform/》kh/k》/
+    # 唇音
     - xform/》b/bb》/
     - xform/》p(?!h)/b》/
     - xform/》ph/p》/
     - xform/》m/bbn》/
+    # 舌尖音
     - xform/》t(?!h)/d》/
     - xform/》th/t》/
     - xform/》n/ln》/
-    - xform/》g(?!g)/gg》/
-    - xform/》k(?!h)/g》/
-    - xform/》kh/k》/
-    - xform/》j/zz》/
-    # ---- 2. 韻母：TLPA → BP ----
-    # ---- 3b. 零聲母：i/u 開頭加 y/w（BP 規範） ----
+    - xform/》l/l》/
+    # 聲門音
+    - xform/》h/h》/
+
+    # ---- 3. 零聲母：i/u 開頭加 y/w（BP 規範） ----
     # i 為介音（ia, io, iu...）→ i 改成 y
-    - xform/》ia/ya》/
-    - xform/》io/yo》/
-    - xform/》iu/yu》/
+    - xform/〔》ia/〔ya/
+    - xform/〔》io/〔yo/
+    - xform/〔》iu/〔yu/
     # i 為主要元音（i + 調號）→ 前加 y
     # - xform/》i([;/\\_\-\[\]])/yi$1》/
-    - xform/》i(\d)/yi$1》/
+    - xform/〔》i(\d)/》yi$1/
     # u 為介音（ua, ui, ue...）→ u 改成 w
-    - xform/》ua/wa》/
-    - xform/》ui/wi》/
-    - xform/》ue/we》/
+    - xform/〔》ua/〔wa/
+    - xform/〔》ui/〔wi/
+    - xform/〔》ue/〔we/
     # u 為主要元音（u + 調號）→ 前加 w
     # - xform/》u([;/\\_\-\[\]])/wu$1》/
-    - xform/》u(\d)/wu$1》/
-    # ---- 4. 調符移位 ----
-    - xform/》iaunnh(\d)/ia${1}unnh》/
-    - xform/》uainnh(\d)/ua${1}innh》/
-    - xform/》aunnh(\d)/a${1}unnh》/
-    - xform/》iannh(\d)/ia${1}nnh》/
-    - xform/》iaunn(\d)/ia${1}unn》/
-    - xform/》uainn(\d)/ua${1}inn》/
-    - xform/》iang(\d)/ia${1}ng》/
-    - xform/》iauh(\d)/ia${1}uh》/
-    - xform/》iong(\d)/io${1}ng》/
-    - xform/》ennh(\d)/e${1}nnh》/
-    - xform/》onnh(\d)/o${1}nnh》/
-    - xform/》annh(\d)/a${1}nnh》/
-    - xform/》ainn(\d)/a${1}inn》/
-    - xform/》aunn(\d)/a${1}unn》/
-    - xform/》iann(\d)/ia${1}nn》/
-    - xform/》innh(\d)/》/
-    - xform/》iunn(\d)/》/
-    - xform/》uann(\d)/ua${1}nn》/
-    - xform/》uinn(\d)/ui${1}nn》/
-    - xform/》ionn(\d)/io${1}nn》/
-    - xform/》aenn(\d)/a${1}enn》/
-    - xform/》eeh(\d)/e${1}eh》/
-    - xform/》ang(\d)/a${1}ng》/
-    - xform/》auh(\d)/a${1}uh》/
-    - xform/》iah(\d)/ia${1}h》/
-    - xform/》iak(\d)/ia${1}k》/
-    - xform/》iam(\d)/ia${1}m》/
-    - xform/》ian(\d)/ia${1}n》/
-    - xform/》iau(\d)/ia${1}u》/
-    - xform/》iap(\d)/ia${1}p》/
-    - xform/》iat(\d)/ia${1}t》/
-    - xform/》ing(\d)/i${1}ng》/
-    - xform/》ioh(\d)/i${1}oh》/
-    - xform/》iok(\d)/i${1}ok》/
-    - xform/》iuh(\d)/i${1}uh》/
-    - xform/》enn(\d)/e${1}nn》/
-    - xform/》ngh(\d)/n${1}gh》/
-    - xform/》onn(\d)/o${1}nn》/
-    - xform/》ong(\d)/o${1}ng》/
-    - xform/》ooh(\d)/o${1}oh》/
-    - xform/》uah(\d)/ua${1}h》/
-    - xform/》uai(\d)/ua${1}i》/
-    - xform/》uan(\d)/ua${1}n》/
-    - xform/》uat(\d)/ua${1}t》/
-    - xform/》ueh(\d)/ue${1}h》/
-    - xform/》ann(\d)/a${1}nn》/
-    - xform/》inn(\d)/i${1}nn》/
-    - xform/》uae(\d)/ua${1}e》/
-    - xform/》ioo(\d)/i${1}oo》/
-    - xform/》eng(\d)/e${1}ng》/
-    - xform/》ee(\d)/e${1}e》/
-    - xform/》ah(\d)/a${1}h》/
-    - xform/》ai(\d)/a${1}i》/
-    - xform/》ak(\d)/a${1}k》/
-    - xform/》am(\d)/a${1}m》/
-    - xform/》an(\d)/a${1}n》/
-    - xform/》au(\d)/a${1}u》/
-    - xform/》ap(\d)/a${1}p》/
-    - xform/》at(\d)/a${1}t》/
-    - xform/》eh(\d)/e${1}h》/
-    - xform/》ir(\d)/i${1}r》/
-    - xform/》ia(\d)/ia${1}》/
-    - xform/》er(\d)/e${1}r》/
-    - xform/》ih(\d)/i${1}h》/
-    - xform/》ik(\d)/i${1}k》/
-    - xform/》im(\d)/i${1}m》/
-    - xform/》in(\d)/i${1}n》/
-    - xform/》io(\d)/i${1}o》/
-    - xform/》ip(\d)/i${1}p》/
-    - xform/》it(\d)/i${1}t》/
-    - xform/》iu(\d)/i${1}u》/
-    - xform/》mh(\d)/m${1}h》/
-    - xform/》ng(\d)/n${1}g》/
-    - xform/》oh(\d)/o${1}h》/
-    - xform/》ok(\d)/o${1}k》/
-    - xform/》oo(\d)/o${1}o》/
-    - xform/》op(\d)/o${1}p》/
-    - xform/》ua(\d)/u${1}a》/
-    - xform/》ue(\d)/u${1}e》/
-    - xform/》uh(\d)/u${1}h》/
-    - xform/》ui(\d)/u${1}i》/
-    - xform/》un(\d)/u${1}n》/
-    - xform/》ut(\d)/u${1}t》/
-    - xform/》om(\d)/o${1}m》/
-    - xform/》eu(\d)/e${1}u》/
-    - xform/》ek(\d)/e${1}k》/
-    - xform/》a(\d)/a${1}》/
-    - xform/》e(\d)/e${1}》/
-    - xform/》i(\d)/i${1}》/
-    - xform/》m(\d)/m${1}》/
-    - xform/》o(\d)/o${1}》/
-    - xform/》u(\d)/u${1}》/
+    - xform/〔》u(\d)/〔wu$1/
+
+    # ---- 4. 為置放聲調符號調整 ----
+    - xform/》iaunnh(\d)/i》a${1}unnh/
+    - xform/》uainnh(\d)/u》a${1}innh/
+    - xform/》aunnh(\d)/》a${1}unnh/
+    - xform/》iannh(\d)/i》a${1}nnh/
+    - xform/》iaunn(\d)/i》a${1}unn/
+    - xform/》uainn(\d)/u》a${1}inn/
+    - xform/》iang(\d)/i》a${1}ng/
+    - xform/》iauh(\d)/i》a${1}uh/
+    - xform/》iong(\d)/i》o${1}ng/
+    - xform/》ennh(\d)/》e${1}nnh/
+    - xform/》onnh(\d)/》o${1}nnh/
+    - xform/》annh(\d)/》a${1}nnh/
+    - xform/》ainn(\d)/》a${1}inn/
+    - xform/》aunn(\d)/》a${1}unn/
+    - xform/》iann(\d)/i》a${1}nn/
+    - xform/》innh(\d)/》i${1}nnh/
+    - xform/》iunn(\d)/》i${1}unn/
+    - xform/》uann(\d)/u》a${1}nn/
+    - xform/》uinn(\d)/u》i${1}nn/
+    - xform/》ionn(\d)/i》o${1}nn/
+
+    - xform/》aenn(\d)/》a${1}enn/
+    - xform/》eeh(\d)/》e${1}eh/
+    - xform/》ang(\d)/》a${1}ng/
+    - xform/》auh(\d)/》a${1}uh/
+    - xform/》iah(\d)/i》a${1}h/
+    - xform/》iak(\d)/i》a${1}k/
+    - xform/》iam(\d)/i》a${1}m/
+    - xform/》ian(\d)/i》a${1}n/
+    - xform/》iau(\d)/i》a${1}u/
+    - xform/》iap(\d)/i》a${1}p/
+    - xform/》iat(\d)/i》a${1}t/
+    - xform/》ing(\d)/》i${1}ng/
+    - xform/》ioh(\d)/》i${1}oh/
+    - xform/》iok(\d)/》i${1}ok/
+    - xform/》iuh(\d)/》i${1}uh/
+    - xform/》enn(\d)/》e${1}nn/
+    - xform/》ngh(\d)/》n${1}gh/
+    - xform/》onn(\d)/》o${1}nn/
+    - xform/》ong(\d)/》o${1}ng/
+    - xform/》ooh(\d)/》o${1}oh/
+    - xform/》uah(\d)/u》a${1}h/
+    - xform/》uai(\d)/u》a${1}i/
+    - xform/》uan(\d)/u》a${1}n/
+    - xform/》uat(\d)/u》a${1}t/
+    - xform/》ueh(\d)/u》e${1}h/
+    - xform/》ann(\d)/》a${1}nn/
+    - xform/》inn(\d)/》i${1}nn/
+    - xform/》uae(\d)/u》a${1}e/
+    - xform/》ioo(\d)/》i${1}oo/
+    - xform/》eng(\d)/》e${1}ng/
+    - xform/》ee(\d)/》e${1}e/
+    - xform/》ah(\d)/》a${1}h/
+    - xform/》ai(\d)/》a${1}i/
+    - xform/》ak(\d)/》a${1}k/
+    - xform/》am(\d)/》a${1}m/
+    - xform/》an(\d)/》a${1}n/
+    - xform/》au(\d)/》a${1}u/
+    - xform/》ap(\d)/》a${1}p/
+    - xform/》at(\d)/》a${1}t/
+    - xform/》eh(\d)/》e${1}h/
+    - xform/》ir(\d)/》i${1}r/
+    - xform/》ia(\d)/i》a${1}/
+    - xform/》er(\d)/》e${1}r/
+    - xform/》ih(\d)/》i${1}h/
+    - xform/》ik(\d)/》i${1}k/
+    - xform/》im(\d)/》i${1}m/
+    - xform/》in(\d)/》i${1}n/
+    - xform/》io(\d)/》i${1}o/
+    - xform/》ip(\d)/》i${1}p/
+    - xform/》it(\d)/》i${1}t/
+    - xform/》iu(\d)/》i${1}u/
+    - xform/》mh(\d)/》m${1}h/
+    - xform/》ng(\d)/》n${1}g/
+    - xform/》oh(\d)/》o${1}h/
+    - xform/》ok(\d)/》o${1}k/
+    - xform/》oo(\d)/》o${1}o/
+    - xform/》op(\d)/》o${1}p/
+    - xform/》ua(\d)/》u${1}a/
+    - xform/》ue(\d)/》u${1}e/
+    - xform/》uh(\d)/》u${1}h/
+    - xform/》ui(\d)/》u${1}i/
+    - xform/》un(\d)/》u${1}n/
+    - xform/》ut(\d)/》u${1}t/
+    - xform/》om(\d)/》o${1}m/
+
+
+
+    - xform/》eu(\d)/》e${1}u/
+    - xform/》ek(\d)/》e${1}k/
+    - xform/》a(\d)/》a${1}/
+    - xform/》e(\d)/》e${1}/
+    - xform/》i(\d)/》i${1}/
+    - xform/》m(\d)/》m${1}/
+    - xform/》o(\d)/》o${1}/
+    - xform/》u(\d)/》u${1}/
 
     # ---- 5. oo 韻母整體處理（須先於單 o 規則）----
-    - xform|》oo;|ōo》|   # 陰平調： 閩拼 1；台羅 1
-    - xform|》oo/|óo》|   # 陽平調： 閩拼 2；台羅 5
-    - xform|》oo\|ǒo》|   # 陰上調： 閩拼 3；台羅 2
-    - xform|》oo\|ǒo》|   # 陽上調： 閩拼 4；台羅 6
-    - xform|》oo_|òo》|   # 陰去調： 閩拼 5；台羅 3
-    - xform|》oo-|ôo》|   # 陽去調： 閩拼 6；台羅 7
-    - xform|》oo[|ōo》|   # 陰入調： 閩拼 7；台羅 4
-    - xform|》oo]|óo》|   # 陽入調： 閩拼 8；台羅 8
+    - xform/》oo1/ōo/   # 陰平調： 閩拼 1；台羅 1
+    - xform/》oo5/óo/   # 陽平調： 閩拼 2；台羅 5
+    - xform/》oo2/ǒo/   # 陰上調： 閩拼 3；台羅 2
+    - xform/》oo6/ǒo/   # 陽上調： 閩拼 4；台羅 6
+    - xform/》oo3/òo/   # 陰去調： 閩拼 5；台羅 3
+    - xform/》oo7/ôo/   # 陽去調： 閩拼 6；台羅 7
+    - xform/》oo4/ōo/   # 陰入調： 閩拼 7；台羅 4
+    - xform/》oo8/óo/   # 陽入調： 閩拼 8；台羅 8
+
     # ---- 6. 調符代換（BP 調符） ----
     # BP 1: ā（上平/陰平，macron U+0304）
-    - xform|》a;|ā》|
-    - xform|》e;|ē》|
-    - xform|》i;|ī》|
-    - xform|》u;|ū》|
-    - xform|》o;|ō》|
-    - xform|》m;|m̄》|
-    - xform|》ng;|n̄g》|
+    - xform/》a1/ā/
+    - xform/》e1/ē/
+    - xform/》i1/ī/
+    - xform/》u1/ū/
+    - xform/》o1/ō/
+    - xform/》m1/m̄/
+    - xform/》n1/n̄/
     # BP 2: á（下平/陽平，acute U+0301）
-    - xform|》a/|á》|
-    - xform|》e/|é》|
-    - xform|》i/|í》|
-    - xform|》u/|ú》|
-    - xform|》o/|ó》|
-    - xform|》m/|ḿ》|
-    - xform|》ng/|ńg》|
+    - xform/》a5/á/
+    - xform/》e5/é/
+    - xform/》i5/í/
+    - xform/》u5/ú/
+    - xform/》o5/ó/
+    - xform/》m5/ḿ/
+    - xform/》n5/ń/
     # BP 3: ǎ（上聲，caron U+030C）
-    - xform|》a\|ǎ》|
-    - xform|》e\|ě》|
-    - xform|》i\|ǐ》|
-    - xform|》u\|ǔ》|
-    - xform|》o\|ǒ》|
-    # BP 4: ǎ（下聲/陽上，同上聲，少用）
-    - xform|》a\|ǎ》|
-    - xform|》e\|ě》|
-    - xform|》i\|ǐ》|
-    - xform|》u\|ǔ》|
-    - xform|》o\|ǒ》|
+    - xform/》a2/ǎ/
+    - xform/》e2/ě/
+    - xform/》i2/ǐ/
+    - xform/》u2/ǔ/
+    - xform/》o2/ǒ/
+    # BP 4: ǎ（上聲/陽上，同上聲，少用）
+    - xform/》a6/ǎ/
+    - xform/》e6/ě/
+    - xform/》i6/ǐ/
+    - xform/》u6/ǔ/
+    - xform/》o6/ǒ/
     # BP 5: à（上去/陰去，grave U+0300）
-    - xform|》a_|à》|
-    - xform|》e_|è》|
-    - xform|》i_|ì》|
-    - xform|》u_|ù》|
-    - xform|》o_|ò》|
+    - xform/》a3/à/
+    - xform/》e3/è/
+    - xform/》i3/ì/
+    - xform/》u3/ù/
+    - xform/》o3/ò/
     # BP 6: â（下去/陽去，circumflex U+0302）
-    - xform|》a-|â》|
-    - xform|》e-|ê》|
-    - xform|》i-|î》|
-    - xform|》u-|û》|
-    - xform|》o-|ô》|
-    - xform|》ng-|n̂g》|
+    - xform/》a7/â/
+    - xform/》e7/ê/
+    - xform/》i7/î/
+    - xform/》u7/û/
+    - xform/》o7/ô/
+    - xform/》n7/n̂/
     # BP 7: ā（上入/陰入，macron U+0304，同上平）
-    - xform|》a[|ā》|
-    - xform|》e[|ē》|
-    - xform|》i[|ī》|
-    - xform|》u[|ū》|
-    - xform|》o[|ō》|
+    - xform/》a4/ā/
+    - xform/》e4/ē/
+    - xform/》i4/ī/
+    - xform/》u4/ū/
+    - xform/》o4/ō/
     # BP 8: á（下入/陽入，acute U+0301，同下平）
-    - xform|》a]|á》|
-    - xform|》e]|é》|
-    - xform|》i]|í》|
-    - xform|》u]|ú》|
-    - xform|》o]|ó》|
+    - xform/》a8/á/
+    - xform/》e8/é/
+    - xform/》i8/í/
+    - xform/》u8/ú/
+    - xform/》o8/ó/
 
     # ---- 7. 清除定位符號 ----
     - xform/》//

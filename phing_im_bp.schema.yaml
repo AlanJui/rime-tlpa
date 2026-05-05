@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_bp
   name: 拼音輸入法【閩拼方案】
-  version: "v0.2.0.1"
+  version: "v0.2.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -76,7 +76,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
-    # - lua_filter@reformat_comment_filter
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyz;-_\/[]7.
@@ -89,10 +89,10 @@ speller:
     # Step 1: TLPA → BP 聲母轉換
     # 原則：多字母先處理；同起首字母者，「目標」先於「來源」以避免雙重轉換
     #==========================================================================
-    # 舌尖前音
+    # 齒音/舌齒音
     - xform/^tsh/c/          # tsh(ㄘ) → c
     - xform/^ts(?!h)/z/      # ts(ㄗ) → z（不含 tsh）
-    # 鼻音聲母（多字母先處理）
+    # 舌根音/鼻音（濁音）（多字母先處理）
     - xform/^ng/ggn/         # ng(ㄫ) → ggn
     # 唇音
     - xform/^b/bb/           # b(ㆠ) → bb  ← 須先於 p→b
@@ -103,11 +103,12 @@ speller:
     - xform/^t(?!h)/d/       # t(ㄉ) → d   ← 不含 th
     - xform/^th/t/           # th(ㄊ) → t  ← 在 t→d 之後
     - xform/^n/ln/           # n(ㄋ) → ln  ← ng 已處理
+    # - xform/^l/l/            # n(ㄋ) → ln  ← ng 已處理
     # 舌根音
     - xform/^g(?!g)/gg/      # g(ㆣ) → gg  ← 須先於 k→g
     - xform/^k(?!h)/g/       # k(ㄍ) → g   ← 不含 kh
     - xform/^kh/k/           # kh(ㄎ) → k  ← 在 k→g 之後
-    # 其他
+    # 齒音/舌齒音
     - xform/^j/zz/           # j(ㆡ) → zz
     # l, s, h, c(tsh), z(ts), zi, ci, ji, si 不變
     #==========================================================================
@@ -171,7 +172,8 @@ speller:
     # Step 9: BP 聲調按鍵對映
     # 1(上平); 6(下去)- 5(上去)_ 3(上聲)\ 2(下平)/ 7(上入)[ 8(下入)] 0(輕聲)7 9(入聲).
     #==========================================================================
-    - xlit|165327809|;-_\/[]7.|
+    # - xlit|165327809|;-_\/[]7.|
+    - xlit|1653278|;-_\/[]|
 
 translator:
   dictionary: ji_khoo_tl
@@ -183,11 +185,11 @@ translator:
     # 1. 分隔符號
     - xform/'/ /
     # 2. Reverse xlit：按鍵 → BP 調號數字
-    # - xlit|;-_\/[]7|16532780|
-    - xlit|;-_\/[]7.|165327809|
+    # - xlit|;-_\/[]7.|165327809|
+    - xlit|;-_\/[]|1653278|
     # 3. 輕聲/入聲縮寫顯示
-    - xform/0/˙/
-    - xform/9/˙/
+    # - xform/0/˙/
+    # - xform/9/˙/
     # 4. 調符移位：將調號數字移至主要元音後
     - xform/([aeiou])(r?m?n*h?g?p?t?k?)([1652378])/$1$3$2/
     - xform/([ae])([iueo])([1652378])/$1$3$2/
