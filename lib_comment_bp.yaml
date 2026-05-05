@@ -1,6 +1,6 @@
 # 【候選清單】程式舘：閩拼方案（BP）
 # lib_comment_bp.yaml
-# version: "v0.1.0.0"
+# version: "v0.1.0.3"
 
 hau_suan_tuann:
   __append:
@@ -32,6 +32,11 @@ hau_suan_tuann:
     # 聲門音
     - xform/》h/h》/
 
+    # ---- 2. 韻母：TLPA → BP ----
+    # 鼻化韻母：自 nn 後綴，改 n 前綴
+    - xform/》onn/》noo/          # onn(ㆧ) → noo（須先於一般規則）
+    - xform/》([iu]?(?:ai|ao|oo|[aiueo]))nn/》n$1/  # ann→na, inn→ni, unn→nu 等
+
     # ---- 3. 零聲母：i/u 開頭加 y/w（BP 規範） ----
     # i 為介音（ia, io, iu...）→ i 改成 y
     - xform/〔》ia/〔ya/
@@ -49,28 +54,30 @@ hau_suan_tuann:
     - xform/〔》u(\d)/〔wu$1/
 
     # ---- 4. 為置放聲調符號調整 ----
-    - xform/》iaunnh(\d)/i》a${1}unnh/
-    - xform/》uainnh(\d)/u》a${1}innh/
-    - xform/》aunnh(\d)/》a${1}unnh/
-    - xform/》iannh(\d)/i》a${1}nnh/
-    - xform/》iaunn(\d)/i》a${1}unn/
-    - xform/》uainn(\d)/u》a${1}inn/
+    - xform/》iaunnh(\d)/ni》a${1}uh/
+    - xform/》iaunn(\d)/ni》a${1}u/
+    - xform/》uainn(\d)/nu》a${1}i/
+    - xform/》ainn(\d)/n》a${1}inn/
+    - xform/》aunn(\d)/n》a${1}unn/
+    - xform/》iunn(\d)/n》i${1}unn/
+    - xform/》uinn(\d)/u》i${1}nn/
+    # 待確定
+    - xform/》eh(\d)/n》e${1}h/
+    - xform/》uann(\d)/nu》a${1}nn/
+    - xform/》iann(\d)/ni》a${1}nn/
+    - xform/》aenn(\d)/》a${1}enn/
+    # 可能有音無字
+    - xform/》ah(\d)/n》a${1}h/
+    - xform/》oh(\d)/n》o${1}h/
+    - xform/》ih(\d)/n》i${1}h/
+    - xform/》ionn(\d)/ni》o${1}nn/
+
+    - xform/》iong(\d)/i》o${1}ng/
     - xform/》iang(\d)/i》a${1}ng/
     - xform/》iauh(\d)/i》a${1}uh/
-    - xform/》iong(\d)/i》o${1}ng/
-    - xform/》ennh(\d)/》e${1}nnh/
-    - xform/》onnh(\d)/》o${1}nnh/
-    - xform/》annh(\d)/》a${1}nnh/
-    - xform/》ainn(\d)/》a${1}inn/
-    - xform/》aunn(\d)/》a${1}unn/
-    - xform/》iann(\d)/i》a${1}nn/
-    - xform/》innh(\d)/》i${1}nnh/
-    - xform/》iunn(\d)/》i${1}unn/
-    - xform/》uann(\d)/u》a${1}nn/
-    - xform/》uinn(\d)/u》i${1}nn/
-    - xform/》ionn(\d)/i》o${1}nn/
-
-    - xform/》aenn(\d)/》a${1}enn/
+    - xform/》uaih(\d)/nu》a${1}ih/
+    - xform/》auh(\d)/》na${1}uh/
+    - xform/》iah(\d)/ni》a${1}h/
     - xform/》eeh(\d)/》e${1}eh/
     - xform/》ang(\d)/》a${1}ng/
     - xform/》auh(\d)/》a${1}uh/
