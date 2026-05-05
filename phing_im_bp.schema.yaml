@@ -76,7 +76,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
-    - lua_filter@reformat_comment_filter
+    # - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyz;-_\/[]7.
@@ -258,9 +258,8 @@ translator:
   comment_format:
     __patch:
       # 【候選清單】使用【單欄】：【閩拼方案】
-      # - lib_comment_bp:/hau_suan_tuann
-      # 【候選清單】使用【雙欄】：【閩拼方案】+【注音符號】或【TLPA】
       - lib_comment_bp:/hau_suan_tuann
+
 key_binder:
   import_preset: default
   bindings:

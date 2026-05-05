@@ -5,123 +5,113 @@
 hau_suan_tuann:
   __append:
     # ---- 0. 複製原始音標（左欄使用〔〕進行後續轉換，右欄【】保持原樣） ----
-    - 'xform/^(.*)$/〔》$1〕【$1】/'
+    - xform/^(.*)$/〔》$1〕【$1】/
     # ---- 1. 聲母：TLPA → BP ----
-    - 'xform/》tsh/c》/'
-    - 'xform/》ts(?!h)/z》/'
-    - 'xform/》ng/ggn》/'
-    - 'xform/》b/bb》/'
-    - 'xform/》p(?!h)/b》/'
-    - 'xform/》ph/p》/'
-    - 'xform/》m/bbn》/'
-    - 'xform/》t(?!h)/d》/'
-    - 'xform/》th/t》/'
-    - 'xform/》n/ln》/'
-    - 'xform/》g(?!g)/gg》/'
-    - 'xform/》k(?!h)/g》/'
-    - 'xform/》kh/k》/'
-    - 'xform/》j/zz》/'
+    - xform/》tsh/c》/
+    - xform/》ts(?!h)/z》/
+    - xform/》ng/ggn》/
+    - xform/》b/bb》/
+    - xform/》p(?!h)/b》/
+    - xform/》ph/p》/
+    - xform/》m/bbn》/
+    - xform/》t(?!h)/d》/
+    - xform/》th/t》/
+    - xform/》n/ln》/
+    - xform/》g(?!g)/gg》/
+    - xform/》k(?!h)/g》/
+    - xform/》kh/k》/
+    - xform/》j/zz》/
     # ---- 2. 韻母：TLPA → BP ----
-    - 'xform/》ir/eu》/'
-    - 'xform/》au/ao》/'
-    - 'xform/》onn/noo》/'
-    - 'xform/》([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1》/'
+    - xform/》ir/eu》/
+    - xform/》au/ao》/
+    - xform/》onn/noo》/
+    - xform/》([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1》/
     # ---- 3. 聲調：TLPA → BP ----
+    # - xlit|234567|357246|
+    # 1(上平); 6(下去)- 5(上去)_ 3(上聲)\ 2(下平)/ 7(上入)[ 8(下入)] 0(輕聲)7 9(入聲).
     - xlit|1653278|;-_\/[]|
-    # # 將 TLPA 調號（數字）轉換為符號，且僅限於「〕」之前，避免動到右欄【】
-    # - 'xform/〔([^〕]*?)1([^〕]*?)〕/〔;〕/'
-    # - 'xform/〔([^〕]*?)5([^〕]*?)〕/〔/〕/'
-    # - 'xform/〔([^〕]*?)2([^〕]*?)〕/〔\\〕/'
-    # - 'xform/〔([^〕]*?)6([^〕]*?)〕/〔\\〕/'
-    # - 'xform/〔([^〕]*?)3([^〕]*?)〕/〔_〕/'
-    # - 'xform/〔([^〕]*?)7([^〕]*?)〕/〔-〕/'
-    # - 'xform/〔([^〕]*?)4([^〕]*?)〕/〔[〕/'
-    # - 'xform/〔([^〕]*?)8([^〕]*?)〕/〔]〕/'
     # ---- 3b. 零聲母：i/u 開頭加 y/w（BP 規範） ----
     # i 為介音（ia, io, iu...）→ i 改成 y
-    - 'xform/》ia/ya》/'
-    - 'xform/》io/yo》/'
-    - 'xform/》iu/yu》/'
+    - xform/》ia/ya》/
+    - xform/》io/yo》/
+    - xform/》iu/yu》/
     # i 為主要元音（i + 調號）→ 前加 y
-    - 'xform/》i([;/\\_\-\[\]])/yi$1》/'
+    - xform/》i(\d)/yi$1》/
     # u 為介音（ua, ui, ue...）→ u 改成 w
-    - 'xform/》ua/wa》/'
-    - 'xform/》ui/wi》/'
-    - 'xform/》ue/we》/'
+    - xform/》ua/wa》/
+    - xform/》ui/wi》/
+    - xform/》ue/we》/
     # u 為主要元音（u + 調號）→ 前加 w
-    - 'xform/》u([;/\\_\-\[\]])/wu$1》/'
+    - xform/》u(\d)/wu$1》/
     # ---- 4. 調符移位 ----
     # - xform/》([aeiou])(r?m?n*h?g?p?t?k?)([12345678])/》$1$3$2》/
     # - xform/》([ae])([iueo])([12345678])/》$1$3$2》/
     # - xform/》([aeiou])(r?m?n*h?g?p?t?k?)([1732548])/》$1$3$2》/
-    - 'xform/》([aeiou])(r?m?n*h?g?p?t?k?)([;/\\_\-\[\]])/》$1$3$2》/'
-    - 'xform/》([ae])([iueo])([;/\\_\-\[\]])/》$1$3$2》/'
+    - xform/》([aeiou])(r?m?n*h?g?p?t?k?)([;/\\_-\[\]])/》$1$3$2》/
+    - xform/》([ae])([iueo])([;/\\_-\[\]])/》$1$3$2》/
     # ---- 5. oo 韻母整體處理（須先於單 o 規則）----
-    - 'xform|》oo;|ōo》|   # 陰平調： 閩拼 1；台羅 1'
-    - 'xform|》oo/|óo》|   # 陽平調： 閩拼 2；台羅 5'
-    - 'xform|》oo\|ǒo》|   # 陰上調： 閩拼 3；台羅 2'
-    - 'xform|》oo\|ǒo》|   # 陽上調： 閩拼 4；台羅 6'
-    - 'xform|》oo_|òo》|   # 陰去調： 閩拼 5；台羅 3'
-    - 'xform|》oo-|ôo》|   # 陽去調： 閩拼 6；台羅 7'
-    - 'xform|》oo[|ōo》|   # 陰入調： 閩拼 7；台羅 4'
-    - 'xform|》oo]|óo》|   # 陽入調： 閩拼 8；台羅 8'
+    - xform|》oo;|ōo》|   # 陰平調： 閩拼 1；台羅 1
+    - xform|》oo/|óo》|   # 陽平調： 閩拼 2；台羅 5
+    - xform|》oo\|ǒo》|   # 陰上調： 閩拼 3；台羅 2
+    - xform|》oo\|ǒo》|   # 陽上調： 閩拼 4；台羅 6
+    - xform|》oo_|òo》|   # 陰去調： 閩拼 5；台羅 3
+    - xform|》oo-|ôo》|   # 陽去調： 閩拼 6；台羅 7
+    - xform|》oo[|ōo》|   # 陰入調： 閩拼 7；台羅 4
+    - xform|》oo]|óo》|   # 陽入調： 閩拼 8；台羅 8
     # ---- 6. 調符代換（BP 調符） ----
     # BP 1: ā（上平/陰平，macron U+0304）
-    - 'xform|》a;|ā》|'
-    - 'xform|》e;|ē》|'
-    - 'xform|》i;|ī》|'
-    - 'xform|》u;|ū》|'
-    - 'xform|》o;|ō》|'
-    - 'xform|》m;|m̄》|'
-    - 'xform|》ng;|n̄g》|'
+    - xform|》a;|ā》|
+    - xform|》e;|ē》|
+    - xform|》i;|ī》|
+    - xform|》u;|ū》|
+    - xform|》o;|ō》|
+    - xform|》m;|m̄》|
+    - xform|》ng;|n̄g》|
     # BP 2: á（下平/陽平，acute U+0301）
-    - 'xform|》a/|á》|'
-    - 'xform|》e/|é》|'
-    - 'xform|》i/|í》|'
-    - 'xform|》u/|ú》|'
-    - 'xform|》o/|ó》|'
-    - 'xform|》m/|ḿ》|'
-    - 'xform|》ng/|ńg》|'
+    - xform|》a/|á》|
+    - xform|》e/|é》|
+    - xform|》i/|í》|
+    - xform|》u/|ú》|
+    - xform|》o/|ó》|
+    - xform|》m/|ḿ》|
+    - xform|》ng/|ńg》|
     # BP 3: ǎ（上聲，caron U+030C）
-    - 'xform|》a\|ǎ》|'
-    - 'xform|》e\|ě》|'
-    - 'xform|》i\|ǐ》|'
-    - 'xform|》u\|ǔ》|'
-    - 'xform|》o\|ǒ》|'
+    - xform|》a\|ǎ》|
+    - xform|》e\|ě》|
+    - xform|》i\|ǐ》|
+    - xform|》u\|ǔ》|
+    - xform|》o\|ǒ》|
     # BP 4: ǎ（下聲/陽上，同上聲，少用）
-    - 'xform|》a\|ǎ》|'
-    - 'xform|》e\|ě》|'
-    - 'xform|》i\|ǐ》|'
-    - 'xform|》u\|ǔ》|'
-    - 'xform|》o\|ǒ》|'
+    - xform|》a\|ǎ》|
+    - xform|》e\|ě》|
+    - xform|》i\|ǐ》|
+    - xform|》u\|ǔ》|
+    - xform|》o\|ǒ》|
     # BP 5: à（上去/陰去，grave U+0300）
-    - 'xform|》a_|à》|'
-    - 'xform|》e_|è》|'
-    - 'xform|》i_|ì》|'
-    - 'xform|》u_|ù》|'
-    - 'xform|》o_|ò》|'
+    - xform|》a_|à》|
+    - xform|》e_|è》|
+    - xform|》i_|ì》|
+    - xform|》u_|ù》|
+    - xform|》o_|ò》|
     # BP 6: â（下去/陽去，circumflex U+0302）
-    - 'xform|》a-|â》|'
-    - 'xform|》e-|ê》|'
-    - 'xform|》i-|î》|'
-    - 'xform|》u-|û》|'
-    - 'xform|》o-|ô》|'
-    - 'xform|》ng-|n̂g》|'
+    - xform|》a-|â》|
+    - xform|》e-|ê》|
+    - xform|》i-|î》|
+    - xform|》u-|û》|
+    - xform|》o-|ô》|
+    - xform|》ng-|n̂g》|
     # BP 7: ā（上入/陰入，macron U+0304，同上平）
-    - 'xform|》a[|ā》|'
-    - 'xform|》e[|ē》|'
-    - 'xform|》i[|ī》|'
-    - 'xform|》u[|ū》|'
-    - 'xform|》o[|ō》|'
+    - xform|》a[|ā》|
+    - xform|》e[|ē》|
+    - xform|》i[|ī》|
+    - xform|》u[|ū》|
+    - xform|》o[|ō》|
     # BP 8: á（下入/陽入，acute U+0301，同下平）
-    - 'xform|》a]|á》|'
-    - 'xform|》e]|é》|'
-    - 'xform|》i]|í》|'
-    - 'xform|》u]|ú》|'
-    - 'xform|》o]|ó》|'
-
-    # ---- 7. 清除定位符號 ----
-    - 'xform/》//'
+    - xform|》a]|á》|
+    - xform|》e]|é》|
+    - xform|》i]|í》|
+    - xform|》u]|ú》|
+    - xform|》o]|ó》|
 
 
     # # ---- 1. 聲母：TLPA → BP ----
