@@ -92,8 +92,15 @@ speller:
     # 齒音/舌齒音
     - xform/^tsh/c/          # tsh(ㄘ) → c
     - xform/^ts(?!h)/z/      # ts(ㄗ) → z（不含 tsh）
+    - xform/^j/zz/           # j(ㆡ) → zz
+    - xform/^s/s/            # s(ㄙ) → s
+    # l, s, h, c(tsh), z(ts), zi, ci, ji, si 不變
     # 舌根音/鼻音（濁音）（多字母先處理）
     - xform/^ng/ggn/         # ng(ㄫ) → ggn
+    # 舌根音
+    - xform/^g(?!g)/gg/      # g(ㆣ) → gg  ← 須先於 k→g
+    - xform/^k(?!h)/g/       # k(ㄍ) → g   ← 不含 kh
+    - xform/^kh/k/           # kh(ㄎ) → k  ← 在 k→g 之後
     # 唇音
     - xform/^b/bb/           # b(ㆠ) → bb  ← 須先於 p→b
     - xform/^p(?!h)/b/       # p(ㄅ) → b   ← 不含 ph
@@ -102,15 +109,11 @@ speller:
     # 舌尖音
     - xform/^t(?!h)/d/       # t(ㄉ) → d   ← 不含 th
     - xform/^th/t/           # th(ㄊ) → t  ← 在 t→d 之後
-    - xform/^n/ln/           # n(ㄋ) → ln  ← ng 已處理
-    # - xform/^l/l/            # n(ㄋ) → ln  ← ng 已處理
-    # 舌根音
-    - xform/^g(?!g)/gg/      # g(ㆣ) → gg  ← 須先於 k→g
-    - xform/^k(?!h)/g/       # k(ㄍ) → g   ← 不含 kh
-    - xform/^kh/k/           # kh(ㄎ) → k  ← 在 k→g 之後
-    # 齒音/舌齒音
-    - xform/^j/zz/           # j(ㆡ) → zz
-    # l, s, h, c(tsh), z(ts), zi, ci, ji, si 不變
+    - xform/^n/ln/           # n(ㄋ) → ln
+    - xform/^l/l/            # l(ㄌ) → l
+    # 聲門音
+    - xform/^h/h/            # h(ㄏ) → h
+
     #==========================================================================
     # Step 2: TLPA → BP 韻母轉換
     #==========================================================================
