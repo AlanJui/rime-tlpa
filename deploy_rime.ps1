@@ -67,6 +67,8 @@ $files = @(
     "lib_comment_bp.yaml",
     "lib_comment_tlpa.yaml",
     "lib_comment_bpm2.yaml",
+    "lib_comment_tps_and_tlpa.yaml",
+    "lib_comment_tps_and_bpm2.yaml",
     # 輸入方案附屬模組之【候選字清單】
     "hau_suan_tuann_bp.yaml",
     "hau_suan_tuann_bpm2.yaml",
