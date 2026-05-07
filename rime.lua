@@ -434,6 +434,46 @@ local function convert_tlpa_to_tps(tlpa_str)
 	return initial_str .. final_str .. coda_str .. tone_str
 end
 
+local function convert_bpm2_to_tps(bpm2_str)
+	if type(bpm2_str) ~= "string" or bpm2_str == "" then return "" end
+	local tones = { ["1"]="", ["2"]="ˋ", ["3"]="˪", ["4"]="", ["5"]="ˊ", ["6"]="ˋ", ["7"]="˫", ["8"]="˙", ["9"]="", ["0"]="" }
+	local initials = { ["ch"]="ㄑ", ["sh"]="ㄒ", ["jj"]="ㆢ", ["bb"]="ㆠ", ["gg"]="ㆣ", ["zz"]="ㆡ", ["ng"]="ㄫ", ["p"]="ㄆ", ["b"]="ㄅ", ["m"]="ㄇ", ["t"]="ㄊ", ["d"]="ㄉ", ["n"]="ㄋ", ["l"]="ㄌ", ["k"]="ㄎ", ["g"]="ㄍ", ["h"]="ㄏ", ["c"]="ㄘ", ["z"]="ㄗ", ["s"]="ㄙ", ["j"]="ㄐ" }
+	local finals = { ["aunn"]="ㆯ", ["ainn"]="ㆮ", ["iann"]="ㄧㆩ", ["iunn"]="ㄧㆫ", ["uann"]="ㄨㆩ", ["uenn"]="ㄨㆥ", ["oonn"]="ㆧ", ["ann"]="ㆩ", ["inn"]="ㆪ", ["unn"]="ㆫ", ["enn"]="ㆥ", ["iong"]="ㄧㆲ", ["iang"]="ㄧㄤ", ["uang"]="ㄨㄤ", ["ong"]="ㆲ", ["ang"]="ㄤ", ["iam"]="ㄧㆰ", ["oom"]="ㆱ", ["am"]="ㆰ", ["ian"]="ㄧㄢ", ["uan"]="ㄨㄢ", ["an"]="ㄢ", ["ing"]="ㄧㄥ", ["iek"]="ㄧㆻ", ["in"]="ㄧㄣ", ["un"]="ㄨㄣ", ["iai"]="ㄧㄞ", ["iau"]="ㄧㄠ", ["uai"]="ㄨㄞ", ["ai"]="ㄞ", ["au"]="ㄠ", ["ia"]="ㄧㄚ", ["io"]="ㄧㄜ", ["iu"]="ㄧㄨ", ["ua"]="ㄨㄚ", ["ue"]="ㄨㆤ", ["ui"]="ㄨㄧ", ["uainn"]="ㄨㆮ", ["uinn"]="ㄨㆪ", ["iaunn"]="ㄧㆯ", ["ioo"]="ㄧㆦ", ["ng"]="ㆭ", ["m"]="ㆬ", ["n"]="ㄣ", ["oo"]="ㆦ", ["or"]="ㄜ", ["a"]="ㄚ", ["i"]="ㄧ", ["u"]="ㄨ", ["e"]="ㆤ", ["o"]="ㄜ", ["ir"]="ㆨ" }
+	local codas = { ["p"]="ㆴ", ["t"]="ㆵ", ["k"]="ㆻ", ["h"]="ㆷ" }
+
+	local tone_num = bpm2_str:match("%d$")
+	local s = bpm2_str:gsub("%d$", "")
+
+	local coda_char = s:match("[ptkh]$")
+	local initial_str = ""
+	for _, len in ipairs({2, 1}) do
+		local pre = s:sub(1, len)
+		if initials[pre] then
+			if (pre == "ng" or pre == "m" or pre == "n") and s:len() == len then break end
+			if (pre == "ng" or pre == "m" or pre == "n") and coda_char == "h" and s:len() == len + 1 then break end
+			initial_str = initials[pre]
+			s = s:sub(len + 1)
+			break
+		end
+	end
+
+	local coda_str = ""
+	if coda_char and #s > 0 then
+		local base = s:sub(1, -2)
+		if base ~= "" and finals[base] then
+			coda_str = codas[coda_char]
+			s = base
+		elseif base == "i" or base == "e" or base == "o" or base == "a" or base == "u" then
+			coda_str = codas[coda_char]
+			s = base
+		end
+	end
+
+	local final_str = finals[s] or s
+	local tone_str = tone_num and tones[tone_num] or ""
+	return initial_str .. final_str .. coda_str .. tone_str
+end
+
 local function convert_tl_to_tps(tl_str)
 	if type(tl_str) ~= "string" or tl_str == "" then return "" end
 	local tlpa_str = convert_tl_to_tlpa(tl_str)
@@ -497,11 +537,15 @@ local function format_comment(comment_string, mode, schema_id)
 		-- 僅十五音：不顯示右欄
 		right = nil
 	else
-		-- 預設（tps）：方音符號，嘗試將右欄（可能是 TL 或 TLPA）轉換為 TPS
+		-- 預設（tps）：方音符號，嘗試將右欄（可能是 TL, TLPA 或 BPM2）轉換為 TPS
+		local is_bpm2 = schema_id and schema_id:match("bpm2")
 		right = {}
 		for i, v in ipairs(right_col) do
 			if is_sni then
 				right[i] = v -- 對於 SNI 如果有右欄，可能不適用 TLPA->TPS，維持原樣
+			elseif is_bpm2 then
+				local tps = convert_bpm2_to_tps(v)
+				right[i] = (tps ~= "") and tps or v
 			else
 				local tps = convert_tl_to_tps(v)
 				right[i] = (tps ~= "") and tps or v

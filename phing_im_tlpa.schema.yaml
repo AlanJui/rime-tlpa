@@ -245,18 +245,12 @@ translator:
     - xform/iek/ik/
 
   comment_format:
-    #--------------------------------------------------------------------------
-    # 定義【候選字清單】
-    #--------------------------------------------------------------------------
     __patch:
       #---------------------------------------------
-      # 左半邊：【台語音標】（TLPA）
+      # 【雙欄式候選清單】：【台語音標】（TLPA）+【方音符號】（TPS）
       #---------------------------------------------
-      # - hau_suan_tuann_tlpa:/hau_suan_tuann
-      #---------------------------------------------
-      # 左半邊：【台語音標】（TLPA）+【方音符號】（TPS）
-      #---------------------------------------------
-      - hau_suan_tuann_tlpa_and_tps:/hau_suan_tuann
+      # - hau_suan_tuann_tlpa_and_tps:/hau_suan_tuann
+      - lib_comment_tlpa:/hau_suan_tuann
 
 # reverse_lookup:
 #   dictionary: luna_pinyin

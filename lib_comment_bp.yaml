@@ -54,21 +54,6 @@ hau_suan_tuann:
     - xform/〔》u(\d)/〔wu$1/
 
     # ---- 4. 為置放聲調符號調整 ----
-    # 處理零聲母鼻化韻母（Step 2 轉換後，以 》n 開頭的狀況）
-    - xform/》nuai(\d)/nu》a${1}i/
-    - xform/》nua(\d)/nu》a${1}/
-    - xform/》nui(\d)/nu》i${1}/
-    - xform/》niau(\d)/ni》a${1}u/
-    - xform/》nia(\d)/ni》a${1}/
-    - xform/》niu(\d)/ni》u${1}/
-    - xform/》nau(\d)/n》a${1}u/
-    - xform/》nai(\d)/n》a${1}i/
-    - xform/》na(\d)/n》a${1}/
-    - xform/》noo(\d)/n》o${1}o/
-    - xform/》nu(\d)/n》u${1}/
-    - xform/》ni(\d)/n》i${1}/
-    - xform/》ne(\d)/n》e${1}/
-
     - xform/》iaunnh(\d)/ni》a${1}uh/
     - xform/》iaunn(\d)/ni》a${1}u/
     - xform/》uainn(\d)/nu》a${1}i/

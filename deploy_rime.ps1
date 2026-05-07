@@ -63,9 +63,10 @@ $files = @(
     # 輸入方案功能模組
     "lib_phing_im.yaml",
     "lib_comment_poj.yaml",
-    "lib_comment_poj_and_tps.yaml",
     "lib_comment_tl.yaml",
     "lib_comment_bp.yaml",
+    "lib_comment_tlpa.yaml",
+    "lib_comment_bpm2.yaml",
     # 輸入方案附屬模組之【候選字清單】
     "hau_suan_tuann_bp.yaml",
     "hau_suan_tuann_bpm2.yaml",
