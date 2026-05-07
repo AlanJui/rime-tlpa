@@ -481,110 +481,47 @@ local function convert_tl_to_tps(tl_str)
 end
 
 local function format_comment(comment_string, mode, schema_id)
-	-- comment_string: 原始 comment 字串
-	--   左欄 〔...〕 為十五音，原始格式：【聲+韻+調】（如：柳君二）
-	--   右欄 【...】 為方音符號
-	-- mode: "tps"（方音符號）、"tlpa"（台語音標）、"sni"（十五音）
-	if type(comment_string) ~= "string" or comment_string == "" then
-		return comment_string
-	end
-	local left_col, right_col = {}, {}
+        if type(comment_string) ~= "string" or comment_string == "" then
+                return comment_string
+        end
 
-	-- 取左欄的所有音節（輸入方案支援【連續輸入】，故音節數不一定為單一）
-	for left in comment_string:gmatch("〔(.-)〕") do
-		table.insert(left_col, left)
-	end
-	for right in comment_string:gmatch("【(.-)】") do
-		table.insert(right_col, right)
-	end
+        local is_sni = schema_id and (schema_id:match("hau_suan") or schema_id:match("huan_ciat"))
+        
+        -- 對於非十五音（如 tps, tlpa），完全由 yaml 控制左右欄，直接回傳
+        if not is_sni then
+                return comment_string
+        end
 
-	if #left_col == 0 then
-		return comment_string
-	end
+        -- 針對十五音（反切/校算）方案進行內部漢字倒裝（聲韻調 -> 韻調聲）
+        -- 尋找字串內的〔...〕或【...】
+        local new_comment = comment_string:gsub("〔(.-)〕", function(s)
+                local chars = {}
+                for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+                        table.insert(chars, uchar)
+                end
+                
+                -- 當括號內恰好為 3 個字元（聲+韻+調）時進行調換
+                if #chars == 3 then
+                        return "〔" .. chars[2] .. chars[3] .. chars[1] .. "〕"
+                else
+                        return "〔" .. s .. "〕"
+                end
+        end)
+        
+        new_comment = new_comment:gsub("【(.-)】", function(s)
+                local chars = {}
+                for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+                        table.insert(chars, uchar)
+                end
+                
+                if #chars == 3 then
+                        return "【" .. chars[2] .. chars[3] .. chars[1] .. "】"
+                else
+                        return "【" .. s .. "】"
+                end
+        end)
 
-	local is_sni = schema_id and (schema_id:match("hau_suan") or schema_id:match("huan_ciat"))
-	-- 將左欄每個音節從【聲+韻+調】重排為【韻+調+聲】（傳統十五音順序）
-	-- 【例】：柳君二（聲+韻+調）→ 君二柳（韻+調+聲）
-	local display_left = {}
-	for _, s in ipairs(left_col) do
-		local chars = {}
-		for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
-			table.insert(chars, uchar)
-		end
-		-- 只有十五音（反切/校算）才需要倒裝字元順序
-		if is_sni and #chars == 3 then
-			-- 聲[1] + 韻[2] + 調[3]  →  韻[2] + 調[3] + 聲[1]
-			table.insert(display_left, chars[2] .. chars[3] .. chars[1])
-		else
-			table.insert(display_left, s)
-		end
-	end
-
-	-- 決定右欄（【...】）的內容
-	local right
-	if mode == "tlpa" then
-		-- 台語音標：將已重排（韻+調+聲）之十五音傳入 convert_sni_to_tlpa
-		right = {}
-		for i, t in ipairs(display_left) do
-			if is_sni then
-				local roman = convert_sni_to_tlpa(t)
-				right[i] = roman and roman or (right_col[i] or "")
-			else
-				right[i] = right_col[i] or ""
-			end
-		end
-	elseif mode == "sni" then
-		-- 僅十五音：不顯示右欄
-		right = nil
-	else
-		-- 預設（tps）：方音符號，嘗試將右欄（可能是 TL, TLPA 或 BPM2）轉換為 TPS
-		local is_bpm2 = schema_id and schema_id:match("bpm2")
-		right = {}
-		for i, v in ipairs(right_col) do
-			if is_sni then
-				right[i] = v -- 對於 SNI 如果有右欄，可能不適用 TLPA->TPS，維持原樣
-			elseif is_bpm2 then
-				local tps = convert_bpm2_to_tps(v)
-				right[i] = (tps ~= "") and tps or v
-			else
-				local tps = convert_tl_to_tps(v)
-				right[i] = (tps ~= "") and tps or v
-			end
-		end
-	end
-
-	local prefix = comment_string:match("^(%s*)") or ""
-
-	if right == nil then
-		-- 僅顯示十五音（韻+調+聲）
-		if #display_left >= 2 then
-			return "〔" .. table.concat(display_left, "〕 〔") .. "〕"
-		else
-			return prefix .. "〔" .. display_left[1] .. "〕"
-		end
-	end
-
-	if #display_left >= 2 and #display_left == #right then
-		return "〔"
-			.. table.concat(display_left, "〕 〔")
-			.. "〕"
-			.. "  "
-			.. "【"
-			.. table.concat(right, "】 【")
-			.. "】"
-	end
-
-	-- 單字（或右欄數量不符時）
-	if #display_left == 1 then
-		local r = right[1] or ""
-		if r ~= "" then
-			return prefix .. "〔" .. display_left[1] .. "〕【" .. r .. "】"
-		else
-			return prefix .. "〔" .. display_left[1] .. "〕"
-		end
-	end
-
-	return comment_string
+        return new_comment
 end
 
 function reformat_comment_filter(input, env)

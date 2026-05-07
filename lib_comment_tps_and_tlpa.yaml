@@ -8,8 +8,8 @@ hau_suan_tuann:
     # 雙欄【候選清單】
     # 左欄：注音符號（TPS）；右欄：台語音標（TLPA）。
     #==============================================================================
-    # ---- 0. 複製原始音標（左欄使用〔〕進行後續轉換，右欄【】保持原樣） ----
-    - xform/^(.*)$/〔》$1〕【$1】/
+    # ---- 0. 複製原始音標（左欄使用【】進行後續轉換，右欄〔〕保持原樣） ----
+    - xform/^(.*)$/【》$1】〔$1〕/
 
     #======================================================
     # 遇【連續輸入】，將【分隔符號：'】換成空白
@@ -206,23 +206,23 @@ hau_suan_tuann:
     # Li, Lu, La, LO, Le, Lai, Lau
     #======================================================
     # 介音 i 開頭之鼻韻母
-    - xform/》Lㄧㄠ/ㄧㆯ》/ # Liau = iaunn
-    - xform/》Lㄧㄚ/ㄧㆩ》/ # Lia = iann
-    - xform/》Lㄧㆦ/ㄧㆧ》/ # LiO = iOnn
-    - xform/》Lㄧㄨ/ㄧㆫ》/ # Liu = iunn
+    - xform/Lㄧㄠ》/ㄧㆯ》/ # Liau = iaunn
+    - xform/Lㄧㄚ》/ㄧㆩ》/ # Lia = iann
+    - xform/Lㄧㆦ》/ㄧㆧ》/ # LiO = iOnn
+    - xform/Lㄧㄨ》/ㄧㆫ》/ # Liu = iunn
     # 介音 u 開頭之鼻韻母
-    - xform/》Lㄨㄞ/ㄨㆮ》/ # Luai = uainn
-    - xform/》Lㄨㄚ/ㄨㆩ》/ # Lua = uann
-    - xform/》Lㄨㄧ/ㄨㆪ》/ # Lui = uinn
-    - xform/》Lㄨㆤ/ㄨㆥ》/ # Lue = uenn
+    - xform/Lㄨㄞ》/ㄨㆮ》/ # Luai = uainn
+    - xform/Lㄨㄚ》/ㄨㆩ》/ # Lua = uann
+    - xform/Lㄨㄧ》/ㄨㆪ》/ # Lui = uinn
+    - xform/Lㄨㆤ》/ㄨㆥ》/ # Lue = uenn
     # 元音/複合鼻韻母
-    - xform/》Lㄧ/ㆪ》/ # Li = inn
-    - xform/》Lㄨ/ㆫ》/ # Lu = unn
-    - xform/》Lㄚ/ㆩ》/ # La = ann
-    - xform/》Lㆦ/ㆧ》/ # LO = Onn
-    - xform/》Lㆤ/ㆥ》/ # Le = enn
-    - xform/》Lㄞ/ㆮ》/ # Lai = ainn
-    - xform/》Lㄠ/ㆯ》/ # Lau = aunn
+    - xform/Lㄧ》/ㆪ》/ # Li = inn
+    - xform/Lㄨ》/ㆫ》/ # Lu = unn
+    - xform/Lㄚ》/ㆩ》/ # La = ann
+    - xform/Lㆦ》/ㆧ》/ # LO = Onn
+    - xform/Lㆤ》/ㆥ》/ # Le = enn
+    - xform/Lㄞ》/ㆮ》/ # Lai = ainn
+    - xform/Lㄠ》/ㆯ》/ # Lau = aunn
     #------------------------------------------------------
     # 鼻音韻尾
     # 陽聲韻： 姆[m-] / 鋼[ng-] / n
