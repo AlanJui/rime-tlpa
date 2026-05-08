@@ -1,0 +1,144 @@
+﻿# 【候選清單】程式舘：【雙欄式】注音符號（TPS）；台語注音二式（BPM2）
+# lib_comment_tps_and_bpm2.yaml
+# version: "v0.1.0.0"
+
+hau_suan_tuann:
+  __append:
+    #==============================================================================
+    # 雙欄【候選清單】
+    # 左欄：注音符號（TPS）；右欄：台語注音二式（BPM2）。
+    #==============================================================================
+    # ---- 0. 複製原始音標（左欄使用【】進行後續轉換，右欄〔〕保持原樣） ----
+    - xform/^(.*)$/【》$1】〔$1〕/
+
+    #======================================================
+    # 遇【連續輸入】，將【分隔符號：'】換成空白
+    #======================================================
+    - xform/'/ /
+
+    #------------------------------------------------------
+    # 聲母
+    #------------------------------------------------------
+    - xform/》jji/ㆢ》/
+    - xform/》chi/ㄑ》/
+    - xform/》shi/ㄒ》/
+    - xform/》zz/ㆡ》/
+    - xform/》bb/ㆠ》/
+    - xform/》gg/ㆣ》/
+    - xform/》ng/ㄫ》/
+    - xform/》ji/ㄐ》/
+    - xform/》l/ㄌ》/
+    - xform/》b/ㄅ》/
+    - xform/》g/ㄍ》/
+    - xform/》k/ㄎ》/
+    - xform/》d/ㄉ》/
+    - xform/》p/ㄆ》/
+    - xform/》t/ㄊ》/
+    - xform/》z/ㄗ》/
+    - xform/》s/ㄙ》/
+    - xform/》Ø/Ø》/
+    - xform/》c/ㄘ》/
+    - xform/》h/ㄏ》/
+    - xform/》m/ㄇ》/
+    - xform/》n/ㄋ》/
+
+    #------------------------------------------------------
+    # 韻母
+    #------------------------------------------------------
+    - xform/》uainnh(\d)/ㄨㆮㆷ》$1/
+    - xform/》iannh(\d)/ㄧㆩㆷ》$1/
+    - xform/》iaunn(\d)/ㄧㆯ》$1/
+    - xform/》iunnh(\d)/ㄧㆫㆷ》$1/
+    - xform/》uainn(\d)/ㄨㆮ》$1/
+    - xform/》annh(\d)/ㆩㆷ》$1/
+    - xform/》ainn(\d)/ㆮ》$1/
+    - xform/》ennh(\d)/ㆥㆷ》$1/
+    - xform/》iann(\d)/ㄧㆩ》$1/
+    - xform/》iang(\d)/ㄧㄤ》$1/
+    - xform/》iauh(\d)/ㄧㄠㆷ》$1/
+    - xform/》ioonn(\d)/ㄧㆧ》$1/
+    - xform/》iong(\d)/ㄧㆲ》$1/
+    - xform/》iunn(\d)/ㄧㆫ》$1/
+    - xform/》onnh(\d)/ㆧㆷ》$1/
+    - xform/》uann(\d)/ㄨㆩ》$1/
+    - xform/》uang(\d)/ㄨㄤ》$1/
+    - xform/》uaih(\d)/ㄨㄞㆷ》$1/
+    - xform/》uinn(\d)/ㄨㆪ》$1/
+    - xform/》ann(\d)/ㆩ》$1/
+    - xform/》ang(\d)/ㄤ》$1/
+    - xform/》aih(\d)/ㄞㆷ》$1/
+    - xform/》auh(\d)/ㄠㆷ》$1/
+    - xform/》enn(\d)/ㆥ》$1/
+    - xform/》inn(\d)/ㆪ》$1/
+    - xform/》ing(\d)/ㄧㄥ》$1/
+    - xform/》iah(\d)/ㄧㄚㆷ》$1/
+    - xform/》iam(\d)/ㄧㆰ》$1/
+    - xform/》ian(\d)/ㄧㄢ》$1/
+    - xform/》iap(\d)/ㄧㄚㆴ》$1/
+    - xform/》iat(\d)/ㄧㄚㆵ》$1/
+    - xform/》iak(\d)/ㄧㄚㆻ》$1/
+    - xform/》iau(\d)/ㄧㄠ》$1/
+    - xform/》iorh(\d)/ㄧㄜㆷ》$1/
+    - xform/》iook(\d)/ㄧㆦㆻ》$1/
+    - xform/》oonn(\d)/ㆧ》$1/
+    - xform/》ooh(\d)/ㆦㆷ》$1/
+    - xform/》ong(\d)/ㆲ》$1/
+    - xform/》uah(\d)/ㄨㄚㆷ》$1/
+    - xform/》uan(\d)/ㄨㄢ》$1/
+    - xform/》uat(\d)/ㄨㄚㆵ》$1/
+    - xform/》uai(\d)/ㄨㄞ》$1/
+    - xform/》ueh(\d)/ㄨㆤㆷ》$1/
+    - xform/》uih(\d)/ㄨㄧㆷ》$1/
+    - xform/》ngh(\d)/ㆭㆷ》$1/
+    - xform/》ah(\d)/ㄚㆷ》$1/
+    - xform/》am(\d)/ㆰ》$1/
+    - xform/》an(\d)/ㄢ》$1/
+    - xform/》ap(\d)/ㄚㆴ》$1/
+    - xform/》at(\d)/ㄚㆵ》$1/
+    - xform/》ak(\d)/ㄚㆻ》$1/
+    - xform/》ai(\d)/ㄞ》$1/
+    - xform/》au(\d)/ㄠ》$1/
+    - xform/》eh(\d)/ㆤㆷ》$1/
+    - xform/》ih(\d)/ㄧㆷ》$1/
+    - xform/》im(\d)/ㄧㆬ》$1/
+    - xform/》in(\d)/ㄧㄣ》$1/
+    - xform/》ip(\d)/一ㆴ》$1/
+    - xform/》it(\d)/ㄧㆵ》$1/
+    - xform/》ik(\d)/ㄧㆻ》$1/
+    - xform/》ia(\d)/ㄧㄚ》$1/
+    - xform/》ior(\d)/ㄧㄜ》$1/
+    - xform/》iu(\d)/ㄧㄨ》$1/
+    - xform/》oo(\d)/ㆦ》$1/
+    - xform/》orh(\d)/ㄜㆷ》$1/
+    - xform/》oom(\d)/ㆱ》$1/
+    - xform/》oop(\d)/ㆦㆴ》$1/
+    - xform/》ok(\d)/ㆦㆻ》$1/
+    - xform/》uh(\d)/ㄨㆷ》$1/
+    - xform/》un(\d)/ㄨㄣ》$1/
+    - xform/》ut(\d)/ㄨㆵ》$1/
+    - xform/》ua(\d)/ㄨㄚ》$1/
+    - xform/》ue(\d)/ㄨㆤ》$1/
+    - xform/》ui(\d)/ㄨㄧ》$1/
+    - xform/》mh(\d)/ㆬㆷ》$1/
+    - xform/》ng(\d)/ㆭ》$1/
+    - xform/》a(\d)/ㄚ》$1/
+    - xform/》e(\d)/ㆤ》$1/
+    - xform/》i(\d)/ㄧ》$1/
+    - xform/》or(\d)/ㄜ》$1/
+    - xform/》u(\d)/ㄨ》$1/
+    - xform/》m(\d)/ㆬ》$1/
+
+
+    #------------------------------------------------------
+    # 聲調
+    #------------------------------------------------------
+    # - xform/》1/ˉ/        # 1 ¹ ˉ   陰平
+    # - xform/》6/˫/ # 7 ⁷ ˫   陽去
+    - xform/6/7/ # 聲調 6 改為 7
+    - xform/》1//   # 1 ¹ ˉ   陰平
+    - xform/》2/ˋ/ # 2 ² ˋ   上声：不分陰上或陽上
+    - xform/》3/˪/  # 3 ³ ˪   陰去
+    - xform/》4//   # 1 ¹ ˉ   陰入
+    - xform/》5/ˊ/ # 5 ⁵ ˊ   陽平
+    - xform/》7/˫/  # 4 ⁴     陰入
+    - xform/》8/˙/ # 8 ⁸ ˙   陽入
