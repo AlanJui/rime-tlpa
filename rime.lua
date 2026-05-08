@@ -129,6 +129,20 @@ local supers_digit = {
 	["8"] = "⁸",
 }
 
+-- 【無需轉換】方案：只做重排配對，不做聲調符號轉換
+-- （左欄漢字標音已是正確格式，yaml 自行控制，Lua 只需整理雙欄順序）
+local SKIP_CONVERT_SCHEMAS = {
+	["phing_im_tlpa"]  = true,
+	["phing_im_tl"]    = true,
+	["phing_im_poj"]   = true,
+	["phing_im_bp"]    = true,
+	["phing_im_bpm2"]  = true,
+	["zu_im_tlpa"]     = true,
+	["zu_im_bpm2"]     = true,
+	["huan_ciat_tps"]  = true,
+	["huan_ciat_tlpa"] = true,
+}
+
 -- === END DICTIONARIES ===
 
 local function convert_sni_to_tlpa(s)
@@ -480,6 +494,20 @@ local function convert_tl_to_tps(tl_str)
 	return convert_tlpa_to_tps(tlpa_str)
 end
 
+-- 重排配對（不做轉換）：〔A〕【a】〔B〕【b〕 → 〔A〕〔B〕  【a】【b】
+local function regroup_pairs_safe(s)
+	if type(s) ~= "string" or s == "" then return s end
+	local tlpa, zh = {}, {}
+	for t in s:gmatch("〔(.-)〕") do table.insert(tlpa, t) end
+	for z in s:gmatch("【(.-)】") do table.insert(zh, z) end
+	if #tlpa >= 2 and #tlpa == #zh then
+		return "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+		       .. "  "
+		       .. "【" .. table.concat(zh, "】 【") .. "】"
+	end
+	return s
+end
+
 local function format_comment(comment_string, mode, schema_id)
         if type(comment_string) ~= "string" or comment_string == "" then
                 return comment_string
@@ -525,31 +553,46 @@ local function format_comment(comment_string, mode, schema_id)
 end
 
 function reformat_comment_filter(input, env)
-	-- hau_suan_piau_im_* 決定候選清單【漢字標音】顯示格式（310.md §候選清單之漢字標音格式）
+	local schema_id = env.engine.schema.schema_id
+	log.info("[reformat_comment_filter] schema_id=" .. (schema_id or "?"))
+
+	-- 【無需轉換】方案：只重排配對，不做聲調符號轉換
+	if SKIP_CONVERT_SCHEMAS[schema_id] then
+		for cand in input:iter() do
+			local old = cand.comment or ""
+			local new = regroup_pairs_safe(old)
+			log.info("[reformat_comment_filter] skip_convert raw=[" .. old .. "] new=[" .. new .. "]")
+			if new ~= old then
+				local c = cand:get_genuine()
+				local nc = Candidate(c.type, c.start, c._end, c.text, new)
+				nc.preedit = cand.preedit
+				nc.quality = cand.quality
+				yield(nc)
+			else
+				yield(cand)
+			end
+		end
+		return
+	end
+
+	-- 【其他方案】（hau_suan/huan_ciat）：依原有邏輯進行漢字倒裝與重排
 	local ctx = env.engine.context
 	local mode
 	if ctx:get_option("hau_suan_piau_im_tlpa") then
-		mode = "tlpa"	-- 台語音標
+		mode = "tlpa"
 	else
-		mode = "tps"	-- 預設：方音符號 (hau_suan_piau_im_tps)
+		mode = "tps"
 	end
-
-	-- [DBG] 確認 filter 被呼叫，及當前 mode
 	log.info("[reformat_comment_filter] mode=" .. mode)
 
-	local schema_id = env.engine.schema.schema_id
-
-	-- 【候選清單】逐項處理：重排 comment 中左欄【十五音】與右欄【注音符號】
 	for hau_suan in input:iter() do
 		local old = hau_suan.comment or ""
-		-- [DBG] 觀察每個候選的原始 comment 內容
 		log.info("[reformat_comment_filter] raw comment=[" .. old .. "] text=" .. (hau_suan.text or "?"))
 		local new = format_comment(old, mode, schema_id)
-		-- [DBG] 觀察格式化後的結果
 		log.info("[reformat_comment_filter] new comment=[" .. new .. "]")
 		local c = hau_suan:get_genuine()
 		local nc = Candidate(c.type, c.start, c._end, c.text, new)
-		nc.preedit = c.preedit  -- 修正：應取 genuine 的 preedit
+		nc.preedit = c.preedit
 		nc.quality = hau_suan.quality
 		yield(nc)
 	end

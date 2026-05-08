@@ -39,6 +39,7 @@ hau_suan_tuann:
 
     # ---- 3. 零聲母：i/u 開頭加 y/w（BP 規範） ----
     # i 為介音（ia, io, iu...）→ i 改成 y
+    - xform/〔》iau/〔yao/
     - xform/〔》ia/〔ya/
     - xform/〔》io/〔yo/
     - xform/〔》iu/〔yu/
@@ -58,7 +59,7 @@ hau_suan_tuann:
     - xform/》iaunn(\d)/ni》a${1}u/
     - xform/》uainn(\d)/nu》a${1}i/
     - xform/》ainn(\d)/n》a${1}inn/
-    - xform/》aunn(\d)/n》a${1}unn/
+    - xform/》aunn(\d)/n》a${1}onn/
     - xform/》iunn(\d)/n》i${1}unn/
     - xform/》uinn(\d)/u》i${1}nn/
     # 待確定
@@ -74,13 +75,13 @@ hau_suan_tuann:
 
     - xform/》iong(\d)/i》o${1}ng/
     - xform/》iang(\d)/i》a${1}ng/
-    - xform/》iauh(\d)/i》a${1}uh/
+    - xform/》iauh(\d)/i》a${1}oh/
     - xform/》uaih(\d)/nu》a${1}ih/
-    - xform/》auh(\d)/》na${1}uh/
+    - xform/》auh(\d)/》na${1}oh/
     - xform/》iah(\d)/ni》a${1}h/
     - xform/》eeh(\d)/》e${1}eh/
     - xform/》ang(\d)/》a${1}ng/
-    - xform/》auh(\d)/》a${1}uh/
+    - xform/》auh(\d)/》a${1}oh/
     - xform/》iah(\d)/i》a${1}h/
     - xform/》iak(\d)/i》a${1}k/
     - xform/》iam(\d)/i》a${1}m/
@@ -113,7 +114,7 @@ hau_suan_tuann:
     - xform/》ak(\d)/》a${1}k/
     - xform/》am(\d)/》a${1}m/
     - xform/》an(\d)/》a${1}n/
-    - xform/》au(\d)/》a${1}u/
+    - xform/》au(\d)/》a${1}o/
     - xform/》ap(\d)/》a${1}p/
     - xform/》at(\d)/》a${1}t/
     - xform/》eh(\d)/》e${1}h/

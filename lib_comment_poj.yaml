@@ -6,73 +6,207 @@ hau_suan_tuann:
   __append:
     # comment_format 直接處理字典原碼（台羅拼音 + 數字調號 1-8），無需 xlit
     # ---- 0. 複製原始音標（左欄使用〔〕進行後續轉換，右欄【】保持原樣） ----
-    - xform/^(.*)$/〔$1〕【$1】/
-    # ---- 1. 聲調正規化 ----
-    - xform/〔([^〕]*)6([^〕]*)〕/〔${1}7${2}〕/
-    # ---- 2. 聲母：TLPA → POJ ----
-    - xform/〔([^〕]*)tsh([^〕]*)〕/〔${1}chh${2}〕/
-    - xform/〔([^〕]*)ts(?!h)([^〕]*)〕/〔${1}ch${2}〕/
-    # ---- 3. 韻母 ing/ik → eng/ek（須在移位前） ----
-    - xform/〔([^〕]*)i(ng|k)([^〕]*)〕/〔${1}e${2}${3}〕/
-    # ---- 4. oo 韻母：整體加入調號標記，避免被移位拆開 ----
-    - xform/〔([^〕]*)oo([12345678])([^〕]*)〕/〔${1}o͘${2}${3}〕/
-    # ---- 5. 調符移位 ----
-    # 含有 a, o, e, O, ə 的母音，調號標在上
-    - xform/〔([^〕]*?)([aoeOə])([^〕]*?)([12345678])([^〕]*)〕/〔${1}${2}${4}${3}${5}〕/
-    # 只有 i, u 的複合母音（iu, ui 等），調號標於後側
-    - xform/〔([^〕]*?)([iu])([iu])([^〕]*?)([12345678])([^〕]*)〕/〔${1}${2}${3}${5}${4}${6}〕/
-    # 單母音（如 i, u, m, ng 等），調號標在上
-    - xform/〔([^〕]*?)([aeiouOəmng])([^〕]*?)([12345678])([^〕]*)〕/〔${1}${2}${4}${3}${5}〕/
-    # 預防其他未盡情況
-    - xform/〔([^〕]*?)([aeiou])(r?m?n*h?g?p?t?k?)([12345678])([^〕]*)〕/〔${1}${2}${4}${3}${5}〕/
-    - xform/〔([^〕]*?)([ae])([iueo])([12345678])([^〕]*)〕/〔${1}${2}${4}${3}${5}〕/
-    # ---- 6. o͘ 調符代換 ----
-    - xform/〔([^〕]*)o͘1([^〕]*)〕/〔${1}o͘${2}〕/
-    - xform/〔([^〕]*)o͘2([^〕]*)〕/〔${1}ó͘${2}〕/
-    - xform/〔([^〕]*)o͘3([^〕]*)〕/〔${1}ò͘${2}〕/
-    - xform/〔([^〕]*)o͘4([^〕]*)〕/〔${1}o͘${2}〕/
-    - xform/〔([^〕]*)o͘5([^〕]*)〕/〔${1}ô͘${2}〕/
-    - xform/〔([^〕]*)o͘7([^〕]*)〕/〔${1}ō͘${2}〕/
-    - xform/〔([^〕]*)o͘8([^〕]*)〕/〔${1}o̍͘${2}〕/
-    # ---- 7. 一般調符代換 ----
-    - xform/〔([^〕]*)a1([^〕]*)〕/〔${1}a${2}〕/
-    - xform/〔([^〕]*)e1([^〕]*)〕/〔${1}e${2}〕/
-    - xform/〔([^〕]*)i1([^〕]*)〕/〔${1}i${2}〕/
-    - xform/〔([^〕]*)u1([^〕]*)〕/〔${1}u${2}〕/
-    - xform/〔([^〕]*)o1([^〕]*)〕/〔${1}o${2}〕/
-    - xform/〔([^〕]*)m1([^〕]*)〕/〔${1}m${2}〕/
-    - xform/〔([^〕]*)ng1([^〕]*)〕/〔${1}ng${2}〕/
-    - xform/〔([^〕]*)a2([^〕]*)〕/〔${1}á${2}〕/
-    - xform/〔([^〕]*)e2([^〕]*)〕/〔${1}é${2}〕/
-    - xform/〔([^〕]*)i2([^〕]*)〕/〔${1}í${2}〕/
-    - xform/〔([^〕]*)u2([^〕]*)〕/〔${1}ú${2}〕/
-    - xform/〔([^〕]*)o2([^〕]*)〕/〔${1}ó${2}〕/
-    - xform/〔([^〕]*)a3([^〕]*)〕/〔${1}à${2}〕/
-    - xform/〔([^〕]*)e3([^〕]*)〕/〔${1}è${2}〕/
-    - xform/〔([^〕]*)i3([^〕]*)〕/〔${1}ì${2}〕/
-    - xform/〔([^〕]*)u3([^〕]*)〕/〔${1}ù${2}〕/
-    - xform/〔([^〕]*)o3([^〕]*)〕/〔${1}ò${2}〕/
-    - xform/〔([^〕]*)a4([^〕]*)〕/〔${1}a${2}〕/
-    - xform/〔([^〕]*)e4([^〕]*)〕/〔${1}e${2}〕/
-    - xform/〔([^〕]*)i4([^〕]*)〕/〔${1}i${2}〕/
-    - xform/〔([^〕]*)u4([^〕]*)〕/〔${1}u${2}〕/
-    - xform/〔([^〕]*)o4([^〕]*)〕/〔${1}o${2}〕/
-    - xform/〔([^〕]*)a5([^〕]*)〕/〔${1}â${2}〕/
-    - xform/〔([^〕]*)e5([^〕]*)〕/〔${1}ê${2}〕/
-    - xform/〔([^〕]*)i5([^〕]*)〕/〔${1}î${2}〕/
-    - xform/〔([^〕]*)u5([^〕]*)〕/〔${1}û${2}〕/
-    - xform/〔([^〕]*)o5([^〕]*)〕/〔${1}ô${2}〕/
-    - xform/〔([^〕]*)a7([^〕]*)〕/〔${1}ā${2}〕/
-    - xform/〔([^〕]*)e7([^〕]*)〕/〔${1}ē${2}〕/
-    - xform/〔([^〕]*)i7([^〕]*)〕/〔${1}ī${2}〕/
-    - xform/〔([^〕]*)u7([^〕]*)〕/〔${1}ū${2}〕/
-    - xform/〔([^〕]*)o7([^〕]*)〕/〔${1}ō${2}〕/
-    - xform/〔([^〕]*)a8([^〕]*)〕/〔${1}a̍${2}〕/
-    - xform/〔([^〕]*)e8([^〕]*)〕/〔${1}e̍${2}〕/
-    - xform/〔([^〕]*)i8([^〕]*)〕/〔${1}i̍${2}〕/
-    - xform/〔([^〕]*)u8([^〕]*)〕/〔${1}u̍${2}〕/
-    - xform/〔([^〕]*)o8([^〕]*)〕/〔${1}o̍${2}〕/
-    # ---- 8. 後處理 ----
-    - xform/〔([^〕]*)nn([^〕]*)〕/〔${1}ⁿ${2}〕/
-    - xform/〔([^〕]*)ua([^〕]*)〕/〔${1}oa${2}〕/
-    - xform/〔([^〕]*)ue([^〕]*)〕/〔${1}oe${2}〕/
+    - xform/^(.*)$/〔》$1〕【$1】/
+
+    # ---- 1. 聲母：TL → TLPA ----
+    # 齒音/舌齒音（多字母先處理）
+    - xform/》tsh/chh》/
+    - xform/》ts(?!h)/ch》/
+    # 舌根音/鼻音（濁音）
+    - xform/》ng/ng》/
+    # 舌根音
+    - xform/》kh/kh》/
+    - xform/》k(?!h)/k》/
+    - xform/》g/g》/
+    # 唇音
+    - xform/》ph/ph》/
+    - xform/》p(?!h)/p》/
+    - xform/》b/b》/
+    - xform/》m/m》/
+    # 舌尖音
+    - xform/》th/th》/
+    - xform/》t(?!h)/t》/
+    - xform/》n/n》/
+    - xform/》l/l》/
+    # 聲門音
+    - xform/》h/h》/
+
+    # ---- 2. 韻母+聲調：TL → TLPA ----
+    # 鼻化韻母：自 nn 後綴，改 n 前綴
+    # - xform/》onn/》noo/          # onn(ㆧ) → noo（須先於一般規則）
+    # - xform/》([iu]?(?:ai|ao|[aiueo]))nn/》$1ⁿ/  # ann→na, inn→ni, unn→nu 等
+    - xform/》oo(\d)/》o͘${1}͘/
+    - xform/》uainnh(\d)/o》a${1}ihⁿ/
+    - xform/》iannh(\d)/i》a${1}hⁿ/
+    - xform/》iaunn(\d)/i》a${1}uⁿ/
+    - xform/》iunnh(\d)/》i${1}uhⁿ/
+    - xform/》uainn(\d)/o》a${1}iⁿ/
+    - xform/》annh(\d)/》a${1}hⁿ/
+    - xform/》ainn(\d)/》a${1}iⁿ/
+    - xform/》ennh(\d)/》e${1}hⁿ/
+    - xform/》iann(\d)/i》a${1}ⁿ/
+    - xform/》ionn(\d)/i》o${1}ⁿ/
+    - xform/》iunn(\d)/》i${1}uⁿ/
+    - xform/》onnh(\d)/》o${1}hⁿ/
+    - xform/》ann(\d)/》a${1}ⁿ/
+    - xform/》enn(\d)/》e${1}ⁿ/
+    - xform/》inn(\d)/》i${1}ⁿ/
+    - xform/》uih(\d)/》u${1}ih/
+    - xform/》iang(\d)/i》a${1}ng/
+    - xform/》iauh(\d)/i》a${1}uh/
+    - xform/》iong(\d)/i》o${1}ng/
+    - xform/》uann(\d)/o》a${1}ⁿ/
+    - xform/》uang(\d)/o》a${1}ng/
+    - xform/》uaih(\d)/o》a${1}ih/
+    - xform/》uinn(\d)/》u${1}iⁿ/
+    - xform/》ang(\d)/》a${1}ng/
+    - xform/》aih(\d)/》a${1}ih/
+    - xform/》auh(\d)/》a${1}uh/
+    - xform/》ing(\d)/》e${1}ng/
+    - xform/》iah(\d)/i》a${1}h/
+    - xform/》iam(\d)/i》a${1}m/
+    - xform/》ian(\d)/i》a${1}n/
+    - xform/》iap(\d)/i》a${1}p/
+    - xform/》iat(\d)/i》a${1}t/
+    - xform/》iak(\d)/i》a${1}k/
+    - xform/》iau(\d)/i》a${1}u/
+    - xform/》ioh(\d)/i》o${1}h/
+    - xform/》iok(\d)/i》o${1}k/
+    - xform/》onn(\d)/》o${1}ⁿ/
+    - xform/》ooh(\d)/》o${1}͘h/
+    - xform/》ong(\d)/》o${1}ng/
+    - xform/》uah(\d)/o》a${1}h/
+    - xform/》uan(\d)/o》a${1}n/
+    - xform/》uat(\d)/o》a${1}t/
+    - xform/》uai(\d)/o》a${1}i/
+    - xform/》ueh(\d)/o》e${1}h/
+    - xform/》ngh(\d)/》n${1}gh/
+    - xform/》ah(\d)/》a${1}h/
+    - xform/》am(\d)/》a${1}m/
+    - xform/》an(\d)/》a${1}n/
+    - xform/》ap(\d)/》a${1}p/
+    - xform/》at(\d)/》a${1}t/
+    - xform/》ak(\d)/》a${1}k/
+    - xform/》ai(\d)/》a${1}i/
+    - xform/》au(\d)/》a${1}u/
+    - xform/》eh(\d)/》e${1}h/
+    - xform/》ih(\d)/》i${1}h/
+    - xform/》im(\d)/》i${1}m/
+    - xform/》in(\d)/》i${1}n/
+    - xform/》ip(\d)/》i${1}p/
+    - xform/》it(\d)/》i${1}t/
+    - xform/》ik(\d)/》e${1}k/
+    - xform/》ia(\d)/》i${1}a/
+    - xform/》io(\d)/》i${1}o/
+    - xform/》iu(\d)/》i${1}u/
+    - xform/》oh(\d)/》o${1}h/
+    - xform/》om(\d)/》o${1}m/
+    - xform/》op(\d)/》o${1}p/
+    - xform/》ok(\d)/》o${1}k/
+    - xform/》uh(\d)/》u${1}h/
+    - xform/》un(\d)/》u${1}n/
+    - xform/》ut(\d)/》u${1}t/
+    - xform/》ua(\d)/o》a${1}/
+    - xform/》ue(\d)/o》e${1}/
+    - xform/》ui(\d)/u》i${1}/
+    - xform/》mh(\d)/》m${1}h/
+    - xform/》ng(\d)/》n${1}g/
+    - xform/》a(\d)/》a${1}/
+    - xform/》e(\d)/》0${1}/
+    - xform/》i(\d)/》i${1}/
+    - xform/》o(\d)/》o${1}/
+    - xform/》u(\d)/》u${1}/
+    - xform/》m(\d)/》m${1}/
+
+    # ---- 羅馬拼音字母上方標聲調符號 ----
+    - xform/》o͘1/o͘/
+    - xform/》o͘2/ó͘/
+    - xform/》o͘3/ò͘/
+    - xform/》o͘4/o͘/
+    - xform/》o͘5/ǒ͘/
+    - xform/》o͘6/ó͘/
+    - xform/》o͘7/ō͘/
+    - xform/》o͘8/o̍͘/
+    - xform/》o͘9/ő͘/
+
+    # 1: 陰平調
+    - xform/》a1/a/
+    - xform/》i1/i/
+    - xform/》u1/u/
+    - xform/》e1/e/
+    - xform/》o1/o/
+    - xform/》m1/m/
+    - xform/》n1/n/
+
+    # 2: 陰上調
+    - xform/》a2/á/
+    - xform/》i2/í/
+    - xform/》u2/ú/
+    - xform/》e2/é/
+    - xform/》o2/ó/
+    - xform/》m2/ḿ/
+    - xform/》n2/ń/
+
+    # 3: 陰去調
+    - xform/》a3/à/
+    - xform/》i3/ì/
+    - xform/》u3/ù/
+    - xform/》e3/è/
+    - xform/》o3/ò/
+    - xform/》m3/m̀/
+    - xform/》n3/ǹ/
+
+    # 4: 陰入調
+    - xform/》a4/a/
+    - xform/》i4/i/
+    - xform/》u4/u/
+    - xform/》e4/e/
+    - xform/》o4/o/
+    - xform/》m4/m/
+    - xform/》n4/n/
+
+    # 5: 陽平調
+    - xform/》a5/ǎ/
+    - xform/》i5/ǐ/
+    - xform/》u5/ǔ/
+    - xform/》e5/ě/
+    - xform/》o5/ǒ/
+    - xform/》m5/m̌/
+    - xform/》n5/ň/
+
+    # 6: 陽上調
+    - xform/》a6/á/
+    - xform/》i6/í/
+    - xform/》u6/ú/
+    - xform/》e6/é/
+    - xform/》o6/ó/
+    - xform/》m6/ḿ/
+    - xform/》n6/ń/
+
+    # 7: 陽去調
+    - xform/》a7/ā/
+    - xform/》i7/ī/
+    - xform/》u7/ū/
+    - xform/》e7/ē/
+    - xform/》o7/ō/
+    - xform/》m7/m̄/
+    - xform/》n7/n̄/
+
+    # 8: 陽入調
+    - xform/》a8/a̍/
+    - xform/》i8/i̍/
+    - xform/》u8/u̍/
+    - xform/》e8/e̍/
+    - xform/》o8/o̍/
+    - xform/》m8/m̍/
+    - xform/》n8/n̍/
+
+    # 9: 輕聲調
+    - xform/》a9/a̋/
+    - xform/》i9/i̋/
+    - xform/》u9/ű/
+    - xform/》e9/e̋/
+    - xform/》o9/ő/
+    - xform/》m9/m̋/
+    - xform/》n9/n̋/
+
