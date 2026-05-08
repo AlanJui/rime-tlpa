@@ -54,9 +54,9 @@ $files = @(
     "phing_im_bpm2.schema.yaml",
     "phing_im_poj.schema.yaml",
     # 注音輸入方案：
-    "zu_im_bpm2.schema.yaml",
     "zu_im_tps.schema.yaml",
     "zu_im_tlpa.schema.yaml",
+    "zu_im_bpm2.schema.yaml",
     # 反切輸入方案：
     "huan_ciat_tps.schema.yaml",
     "huan_ciat_tlpa.schema.yaml",
@@ -69,6 +69,7 @@ $files = @(
     "lib_comment_bpm2.yaml",
     "lib_comment_tps_and_tlpa.yaml",
     "lib_comment_tps_and_bpm2.yaml",
+    "lib_comment_TlpaBpm_and_tlpa.yaml",
     # 輸入方案附屬模組之【候選字清單】
     "hau_suan_tuann_bp.yaml",
     "hau_suan_tuann_bpm2.yaml",
