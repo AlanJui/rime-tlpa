@@ -82,7 +82,7 @@ engine:
     # 為 filter 除錯用
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
-    - lua_filter@reformat_comment_filter
+    # - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyzN=;-_\/[]7.

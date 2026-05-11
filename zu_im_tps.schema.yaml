@@ -64,7 +64,7 @@ engine:
     # 為 filter 除錯用
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
-    - lua_filter@reformat_comment_filter
+    # - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7N"

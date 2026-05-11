@@ -76,7 +76,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
-    - lua_filter@reformat_comment_filter
+    # - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyz;-_\/[]7.

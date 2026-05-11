@@ -514,7 +514,7 @@ local function format_comment(comment_string, mode, schema_id)
         end
 
         local is_sni = schema_id and (schema_id:match("hau_suan") or schema_id:match("huan_ciat"))
-        
+
         -- 對於非十五音（如 tps, tlpa），完全由 yaml 控制左右欄，直接回傳
         if not is_sni then
                 return comment_string
@@ -527,7 +527,7 @@ local function format_comment(comment_string, mode, schema_id)
                 for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
                         table.insert(chars, uchar)
                 end
-                
+
                 -- 當括號內恰好為 3 個字元（聲+韻+調）時進行調換
                 if #chars == 3 then
                         return "〔" .. chars[2] .. chars[3] .. chars[1] .. "〕"
@@ -535,13 +535,13 @@ local function format_comment(comment_string, mode, schema_id)
                         return "〔" .. s .. "〕"
                 end
         end)
-        
+
         new_comment = new_comment:gsub("【(.-)】", function(s)
                 local chars = {}
                 for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
                         table.insert(chars, uchar)
                 end
-                
+
                 if #chars == 3 then
                         return "【" .. chars[2] .. chars[3] .. chars[1] .. "】"
                 else
