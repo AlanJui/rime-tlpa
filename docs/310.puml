@@ -1,0 +1,31 @@
+@startuml
+skinparam shadowing false
+
+title 產生注音檔\n
+
+skinparam activity {
+    StartColor limegreen
+    EndColor darkblue
+    BackgroundColor #d4de5e
+    BorderColor #5e94de
+    ArrowColor black
+}
+skinparam activityDiamond {
+    BackgroundColor #5ede68
+    BorderColor #5e94de
+    fontSize 16
+}
+
+start
+:新建 Excel 檔案;
+:設定 A 欄的格式
+欄寬為 128
+可自動換行;
+:自模版檔案
+複製 output 工作表;
+:將新建之 Excel 檔案命名為 Piau-Tsu-Im.xlsx
+存放於 output 目錄中;
+
+stop
+
+@enduml
