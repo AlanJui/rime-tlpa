@@ -26,18 +26,18 @@ switches:
   - name: full_shape
     reset: 0
     states: [半形, 全形]
-  # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 方音符號
+  # 切換【候選清單】右欄使用之【漢字標音】（參考：310.md）
+  # reset: 0 (預設選項) → 台語音標
   - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
-    reset: 1
-    states: [ 方音符號, 台語音標 ]
-  # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 十五音
+    reset: 0
+    states: [ 台語音標, 方音符號 ]
+  # 指定輸出之【漢字標音】（參考：310.md）
+  # reset: 0（預設選項） → 十五音
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
         key_in_piau_im_bpm2, key_in_piau_im_ipa ]
-    reset: 2
+    reset: 0
     states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
 
 engine:
@@ -68,7 +68,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
-    # - lua_filter@reformat_comment_filter  # 控制【候選清單】顯示之【漢字標音】
+    - lua_filter@reformat_comment_filter  # 控制【候選清單】顯示之【漢字標音】
 
 speller:
   #------------------------------------------------------
