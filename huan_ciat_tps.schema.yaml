@@ -5,7 +5,7 @@
 schema:
   schema_id: huan_ciat_tps
   name: 反切輸入法【方音符號】
-  version: "v0.0.1.2"
+  version: "v0.1.3.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -74,7 +74,7 @@ engine:
     # 為 filter 除錯用
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
-    # - lua_filter@reformat_comment_filter
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7N"
@@ -434,7 +434,8 @@ translator:
     # - xform/4//
     #------------------------------------------------------------------------------
     __patch:
-      - hau_suan_tuann_sni_and_tps:/hau_suan_tuann
+      # - hau_suan_tuann_sni_and_tps:/hau_suan_tuann
+      - lib_comment_sni_and_tps:/hau_suan_tuann
 
 # reverse_lookup:
 #   dictionary: luna_pinyin
