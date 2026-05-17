@@ -442,7 +442,7 @@ translator:
     # 【零聲母】轉換
     # - xform/》Ø/英》/
     # 音節以【鼻音韻母】開頭
-    - xform/【》([iu]?(ai|au|[aiueo]))nn/【英N$1/
+    - xform/【》([iu]?(ai|au|[aiueo]))nn/【英》N$1/
     # 音節以【韻母】開頭
     - xform/【》(oo|[aeiou])/【英》$1/
     # 音節以【韻化輔音】開始
