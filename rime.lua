@@ -265,8 +265,22 @@ function aux_commit(key, env)
 		local schema_id = env.engine.schema.schema_id
 		local sni_list = {}
 		if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+			-- comment_format 輸出 SNI 為 聲+韻+調 順序（如：柳君二）；
+			-- reformat_comment_filter 顯示前倒裝成 韻+調+聲（如：君二柳）。
+			-- ctx:get_selected_candidate() 可能回傳過濾前（聲+韻+調）或後（韻+調+聲），
+			-- 兩種情況都需能正確轉換，故先嘗試直接轉換，失敗則執行倒裝後再轉換。
 			for v in gen_comm:gmatch("【(.-)】") do
-				table.insert(sni_list, v)
+				local chars = {}
+				for uchar in v:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+					table.insert(chars, uchar)
+				end
+				if #chars == 3 and not convert_sni_to_tlpa(v) then
+					-- 聲+韻+調 → 韻+調+聲 倒裝（過濾前的 comment_format 輸出）
+					local inv = chars[2] .. chars[3] .. chars[1]
+					table.insert(sni_list, convert_sni_to_tlpa(inv) and inv or v)
+				else
+					table.insert(sni_list, v)  -- 已是 韻+調+聲（過濾後）或無法識別
+				end
 			end
 		else
 			for v in gen_comm:gmatch("〔(.-)〕") do
@@ -499,6 +513,21 @@ local function regroup_pairs_safe(s)
 	return s
 end
 
+-- regroup_pairs_zh_first：多音節詞時將 【】 排左欄、〔〕 排右欄
+-- 用於 huan_ciat 系列方案（【十五音】〔字典音標〕 格式）
+local function regroup_pairs_two_columns(s)
+	if type(s) ~= "string" or s == "" then return s end
+	local zh, tlpa = {}, {}
+	for z in s:gmatch("【(.-)】") do table.insert(zh, z) end
+	for t in s:gmatch("〔(.-)〕") do table.insert(tlpa, t) end
+	if #zh >= 2 and #zh == #tlpa then
+		return "【" .. table.concat(zh, "】 【") .. "】"
+		       .. "  "
+		       .. "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+	end
+	return s
+end
+
 local function format_comment(comment_string, mode, schema_id)
         if type(comment_string) ~= "string" or comment_string == "" then
                 return comment_string
@@ -544,6 +573,12 @@ local function format_comment(comment_string, mode, schema_id)
 end
 
 function reformat_comment_filter(input, env)
+	-- (1) 遇【反切】類輸入法，如 huan_ciat_tlpa、huan_ciat_tps，需將【十五音】從【聲+韻+調】格式，
+	--     改成【韻+調+聲】。
+	-- (2) 遇連續輸入，comment_format 輸出為：【柳君二】〔lun2〕  【地干一】〔tan1〕
+	--     經 regroup_pairs_two_columns 修正：【柳君二】 【地干一】  〔lun2〕 〔tan1〕（十五音置於左）
+	-- 	   需 filter 調整十五音結構：【君二柳】 【干一地】  〔lun2〕 〔tan1〕 ✓（兩欄順序正確）
+	-- (3) 由於 comment_format 的輸出格式為【聲+韻+調】（如：柳君二），因此 reformat_comment_filter 需能處理兩種格式的輸入，才能確保【連續輸入】時的顯示正確。
 	local schema_id = env.engine.schema.schema_id
 	log.info("[reformat_comment_filter] schema_id=" .. (schema_id or "?"))
 
@@ -551,7 +586,16 @@ function reformat_comment_filter(input, env)
 	if SKIP_CONVERT_SCHEMAS[schema_id] then
 		for cand in input:iter() do
 			local old = cand.comment or ""
-			local new = regroup_pairs_safe(old)
+			-- <<< 註解有問題，待修訂：
+			-- huan_ciat：【SNI】〔字典〕格式，需將 【】 排左欄
+			-- 其他方案：〔字典〕【注音/拼音〕格式，沿用 regroup_pairs_safe
+			-- >>>
+			local new
+			if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+				new = regroup_pairs_two_columns(old)
+			else
+				new = regroup_pairs_safe(old)
+			end
 			-- 【反切】方案（huan_ciat）：左欄【十五音】需從【聲+韻+調】倒裝成【韻+調+聲】
 			-- 例：柳君二 → 君二柳
 			-- 兩種方案均使用 【十五音】〔字典編碼〕 格式：
