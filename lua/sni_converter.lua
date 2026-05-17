@@ -90,3 +90,49 @@ local tiau_ho_map = {
 	["七"] = 7,
 	["八"] = 8,
 }
+
+local function convert_sni_to_tlpa(s)
+	-- 功能：將傳統【十五音】轉換成【台語音標】
+	-- 輸入：s 為【十五音】漢字標音字串，包含三個 UTF-8 字元，分別代表韻母、聲調、聲母，如：【君二柳】。
+
+	---------------------------------------------------------------------------
+	-- 將字串 s 拆解成三個 UTF-8 字元，存入 chars 陣列。
+	-- 在此檔案的上下文中，後續程式碼會取 chars[1]（韻母）、chars[2]（聲調）、chars[3]（聲母）來進行十五音轉換。
+	---------------------------------------------------------------------------
+	-- 【UTF-8 字元比對】正規表示式： [%z\1-\127\194-\244][\128-\191]*
+	--
+	-- 以十五音： "君二柳" 為例，UTF-8 的中文中字串，不要解析成 9 個位元組，而應當作：
+	-- {"君", "二", "柳"} 三個中文字元。
+	---------------------------------------------------------------------------
+	-- 部分			範圍		 說明
+	-- %z			0x00		null 位元組
+	-- \1-\127		0x01–0x7F	ASCII 單位元組字元
+	-- \194-\244	0xC2–0xF4	多位元組 UTF-8 的起始位元組
+	-- [\128-\191]*	0x80–0xBF	多位元組 UTF-8 的後續位元組（0 個或多個）
+	---------------------------------------------------------------------------
+	local chars = {}
+	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+		table.insert(chars, uchar)
+	end
+	if #chars ~= 3 then
+		return nil
+	end
+
+	local un = chars[1]
+	local tiau = chars[2]
+	local siann = chars[3]
+
+	local tiau_ho = tiau_ho_map[tiau]	-- 調號：tiau_ho
+	local siann_bu = siann_bu_dict[siann]
+	local un_bu = un_bu_dict[un]
+
+	if not tiau_ho or not siann_bu or not un_bu then
+		return nil
+	end
+
+	-- 依據【調號】選用【舒聲】或【促聲】韻母：調號為 4 或 8 時，使用促聲韻母；其他調號則使用舒聲韻母
+	local jip_siann_tiau = (tiau_ho == 4 or tiau_ho == 8)  -- 入聲調號為 4 或 8 時，才使用 un_bu_dict 中的第二個元素（入聲調）
+	un_bu = jip_siann_tiau and un_bu[2] or un_bu[1]  -- 根據是否為入聲調，選擇 un_bu_dict 中的對應元素
+
+	return siann_bu .. un_bu .. tiau_ho
+end

@@ -146,7 +146,24 @@ local SKIP_CONVERT_SCHEMAS = {
 -- === END DICTIONARIES ===
 
 local function convert_sni_to_tlpa(s)
-	-- 將【十五音】轉換成【台語音標】
+	-- 功能：將傳統【十五音】轉換成【台語音標】
+	-- 輸入：s 為【十五音】漢字標音字串，包含三個 UTF-8 字元，分別代表韻母、聲調、聲母，如：【君二柳】。
+
+	---------------------------------------------------------------------------
+	-- 將字串 s 拆解成三個 UTF-8 字元，存入 chars 陣列。
+	-- 在此檔案的上下文中，後續程式碼會取 chars[1]（韻母）、chars[2]（聲調）、chars[3]（聲母）來進行十五音轉換。
+	---------------------------------------------------------------------------
+	-- 【UTF-8 字元比對】正規表示式： [%z\1-\127\194-\244][\128-\191]*
+	--
+	-- 以十五音： "君二柳" 為例，UTF-8 的中文中字串，不要解析成 9 個位元組，而應當作：
+	-- {"君", "二", "柳"} 三個中文字元。
+	---------------------------------------------------------------------------
+	-- 部分			範圍		 說明
+	-- %z			0x00		null 位元組
+	-- \1-\127		0x01–0x7F	ASCII 單位元組字元
+	-- \194-\244	0xC2–0xF4	多位元組 UTF-8 的起始位元組
+	-- [\128-\191]*	0x80–0xBF	多位元組 UTF-8 的後續位元組（0 個或多個）
+	---------------------------------------------------------------------------
 	local chars = {}
 	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
 		table.insert(chars, uchar)
@@ -362,22 +379,6 @@ function aux_commit(key, env)
 	return 2
 end
 
-------------------------------------------------------------------------------------------
--- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
-------------------------------------------------------------------------------------------
-function supers_indicator(input, env)
-	local on = env.engine.context:get_option("supers_tone")
-	local tag = on and "〔上標〕 " or "〔一般〕 "
-	for cand in input:iter() do
-		-- 生成新的候選（不改動 text / segment）
-		local c = cand:get_genuine()
-		local new = Candidate(cand.type, cand.start, cand._end, cand.text, tag .. (cand.comment or ""))
-		-- 保留原本的屬性
-		new.preedit = cand.preedit
-		yield(new)
-	end
-end
-
 --------------------------------------------------------------------------
 -- reformat_comment_filter：重排候選註解中的羅馬拼音與注音符號
 --------------------------------------------------------------------------
@@ -561,6 +562,37 @@ function reformat_comment_filter(input, env)
 		for cand in input:iter() do
 			local old = cand.comment or ""
 			local new = regroup_pairs_safe(old)
+			-- 【反切】方案（huan_ciat）：左欄【十五音】需從【聲+韻+調】倒裝成【韻+調+聲】
+			-- 例：柳君二 → 君二柳
+			-- 兩種方案括號角色相反：
+			--   huan_ciat_tlpa：左欄十五音在 【...】，右欄 TLPA 在 〔...〕
+			--   huan_ciat_tps ：左欄十五音在 〔...〕，右欄方音符號在 【...】
+			-- 只倒裝存放十五音的那個括號，不碰另一側（避免 ng7 等 3-char TLPA 被誤倒裝）
+			if schema_id == "huan_ciat_tlpa" then
+				new = new:gsub("【(.-)】", function(s)
+					local chars = {}
+					for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+						table.insert(chars, uchar)
+					end
+					if #chars == 3 then
+						return "【" .. chars[2] .. chars[3] .. chars[1] .. "】"
+					else
+						return "【" .. s .. "】"
+					end
+				end)
+			elseif schema_id == "huan_ciat_tps" then
+				new = new:gsub("〔(.-)〕", function(s)
+					local chars = {}
+					for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+						table.insert(chars, uchar)
+					end
+					if #chars == 3 then
+						return "〔" .. chars[2] .. chars[3] .. chars[1] .. "〕"
+					else
+						return "〔" .. s .. "〕"
+					end
+				end)
+			end
 			log.info("[reformat_comment_filter] skip_convert raw=[" .. old .. "] new=[" .. new .. "]")
 			if new ~= old then
 				local c = cand:get_genuine()
@@ -875,4 +907,20 @@ local function norm_repr(r)
 	-- 能截獲的按鍵：Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
 	r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
 	return r:lower()
+end
+
+------------------------------------------------------------------------------------------
+-- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
+------------------------------------------------------------------------------------------
+function supers_indicator(input, env)
+	local on = env.engine.context:get_option("supers_tone")
+	local tag = on and "〔上標〕 " or "〔一般〕 "
+	for cand in input:iter() do
+		-- 生成新的候選（不改動 text / segment）
+		local c = cand:get_genuine()
+		local new = Candidate(cand.type, cand.start, cand._end, cand.text, tag .. (cand.comment or ""))
+		-- 保留原本的屬性
+		new.preedit = cand.preedit
+		yield(new)
+	end
 end
