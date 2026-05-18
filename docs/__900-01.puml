@@ -1,0 +1,66 @@
+@startuml
+title reformat_comment_filter — SKIP_CONVERT_SCHEMAS 分支（lines 586–630）
+
+participant "RIME Engine" as RIME
+participant "reformat_comment_filter" as F
+participant "regroup_pairs_two_columns\n(huan_ciat 用：【】左、〔〕右)" as RZH
+participant "regroup_pairs_safe\n(phing_im/zu_im 用：〔〕左、【】右)" as RS
+participant "SNI 倒裝\n【柳君二】→【君二柳】" as INV
+participant "候選清單" as CL
+
+RIME -> F : 觸發 filter（候選清單渲染）
+F -> F : 讀取 schema_id
+
+loop 每個候選 (input:iter())
+
+    F -> F : old = cand.comment
+    note right
+      例：【柳君二】〔lun2〕  【地干一】〔tan1〕
+    end note
+
+    alt#gold #lightblue schema_id 屬於 huan_ciat_tlpa / huan_ciat_tps
+
+        F -> RZH : regroup_pairs_two_columns(old)
+        note right of RZH
+          ≥2 對時重排：
+          【柳君二】 【地干一】
+            〔lun2〕  〔tan1〕
+          （【】集中至左欄）
+        end note
+        RZH --> F : new
+
+        F -> INV : new:gsub("【(.-)】", fn)
+        note right of INV
+          逐一處理 【】 內的 SNI
+          取出 3 個 UTF-8 字元：
+            chars[1]=聲, chars[2]=韻, chars[3]=調
+          重組為 chars[2]+chars[3]+chars[1]
+          【柳君二】→【君二柳】
+          【地干一】→【干一地】
+        end note
+        INV --> F : new（倒裝完成）
+
+    else #pink phing_im / zu_im（其他 SKIP_CONVERT）
+
+        F -> RS : regroup_pairs_safe(old)
+        note right of RS
+          ≥2 對時重排：
+          〔lun2〕 〔tan1〕
+            【X】   【Y】
+          （〔〕集中至左欄）
+        end note
+        RS --> F : new
+
+    end
+
+    alt new ~= old（comment 有變動）
+        F -> F : c = cand:get_genuine()\nnc = Candidate(type, start, _end,\n  text, **new**)
+        F -> CL : yield(nc)
+    else new == old（無變動）
+        F -> CL : yield(cand)
+    end
+
+end
+
+F --> RIME : return（此分支結束）
+@enduml
