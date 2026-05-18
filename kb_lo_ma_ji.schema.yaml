@@ -1,0 +1,118 @@
+# Rime schema
+# version: "v0.2.0.0"
+# encoding: utf-8
+
+schema:
+  schema_id: kb_lo_ma_ji
+  name: 按鍵練習【羅馬拼音字母】
+  version: "0.2.0.0"
+  author:
+    - Alan Jui <AlanJui.1960@gmail.com>
+  description: |
+    輸入帶調符之「羅馬拼音字母」（台羅拼音 / 白話字）
+
+    【聲調按鍵對映】
+    按鍵  調號  聲調
+    ;     1     陰平調（高音調）
+    \     2     上聲調（高降調）
+    _     3     陰去調（低音調）
+    [     4     陰入調（低促調）
+    /     5     陽平調（低升調）
+    -     7     陽去調（中音調）
+    ]     8     陽入調（高促調）
+
+    【輸入範例】
+    siann;  → siann（陰平）
+    siann\  → siánn（上聲）
+    siann_  → siànn（陰去）
+    siann/  → siânn（陽平）
+    siann-  → siānn（陽去）
+    tshiu/  → tshiû（陽平）
+    e[      → e（陰入）
+    a]      → a̍（陽入）
+
+    【按鍵字母對映表】（單鍵查閱，不含聲調）
+    序號  鍵盤按鍵  方音符號  注音編碼  國際音標
+    22    8         ㄚ        a         a
+    24    u         ㄧ        i         i
+    26    j         ㄨ        u         u
+    28    ,         ㆤ        e         e
+    31    i         ㆦ        O         ɔ
+    30    k         ㄜ        o         ə
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文 ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形 全形]
+
+engine:
+  processors:
+    - punctuator
+    - selector
+    - express_editor
+  segmentors:
+    - punct_segmentor
+  translators:
+    - punct_translator
+
+punctuator:
+  half_shape: &symtable
+    ";": ["", "\u0304"]
+    "-": ["\u0304", "\u0302"]
+    "_": ["\u0300", "\u0302"]
+    "\\": ["\u0301", "\u030C"]
+    "/": ["\u030C", "\u0301"]
+    "[": ["", "\u0304"]
+    "]": ["\u030D", "\u0301"]
+    "1": ["¹"]
+    "7": ["⁷"]
+    "3": ["³"]
+    "2": ["²"]
+    "5": ["⁵"]
+    "6": [""]
+    "4": ["⁴"]
+    "8": ["⁸"]
+    "O": ["o͘", "ó͘" ,"ò͘" ,"o͘" ,"ǒ͘" ,"ó͘" ,"ō͘" ,"o̍͘" ,"ő͘"]
+    "a": [ "a", "á", "à", "a", "â", "ǎ", "ā", "a̍"]
+    "i": [ "i", "í", "ì", "i", "î", "ǐ", "ī", "i̍"]
+    "u": [ "u", "ú", "ù", "u", "û", "ǔ", "ū", "u̍"]
+    "e": [ "e", "é", "è", "e", "ê", "ě", "ē", "e̍"]
+    "o": [ "o", "ó", "ò", "o", "ô", "ǒ", "ō", "o̍"]
+    "m": [ "m", "ḿ", "m̀", "m", "m̂", "m̌", "m̄", "m̍"]
+    "n": [ "n", "ń", "ǹ", "n", "n̂", "ň", "n̄", "n̍"]
+
+full_shape:
+  ".": 。
+
+key_binder:
+  import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore }
+    #---------------------------------------------------
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus }
+    #---------------------------------------------------
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
+    #---------------------------------------------------
+    # 翻頁
+    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------

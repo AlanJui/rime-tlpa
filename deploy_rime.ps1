@@ -86,6 +86,7 @@ $files = @(
     # 輸入方案附屬工具
     "kb_hong_im.schema.yaml",
     "kb_ipa.schema.yaml",
+    "kb_lo_ma_ji.schema.yaml",
     # 輸入方案使用之【功能插件（Lua 腳本）】
     "rime.lua",
     "lua\tlpa_converter.lua"
