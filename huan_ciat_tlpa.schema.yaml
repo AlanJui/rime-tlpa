@@ -26,11 +26,11 @@ switches:
   - name: full_shape
     reset: 0
     states: [半形, 全形]
-  # 切換【候選清單】右欄使用之【漢字標音】（參考：310.md）
-  # reset: 0 (預設選項) → 台語音標
-  - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
-    reset: 0
-    states: [ 台語音標, 方音符號 ]
+  # # 切換【候選清單】右欄使用之【漢字標音】（參考：310.md）
+  # # reset: 0 (預設選項) → 台語音標
+  # - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
+  #   reset: 0
+  #   states: [ 台語音標, 方音符號 ]
   # 指定輸出之【漢字標音】（參考：310.md）
   # reset: 0（預設選項） → 十五音
   - options:
@@ -165,7 +165,7 @@ speller:
 
 translator:
   dictionary: ji_khoo_tl
-  prism: huan_ciat_tlpa.prism.yaml
+  prism: huan_ciat_tlpa
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -459,7 +459,7 @@ translator:
     - xform/》b/門》/                   # ㆠ
     - xform/》m(?!\d)/毛》/             # ㄇ
     # 舌根音
-    - xform/》kh/氣》/                  # ㄎ
+    - xform/》kh/去》/                  # ㄎ
     - xform/》k(?!h)/求》/              # ㄍ
     - xform/》g/語》/                   # ㆣ
     - xform/》ng(?!\d)/雅》/            # ㄫ
@@ -539,7 +539,7 @@ translator:
     - xform/》ua(h?)(?!n)/瓜》/
 
     # - xform/》uiⁿ/禈》/
-    - xform/》Nui/禈》/
+    - xform/》Nui/褌》/
     - xform/》ui(h?)/規》/
 
     # - xform/》ueⁿ/糜》/
@@ -657,11 +657,10 @@ key_binder:
 
 editor:
   bindings:
-    Return: commit_composition                # 輸出【輸入編輯列】的【漢字標音】
-    Shift+Return: commit_raw_input            # 上屏候選項備注：ㄉㄚ˪〖柳交五〗
-    Control+Return: commit_script_text        # 上屏顯示的輸入：lau⁵ / lâu
-    Shift+Control+Return: commit_comment      # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
-    # Control+Shift+Return: commit_raw_input  # 將 Control+Return 綁定到 Lua 函數
+    Return: commit_composition              # 【漢字標音輸出】選項設定
+    Control+Return: commit_raw_input        # 【鍵盤按鍵】（未經 preedit_format 轉換的原始輸入）
+    Shift+Return: commit_script_text        # 【輸入編輯列】（經 preedit_format 轉換後的結構）
+    Control+Shift+Return: commit_comment    # 【候選字清單】選擇項目
 
 menu:
   alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]  # 修改候選標籤

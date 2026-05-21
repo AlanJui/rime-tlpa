@@ -572,50 +572,74 @@ local function format_comment(comment_string, mode, schema_id)
         return new_comment
 end
 
-function reformat_comment_filter(input, env)
-	-- (1) 遇【反切】類輸入法，如 huan_ciat_tlpa、huan_ciat_tps，需將【十五音】從【聲+韻+調】格式，
-	--     改成【韻+調+聲】。
-	-- (2) 遇連續輸入，comment_format 輸出為：【柳君二】〔lun2〕  【地干一】〔tan1〕
-	--     經 regroup_pairs_two_columns 修正：【柳君二】 【地干一】  〔lun2〕 〔tan1〕（十五音置於左）
-	-- 	   需 filter 調整十五音結構：【君二柳】 【干一地】  〔lun2〕 〔tan1〕 ✓（兩欄順序正確）
-	-- (3) 由於 comment_format 的輸出格式為【聲+韻+調】（如：柳君二），因此 reformat_comment_filter 需能處理兩種格式的輸入，才能確保【連續輸入】時的顯示正確。
-	local schema_id = env.engine.schema.schema_id
-	log.info("[reformat_comment_filter] schema_id=" .. (schema_id or "?"))
+local function utf8_chars(s)
+	local chars = {}
+	if type(s) ~= "string" then
+		return chars
+	end
+	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+		table.insert(chars, uchar)
+	end
+	return chars
+end
 
-	-- 【無需轉換】方案：只重排配對，不做聲調符號轉換
-	if SKIP_CONVERT_SCHEMAS[schema_id] then
+local function normalize_sni_syllable(s)
+	local chars = utf8_chars(s)
+	if #chars ~= 3 then
+		return s
+	end
+
+	-- 候選左欄可能來自 comment_format 的「聲韻調」，也可能已是傳統「韻調聲」。
+	-- convert_sni_to_tlpa() 只接受傳統十五音，因此用它判斷是否需要倒裝。
+	if convert_sni_to_tlpa(s) then
+		return s
+	end
+
+	local reordered = chars[2] .. chars[3] .. chars[1]
+	if convert_sni_to_tlpa(reordered) then
+		return reordered
+	end
+
+	return s
+end
+
+local function render_huan_ciat_comment(comment_string)
+	if type(comment_string) ~= "string" or comment_string == "" then
+		return comment_string
+	end
+
+	local sni_items = {}
+	local raw_right_items = {}
+	for sni in comment_string:gmatch("【(.-)】") do
+		table.insert(sni_items, normalize_sni_syllable(sni))
+	end
+	for right in comment_string:gmatch("〔(.-)〕") do
+		table.insert(raw_right_items, right)
+	end
+	if #sni_items == 0 then
+		return comment_string
+	end
+
+	local left = "【" .. table.concat(sni_items, "】 【") .. "】"
+	if #raw_right_items == 0 then
+		return left
+	end
+	local right = "〔" .. table.concat(raw_right_items, "〕 〔") .. "〕"
+	if #sni_items == 1 then
+		return left .. right
+	end
+	return left .. "  " .. right
+end
+
+function reformat_comment_filter(input, env)
+	local schema_id = env.engine.schema.schema_id
+
+	-- 反切方案依 310.md 顯示：【傳統十五音】〔YAML 產出的右欄標音〕。
+	-- Lua 只校正左欄十五音順序，並在多音節時整理成雙欄排列。
+	if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
 		for cand in input:iter() do
 			local old = cand.comment or ""
-			-- <<< 註解有問題，待修訂：
-			-- huan_ciat：【SNI】〔字典〕格式，需將 【】 排左欄
-			-- 其他方案：〔字典〕【注音/拼音〕格式，沿用 regroup_pairs_safe
-			-- >>>
-			local new
-			if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
-				new = regroup_pairs_two_columns(old)
-			else
-				new = regroup_pairs_safe(old)
-			end
-			-- 【反切】方案（huan_ciat）：左欄【十五音】需從【聲+韻+調】倒裝成【韻+調+聲】
-			-- 例：柳君二 → 君二柳
-			-- 兩種方案均使用 【十五音】〔字典編碼〕 格式：
-			--   huan_ciat_tlpa：【十五音】〔台語音標〕
-			--   huan_ciat_tps ：【十五音】〔方音符號〕
-			-- 只倒裝 【...】 中的十五音（三字元），不碰右欄 〔...〕
-			if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
-				new = new:gsub("【(.-)】", function(s)
-					local chars = {}
-					for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
-						table.insert(chars, uchar)
-					end
-					if #chars == 3 then
-						return "【" .. chars[2] .. chars[3] .. chars[1] .. "】"
-					else
-						return "【" .. s .. "】"
-					end
-				end)
-			end
-			log.info("[reformat_comment_filter] skip_convert raw=[" .. old .. "] new=[" .. new .. "]")
+			local new = render_huan_ciat_comment(old)
 			if new ~= old then
 				local c = cand:get_genuine()
 				local nc = Candidate(c.type, c.start, c._end, c.text, new)
@@ -629,26 +653,19 @@ function reformat_comment_filter(input, env)
 		return
 	end
 
-	-- 【其他方案】（hau_suan/huan_ciat）：依原有邏輯進行漢字倒裝與重排
-	local ctx = env.engine.context
-	local mode
-	if ctx:get_option("hau_suan_piau_im_tlpa") then
-		mode = "tlpa"
-	else
-		mode = "tps"
-	end
-	log.info("[reformat_comment_filter] mode=" .. mode)
-
-	for hau_suan in input:iter() do
-		local old = hau_suan.comment or ""
-		log.info("[reformat_comment_filter] raw comment=[" .. old .. "] text=" .. (hau_suan.text or "?"))
-		local new = format_comment(old, mode, schema_id)
-		log.info("[reformat_comment_filter] new comment=[" .. new .. "]")
-		local c = hau_suan:get_genuine()
-		local nc = Candidate(c.type, c.start, c._end, c.text, new)
-		nc.preedit = c.preedit
-		nc.quality = hau_suan.quality
-		yield(nc)
+	-- 其他既有方案沿用原本的雙欄整理，不在此處改變標音內容。
+	for cand in input:iter() do
+		local old = cand.comment or ""
+		local new = SKIP_CONVERT_SCHEMAS[schema_id] and regroup_pairs_safe(old) or old
+		if new ~= old then
+			local c = cand:get_genuine()
+			local nc = Candidate(c.type, c.start, c._end, c.text, new)
+			nc.preedit = cand.preedit
+			nc.quality = cand.quality
+			yield(nc)
+		else
+			yield(cand)
+		end
 	end
 end
 
