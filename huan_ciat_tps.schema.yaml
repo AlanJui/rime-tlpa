@@ -5,7 +5,7 @@
 schema:
   schema_id: huan_ciat_tps
   name: 反切輸入法【方音符號】
-  version: "v0.1.3.1"
+  version: "v0.1.3.2"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -77,9 +77,9 @@ engine:
     - lua_filter@reformat_comment_filter
 
 speller:
-  alphabet: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7N"
-  initials: "!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"
-  finals: ":5346][7"
+  alphabet: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-\"5346][7"
+  initials: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"
+  finals: "\"5346][7."
   delimiter: "'"
   use_space: true
   #==========================================================================
@@ -318,14 +318,11 @@ speller:
     # 【5】==>【6】==>【ˊ】   # 按鍵【6】輸入：第5調（陽平調）的【低升調】符號
     # 【4】==>【[】==>【ˉ】   # 按鍵【[】輸入：第4調（陰入調）的【低促聲調】符號
     # 【8】==>【]】==>【˙】   # 按鍵【]】輸入：第4調（陽入調）的【高促聲調】符號
-    # 【0】==>【7】==>【˙】   # 按鍵【7】輸入：第4/8調，入声調
+    # 【0】==>【7】==>【˙】   # 按鍵【7】輸入：第4/8調，所有入声調
     #--------------------------------------------------------------------------
-    # 【L】==>【N】==>【ㄥ】  # 按鍵【N】輸入：ㄥ【鼻化韻母前綴符號】
-    # 【&】==>【.】==>【入】  # 按鍵【.】輸入：入【所有之入聲韻尾】
-    # 【*】==>【-】==>【ñ】   # 按鍵【-】輸入：ñ【所有之鼻化韻母】
+    # 【L】==>【.】==>【ㄥ】  # 按鍵【N】輸入：ㄥ【鼻化韻母前綴符號】
     #--------------------------------------------------------------------------
-    # - xlit|bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy8732541L&|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L75346][N.|
-    - xlit|bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy1732584&L|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7N|
+    - xlit|bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy1732584&L|!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"5346][7-|
 
 translator:
   dictionary: ji_khoo_tl
@@ -342,7 +339,7 @@ translator:
     # 全對映：（1）【注音符號按鍵】；（2）【調號按鍵】；（3）【功能按鍵】
     #==========================================================================
     # （1）【注音符號按鍵】
-    - xlit|!1qas2wxEedGYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7N|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ一七三二五八四入ㄥ|
+    - xlit|!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"5346][7-|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ一七三二五八四入ㄥ|
     #--------------------------------------------------------------------------
     # （2）【調號按鍵】
     #     -【[】高音調（陰平）： 【無標記】
@@ -358,9 +355,9 @@ translator:
     #--------------------------------------------------------------------------
     # 入聲尾韻不用【標準按鍵】改用【声母按鍵】之相容處理
     - xform/ㄅ(四|八)$/ㆴ$1/  # ㄚㆴ
-    - xform/ㄉ(四|八)$/ㆵ$1/  # ㄚㆴ
-    - xform/ㄍ(四|八)$/ㆻ$1/   # ㄚㆴ
-    - xform/ㄏ(四|八)$/ㆷ$1/  # ㄚㆴ
+    - xform/ㄉ(四|八)$/ㆵ$1/  # ㄚㆵ
+    - xform/ㄍ(四|八)$/ㆻ$1/  # ㄚㆻ
+    - xform/ㄏ(四|八)$/ㆷ$1/  # ㄚㆷ
     #------------------------------------------------------
     - xform/一//
     - xform/七/˫/
@@ -417,10 +414,10 @@ translator:
     # - derive/zi/Zi/  # ji(ㄐ) = z(ㄗ) + i
     # - derive/ci/Ci/  # Ci(ㄑ) = c(ㄘ) + i
     # - derive/si/Si/  # Si(ㄒ) = s(ㄙ) + i
-    - xform/ㆡ((ㄥ)?ㄧ)/ㆢ$1/
-    - xform/ㄗ((ㄥ)?ㄧ)/ㄐ$1/
-    - xform/ㄘ((ㄥ)?ㄧ)/ㄑ$1/
-    - xform/ㄙ((ㄥ)?ㄧ)/ㄒ$1/
+    - xform/ㆡ((ㄥ)?(ㄧ|ㆪ))/ㆢ$1/
+    - xform/ㄗ((ㄥ)?(ㄧ|ㆪ))/ㄐ$1/
+    - xform/ㄘ((ㄥ)?(ㄧ|ㆪ))/ㄑ$1/
+    - xform/ㄙ((ㄥ)?(ㄧ|ㆪ))/ㄒ$1/
 
   comment_format:
     #==============================================================================
