@@ -1,91 +1,11 @@
-# Rime schema
-# vim: set sw=2 sts=2 et nowrap:
-# encoding: utf-8
+# lib_preedit_tps: 注音輸入法模組程式舘
+# version: "v0.1.0.0"
 
-schema:
-  schema_id: huan_ciat_tps
-  name: 反切輸入法【方音符號】
-  version: "v0.1.3.3"
-  author:
-    - 居正中 <alanjui.1960@gmail.com>
-  description: |
-    使用者輸入【方音符號】按鍵，輸入法會將【方音符號】轉換成【十五音】的【聲母】、【韻母】
-    與【聲調】；同時輸入法亦會根據使用者已輸入的【方音符號】，推測可能的【漢字】及其【讀音】，
-    並顯示於【候選字清單】中，供使用者選擇。漢字的【讀音】以兩種方式呈現：一為【十五音反切】；
-    另一為【方音符號】。
-
-    【拼音系統】：台語音標+（TLPA+）
-    【字典編碼】：【台羅拼音】
-    【輸入類型】：注音輸入法
-    【注音符號】：極簡化方音符號，適合懶地背記按鍵位置的使用者。
-    【特性簡介】：
-      1. 使用者輸入的【方音符號】按鍵，會轉換成【十五音】的【聲母】、【韻母】與【聲調】；
-         如使用者輸入：ㄒㄧㄣˊ，輸入法的【輸入列】會顯示：【時巾五】
-      2. 【侯選清單】：以【十五音反切】、【方音符號】兩欄標示，如：〔巾五時〕【ㄒㄧㄣˊ】
-      3. 【聲調標示】：
-          (a) 採【台羅八聲調】為【調名】；
-          (b) 調號採與【注音符號】相容的【方音符號】。
-
-switches:
-  - name: ascii_mode
-    reset: 0
-    states: [漢文, ABC]
-  - name: full_shape
-    reset: 0
-    states: [半形, 全形]
-  # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 十五音
-  - options:
-      [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
-        key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
-        key_in_piau_im_bpm2, key_in_piau_im_ipa ]
-    reset: 0
-    states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
-  # # 【候選清單】漢字標音格式（暫停實作）
-  # # reset: 0 → 第一個選項為預設 → 方音符號
-  # - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
-  #   reset: 0
-  #   states: [ 方音符號, 台語音標 ]
-
-engine:
-  processors:
-    - lua_processor@aux_commit    # 輸出【漢字標音】，而非【漢字】
-    - lua_processor@jump_select   # 務必置頂，用以攔截【快捷鍵】，如：Ctrl+M, Ctrl+<, Ctrl+>
-    - ascii_composer
-    - recognizer
-    - key_binder
-    - speller
-    - punctuator
-    - selector
-    - navigator
-    - express_editor
-  segmentors:
-    - ascii_segmentor
-    - matcher
-    - abc_segmentor
-    - punct_segmentor
-    - fallback_segmentor
-  translators:
-    - punct_translator
-    - script_translator
-  filters:
-    - simplifier
-    - uniquifier
-    # 為 filter 除錯用
-    # - lua_filter@append_ok_filter
-    # - lua_filter@force_mark_filter
-    - lua_filter@reformat_comment_filter
-
-speller:
-  alphabet: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-\"5346][7"
-  initials: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"
-  finals: "\"5346][7."
-  delimiter: "'"
-  use_space: true
+mapping_dict_to_key_code:
   #==========================================================================
   # 定義【注音符號】編碼及【鍵盤按鍵】對映之【注音編碼】
   #==========================================================================
-  algebra:
+  __append:
     #==========================================================================
     # 為本輸入方案使用之【字典編碼】，進行【標準化】前置處理
     #==========================================================================
@@ -324,13 +244,11 @@ speller:
     #--------------------------------------------------------------------------
     - xlit|bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxy1732584&L|!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"5346][7-|
 
-translator:
-  dictionary: ji_khoo_tl
-  prism: huan_ciat_tps
-  spelling_hints: 20
-  always_show_comments: true
-  initial_quality: 0.75
-  preedit_format:
+mapping_key_code_to_phonetic_symbol:
+  #==========================================================================
+  # 定義【鍵盤按鍵】與【字典編碼】之對映關係
+  #==========================================================================
+  __append:
     # 將連續輸入的分隔符號：【'】換成空白
     # - xform/'/ /
     #==========================================================================
@@ -342,31 +260,30 @@ translator:
     - xlit|!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L"5346][7-|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ一七三二五八四入ㄥ|
     #--------------------------------------------------------------------------
     # （2）【調號按鍵】
-    #     -【"】高音調（陰平）： 一
-    #     -【5】中音調（陽去）： 七
-    #     -【3】低音調（陰去）： 三
-    #     -【4】高降調（上声）： 二
-    #     -【6】低升調（陽平）： 五
-    #     -【[】低促調（陰入）： 四
-    #     -【]】高促調（陽入）： 八
+    #     -【[】高音調（陰平）： 【無標記】
+    #     -【5】中音調（陽去）： '
+    #     -【3】低音調（陰去）： "
+    #     -【4】高降調（上声）： ˋ
+    #     -【6】低升調（陽平）： ˇ
+    #     -【]】低促調（陰入）： 【無標記】
+    #     -【7】高促調（陽入）： ˙
     #--------------------------------------------------------------------------
-    #     -【7】促聲調（陰入/陽入）：【字典編碼】：【4】/【8】
+    #     -【.】促聲調（陰入/陽入）：【字典編碼】：【4】/【8】
     #     -【7】輕聲調（輕聲）：【字典編碼】：【0】
     #--------------------------------------------------------------------------
-    # - xform/一//
-    # - xform/七/˫/
-    # - xform/三/˪/
-    # - xform/二/ˋ/
-    # - xform/五/ˊ/
-    # - xform/八/˙/
-    # - xform/四//
-    #--------------------------------------------------------------------------
     # 入聲尾韻不用【標準按鍵】改用【声母按鍵】之相容處理
-    #--------------------------------------------------------------------------
     - xform/ㄅ(四|八)$/ㆴ$1/  # ㄚㆴ
     - xform/ㄉ(四|八)$/ㆵ$1/  # ㄚㆵ
     - xform/ㄍ(四|八)$/ㆻ$1/  # ㄚㆻ
     - xform/ㄏ(四|八)$/ㆷ$1/  # ㄚㆷ
+    #------------------------------------------------------
+    - xform/一//
+    - xform/七/˫/
+    - xform/三/˪/
+    - xform/二/ˋ/
+    - xform/五/ˊ/
+    - xform/八/˙/
+    - xform/四//
     #--------------------------------------------------------------------------
     # 【鼻化之元音韻母】（方音符號：ñ）輸入校調
     #--------------------------------------------------------------------------
@@ -419,240 +336,3 @@ translator:
     - xform/ㄗ(ㄧ|ㆪ)/ㄐ$1/
     - xform/ㄘ(ㄧ|ㆪ)/ㄑ$1/
     - xform/ㄙ(ㄧ|ㆪ)/ㄒ$1/
-    #==========================================================================
-    # 聲母：【注音符號】轉【十五音】
-    #==========================================================================
-    # 声母：【注音符號】→【十五音聲母】
-    - xform/ㆠ/門/  # b【!】 ==>  [b]
-    - xform/ㄅ/邊/  # p【1】 ==>  [p]
-    - xform/ㄆ/頗/  # P【q】 ==>  [ph]
-    # - xform/ㄇ/毛/  # m【a】 ==>  [m]
-    - xform/ㄇ/門/  # m【a】 ==>  [m]
-    # - xform/ㄋ/耐/  # n【s】 ==>  [n]
-    - xform/ㄋ/柳/  # n【s】 ==>  [n]
-    - xform/ㄉ/地/  # t【2】 ==>  [t]
-    - xform/ㄊ/他/  # T【w】 ==>  [th]
-    - xform/ㄌ/柳/  # l【x】 ==>  [l]
-    - xform/ㆣ/語/  # g【E】 ==>  [g]
-    - xform/ㄍ/求/  # k【e】 ==>  [k]
-    - xform/ㄎ/去/  # K【d】 ==>  [kh]
-    # - xform/ㄫ/雅/  # ŋ【G】 ==>  [ng]
-    - xform/ㄫ/語/  # ŋ【G】 ==>  [ng]
-    - xform/ㆡ/入/  # j【Y】 ==>  [j]
-    - xform/ㄗ/曾/  # z【y】 ==>  [z]
-    - xform/ㄘ/出/  # c【h】 ==>  [c]
-    - xform/ㄙ/時/  # s【n】 ==>  [s]
-    - xform/ㄏ/喜/  # h【c】 ==>  [h]
-    - xform/ㆢ/入/  # J【R】 ==>  [ji]
-    - xform/ㄐ/曾/  # Z【r】 ==>  [zi]
-    - xform/ㄑ/出/  # C【f】 ==>  [ci]
-    - xform/ㄒ/時/  # S【v】 ==>  [si]
-    #==========================================================================
-    # 韻母：【注音符號】轉【十五音】
-    #==========================================================================
-    - xform/ㄧㄚㆷ/迦/
-    - xform/ㄧㆩㆷ/迦/
-    - xform/ㄧㄚㆴ/兼/
-    - xform/ㄧㄚㆵ/堅/
-    - xform/ㄧㄚㆻ/姜/
-    - xform/ㄧㄠㆷ/嬌/
-    - xform/ㄧㄜㆷ/茄/
-    - xform/ㄧㆦㆻ/恭/
-    - xform/ㄧㆫㆷ/牛/
-    - xform/ㄨㄚㆷ/瓜/
-    - xform/ㄨㄚㆵ/觀/
-    - xform/ㄨㄞㆷ/乖/
-    - xform/ㄨㆮㆷ/閂/
-    - xform/ㄨㆤㆷ/檜/
-    - xform/ㄨㄧㆷ/褌/
-    - xform/ㄚㆷ/膠/
-    - xform/ㆩㆷ/監/
-    - xform/ㄚㆴ/甘/
-    - xform/ㄚㆵ/干/
-    - xform/ㄚㆻ/江/
-    - xform/ㄞㆷ/皆/
-    - xform/ㄠㆷ/交/
-    - xform/ㆤㆷ/伽/
-    - xform/ㆥㆷ/更/
-    - xform/ㄧㆷ/居/
-    - xform/ㄧㆬ/金/
-    - xform/ㄧㄣ/巾/
-    - xform/ㄧㄥ/經/
-    - xform/一ㆴ/金/
-    - xform/ㄧㆵ/巾/
-    - xform/ㄧㆻ/經/
-    - xform/ㄧㄚ/迦/
-    - xform/ㄧㆩ/驚/
-    - xform/ㄧㆰ/兼/
-    - xform/ㄧㄢ/堅/
-    - xform/ㄧㄤ/姜/
-    - xform/ㄧㄠ/嬌/
-    - xform/ㄧㆯ/嘄/
-    - xform/ㄧㄜ/茄/
-    - xform/ㄧㆧ/薑/
-    - xform/ㄧㆲ/恭/
-    - xform/ㄧㄨ/丩/
-    - xform/ㄧㆫ/牛/
-    - xform/ㄜㆷ/高/
-    - xform/ㆦㆷ/沽/
-    - xform/ㆧㆷ/扛/
-    - xform/ㆦㆴ/箴/
-    - xform/ㆦㆻ/公/
-    - xform/ㄨㆷ/艍/
-    - xform/ㄨㄣ/君/
-    - xform/ㄨㆵ/君/
-    - xform/ㄨㄚ/瓜/
-    - xform/ㄨㆩ/官/
-    - xform/ㄨㄢ/觀/
-    - xform/ㄨㄤ/光/
-    - xform/ㄨㄞ/乖/
-    - xform/ㄨㆮ/閂/
-    - xform/ㄨㆤ/檜/
-    - xform/ㄨㄧ/規/
-    - xform/ㄨㆪ/褌/
-    - xform/ㆬㆷ/姆/
-    - xform/ㆭㆷ/鋼/
-    - xform/ㄚ/膠/
-    - xform/ㆩ/監/
-    - xform/ㆰ/甘/
-    - xform/ㄢ/干/
-    - xform/ㄤ/江/
-    - xform/ㄞ/皆/
-    - xform/ㆮ/閒/
-    - xform/ㄠ/交/
-    - xform/ㆤ/稽/
-    - xform/ㆥ/更/
-    - xform/ㄧ/居/
-    - xform/ㆪ/梔/
-    - xform/ㄜ/高/
-    - xform/ㆦ/沽/
-    - xform/ㆧ/姑/
-    - xform/ㆱ/箴/
-    - xform/ㆲ/公/
-    - xform/ㄨ/艍/
-    - xform/ㆬ/姆/
-    - xform/ㆭ/鋼/
-
-
-  comment_format:
-    #==============================================================================
-    # 定義【雙欄】之【候選字單】
-    # 左欄：十五音；右欄：方音符號。
-    #==============================================================================
-    __patch:
-      - lib_comment_sni_and_tps:/hau_suan_tuann
-
-# reverse_lookup:
-#   dictionary: luna_pinyin
-#   prefix: "`"
-#   tips: 〔拼音〕
-#   preedit_format:
-#     - xform/([nljqxy])v/$1ü/
-
-key_binder:
-  import_preset: default
-  bindings:
-    #---------------------------------------------------
-    # 注音輸入法：使用【:】鍵，輸入【韻母】：ㆲ
-    # - { when: composing, accept: colon, send: colon }
-    # - { when: has_menu, accept: colon, send: colon  }
-    #---------------------------------------------------
-    # 拼音輸入法：使用【_】鍵，輸入【調號】：3 （低音調）
-    # - { when: composing, accept: underscore, send: underscore }
-    # - { when: has_menu, accept: underscore, send: underscore }
-    #---------------------------------------------------
-    # 拼音輸入法：使用【=】鍵，輸入【所有入聲尾】
-    - { when: composing, accept: equal, send: equal }
-    - { when: has_menu, accept: equal, send: equal }
-    #---------------------------------------------------
-    # 注音輸入法：使用【-】鍵，輸入【所有鼻化之元音韻母】
-    # 拼音輸入法：使用【-】鍵，輸入【調號】：7 （中音調）
-    - { when: composing, accept: minus, send: minus }
-    - { when: has_menu, accept: minus, send: minus }
-    #---------------------------------------------------
-    # 注音輸入法：使用【.】鍵，輸入【鼻化之元音韻母前綴識別】
-    # 拼音輸入法：使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
-    - { when: composing, accept: period, send: period }
-    - { when: has_menu, accept: period, send: period }
-    #---------------------------------------------------
-    # 【候選字清單】翻頁快捷鍵設定
-    #---------------------------------------------------
-    - { accept: "Control+p", send: Page_Up, when: composing }
-    - { accept: "Control+n", send: Page_Down, when: composing }
-    #---------------------------------------------------
-    # 【候選字清單】以 VIM 模式，操作【游標】之移動，達到【上/下/翻到前頁/翻到後頁】操作
-    #---------------------------------------------------
-    - { when: has_menu, accept: "Control+h", send: Page_Up }
-    - { when: has_menu, accept: "Control+l", send: Page_Down }
-    - { when: has_menu, accept: "Control+k", send: Up }
-    - { when: has_menu, accept: "Control+j", send: Down }
-    #---------------------------------------------------
-    # 【候選字清單】展開時（即 has_menu 為 true 時）
-    #---------------------------------------------------
-    # 註：先前曾使用 F20/F24 作為代理鍵，但目前的 rime.lua (v0.2)
-    # 已改為由 Lua 直接發送 Page_Up 與 Down 原生鍵，故以下代理鍵轉發已不再需要。
-    # - { when: has_menu, accept: F20, send: Home }
-    # - { when: has_menu, accept: F24, send: Down }
-
-    # 以下為 jump_select 實際截獲的快捷鍵定義（由右至左順序）：
-    # Ctrl+/ (頂端) | Ctrl+. (中間) | Ctrl+, (底端)
-    - { when: has_menu, accept: "Control+slash", send: "Control+slash" }
-    - { when: has_menu, accept: "Control+period", send: "Control+period" }
-    - { when: has_menu, accept: "Control+comma", send: "Control+comma" }
-    #---------------------------------------------------
-    # 切換第3欄為：方音符號/台語音標 (羅馬拼音)
-    #---------------------------------------------------
-    - { when: always, accept: "Control+m", toggle: dict_mode }
-    #---------------------------------------------------
-    # 切換【帶調號值的方音符號】，其【調值】使用【一般格式】/【上標格式】
-    #---------------------------------------------------
-    # - { when: always, accept: "Control+grave", toggle: supers_tone }
-    # - { when: has_menu, accept: "Control+grave", toggle: supers_tone }
-    # 空白鍵選字：由 speller 的 use_space: true 自然處理，勿用 send: Return（會觸發 commit_composition）
-    # - { when: has_menu, accept: space, send: Return }  # 空白鍵選字（有候選清單時）
-
-editor:
-  bindings:
-    # Return: confirm
-    Return: commit_composition              # 【漢字標音輸出】選項設定
-    Control+Return: commit_raw_input        # 【鍵盤按鍵】（未經 preedit_format 轉換的原始輸入）
-    Shift+Return: commit_script_text        # 【輸入編輯列】（經 preedit_format 轉換後的結構）
-    Control+Shift+Return: commit_comment    # 【候選字清單】選擇項目
-
-menu:
-  page_size: 5 #選單每䈎顯示個數
-  alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
-
-style:
-  horizontal: false
-  # font_face: "霞鶩文楷 TC, 新細明體"
-  # comment_font_face: "BopomofoRuby1909-v1, 新細明體"
-  # font_face: "Noto Sans TC"
-  # font_face: "Noto Serif TC"
-  # comment_font_face: "霞鶩文楷 TC"
-  # comment_font_size: 18
-
-recognizer:
-  import_preset: default
-  patterns:
-    # 用來辨識【輸入】是否為【標點符號】：「反引號開頭、接一字元的輸入」
-    # (1) 「反引號」【`】表：觸發便捷輸入；
-    # (2) [^\s] → 後面接一個「不是空白」的字元；
-    # (3) $ → 且該字元必須剛好在字串的結尾。
-    punct: '`[^\s]$'
-    email: ^[a-z][-_.0-9a-z]*@.*$
-    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
-    url: ^(www[.]|https?:|ftp:|mailto:).*$
-    # reverse_lookup: "`[a-z]*$"
-
-punctuator:
-  import_preset: keymap_piau_tian
-
-# custom_phrase:
-#   dictionary: ""
-#   user_dict: custom_phrase
-#   db_class: stabledb
-#   enable_completion: false
-#   enable_sentence: false
-#   initial_quality: 1
-
