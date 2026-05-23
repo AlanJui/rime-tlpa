@@ -62,6 +62,8 @@ $files = @(
     "huan_ciat_tlpa.schema.yaml",
     # 輸入方案功能模組
     "lib_phing_im.yaml",
+    # 字典編碼及輸入編輯列
+    "lib_preedit_tps.yaml",
     # 輸入方案附屬模組之【候選字清單】
     "lib_comment_poj.yaml",
     "lib_comment_tl.yaml",
