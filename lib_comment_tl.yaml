@@ -18,8 +18,6 @@ hau_suan_tuann:
     - xform/〔》tsh/〔tsh》/
     - xform/〔》ts(?!h)/〔ts》/
     - xform/〔》j/〔j》/
-    - xform/〔》z/〔ts》/
-    - xform/〔》c/〔tsh》/
     - xform/〔》s/〔s》/
     # 舌根音/鼻音（濁音）
     - xform/〔》ng(?!\d)/〔ng》/
@@ -185,13 +183,13 @@ hau_suan_tuann:
     - xform/》n5/n̂/
 
     # 6: 陽上調
-    - xform/》a6/á/
-    - xform/》i6/í/
-    - xform/》u6/ú/
-    - xform/》e6/é/
-    - xform/》o6/ó/
-    - xform/》m6/ḿ/
-    - xform/》n6/ń/
+    - xform/》a6/ǎ/
+    - xform/》i6/ǐ/
+    - xform/》u6/ǔ/
+    - xform/》e6/ě/
+    - xform/》o6/ǒ/
+    - xform/》m6/m̌/
+    - xform/》n6/ň/
 
     # 7: 陽去調
     - xform/》a7/ā/

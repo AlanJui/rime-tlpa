@@ -40,13 +40,7 @@ switches:
   - name: full_shape
     reset: 0
     states: [半形, 全形]
-  # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 方音符號
-  - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
-    reset: 0
-    states: [ 方音符號, 台語音標 ]
   # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 十五音
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
@@ -85,7 +79,7 @@ engine:
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
     # 重組【候選字清單】中的【羅馬拼音字母】及【注音符號】
-    # - lua_filter@reformat_comment_filter
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyzN;-_\/[]7.
@@ -140,7 +134,7 @@ speller:
     #======================================================
     # - xform/oo/o͘/      # 不可在 algebra 轉換：使用者無法從鍵盤輸入 o͘，改由 preedit_format 顯示層處理
     - xform/ou/oo/        # ou = oo
-    - xform/ua[nt]/oa$1/  # uan ==> oan; uat ==> oat
+    - xform/ua([nt])/oa$1/  # uan ==> oan; uat ==> oat
     - xform/ue/oe/
     - xform/ua/oa/
     - xform/i(ng|k)/e$1/
@@ -218,6 +212,8 @@ translator:
     #  ] ==> 8
     #------------------------------------------------------
     - xlit|;-_\/[]|1732548|
+    # 若聲調數字輸入於聲母與韻母之間（如 g8iok），先移至末尾再做定位
+    - xform/^([a-z]+)([1732548])([a-z]+)$/$1$3$2/
     #------------------------------------------------------
     # 【元音韻母】 oo [ɔ] = o͘ = ㆦ
     - xform/oo/o͘/
@@ -229,11 +225,17 @@ translator:
     # （字符集使用 [1732548]，即 xlit 轉換後的數字）
     # 注意：o͘ 中的 ͘（U+0358）不在 [aeiou] 及韻尾集合中，
     # 故移位規則不會誤匹配 o͘，o͘ 後面的調號會直接由下方規則處理。
-    - xform/(.*?)([aoeOə])(.*?)([1732548])/$1$2$4$3/
+    - xform/(.*?)([aoe])(.*?)([1732548])/$1$2$4$3/
+    #------------------------------------------------------
+    # 處理雙母音 iu / ui 的調號定位
+    # uinn3 ==>	(u)(i)(nn)(3)	==> ui3nn
+    # iunn5 ==>	(i)(u)(n)(5)	==> iu5n
     - xform/([iu])([iu])(.*?)([1732548])/$1$2$4$3/
-    - xform/([aeiouOəmng])(.*?)([1732548])/$1$3$2/
+    #------------------------------------------------------
+    - xform/([iu])([^aoe1732548]*?)([1732548])/$1$3$2/
     - xform/([aeiou])(r?m?n*h?g?p?t?k?)([1732548])/$1$3$2/
     - xform/([ae])([iueo])([1732548])/$1$3$2/
+    #------------------------------------------------------
     # [POJ oo 韻母] oo 已轉為 o͘，直接對應調符
     - xform/o͘1/o͘/
     - xform/o͘2/ó͘/
@@ -360,14 +362,10 @@ key_binder:
 
 editor:
   bindings:
-    # (1) 輸出拼音字母：Enter（supers_tone=ON） → giam¹ ga¹ ✅
-    # (2) 輸出拼音字母：Enter（supers_tone=OFF） → giam1 ga1 ✅
-    # (3) 輸出注音符號：Ctrl+Enter → ㄍㄧㆰ ㄍㄚ（不變）
-    # (4) 輸出帶調號的注音符號（上標）：Shift+Enter（supers_tone=ON） → ㄍㄧㆰ¹ ㄍㄚ¹（不變）
-    # (5) 輸出帶調號的注音符號（一般）：Shift+Enter（supers_tone=OFF） → ㄍㄧㆰ1 ㄍㄚ1（不變）
-    # (6) 輸入候選字清單之【拼音字母】及【注音符號】：Ctrl+Shift+Enter → 〔giam1〕 〔ga1〕 【ㄍㄧㆰ】 【ㄍㄚ】（不變）
-    space: commit # 以【候選字清單】中，被【候選游標】標示的【漢字】，將之輸出
-    Control+Shift+Return: commit_comment  # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
+    Return: commit_composition              # 【漢字標音輸出】選項設定
+    Control+Return: commit_raw_input        # 【鍵盤按鍵】（未經 preedit_format 轉換的原始輸入）
+    Shift+Return: commit_script_text        # 【輸入編輯列】（經 preedit_format 轉換後的結構）
+    Control+Shift+Return: commit_comment    # 【候選字清單】選擇項目
 
 recognizer:
   import_preset: default
@@ -386,8 +384,7 @@ menu:
 style:
   horizontal: false
   font_face: "霞鶩文楷 TC, 新細明體"
-  # comment_font_face: "BopomofoRuby1909-v1, 新細明體"
-  comment_font_face: "霞鶩文楷 TC, 新細明體"
+  comment_font_face: "Cascadia Next TC Medium, 霞鶩文楷 TC, BopomofoRuby1909-v1, 新細明體"
   comment_font_size: 18
 
 punctuator:
