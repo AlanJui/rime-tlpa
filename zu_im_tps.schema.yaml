@@ -24,7 +24,6 @@ switches:
     reset: 0
     states: [半形, 全形]
   # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 十五音
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
@@ -421,14 +420,10 @@ key_binder:
 
 editor:
   bindings:
-    # (1) 輸出拼音字母：Enter（supers_tone=ON） → giam¹ ga¹ ✅
-    # (2) 輸出拼音字母：Enter（supers_tone=OFF） → giam1 ga1 ✅
-    # (3) 輸出注音符號：Ctrl+Enter → ㄍㄧㆰ ㄍㄚ（不變）
-    # (4) 輸出帶調號的注音符號（上標）：Shift+Enter（supers_tone=ON） → ㄍㄧㆰ¹ ㄍㄚ¹（不變）
-    # (5) 輸出帶調號的注音符號（一般）：Shift+Enter（supers_tone=OFF） → ㄍㄧㆰ1 ㄍㄚ1（不變）
-    # (6) 輸入候選字清單之【拼音字母】及【注音符號】：Ctrl+Shift+Enter → 〔giam1〕 〔ga1〕 【ㄍㄧㆰ】 【ㄍㄚ】（不變）
-    Return: commit_composition             # 讓 Enter 鍵，可直接輸出【編輯區】的【標音】
-    Control+Shift+Return: commit_comment  # 輸出【台語注音二式】的【羅馬拼音字母】+【方音符號】的【注音符號】
+    Return: commit_composition              # 【漢字標音輸出】選項設定
+    Control+Return: commit_raw_input        # 【鍵盤按鍵】（未經 preedit_format 轉換的原始輸入）
+    Shift+Return: commit_script_text        # 【輸入編輯列】（經 preedit_format 轉換後的結構）
+    Control+Shift+Return: commit_comment    # 【候選字清單】選擇項目
 
 menu:
   page_size: 5 #選單每䈎顯示個數
