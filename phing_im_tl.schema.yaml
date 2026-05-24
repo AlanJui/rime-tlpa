@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_tl
   name: 拼音輸入法【台羅拼音】
-  version: "v0.1.0.2"
+  version: "v0.1.0.3"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -40,13 +40,7 @@ switches:
   - name: full_shape
     reset: 0
     states: [半形, 全形]
-  # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 方音符號
-  - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
-    reset: 0
-    states: [ 方音符號, 台語音標 ]
   # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 十五音
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
@@ -85,7 +79,7 @@ engine:
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
     # 重組【候選字清單】中的【羅馬拼音字母】及【注音符號】
-    # - lua_filter@reformat_comment_filter
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyzN;-_\/[]7.
@@ -237,52 +231,51 @@ translator:
     # 處理一般韻母
     - xform/([aeiou])(r?m?n*h?g?p?t?k?)([1732548])/$1$3$2/
     # ---- 羅馬拼音字母上方標聲調符號 ----
-    - xform/》o͘1/o͘/
-    - xform/》o͘2/ó͘/
-    - xform/》o͘3/ò͘/
-    - xform/》o͘4/o͘/
-    - xform/》o͘5/ǒ͘/
-    - xform/》o͘6/ó͘/
-    - xform/》o͘7/ō͘/
-    - xform/》o͘8/o̍͘/
-    - xform/》o͘9/ő͘/
-
+    # - xform/》o͘1/o͘/
+    # - xform/》o͘2/ó͘/
+    # - xform/》o͘3/ò͘/
+    # - xform/》o͘4/o͘/
+    # - xform/》o͘5/ǒ͘/
+    # - xform/》o͘6/ó͘/
+    # - xform/》o͘7/ō͘/
+    # - xform/》o͘8/o̍͘/
+    # - xform/》o͘9/ő͘/
     # [1] 陰平調（高音調）
     - xform/a1/a/
-    - xform/e1/e/
     - xform/i1/i/
     - xform/u1/u/
+    - xform/e1/e/
     - xform/o1/o/
     - xform/m1/m/
     - xform/ng1/ng/
     # [2] 上聲調（高降調）
     - xform/a2/á/
-    - xform/e2/é/
     - xform/i2/í/
     - xform/u2/ú/
+    - xform/e2/é/
     - xform/o2/ó/
     - xform/m2/ḿ/
     - xform/ng2/ńg/
     # [3] 陰去調（低音調）_ （劃底線符號）
     - xform/a3/à/
-    - xform/e3/è/
     - xform/i3/ì/
     - xform/u3/ù/
+    - xform/e3/è/
     - xform/o3/ò/
     - xform/ng3/ǹg/
     # [4] 陰入調（低促調）[
     - xform/a4/a/
-    - xform/e4/e/
     - xform/i4/i/
     - xform/u4/u/
+    - xform/e4/e/
     - xform/o4/o/
     - xform/mh4/mh/
     - xform/ngh/ngh/
     # [5] 陽平調（低升調）/
     - xform/a5/â/
-    - xform/e5/ê/
     - xform/i5/î/
     - xform/u5/û/
+    - xform/e5/ê/
     - xform/o5/ô/
     - xform/m5/m̂/
     - xform/ng5/n̂g/
@@ -295,9 +288,9 @@ translator:
     # - xform/ng6/ňg/
     # [7] 陽去調（中音調）-
     - xform/a7/ā/
-    - xform/e7/ē/
     - xform/i7/ī/
     - xform/u7/ū/
+    - xform/e7/ē/
     - xform/o7/ō/
     - xform/m7/m̄/
     - xform/ng7/n̄g/

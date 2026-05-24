@@ -1,17 +1,23 @@
-# 【候選清單】程式舘：台羅拼音（TLPA）
+# 【候選清單】程式舘：台羅拼音（TL）
 # lib_comment_tl.yaml
-# version: "v0.1.0.2"
+# version: "v0.2.0"
 
 hau_suan_tuann:
   __append:
-    # ---- 0. 複製原始音標（左欄使用〔〕進行後續轉換，右欄【】保持原樣） ----
-    - xform/^(.*)$/〔》$1〕【$1】/
+    # ---- 0. 包裝：左欄〔》〕顯示台羅拼音（TL），右欄【】顯示台語音標（TLPA） ----
+    - xform/^(.*)$/〔》$1〕【〉$1】/
+    # ---- 0b. 右欄：TL → TLPA 聲母轉換（tsh→c, ts→z，保留數字調號） ----
+    - xform/【〉tsh/【c/
+    - xform/【〉ts(?!h)/【z/
+    - xform/【〉/【/
 
-    # ---- 1. 聲母：TL → TLPA ----
-    # 齒音/舌齒音（多字母先處理）
-    # - xform/》tsh/c》/
-    # - xform/》ts(?!h)/z》/
-    - xform/》z/z》/
+    # ---- 1. 左欄聲母：TL 原字母（移動》標記） ----
+    # 齒音/舌齒音（多字母先處理，長的先匹配）
+    - xform/》tsh/tsh》/
+    - xform/》ts(?!h)/ts》/
+    - xform/》j/j》/
+    - xform/》z/ts》/
+    - xform/》c/tsh》/
     - xform/》s/s》/
     # 舌根音/鼻音（濁音）
     - xform/》ng/ng》/
@@ -25,14 +31,14 @@ hau_suan_tuann:
     - xform/》ph/ph》/
     - xform/》m/m》/
     # 舌尖音
-    - xform/》t(?!h)/t》/
+    - xform/》t(?![hs])/t》/
     - xform/》th/th》/
     - xform/》n/n》/
     - xform/》l/l》/
     # 聲門音
     - xform/》h/h》/
 
-    # ---- 2. 韻母+聲調：TL → TLPA ----
+    # ---- 2. 左欄韻母+聲調：TL 韻母位置標記 → 調符 ----
     - xform/》iaunnh(\d)/i》a${1}unnh/
     - xform/》uainnh(\d)/u》a${1}innh/
     - xform/》aunnh(\d)/》a${1}unnh/
@@ -168,13 +174,13 @@ hau_suan_tuann:
     - xform/》n4/n/
 
     # 5: 陽平調
-    - xform/》a5/ǎ/
-    - xform/》i5/ǐ/
-    - xform/》u5/ǔ/
-    - xform/》e5/ě/
-    - xform/》o5/ǒ/
-    - xform/》m5/m̌/
-    - xform/》n5/ň/
+    - xform/》a5/â/
+    - xform/》i5/î/
+    - xform/》u5/û/
+    - xform/》e5/ê/
+    - xform/》o5/ô/
+    - xform/》m5/m̂/
+    - xform/》n5/n̂/
 
     # 6: 陽上調
     - xform/》a6/á/
