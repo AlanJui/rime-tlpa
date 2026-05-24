@@ -5,38 +5,40 @@
 hau_suan_tuann:
   __append:
     # ---- 0. 包裝：左欄〔》〕顯示台羅拼音（TL），右欄【】顯示台語音標（TLPA） ----
-    - xform/^(.*)$/〔》$1〕【〉$1】/
+    - xform/^(.*)$/〔》$1〕【$1】/
     # ---- 0b. 右欄：TL → TLPA 聲母轉換（tsh→c, ts→z，保留數字調號） ----
-    - xform/【〉tsh/【c/
-    - xform/【〉ts(?!h)/【z/
-    - xform/【〉/【/
+    - xform/【tsh/【c/
+    - xform/【ts(?!h)/【z/
+    # ---- 0c. 韻化輔音特別處理 ----
+    - xform/〔(m)(\d)/〔》m$2/
+    - xform/〔(ng)(\d)/〔》n$2g/
 
     # ---- 1. 左欄聲母：TL 原字母（移動》標記） ----
     # 齒音/舌齒音（多字母先處理，長的先匹配）
-    - xform/》tsh/tsh》/
-    - xform/》ts(?!h)/ts》/
-    - xform/》j/j》/
-    - xform/》z/ts》/
-    - xform/》c/tsh》/
-    - xform/》s/s》/
+    - xform/〔》tsh/〔tsh》/
+    - xform/〔》ts(?!h)/〔ts》/
+    - xform/〔》j/〔j》/
+    - xform/〔》z/〔ts》/
+    - xform/〔》c/〔tsh》/
+    - xform/〔》s/〔s》/
     # 舌根音/鼻音（濁音）
-    - xform/》ng/ng》/
+    - xform/〔》ng(?!\d)/〔ng》/
     # 舌根音
-    - xform/》g/g》/
-    - xform/》k(?!h)/k》/
-    - xform/》kh/kh》/
+    - xform/〔》g/〔g》/
+    - xform/〔》k(?!h)/〔k》/
+    - xform/〔》kh/〔kh》/
     # 唇音
-    - xform/》b/b》/
-    - xform/》p(?!h)/p》/
-    - xform/》ph/ph》/
-    - xform/》m/m》/
+    - xform/〔》b/〔b》/
+    - xform/〔》p(?!h)/〔p》/
+    - xform/〔》ph/〔ph》/
+    - xform/〔》m(?!\d)/〔m》/
     # 舌尖音
-    - xform/》t(?![hs])/t》/
-    - xform/》th/th》/
-    - xform/》n/n》/
-    - xform/》l/l》/
+    - xform/〔》t(?![hs])/〔t》/
+    - xform/〔》th/〔th》/
+    - xform/〔》n(?!g)/〔n》/
+    - xform/〔》l/〔l》/
     # 聲門音
-    - xform/》h/h》/
+    - xform/〔》h/〔h》/
 
     # ---- 2. 左欄韻母+聲調：TL 韻母位置標記 → 調符 ----
     - xform/》iaunnh(\d)/i》a${1}unnh/

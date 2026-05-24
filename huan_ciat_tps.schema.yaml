@@ -657,12 +657,9 @@ menu:
 
 style:
   horizontal: false
-  # font_face: "霞鶩文楷 TC, 新細明體"
-  # comment_font_face: "BopomofoRuby1909-v1, 新細明體"
-  # font_face: "Noto Sans TC"
-  # font_face: "Noto Serif TC"
-  # comment_font_face: "霞鶩文楷 TC"
-  # comment_font_size: 18
+  font_face: "霞鶩文楷 TC, 新細明體"
+  comment_font_face: "Cascadia Next TC Medium, 霞鶩文楷 TC, BopomofoRuby1909-v1, 新細明體"
+  comment_font_size: 18
 
 recognizer:
   import_preset: default
