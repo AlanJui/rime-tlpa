@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_bp
   name: 拼音輸入法【閩拼方案】
-  version: "v0.2.0.3"
+  version: "v0.2.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -83,11 +83,6 @@ speller:
     # Step 1: TLPA → BP 聲母轉換
     # 原則：多字母先處理；同起首字母者，「目標」先於「來源」以避免雙重轉換
     #==========================================================================
-    # BPM2 → BP 声母轉換
-    # - xform/^jji/zzi/  # jji (ㆢㄧ) = zz(ㆡ) + i(ㄧ)
-    # - xform/^ji/zi/    # ji (ㄐㄧ)  = z(ㄗ)  + i(ㄧ)
-    - xform/^chi/ci/   # chi (ㄑㄧ) = c(ㄘ)  + i(ㄧ)
-    - xform/^shi/si/   # shi (ㄒㄧ) = s(ㄙ)  + i(ㄧ)
     # 齒音/舌齒音
     - xform/^j/zz/          # j(ㆡ) → zz
     - xform/^z/z/           # ts(ㄗ) → z（不含 tsh）
@@ -156,7 +151,7 @@ speller:
     # Step 6: 零聲母 i/u 的 y/w 相容輸入
     #==========================================================================
     # i 為介音
-    - derive/^ia(?!u)/ya/
+    - derive/^ia/ya/
     - derive/^io/yo/
     - derive/^iu/yu/
     # i 為主要元音
@@ -195,45 +190,37 @@ translator:
     #==========================================================================
     # 分隔符號
     - xform/'/ /
-    # #==========================================================================
-    # # 韻母轉換：台語注音二式（BPM2） → 閩拼方案（BP）
-    # #==========================================================================
-    # - derive/oonn/onn/
-    # - derive/oom/om/
-    # - derive/or/o/
-    # - derive/iek/ik/
+    #==========================================================================
+    # 韻母轉換：台語注音二式（BPM2） → 閩拼方案（BP）
+    #==========================================================================
+    - derive/oonn/onn/
+    - derive/oom/om/
+    - derive/or/o/
+    - derive/iek/ik/
     #==========================================================================
     # 零聲母相容輸入： i/u 校調成 y/w
     #==========================================================================
     # i 為介音
-    - xform/^ia(?!u)/ya/
-    - xform/^io/yo/
-    - xform/^iu/yu/
+    - derive/^ia/ya/
+    - derive/^io/yo/
+    - derive/^iu/yu/
     # i 為主要元音
-    - xform/^i(\d)/yi$1/
+    - derive/^i(\d)/yi$1/
     # u 為介音
-    - xform/^ua/wa/
-    - xform/^ui/wi/
-    - xform/^ue/we/
+    - derive/^ua/wa/
+    - derive/^ui/wi/
+    - derive/^ue/we/
     # u 為主要元音
-    - xform/^u(\d)/wu$1/
-    #==========================================================================
+    - derive/^u(\d)/wu$1/
     # 2. 按鍵 → BP 調號數字
-    #==========================================================================
     - xlit|;-_\/[]|1653278|
-    #==========================================================================
     # 3. 輕聲/入聲縮寫顯示
-    #==========================================================================
     # - xform/0/˙/
     # - xform/9/˙/
-    #==========================================================================
     # 4. 調符移位：將調號數字移至主要元音後
-    #==========================================================================
     - xform/([aeiou])(r?m?n*h?g?p?t?k?)([1652378])/$1$3$2/
     - xform/([ae])([iueo])([1652378])/$1$3$2/
-    #==========================================================================
     # 5. oo 韻母整體處理（須先於單 o 規則）
-    #==========================================================================
     - xform/oo1/ōo/
     - xform/oo2/óo/
     - xform/oo3/ǒo/
@@ -242,9 +229,7 @@ translator:
     - xform/oo6/ôo/
     - xform/oo7/ōo/
     - xform/oo8/óo/
-    #==========================================================================
     # 6. 調符代換（BP 調符）
-    #==========================================================================
     # BP 1: ā（macron）
     - xform/a1/ā/
     - xform/e1/ē/
@@ -308,23 +293,17 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 使用【_】鍵，輸入【調號】：3 （低音調）
-    - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu, accept: underscore, send: underscore }
+    # 覆蓋預設 paging_with_minus_equal：防止 has_menu 時把 - 鍵（BP 調6）截為翻頁
+    - { when: composing, accept: minus,  send: minus  }
+    - { when: has_menu,  accept: minus,  send: minus  }
     #---------------------------------------------------
-    # 使用【-】鍵，輸入【調號】：7 （中音調）
-    - { when: composing, accept: minus, send: minus }
-    - { when: has_menu, accept: minus, send: minus }
+    # 覆蓋預設 paging_with_comma_period：防止 has_menu 時把 . 鍵（入聲縮寫）截為翻頁
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu,  accept: period, send: period }
     #---------------------------------------------------
-    # # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
-    # - { when: composing, accept: period, send: period }
-    # - { when: has_menu, accept: period, send: period }
-    #---------------------------------------------------
-    # 翻頁
+    # 翻頁 / Vim 導覽
     - { accept: "Control+p", send: Page_Up,   when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
-    #---------------------------------------------------
-    # Vim 導覽
     - { when: has_menu, accept: "Control+h", send: Page_Up }
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
@@ -362,13 +341,13 @@ punctuator:
   # 清除 BP 聲調按鍵在 punctuator 的攔截，讓 speller 優先處理
   # keymap_piau_tian 的 half_shape 把 \, _, [, ] 定義為 commit_text，
   # 會直接輸出字元而不交給 speller。設為 ~ (null) 可取消攔截。
-  # half_shape:
-  #   '\': ~   # BP 調3：讓 speller 處理
-  #   '_': ~   # BP 調5：讓 speller 處理
-  #   '[': ~   # BP 調7：讓 speller 處理
-  #   ']': ~   # BP 調8：讓 speller 處理
-  # full_shape:
-  #   '\': ~   # BP 調3：防止輸出「、」
-  #   '_': ~   # BP 調5：防止輸出「＿」
-  #   '[': ~   # BP 調7：防止輸出「「」
-  #   ']': ~   # BP 調8：防止輸出「」」
+  half_shape:
+    '\': ~   # BP 調3：讓 speller 處理
+    '_': ~   # BP 調5：讓 speller 處理
+    '[': ~   # BP 調7：讓 speller 處理
+    ']': ~   # BP 調8：讓 speller 處理
+  full_shape:
+    '\': ~   # BP 調3：防止輸出「、」
+    '_': ~   # BP 調5：防止輸出「＿」
+    '[': ~   # BP 調7：防止輸出「「」
+    ']': ~   # BP 調8：防止輸出「」」

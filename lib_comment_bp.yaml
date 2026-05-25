@@ -5,6 +5,40 @@
 
 hau_suan_tuann:
   __append:
+    #======================================================
+    # 韻母轉換作業
+    #======================================================
+    # BPM2 → BP 声母轉換
+    - xform/^jji/zzi/  # jji (ㆢㄧ) = zz(ㆡ) + i(ㄧ)
+    - xform/^ji/zi/    # ji (ㄐㄧ)  = z(ㄗ)  + i(ㄧ)
+    - xform/^chi/ci/   # chi (ㄑㄧ) = c(ㄘ)  + i(ㄧ)
+    - xform/^shi/si/   # shi (ㄒㄧ) = s(ㄙ)  + i(ㄧ)
+    # ------------------------------------------------------------------------
+    # BPM2 → BP 韻母轉換
+    - xform/iek/ik/
+    - xform/ior/io/
+    - xform/or/o/             # or
+    - xform/ir/eu/            # ir(ㆨ) → eu
+    - xform/au/ao/            # au(ㄠ) → ao
+    - xform/iook/iok/
+    - xform/ioonn/nioo/
+    - xform/oonn/noo/          # onn(ㆧ) → noo（須先於一般規則）
+    - xform/oom/om/
+    #------------------------------------------------------
+    # ---- 0. 零聲母：i/u 開頭加 y/w（BP 規範） ----
+    # i 為介音（ia, io, iu...）→ i 改成 y
+    - xform/^iao(\d)/yao/
+    - xform/^ia(\d)/ya/
+    - xform/^io/yo/
+    - xform/^iu/yu/
+    # i 為主要元音（i + 調號）→ 前加 y
+    - xform/^i(\d)/y@i${1}/
+    # u 為介音（ua, ui, ue...）→ u 改成 w
+    - xform/^ua/wa/
+    - xform/^ui/wi/
+    - xform/^ue/we/
+    # u 為主要元音（u + 調號）→ 前加 w
+    - xform/^u(\d)/wu$1/
     #==============================================================================
     # 定義【候選字清單】
     #==============================================================================
@@ -18,12 +52,7 @@ hau_suan_tuann:
     - xform/\s+/ / # 多重空白壓成一格（美化）
 
     # ---- 1. 聲母：BPM2 → BP ----
-    - xform/〔@jji/〔j@i/   # jji (ㆢㄧ) = zz(ㆡ) + i(ㄧ)
-    - xform/〔@ji/〔z@i/    # ji (ㄐㄧ)  = z(ㄗ)  + i(ㄧ)
-    - xform/〔@chi/〔c@i/   # chi (ㄑㄧ) = c(ㄘ)  + i(ㄧ)
-    - xform/〔@shi/〔s@i/   # shi (ㄒㄧ) = s(ㄙ)  + i(ㄧ)
-    # ------------------------------------------------------------------------
-    - xform/〔@zz/〔j@/     # zz(ㆡ) → j（濁音）
+    - xform/〔@zz/〔zz@/     # zz(ㆡ) → j（濁音）
     - xform/〔@z/〔z@/      # z(ㄗ) → z
     - xform/〔@c/〔c@/      # c(ㄘ) → c
     - xform/〔@s/〔s@/      # s(ㄙ) → s
@@ -69,7 +98,7 @@ hau_suan_tuann:
     - xform/@inn(\d)/n@i${1}/
     #-----------------------------------------------------------------------
     - xform/@iang(\d)/i@a${1}ng/
-    - xform/@iauh(\d)/y@a${1}oh/    # i 為介音 → i 改成 y
+    - xform/@iauh(\d)/i@a${1}oh/
     - xform/@iorh(\d)/i@o${1}h/
     - xform/@iong(\d)/i@o${1}ng/
     - xform/@iook(\d)/i@o${1}k/
@@ -88,19 +117,23 @@ hau_suan_tuann:
     - xform/@iap(\d)/i@a${1}p/
     - xform/@iat(\d)/i@a${1}t/
     - xform/@iak(\d)/i@a${1}k/
-    - xform/@iau(\d)/y@a${1}o/  # i 為介音 → i 改成 y
-    - xform/@ior(\d)/y@o${1}/   # i 為介音 → i 改成 y
-    - xform/@orh(\d)/@o${1}h/
+    # - xform/@iau(\d)/i@a${1}o/
+    - xform/@iao(\d)/i@a${1}o/
+    # - xform/@ior(\d)/i@o${1}/
+    - xform/@io(\d)/i@o${1}/
+    # - xform/@orh(\d)/@o${1}h/
+    - xform/@oh(\d)/@o${1}h/
     - xform/@ooh(\d)/@o${1}oh/
-    - xform/@oom(\d)/@o${1}m/
+    # - xform/@oom(\d)/@o${1}m/
+    - xform/@om(\d)/@o${1}m/
     - xform/@ong(\d)/@o${1}ng/
-    - xform/@oop(\d)/@o${1}p/
+    - xform/@oop(\d)/@o${1}p/   # ???
     - xform/@uah(\d)/u@a${1}h/
     - xform/@uan(\d)/u@a${1}n/
     - xform/@uat(\d)/u@a${1}t/
     - xform/@uai(\d)/u@a${1}i/
     - xform/@ueh(\d)/u@e${1}h/
-    - xform/@uih(\d)/@u${1}ih/
+    - xform/@uih(\d)/u@i${1}h/
     - xform/@ngh(\d)/@n${1}gh/
     - xform/@ah(\d)/@a${1}h/
     - xform/@am(\d)/@a${1}m/
@@ -117,41 +150,25 @@ hau_suan_tuann:
     - xform/@ip(\d)/@i${1}p/
     - xform/@it(\d)/@i${1}t/
     - xform/@ik(\d)/@i${1}k/
-    - xform/@ia(\d)/y@a${1}/  # i 為介音 → i 改成 y
-    - xform/@iu(\d)/y@u${1}/  # i 為介音 → i 改成 y
-    - xform/@or(\d)/@o${1}/
+    - xform/@ia(\d)/i@a${1}/
+    - xform/@iu(\d)/i@u${1}/
+    # - xform/@or(\d)/@o${1}/
+    - xform/@o(\d)/@o${1}/
     - xform/@oo(\d)/@o${1}o/
     - xform/@ok(\d)/@o${1}k/
     - xform/@uh(\d)/@u${1}h/
     - xform/@un(\d)/@u${1}n/
     - xform/@ut(\d)/@u${1}t/
-    - xform/@ua(\d)/w@a${1}/  # u 為介音 → u 改成 w
-    - xform/@ue(\d)/w@e${1}/  # u 為介音 → u 改成 w
-    - xform/@ui(\d)/w@i${1}/  # u 為介音 → u 改成 w
+    - xform/@ua(\d)/u@a${1}/
+    - xform/@ue(\d)/u@e${1}/
+    - xform/@ui(\d)/u@i${1}/
     - xform/@mh(\d)/@m${1}h/
     - xform/@ng(\d)/@n${1}g/
     - xform/@a(\d)/@a${1}/
     - xform/@e(\d)/@e${1}/
-    - xform/@i(\d)/y@i${1}/   # i 為元音 → 前加 y
-    - xform/@u(\d)/w@u${1}/   # u 為元音 → 前加 w
+    - xform/@i(\d)/i@i${1}/
+    - xform/@u(\d)/u@u${1}/
     - xform/@m(\d)/@m${1}/
-
-    # # ---- 4. 零聲母：i/u 開頭加 y/w（BP 規範） ----
-    # # i 為介音（ia, io, iu...）→ i 改成 y
-    # - xform/〔iau(\d)/〔yao/
-    # - xform/〔ia(\d)/〔ya/
-    # - xform/〔io/〔yo/
-    # - xform/〔iu/〔yu/
-    # # i 為主要元音（i + 調號）→ 前加 y
-    # # - xform/@i([;/\\_\-\[\]])/yi$1@/
-    # - xform/〔i(\d)/y@i${1}/
-    # # u 為介音（ua, ui, ue...）→ u 改成 w
-    # - xform/〔@ua/〔wa/
-    # - xform/〔@ui/〔wi/
-    # - xform/〔@ue/〔we/
-    # # u 為主要元音（u + 調號）→ 前加 w
-    # # - xform/@u([;/\\_\-\[\]])/wu$1@/
-    # - xform/〔@u(\d)/〔wu$1/
 
     # ---- 5. oo 韻母整體處理（須先於單 o 規則）----
     - xform/@oo1/ōo/   # 陰平調： 閩拼 1；台羅 1
@@ -274,10 +291,6 @@ hau_suan_tuann:
     #------------------------------------------------------
     # 喉音
     - xform/》h/ㄏ》/
-    #======================================================
-    # 韻母轉換作業
-    #======================================================
-    #
     #------------------------------------------------------
     # 【鼻音韻母】使用之【識別符號】變更成【前綴識別】
     # 鼻音韻母： ann ==>  La ==> ㄥㄚ ==> ㆩ
@@ -288,15 +301,20 @@ hau_suan_tuann:
     - xform/》uainnh(\d)/ㄨㆮㆷ》${1}/
     - xform/》iannh(\d)/ㄧㆩㆷ》${1}/
     - xform/》iaunn(\d)/ㄧㆯ》${1}/
-    - xform/》ioonn(\d)/ㄧㆧ》${1}/
+    # - xform/》ioonn(\d)/ㄧㆧ》${1}/   # ioonn --> nioo
+    - xform/》nioo(\d)/ㄧㆧ》${1}/   # ioonn --> nioo
     - xform/》iunnh(\d)/ㄧㆫㆷ》${1}/
     - xform/》uainn(\d)/ㄨㆮ》${1}/
+    - xform/》uann(\d)/ㄨㆩ》${1}/
+    - xform/》uinn(\d)/ㄨㆪ》${1}/
     - xform/》annh(\d)/ㆩㆷ》${1}/
     - xform/》ainn(\d)/ㆮ》${1}/
     - xform/》ennh(\d)/ㆥㆷ》${1}/
     - xform/》iann(\d)/ㄧㆩ》${1}/
     - xform/》iunn(\d)/ㄧㆫ》${1}/
-    - xform/》onnh(\d)/ㆧㆷ》${1}/
+    # - xform/》oonn(\d)/ㆧ》${1}/    # oonn --> noo
+    - xform/》nooh(\d)/ㆧㆷ》${1}/    # oonn --> noo
+    - xform/》noo(\d)/ㆧ》${1}/    # oonn --> noo
     - xform/》ann(\d)/ㆩ》${1}/
     - xform/》enn(\d)/ㆥ》${1}/
     - xform/》inn(\d)/ㆪ》${1}/
@@ -305,14 +323,13 @@ hau_suan_tuann:
     #------------------------------------------------------
     - xform/》iang(\d)/ㄧㄤ》${1}/
     - xform/》iauh(\d)/ㄧㄠㆷ》${1}/
-    - xform/》iorh(\d)/ㄧㄜㆷ》${1}/
+    # - xform/》iorh(\d)/ㄧㄜㆷ》${1}/
+    - xform/》ioh(\d)/ㄧㄜㆷ》${1}/   # iorh --> ioh
     - xform/》iong(\d)/ㄧㆲ》${1}/
-    - xform/》iook(\d)/ㄧㆦㆻ》${1}/
-    - xform/》oonn(\d)/ㆧ》${1}/
-    - xform/》uann(\d)/ㄨㆩ》${1}/
+    # - xform/》iook(\d)/ㄧㆦㆻ》${1}/  # iook --> iok
+    - xform/》iok(\d)/ㄧㆦㆻ》${1}/  # iook --> iok
     - xform/》uang(\d)/ㄨㄤ》${1}/
     - xform/》uaih(\d)/ㄨㄞㆷ》${1}/
-    - xform/》uinn(\d)/ㄨㆪ》${1}/
     - xform/》ang(\d)/ㄤ》${1}/
     - xform/》aih(\d)/ㄞㆷ》${1}/
     - xform/》auh(\d)/ㄠㆷ》${1}/
@@ -327,7 +344,8 @@ hau_suan_tuann:
     - xform/》ior(\d)/ㄧㄜ》${1}/
     - xform/》orh(\d)/ㄜㆷ》${1}/
     - xform/》ooh(\d)/ㆦㆷ》${1}/
-    - xform/》oom(\d)/ㆱ》${1}/
+    # - xform/》oom(\d)/ㆱ》${1}/ # oom --> om
+    - xform/》om(\d)/ㆱ》${1}/ # oom --> om
     - xform/》ong(\d)/ㆲ》${1}/
     - xform/》oop(\d)/ㆦㆴ》${1}/
     - xform/》uah(\d)/ㄨㄚㆷ》${1}/
@@ -353,8 +371,10 @@ hau_suan_tuann:
     - xform/》it(\d)/ㄧㆵ》${1}/
     - xform/》ik(\d)/ㄧㆻ》${1}/
     - xform/》ia(\d)/ㄧㄚ》${1}/
+    - xform/》ir(\d)/ㄧㆨ》${1}/
     - xform/》iu(\d)/ㄧㄨ》${1}/
-    - xform/》or(\d)/ㄜ》${1}/
+    # - xform/》or(\d)/ㄜ》${1}/    # or --> o
+    - xform/》o(\d)/ㄜ》${1}/    # or --> o
     - xform/》oo(\d)/ㆦ》${1}/
     - xform/》ok(\d)/ㆦㆻ》${1}/
     - xform/》uh(\d)/ㄨㆷ》${1}/

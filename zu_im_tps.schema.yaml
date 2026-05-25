@@ -373,14 +373,6 @@ key_binder:
   import_preset: default
   bindings:
     #---------------------------------------------------
-    # 注音輸入法：使用【:】鍵，輸入【韻母】：ㆲ
-    # - { when: composing, accept: colon, send: colon }
-    # - { when: has_menu, accept: colon, send: colon  }
-    #---------------------------------------------------
-    # 拼音輸入法：使用【_】鍵，輸入【調號】：3 （低音調）
-    # - { when: composing, accept: underscore, send: underscore }
-    # - { when: has_menu, accept: underscore, send: underscore }
-    #---------------------------------------------------
     # 拼音輸入法：使用【=】鍵，輸入【所有入聲尾】
     - { when: composing, accept: equal, send: equal }
     - { when: has_menu, accept: equal, send: equal }
@@ -406,18 +398,6 @@ key_binder:
     - { when: has_menu, accept: "Control+l", send: Page_Down }
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
-    #---------------------------------------------------
-    # 【候選字清單】展開時（即 has_menu 為 true 時）
-    #---------------------------------------------------
-    # 當【候選字清單】展開時，執行【代理鍵】F20/F24 之功能
-    # - { when: has_menu, accept: "Control+slash",  send: Home }  # 回到第 1 個
-    # - { when: has_menu, accept: "Control+comma",  send: End }   # 跳到本頁最後一個
-    - { when: has_menu, accept: F20, send: Home }    # F20：將【侯選游標】置於【頂端】(第一個候選字)
-    - { when: has_menu, accept: F24, send: Down }    # F24：將【候選游標】往下移動一行
-    #---------------------------------------------------
-    # 切換【帶調號值的方音符號】，其【調值】使用【一般格式】/【上標格式】
-    # - { when: always, accept: "Control+grave", toggle: supers_tone }
-    # - { when: has_menu, accept: "Control+grave", toggle: supers_tone }
 
 editor:
   bindings:
