@@ -36,13 +36,7 @@ switches:
   - name: full_shape
     reset: 0
     states: [半形, 全形]
-  # 【候選清單】漢字標音格式（310.md §候選清單之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 方音符號
-  - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
-    reset: 0
-    states: [ 方音符號, 台語音標 ]
   # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 十五音
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
@@ -53,7 +47,7 @@ switches:
 engine:
   processors:
     - lua_processor@aux_commit    # 選擇【輸入法】輸出：羅馬拼音字母
-    # - lua_processor@jump_select
+    - lua_processor@jump_select
     - ascii_composer
     - recognizer
     - key_binder
@@ -76,7 +70,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
-    # - lua_filter@reformat_comment_filter
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyz;-_\/[]7.
@@ -90,37 +84,42 @@ speller:
     # 原則：多字母先處理；同起首字母者，「目標」先於「來源」以避免雙重轉換
     #==========================================================================
     # 齒音/舌齒音
-    - xform/^tsh/c/          # tsh(ㄘ) → c
-    - xform/^ts(?!h)/z/      # ts(ㄗ) → z（不含 tsh）
-    - xform/^j/zz/           # j(ㆡ) → zz
-    - xform/^s/s/            # s(ㄙ) → s
-    # l, s, h, c(tsh), z(ts), zi, ci, ji, si 不變
-    # 舌根音/鼻音（濁音）（多字母先處理）
-    - xform/^ng/ggn/         # ng(ㄫ) → ggn
+    - xform/^j/zz/          # j(ㆡ) → zz
+    - xform/^z/z/           # ts(ㄗ) → z（不含 tsh）
+    - xform/^c/c/           # tsh(ㄘ) → c
+    - xform/^s/s/           # s(ㄙ) → s
+    # 舌根音/鼻音（濁音）
+    - xform/^ng/ggn/        # ng(ㄫ) → ggn
     # 舌根音
-    - xform/^g(?!g)/gg/      # g(ㆣ) → gg  ← 須先於 k→g
-    - xform/^k(?!h)/g/       # k(ㄍ) → g   ← 不含 kh
-    - xform/^kh/k/           # kh(ㄎ) → k  ← 在 k→g 之後
+    - xform/^gg/gg/         # g(ㆣ) → gg  ← 須先於 k→g
+    - xform/^g/g/           # k(ㄍ) → g   ← 不含 kh
+    - xform/^k/k/           # kh(ㄎ) → k  ← 在 k→g 之後
     # 唇音
-    - xform/^b/bb/           # b(ㆠ) → bb  ← 須先於 p→b
-    - xform/^p(?!h)/b/       # p(ㄅ) → b   ← 不含 ph
-    - xform/^ph/p/           # ph(ㄆ) → p  ← 在 p→b 之後
-    - xform/^m/bbn/          # m(ㄇ) → bbn
+    - xform/^m/bbn/         # m(ㄇ) → bbn
+    - xform/^b/bb/          # b(ㆠ) → bb  ← 須先於 p→b
+    - xform/^b/b/           # p(ㄅ) → b   ← 不含 ph
+    - xform/^p/p/           # ph(ㄆ) → p  ← 在 p→b 之後
     # 舌尖音
-    - xform/^t(?!h)/d/       # t(ㄉ) → d   ← 不含 th
-    - xform/^th/t/           # th(ㄊ) → t  ← 在 t→d 之後
-    - xform/^n/ln/           # n(ㄋ) → ln
-    - xform/^l/l/            # l(ㄌ) → l
+    - xform/^n/ln/          # n(ㄋ) → ln
+    - xform/^l(?!n)/l/      # l(ㄌ) → l
+    - xform/^d/d/           # t(ㄉ) → d   ← 不含 th
+    - xform/^t/t/           # th(ㄊ) → t  ← 在 t→d 之後
     # 聲門音
-    - xform/^h/h/            # h(ㄏ) → h
+    - xform/^h/h/           # h(ㄏ) → h
 
     #==========================================================================
-    # Step 2: TLPA → BP 韻母轉換
+    # Step 2: BPM2 → BP 韻母轉換
     #==========================================================================
+    - xform/iek/ik/
+    - xform/ior/io/
+    - xform/or/o/             # or
     - xform/ir/eu/            # ir(ㆨ) → eu
     - xform/au/ao/            # au(ㄠ) → ao
-    # 鼻化韻母：去 nn 後綴，加 n 前綴
-    - xform/onn/noo/          # onn(ㆧ) → noo（須先於一般規則）
+    - xform/iook/iok/
+    - xform/ioonn/nioo/
+    - xform/oonn/noo/          # onn(ㆧ) → noo（須先於一般規則）
+    - xform/oom/om/
+    #--------------------------------------------------------------------------
     - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/  # ann→na, inn→ni, unn→nu 等
     #==========================================================================
     # Step 3: TLPA → BP 聲調轉換（同步替換，無衝突）
@@ -179,16 +178,41 @@ speller:
     - xlit|1653278|;-_\/[]|
 
 translator:
-  dictionary: ji_khoo_tl
+  # dictionary: ji_khoo_tl
+  dictionary: ji_khoo_bpm2
   prism: phing_im_bp
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
   preedit_format:
-    # 1. 分隔符號
+    #==========================================================================
+    # 輸入方案總則
+    #==========================================================================
+    # 分隔符號
     - xform/'/ /
-    # 2. Reverse xlit：按鍵 → BP 調號數字
-    # - xlit|;-_\/[]7.|165327809|
+    #==========================================================================
+    # 韻母轉換：台語注音二式（BPM2） → 閩拼方案（BP）
+    #==========================================================================
+    - derive/oonn/onn/
+    - derive/oom/om/
+    - derive/or/o/
+    - derive/iek/ik/
+    #==========================================================================
+    # 零聲母相容輸入： i/u 校調成 y/w
+    #==========================================================================
+    # i 為介音
+    - derive/^ia/ya/
+    - derive/^io/yo/
+    - derive/^iu/yu/
+    # i 為主要元音
+    - derive/^i(\d)/yi$1/
+    # u 為介音
+    - derive/^ua/wa/
+    - derive/^ui/wi/
+    - derive/^ue/we/
+    # u 為主要元音
+    - derive/^u(\d)/wu$1/
+    # 2. 按鍵 → BP 調號數字
     - xlit|;-_\/[]|1653278|
     # 3. 輕聲/入聲縮寫顯示
     # - xform/0/˙/
@@ -268,12 +292,23 @@ translator:
 key_binder:
   import_preset: default
   bindings:
-    - { when: composing, accept: underscore, send: underscore }
-    - { when: has_menu,  accept: underscore, send: underscore }
-    - { when: composing, accept: minus, send: minus }
-    - { when: has_menu,  accept: minus, send: minus }
-    - { when: composing, accept: period, send: period }
-    - { when: has_menu,  accept: period, send: period }
+    # BP 聲調鍵優先於預設 key_binder 綁定（防止 has_menu 時被截走）
+    - { when: composing, accept: semicolon,    send: semicolon    }  # BP 調1 ;
+    - { when: has_menu,  accept: semicolon,    send: semicolon    }
+    - { when: composing, accept: slash,        send: slash        }  # BP 調2 /
+    - { when: has_menu,  accept: slash,        send: slash        }
+    - { when: composing, accept: backslash,    send: backslash    }  # BP 調3 \
+    - { when: has_menu,  accept: backslash,    send: backslash    }
+    - { when: composing, accept: underscore,   send: underscore   }  # BP 調5 _
+    - { when: has_menu,  accept: underscore,   send: underscore   }
+    - { when: composing, accept: minus,        send: minus        }  # BP 調6 -
+    - { when: has_menu,  accept: minus,        send: minus        }
+    - { when: composing, accept: bracketleft,  send: bracketleft  }  # BP 調7 [
+    - { when: has_menu,  accept: bracketleft,  send: bracketleft  }
+    - { when: composing, accept: bracketright, send: bracketright }  # BP 調8 ]
+    - { when: has_menu,  accept: bracketright, send: bracketright }
+    - { when: composing, accept: period,       send: period       }  # 入聲縮寫 .
+    - { when: has_menu,  accept: period,       send: period       }
     - { accept: "Control+p", send: Page_Up,   when: composing }
     - { accept: "Control+n", send: Page_Down, when: composing }
     - { when: has_menu, accept: "Control+h", send: Page_Up }
@@ -283,8 +318,10 @@ key_binder:
 
 editor:
   bindings:
-    space: commit
-    Control+Shift+Return: commit_comment
+    Return: commit_composition              # 【漢字標音輸出】選項設定
+    Control+Return: commit_raw_input        # 【鍵盤按鍵】（未經 preedit_format 轉換的原始輸入）
+    Shift+Return: commit_script_text        # 【輸入編輯列】（經 preedit_format 轉換後的結構）
+    Control+Shift+Return: commit_comment    # 【候選字清單】選擇項目
 
 recognizer:
   import_preset: default
@@ -303,7 +340,7 @@ menu:
 style:
   horizontal: false
   font_face: "霞鶩文楷 TC, 新細明體"
-  comment_font_face: "霞鶩文楷 TC, 新細明體"
+  comment_font_face: "Cascadia Next TC Medium, 霞鶩文楷 TC, BopomofoRuby1909-v1, 新細明體"
   comment_font_size: 18
 
 punctuator:

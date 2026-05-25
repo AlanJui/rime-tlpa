@@ -9,6 +9,13 @@ hau_suan_tuann:
     # 定義【候選字清單】
     #==============================================================================
     - xform/^(.*)$/〔@$1〕【》$1】/
+    #======================================================
+    # 遇【連續輸入】，將【分隔符號：'】換成空白
+    #======================================================
+    # 右欄多音節：' 後面插入 》 標記（lookahead 限右欄 【...】 內）
+    # - xform/'(?=[^〕】]*】)/ 》/
+    - xform/'/ /
+    - xform/\s+/ / # 多重空白壓成一格（美化）
 
     # ---- 1. 聲母：BPM2 → BP ----
     - xform/〔@jji/〔j@i/   # jji (ㆢㄧ) = zz(ㆡ) + i(ㄧ)
@@ -44,122 +51,107 @@ hau_suan_tuann:
     - xform/@onn/@noo/          # onn(ㆧ) → noo（須先於一般規則）
     - xform/@([iu]?(?:ai|ao|oo|[aiueo]))nn/@n$1/  # ann→na, inn→ni, unn→nu 等
 
-    # ---- 3. 零聲母：i/u 開頭加 y/w（BP 規範） ----
-    # i 為介音（ia, io, iu...）→ i 改成 y
-    - xform/〔@iau/〔yao/
-    - xform/〔@ia/〔ya/
-    - xform/〔@io/〔yo/
-    - xform/〔@iu/〔yu/
-    # i 為主要元音（i + 調號）→ 前加 y
-    # - xform/@i([;/\\_\-\[\]])/yi$1@/
-    - xform/〔@i(\d)/@yi$1/
-    # u 為介音（ua, ui, ue...）→ u 改成 w
-    - xform/〔@ua/〔wa/
-    - xform/〔@ui/〔wi/
-    - xform/〔@ue/〔we/
-    # u 為主要元音（u + 調號）→ 前加 w
-    # - xform/@u([;/\\_\-\[\]])/wu$1@/
-    - xform/〔@u(\d)/〔wu$1/
-
-    # ---- 4. 為置放聲調符號調整 ----
-    - xform/@iaunnh(\d)/ni@a${1}uh/
-    - xform/@iaunn(\d)/ni@a${1}u/
+    # ---- 3. 為【韻母】上【聲調符號】調整 ----
+    - xform/@uainnh(\d)/nu@a${1}ih/
+    - xform/@iannh(\d)/ni@a${1}h/
+    - xform/@iaunn(\d)/ni@a${1}o/
+    - xform/@ioonn(\d)/ni@o${1}o/
+    - xform/@iunnh(\d)/n@i${1}uh/
     - xform/@uainn(\d)/nu@a${1}i/
-    - xform/@ainn(\d)/n@a${1}inn/
-    - xform/@aunn(\d)/n@a${1}onn/
-    - xform/@iunn(\d)/n@i${1}unn/
-    - xform/@uinn(\d)/u@i${1}nn/
-    # 待確定
-    - xform/@eh(\d)/n@e${1}h/
-    - xform/@uann(\d)/nu@a${1}nn/
-    - xform/@iann(\d)/ni@a${1}nn/
-    - xform/@aenn(\d)/@a${1}enn/
-    # 可能有音無字
-    - xform/@ah(\d)/n@a${1}h/
-    - xform/@oh(\d)/n@o${1}h/
-    - xform/@ih(\d)/n@i${1}h/
-    - xform/@ionn(\d)/ni@o${1}nn/
-
-    - xform/@iong(\d)/i@o${1}ng/
+    - xform/@annh(\d)/n@a${1}h/
+    - xform/@ainn(\d)/n@a${1}i/
+    - xform/@ennh(\d)/n@e${1}h/
+    - xform/@iann(\d)/ni@a${1}/
+    - xform/@iunn(\d)/n@i${1}u/
+    - xform/@onnh(\d)/n@i${1}uh/
+    - xform/@ann(\d)/n@a${1}/
+    - xform/@enn(\d)/n@e${1}/
+    - xform/@inn(\d)/n@i${1}/
+    #-----------------------------------------------------------------------
     - xform/@iang(\d)/i@a${1}ng/
-    - xform/@iauh(\d)/i@a${1}oh/
-    - xform/@uaih(\d)/nu@a${1}ih/
-    - xform/@auh(\d)/@na${1}oh/
-    - xform/@iah(\d)/ni@a${1}h/
-    - xform/@eeh(\d)/@e${1}eh/
+    - xform/@iauh(\d)/y@a${1}oh/    # i 為介音 → i 改成 y
+    - xform/@iorh(\d)/i@o${1}h/
+    - xform/@iong(\d)/i@o${1}ng/
+    - xform/@iook(\d)/i@o${1}k/
+    - xform/@oonn(\d)/n@o${1}o/
+    - xform/@uann(\d)/nu@a${1}/
+    - xform/@uang(\d)/u@a${1}ng/
+    - xform/@uaih(\d)/u@a${1}ih/
+    - xform/@uinn(\d)/n@u${1}i/
     - xform/@ang(\d)/@a${1}ng/
+    - xform/@aih(\d)/@a${1}ih/
     - xform/@auh(\d)/@a${1}oh/
+    - xform/@ing(\d)/@i${1}ng/
     - xform/@iah(\d)/i@a${1}h/
-    - xform/@iak(\d)/i@a${1}k/
     - xform/@iam(\d)/i@a${1}m/
     - xform/@ian(\d)/i@a${1}n/
-    - xform/@iau(\d)/i@a${1}u/
     - xform/@iap(\d)/i@a${1}p/
     - xform/@iat(\d)/i@a${1}t/
-    - xform/@ing(\d)/@i${1}ng/
-    - xform/@ioh(\d)/@i${1}oh/
-    - xform/@iok(\d)/@i${1}ok/
-    - xform/@iuh(\d)/@i${1}uh/
-    - xform/@enn(\d)/@e${1}nn/
-    - xform/@ngh(\d)/@n${1}gh/
-    - xform/@onn(\d)/@o${1}nn/
-    - xform/@ong(\d)/@o${1}ng/
+    - xform/@iak(\d)/i@a${1}k/
+    - xform/@iau(\d)/y@a${1}o/  # i 為介音 → i 改成 y
+    - xform/@ior(\d)/y@o${1}/   # i 為介音 → i 改成 y
+    - xform/@orh(\d)/@o${1}h/
     - xform/@ooh(\d)/@o${1}oh/
+    - xform/@oom(\d)/@o${1}m/
+    - xform/@ong(\d)/@o${1}ng/
+    - xform/@oop(\d)/@o${1}p/
     - xform/@uah(\d)/u@a${1}h/
-    - xform/@uai(\d)/u@a${1}i/
     - xform/@uan(\d)/u@a${1}n/
     - xform/@uat(\d)/u@a${1}t/
+    - xform/@uai(\d)/u@a${1}i/
     - xform/@ueh(\d)/u@e${1}h/
-    - xform/@ann(\d)/@a${1}nn/
-    - xform/@inn(\d)/@i${1}nn/
-    - xform/@uae(\d)/u@a${1}e/
-    - xform/@ioo(\d)/@i${1}oo/
-    - xform/@eng(\d)/@e${1}ng/
-    - xform/@ee(\d)/@e${1}e/
+    - xform/@uih(\d)/@u${1}ih/
+    - xform/@ngh(\d)/@n${1}gh/
     - xform/@ah(\d)/@a${1}h/
-    - xform/@ai(\d)/@a${1}i/
-    - xform/@ak(\d)/@a${1}k/
     - xform/@am(\d)/@a${1}m/
     - xform/@an(\d)/@a${1}n/
-    - xform/@au(\d)/@a${1}o/
     - xform/@ap(\d)/@a${1}p/
     - xform/@at(\d)/@a${1}t/
+    - xform/@ak(\d)/@a${1}k/
+    - xform/@ai(\d)/@a${1}i/
+    - xform/@au(\d)/@a${1}o/
     - xform/@eh(\d)/@e${1}h/
-    - xform/@ir(\d)/@i${1}r/
-    - xform/@ia(\d)/i@a${1}/
-    - xform/@er(\d)/@e${1}r/
     - xform/@ih(\d)/@i${1}h/
-    - xform/@ik(\d)/@i${1}k/
     - xform/@im(\d)/@i${1}m/
     - xform/@in(\d)/@i${1}n/
-    - xform/@io(\d)/@i${1}o/
     - xform/@ip(\d)/@i${1}p/
     - xform/@it(\d)/@i${1}t/
-    - xform/@iu(\d)/@i${1}u/
-    - xform/@mh(\d)/@m${1}h/
-    - xform/@ng(\d)/@n${1}g/
-    - xform/@oh(\d)/@o${1}h/
-    - xform/@ok(\d)/@o${1}k/
+    - xform/@ik(\d)/@i${1}k/
+    - xform/@ia(\d)/y@a${1}/  # i 為介音 → i 改成 y
+    - xform/@iu(\d)/y@u${1}/  # i 為介音 → i 改成 y
+    - xform/@or(\d)/@o${1}/
     - xform/@oo(\d)/@o${1}o/
-    - xform/@op(\d)/@o${1}p/
-    - xform/@ua(\d)/@u${1}a/
-    - xform/@ue(\d)/@u${1}e/
+    - xform/@ok(\d)/@o${1}k/
     - xform/@uh(\d)/@u${1}h/
-    - xform/@ui(\d)/@u${1}i/
     - xform/@un(\d)/@u${1}n/
     - xform/@ut(\d)/@u${1}t/
-    - xform/@om(\d)/@o${1}m/
-
-
-
-    - xform/@eu(\d)/@e${1}u/
-    - xform/@ek(\d)/@e${1}k/
+    - xform/@ua(\d)/w@a${1}/  # u 為介音 → u 改成 w
+    - xform/@ue(\d)/w@e${1}/  # u 為介音 → u 改成 w
+    - xform/@ui(\d)/w@i${1}/  # u 為介音 → u 改成 w
+    - xform/@mh(\d)/@m${1}h/
+    - xform/@ng(\d)/@n${1}g/
     - xform/@a(\d)/@a${1}/
     - xform/@e(\d)/@e${1}/
-    - xform/@i(\d)/@i${1}/
+    - xform/@i(\d)/y@i${1}/   # i 為元音 → 前加 y
+    - xform/@u(\d)/w@u${1}/   # u 為元音 → 前加 w
     - xform/@m(\d)/@m${1}/
-    - xform/@o(\d)/@o${1}/
-    - xform/@u(\d)/@u${1}/
+
+    # # ---- 4. 零聲母：i/u 開頭加 y/w（BP 規範） ----
+    # # i 為介音（ia, io, iu...）→ i 改成 y
+    # - xform/〔iau(\d)/〔yao/
+    # - xform/〔ia(\d)/〔ya/
+    # - xform/〔io/〔yo/
+    # - xform/〔iu/〔yu/
+    # # i 為主要元音（i + 調號）→ 前加 y
+    # # - xform/@i([;/\\_\-\[\]])/yi$1@/
+    # - xform/〔i(\d)/y@i${1}/
+    # # u 為介音（ua, ui, ue...）→ u 改成 w
+    # - xform/〔@ua/〔wa/
+    # - xform/〔@ui/〔wi/
+    # - xform/〔@ue/〔we/
+    # # u 為主要元音（u + 調號）→ 前加 w
+    # # - xform/@u([;/\\_\-\[\]])/wu$1@/
+    # - xform/〔@u(\d)/〔wu$1/
 
     # ---- 5. oo 韻母整體處理（須先於單 o 規則）----
     - xform/@oo1/ōo/   # 陰平調： 閩拼 1；台羅 1
@@ -242,9 +234,9 @@ hau_suan_tuann:
     # 4. 零聲母 + 韻化輔音 + 調號，如：【不】Øm2, 【黄】Øng5, ...
     #------------------------------------------------------
     # 音節以【鼻音韻母】開頭
-    - xform/【》([iu]?(ai|au|oo|[aiueo]))nn/【》L$1/
     # 音節以【韻母】開頭
-    - xform/【》([iu]?(ai|au|oo|[aiueo]))/【》$1/
+    # - xform/【》([iu]?(ai|au|oo|[aiueo]))nn/【》L$1/
+    # - xform/【》([iu]?(ai|au|oo|[aiueo]))/【》$1/
     # 音節以【韻化輔音】開始
     - xform/【》(m)(\d)$/【ㆬ》$2/
     - xform/【》(ng)(\d)$/【ㆭ》$2/
@@ -263,19 +255,19 @@ hau_suan_tuann:
     - xform/》s/ㄙ》/
     # --------------------------------------------------------------------------
     # 唇音(不送氣音/送氣音/濁音/鼻音)
-    - xform/》bbn/ㄇ》/
+    - xform/》m/ㄇ》/
     - xform/》bb/ㆠ》/
     - xform/》b/ㄅ》/
-    - xform/》ph/ㄆ》/
+    - xform/》p/ㄆ》/
     # --------------------------------------------------------------------------
     # 舌根音（軟顎音）
-    - xform/》ggn/ㄫ》/
+    - xform/》ng/ㄫ》/
     - xform/》gg/ㆣ》/
     - xform/》g/ㄍ》/
     - xform/》k/ㄎ》/
     # --------------------------------------------------------------------------
     # 舌尖音（齒齦音）
-    - xform/》ln/ㄋ》/  # 絕對不可將 n 置於 ng 之前
+    - xform/》n/ㄋ》/
     - xform/》l/ㄌ》/
     - xform/》d/ㄉ》/
     - xform/》t/ㄊ》/
@@ -291,94 +283,94 @@ hau_suan_tuann:
     # 鼻音韻母： ann ==>  La ==> ㄥㄚ ==> ㆩ
     # (a/i/u/e/oo/iau/uai/ai/au/ia/io/iu/ua/ui) + nn
     #------------------------------------------------------
-    - xform/》([iu]?(ai|au|oo|[aiueo]))nn/》L$1/
+    # - xform/》([iu]?(ai|au|oo|[aiueo]))nn/》L$1/
     #------------------------------------------------------
-    - xform/》Luaih/ㄨㆮㆷ》/
-    - xform/》Liah/ㄧㆩㆷ》/
-    - xform/》Liau/ㄧㆯ》/
-    - xform/》Liuh/ㄧㆫㆷ》/
-    - xform/》Luai/ㄨㆮ》/
-    - xform/》Lah/ㆩㆷ》/
-    - xform/》Lai/ㆮ》/
-    - xform/》Leh/ㆥㆷ》/
-    - xform/》Lia/ㄧㆩ》/
-    - xform/》Lio/ㄧㆧ》/
-    - xform/》Liu/ㄧㆫ》/
-    - xform/》Loh/ㆧㆷ》/
-    - xform/》Loo/ㆧ》/
-    - xform/》Lua/ㄨㆩ》/
-    - xform/》Lui/ㄨㆪ》/
-    - xform/》La/ㆩ》/
-    - xform/》Le/ㆥ》/
-    - xform/》Li/ㆪ》/
+    - xform/》uainnh(\d)/ㄨㆮㆷ》${1}/
+    - xform/》iannh(\d)/ㄧㆩㆷ》${1}/
+    - xform/》iaunn(\d)/ㄧㆯ》${1}/
+    - xform/》ioonn(\d)/ㄧㆧ》${1}/
+    - xform/》iunnh(\d)/ㄧㆫㆷ》${1}/
+    - xform/》uainn(\d)/ㄨㆮ》${1}/
+    - xform/》annh(\d)/ㆩㆷ》${1}/
+    - xform/》ainn(\d)/ㆮ》${1}/
+    - xform/》ennh(\d)/ㆥㆷ》${1}/
+    - xform/》iann(\d)/ㄧㆩ》${1}/
+    - xform/》iunn(\d)/ㄧㆫ》${1}/
+    - xform/》onnh(\d)/ㆧㆷ》${1}/
+    - xform/》ann(\d)/ㆩ》${1}/
+    - xform/》enn(\d)/ㆥ》${1}/
+    - xform/》inn(\d)/ㆪ》${1}/
     #------------------------------------------------------
     # 元音韻母/複合韻母轉換
     #------------------------------------------------------
-    - xform/》iang/ㄧㄤ》/
-    - xform/》iauh/ㄧㄠㆷ》/
-    - xform/》iong/ㄧㆲ》/
-    - xform/》uang/ㄨㄤ》/
-    - xform/》uaih/ㄨㄞㆷ》/
-    - xform/》uih/ㄨㄧㆷ》/
-    - xform/》ang/ㄤ》/
-    - xform/》aih/ㄞㆷ》/
-    - xform/》auh/ㄠㆷ》/
-    - xform/》ing/ㄧㄥ》/
-    - xform/》iah/ㄧㄚㆷ》/
-    - xform/》iam/ㄧㆰ》/
-    - xform/》ian/ㄧㄢ》/
-    - xform/》iap/ㄧㄚㆴ》/
-    - xform/》iat/ㄧㄚㆵ》/
-    - xform/》iak/ㄧㄚㆻ》/
-    - xform/》iau/ㄧㄠ》/
-    - xform/》iek/ㄧㆤㆻ》/
-    - xform/》ioh/ㄧㄜㆷ》/
-    - xform/》iok/ㄧㆦㆻ》/
-    - xform/》ooh/ㆦㆷ》/
-    - xform/》ong/ㆲ》/
-    - xform/》uah/ㄨㄚㆷ》/
-    - xform/》uan/ㄨㄢ》/
-    - xform/》uat/ㄨㄚㆵ》/
-    - xform/》uai/ㄨㄞ》/
-    - xform/》ueh/ㄨㆤㆷ》/
-    - xform/》ngh/ㆭㆷ》/
-    - xform/》ah/ㄚㆷ》/
-    - xform/》am/ㆰ》/
-    - xform/》an/ㄢ》/
-    - xform/》ap/ㄚㆴ》/
-    - xform/》at/ㄚㆵ》/
-    - xform/》ak/ㄚㆻ》/
-    - xform/》ai/ㄞ》/
-    - xform/》au/ㄠ》/
-    - xform/》eh/ㆤㆷ》/
-    - xform/》ih/ㄧㆷ》/
-    - xform/》im/ㄧㆬ》/
-    - xform/》in/ㄧㄣ》/
-    - xform/》ip/一ㆴ》/
-    - xform/》it/ㄧㆵ》/
-    # - xform/》ik/ㄧㆻ》/
-    - xform/》ia/ㄧㄚ》/
-    - xform/》io/ㄧㄜ》/
-    - xform/》iu/ㄧㄨ》/
-    - xform/》oo/ㆦ》/
-    - xform/》or/ㄜ》/
-    - xform/》oh/ㄜㆷ》/
-    - xform/》oom/ㆱ》/
-    - xform/》op/ㆦㆴ》/
-    - xform/》ok/ㆦㆻ》/
-    - xform/》uh/ㄨㆷ》/
-    - xform/》un/ㄨㄣ》/
-    - xform/》ut/ㄨㆵ》/
-    - xform/》ua/ㄨㄚ》/
-    - xform/》ue/ㄨㆤ》/
-    - xform/》ui/ㄨㄧ》/
-    - xform/》mh/ㆬㆷ》/
-    - xform/》ng/ㆭ》/
-    - xform/》a/ㄚ》/
-    - xform/》e/ㆤ》/
-    - xform/》i/ㄧ》/
-    - xform/》u/ㄨ》/
-    - xform/》m/ㆬ》/
+    - xform/》iang(\d)/ㄧㄤ》${1}/
+    - xform/》iauh(\d)/ㄧㄠㆷ》${1}/
+    - xform/》iorh(\d)/ㄧㄜㆷ》${1}/
+    - xform/》iong(\d)/ㄧㆲ》${1}/
+    - xform/》iook(\d)/ㄧㆦㆻ》${1}/
+    - xform/》oonn(\d)/ㆧ》${1}/
+    - xform/》uann(\d)/ㄨㆩ》${1}/
+    - xform/》uang(\d)/ㄨㄤ》${1}/
+    - xform/》uaih(\d)/ㄨㄞㆷ》${1}/
+    - xform/》uinn(\d)/ㄨㆪ》${1}/
+    - xform/》ang(\d)/ㄤ》${1}/
+    - xform/》aih(\d)/ㄞㆷ》${1}/
+    - xform/》auh(\d)/ㄠㆷ》${1}/
+    - xform/》ing(\d)/ㄧㄥ》${1}/
+    - xform/》iah(\d)/ㄧㄚㆷ》${1}/
+    - xform/》iam(\d)/ㄧㆰ》${1}/
+    - xform/》ian(\d)/ㄧㄢ》${1}/
+    - xform/》iap(\d)/ㄧㄚㆴ》${1}/
+    - xform/》iat(\d)/ㄧㄚㆵ》${1}/
+    - xform/》iak(\d)/ㄧㄚㆻ》${1}/
+    - xform/》iau(\d)/ㄧㄠ》${1}/
+    - xform/》ior(\d)/ㄧㄜ》${1}/
+    - xform/》orh(\d)/ㄜㆷ》${1}/
+    - xform/》ooh(\d)/ㆦㆷ》${1}/
+    - xform/》oom(\d)/ㆱ》${1}/
+    - xform/》ong(\d)/ㆲ》${1}/
+    - xform/》oop(\d)/ㆦㆴ》${1}/
+    - xform/》uah(\d)/ㄨㄚㆷ》${1}/
+    - xform/》uan(\d)/ㄨㄢ》${1}/
+    - xform/》uat(\d)/ㄨㄚㆵ》${1}/
+    - xform/》uai(\d)/ㄨㄞ》${1}/
+    - xform/》ueh(\d)/ㄨㆤㆷ》${1}/
+    - xform/》uih(\d)/ㄨㄧㆷ》${1}/
+    - xform/》ngh(\d)/ㆭㆷ》${1}/
+    - xform/》ah(\d)/ㄚㆷ》${1}/
+    - xform/》am(\d)/ㆰ》${1}/
+    - xform/》an(\d)/ㄢ》${1}/
+    - xform/》ap(\d)/ㄚㆴ》${1}/
+    - xform/》at(\d)/ㄚㆵ》${1}/
+    - xform/》ak(\d)/ㄚㆻ》${1}/
+    - xform/》ai(\d)/ㄞ》${1}/
+    - xform/》au(\d)/ㄠ》${1}/
+    - xform/》eh(\d)/ㆤㆷ》${1}/
+    - xform/》ih(\d)/ㄧㆷ》${1}/
+    - xform/》im(\d)/ㄧㆬ》${1}/
+    - xform/》in(\d)/ㄧㄣ》${1}/
+    - xform/》ip(\d)/一ㆴ》${1}/
+    - xform/》it(\d)/ㄧㆵ》${1}/
+    - xform/》ik(\d)/ㄧㆻ》${1}/
+    - xform/》ia(\d)/ㄧㄚ》${1}/
+    - xform/》iu(\d)/ㄧㄨ》${1}/
+    - xform/》or(\d)/ㄜ》${1}/
+    - xform/》oo(\d)/ㆦ》${1}/
+    - xform/》ok(\d)/ㆦㆻ》${1}/
+    - xform/》uh(\d)/ㄨㆷ》${1}/
+    - xform/》un(\d)/ㄨㄣ》${1}/
+    - xform/》ut(\d)/ㄨㆵ》${1}/
+    - xform/》ua(\d)/ㄨㄚ》${1}/
+    - xform/》ue(\d)/ㄨㆤ》${1}/
+    - xform/》ui(\d)/ㄨㄧ》${1}/
+    - xform/》mh(\d)/ㆬㆷ》${1}/
+    - xform/》ng(\d)/ㆭ》${1}/
+    - xform/》a(\d)/ㄚ》${1}/
+    - xform/》e(\d)/ㆤ》${1}/
+    - xform/》i(\d)/ㄧ》${1}/
+    - xform/》u(\d)/ㄨ》${1}/
+    - xform/》m(\d)/ㆬ》${1}/
+
     #======================================================
     # 【聲調】
     #======================================================
