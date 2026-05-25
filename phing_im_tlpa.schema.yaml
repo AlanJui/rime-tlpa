@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_tlpa
   name: 拼音輸入法【台語音標】
-  version: "v0.1.0.1"
+  version: "v0.1.0.3"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -46,7 +46,6 @@ switches:
     reset: 0
     states: [ 方音符號, 台語音標 ]
   # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
-  # reset: 0 → 第一個選項為預設 → 十五音
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
@@ -85,7 +84,7 @@ engine:
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
     # 重組【候選字清單】中的【羅馬拼音字母】及【注音符號】
-    # - lua_filter@reformat_comment_filter
+    - lua_filter@reformat_comment_filter
 
 speller:
   alphabet: abcdefghijklmnopqrstuvwxyzN;-_\/[]7.
@@ -114,8 +113,8 @@ speller:
     # --------------------------------------------------------------------------
     # 舌尖前音（齒齦音）: z[c], c[ch], j[j], s[s]
     # 舌尖前音（齒齦音）: z[c], c[ch], j[j], s[s]
-    - derive/^ts(?!h)/z/ # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
-    - derive/^tsh/c/ # ㄘ
+    - xform/^tsh/c/ # ㄘ
+    - xform/^ts(?!h)/z/ # ㄗ（拼音字母 c 之後不是接 h 的【c】換成【z】）
     #==========================================================================
     # 【閩南話變調規則】
     # 為強化使用者輸入之便利性，即便輸入【變調】，仍能推算出【本調】之漢字
