@@ -1,7 +1,7 @@
 # 【候選清單】程式舘：閩拼方案（BP）
 # 【字典編碼】：台語注音二式（BPM2）
 # lib_comment_bp.yaml
-# version: "v0.1.0.11"
+# version: "v0.1.0.12"
 
 hau_suan_tuann:
   __append:
@@ -77,19 +77,19 @@ hau_suan_tuann:
     - xform/》s/ㄙ》/
     # --------------------------------------------------------------------------
     # 唇音(不送氣音/送氣音/濁音/鼻音)
-    - xform/》m/ㄇ》/
+    - xform/》m(?!\d)/ㄇ》/    # 韻化輔音
     - xform/》bb/ㆠ》/
     - xform/》b/ㄅ》/
     - xform/》p/ㄆ》/
     # --------------------------------------------------------------------------
     # 舌根音（軟顎音）
-    - xform/》ng/ㄫ》/
+    - xform/》ng(?!\d)/ㄫ》/    # 韻化輔音
     - xform/》gg/ㆣ》/
     - xform/》g/ㄍ》/
     - xform/》k/ㄎ》/
     # --------------------------------------------------------------------------
     # 舌尖音（齒齦音）
-    - xform/》n/ㄋ》/
+    - xform/》n(?!g)/ㄋ》/
     - xform/》l/ㄌ》/
     - xform/》d/ㄉ》/
     - xform/》t/ㄊ》/
@@ -273,18 +273,18 @@ hau_suan_tuann:
     - xform/〉c/c/        # c(ㄘ) → c
     - xform/〉s/s/        # s(ㄙ) → s
     # 舌根音/鼻音（濁音）
-    - xform/〉ng/$1ggn/
+    - xform/〉ng(?!\d)/$1ggn/    # 韻化輔音
     # 舌根音
     - xform/〉gg/$1gg/
     - xform/〉g/$1g/
     - xform/〉k/$1k/
     # 唇音
-    - xform/〉m/$1bbn/
+    - xform/〉m(?!\d)/$1bbn/    # 韻化輔音
     - xform/〉bb/$1bb/
     - xform/〉b/$1b/
     - xform/〉p/$1p/
     # 舌尖音
-    - xform/〉n/$1ln/
+    - xform/〉n(?!g)/$1ln/
     - xform/〉l/$1l/
     - xform/〉d/$1d/
     - xform/〉t/$1t/
