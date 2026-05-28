@@ -1,7 +1,7 @@
 # 【候選清單】程式舘：閩拼方案（BP）
 # 【字典編碼】：台語注音二式（BPM2）
 # lib_comment_bp.yaml
-# version: "v0.1.0.9"
+# version: "v0.1.0.10"
 
 hau_suan_tuann:
   __append:
@@ -33,16 +33,6 @@ hau_suan_tuann:
     # 2. 零聲母 + 元音韻母 + 調號，如：Øu5, Øi1, ...
     # 3. 零聲母 + 複合韻母 + 調號，如：Øiau1, Øiong2, Øuan2, Øuai1, ....
     # 4. 零聲母 + 韻化輔音 + 調號，如：【不】Øm2, 【黄】Øng5, ...
-    #------------------------------------------------------
-    # 第一個漢字輸入拆解【音節】=【聲母】+【韻母】+【聲調】
-    #------------------------------------------------------
-    # 【零聲母】組合型式
-    # 以【介音韻母】、【元音韻母】開始的無聲母音標
-    - xform/^([iu]?(ai|ao|[aiue]).*)$/〔〉Ø$1〕 【》Ø$1】/
-    # 以【鼻化之元音韻母】開始的無聲母音標
-    - xform/^((m|ng)(\d))$/〔〉Ø$1〕 【》Ø$1】/
-    # 以【聲母】開始的音標
-    - xform/^([a-z]+\d)$/〔〉$1〕 【》$1】/
     #------------------------------------------------------
     # 連續漢字輸入拆解【音節】=【聲母】+【韻母】+【聲調】
     #------------------------------------------------------
@@ -262,17 +252,17 @@ hau_suan_tuann:
     #   - iang → yang / iak → yak
     #   - iong → yong / iok → yok
     #--------------------------------------------------------------------------
-    - xform/〔〉ia/〔y〉a/               # ia... → ya...
-    - xform/〔〉io/〔y〉o/               # io... → yo...
-    - xform/〔〉iu/〔y〉u/               # iu... → yu...
-    - xform/〔〉i(ang|ak)(\d)$/〔y〉$1$2/     # iang1 → yang1, iak8 → yak8
-    - xform/〔〉i(ong|ok)(\d)$/〔y〉$1$2/     # iong2 → yong2, iok8 → yok8
-    - xform/〔〉i(a[inp]?)(\d)$/〔y〉$1$2/    # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
-    - xform/〔〉i(a)(\d)$/〔y〉$1$2/          # ia1 → ya1
-    - xform/〔〉i(\d)$/〔y〉i$1/              # i1 → yi1
-    - xform/〔〉i(ng|k)(\d)$/〔y〉i$1$2/      # ing1 → ying1, ik8 → yik8
-    - xform/〔〉i(n|t)(\d)$/〔y〉i$1$2/       # in1 → yin1, it8 → yit8
-    - xform/〔〉i(m|p)(\d)$/〔y〉i$1$2/       # im1 → yim1, ip8 → yip8
+    - xform/〔〉ia/〔ya/                 # ia... → ya...
+    - xform/〔〉io/〔yo/                 # io... → yo...
+    - xform/〔〉iu/〔yu/                 # iu... → yu...
+    - xform/〔〉i(ang|ak)(\d)〕/〔y$1$2〕/     # iang1 → yang1, iak8 → yak8
+    - xform/〔〉i(ong|ok)(\d)〕/〔y$1$2〕/     # iong2 → yong2, iok8 → yok8
+    - xform/〔〉i(a[inp]?)(\d)〕/〔y$1$2〕/    # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
+    - xform/〔〉i(a)(\d)〕/〔y$1$2〕/          # ia1 → ya1
+    - xform/〔〉i(\d)〕/〔yi$1〕/              # i1 → yi1
+    - xform/〔〉i(ng|k)(\d)〕/〔yi$1$2〕/      # ing1 → ying1, ik8 → yik8
+    - xform/〔〉i(n|t)(\d)〕/〔yi$1$2〕/       # in1 → yin1, it8 → yit8
+    - xform/〔〉i(m|p)(\d)〕/〔yi$1$2〕/       # im1 → yim1, ip8 → yip8
     #==========================================================================
     # 在 u 前加上 w (前加法)
     # 範例：
@@ -286,12 +276,12 @@ hau_suan_tuann:
     #   - uan → wan / uai → wai / uap → wap
     #   - uang → wang / uak → wak
     #--------------------------------------------------------------------------
-    - xform/〔〉u(a)(ng|k)(\d)$/〔w〉$1$2$3/  # uang1 → wang1, uak8 → wak8
-    - xform/〔〉u(h)(\d)$/〔w〉u$1$2/         # uh4 → wuh4
-    - xform/〔〉u(n|t)(\d)$/〔w〉u$1$2/       # un2 → wun2, ut8 → wut8
-    - xform/〔〉u(a[inp]?)(\d)$/〔w〉$1$2/    # uan2 → wan2, uai7 → wai7, uap8 → wap8
-    - xform/〔〉u([ei])(\d)$/〔w〉$1$2/       # ue3 → we3, ui7 → wi7
-    - xform/〔〉u(\d)$/〔w〉u$1/              # u3 → wu3
+    - xform/〔〉u(a)(ng|k)(\d)〕/〔w$1$2$3〕/  # uang1 → wang1, uak8 → wak8
+    - xform/〔〉u(h)(\d)〕/〔wu$1$2〕/         # uh4 → wuh4
+    - xform/〔〉u(n|t)(\d)〕/〔wu$1$2〕/       # un2 → wun2, ut8 → wut8
+    - xform/〔〉u(a[inp]?)(\d)〕/〔w$1$2〕/    # uan2 → wan2, uai7 → wai7, uap8 → wap8
+    - xform/〔〉u([ei])(\d)〕/〔w$1$2〕/       # ue3 → we3, ui7 → wi7
+    - xform/〔〉u(\d)〕/〔wu$1〕/              # u3 → wu3
     #------------------------------------------------------
     #  1. 聲母：BPM2 → BP ----
     #------------------------------------------------------
@@ -312,9 +302,6 @@ hau_suan_tuann:
     - xform/〉g/$1g/
     - xform/〉k/$1k/
     # 唇音
-    - xform/〔〉ua/〔w〉a/               # ua... → wa...
-    - xform/〔〉ui/〔w〉i/               # ui... → wi...
-    - xform/〔〉ue/〔w〉e/               # ue... → we...
     - xform/〉m/$1bbn/
     - xform/〉bb/$1bb/
     - xform/〉b/$1b/
