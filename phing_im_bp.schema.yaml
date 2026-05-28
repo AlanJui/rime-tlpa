@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_bp
   name: 拼音輸入法【閩拼方案】
-  version: "v0.2.0.7"
+  version: "v0.2.0.8"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -131,7 +131,7 @@ speller:
     #--------------------------------------------------------------------------
     - xform/^iunn/ynu/
     - xform/^iann/yna/
-    - xform/^iaunn/ynao/
+    - xform/^iaonn/ynao/
     - xform/^ioonn/ynoo/
     - xform/^inn/yni/
     - xform/^uann/wna/
@@ -283,7 +283,11 @@ translator:
     #==========================================================================
     # 分隔符號
     - xform/'/ /
+    #--------------------------------------------------------------------------
+    # 防呆校正：閩拼漢字標音之音節，不可能有 i/u 開頭的【韻母】
+    - xform/^inn/yni/
     - xform/^i/y/
+    - xform/^unn/wnu/
     - xform/^u/w/
     #--------------------------------------------------------------------------
     # 鼻化韻母：改 nn 後綴，成 n 前綴
