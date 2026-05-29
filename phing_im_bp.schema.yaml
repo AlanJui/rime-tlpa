@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_bp
   name: 拼音輸入法【閩拼方案】
-  version: "v0.2.0.9"
+  version: "v0.2.0.10"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -206,29 +206,29 @@ speller:
     #   - uang → wang / uak → wak
     #==========================================================================
     # i 開頭
-    - xform/^ia/ya/                    # ia... → ya...
-    - xform/^io/yo/                    # io... → yo...
-    - xform/^iu/yu/                    # iu... → yu...
-    - xform/^i(ang|ak)(\d)$/y$1$2/     # iang1 → yang1, iak8 → yak8
-    - xform/^i(ong|ok)(\d)$/y$1$2/     # iong2 → yong2, iok8 → yok8
-    - xform/^i(a[inp]?)(\d)$/y$1$2/    # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
-    - xform/^i(a)(\d)$/y$1$2/          # ia1 → ya1
-    - xform/^i(h)(\d)$/yi$1$2/         # ih4 → yih4
-    - xform/^i(\d)$/yi$1/              # i1 → yi1
-    - xform/^i(ng|k)(\d)$/yi$1$2/      # ing1 → ying1, ik8 → yik8
-    - xform/^i(n|t)(\d)$/yi$1$2/       # in1 → yin1, it8 → yit8
-    - xform/^i(m|p)(\d)$/yi$1$2/       # im1 → yim1, ip8 → yip8
+    - derive/^ia/ya/                    # ia... → ya...
+    - derive/^io/yo/                    # io... → yo...
+    - derive/^iu/yu/                    # iu... → yu...
+    - derive/^i(ang|ak)(\d)$/y$1$2/     # iang1 → yang1, iak8 → yak8
+    - derive/^i(ong|ok)(\d)$/y$1$2/     # iong2 → yong2, iok8 → yok8
+    - derive/^i(a[inp]?)(\d)$/y$1$2/    # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
+    - derive/^i(a)(\d)$/y$1$2/          # ia1 → ya1
+    - derive/^i(h)(\d)$/yi$1$2/         # ih4 → yih4
+    - derive/^i(\d)$/yi$1/              # i1 → yi1
+    - derive/^i(ng|k)(\d)$/yi$1$2/      # ing1 → ying1, ik8 → yik8
+    - derive/^i(n|t)(\d)$/yi$1$2/       # in1 → yin1, it8 → yit8
+    - derive/^i(m|p)(\d)$/yi$1$2/       # im1 → yim1, ip8 → yip8
     #--------------------------------------------------------------------------
     # u 開頭
-    - xform/^ua/wa/                    # ua... → wa...
-    - xform/^ui/wi/                    # ui... → wi...
-    - xform/^ue/we/                    # ue... → we...
-    - xform/^u(a)(ng|k)(\d)$/w$1$2$3/  # uang1 → wang1, uak8 → wak8
-    - xform/^u(h)(\d)$/wu$1$2/         # uh4 → wuh4
-    - xform/^u(n|t)(\d)$/wu$1$2/       # un2 → wun2, ut8 → wut8
-    - xform/^u(a[inp]?)(\d)$/w$1$2/    # uan2 → wan2, uai7 → wai7, uap8 → wap8
-    - xform/^u([ei])(\d)$/w$1$2/       # ue3 → we3, ui7 → wi7
-    - xform/^u(\d)$/wu$1/              # u3 → wu3
+    - derive/^ua/wa/                    # ua... → wa...
+    - derive/^ui/wi/                    # ui... → wi...
+    - derive/^ue/we/                    # ue... → we...
+    - derive/^u(a)(ng|k)(\d)$/w$1$2$3/  # uang1 → wang1, uak8 → wak8
+    - derive/^u(h)(\d)$/wu$1$2/         # uh4 → wuh4
+    - derive/^u(n|t)(\d)$/wu$1$2/       # un2 → wun2, ut8 → wut8
+    - derive/^u(a[inp]?)(\d)$/w$1$2/    # uan2 → wan2, uai7 → wai7, uap8 → wap8
+    - derive/^u([ei])(\d)$/w$1$2/       # ue3 → we3, ui7 → wi7
+    - derive/^u(\d)$/wu$1/              # u3 → wu3
     #==========================================================================
     # BPM2 → BP 聲調轉換（同步替換，無衝突）
     # BPM2: 1  2  3  4  5  6  7  8
@@ -251,11 +251,6 @@ speller:
     - derive/[ptk]7/8/         # -ptk 陰入(7) → 陽入(8)
     - derive/[ptk]8/7/         # -ptk 陽入(8) → 陰入(7)
     #==========================================================================
-    # 入聲縮寫與輕聲
-    #==========================================================================
-    - derive/([ptkh])[78]$/${1}9/    # 入聲韻尾 + 調號縮寫為 9
-    - derive/8/0/                    # 陽入(8) 可用 0（輕聲鍵）輸入
-    #==========================================================================
     # 聲母縮寫輸入（只打聲母）
     #==========================================================================
     - abbrev/^(bbn|bb|ln|ggn|gg|zz|[bpdtlgkhzcsjyw]).+$/$1/
@@ -267,8 +262,13 @@ speller:
     # BP 聲調按鍵對映
     # 1(上平); 6(下去)- 5(上去)_ 3(上聲)\ 2(下平)/ 7(上入)[ 8(下入)] 0(輕聲)7 9(入聲).
     #==========================================================================
-    # - xlit|165327809|;-_\/[]7.|
     - xlit|1653278|;-_\/[]|
+    #==========================================================================
+    # 入聲縮寫與輕聲
+    #==========================================================================
+    # - derive/([ptkh])[78]$/${1}9/    # 入聲韻尾 + 調號縮寫為 9
+    # - derive/8/0/                    # 陽入(8) 可用 0（輕聲鍵）輸入
+    # - xlit|165327809|;-_\/[]7.|
 
 translator:
   dictionary: ji_khoo_bpm2
@@ -286,39 +286,6 @@ translator:
     # 防呆校正：閩拼漢字標音之音節，不可能有 i/u 開頭的【韻母】
     - xform/^i/y/
     - xform/^u/w/
-    #--------------------------------------------------------------------------
-    # 鼻化韻母：改 nn 後綴，成 n 前綴
-    - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/
-    #==========================================================================
-    # 【零聲母】+【i/u開頭韻母】校調
-    #==========================================================================
-    # i 開頭
-    - xform/^ia/ya/                    # ia... → ya...
-    - xform/^io/yo/                    # io... → yo...
-    - xform/^iu/yu/                    # iu... → yu...
-    - xform/^i(ang|ak)(\d)$/y$1$2/     # iang1 → yang1, iak8 → yak8
-    - xform/^i(ong|ok)(\d)$/y$1$2/     # iong2 → yong2, iok8 → yok8
-    - xform/^i(a[inp]?)(\d)$/y$1$2/    # iao1 → yao1, ian2 → yan2, iam3 → yam3, iap4 → yap4
-    - xform/^i(a)(\d)$/y$1$2/          # ia1 → ya1
-    - xform/^i(h)(\d)$/yi$1$2/         # ih4 → yih4
-    - xform/^i(\d)$/yi$1/              # i1 → yi1
-    - xform/^i(ng|k)(\d)$/yi$1$2/      # ing1 → ying1, ik8 → yik8
-    - xform/^i(n|t)(\d)$/yi$1$2/       # in1 → yin1, it8 → yit8
-    - xform/^i(m|p)(\d)$/yi$1$2/       # im1 → yim1, ip8 → yip8
-    #--------------------------------------------------------------------------
-    # u 開頭
-    - xform/^ua/wa/                    # ua... → wa...
-    - xform/^ui/wi/                    # ui... → wi...
-    - xform/^ue/we/                    # ue... → we...
-    - xform/^u(a)(ng|k)(\d)$/w$1$2$3/  # uang1 → wang1, uak8 → wak8
-    - xform/^u(h)(\d)$/wu$1$2/         # uh4 → wuh4
-    - xform/^u(n|t)(\d)$/wu$1$2/       # un2 → wun2, ut8 → wut8
-    - xform/^u(a[inp]?)(\d)$/w$1$2/    # uan2 → wan2, uai7 → wai7, uap8 → wap8
-    - xform/^u([ei])(\d)$/w$1$2/       # ue3 → we3, ui7 → wi7
-    - xform/^u(\d)$/wu$1/              # u3 → wu3
-    #--------------------------------------------------------------------------
-    # 鼻化韻母：改 nn 後綴，成 n 前綴
-    # - xform/^(y|w)?([iu]?(?:ai|ao|oo|[aiueo]))nn(\d)$/$1n$2$3/  # iunn→ynu, uann→wna, ann→na
     #==========================================================================
     # 2. 按鍵 → BP 調號數字
     #==========================================================================
