@@ -1,8 +1,19 @@
+-- Version: 0.2.4 (2026/6/2)
 -- Version: 0.2.3 (2026/4/29)
--- Version: 0.2.1 (2026/4/28)
 -- RIME API 依賴於運行時環境，無需顯式引入
 
 ---@diagnostic disable: undefined-global
+
+-- === 模組載入（於 rime.lua 初始化時執行，避免在函數內 require 靜默失敗）===
+local _tlpa_conv_ok, _tlpa_conv = pcall(require, "tlpa_converter")
+local _bpm2_conv_ok, _bpm2_conv = pcall(require, "bpm2_converter")
+if not _tlpa_conv_ok then
+	-- log 可能尚未就緒，故只記錄警告；aux_commit 稍後會再檢查
+	_tlpa_conv = nil
+end
+if not _bpm2_conv_ok then
+	_bpm2_conv = nil
+end
 
 -- === DICTIONARIES ===
 
@@ -306,16 +317,33 @@ function aux_commit(key, env)
 
 	if r == "return" or r == "kp_enter" then
 		if not ctx:has_menu() then
-			return 2
-		end
-		local cand = ctx:get_selected_candidate()
-		if not cand then
+			log.info("[aux_commit] has_menu=false, returning kNoop")
 			return 2
 		end
 
-		local gen_comm = cand.comment
-		if not gen_comm or gen_comm == "" then
-			gen_comm = cand:get_genuine().comment or ""
+		-- 使用與 jump_select 相同的穩定 API 取得當前候選
+		local comp = ctx.composition
+		if comp:empty() then
+			log.info("[aux_commit] composition empty, returning kNoop")
+			return 2
+		end
+		local seg = comp:back()
+		if not seg or not seg.menu then
+			log.info("[aux_commit] no seg/menu, returning kNoop")
+			return 2
+		end
+		local selected_index = seg.selected_index
+		local cand = seg.menu:get_candidate_at(selected_index)
+		if not cand then
+			log.info("[aux_commit] get_candidate_at returned nil, returning kNoop")
+			return 2
+		end
+
+		local gen_comm = cand.comment or ""
+		if gen_comm == "" then
+			-- 嘗試從 genuine 取得（filter 前原始候選）
+			local ok, gc = pcall(function() return cand:get_genuine().comment or "" end)
+			if ok then gen_comm = gc end
 		end
 		log.info("[aux_commit] cand.text=" .. (cand.text or "?") .. " comment=[" .. gen_comm .. "]")
 
@@ -346,24 +374,26 @@ function aux_commit(key, env)
 				end
 			end
 
-		elseif schema_id:match("^zu_im_") then
-			-- 注音輸入法系列：〔〕 含 TLPA（帶上標調號）或 BPM2 音碼
+		elseif schema_id:match("^zu_im_") or schema_id:match("^phing_im_") then
+			-- 注音輸入法 / 拼音輸入法系列：〔〕 含 TLPA（帶上標調號）或 BPM2 音碼
 			-- → 正規化為一般數值調號的 TLPA，後續直接進 conv.convert
 			is_tlpa = true
+			local is_bpm2 = (schema_id == "zu_im_bpm2" or schema_id == "phing_im_bpm2")
 			for v in gen_comm:gmatch("〔(.-)〕") do
 				local tlpa
-				if schema_id == "zu_im_bpm2" then
+				if is_bpm2 then
 					tlpa = bpm2_to_tlpa(v)
 				else
-					-- zu_im_tlpa / zu_im_tps：上標調號 → 數值調號
+					-- zu_im_tlpa / zu_im_tps / phing_im_* ：
+					-- 可能含上標調號（如 hong⁵）→ 數值調號（hong5）
 					tlpa = normalize_supers(v)
 				end
 				table.insert(source_list, tlpa)
-				log.info("[aux_commit] zu_im raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
+				log.info("[aux_commit] tlpa_schema raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 			end
 
 		else
-			-- 其他方案：〔〕 含十五音（SNI）
+			-- 其他方案（如有）：〔〕 含十五音（SNI）
 			for v in gen_comm:gmatch("〔(.-)〕") do
 				table.insert(source_list, v)
 			end
@@ -379,9 +409,13 @@ function aux_commit(key, env)
 			return 2
 		end
 
-		-- 取得轉換模組
-		local conv     = require("tlpa_converter")
-		local bpm2conv = require("bpm2_converter")
+		-- 取得轉換模組（使用 module-level 預載的版本）
+		local conv     = _tlpa_conv
+		local bpm2conv = _bpm2_conv
+		if not conv then
+			log.error("[aux_commit] tlpa_converter 模組未載入，無法執行標音轉換")
+			return 2
+		end
 
 		-- 輔助函數：TLPA or SNI → 目標標音系統
 		local function to_target(src, target)
@@ -440,10 +474,10 @@ function aux_commit(key, env)
 			-- 台語注音二式（數字調號）：TLPA/SNI → BPM2
 			for i, v in ipairs(source_list) do
 				if is_tlpa then
-					out_list[i] = bpm2conv.convert(v)
+					out_list[i] = bpm2conv and bpm2conv.convert(v) or v
 				else
 					local tlpa = convert_sni_to_tlpa(v)
-					out_list[i] = tlpa and bpm2conv.convert(tlpa) or v
+					out_list[i] = (tlpa and bpm2conv) and bpm2conv.convert(tlpa) or (tlpa or v)
 				end
 			end
 
