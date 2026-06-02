@@ -138,6 +138,7 @@ local SKIP_CONVERT_SCHEMAS = {
 	["phing_im_bp"]    = true,
 	["phing_im_bpm2"]  = true,
 	["zu_im_tlpa"]     = true,
+	["zu_im_tps"]      = true,
 	["zu_im_bpm2"]     = true,
 	["huan_ciat_tps"]  = true,
 	["huan_ciat_tlpa"] = true,
@@ -513,6 +514,19 @@ local function regroup_pairs_safe(s)
 	return s
 end
 
+-- regroup_zu_im_comment：zu_im_* 方案多欄整理
+-- 確保【注音符號】永遠排左欄、〔拼音字母〕排右欄（含單音節對調）
+local function regroup_zu_im_comment(s)
+	if type(s) ~= "string" or s == "" then return s end
+	local zh, tlpa = {}, {}
+	for z in s:gmatch("【(.-)】") do table.insert(zh, z) end
+	for t in s:gmatch("〔(.-)〕") do table.insert(tlpa, t) end
+	if #zh == 0 or #tlpa == 0 or #zh ~= #tlpa then return s end
+	local zh_str   = "【" .. table.concat(zh,   "】 【") .. "】"
+	local tlpa_str = "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+	return zh_str .. (#zh >= 2 and "  " or "") .. tlpa_str
+end
+
 -- regroup_pairs_zh_first：多音節詞時將 【】 排左欄、〔〕 排右欄
 -- 用於 huan_ciat 系列方案（【十五音】〔字典音標〕 格式）
 local function regroup_pairs_two_columns(s)
@@ -656,7 +670,16 @@ function reformat_comment_filter(input, env)
 	-- 其他既有方案沿用原本的雙欄整理，不在此處改變標音內容。
 	for cand in input:iter() do
 		local old = cand.comment or ""
-		local new = SKIP_CONVERT_SCHEMAS[schema_id] and regroup_pairs_safe(old) or old
+		local new
+		if SKIP_CONVERT_SCHEMAS[schema_id] then
+			if schema_id:match("^zu_im_") then
+				new = regroup_zu_im_comment(old)
+			else
+				new = regroup_pairs_safe(old)
+			end
+		else
+			new = old
+		end
 		if new ~= old then
 			local c = cand:get_genuine()
 			local nc = Candidate(c.type, c.start, c._end, c.text, new)

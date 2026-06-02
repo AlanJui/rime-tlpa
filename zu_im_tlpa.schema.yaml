@@ -264,20 +264,20 @@ translator:
     - xform/【》n(?!\d)/【ㄋ》/
     - xform/【》m(?!\d)/【ㄇ》/
     #------------------------------------------------------
-    - xform/》ph/ㄆ》/
-    - xform/》th/ㄊ》/
-    - xform/》kh/ㄎ》/
-    - xform/》g/ㄫ》/
-    - xform/》b/ㄪ》/
-    - xform/》j/ㄖ》/
-    - xform/》z/ㄗ》/
-    - xform/》s/ㄙ》/
-    - xform/》c/ㄘ》/
-    - xform/》l/ㄌ》/
-    - xform/》p/ㄅ》/
-    - xform/》k/ㄍ》/
-    - xform/》t/ㄉ》/
-    - xform/》h/ㄏ》/
+    - xform/【》ph/【ㄆ》/
+    - xform/【》th/【ㄊ》/
+    - xform/【》kh/【ㄎ》/
+    - xform/【》g/【ㄫ》/
+    - xform/【》b/【ㄪ》/
+    - xform/【》j/【ㄖ》/
+    - xform/【》z/【ㄗ》/
+    - xform/【》s/【ㄙ》/
+    - xform/【》c/【ㄘ》/
+    - xform/【》l/【ㄌ》/
+    - xform/【》p/【ㄅ》/
+    - xform/【》k/【ㄍ》/
+    - xform/【》t/【ㄉ》/
+    - xform/【》h/【ㄏ》/
 
     #--------------------------------------------------------------------------
     # 零聲母特別處理
