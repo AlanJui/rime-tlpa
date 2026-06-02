@@ -478,13 +478,21 @@ function aux_commit(key, env)
 			end
 
 		elseif ctx:get_option("key_in_piau_im_bpm2") then
-			-- 台語注音二式（數字調號）：TLPA/SNI → BPM2
-			for i, v in ipairs(source_list) do
-				if is_tlpa then
-					out_list[i] = bpm2conv and bpm2conv.convert(v) or v
-				else
-					local tlpa = convert_sni_to_tlpa(v)
-					out_list[i] = (tlpa and bpm2conv) and bpm2conv.convert(tlpa) or (tlpa or v)
+			-- 台語注音二式（數字調號）
+			if schema_id == "zu_im_bpm2" or schema_id == "phing_im_bpm2" then
+				-- BPM2 字典：〔〕欄已是 BPM2 音碼（如 hor5），直接輸出，不做 round-trip 轉換
+				for v in gen_comm:gmatch("〔(.-)〕") do
+					table.insert(out_list, v)
+				end
+			else
+				-- 非 BPM2 字典：TLPA/SNI → BPM2
+				for i, v in ipairs(source_list) do
+					if is_tlpa then
+						out_list[i] = bpm2conv and bpm2conv.convert(v) or v
+					else
+						local tlpa = convert_sni_to_tlpa(v)
+						out_list[i] = (tlpa and bpm2conv) and bpm2conv.convert(tlpa) or (tlpa or v)
+					end
 				end
 			end
 
