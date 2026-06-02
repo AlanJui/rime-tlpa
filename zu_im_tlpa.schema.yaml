@@ -28,7 +28,7 @@ switches:
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
-        key_in_piau_im_bpm2, key_in_piau_im_ipa ]
+        key_in_piau_im_bpm2, key_in_piau_im_ipa, key_in_piau_im_tlpa_tps ]
     reset: 8
     states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標, 台語注音符號 ]
 

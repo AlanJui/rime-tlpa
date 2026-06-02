@@ -374,9 +374,14 @@ function aux_commit(key, env)
 				end
 			end
 
-		elseif schema_id:match("^zu_im_") or schema_id:match("^phing_im_") then
-			-- 注音輸入法 / 拼音輸入法系列：〔〕 含 TLPA（帶上標調號）或 BPM2 音碼
-			-- → 正規化為一般數值調號的 TLPA，後續直接進 conv.convert
+		elseif schema_id:match("^zu_im_")
+		    or schema_id == "phing_im_tl"
+		    or schema_id == "phing_im_tlpa"
+		    or schema_id == "phing_im_bpm2" then
+			-- 注音/拼音輸入法（數值調號系列）：〔〕 含 TLPA 數值調（或 BPM2）
+			-- → 正規化為 TLPA，後續直接進 conv.convert
+			-- 注意：phing_im_bp / phing_im_poj 的 〔〕 已含調符（如 hóng），
+			--       不在此處理，落入 else 分支讓 to_target 的 fallback 原樣回傳。
 			is_tlpa = true
 			local is_bpm2 = (schema_id == "zu_im_bpm2" or schema_id == "phing_im_bpm2")
 			for v in gen_comm:gmatch("〔(.-)〕") do
@@ -384,8 +389,7 @@ function aux_commit(key, env)
 				if is_bpm2 then
 					tlpa = bpm2_to_tlpa(v)
 				else
-					-- zu_im_tlpa / zu_im_tps / phing_im_* ：
-					-- 可能含上標調號（如 hong⁵）→ 數值調號（hong5）
+					-- 上標調號（hong⁵）→ 數值調號（hong5）
 					tlpa = normalize_supers(v)
 				end
 				table.insert(source_list, tlpa)
@@ -393,7 +397,8 @@ function aux_commit(key, env)
 			end
 
 		else
-			-- 其他方案（如有）：〔〕 含十五音（SNI）
+			-- 其他方案（phing_im_bp、phing_im_poj 等）：〔〕 已含調符拼音
+			-- to_target 的 fallback 路徑會將無法轉換的字串原樣回傳
 			for v in gen_comm:gmatch("〔(.-)〕") do
 				table.insert(source_list, v)
 			end
@@ -485,6 +490,25 @@ function aux_commit(key, env)
 			-- 國際音標：TLPA/SNI → IPA
 			for i, v in ipairs(source_list) do
 				out_list[i] = to_target(v, "國際音標")
+			end
+
+		elseif ctx:get_option("key_in_piau_im_tlpa_tps") then
+			-- 台語注音符號（TPS + 上標調號）：直接從候選 comment 的【】欄取得
+			-- （zu_im_tlpa 的 comment_format 已將注音符號帶上標調號放入【】欄，
+			--   如 【ㄏㄛㄥ⁵】，無需再經 conv.convert 轉換）
+			local tps_items = {}
+			for z in gen_comm:gmatch("【(.-)】") do
+				table.insert(tps_items, z)
+			end
+			if #tps_items > 0 then
+				for i, v in ipairs(tps_items) do
+					out_list[i] = v
+				end
+			else
+				-- fallback：無 【】 欄時用 TPS 方音符號格式
+				for i, v in ipairs(source_list) do
+					out_list[i] = to_target(v, "方音符號")
+				end
 			end
 
 		else
