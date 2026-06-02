@@ -234,6 +234,66 @@ local function apply_poj_tiau_hu(syllable)
 end
 
 ------------------------------------------------------------------------------------------
+-- aux_commit 輔助函數
+------------------------------------------------------------------------------------------
+
+-- 將 TLPA 調號之上標數字（¹²³⁴⁵⁶⁷⁸）還原成一般數字（1-8）
+-- 用於 zu_im_tlpa / zu_im_tps 的 comment 中 〔〕 欄位
+local function normalize_supers(s)
+	if type(s) ~= "string" then return s end
+	s = s:gsub("\194\185", "1")      -- ¹ U+00B9
+	s = s:gsub("\194\178", "2")      -- ² U+00B2
+	s = s:gsub("\194\179", "3")      -- ³ U+00B3
+	s = s:gsub("\226\129\180", "4")  -- ⁴ U+2074
+	s = s:gsub("\226\129\181", "5")  -- ⁵ U+2075
+	s = s:gsub("\226\129\182", "6")  -- ⁶ U+2076
+	s = s:gsub("\226\129\183", "7")  -- ⁷ U+2077
+	s = s:gsub("\226\129\184", "8")  -- ⁸ U+2078
+	return s
+end
+
+-- BPM2（台語注音二式）音碼 → TLPA（台語音標）還原
+-- BPM2 聲母與 TLPA 不同；韻母相同，但 BPM2 特有的 'or' 對應 TLPA 的 'o'
+local BPM2_TO_TLPA_SIANN = {
+	-- 雙字母（longest-match 優先）
+	ng="ng", bb="b",  gg="g",  zz="j",  jj="j",
+	ph="ph", th="th", kh="kh",
+	ch="c",  sh="s",
+	-- 單字母
+	b="p",  p="ph", m="m",
+	d="t",  t="th", n="n",  l="l",
+	z="z",  c="c",  s="s",
+	g="k",  k="kh", h="h",
+	j="z",  -- BPM2 j（ㄐ，介母 i 前）→ TLPA z（z + i 自動顎化為 ㄐ）
+}
+
+local function bpm2_to_tlpa(bpm2)
+	if type(bpm2) ~= "string" or bpm2 == "" then return bpm2 end
+	local tone = bpm2:match("([1-8])$") or ""
+	local s = tone ~= "" and bpm2:sub(1, -2) or bpm2
+	-- BPM2 特有韻母 'or' → TLPA 'o'（如：hor5 → ho5）
+	s = s:gsub("or", "o")
+	-- 比對聲母（longest-match）
+	local siann_order = {
+		"ng","bb","gg","zz","jj","ph","th","kh","ch","sh",
+		"b","p","m","d","t","n","l","z","c","s","g","k","h","j",
+	}
+	local found = ""
+	local un = s
+	for _, si in ipairs(siann_order) do
+		if s:sub(1, #si) == si then
+			-- ng/m/n 只當韻化輔音時不拆
+			if (si == "ng" or si == "m" or si == "n") and s == si then break end
+			found = si
+			un = s:sub(#si + 1)
+			break
+		end
+	end
+	local tlpa_siann = BPM2_TO_TLPA_SIANN[found] or found
+	return tlpa_siann .. un .. tone
+end
+
+------------------------------------------------------------------------------------------
 -- aux_commit：切換輸入方案【輸出】之【漢字標音】格式
 -- Space → 漢字
 -- Enter → 漢字標音（格式依選項而定）
@@ -259,12 +319,14 @@ function aux_commit(key, env)
 		end
 		log.info("[aux_commit] cand.text=" .. (cand.text or "?") .. " comment=[" .. gen_comm .. "]")
 
-		-- 依方案決定括號角色：
-		--   huan_ciat_tlpa：【十五音(SNI)】〔台語音標〕
-		--   huan_ciat_tps ：【十五音(SNI)】〔方音符號〕
-		--   其他方案        ：〔十五音(SNI)〕【TPS/其他】
+		-- 依方案決定標音來源及格式：
+		--   huan_ciat_*：【十五音(SNI)】〔台語音標/方音符號〕  → 從【】取 SNI
+		--   zu_im_*    ：【注音符號】〔TLPA/BPM2〕             → 從〔〕取 TLPA（直接可用）
+		--   其他方案    ：〔十五音(SNI)〕【TPS/其他】          → 從〔〕取 SNI
 		local schema_id = env.engine.schema.schema_id
-		local sni_list = {}
+		local source_list = {}  -- 存放「已正規化之 TLPA」或「SNI」
+		local is_tlpa = false   -- true 時 source_list 內容已是 TLPA，跳過 SNI→TLPA 轉換
+
 		if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
 			-- comment_format 輸出 SNI 為 聲+韻+調 順序（如：柳君二）；
 			-- reformat_comment_filter 顯示前倒裝成 韻+調+聲（如：君二柳）。
@@ -278,24 +340,42 @@ function aux_commit(key, env)
 				if #chars == 3 and not convert_sni_to_tlpa(v) then
 					-- 聲+韻+調 → 韻+調+聲 倒裝（過濾前的 comment_format 輸出）
 					local inv = chars[2] .. chars[3] .. chars[1]
-					table.insert(sni_list, convert_sni_to_tlpa(inv) and inv or v)
+					table.insert(source_list, convert_sni_to_tlpa(inv) and inv or v)
 				else
-					table.insert(sni_list, v)  -- 已是 韻+調+聲（過濾後）或無法識別
+					table.insert(source_list, v)  -- 已是 韻+調+聲（過濾後）或無法識別
 				end
 			end
-		else
+
+		elseif schema_id:match("^zu_im_") then
+			-- 注音輸入法系列：〔〕 含 TLPA（帶上標調號）或 BPM2 音碼
+			-- → 正規化為一般數值調號的 TLPA，後續直接進 conv.convert
+			is_tlpa = true
 			for v in gen_comm:gmatch("〔(.-)〕") do
-				table.insert(sni_list, v)
+				local tlpa
+				if schema_id == "zu_im_bpm2" then
+					tlpa = bpm2_to_tlpa(v)
+				else
+					-- zu_im_tlpa / zu_im_tps：上標調號 → 數值調號
+					tlpa = normalize_supers(v)
+				end
+				table.insert(source_list, tlpa)
+				log.info("[aux_commit] zu_im raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
+			end
+
+		else
+			-- 其他方案：〔〕 含十五音（SNI）
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				table.insert(source_list, v)
 			end
 		end
 
-		log.info("[aux_commit] schema_id=" .. schema_id .. " sni_list count=" .. #sni_list)
-		for i, v in ipairs(sni_list) do
-			log.info("[aux_commit] sni_list[" .. i .. "]=[" .. v .. "]")
+		log.info("[aux_commit] schema_id=" .. schema_id .. " source_list count=" .. #source_list .. " is_tlpa=" .. tostring(is_tlpa))
+		for i, v in ipairs(source_list) do
+			log.info("[aux_commit] source_list[" .. i .. "]=[" .. v .. "]")
 		end
 
-		if #sni_list == 0 then
-			log.info("[aux_commit] sni_list is empty, returning kNoop")
+		if #source_list == 0 then
+			log.info("[aux_commit] source_list is empty, returning kNoop")
 			return 2
 		end
 
@@ -303,10 +383,13 @@ function aux_commit(key, env)
 		local conv     = require("tlpa_converter")
 		local bpm2conv = require("bpm2_converter")
 
-		-- 輔助函數：十五音(SNI) → TLPA → 目標標音系統
-		local function sni_to_target(sni_str, target)
-			local tlpa = convert_sni_to_tlpa(sni_str)
-			if not tlpa then return sni_str end
+		-- 輔助函數：TLPA or SNI → 目標標音系統
+		local function to_target(src, target)
+			if is_tlpa then
+				return conv.convert(src, target)
+			end
+			local tlpa = convert_sni_to_tlpa(src)
+			if not tlpa then return src end
 			return conv.convert(tlpa, target)
 		end
 
@@ -324,52 +407,56 @@ function aux_commit(key, env)
 		local out_list = {}
 
 		if ctx:get_option("key_in_piau_im_tps") then
-			-- 方音符號：十五音 → TLPA → 方音符號
-			for i, v in ipairs(sni_list) do
-				out_list[i] = sni_to_target(v, "方音符號")
+			-- 方音符號：TLPA/SNI → 方音符號
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "方音符號")
 			end
 
 		elseif ctx:get_option("key_in_piau_im_tlpa") then
-			-- 台語音標（數字調號）：十五音 → TLPA
-			for i, v in ipairs(sni_list) do
-				out_list[i] = sni_to_target(v, "台語音標")
+			-- 台語音標（數字調號）：TLPA/SNI → TLPA
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "台語音標")
 			end
 
 		elseif ctx:get_option("key_in_piau_im_tl") then
-			-- 台羅拼音（調符）：十五音 → TLPA → 台羅
-			for i, v in ipairs(sni_list) do
-				out_list[i] = sni_to_target(v, "台羅拼音")
+			-- 台羅拼音（調符）：TLPA/SNI → 台羅
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "台羅拼音")
 			end
 
 		elseif ctx:get_option("key_in_piau_im_poj") then
-			-- 白話字（調符）：十五音 → TLPA → POJ
-			for i, v in ipairs(sni_list) do
-				out_list[i] = sni_to_target(v, "白話字")
+			-- 白話字（調符）：TLPA/SNI → POJ
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "白話字")
 			end
 
 		elseif ctx:get_option("key_in_piau_im_bp") then
-			-- 閩拼方案（調符）：十五音 → TLPA → BP
-			for i, v in ipairs(sni_list) do
-				out_list[i] = sni_to_target(v, "閩拼方案")
+			-- 閩拼方案（調符）：TLPA/SNI → BP
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "閩拼方案")
 			end
 
 		elseif ctx:get_option("key_in_piau_im_bpm2") then
-			-- 台語注音二式（數字調號）：十五音 → TLPA → BPM2
-			for i, v in ipairs(sni_list) do
-				local tlpa = convert_sni_to_tlpa(v)
-				out_list[i] = tlpa and bpm2conv.convert(tlpa) or v
+			-- 台語注音二式（數字調號）：TLPA/SNI → BPM2
+			for i, v in ipairs(source_list) do
+				if is_tlpa then
+					out_list[i] = bpm2conv.convert(v)
+				else
+					local tlpa = convert_sni_to_tlpa(v)
+					out_list[i] = tlpa and bpm2conv.convert(tlpa) or v
+				end
 			end
 
 		elseif ctx:get_option("key_in_piau_im_ipa") then
-			-- 國際音標：十五音 → TLPA → IPA
-			for i, v in ipairs(sni_list) do
-				out_list[i] = sni_to_target(v, "國際音標")
+			-- 國際音標：TLPA/SNI → IPA
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "國際音標")
 			end
 
 		else
-			-- 預設（key_in_piau_im_sni）：十五音（韻+調+聲）原樣輸出
-			for i, v in ipairs(sni_list) do
-				out_list[i] = v
+			-- 預設（key_in_piau_im_sni）：十五音（韻+調+聲）
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "十五音")
 			end
 		end
 
