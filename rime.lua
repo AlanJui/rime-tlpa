@@ -282,8 +282,10 @@ local function bpm2_to_tlpa(bpm2)
 	if type(bpm2) ~= "string" or bpm2 == "" then return bpm2 end
 	local tone = bpm2:match("([1-8])$") or ""
 	local s = tone ~= "" and bpm2:sub(1, -2) or bpm2
-	-- BPM2 特有韻母 'or' → TLPA 'o'（如：hor5 → ho5）
-	s = s:gsub("or", "o")
+	-- BPM2 韻母 → TLPA 韻母（順序：較長的先替換，避免截短）
+	s = s:gsub("oom", "om")   -- BPM2 oom（箴韻） → TLPA om
+	s = s:gsub("oop", "op")   -- BPM2 oop（箴韻入聲） → TLPA op
+	s = s:gsub("or", "o")     -- BPM2 or（高韻） → TLPA o（如：hor5 → ho5）
 	-- 比對聲母（longest-match）
 	local siann_order = {
 		"ng","bb","gg","zz","jj","ph","th","kh","ch","sh",
