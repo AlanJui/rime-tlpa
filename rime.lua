@@ -697,7 +697,8 @@ end
 -- 能在【候選字清單】中，以快捷鍵移動【選擇游標】，能將選擇游標，快速移到：
 -- 頂端（第1個選項）/中間（第3個選項）/底端（第5個選項）三種快捷鍵。
 -----------------------------------------------------------------------------------------
--- 邏輯：先發送 Page_Up 重置到頁首，再依位移量補送 Down 鍵。
+-- 邏輯：從目前 selected_index 相對移動到目標 index（用 Up/Down），
+--       不使用 Page_Up（RIME 的 Page_Up 是「翻到上一頁」而非「回本頁頁首」）。
 -- 快捷鍵（由右至左）：
 -- （1）Ctrl+M（頂端 1st）
 -- （2）Ctrl+,（中間 3rd）
@@ -769,11 +770,16 @@ function jump_select(key, env)
 		target_index = available - 1
 	end
 
-	env.engine:process_key(KeyEvent("Page_Up"))
-
-	local steps = target_index - page_start
-	for i = 1, steps do
-		env.engine:process_key(KeyEvent("Down"))
+	-- 從目前位置相對移動到目標位置（不使用 Page_Up，避免翻頁副作用）
+	local delta = target_index - selected_index
+	if delta > 0 then
+		for i = 1, delta do
+			env.engine:process_key(KeyEvent("Down"))
+		end
+	elseif delta < 0 then
+		for i = 1, -delta do
+			env.engine:process_key(KeyEvent("Up"))
+		end
 	end
 
 	if auto_commit then
