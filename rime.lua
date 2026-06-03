@@ -307,6 +307,57 @@ local function bpm2_to_tlpa(bpm2)
 end
 
 ------------------------------------------------------------------------------------------
+-- BP（閩拼方案）轉換輔助
+-- lib_comment_bp.yaml 的 〔〕 欄輸出 BP 調符拼音（NFC 預合字，如 hóng），
+-- 【】 欄輸出 TPS 注音符號 + BP 上標調號（如 ㄏㆲ²）。
+-- 下列工具函數從兩欄重建 TLPA，以便 aux_commit 進行任意格式轉換。
+------------------------------------------------------------------------------------------
+
+-- BP 上標調號（lib_comment_bp.yaml 產出的 BP 調號）→ TLPA 數值調號
+-- xlit|234567|357246| 表示 TLPA/BPM2 → BP 的對映，此處為其逆映射
+local BP_SUPER_TO_TLPA_TIAU = {
+	["\194\185"] = "1",         -- ¹ U+00B9: BP 1 → TLPA 1（陰平）
+	["\194\178"] = "5",         -- ² U+00B2: BP 2 → TLPA 5（陽平）
+	["\194\179"] = "2",         -- ³ U+00B3: BP 3 → TLPA 2（上聲）
+	["\226\129\180"] = "6",     -- ⁴ U+2074: BP 4 → TLPA 6（陽上）
+	["\226\129\181"] = "3",     -- ⁵ U+2075: BP 5 → TLPA 3（陰去）
+	["\226\129\182"] = "7",     -- ⁶ U+2076: BP 6 → TLPA 7（陽去）
+	["\226\129\183"] = "4",     -- ⁷ U+2077: BP 7 → TLPA 4（陰入）
+	["\226\129\184"] = "8",     -- ⁸ U+2078: BP 8 → TLPA 8（陽入）
+}
+
+-- 從 TPS 字串（如 "ㄏㆲ²"）尾端取得 BP 上標調號並映射為 TLPA 調號
+local function bp_super_to_tlpa_tiau(tps_str)
+	if type(tps_str) ~= "string" then return nil end
+	-- 先試 3 位元組超上標（⁴–⁸, U+2074–U+2078），再試 2 位元組（¹²³, U+00B9/B2/B3）
+	for slen = 3, 2, -1 do
+		local t = BP_SUPER_TO_TLPA_TIAU[tps_str:sub(-slen)]
+		if t then return t end
+	end
+	return nil
+end
+
+-- 去除 BP 拼音的調符（同時處理 NFC 預合字母與 NFD 組合調號）以還原基礎拼音
+local function strip_bp_tones(s)
+	if type(s) ~= "string" then return s end
+	-- NFD 組合調號（U+0300–U+036F = combining diacritics）
+	s = s:gsub("\204[\128-\191]", "")
+	s = s:gsub("\205[\128-\175]", "")
+	-- NFC 預合字母 → 基礎字母（BP diacritic vowels）
+	s = s:gsub("\195\160","a"):gsub("\195\161","a"):gsub("\195\162","a")  -- àáâ
+	s = s:gsub("\199\142","a"):gsub("\196\129","a")                        -- ǎā
+	s = s:gsub("\195\168","e"):gsub("\195\169","e"):gsub("\195\170","e")  -- èéê
+	s = s:gsub("\196\155","e"):gsub("\196\147","e")                        -- ěē
+	s = s:gsub("\195\172","i"):gsub("\195\173","i"):gsub("\195\174","i")  -- ìíî
+	s = s:gsub("\199\144","i"):gsub("\196\171","i")                        -- ǐī
+	s = s:gsub("\195\185","u"):gsub("\195\186","u"):gsub("\195\187","u")  -- ùúû
+	s = s:gsub("\197\173","u"):gsub("\197\171","u")                        -- ǔū
+	s = s:gsub("\195\178","o"):gsub("\195\179","o"):gsub("\195\180","o")  -- òóô
+	s = s:gsub("\199\146","o"):gsub("\197\141","o")                        -- ǒō
+	return s
+end
+
+------------------------------------------------------------------------------------------
 -- aux_commit：切換輸入方案【輸出】之【漢字標音】格式
 -- Space → 漢字
 -- Enter → 漢字標音（格式依選項而定）
@@ -398,8 +449,23 @@ function aux_commit(key, env)
 				log.info("[aux_commit] tlpa_schema raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 			end
 
+		elseif schema_id == "phing_im_bp" then
+			-- 〔〕 含 BP 調符拼音（如 hóng），【】 含 TPS + BP 上標調號（如 ㄏㆲ²）
+			-- 從兩欄重建 TLPA：去調符字母 + BP 上標 → TLPA 調號
+			is_tlpa = true
+			local bp_items, tps_items = {}, {}
+			for v in gen_comm:gmatch("〔(.-)〕") do table.insert(bp_items, v) end
+			for v in gen_comm:gmatch("【(.-)】") do table.insert(tps_items, v) end
+			for i = 1, #bp_items do
+				local base  = strip_bp_tones(bp_items[i])
+				local tiau  = bp_super_to_tlpa_tiau(tps_items[i] or "") or "1"
+				local tlpa  = base .. tiau
+				table.insert(source_list, tlpa)
+				log.info("[aux_commit] phing_im_bp bp=[" .. bp_items[i] .. "] tps=[" .. (tps_items[i] or "") .. "] → tlpa=[" .. tlpa .. "]")
+			end
+
 		else
-			-- 其他方案（phing_im_bp、phing_im_poj 等）：〔〕 已含調符拼音
+			-- 其他方案：〔〕 含 SNI 十五音或其他格式
 			-- to_target 的 fallback 路徑會將無法轉換的字串原樣回傳
 			for v in gen_comm:gmatch("〔(.-)〕") do
 				table.insert(source_list, v)
