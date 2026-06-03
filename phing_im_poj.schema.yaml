@@ -323,6 +323,9 @@ translator:
     - xform/o8/o̍/
     - xform/mh8/m̍h/
     - xform/ngh8/n̍gh/
+    #--------------------------------------------------------------------------
+    # 省略【聲母】的調號顯示
+    - xform/[14]//
 
   comment_format:
     __patch:
