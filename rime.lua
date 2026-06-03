@@ -307,6 +307,55 @@ local function bpm2_to_tlpa(bpm2)
 end
 
 ------------------------------------------------------------------------------------------
+-- 內建 TLPA → BPM2 轉換（不依賴 require，確保 bpm2_converter 模組載入失敗時仍可運作）
+------------------------------------------------------------------------------------------
+
+local TLPA_TO_BPM2_SIANN = {
+	p="b", ph="p", b="bb", m="m",
+	t="d", th="t", n="n",  l="l",
+	z="z", c="c",  j="zz", s="s",
+	k="g", kh="k", g="gg", ng="ng", h="h",
+	zi="j", ci="ch", ji="jj", si="sh",
+}
+-- TLPA 韻母 → BPM2 韻母（僅列出有差異者）
+local TLPA_TO_BPM2_UN = {
+	["o"]  = "or",   -- 高韻（短 o）
+	["oh"] = "orh",  -- 高韻入聲
+	["om"] = "oom",  -- 箴韻
+	["op"] = "oop",  -- 箴韻入聲
+}
+
+local function tlpa_to_bpm2(tlpa)
+	if type(tlpa) ~= "string" or tlpa == "" then return tlpa end
+	-- 優先使用已載入的模組（精確版）
+	if _bpm2_conv then return _bpm2_conv.convert(tlpa) end
+	-- 模組未載入時的內建 fallback
+	local tone = tlpa:match("([1-8])$") or ""
+	local s = (tone ~= "") and tlpa:sub(1, -2) or tlpa
+	-- 比對聲母（longest-match）
+	local siann_order = {
+		"tsh","kh","ph","th","ng","bb","gg",
+		"ts","z","c","p","k","t","l","s","h","b","g","m","n","j"
+	}
+	local siann, un = "", s
+	for _, si in ipairs(siann_order) do
+		if s:sub(1, #si) == si then
+			siann = si; un = s:sub(#si + 1); break
+		end
+	end
+	-- 顎化（介母 i 起頭）
+	if un:sub(1, 1) == "i" then
+		if     siann == "z" then siann = "zi"
+		elseif siann == "c" then siann = "ci"
+		elseif siann == "j" then siann = "ji"
+		elseif siann == "s" then siann = "si"
+		end
+	end
+	local b2 = (siann == "") and "" or (TLPA_TO_BPM2_SIANN[siann] or siann)
+	return b2 .. (TLPA_TO_BPM2_UN[un] or un) .. tone
+end
+
+------------------------------------------------------------------------------------------
 -- BP（閩拼方案）轉換輔助
 -- lib_comment_bp.yaml 的 〔〕 欄輸出 BP 調符拼音（NFC 預合字，如 hóng），
 -- 【】 欄輸出 TPS 注音符號 + BP 上標調號（如 ㄏㆲ²）。
@@ -552,12 +601,13 @@ function aux_commit(key, env)
 				end
 			else
 				-- 非 BPM2 字典：TLPA/SNI → BPM2
+				-- 使用 tlpa_to_bpm2（內建 fallback，不依賴 require 是否成功）
 				for i, v in ipairs(source_list) do
 					if is_tlpa then
-						out_list[i] = bpm2conv and bpm2conv.convert(v) or v
+						out_list[i] = tlpa_to_bpm2(v)
 					else
 						local tlpa = convert_sni_to_tlpa(v)
-						out_list[i] = (tlpa and bpm2conv) and bpm2conv.convert(tlpa) or (tlpa or v)
+						out_list[i] = tlpa and tlpa_to_bpm2(tlpa) or v
 					end
 				end
 			end
