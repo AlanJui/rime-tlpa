@@ -386,7 +386,8 @@ local function bp_super_to_tlpa_tiau(tps_str)
 	return nil
 end
 
--- 去除 BP 拼音的調符（同時處理 NFC 預合字母與 NFD 組合調號）以還原基礎拼音
+-- 去除 BP 拼音的調符（同時處理 NFC 預合字母與 NFD 組合調號）以還原基礎拼音，
+-- 並將 BP 特有韻母轉回 TLPA 格式。
 local function strip_bp_tones(s)
 	if type(s) ~= "string" then return s end
 	-- NFD 組合調號（U+0300–U+036F = combining diacritics）
@@ -403,8 +404,17 @@ local function strip_bp_tones(s)
 	s = s:gsub("\197\173","u"):gsub("\197\171","u")                        -- ǔū
 	s = s:gsub("\195\178","o"):gsub("\195\179","o"):gsub("\195\180","o")  -- òóô
 	s = s:gsub("\199\146","o"):gsub("\197\141","o")                        -- ǒō
+	-- BP 特有韻母 → TLPA 韻母（lib_comment_bp.yaml 的 xform/au/ao/ 之逆操作）
+	s = s:gsub("ao", "au")   -- BP iao/ao → TLPA iau/au
 	return s
 end
+
+-- BP 調號（TLPA 重映射後）→ BP 原始調號（供 IPA 直接引用）
+-- 此為 BP_SUPER_TO_TLPA_TIAU 的逆映射
+local TLPA_TO_BP_TIAU = {
+	["1"]="1", ["5"]="2", ["2"]="3", ["6"]="4",
+	["3"]="5", ["7"]="6", ["4"]="7", ["8"]="8",
+}
 
 ------------------------------------------------------------------------------------------
 -- aux_commit：切換輸入方案【輸出】之【漢字標音】格式
@@ -614,8 +624,18 @@ function aux_commit(key, env)
 
 		elseif ctx:get_option("key_in_piau_im_ipa") then
 			-- 國際音標：TLPA/SNI → IPA
+			-- phing_im_bp 特殊處理：調號直接引用 BP 原始調號（不做 BP→TLPA 重映射）
+			-- 因 BP 系統調號與其他系統不同，IPA 上標數字應顯示 BP 調號
 			for i, v in ipairs(source_list) do
-				out_list[i] = to_target(v, "國際音標")
+				if schema_id == "phing_im_bp" then
+					-- 從 source_list 的 TLPA 調號（已 BP→TLPA 重映射）反推回 BP 調號
+					local tlpa_tone = v:match("([1-8])$") or "1"
+					local bp_tone   = TLPA_TO_BP_TIAU[tlpa_tone] or tlpa_tone
+					local base      = v:gsub("[1-8]$", "")
+					out_list[i] = to_target(base .. bp_tone, "國際音標")
+				else
+					out_list[i] = to_target(v, "國際音標")
+				end
 			end
 
 		elseif ctx:get_option("key_in_piau_im_tlpa_tps") then
