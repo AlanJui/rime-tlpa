@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_bpm2
   name: 拼音輸入法【台語注音二式】
-  version: "v0.1.0.10"
+  version: "v0.1.0.11"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -116,10 +116,10 @@ speller:
     #--------------------------------------------------------------------------
     # jji, zzi, chi, shi
     # zz,  z,   c,   s
-    - derive/jji/ji/    # jji (ㆢㄧ) = zz(ㆡ) + i(ㄧ)
-    - derive/zzi/zi/    # zzi (ㆡㄧ) = z(ㄗ)  + i(ㄧ)
-    - derive/chi/ci/    # chi (ㄑㄧ) = c(ㄘ)  + i(ㄧ)
-    - derive/shi/si/    # shi (ㄒㄧ) = s(ㄙ)  + i(ㄧ)
+    # - derive/jji/ji/    # jji (ㆢㄧ) = zz(ㆡ) + i(ㄧ)
+    # - derive/zzi/zi/    # zzi (ㆡㄧ) = z(ㄗ)  + i(ㄧ)
+    # - derive/chi/ci/    # chi (ㄑㄧ) = c(ㄘ)  + i(ㄧ)
+    # - derive/shi/si/    # shi (ㄒㄧ) = s(ㄙ)  + i(ㄧ)
 
     #==========================================================================
     # 【變調處理】
@@ -205,10 +205,10 @@ translator:
     #------------------------------------------------------
     # 聲母校調
     #------------------------------------------------------
-    - xform/ji/jji/
-    - xform/zi/ji/
-    - xform/ci/chi/
-    - xform/si/shi/
+    # - xform/ji/jji/
+    # - xform/zi/ji/
+    # - xform/ci/chi/
+    # - xform/si/shi/
     #------------------------------------------------------
     # 聲調校調
     #------------------------------------------------------
