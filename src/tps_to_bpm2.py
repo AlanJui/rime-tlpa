@@ -1,15 +1,37 @@
 #!/usr/bin/env python3
 """
-tps_to_bpm2.py v0.0.1 — 方音符號 (TPS) → 台語注音二式 (BPM2) 批量轉換
+tps_to_bpm2.py v0.0.3 — 方音符號 (TPS) → 台語注音二式 (BPM2) 批量轉換
 
 讀取 CIN方音符號.xlsx 中的 【聲】聲母對照表、【韻】韻母對照表，
 將【漢字庫】工作表 E 欄（方音符號）批量轉換後寫入 F 欄（台語注音二式）。
+
+【註】：執行前，需將 Excel 活頁簿檔案關閉，否則 openpyxl 無法寫入。
 
 用法：
     python tps_to_bpm2.py [excel_path] [output_path]
 
     excel_path  : 來源 .xlsx（預設同目錄的 CIN方音符號.xlsx）
     output_path : 輸出 .xlsx（預設覆寫來源檔）
+
+(.venv) PS C:\Users\AlanJui\work\rime-tlpa\src> py .\tps_to_bpm2.py
+讀取：C:\Users\AlanJui\work\rime-tlpa\src\CIN方音符號.xlsx
+  聲母對映：21 筆
+  韻母對映：162 筆
+  按鍵對映：49 筆
+
+開始轉換（共約 21,026 列）…
+  處理中… row 21,029  (100.0%)
+
+轉換完成：
+  成功 21,023 筆 / 失敗 2 筆（涵蓋率 100.0%）
+  空白略過 1 筆
+
+失敗明細（共 2 筆）：
+  row  2,078  key='qjj2'  TPS='ㄆㆫㄉ'
+  row  2,079  key='qjj2'  TPS='ㄆㆫㄉ'
+
+輸出：C:\Users\AlanJui\work\rime-tlpa\src\CIN方音符號.xlsx
+(.venv) PS C:\Users\AlanJui\work\rime-tlpa\src>
 """
 
 import sys
@@ -30,7 +52,7 @@ TONE_SUFFIX: dict[str, str] = {
 }
 
 # 入聲尾輔音（用於判斷調 4；˙ 後接此類字元 → 調 8 已先處理）
-ENTERING_FINALS: set[str] = {
+JIP_SIANN_UN_BUE: set[str] = {
     'ㄏ',   # ㄏ h-final
     'ㄍ',   # ㄍ k-final
     'ㄉ',   # ㄉ t-final
@@ -72,7 +94,7 @@ def build_tables(path: str):
     siann_set: set[str] = set()
     for _, row in ds.dropna(subset=['方音符號']).iterrows():
         tps  = str(row['方音符號']).strip()
-        bpm2 = str(row['注音二式']).strip() if pd.notna(row['注音二式']) else ''
+        bpm2 = str(row['台語注音二式']).strip() if pd.notna(row['台語注音二式']) else ''
         if tps and tps != 'nan':
             siann_map[tps] = bpm2
             siann_set.add(tps)
@@ -209,7 +231,7 @@ def convert_syllable(
     if last in TONE_SUFFIX:
         tone = TONE_SUFFIX[last]
         s = s[:-1]              # 去掉調號字元
-    elif last in ENTERING_FINALS:
+    elif last in JIP_SIANN_UN_BUE:
         tone = '4'              # 入聲尾 → 保留字元（屬於韻母的一部份）
 
     if not s:
@@ -233,7 +255,50 @@ def convert_syllable(
     return siann_bpm2 + un_bpm2 + tone
 
 
-# ── 5. 主程式 ─────────────────────────────────────────────────────────────────
+# ── 5. 按鍵對映表 & 鍵碼 → TPS ───────────────────────────────────────────────
+def build_key_map(path: str) -> dict[str, str]:
+    """
+    讀取【按鍵對映】工作表，建立 {鍵盤字串 → TPS字元} 對映。
+    工作表格式：col B = "key_seq TPS_char"（如 ", ㆤ" 或 "ss ㄫ"）
+    """
+    wb = load_workbook(path, read_only=True, data_only=True)
+    ws = wb['按鍵對映']
+    key_map: dict[str, str] = {}
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if row[1] is None:
+            continue
+        # rsplit(' ', 1) 以最後一個空格分隔，支援 key 含多個字元
+        parts = str(row[1]).strip().rsplit(' ', 1)
+        if len(parts) == 2:
+            key_str, tps_char = parts[0].strip(), parts[1].strip()
+            if key_str and tps_char:
+                key_map[key_str] = tps_char
+    wb.close()
+    return key_map
+
+
+def keys_to_tps(key_seq: str, key_map: dict[str, str],
+                sorted_keys: list) -> str | None:
+    """
+    將按鍵序列（如 '185'）貪婪匹配轉換為 TPS 字串（如 'ㄅㄚ˫'）。
+    若有未知按鍵則回傳 None。
+    """
+    result = []
+    i = 0
+    while i < len(key_seq):
+        matched = False
+        for k in sorted_keys:          # 長度由長到短，優先匹配多字元鍵
+            if key_seq[i:i + len(k)] == k:
+                result.append(key_map[k])
+                i += len(k)
+                matched = True
+                break
+        if not matched:
+            return None                 # 遇到未知按鍵
+    return ''.join(result)
+
+
+# ── 6. 主程式 ─────────────────────────────────────────────────────────────────
 def main() -> None:
     import os
     default_path = os.path.join(os.path.dirname(__file__), 'CIN方音符號.xlsx')
@@ -245,49 +310,61 @@ def main() -> None:
     print(f'  聲母對映：{len(siann_map)} 筆')
     print(f'  韻母對映：{len(fin_map)} 筆')
 
-    # E 欄為公式（=CONCAT(N:S)），需用 data_only=True 讀取計算值
-    wb_data = load_workbook(src_path, data_only=True)
-    ws_data = wb_data['漢字庫']
+    # 按鍵對映：鍵盤字串 → TPS 字元（多字元鍵如 'ss'/'jj' 優先匹配）
+    key_map = build_key_map(src_path)
+    sorted_keys = sorted(key_map.keys(), key=len, reverse=True)
+    print(f'  按鍵對映：{len(key_map)} 筆')
 
-    # Excel 錯誤值集合（data_only 模式下以字串形式回傳）
-    _EXCEL_ERRORS = {'#N/A', '#REF!', '#VALUE!', '#NAME?', '#DIV/0!', '#NULL!', '#NUM!', 'None', ''}
-
-    # 建立 {row_index: tps_value} 對照表
-    tps_values: dict[int, str] = {}
-    for row_idx in range(4, ws_data.max_row + 1):
-        val = ws_data.cell(row=row_idx, column=5).value
-        if val is not None:
-            s = str(val).strip()
-            if s and s not in _EXCEL_ERRORS:
-                tps_values[row_idx] = s
-
-    wb_data.close()
-
-    # 以一般模式載入，保留公式，只改寫 F 欄
+    # 載入工作簿（保留公式），只改寫 F 欄
     wb = load_workbook(src_path)
     ws = wb['漢字庫']
 
     converted = 0
-    skipped   = 0   # E 欄空白
+    skipped   = 0   # A 欄空白或格式不符
     failed    = 0   # 無法對映
-    fail_ex   = []  # 失敗樣本（前 20 筆）
+    fail_all  = []  # 所有失敗記錄 [(row_idx, key_seq, tps_or_None)]
 
+    total_rows = ws.max_row - 3          # 資料列總數（第 4 列起）
+    PROGRESS_STEP = 1000                 # 每 1000 列顯示一次進度
+
+    print(f'\n開始轉換（共約 {total_rows:,} 列）…')
     for row_idx in range(4, ws.max_row + 1):
-        tps_val = tps_values.get(row_idx)
-        if tps_val is None:
+        # ── 進度顯示 ──
+        processed = row_idx - 3
+        if processed % PROGRESS_STEP == 0 or row_idx == ws.max_row:
+            pct_done = processed / total_rows * 100
+            print(f'  處理中… row {row_idx:>6,}  ({pct_done:5.1f}%)',
+                  end='\r', flush=True)
+
+        # ── 讀取 A 欄：格式為 "{key_seq} {漢字}" ──
+        cell_a = ws.cell(row=row_idx, column=1).value
+        if cell_a is None:
             skipped += 1
             continue
+        raw_a = str(cell_a).strip()
+        space_pos = raw_a.find(' ')
+        if space_pos <= 0:
+            skipped += 1
+            continue
+        key_seq = raw_a[:space_pos]
 
+        # ── 鍵碼 → TPS ──
+        tps_val = keys_to_tps(key_seq, key_map, sorted_keys)
+        if tps_val is None:
+            fail_all.append((row_idx, key_seq, None))
+            failed += 1
+            continue
+
+        # ── TPS → BPM2 ──
         bpm2 = convert_syllable(tps_val, siann_set, siann_map, fin_map)
-
         if bpm2 is not None:
-            ws.cell(row=row_idx, column=6).value = bpm2  # F 欄
+            ws.cell(row=row_idx, column=6).value = bpm2   # F 欄
             converted += 1
         else:
-            if len(fail_ex) < 20:
-                fail_ex.append((row_idx, tps_val))
+            fail_all.append((row_idx, key_seq, tps_val))
             failed += 1
 
+    print()   # 換行，結束進度列
     wb.save(dst_path)
 
     total = converted + failed
@@ -295,10 +372,11 @@ def main() -> None:
     print(f'\n轉換完成：')
     print(f'  成功 {converted:,} 筆 / 失敗 {failed:,} 筆（涵蓋率 {pct:.1f}%）')
     print(f'  空白略過 {skipped:,} 筆')
-    if fail_ex:
-        print(f'\n失敗樣本（前 {len(fail_ex)} 筆）：')
-        for ridx, tps in fail_ex:
-            print(f'  row {ridx}  TPS={tps!r}')
+    if fail_all:
+        print(f'\n失敗明細（共 {len(fail_all)} 筆）：')
+        for ridx, ks, tps in fail_all:
+            tps_s = repr(tps) if tps else '（鍵碼無法對映）'
+            print(f'  row {ridx:>6,}  key={ks!r}  TPS={tps_s}')
     print(f'\n輸出：{dst_path}')
 
 
