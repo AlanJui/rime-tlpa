@@ -283,6 +283,7 @@ local function bpm2_to_tlpa(bpm2)
 	local tone = bpm2:match("([1-8])$") or ""
 	local s = tone ~= "" and bpm2:sub(1, -2) or bpm2
 	-- BPM2 韻母 → TLPA 韻母（順序：較長的先替換，避免截短）
+	s = s:gsub("iook", "iok")  -- BPM2 iook（恭韻入聲） → TLPA iok
 	s = s:gsub("oom", "om")   -- BPM2 oom（箴韻） → TLPA om
 	s = s:gsub("oop", "op")   -- BPM2 oop（箴韻入聲） → TLPA op
 	s = s:gsub("or", "o")     -- BPM2 or（高韻） → TLPA o（如：hor5 → ho5）
@@ -401,12 +402,87 @@ local function strip_bp_tones(s)
 	s = s:gsub("\195\172","i"):gsub("\195\173","i"):gsub("\195\174","i")  -- ìíî
 	s = s:gsub("\199\144","i"):gsub("\196\171","i")                        -- ǐī
 	s = s:gsub("\195\185","u"):gsub("\195\186","u"):gsub("\195\187","u")  -- ùúû
-	s = s:gsub("\197\173","u"):gsub("\197\171","u")                        -- ǔū
+	s = s:gsub("\197\173","u"):gsub("\197\171","u"):gsub("\199\148","u")  -- ǔūǔ (U+01D4)
 	s = s:gsub("\195\178","o"):gsub("\195\179","o"):gsub("\195\180","o")  -- òóô
 	s = s:gsub("\199\146","o"):gsub("\197\141","o")                        -- ǒō
 	-- BP 特有韻母 → TLPA 韻母（lib_comment_bp.yaml 的 xform/au/ao/ 之逆操作）
 	s = s:gsub("ao", "au")   -- BP iao/ao → TLPA iau/au
 	return s
+end
+
+-- BP 基底拼音（已去調符）→ TLPA 聲母
+local function bp_base_to_tlpa(s)
+	if type(s) ~= "string" or s == "" then return s end
+	if s:sub(1,2) == "bb" then return "b"  .. s:sub(3)
+	elseif s:sub(1,2) == "gg" then return "g"  .. s:sub(3)
+	elseif s:sub(1,2) == "zz" then return "j"  .. s:sub(3)
+	elseif s:sub(1,2) == "jj" then return "j"  .. s:sub(3)
+	end
+	local c1 = s:sub(1,1)
+	if     c1 == "b" then return "p"  .. s:sub(2)
+	elseif c1 == "p" then return "ph" .. s:sub(2)
+	elseif c1 == "d" then return "t"  .. s:sub(2)
+	elseif c1 == "t" and s:sub(1,2) ~= "th" then return "th" .. s:sub(2)
+	elseif c1 == "g" then return "k"  .. s:sub(2)
+	elseif c1 == "k" and s:sub(1,2) ~= "kh" then return "kh" .. s:sub(2)
+	elseif c1 == "j" then return "z"  .. s:sub(2)
+	end
+	return s
+end
+
+-- TL/POJ 調符（NFC 預合字）→ TLPA 數值調號
+local TL_DIAC_BASE = {
+	["\195\161"]="a",["\195\169"]="e",["\195\173"]="i",["\195\179"]="o",["\195\186"]="u", -- áéíóú
+	["\195\160"]="a",["\195\168"]="e",["\195\172"]="i",["\195\178"]="o",["\195\185"]="u", -- àèìòù
+	["\195\162"]="a",["\195\170"]="e",["\195\174"]="i",["\195\180"]="o",["\195\187"]="u", -- âêîôû
+	["\196\129"]="a",["\196\147"]="e",["\196\171"]="i",["\197\141"]="o",["\197\171"]="u", -- āēīōū
+	["\199\146"]="o",  -- ǒ (U+01D2, POJ o͘ tone-5)
+}
+local TL_DIAC_TONE = {
+	["\195\161"]="2",["\195\169"]="2",["\195\173"]="2",["\195\179"]="2",["\195\186"]="2",
+	["\195\160"]="3",["\195\168"]="3",["\195\172"]="3",["\195\178"]="3",["\195\185"]="3",
+	["\195\162"]="5",["\195\170"]="5",["\195\174"]="5",["\195\180"]="5",["\195\187"]="5",
+	["\196\129"]="7",["\196\147"]="7",["\196\171"]="7",["\197\141"]="7",["\197\171"]="7",
+	["\199\146"]="5",
+}
+
+local function tl_diac_to_tlpa(s)
+	if type(s) ~= "string" or s == "" then return s end
+	local tone = "1"
+	-- 調 8 組合符號 U+030D ("\204\141") → tone 8
+	local has8 = s:find("\204\141", 1, true)
+	if has8 then s = s:gsub("\204\141", ""); tone = "8" end
+	-- 替換調符元音
+	for diac, base in pairs(TL_DIAC_BASE) do
+		if s:find(diac, 1, true) then
+			s = s:gsub(diac, base)
+			if not has8 then tone = TL_DIAC_TONE[diac] end
+		end
+	end
+	-- ⁿ (U+207F = "\226\129\191") → nn
+	s = s:gsub("\226\129\191", "nn")
+	-- 無調符且非入聲 → 調 1；有塞尾音 → 調 4
+	if tone == "1" and s:match("[ptk]$") then tone = "4" end
+	s = s:gsub("[1-8]$", "")
+	return s .. tone
+end
+
+local function poj_diac_to_tlpa(s)
+	if type(s) ~= "string" or s == "" then return s end
+	-- o + U+0358 (COMBINING DOT ABOVE RIGHT = "\205\152") → oo
+	s = s:gsub("o\205\152", "oo")
+	-- 調符剝離
+	local result = tl_diac_to_tlpa(s)
+	-- 分離 base 和 tone
+	local tone = result:match("([1-8])$") or "1"
+	local base = tone ~= "" and result:sub(1, -(#tone + 1)) or result
+	-- POJ 韻母 → TLPA 韻母
+	base = base:gsub("eng", "ing"):gsub("ek$", "ik")
+	base = base:gsub("oa", "ua"):gsub("oe", "ue")
+	base = base:gsub("ao", "au")
+	-- POJ 聲母 → TLPA 聲母（longest-match first）
+	base = base:gsub("^chh", "tsh"):gsub("^ch", "ts")
+	return base .. tone
 end
 
 -- BP 調號（TLPA 重映射後）→ BP 原始調號（供 IPA 直接引用）
@@ -487,13 +563,10 @@ function aux_commit(key, env)
 			end
 
 		elseif schema_id:match("^zu_im_")
-		    or schema_id == "phing_im_tl"
 		    or schema_id == "phing_im_tlpa"
 		    or schema_id == "phing_im_bpm2" then
 			-- 注音/拼音輸入法（數值調號系列）：〔〕 含 TLPA 數值調（或 BPM2）
 			-- → 正規化為 TLPA，後續直接進 conv.convert
-			-- 注意：phing_im_bp / phing_im_poj 的 〔〕 已含調符（如 hóng），
-			--       不在此處理，落入 else 分支讓 to_target 的 fallback 原樣回傳。
 			is_tlpa = true
 			local is_bpm2 = (schema_id == "zu_im_bpm2" or schema_id == "phing_im_bpm2")
 			for v in gen_comm:gmatch("〔(.-)〕") do
@@ -508,6 +581,24 @@ function aux_commit(key, env)
 				log.info("[aux_commit] tlpa_schema raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 			end
 
+		elseif schema_id == "phing_im_tl" then
+			-- 〔〕 含 TL 調符拼音（如 hông）→ 剝離調符還原為 TLPA 數值調
+			is_tlpa = true
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				local tlpa = tl_diac_to_tlpa(v)
+				table.insert(source_list, tlpa)
+				log.info("[aux_commit] phing_im_tl raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
+			end
+
+		elseif schema_id == "phing_im_poj" then
+			-- 〔〕 含 POJ 調符拼音（如 hông）→ 剝離調符並轉換 POJ→TLPA
+			is_tlpa = true
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				local tlpa = poj_diac_to_tlpa(v)
+				table.insert(source_list, tlpa)
+				log.info("[aux_commit] phing_im_poj raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
+			end
+
 		elseif schema_id == "phing_im_bp" then
 			-- 〔〕 含 BP 調符拼音（如 hóng），【】 含 TPS + BP 上標調號（如 ㄏㆲ²）
 			-- 從兩欄重建 TLPA：去調符字母 + BP 上標 → TLPA 調號
@@ -516,7 +607,7 @@ function aux_commit(key, env)
 			for v in gen_comm:gmatch("〔(.-)〕") do table.insert(bp_items, v) end
 			for v in gen_comm:gmatch("【(.-)】") do table.insert(tps_items, v) end
 			for i = 1, #bp_items do
-				local base  = strip_bp_tones(bp_items[i])
+				local base  = bp_base_to_tlpa(strip_bp_tones(bp_items[i]))
 				local tiau  = bp_super_to_tlpa_tiau(tps_items[i] or "") or "1"
 				local tlpa  = base .. tiau
 				table.insert(source_list, tlpa)
