@@ -6,7 +6,8 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(python tps_to_bpm2.py \"CIN方音符號.xlsx\" \"CIN方音符號_output.xlsx\")"
     ]
   }
 }
