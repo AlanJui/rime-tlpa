@@ -125,10 +125,13 @@ hau_suan_tuann:
     - xform/》iat/ㄧㄚㆵ》/
     - xform/》iak/ㄧㄚㆻ》/
     - xform/》iau/ㄧㄠ》/
-    - xform/》iek/ㄧㆤㆻ》/
+    - xform/》iek/ㄧㆤㆻ》/      # - xform/》ik/ㄧㆻ》/
     - xform/》ioh/ㄧㄜㆷ》/
     - xform/》iook/ㄧㆦㆻ》/
+    - xform/》ior/ㄧㄜ》/       # ior(ㄧㄜ) → io(ㄧㄜ)
     - xform/》ooh/ㆦㆷ》/
+    - xform/》ook/ㆦㆻ》/     # ook(ㆦㆻ) → o(ㆦㆻ)
+    - xform/》oom/ㆱ》/
     - xform/》ong/ㆲ》/
     - xform/》uah/ㄨㄚㆷ》/
     - xform/》uan/ㄨㄢ》/
@@ -150,16 +153,13 @@ hau_suan_tuann:
     - xform/》in/ㄧㄣ》/
     - xform/》ip/一ㆴ》/
     - xform/》it/ㄧㆵ》/
-    # - xform/》ik/ㄧㆻ》/
     - xform/》ia/ㄧㄚ》/
     - xform/》io/ㄧㄜ》/
     - xform/》iu/ㄧㄨ》/
     - xform/》oo/ㆦ》/
     - xform/》or/ㄜ》/
     - xform/》oh/ㄜㆷ》/
-    - xform/》oom/ㆱ》/
     - xform/》op/ㆦㆴ》/
-    - xform/》ok/ㆦㆻ》/
     - xform/》uh/ㄨㆷ》/
     - xform/》un/ㄨㄣ》/
     - xform/》ut/ㄨㆵ》/
