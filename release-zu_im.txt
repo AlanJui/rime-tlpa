@@ -1,0 +1,23 @@
+# --- 輸入方案共用模組 ---
+keymap_piau_tian.yaml
+
+# --- 輸入方案插件函式庫 ---
+rime.lua
+lua\tlpa_converter.lua
+lua\bpm2_converter.lua
+
+# --- 輸入方案用字典 ---
+ji_khoo_bpm2.dict.yaml
+ji_khoo_tl.dict.yaml
+
+# --- 按鍵輔助工具 ---
+kb_hong_im.schema.yaml
+kb_ipa.schema.yaml
+kb_lo_ma_ji.schema.yaml
+
+# --- 注音輸入法 ---
+zu_im_tps.schema.yaml
+zu_im_tlpa.schema.yaml
+zu_im_bpm2.schema.yaml
+# -----------------
+lib_preedit_tps.yaml
