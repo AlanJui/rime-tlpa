@@ -47,51 +47,49 @@ Write-Host "用戶目錄：$userDir" -ForegroundColor Cyan
 # 3. 複製設定檔至 Rime 使用者設定目錄
 $sourceDir = $PSScriptRoot
 $files = @(
-    # 拼音輸入方案：
-    "phing_im_tl.schema.yaml",
-    "phing_im_tlpa.schema.yaml",
-    "phing_im_bp.schema.yaml",
-    "phing_im_bpm2.schema.yaml",
-    "phing_im_poj.schema.yaml",
-    # 注音輸入方案：
-    "zu_im_tps.schema.yaml",
-    "zu_im_tlpa.schema.yaml",
-    "zu_im_bpm2.schema.yaml",
-    # 反切輸入方案：
-    "huan_ciat_tps.schema.yaml",
-    "huan_ciat_tlpa.schema.yaml",
-    # 輸入方案功能模組
-    "lib_phing_im.yaml",
-    # 字典編碼及輸入編輯列
-    "lib_preedit_tps.yaml",
-    # 輸入方案附屬模組之【候選字清單】
-    "lib_comment_poj.yaml",
-    "lib_comment_tl.yaml",
-    "lib_comment_bp.yaml",
-    "lib_comment_tlpa.yaml",
-    "lib_comment_bpm2.yaml",
-    "lib_comment_tps_and_tlpa.yaml",
-    "lib_comment_tps_and_bpm2.yaml",
-    "lib_comment_TlpaBpm_and_tlpa.yaml",
-    "lib_comment_sni_and_tps.yaml",
-    # "hau_suan_tuann_bp.yaml",
-    # "hau_suan_tuann_bpm2.yaml",
-    # "hau_suan_tuann_sni_and_tps.yaml",
-    # "hau_suan_tuann_tlpa.yaml",
-    # "hau_suan_tuann_tlpa_and_tps.yaml",
-    # "hau_suan_tuann_tps.yaml",
-    # 輸入方案用字典
-    "ji_khoo_tl.dict.yaml",
-    "ji_khoo_bpm2.dict.yaml",
-    # 輸入方案附屬模組之【鍵盤映射】
-    "keymap_piau_tian.yaml",
-    # 輸入方案附屬工具
-    "kb_hong_im.schema.yaml",
-    "kb_ipa.schema.yaml",
-    "kb_lo_ma_ji.schema.yaml",
-    # 輸入方案使用之【功能插件（Lua 腳本）】
-    "rime.lua",
+    # --- 輸入方案共用模組 ---
+    # lib_phing_im.yaml
+    "keymap_piau_tian.yaml"
+
+    # --- 輸入方案插件函式庫 ---
+    "rime.lua"
     "lua\tlpa_converter.lua"
+    "lua\bpm2_converter.lua"
+
+    # --- 輸入方案用字典 ---
+    "ji_khoo_bpm2.dict.yaml"
+    "ji_khoo_tl.dict.yaml"
+
+    # --- 拼音輸入法 ---
+    "phing_im_bp.schema.yaml"
+    "phing_im_bpm2.schema.yaml"
+    "phing_im_poj.schema.yaml"
+    "phing_im_tl.schema.yaml"
+    "phing_im_tlpa.schema.yaml"
+    # -----------------
+    "lib_comment_bp.yaml"
+    "lib_comment_bpm2.yaml"
+    "lib_comment_poj.yaml"
+    "lib_comment_tl.yaml"
+    "lib_comment_tlpa.yaml"
+
+    # --- 注音輸入法 ---
+    "zu_im_tps.schema.yaml"
+    "zu_im_tlpa.schema.yaml"
+    "zu_im_bpm2.schema.yaml"
+    # -----------------
+    "lib_preedit_tps.yaml"
+
+    # --- 反切輸入法 ---
+    "huan_ciat_tlpa.schema.yaml"
+    "huan_ciat_tps.schema.yaml"
+    # -----------------
+    "lib_comment_sni_and_tps.yaml"
+
+    # --- 按鍵輔助工具 ---
+    "kb_hong_im.schema.yaml"
+    "kb_ipa.schema.yaml"
+    "kb_lo_ma_ji.schema.yaml"
 )
 
 foreach ($file in $files) {
