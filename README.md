@@ -79,7 +79,7 @@
    系統安裝的【輸入法框架】為何者。
 
 
-2. **下載及安裝 [輸入方案套件包](https://github.com/AlanJui/rime-taigi/releases)。**
+2. **下載及安裝 [輸入方案套件包](https://github.com/AlanJui/rime-tlpa/releases)。**
 
 <img alt="image" src="https://github.com/user-attachments/assets/7d387177-9777-4ebf-8484-39673bdad2a5" />
 
@@ -88,6 +88,17 @@
    3. rime-tlpa-phing_im-v0.1.zip：【拼音輸入方案】壓縮包
    4. rime-tlpa-zu_im-v0.1.zip：【注音輸入方案】壓縮包
    5. RIME_TLPA_Installer.exe：輸入方案安裝程式執行檔
+
+   **【操作提示】**
+
+   - 安裝程式 `RIME_TLPA_Installer.exe` **不內含**輸入方案檔；請**先**下載上述
+     `rime-tlpa-*.zip` 任一壓縮包（如僅需全部方案，下載 `rime-tlpa-all-*.zip` 即可）。
+   - 將下載的 `.zip` 壓縮檔放到**安裝程式（.exe）所在資料夾**，或保留在
+     **【下載 (Downloads)】資料夾**即可——安裝程式啟動時會自動偵測這兩處
+     （以及目前工作目錄）的 `rime-tlpa-*.zip`。
+   - 執行 `RIME_TLPA_Installer.exe` 後，於畫面上方的下拉選單**選擇要安裝的壓縮檔**，
+     再點擊【開始安裝】；若壓縮檔放在其他位置，可點【瀏覽…】自行指定。
+   - 若未偵測到任何壓縮檔，安裝程式會中止並提示先行下載，請依提示完成下載後再重試。
 
 **【輸入方案套件包清單】**
 

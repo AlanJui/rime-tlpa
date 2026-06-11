@@ -88,17 +88,26 @@ speller:
     # 《範例》：【何】：【ho5】= 【hə5】
     # --------------------------------------------------------------------------
     # 變更【元音韻母】的羅馬拼音字母： oo 為 O
-    - xform/oonn/Onn/ # ㆧ [oonn] = O + nn
-    - xform/oo/O/ # ㆦ [oo]
+    # - xform/oonn/Onn/ # ㆧ [oonn] = O + nn
+    # - xform/oo/O/ # ㆦ [oo]
+    - derive/oonn/Onn/ # ㆧ [oonn] = O + nn
+    - derive/oo/O/ # ㆦ [oo]
     # --------------------------------------------------------------------------
     # ㆦ [oo] 韻替換調整：[oo/ong/ok/op] ==> [O] ==> ㆦ /ɔ/
-    - xform/ioonn/iOnn/
-    - xform/iong/iOng/
-    - xform/iook/iOk/ # 台語注音二式無此韻母，其拼音為：[iook] ==> [iOk] ==> ㄧㆦㄍ
-    - xform/oom/Om/
-    - xform/oop/Op/
-    - xform/ong/Ong/
-    - xform/ook/Ok/
+    # - xform/ioonn/iOnn/
+    # - xform/iong/iOng/
+    # - xform/iook/iOk/ # 台語注音二式無此韻母，其拼音為：[iook] ==> [iOk] ==> ㄧㆦㄍ
+    # - xform/oom/Om/
+    # - xform/oop/Op/
+    # - xform/ong/Ong/
+    # - xform/ook/Ok/
+    - derive/ioonn/iOnn/
+    - derive/iong/iOng/
+    - derive/iook/iOk/ # 台語注音二式無此韻母，其拼音為：[iook] ==> [iOk] ==> ㄧㆦㄍ
+    - derive/oom/Om/
+    - derive/oop/Op/
+    - derive/ong/Ong/
+    - derive/ook/Ok/
     # --------------------------------------------------------------------------
     # or 之【字典編碼】改為： ə
     - xform/or/ə/

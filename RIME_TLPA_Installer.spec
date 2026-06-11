@@ -6,10 +6,8 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[
-        ('release-include.txt', '.'),          # 安裝清單
-        ('*.yaml', '.'),                       # 根目錄所有 YAML 配置
-        ('rime.lua', '.'),                     # 根目錄 Lua 主入口
-        ('lua/*.lua', 'lua'),                  # lua/ 子目錄所有 Lua 插件
+        # 僅內嵌【輸入法選單設定】；輸入方案檔（schema/dict/lua…）改由
+        # 使用者下載之 rime-tlpa-*.zip 提供，不再打包進 exe。
         ('config/default.custom.yaml', 'config'),  # 預設輸入法選單設定
     ],
     hiddenimports=[],
