@@ -106,29 +106,25 @@ jobs:
           fi
 
           # ---------- COMMON：輸入方案共用模組及插件函式庫 ----------
+          # 由【專案根目錄】的 release-include.txt 讀取
           COMMON_LIST="dist/_common.list"
           : > "$COMMON_LIST"
-          for p in \
-            # --- 輸入方案共用模組：【候選字清單】 ---
-            hau_suan_tuann_bp.yaml \
-            hau_suan_tuann_bpm2.yaml \
-            hau_suan_tuann_sni_and_tps.yaml \
-            hau_suan_tuann_tlpa_and_tps.yaml \
-            hau_suan_tuann_tlpa.yaml \
-            hau_suan_tuann_tps.yaml \
-            # --- 輸入方案共用模組 ---
-            keymap_piau_tian.yaml \
-            lib_phing_im.yaml \
-            # --- 按鍵輔助工具 ---
-            kb_hong_im.schema.yaml \
-            kb_ipa.schema.yaml \
-            # --- 輸入方案插件函式庫 ---
-            rime.lua \
-            lua/*.lua
-          do
-            f="${PREFIX}${p}"
-            [[ -f "$f" ]] && echo "$f" >> "$COMMON_LIST" || echo "::warning::Missing COMMON: $f"
-          done
+          if [[ -f release-include.txt ]]; then
+            echo "Use release-include.txt for COMMON"
+            awk 'NR==1{sub(/^\xef\xbb\xbf/,"")}{print}' release-include.txt \
+              | sed -e 's/\r$//' -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' \
+              | sed -e '/^$/d' -e '/^#/d' \
+              | tr '\\' '/' \
+              | while read -r p; do
+                  [[ -z "$p" ]] && continue
+                  # 支援 glob（例如 lua/*.lua）
+                  for f in ${PREFIX}${p}; do
+                    [[ -f "$f" ]] && echo "$f" || echo "::warning::Missing COMMON: $f" >&2
+                  done
+                done > "$COMMON_LIST"
+          else
+            echo "::warning::release-include.txt not found, COMMON list is empty"
+          fi
 
           # ---------- 【拼音輸入方案】 ----------
           PhingIm_LIST="dist/_PhingIm.list"
