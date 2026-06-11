@@ -37,18 +37,35 @@ jobs:
         shell: bash
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "REF=${{ github.event.inputs.ref }}" >> $GITHUB_OUTPUT
-            echo "TAG=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
-            echo "PRERELEASE=${{ github.event.inputs.prerelease }}" >> $GITHUB_OUTPUT
+            REF="${{ github.event.inputs.ref }}"
+            TAG="${{ github.event.inputs.tag_name }}"
+            PRERELEASE="${{ github.event.inputs.prerelease }}"
           else
-            echo "REF=${{ github.ref_name }}" >> $GITHUB_OUTPUT
-            echo "TAG=${{ github.ref_name }}" >> $GITHUB_OUTPUT
-            echo "PRERELEASE=false" >> $GITHUB_OUTPUT
+            REF="${{ github.ref_name }}"
+            TAG="${{ github.ref_name }}"
+            PRERELEASE="false"
           fi
-          echo "Resolved REF=$(cat $GITHUB_OUTPUT | sed -n 's/^REF=//p'), TAG=$(cat $GITHUB_OUTPUT | sed -n 's/^TAG=//p')"
+
+          # 去除前後空白
+          TAG="$(echo -n "$TAG" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')"
+
+          # tag_name 驗證（方案 A：寬鬆版）
+          if [[ -z "$TAG" ]]; then
+            echo "::error::tag_name is required"
+            exit 1
+          fi
+          if [[ ! "$TAG" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+            echo "::error::Invalid tag_name '$TAG' — only A-Z, a-z, 0-9, '.', '_', '/', '-' are allowed (no spaces). 範例：v0.1.0-alpha"
+            exit 1
+          fi
+
+          echo "REF=$REF" >> $GITHUB_OUTPUT
+          echo "TAG=$TAG" >> $GITHUB_OUTPUT
+          echo "PRERELEASE=$PRERELEASE" >> $GITHUB_OUTPUT
+          echo "Resolved REF=$REF, TAG=$TAG, PRERELEASE=$PRERELEASE"
 
       - name: Checkout repository at ref
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           ref: ${{ steps.meta.outputs.REF }}
@@ -221,7 +238,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout repository at ref
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           ref: ${{ needs.build-bundles.outputs.REF }}
