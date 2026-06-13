@@ -5,7 +5,7 @@
 schema:
   schema_id: zu_im_bpm2
   name: 注音輸入法【台語注音二式】
-  version: "v0.1.0.6"
+  version: "v0.1.0.7"
   author: 居正中
   description: |
     【輸入類型】：注音輸入法
@@ -36,18 +36,16 @@ switches:
 
 engine:
   processors:
-    - lua_processor@aux_commit    # 可輸出【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
-    - lua_processor@jump_select   # 務必置頂，用以攔截【快捷鍵】，如：<Ctrl>+<,> / <Ctrl>+<.>，轉送【代理鍵】：F20/F24
+    - lua_processor@aux_commit
+    - lua_processor@jump_select
     - ascii_composer
     - recognizer
-    - key_binder                  # 令【代理鍵】：F20/F24，觸發【侯選字游標】執行【Home/Down】功能
+    - key_binder
     - speller
     - punctuator
     - selector
     - navigator
     - express_editor
-    # - fluid_editor
-    # - fluency_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -58,18 +56,14 @@ engine:
     - punct_translator
     - script_translator
   filters:
-    # - lua_filter@supers_indicator   # ← 新增：在候選註解前顯示 〔上標〕 / 〔一般〕
     - simplifier
     - uniquifier
-    # - comment_filter  # 重新啟用
+    - lua_filter@reformat_comment_filter  # 如果有對應的 Lua 腳本才啟用
     # 為 filter 除錯用
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
-    - lua_filter@reformat_comment_filter  # 如果有對應的 Lua 腳本才啟用
 
 speller:
-  # alphabet: "!1qa2wsxEedGYyhnRrfvc8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz7-=\"5346]["
-  # initials: "!1qa2wsxEedGYyhnRrfvc8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz7-="
   alphabet: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-=\"5346][7"
   initials: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-="
   finals: "\"5346][7"
@@ -90,19 +84,10 @@ speller:
     # 《範例》：【何】：【ho5】= 【hə5】
     # --------------------------------------------------------------------------
     # 變更【元音韻母】的羅馬拼音字母： oo 為 O
-    # - xform/oonn/Onn/ # ㆧ [oonn] = O + nn
-    # - xform/oo/O/ # ㆦ [oo]
     - derive/oonn/Onn/ # ㆧ [oonn] = O + nn
     - derive/oo/O/ # ㆦ [oo]
     # --------------------------------------------------------------------------
     # ㆦ [oo] 韻替換調整：[oo/ong/ok/op] ==> [O] ==> ㆦ /ɔ/
-    # - xform/ioonn/iOnn/
-    # - xform/iong/iOng/
-    # - xform/iook/iOk/ # 台語注音二式無此韻母，其拼音為：[iook] ==> [iOk] ==> ㄧㆦㄍ
-    # - xform/oom/Om/
-    # - xform/oop/Op/
-    # - xform/ong/Ong/
-    # - xform/ook/Ok/
     - derive/ioonn/iOnn/
     - derive/iong/iOng/
     - derive/iook/iOk/ # 台語注音二式無此韻母，其拼音為：[iook] ==> [iOk] ==> ㄧㆦㄍ
@@ -184,7 +169,7 @@ speller:
     - xform/^bb/B/ # ㆠ[ bb ]
     # - xform/^b/b/ # ㄅ[ b ]
     # - xform/^p/p/ # ㄆ[ p ]
-    - xform/^m(?!\d)/m/ # ㄇ[ m ]
+    # - xform/^m(?!\d)/m/ # ㄇ[ m ]
     #--------------------------------------------------------------------------
     # 舌尖前音（齒齦音）: z[j], c[ch], zz[jj], s[sh]
     - xform/^zz/Z/ # ㆡ[ zz ]
@@ -198,10 +183,10 @@ speller:
     - xform/^ch/C/ # ㄑ[ ch ]
     - xform/^sh/S/ # ㄒ[ sh ]
     #--------------------------------------------------------------------------
-    - derive/^Zi/Ji/ # ㆢ[ jj ]
-    - derive/^z/zi/  # ㄐ[ j ]
-    - derive/^ci/Ci/ # ㄑ[ ch ]
-    - derive/^si/Si/ # ㄒ[ sh ]
+    # - derive/^Zi/Ji/ # ㆢ[ jj ]
+    # - derive/^z/zi/  # ㄐ[ j ]
+    # - derive/^ci/Ci/ # ㄑ[ ch ]
+    # - derive/^si/Si/ # ㄒ[ sh ]
     #--------------------------------------------------------------------------
     - xform/^gg/Ğ/ # ㆣ[ gg ] ==> Ğ（U+011E，G 加短音符）
     # ng 可為聲母，亦可為韻母
@@ -215,7 +200,7 @@ speller:
     # - xform/^n(?!\d)/n/ # ㄋ[ n ]
     # - xform/^l/l/ # ㄌ[ l ]
     #--------------------------------------------------------------------------
-    - xform/^h(?!\d)/h/ # ㄏ[ h ]
+    # - xform/^h(?!\d)/h/ # ㄏ[ h ]
     #==========================================================================
     # 【韻母】羅馬拼音字母替換/衍生
     #==========================================================================
@@ -349,10 +334,11 @@ speller:
     # 【鍵盤按鍵】/【注音編碼】/【注音符號】
     # 【7】==>【8】==>【˙】 # 第8調（陽入調）入聲韻尾
     # 【.】==>【&】==>【入】 # 所有入聲韻尾
-    # 【=】==>【L】==>【ㄥ】 # 鼻化之元音韻母前綴符號
-    # 【-】==>【*】==>【ｎ】 # 所有鼻化之元音韻母
+    # 【7】==>【&】==>【入】 # 所有入聲韻尾
+    # 【-】==>【L】==>【ㄥ】 # 鼻化韻母前綴符號
+    # 【=】==>【Ø】==>【Ø】  # 鼻化韻母前綴符號
     #--------------------------------------------------------------------------
-    - xlit|BbpmdtnlĞgkŋZzcsJjCShaiwueOəIUDfqrvxyMGNY@AWHRFQV&LØ1732584|!1qa2wsxEedGYyhnRrfvc8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz7-="5346][|
+    - xlit|BbpmdtnlĞgkŋhZzcsJjCSaiwueOəIUDfqrvxyMGNY@AWHRFQVØL&1732548|!1qa2wsxEedNcYyhnRrfv8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz=-7"5346[]|
 
 translator:
   dictionary: ji_khoo_bpm2
@@ -367,8 +353,8 @@ translator:
     # 定義【鍵盤輸入列】：按鍵與方音符號對映
     #==========================================================================
     # （1）【注音符號按鍵】
-    # - xlit|!1qa2wsxEedGYyhnRrfvc8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz7-="5346][|ㆠㄅㄆㄇㄉㄊㄋㄌㆣㄍㄎㄫㆡㄗㄘㄙㆢㄐㄑㄒㄏㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㆭㄣㆰㄢㄤㆱㆲㆴㆵㆻㆷ入ㄥØ一七三二五八四|
-    - xlit|!1qa2wsxEedGYyhnRrfvc8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz7-="5346][|ㆠㄅㄆㄇㄉㄊㄋㄌㆣㄍㄎㄫㆡㄗㄘㄙㆢㄐㄑㄒㄏㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㆭㄣㆰㄢㄤㆱㆲㆴㆵㆻㆷ入ㄥØ一七三二五八四|
+    - xlit|!1qa2wsxEedNcYyhnRrfv8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz=-7"5346[]|ㆠㄅㄆㄇㄉㄊㄋㄌㆣㄍㄎㄫㄏㆡㄗㄘㄙㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㆭㄣㆰㄢㄤㆱㆲㆴㆵㆻㆷØㄥ入一七三二五四八|
+
     #--------------------------------------------------------------------------
     # （2）【調號按鍵】
     #     -【"】高音調（陰平）： 【無標記】
@@ -482,7 +468,7 @@ translator:
     # 零聲母 + 韻化輔音（m/ng號） + 調號
     - xform/\b((?:m|ng)\d)\b/〔〉Ø$1〕 【》Ø$1】/
     # 零聲母 + 鼻化元音/複合韻母 + 調號：本字典使用 nn 後綴（如 ann1、uainn1）。
-    # 不可把 n + 韻母（如 na1）先標成 Ø，否則會跳過後面的 ㄋ 聲母轉換。
+    - xform/\b([iu]?(?:ai|au|oo|[aiue])nn[a-z]*\d)\b/〔〉Ø$1〕 【》Ø$1】/
     # 零聲母 + 元音/複合韻母 + 調號: i1, iu2, uai1, ...
     - xform/\b([iu]?(?:ai|au|oo|[aiueo])[a-z]*\d)\b/〔〉Ø$1〕 【》Ø$1】/
     # 聲母 + 韻母 + 調號
