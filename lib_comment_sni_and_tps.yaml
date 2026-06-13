@@ -23,13 +23,13 @@ hau_suan_tuann:
     #==========================================================================
     # 韻母校調
     #==========================================================================
-    - xform/iek/ik/
-    - xform/ur/u/
-    - xform/or/o/
-    - xform/ou/oo/
+    # - xform/iek/ik/
+    # - xform/ur/u/
+    # - xform/or/o/
+    # - xform/ou/oo/
     #------------------------------------------------------
     # 組合韻母
-    - xform/([iu]?(?:ai|au|oo|[aiueo]))/$1/
+    # - xform/([iu]?(?:ai|au|oo|[aiueo]))/$1/
     #------------------------------------------------------
     # 鼻化韻母轉換：改 nn 後綴，成 n 前綴
     # ann ==>  La ==> ㄥㄚ ==> ㆩ
@@ -37,13 +37,13 @@ hau_suan_tuann:
     # 台羅拼音：onn ；台語注音二式：oonn
     # 台羅拼音：o ；台語注音二式：or
     #------------------------------------------------------
-    - xform/([iu]?(?:ai|au|oo|[aiueo]))nn/L$1/
+    # - xform/([iu]?(?:ai|au|oo|[aiueo]))nn/L$1/
     #==========================================================================
     # 声母校調
     #==========================================================================
     # 舌尖前音（齒齦音）: z[ts/c], c[tsh/ch], s[s], j[j]
-    - xform/tsh/c/     # ㄘ
-    - xform/ts/z/      # ㄗ
+    # - xform/tsh/c/     # ㄘ
+    # - xform/ts/z/      # ㄗ
 
     #==========================================================================
     # 【候選清單】漢字標音格式化
@@ -57,7 +57,8 @@ hau_suan_tuann:
     # 零聲母 + 韻化輔音（m/ng號） + 調號
     - xform/\b((?:m|ng)\d)\b/【》Ø$1】〔〉Ø$1〕/
     # 零聲母 + 鼻化元音/複合韻母 + 調號: ni1, niu2, nuai1, ...
-    - xform/\b(L([iu]?(?:ai|au|oo|[aiueo])[a-z]*\d))\b/【》Ø$1】〔〉Ø$1〕/
+    # - xform/\b(L([iu]?(?:ai|au|oo|[aiueo])[a-z]*\d))\b/【》Ø$1】〔〉Ø$1〕/
+    - xform/\b(([iu]?(?:ai|au|oo|[aiueo]nn)[a-z]*\d))\b/【》Ø$1】〔〉Ø$1〕/
     # 零聲母 + 元音/複合韻母 + 調號: i1, iu2, uai1, ...
     - xform/\b([iu]?(?:ai|au|oo|[aiueo])[a-z]*\d)\b/【》Ø$1】〔〉Ø$1〕/
     # 聲母 + 韻母 + 調號
@@ -67,31 +68,31 @@ hau_suan_tuann:
     # 【注音系統】声母轉換作業
     #==========================================================================
     # 舌齒音（齒齦顎音）
-    - xform/〉z/ㄗ〉/
-    - xform/〉c/ㄘ〉/
-    - xform/〉j/ㆡ〉/
-    - xform/〉s/ㄙ〉/
+    - xform/〔〉ts(?!h)/〔ㄗ〉/
+    - xform/〔〉tsh/〔ㄘ〉/
+    - xform/〔〉j/〔ㆡ〉/
+    - xform/〔〉s/〔ㄙ〉/
     # --------------------------------------------------------------------------
     # 唇音(不送氣音/送氣音/濁音/鼻音)
-    - xform/〉ph/ㄆ〉/
-    - xform/〉p(?![h\d])/ㄅ〉/
-    - xform/〉m(?!\d)/ㄇ〉/     # m 不僅為聲母，亦為韻化聲母
-    - xform/〉b/ㆠ〉/
-    # --------------------------------------------------------------------------
-    # 舌根音（軟顎音）
-    - xform/〉kh/ㄎ〉/
-    - xform/〉k(?![h\d])/ㄍ〉/
-    - xform/〉ng(?!\d)/ㄫ〉/
-    - xform/〉g/ㆣ〉/
+    - xform/〔〉ph/〔ㄆ〉/
+    - xform/〔〉p(?![h\d])/〔ㄅ〉/
+    - xform/〔〉m(?!\d)/〔ㄇ〉/     # m 不僅為聲母，亦為韻化聲母
+    - xform/〔〉b/〔ㆠ〉/
     # --------------------------------------------------------------------------
     # 舌尖音（齒齦音）
-    - xform/〉th/ㄊ〉/
-    - xform/〉t(?![h\d])/ㄉ〉/
-    - xform/〉n(?!g)(?!\d)/ㄋ〉/  # 絕對不可將 n 置於 ng 之前
-    - xform/〉l/ㄌ〉/
+    - xform/〔〉th/〔ㄊ〉/
+    - xform/〔〉t(?![h\d])/〔ㄉ〉/
+    - xform/〔〉n(?!g)/〔ㄋ〉/  # 絕對不可將 n 置於 ng 之前
+    - xform/〔〉l/〔ㄌ〉/
+    # --------------------------------------------------------------------------
+    # 舌根音（軟顎音）
+    - xform/〔〉kh/〔ㄎ〉/
+    - xform/〔〉k(?![h\d])/〔ㄍ〉/
+    - xform/〔〉ng(?!\d)/〔ㄫ〉/
+    - xform/〔〉g/〔ㆣ〉/
     #------------------------------------------------------
     # 喉音
-    - xform/〉h/ㄏ〉/
+    - xform/〔〉h/〔ㄏ〉/
 
     #--------------------------------------------------------------------------
     # 零聲母特別處理
@@ -108,91 +109,93 @@ hau_suan_tuann:
     #==========================================================================
     # 鼻化韻母轉換
     #------------------------------------------------------
-    - xform/〉Luaih/ㄨㆮㆷ〉/
-    - xform/〉Liah/ㄧㆩㆷ〉/
-    - xform/〉Liau/ㄧㆯ〉/
-    - xform/〉Liuh/ㄧㆫㆷ〉/
-    - xform/〉Luai/ㄨㆮ〉/
-    - xform/〉Lah/ㆩㆷ〉/
-    - xform/〉Lai/ㆮ〉/
-    - xform/〉Leh/ㆥㆷ〉/
-    - xform/〉Lia/ㄧㆩ〉/
-    - xform/〉Lio/ㄧㆧ〉/
-    - xform/〉Liu/ㄧㆫ〉/
-    - xform/〉Loh/ㆧㆷ〉/
-    - xform/〉Lua/ㄨㆩ〉/
-    - xform/〉Lui/ㄨㆪ〉/
-    - xform/〉La/ㆩ〉/
-    - xform/〉Le/ㆥ〉/
-    - xform/〉Li/ㆪ〉/
-    - xform/〉Lo/ㆧ〉/
+    - xform/〉uainnh/ㄨㆮㆷ〉/
+    - xform/〉iannh/ㄧㆩㆷ〉/
+    - xform/〉iaunn/ㄧㆯ〉/
+    - xform/〉iunnh/ㄧㆫㆷ〉/
+    - xform/〉uainn/ㄨㆮ〉/
+    - xform/〉ainn/ㆮ〉/
+    - xform/〉annh/ㆩㆷ〉/
+    - xform/〉ennh/ㆥㆷ〉/
+    - xform/〉iann/ㄧㆩ〉/
+    - xform/〉ionn/ㄧㆧ〉/
+    - xform/〉iunn/ㄧㆫ〉/
+    - xform/〉onnh/ㆧㆷ〉/
+    - xform/〉ann/ㆩ〉/
+    - xform/〉enn/ㆥ〉/
+    - xform/〉inn/ㆪ〉/
+    - xform/〉uih/ㄨㄧㆷ〉/
+
     #------------------------------------------------------
     # 複合複母、元音韻母轉換
     #------------------------------------------------------
     - xform/〉iang/ㄧㄤ〉/
     - xform/〉iauh/ㄧㄠㆷ〉/
     - xform/〉iong/ㄧㆲ〉/
-    - xform/〉uang/ㄨㄤ〉/
     - xform/〉uaih/ㄨㄞㆷ〉/
-    - xform/〉uih/ㄨㄧㆷ〉/
-    - xform/〉ang/ㄤ〉/
+    - xform/〉uang/ㄨㄤ〉/
+    - xform/〉uann/ㄨㆩ〉/
+    - xform/〉uinn/ㄨㆪ〉/
     - xform/〉aih/ㄞㆷ〉/
+    - xform/〉ang/ㄤ〉/
     - xform/〉auh/ㄠㆷ〉/
-    - xform/〉ing/ㄧㄥ〉/
     - xform/〉iah/ㄧㄚㆷ〉/
+    - xform/〉iak/ㄧㄚㆻ〉/
     - xform/〉iam/ㄧㆰ〉/
     - xform/〉ian/ㄧㄢ〉/
     - xform/〉iap/ㄧㄚㆴ〉/
     - xform/〉iat/ㄧㄚㆵ〉/
-    - xform/〉iak/ㄧㄚㆻ〉/
     - xform/〉iau/ㄧㄠ〉/
+    - xform/〉ing/ㄧㄥ〉/
     - xform/〉ioh/ㄧㄜㆷ〉/
     - xform/〉iok/ㄧㆦㆻ〉/
-    - xform/〉ooh/ㆦㆷ〉/
+    - xform/〉ngh/ㆭㆷ〉/
     - xform/〉ong/ㆲ〉/
+    - xform/〉onn/ㆧ〉/
+    - xform/〉ooh/ㆦㆷ〉/
     - xform/〉uah/ㄨㄚㆷ〉/
+    - xform/〉uai/ㄨㄞ〉/
     - xform/〉uan/ㄨㄢ〉/
     - xform/〉uat/ㄨㄚㆵ〉/
-    - xform/〉uai/ㄨㄞ〉/
     - xform/〉ueh/ㄨㆤㆷ〉/
-    - xform/〉ngh/ㆭㆷ〉/
     - xform/〉ah/ㄚㆷ〉/
+    - xform/〉ai/ㄞ〉/
+    - xform/〉ak/ㄚㆻ〉/
     - xform/〉am/ㆰ〉/
     - xform/〉an/ㄢ〉/
     - xform/〉ap/ㄚㆴ〉/
     - xform/〉at/ㄚㆵ〉/
-    - xform/〉ak/ㄚㆻ〉/
-    - xform/〉ai/ㄞ〉/
     - xform/〉au/ㄠ〉/
     - xform/〉eh/ㆤㆷ〉/
+    - xform/〉ia/ㄧㄚ〉/
     - xform/〉ih/ㄧㆷ〉/
+    - xform/〉ik/ㄧㆻ〉/
     - xform/〉im/ㄧㆬ〉/
     - xform/〉in/ㄧㄣ〉/
+    - xform/〉io/ㄧㄜ〉/
     - xform/〉ip/一ㆴ〉/
     - xform/〉it/ㄧㆵ〉/
-    - xform/〉ik/ㄧㆻ〉/
-    - xform/〉ia/ㄧㄚ〉/
-    - xform/〉io/ㄧㄜ〉/
     - xform/〉iu/ㄧㄨ〉/
-    - xform/〉oo/ㆦ〉/
-    - xform/〉oh/ㄜㆷ〉/
-    - xform/〉om/ㆱ〉/
-    - xform/〉op/ㆦㆴ〉/
-    - xform/〉ok/ㆦㆻ〉/
-    - xform/〉uh/ㄨㆷ〉/
-    - xform/〉un/ㄨㄣ〉/
-    - xform/〉ut/ㄨㆵ〉/
-    - xform/〉ua/ㄨㄚ〉/
-    - xform/〉ue/ㄨㆤ〉/
-    - xform/〉ui/ㄨㄧ〉/
     - xform/〉mh/ㆬㆷ〉/
     - xform/〉ng/ㆭ〉/
+    - xform/〉oh/ㄜㆷ〉/
+    - xform/〉ok/ㆦㆻ〉/
+    - xform/〉om/ㆱ〉/
+    - xform/〉oo/ㆦ〉/
+    - xform/〉op/ㆦㆴ〉/
+    - xform/〉ua/ㄨㄚ〉/
+    - xform/〉ue/ㄨㆤ〉/
+    - xform/〉uh/ㄨㆷ〉/
+    - xform/〉ui/ㄨㄧ〉/
+    - xform/〉un/ㄨㄣ〉/
+    - xform/〉ut/ㄨㆵ〉/
     - xform/〉a/ㄚ〉/
-    - xform/〉e/ㆤ〉/
+    - xform/〉ei/ㆤ〉/
     - xform/〉i/ㄧ〉/
+    - xform/〉m/ㆬ〉/
     - xform/〉o/ㄜ〉/
     - xform/〉u/ㄨ〉/
-    - xform/〉m/ㆬ〉/
+
     #------------------------------------------------------
     # 校調
     #------------------------------------------------------
@@ -242,150 +245,134 @@ hau_suan_tuann:
     # - xform/》ch/出》/
     # - xform/》tsh/出》/
     # - xform/》ts(?!h)/曾》/
-    - xform/》z/曾》/
-    - xform/》c/出》/
-    - xform/》j/入》/
-    - xform/》s/時》/
+    - xform/【》ts(?!h)/【曾》/
+    - xform/【》tsh/【出》/
+    - xform/【》j/【入》/
+    - xform/【》s/【時》/
     # 唇音(不送氣音/送氣音/濁音/鼻音)
-    - xform/》ph/頗》/
-    - xform/》p(?!h)/邊》/
-    - xform/》b/門》/
-    # - xform/》m(?!\d)/毛》/
-    - xform/》m(?!\d)/門》/  # m【a】 ==>  [m]
-    # 舌根音
-    - xform/》kh/去》/
-    - xform/》k(?!h)/求》/
-    - xform/》g/語》/
-    # - xform/》ng(?!\d)/雅》/
-    - xform/》ng(?!\d)/語》/
+    - xform/【》ph/【頗》/
+    - xform/【》p(?!h)/【邊》/
+    - xform/【》b/【門》/
+    # - xform/【》m(?!\d)【/【門》/  # m【a】 ==>  [m]
+    - xform/【》m(?!\【d)/【毛》/
     # 舌尖音
-    - xform/》th/他》/
-    - xform/》t(?!h)/地》/
-    - xform/》n(?!g)(?!\d)/耐》/
-    - xform/》l/柳》/
+    - xform/【》th/【他》/
+    - xform/【》t(?!h)/【地》/
+    - xform/【》n(?!g)/【耐》/
+    - xform/【》l/【柳》/
+    # 舌根音
+    - xform/【》kh/【去》/
+    - xform/【》k(?!h)/【求》/
+    - xform/【》g/【語》/
+    # - xform/【》ng(?!\d)/【語》/
+    - xform/【》ng(?!\d)/【雅》/
     # 喉音
-    - xform/》h/喜》/
+    - xform/【》h/【喜》/
     #------------------------------------------------------
     # 韻母
     #------------------------------------------------------
-    # 泉州腔《彙音妙悟》十五音韻書
-    - xform/》ir(ng|k)/生》/
-    - xform/》er(ng|k)/生》/
-    - xform/》ir(n|t)/恩》/
-    - xform/》er(n|t)/恩》/
-    - xform/》ir(m|p)/箴》/
-    - xform/》ere(h?)/雞》/
-    - xform/》eru/鉤》/
-    - xform/》er(h?)/科》/
-    - xform/》or(h?)/刀》/
-    - xform/》ir/居》/
-    - xform/》ur(h?)/高》/
+    # # 泉州腔《彙音妙悟》十五音韻書
+    # - xform/》ir(ng|k)/生》/
+    # - xform/》er(ng|k)/生》/
+    # - xform/》ir(n|t)/恩》/
+    # - xform/》er(n|t)/恩》/
+    # - xform/》ir(m|p)/箴》/
+    # - xform/》ere(h?)/雞》/
+    # - xform/》eru/鉤》/
+    # - xform/》er(h?)/科》/
+    # - xform/》or(h?)/刀》/
+    # - xform/》ir/居》/
+    # - xform/》ur(h?)/高》/
     #------------------------------------------------------
-    # i
+    # 鼻化韻母轉換
     #------------------------------------------------------
-    # - xform/》iauⁿ(h?)/嘄》/
-    - xform/》Liau(h?)/嘄》/
-    - xform/》iau(h?)/嬌》/
+    - xform/》uainnh/閂》/
+    - xform/》iannh/迦》/
+    - xform/》iaunn/嘄》/
+    - xform/》iunnh/牛》/
+    - xform/》uainn/閂》/
+    - xform/》ainn/閒》/
+    - xform/》annh/監》/
+    - xform/》ennh/更》/
+    - xform/》iann/驚》/
+    - xform/》ionn/薑》/
+    - xform/》iunn/牛》/
+    - xform/》onnh/扛》/
+    - xform/》ann/監》/
+    - xform/》enn/更》/
+    - xform/》inn/梔》/
+    - xform/》uih/褌》/
 
-    - xform/》ia(ng|k)/姜》/
-    - xform/》ia(n|t)/堅》/
-    - xform/》ia(m|p)/兼》/
-
-    # - xform/》iaⁿ/驚》/
-    - xform/》Lia/驚》/
-    - xform/》ia(h?)/迦》/
-
-    # - xform/》ioⁿ/薑》/
-    - xform/》Lio/薑》/
-    - xform/》io(ng|k)/恭》/
-    - xform/》io(h?)/茄》/
-
-    # - xform/》iuⁿ/牛》/
-    - xform/》Liu/牛》/
-    - xform/》iu/丩》/
-
-    - xform/》i(ng|k)/經》/
-    - xform/》i(n|t)/巾》/
-    - xform/》i(m|p)/金》/
-
-    # - xform/》iⁿ(h?)/梔》/
-    - xform/》Li(h?)/梔》/
-    - xform/》i(h?)/居》/
     #------------------------------------------------------
-    # u
+    # 複合/元音韻母轉換
     #------------------------------------------------------
-    - xform/》ua(ng|k)/光》/
-    - xform/》ua(n|t)/觀》/
-
-    # - xform/》uaiⁿ(h?)/閂》/
-    - xform/》Luai(h?)/閂》/
-    - xform/》uai(h?)/乖》/
-
-    # - xform/》uaⁿ/官》/
-    - xform/》Lua/官》/
-    - xform/》ua(h?)(?!n)/瓜》/
-
-    # - xform/》uiⁿ/禈》/
-    - xform/》Lui/禈》/
-    - xform/》ui(h?)/規》/
-
-    # - xform/》ueⁿ/糜》/
-    - xform/》Lue/糜》/
-    - xform/》ue(h?)/檜》/
-
-    - xform/》u(n|t)/君》/
-
-    - xform/》u(h?)/艍》/
-    #------------------------------------------------------
-    # a
-    #------------------------------------------------------
-    # - xform/》aiⁿ/閒》/
-    - xform/》Lai/閒》/
+    - xform/》iang/姜》/
+    - xform/》iauh/嬌》/
+    - xform/》iong/恭》/
+    - xform/》uaih/乖》/
+    - xform/》uang/光》/
+    - xform/》uann/官》/
+    - xform/》uinn/褌》/
+    - xform/》aih/皆》/
+    - xform/》ang/江》/
+    - xform/》auh/交》/
+    - xform/》iah/迦》/
+    - xform/》iak/姜》/
+    - xform/》iam/兼》/
+    - xform/》ian/堅》/
+    - xform/》iap/兼》/
+    - xform/》iat/堅》/
+    - xform/》iau/嬌》/
+    - xform/》ing/經》/
+    - xform/》ioh/茄》/
+    - xform/》iok/恭》/
+    - xform/》ngh/鋼》/
+    - xform/》ong/公》/
+    - xform/》onn/姑》/
+    - xform/》ooh/沽》/
+    - xform/》uah/瓜》/
+    - xform/》uai/乖》/
+    - xform/》uan/觀》/
+    - xform/》uat/觀》/
+    - xform/》ueh/檜》/
+    - xform/》ah/膠》/
     - xform/》ai/皆》/
-
-    # - xform/》auⁿ/爻》/
-    - xform/》Lau/爻》/
-    - xform/》au(h?)/交》/
-
-    - xform/》a(ng|k)/江》/
-    - xform/》a(n|t)/干》/
-    - xform/》a(m|p)/甘》/
-
-    # - xform/》aⁿ(h?)/監》/
-    - xform/》La(h?)/監》/
-    - xform/》a(h?)/膠》/
-    #------------------------------------------------------
-    # e
-    #------------------------------------------------------
-    - xform/》ei/稽》/
-    - xform/》ee(h?)/嘉》/
-
-    # - xform/》eⁿ(h?)/更》/
-    - xform/》Le(h?)/更》/
-    - xform/》e(h?)/伽》/
-    #------------------------------------------------------
-    # oo
-    #------------------------------------------------------
-    - xform/》o(ng|k)/公》/
-    - xform/》o(m|p)/箴》/
-
-    # - xform/》ooⁿ/姑》/
-    - xform/》oo(h?)/沽》/
-    # - xform/》Loo/姑》/
-    - xform/》Lo/姑》/
-    #------------------------------------------------------
-    # o
-    # 停用 `江(oⁿ)` ，併入 `姑(oⁿ/ooⁿ)`
-    # - xform/》oⁿ(h?)/扛》/
-    #------------------------------------------------------
-    # - xform/》oⁿ(h?)/姑》/
-    - xform/》Lo(h?)/姑》/
-    - xform/》o(h?)/高》/
-    #------------------------------------------------------
-    # m, ng
-    #------------------------------------------------------
-    - xform/》m/姆》/
+    - xform/》ak/江》/
+    - xform/》am/甘》/
+    - xform/》an/干》/
+    - xform/》ap/甘》/
+    - xform/》at/干》/
+    - xform/》au/交》/
+    - xform/》eh/伽》/
+    - xform/》ia/迦》/
+    - xform/》ih/居》/
+    - xform/》ik/經》/
+    - xform/》im/金》/
+    - xform/》in/巾》/
+    - xform/》io/茄》/
+    - xform/》ip/金》/
+    - xform/》it/巾》/
+    - xform/》iu/丩》/
+    - xform/》mh/姆》/
     - xform/》ng/鋼》/
+    - xform/》oh/高》/
+    - xform/》ok/公》/
+    - xform/》om/箴》/
+    - xform/》oo/沽》/
+    - xform/》op/箴》/
+    - xform/》ua/瓜》/
+    - xform/》ue/檜》/
+    - xform/》uh/艍》/
+    - xform/》ui/規》/
+    - xform/》un/君》/
+    - xform/》ut/君》/
+    - xform/》a/膠》/
+    - xform/》ei/稽》/
+    - xform/》i/居》/
+    - xform/》m/姆》/
+    - xform/》o/高》/
+    - xform/》u/艍》/
+
     #------------------------------------------------------
     # 轉換聲調
     #------------------------------------------------------
