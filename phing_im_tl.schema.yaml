@@ -173,7 +173,6 @@ speller:
     # 只輸入【聲母】與【調號】
     - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
     # 鼻算韻母以 L 代
-    # - abbrev/L([iu]?(ai|au|oo|[aiueo]))/L/
     - abbrev/([iu]?(ai|au|oo|[aiueo]))nn/L/
 
     #=======================================================================
