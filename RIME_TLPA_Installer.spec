@@ -8,7 +8,10 @@ a = Analysis(
     datas=[
         # 僅內嵌【輸入法選單設定】；輸入方案檔（schema/dict/lua…）改由
         # 使用者下載之 rime-tlpa-*.zip 提供，不再打包進 exe。
-        ('config/default.custom.yaml', 'config'),  # 預設輸入法選單設定
+        ('config/default.custom.yaml', 'config'),  # 全部輸入方案選單設定
+        ('config/default.custom.zu_im.yaml', 'config'),  # 注音類輸入方案選單設定
+        ('config/default.custom.phing_im.yaml', 'config'),  # 拼音類輸入方案選單設定
+        ('config/default.custom.huan_ciat.yaml', 'config'),  # 反切類輸入方案選單設定
     ],
     hiddenimports=[],
     hookspath=[],

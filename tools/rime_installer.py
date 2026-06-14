@@ -9,7 +9,7 @@ RIME TLPA 專用安裝程式（圖形介面版）
   2. 使用者【下載 (Downloads)】資料夾
   3. 目前工作目錄
 若找不到，提示使用者先行下載，或自行以檔案對話框指定。
-default.custom.yaml（輸入法選單設定）仍隨 exe 內嵌提供。
+各輸入方案類別使用的 default.custom*.yaml（輸入法選單設定）隨 exe 內嵌提供。
 """
 
 import queue
@@ -27,6 +27,20 @@ from tkinter import filedialog, messagebox, ttk
 SCHEME_ZIP_GLOB = "rime-tlpa-*.zip"
 # 找不到壓縮檔時，提示使用者前往下載之網址
 RELEASE_URL = "https://github.com/AlanJui/rime-tlpa/releases"
+
+PACKAGE_CONFIG_FILES = {
+    "all": "default.custom.yaml",
+    "zu_im": "default.custom.zu_im.yaml",
+    "phing_im": "default.custom.phing_im.yaml",
+    "huan_ciat": "default.custom.huan_ciat.yaml",
+}
+
+PACKAGE_LABELS = {
+    "all": "全部輸入方案",
+    "zu_im": "注音類輸入方案",
+    "phing_im": "拼音類輸入方案",
+    "huan_ciat": "反切類輸入方案",
+}
 
 
 def get_exe_dir() -> Path:
@@ -70,6 +84,15 @@ def find_scheme_zips() -> list:
     return found
 
 
+def detect_package_kind(zip_path: Path) -> str | None:
+    """依輸入方案壓縮檔檔名判斷套件類別。"""
+    name = zip_path.name.lower()
+    for kind in PACKAGE_CONFIG_FILES:
+        if name.startswith(f"rime-tlpa-{kind}-") and name.endswith(".zip"):
+            return kind
+    return None
+
+
 class RimeTLPAInstaller:
     def __init__(self, zip_path=None, log_func=None):
         self._log = log_func or print
@@ -103,7 +126,18 @@ class RimeTLPAInstaller:
             self._log(f"❌ 錯誤: 「{self.zip_path.name}」不是有效的 zip 壓縮檔")
             return False
 
+        package_kind = detect_package_kind(self.zip_path)
+        if package_kind is None:
+            self._log(f"❌ 錯誤: 無法由檔名判斷輸入方案類別: {self.zip_path.name}")
+            self._log("   檔名應為下列格式之一：")
+            self._log("   - rime-tlpa-all-[ver_no].zip")
+            self._log("   - rime-tlpa-zu_im-[ver_no].zip")
+            self._log("   - rime-tlpa-phing_im-[ver_no].zip")
+            self._log("   - rime-tlpa-huan_ciat-[ver_no].zip")
+            return False
+
         self._log(f"📦 使用輸入方案壓縮檔: {self.zip_path.name}")
+        self._log(f"📦 輸入方案類別: {PACKAGE_LABELS[package_kind]}")
         return True
 
     def backup_default_custom(self):
@@ -166,20 +200,26 @@ class RimeTLPAInstaller:
         return copied_count, failed_files
 
     def copy_default_custom(self):
-        """複製內嵌之 default.custom.yaml（輸入法選單設定）。"""
-        config_src = self.bundle_dir / "config" / "default.custom.yaml"
+        """依輸入方案壓縮包類別，複製內嵌之輸入法選單設定。"""
+        package_kind = detect_package_kind(self.zip_path) if self.zip_path else None
+        config_name = PACKAGE_CONFIG_FILES.get(package_kind)
+        if config_name is None:
+            self._log("⚠️  無法判斷需使用的 default.custom 設定檔")
+            return False
+
+        config_src = self.bundle_dir / "config" / config_name
 
         if config_src.exists():
             dst_file = self.rime_dir / "default.custom.yaml"
             shutil.copy2(config_src, dst_file)
-            self._log("✅ 已複製 default.custom.yaml (輸入法選單設定)")
+            self._log(f"✅ 已複製 {config_name} 為 default.custom.yaml (輸入法選單設定)")
             return True
 
-        self._log("⚠️  找不到內嵌的 default.custom.yaml")
+        self._log(f"⚠️  找不到內嵌的 {config_name}")
         return False
 
     def deploy_rime(self):
-        """RIME 重新部署
+        r"""RIME 重新部署
          1. 部署程式檔名為： WeaselDeployer.exe
          2. 部署程式存放目錄路徑為： C:\Program Files\Rime\weasel-<version>\WeaselDeployer.exe
             如： C:\Program Files\Rime\weasel-0.17.4\WeaselDeployer.exe

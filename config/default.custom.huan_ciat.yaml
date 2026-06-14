@@ -1,0 +1,19 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.17.4
+  generator: "Rime::SwitcherSettings"
+  modified_time: "Sun Mar 29 11:53:13 2026"
+  rime_version: 1.13.1
+patch:
+  "log/level": "info"
+  schema_list:
+    #------------------------------------------------------------------------
+    # 注音符號鍵盤練習
+    #------------------------------------------------------------------------
+    - { schema: kb_hong_im }  # 方音符號按鍵練習
+    - { schema: kb_ipa }      # 國際音標按鍵練習
+    #------------------------------------------------------------------------
+    # 反切輸入法（拼音字母）
+    #------------------------------------------------------------------------
+    - { schema: huan_ciat_tlpa }  # 反切輸入法。台語音標（TLPA）
+    - { schema: huan_ciat_tps }   # 反切輸入法。方音符號（TPS）
