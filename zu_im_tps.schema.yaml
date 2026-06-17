@@ -5,7 +5,7 @@
 schema:
   schema_id: zu_im_tps
   name: 注音輸入法【方音符號】
-  version: "v0.1.0.7"
+  version: "v0.1.0.8"
   author: 居正中
   description: |
     【輸入類型】：注音輸入法
@@ -55,15 +55,15 @@ engine:
   filters:
     - simplifier
     - uniquifier
+    - lua_filter@reformat_comment_filter
     # 為 filter 除錯用
     # - lua_filter@append_ok_filter
     # - lua_filter@force_mark_filter
-    - lua_filter@reformat_comment_filter
 
 speller:
-  alphabet: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-=\"5346][7"
+  alphabet: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-=\"5346][7."
   initials: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-="
-  finals: "\"5346][7."
+  finals: "\"5346][7"
   delimiter: "'"
   use_space: true
   #==========================================================================
