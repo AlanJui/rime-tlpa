@@ -1,11 +1,11 @@
 # Rime schema
-# version: "v0.2.0.0"
+# version: "v0.1.0"
 # encoding: utf-8
 
 schema:
   schema_id: kb_lo_ma_ji
   name: 按鍵練習【羅馬拼音字母】
-  version: "0.2.0.0"
+  version: "v0.1.0"
   author:
     - Alan Jui <AlanJui.1960@gmail.com>
   description: |

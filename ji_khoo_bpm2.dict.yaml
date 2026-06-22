@@ -5,7 +5,7 @@
 #
 ---
 name: ji_khoo_bpm2
-version: "v0.1.0.0"
+version: "v0.1.0"
 sort: by_weight
 use_preset_vocabulary: false
 columns:

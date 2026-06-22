@@ -1,5 +1,5 @@
--- Version: 0.2.4 (2026/6/2)
--- Version: 0.2.3 (2026/4/29)
+-- Version: v0.1.0 (2026/6/2)
+-- Version: v0.1.0 (2026/4/29)
 -- RIME API 依賴於運行時環境，無需顯式引入
 
 ---@diagnostic disable: undefined-global

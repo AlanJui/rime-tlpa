@@ -5,7 +5,7 @@
 schema:
   schema_id: huan_ciat_tps
   name: 反切輸入法【方音符號】
-  version: "v0.1.0.6"
+  version: "v0.1.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -624,7 +624,7 @@ key_binder:
     #---------------------------------------------------
     # 【候選字清單】展開時（即 has_menu 為 true 時）
     #---------------------------------------------------
-    # 註：先前曾使用 F20/F24 作為代理鍵，但目前的 rime.lua (v0.2)
+    # 註：先前曾使用 F20/F24 作為代理鍵，但目前的 rime.lua (v.0.2)
     # 已改為由 Lua 直接發送 Page_Up 與 Down 原生鍵，故以下代理鍵轉發已不再需要。
     # - { when: has_menu, accept: F20, send: Home }
     # - { when: has_menu, accept: F24, send: Down }

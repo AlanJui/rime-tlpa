@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_poj
   name: 拼音輸入法【白話字】
-  version: "v0.1.0.6"
+  version: "v0.1.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |

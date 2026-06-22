@@ -1,5 +1,5 @@
 -- lua/tlpa_converter.lua
--- V0.1.2 (2026/4/29)：修訂【國際音標】轉換。
+-- v0.1.0 (2026/4/29)：修訂【國際音標】轉換。
 -- TLPA（台語音標）→ 各閩南話標音系統 轉換模組
 -- 相容 Lua 5.1（使用 \NNN 十進位跳脫，不使用 \xNN）
 --
@@ -206,7 +206,7 @@ local FINALS = {
 -- ============================================================
 
 -- 移除 UTF-8 連接調符（U+0300–U+036F）
--- 在 Lua 5.1 中使用十進制跳脫：
+-- 在 Lua v.5.1.0 中使用十進制跳脫：
 --   U+0300–U+033F = byte1:204(\204), byte2:128-191(\128-\191)
 --   U+0340–U+036F = byte1:205(\205), byte2:128-175(\128-\175)
 local function strip_diacritics(s)
@@ -262,7 +262,7 @@ end
 -- 依優先規則在羅馬拼音中標注調符
 -- system: "台羅拼音" | "白話字" | "閩拼方案"
 local function apply_tone_mark(base, tiau, system)
-    -- Combining diacritical marks（Lua 5.1 十進制跳脫）
+    -- Combining diacritical marks（Lua v.5.1.0 十進制跳脫）
     -- U+0301 acute    = \204\129
     -- U+0300 grave    = \204\128
     -- U+0302 circum.  = \204\130
@@ -395,7 +395,7 @@ local function convert_tlpa(tlpa, target)
         end
 
         -- 方音調符（U+02CB ˋ, U+02EA ˪, U+02CA ˊ, U+02EB ˫, U+02D9 ˙）
-        -- 以 Lua 5.1 十進制：U+02CB=\203\139, U+02EA=\203\170,
+        -- 以 Lua v.5.1.0 十進制：U+02CB=\203\139, U+02EA=\203\170,
         --                    U+02CA=\203\138, U+02EB=\203\171, U+02D9=\203\153
         local tps_tones = {
             ["1"] = "",

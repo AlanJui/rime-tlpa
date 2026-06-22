@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_bp
   name: 拼音輸入法【閩拼方案】
-  version: "v0.2.0.12"
+  version: "v0.1.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |

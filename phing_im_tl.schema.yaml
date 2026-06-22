@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_tl
   name: 拼音輸入法【台羅拼音】
-  version: "v0.1.0.7"
+  version: "v0.1.0"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
