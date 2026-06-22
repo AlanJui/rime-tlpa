@@ -41,7 +41,9 @@ jobs:
             TAG="${{ github.event.inputs.tag_name }}"
             PRERELEASE="${{ github.event.inputs.prerelease }}"
           else
-            REF="${{ github.ref_name }}"
+            # tag push：github.ref_name 是 tag 名稱（例如 v0.1.0），
+            # 不能當作 target_commitish；改用 github.sha（tag 指到的 commit）
+            REF="${{ github.sha }}"
             TAG="${{ github.ref_name }}"
             PRERELEASE="false"
           fi
