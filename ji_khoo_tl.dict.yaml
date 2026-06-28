@@ -14,8 +14,8 @@ columns:
   - weight  # 常用度（優先顯示度）
   - stem    # 用法舉例
   - create  # 建立時間
-# import_tables:
-#   - tl_han_ji_khoo
+import_tables:
+  - ji_khoo_su_lui
 ...
 㔂	lan5	0.1	NA	2026-01-02 22:50:38
 㜅	thik4	0.01	NA	2025-02-11 11:16:04

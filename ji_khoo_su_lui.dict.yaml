@@ -1,0 +1,19 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# 河洛白話音
+#
+---
+name: ji_khoo_su_lui
+version: "v0.1.0"
+sort: by_weight
+use_preset_vocabulary: false
+columns:
+  - text    # 漢字
+  - code    # 台灣音標（TLPA）拼音
+  - weight  # 常用度（優先顯示度）
+  - stem    # 用法舉例
+  - create  # 建立時間
+...
+或是	a2 si2	0.60 	a2:或、或是、還是	2026-06-28 21:14
+阿祖	a0 tsoo2	0.60 	a:阿	2026-06-28 21:14

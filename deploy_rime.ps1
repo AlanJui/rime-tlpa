@@ -60,6 +60,9 @@ $files = @(
     "ji_khoo_bpm2.dict.yaml"
     "ji_khoo_tl.dict.yaml"
 
+    # --- 輸入方案用辭彙典 ---
+    "ji_khoo_su_lui.dict.yaml"
+
     # --- 拼音輸入法 ---
     "phing_im_bp.schema.yaml"
     "phing_im_bpm2.schema.yaml"
