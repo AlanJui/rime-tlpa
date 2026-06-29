@@ -82,7 +82,7 @@ stop
 
 1. 程式語言：Python Script
 2. Excel 操作套件庫： xlwings
-3. 程式檔名稱： a100_su_lui_converter.py
+3. 程式檔名稱： convert_su_lui_to_rime_dict.py
 4. 程式存放路徑： tools\
 5. 操作用法：
 
