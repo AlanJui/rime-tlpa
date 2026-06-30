@@ -87,7 +87,7 @@ stop
 5. 操作用法：
 
 ```python
-# 先驗證邏輯(不需 Excel)
+# 只驗證邏輯(不需 Excel)
 python tools/convert_su_lui_to_rime_dict.py --selftest
 
 # 對預設檔執行轉換(需 xlwings + 開著的 Excel)
