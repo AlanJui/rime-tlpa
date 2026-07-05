@@ -62,6 +62,7 @@ $files = @(
 
     # --- 輸入方案用辭彙典 ---
     "ji_khoo_su_lui.dict.yaml"
+    "ji_khoo_ban_lam.dict.yaml"
 
     # --- 拼音輸入法 ---
     "phing_im_bp.schema.yaml"
