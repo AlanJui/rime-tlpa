@@ -1,10 +1,10 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# 河洛白話音
+# 台語白話音日常辭庫
 #
 ---
-name: ji_khoo_tl
+name: ji_khoo_kam_ji_tian
 version: "v0.1.0"
 sort: by_weight
 use_preset_vocabulary: false
@@ -14,11 +14,8 @@ columns:
   - weight  # 常用度（優先顯示度）
   - stem    # 用法舉例
   - create  # 建立時間
-import_tables:
-  - ji_khoo_ziann_ji
-  # - ji_khoo_su_lui
-  # - ji_khoo_ban_lam
 ...
+
 ㄏ	e3	0.80	【3754】字母 對 (丿Phiat) 出, 拖 ê 意思.	2026-07-05 21:19
 ㄙ	boo2	0.80	【770】物 總 稱呼 ê 字, 親像 某物; 也是 斡角 ê 意思.	2026-07-05 21:19
 ㄙ	su1	0.80	【20081】歪 m̄直 ê 意思, 公平 ê 對反, 就是 無 公平, 偏私.	2026-07-05 21:19

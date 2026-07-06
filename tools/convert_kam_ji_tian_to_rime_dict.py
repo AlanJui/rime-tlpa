@@ -96,12 +96,12 @@ def to_weight(tailo: str) -> float:
 def convert_row(dict_word_id, text, kaisoeh, kip_input, hanbun_im) -> list[tuple]:
     """
     將來源一列轉為 0~2 筆 RIME 紀錄 (text, code, weight, stem)。
-    - text 空值或「-」：略過（回傳空 list）
+    - text 空值、「-」或「?」：略過（回傳空 list）
     - J 欄（kip_input）一筆；L 欄（hanbun_im）有值再一筆
     - 同列 code 重複者只留一筆
     """
     t = "" if text is None else str(text).strip()
-    if not t or t == "-":
+    if not t or t in ("-", "?", "？"):
         return []
 
     wid = "" if dict_word_id is None else str(dict_word_id).strip()
@@ -153,27 +153,32 @@ def run_convert(xlsx_path: str, yaml_out: str | None = None) -> None:
     n = last_row - START_ROW + 1
     print(f"來源工作表：{SOURCE_SHEET}，資料列：{START_ROW}~{last_row}（共 {n} 列）")
 
-    # 一次批次讀取 A~L 欄（較逐格快）
-    rows = src.range(f"A{START_ROW}:L{last_row}").value
-    if n == 1:
-        rows = [rows]
-
+    # 分批讀取 A~L 欄並轉換，於同一列回報處理進度
     create_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     out, skipped = [], 0
-    for row in rows:
-        # A=0, D=3, H=7, J=9, L=11
-        recs = convert_row(row[0], row[3], row[7], row[9], row[11])
-        if not recs:
-            skipped += 1
-            continue
-        for text, code, weight, stem in recs:
-            out.append([text, code, weight, stem, create_str])
+    CHUNK = 1000
+    for chunk_start in range(START_ROW, last_row + 1, CHUNK):
+        chunk_end = min(chunk_start + CHUNK - 1, last_row)
+        rows = src.range(f"A{chunk_start}:L{chunk_end}").value
+        if chunk_start == chunk_end:
+            rows = [rows]
+        for i, row in enumerate(rows):
+            # A=0, D=3, H=7, J=9, L=11
+            recs = convert_row(row[0], row[3], row[7], row[9], row[11])
+            if not recs:
+                skipped += 1
+            for text, code, weight, stem in recs:
+                out.append([text, code, weight, stem, create_str])
+        print(f"\r目前處理 row no：{chunk_end}/{last_row}", end="", flush=True)
+    print()  # 進度列結束，換行
 
     # 清除標的工作表舊資料後，批次寫入
+    print("寫入標的工作表中…", flush=True)
     dst.clear_contents()
     dst.range("A1").value = ["text", "code", "weight", "stem", "create"]
     if out:
         dst.range(f"A{START_ROW}").value = out
+    print("存檔中…", flush=True)
     book.save()
     print(f"✓ 完成：來源 {n} 列 → 寫入 {len(out)} 筆（略過無漢字 {skipped} 列），已存檔。")
 
@@ -251,6 +256,8 @@ def selftest() -> int:
         ],
     )
     check("無漢字（-）→ 略過", convert_row(15, "-", "a-ka.", "a", None), [])
+    check("無漢字（?）→ 略過", convert_row(15, "?", "a-ka.", "a", None), [])
+    check("無漢字（全形？）→ 略過", convert_row(15, "？", "a-ka.", "a", None), [])
     check("漢字空值 → 略過", convert_row(15, None, "a-ka.", "a", None), [])
     check(
         "同列 J/L 同音 → 只留一筆",

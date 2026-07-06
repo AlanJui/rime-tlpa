@@ -56,13 +56,19 @@ $files = @(
     "lua\tlpa_converter.lua"
     "lua\bpm2_converter.lua"
 
-    # --- 輸入方案用字典 ---
-    "ji_khoo_bpm2.dict.yaml"
+    # --- 【台羅拼音】輸入方案用字典 ---
     "ji_khoo_tl.dict.yaml"
 
-    # --- 輸入方案用辭彙典 ---
+    # --- 【台羅拼音】輸入方案用辭庫 ---
     "ji_khoo_su_lui.dict.yaml"
     "ji_khoo_ban_lam.dict.yaml"
+    "ji_khoo_ziann_ji.dict.yaml"
+
+    # --- 【台語注音二式】輸入方案用字典 ---
+    "ji_khoo_bpm2.dict.yaml"
+
+    # --- 【台語注音二式】輸入方案用辭庫 ---
+
 
     # --- 拼音輸入法 ---
     "phing_im_bp.schema.yaml"
