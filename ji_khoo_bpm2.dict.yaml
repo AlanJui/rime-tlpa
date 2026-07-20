@@ -14,6 +14,10 @@ columns:
   - weight  # 常用度（優先顯示度）
   - stem    # 用法舉例
   - create  # 建立時間
+import_tables:
+  - ji_khoo_ziann_ji_bpm2
+  - ji_khoo_ban_lam_bpm2
+  - ji_khoo_su_lui_bpm2
 ...
 
 ㄏ	e3	0.8	【3754】字母 對 (丿Phiat) 出, 拖 ê 意思.	2026-07-05 21:19:00

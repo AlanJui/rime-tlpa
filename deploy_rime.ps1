@@ -68,7 +68,9 @@ $files = @(
     "ji_khoo_bpm2.dict.yaml"
 
     # --- 【台語注音二式】輸入方案用辭庫 ---
-
+    "ji_khoo_su_lui_bpm2.dict.yaml"
+    "ji_khoo_ban_lam_bpm2.dict.yaml"
+    "ji_khoo_ziann_ji_bpm2.dict.yaml"
 
     # --- 拼音輸入法 ---
     "phing_im_bp.schema.yaml"
