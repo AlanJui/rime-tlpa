@@ -5,7 +5,7 @@
 schema:
   schema_id: phing_im_bpm2
   name: 拼音輸入法【台語注音二式】
-  version: "v0.1.0"
+  version: "v0.1.1"
   author:
     - 居正中 <alanjui.1960@gmail.com>
   description: |
@@ -189,7 +189,8 @@ speller:
 translator:
   dictionary: ji_khoo_bpm2
   prism: phing_im_bpm2
-  spelling_hints: 20
+  # spelling_hints: 20
+  spelling_hints: 5
   always_show_comments: true
   initial_quality: 0.75
   preedit_format:
