@@ -1,0 +1,47 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.17.4
+  generator: "Rime::SwitcherSettings"
+  modified_time: "Sun Mar 29 11:53:13 2026"
+  rime_version: 1.13.1
+patch:
+  "log/level": "info"
+  schema_list:
+    #------------------------------------------------------------------------
+    # 注音符號鍵盤練習
+    #------------------------------------------------------------------------
+    - { schema: kb_hong_im }  # 方音符號按鍵練習
+    - { schema: kb_ipa }      # 國際音標按鍵練習
+    #------------------------------------------------------------------------
+    # 拼音輸入法
+    #------------------------------------------------------------------------
+    - { schema: phing_im_bp }     # 拼音輸入法。閩拼方案（BP）
+    - { schema: phing_im_bpm2 }   # 拼音輸入法。台語注音二式（BPM2）
+    - { schema: phing_im_poj }    # 拼音輸入法。白話字（POJ）
+    - { schema: phing_im_tl }     # 拼音輸入法。台羅拼音（TL）
+    - { schema: phing_im_tlpa }   # 拼音輸入法。台語音標（TLPA）
+    #------------------------------------------------------------------------
+    # 注音輸入法
+    #------------------------------------------------------------------------
+    - { schema: zu_im_tlpa } # 注音輸入法。台語音標（TLPA）
+    - { schema: zu_im_bpm2 } # 注音輸入法。台語注音二式（BPM2）
+    - { schema: zu_im_tps }  # 注音輸入法。方音符號（TPS）
+    #------------------------------------------------------------------------
+    # 反切輸入法（拼音字母）
+    #------------------------------------------------------------------------
+    - { schema: huan_ciat_tlpa }  # 反切輸入法。台語音標（TLPA）
+    - { schema: huan_ciat_tps }   # 反切輸入法。方音符號（TPS）
+    #------------------------------------------------------------------------
+    # RIME 官方輸入法
+    #------------------------------------------------------------------------
+    # - { schema: luna_pinyin }
+    # - { schema: stroke }
+    # - {schema: cangjie5}
+    # - {schema: terra_pinyin}
+    # - {schema: luna_pinyin_simp}
+    # - {schema: luna_pinyin_fluency}
+    # - {schema: cangjie5_express}
+    # - {schema: bopomofo}
+    # - {schema: bopomofo_express}
+    # - {schema: bopomofo_tw}
+    # - {schema: luna_pinyin_tw}

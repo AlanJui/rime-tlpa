@@ -1,0 +1,1376 @@
+-- Version: v0.1.0 (2026/6/2)
+-- Version: v0.1.0 (2026/4/29)
+-- RIME API 依賴於運行時環境，無需顯式引入
+
+---@diagnostic disable: undefined-global
+
+-- === 模組載入（於 rime.lua 初始化時執行，避免在函數內 require 靜默失敗）===
+local _tlpa_conv_ok, _tlpa_conv = pcall(require, "tlpa_converter")
+local _bpm2_conv_ok, _bpm2_conv = pcall(require, "bpm2_converter")
+if not _tlpa_conv_ok then
+	-- log 可能尚未就緒，故只記錄警告；aux_commit 稍後會再檢查
+	_tlpa_conv = nil
+end
+if not _bpm2_conv_ok then
+	_bpm2_conv = nil
+end
+
+-- === DICTIONARIES ===
+
+-- 十五音【聲母】與【台語音標】之對映關係
+local siann_bu_dict = {
+	["邊"] = "p",
+	["頗"] = "ph",
+	["門"] = "b",
+	["毛"] = "m",
+	["地"] = "t",
+	["他"] = "th",
+	["耐"] = "n",
+	["柳"] = "l",
+	["曾"] = "z",
+	["出"] = "c",
+	["時"] = "s",
+	["入"] = "j",
+	["求"] = "k",
+	["去"] = "kh",
+	["語"] = "g",
+	["雅"] = "ng",
+	["喜"] = "h",
+	["英"] = "",
+}
+
+-- 十五音【韻母】與【台語音標】之對映對映關係
+-- 前為【舒聲】韻母：調號為 1、2、3、5、6、7
+-- 後為【促聲】韻母：調號為 4 或 8
+local un_bu_dict = {
+	["君"] = { "un", "ut" },
+	["堅"] = { "ian", "iat" },
+	["金"] = { "im", "ip" },
+	["規"] = { "ui", "" },
+	["嘉"] = { "ee", "eeh" },
+	["干"] = { "an", "at" },
+	["公"] = { "ong", "ok" },
+	["乖"] = { "uai", "uaih" },
+	["經"] = { "ing", "ik" },
+	["觀"] = { "uan", "uat" },
+	["沽"] = { "oo", "" },
+	["嬌"] = { "iau", "iauh" },
+	["稽"] = { "ei", "" },
+	["恭"] = { "iong", "iok" },
+	["高"] = { "o", "oh" },
+	["皆"] = { "ai", "" },
+	["巾"] = { "in", "it" },
+	["姜"] = { "iang", "iak" },
+	["甘"] = { "am", "ap" },
+	["瓜"] = { "ua", "uah" },
+	["江"] = { "ang", "ak" },
+	["兼"] = { "iam", "iap" },
+	["交"] = { "au", "auh" },
+	["迦"] = { "ia", "iah" },
+	["檜"] = { "ue", "ueh" },
+	["監"] = { "ann", "ahnn" },
+	["艍"] = { "u", "uh" },
+	["膠"] = { "a", "ah" },
+	["居"] = { "i", "ih" },
+	["丩"] = { "iu", "" },
+	["更"] = { "enn", "ehnn" },
+	["褌"] = { "uinn", "" },
+	["茄"] = { "io", "ioh" },
+	["梔"] = { "inn", "ihnn" },
+	["薑"] = { "ionn", "" },
+	["驚"] = { "iann", "" },
+	["官"] = { "uann", "" },
+	["鋼"] = { "ng", "" },
+	["伽"] = { "e", "eh" },
+	["閒"] = { "ainn", "" },
+	["姑"] = { "oonn", "" },
+	["姆"] = { "m", "" },
+	["光"] = { "uang", "uak" },
+	["閂"] = { "uainn", "uaihnn" },
+	["糜"] = { "uenn", "" },
+	["嘄"] = { "iaunn", "iauhnn" },
+	["箴"] = { "om", "op" },
+	["爻"] = { "aunn", "" },
+	["扛"] = { "onn", "ohnn" },
+	["牛"] = { "iunn", "" },
+}
+
+-- 十五音【聲調】在【中文調號】與【阿拉伯字調號】之對映關係
+local tiau_ho_map = {
+	["一"] = 1,
+	["二"] = 2,
+	["三"] = 3,
+	["四"] = 4,
+	["五"] = 5,
+	["六"] = 6,
+	["七"] = 7,
+	["八"] = 8,
+}
+
+-- 【白話字】與【台羅拼音】使用之聲調符號（調符）對照表
+local POJ_TIAU_HU = {
+	["1"] = "",
+	["2"] = "́", -- U+0301
+	["3"] = "̀", -- U+0300
+	["4"] = "",
+	["5"] = "̂", -- U+0302
+	["6"] = "̌", -- U+030C
+	["7"] = "̄", -- U+0304
+	["8"] = "̍", -- U+030D
+}
+
+-- 方音符號之調符對映關係
+local TPS_TIAU_HU = {
+	["2"] = "ˋ",
+	["3"] = "˪",
+	["5"] = "ˊ",
+	["7"] = "˫",
+	["8"] = "˙",
+}
+
+-- 【上標數字】標示聲調之【調號】值
+local supers_digit = {
+	["1"] = "¹",
+	["2"] = "²",
+	["3"] = "³",
+	["4"] = "⁴",
+	["5"] = "⁵",
+	["6"] = "⁶",
+	["7"] = "⁷",
+	["8"] = "⁸",
+}
+
+-- 【無需轉換】方案：只做重排配對，不做聲調符號轉換
+-- （左欄漢字標音已是正確格式，yaml 自行控制，Lua 只需整理雙欄順序）
+local SKIP_CONVERT_SCHEMAS = {
+	["phing_im_tlpa"]  = true,
+	["phing_im_tl"]    = true,
+	["phing_im_poj"]   = true,
+	["phing_im_bp"]    = true,
+	["phing_im_bpm2"]  = true,
+	["zu_im_tlpa"]     = true,
+	["zu_im_tps"]      = true,
+	["zu_im_bpm2"]     = true,
+	["huan_ciat_tps"]  = true,
+	["huan_ciat_tlpa"] = true,
+}
+
+-- === END DICTIONARIES ===
+
+local function convert_sni_to_tlpa(s)
+	-- 功能：將傳統【十五音】轉換成【台語音標】
+	-- 輸入：s 為【十五音】漢字標音字串，包含三個 UTF-8 字元，分別代表韻母、聲調、聲母，如：【君二柳】。
+
+	---------------------------------------------------------------------------
+	-- 將字串 s 拆解成三個 UTF-8 字元，存入 chars 陣列。
+	-- 在此檔案的上下文中，後續程式碼會取 chars[1]（韻母）、chars[2]（聲調）、chars[3]（聲母）來進行十五音轉換。
+	---------------------------------------------------------------------------
+	-- 【UTF-8 字元比對】正規表示式： [%z\1-\127\194-\244][\128-\191]*
+	--
+	-- 以十五音： "君二柳" 為例，UTF-8 的中文中字串，不要解析成 9 個位元組，而應當作：
+	-- {"君", "二", "柳"} 三個中文字元。
+	---------------------------------------------------------------------------
+	-- 部分			範圍		 說明
+	-- %z			0x00		null 位元組
+	-- \1-\127		0x01–0x7F	ASCII 單位元組字元
+	-- \194-\244	0xC2–0xF4	多位元組 UTF-8 的起始位元組
+	-- [\128-\191]*	0x80–0xBF	多位元組 UTF-8 的後續位元組（0 個或多個）
+	---------------------------------------------------------------------------
+	local chars = {}
+	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+		table.insert(chars, uchar)
+	end
+	if #chars ~= 3 then
+		return nil
+	end
+
+	local un = chars[1]
+	local tiau = chars[2]
+	local siann = chars[3]
+
+	local tiau_ho = tiau_ho_map[tiau]	-- 調號：tiau_ho
+	local siann_bu = siann_bu_dict[siann]
+	local un_bu = un_bu_dict[un]
+
+	if not tiau_ho or not siann_bu or not un_bu then
+		return nil
+	end
+
+	-- 依據【調號】選用【舒聲】或【促聲】韻母：調號為 4 或 8 時，使用促聲韻母；其他調號則使用舒聲韻母
+	local jip_siann_tiau = (tiau_ho == 4 or tiau_ho == 8)  -- 入聲調號為 4 或 8 時，才使用 un_bu_dict 中的第二個元素（入聲調）
+	un_bu = jip_siann_tiau and un_bu[2] or un_bu[1]  -- 根據是否為入聲調，選擇 un_bu_dict 中的對應元素
+
+	return siann_bu .. un_bu .. tiau_ho
+end
+
+local function apply_poj_tiau_hu(syllable)
+	-- 【台語音標】轉換成【白話字】或【台羅拼音】時，
+	-- 原先之【調號】需轉換成【調符】，並套於【羅馬拼音字母】之上。
+	local base, tone = syllable:match("^(.-)([1-8])$")
+	if not base or not tone then
+		return syllable
+	end
+	local mark = POJ_TIAU_HU[tone]
+	if not mark or mark == "" then
+		return base
+	end
+
+	local res = base
+	if base:find("a") then
+		res = base:gsub("a", "a" .. mark, 1)
+	elseif base:find("oo") then
+		res = base:gsub("oo", "o" .. mark .. "o", 1)
+	elseif base:find("ee") then
+		res = base:gsub("ee", "e" .. mark .. "e", 1)
+	elseif base:find("e") then
+		res = base:gsub("e", "e" .. mark, 1)
+	elseif base:find("o") then
+		res = base:gsub("o", "o" .. mark, 1)
+	elseif base:find("iu") then
+		res = base:gsub("iu", "i" .. "u" .. mark, 1)
+	elseif base:find("ui") then
+		res = base:gsub("ui", "u" .. "i" .. mark, 1)
+	elseif base:find("i") then
+		res = base:gsub("i", "i" .. mark, 1)
+	elseif base:find("u") then
+		res = base:gsub("u", "u" .. mark, 1)
+	elseif base:find("m") then
+		res = base:gsub("m", "m" .. mark, 1)
+	elseif base:find("ng") then
+		res = base:gsub("ng", "n" .. mark .. "g", 1)
+	else
+		res = base .. mark
+	end
+	return res
+end
+
+------------------------------------------------------------------------------------------
+-- aux_commit 輔助函數
+------------------------------------------------------------------------------------------
+
+-- 將 TLPA 調號之上標數字（¹²³⁴⁵⁶⁷⁸）還原成一般數字（1-8）
+-- 用於 zu_im_tlpa / zu_im_tps 的 comment 中 〔〕 欄位
+local function normalize_supers(s)
+	if type(s) ~= "string" then return s end
+	s = s:gsub("\194\185", "1")      -- ¹ U+00B9
+	s = s:gsub("\194\178", "2")      -- ² U+00B2
+	s = s:gsub("\194\179", "3")      -- ³ U+00B3
+	s = s:gsub("\226\129\180", "4")  -- ⁴ U+2074
+	s = s:gsub("\226\129\181", "5")  -- ⁵ U+2075
+	s = s:gsub("\226\129\182", "6")  -- ⁶ U+2076
+	s = s:gsub("\226\129\183", "7")  -- ⁷ U+2077
+	s = s:gsub("\226\129\184", "8")  -- ⁸ U+2078
+	return s
+end
+
+-- BPM2（台語注音二式）音碼 → TLPA（台語音標）還原
+-- BPM2 聲母與 TLPA 不同；韻母相同，但 BPM2 特有的 'or' 對應 TLPA 的 'o'
+local BPM2_TO_TLPA_SIANN = {
+	-- 雙字母（longest-match 優先）
+	ng="ng", bb="b",  gg="g",  zz="j",  jj="j",
+	ph="ph", th="th", kh="kh",
+	ch="c",  sh="s",
+	-- 單字母
+	b="p",  p="ph", m="m",
+	d="t",  t="th", n="n",  l="l",
+	z="z",  c="c",  s="s",
+	g="k",  k="kh", h="h",
+	j="z",  -- BPM2 j（ㄐ，介母 i 前）→ TLPA z（z + i 自動顎化為 ㄐ）
+}
+
+local function bpm2_to_tlpa(bpm2)
+	if type(bpm2) ~= "string" or bpm2 == "" then return bpm2 end
+	local tone = bpm2:match("([1-8])$") or ""
+	local s = tone ~= "" and bpm2:sub(1, -2) or bpm2
+	-- BPM2 韻母 → TLPA 韻母（順序：較長的先替換，避免截短）
+	s = s:gsub("iook", "iok")  -- BPM2 iook（恭韻入聲） → TLPA iok
+	s = s:gsub("oom", "om")   -- BPM2 oom（箴韻） → TLPA om
+	s = s:gsub("oop", "op")   -- BPM2 oop（箴韻入聲） → TLPA op
+	s = s:gsub("or", "o")     -- BPM2 or（高韻） → TLPA o（如：hor5 → ho5）
+	-- 比對聲母（longest-match）
+	local siann_order = {
+		"ng","bb","gg","zz","jj","ph","th","kh","ch","sh",
+		"b","p","m","d","t","n","l","z","c","s","g","k","h","j",
+	}
+	local found = ""
+	local un = s
+	for _, si in ipairs(siann_order) do
+		if s:sub(1, #si) == si then
+			-- ng/m/n 只當韻化輔音時不拆
+			if (si == "ng" or si == "m" or si == "n") and s == si then break end
+			found = si
+			un = s:sub(#si + 1)
+			break
+		end
+	end
+	local tlpa_siann = BPM2_TO_TLPA_SIANN[found] or found
+	return tlpa_siann .. un .. tone
+end
+
+------------------------------------------------------------------------------------------
+-- 內建 TLPA → BPM2 轉換（不依賴 require，確保 bpm2_converter 模組載入失敗時仍可運作）
+------------------------------------------------------------------------------------------
+
+local TLPA_TO_BPM2_SIANN = {
+	p="b", ph="p", b="bb", m="m",
+	t="d", th="t", n="n",  l="l",
+	z="z", c="c",  j="zz", s="s",
+	k="g", kh="k", g="gg", ng="ng", h="h",
+	zi="j", ci="ch", ji="jj", si="sh",
+}
+-- TLPA 韻母 → BPM2 韻母（僅列出有差異者）
+local TLPA_TO_BPM2_UN = {
+	["o"]  = "or",   -- 高韻（短 o）
+	["oh"] = "orh",  -- 高韻入聲
+	["om"] = "oom",  -- 箴韻
+	["op"] = "oop",  -- 箴韻入聲
+}
+
+local function tlpa_to_bpm2(tlpa)
+	if type(tlpa) ~= "string" or tlpa == "" then return tlpa end
+	-- 優先使用已載入的模組（精確版）
+	if _bpm2_conv then return _bpm2_conv.convert(tlpa) end
+	-- 模組未載入時的內建 fallback
+	local tone = tlpa:match("([1-8])$") or ""
+	local s = (tone ~= "") and tlpa:sub(1, -2) or tlpa
+	-- 比對聲母（longest-match）
+	local siann_order = {
+		"tsh","kh","ph","th","ng","bb","gg",
+		"ts","z","c","p","k","t","l","s","h","b","g","m","n","j"
+	}
+	local siann, un = "", s
+	for _, si in ipairs(siann_order) do
+		if s:sub(1, #si) == si then
+			siann = si; un = s:sub(#si + 1); break
+		end
+	end
+	-- 顎化（介母 i 起頭）
+	if un:sub(1, 1) == "i" then
+		if     siann == "z" then siann = "zi"
+		elseif siann == "c" then siann = "ci"
+		elseif siann == "j" then siann = "ji"
+		elseif siann == "s" then siann = "si"
+		end
+	end
+	local b2 = (siann == "") and "" or (TLPA_TO_BPM2_SIANN[siann] or siann)
+	return b2 .. (TLPA_TO_BPM2_UN[un] or un) .. tone
+end
+
+------------------------------------------------------------------------------------------
+-- BP（閩拼方案）轉換輔助
+-- lib_comment_bp.yaml 的 〔〕 欄輸出 BP 調符拼音（NFC 預合字，如 hóng），
+-- 【】 欄輸出 TPS 注音符號 + BP 上標調號（如 ㄏㆲ²）。
+-- 下列工具函數從兩欄重建 TLPA，以便 aux_commit 進行任意格式轉換。
+------------------------------------------------------------------------------------------
+
+-- BP 上標調號（lib_comment_bp.yaml 產出的 BP 調號）→ TLPA 數值調號
+-- xlit|234567|357246| 表示 TLPA/BPM2 → BP 的對映，此處為其逆映射
+local BP_SUPER_TO_TLPA_TIAU = {
+	["\194\185"] = "1",         -- ¹ U+00B9: BP 1 → TLPA 1（陰平）
+	["\194\178"] = "5",         -- ² U+00B2: BP 2 → TLPA 5（陽平）
+	["\194\179"] = "2",         -- ³ U+00B3: BP 3 → TLPA 2（上聲）
+	["\226\129\180"] = "6",     -- ⁴ U+2074: BP 4 → TLPA 6（陽上）
+	["\226\129\181"] = "3",     -- ⁵ U+2075: BP 5 → TLPA 3（陰去）
+	["\226\129\182"] = "7",     -- ⁶ U+2076: BP 6 → TLPA 7（陽去）
+	["\226\129\183"] = "4",     -- ⁷ U+2077: BP 7 → TLPA 4（陰入）
+	["\226\129\184"] = "8",     -- ⁸ U+2078: BP 8 → TLPA 8（陽入）
+}
+
+-- 從 TPS 字串（如 "ㄏㆲ²"）尾端取得 BP 上標調號並映射為 TLPA 調號
+local function bp_super_to_tlpa_tiau(tps_str)
+	if type(tps_str) ~= "string" then return nil end
+	-- 先試 3 位元組超上標（⁴–⁸, U+2074–U+2078），再試 2 位元組（¹²³, U+00B9/B2/B3）
+	for slen = 3, 2, -1 do
+		local t = BP_SUPER_TO_TLPA_TIAU[tps_str:sub(-slen)]
+		if t then return t end
+	end
+	return nil
+end
+
+-- 去除 BP 拼音的調符（同時處理 NFC 預合字母與 NFD 組合調號）以還原基礎拼音，
+-- 並將 BP 特有韻母轉回 TLPA 格式。
+local function strip_bp_tones(s)
+	if type(s) ~= "string" then return s end
+	-- NFD 組合調號（U+0300–U+036F = combining diacritics）
+	s = s:gsub("\204[\128-\191]", "")
+	s = s:gsub("\205[\128-\175]", "")
+	-- NFC 預合字母 → 基礎字母（BP diacritic vowels）
+	s = s:gsub("\195\160","a"):gsub("\195\161","a"):gsub("\195\162","a")  -- àáâ
+	s = s:gsub("\199\142","a"):gsub("\196\129","a")                        -- ǎā
+	s = s:gsub("\195\168","e"):gsub("\195\169","e"):gsub("\195\170","e")  -- èéê
+	s = s:gsub("\196\155","e"):gsub("\196\147","e")                        -- ěē
+	s = s:gsub("\195\172","i"):gsub("\195\173","i"):gsub("\195\174","i")  -- ìíî
+	s = s:gsub("\199\144","i"):gsub("\196\171","i")                        -- ǐī
+	s = s:gsub("\195\185","u"):gsub("\195\186","u"):gsub("\195\187","u")  -- ùúû
+	s = s:gsub("\197\173","u"):gsub("\197\171","u"):gsub("\199\148","u")  -- ǔūǔ (U+01D4)
+	s = s:gsub("\195\178","o"):gsub("\195\179","o"):gsub("\195\180","o")  -- òóô
+	s = s:gsub("\199\146","o"):gsub("\197\141","o")                        -- ǒō
+	-- BP 特有韻母 → TLPA 韻母（lib_comment_bp.yaml 的 xform/au/ao/ 之逆操作）
+	s = s:gsub("ao", "au")   -- BP iao/ao → TLPA iau/au
+	return s
+end
+
+-- BP 基底拼音（已去調符）→ TLPA 聲母
+local function bp_base_to_tlpa(s)
+	if type(s) ~= "string" or s == "" then return s end
+	if s:sub(1,2) == "bb" then return "b"  .. s:sub(3)
+	elseif s:sub(1,2) == "gg" then return "g"  .. s:sub(3)
+	elseif s:sub(1,2) == "zz" then return "j"  .. s:sub(3)
+	elseif s:sub(1,2) == "jj" then return "j"  .. s:sub(3)
+	end
+	local c1 = s:sub(1,1)
+	if     c1 == "b" then return "p"  .. s:sub(2)
+	elseif c1 == "p" then return "ph" .. s:sub(2)
+	elseif c1 == "d" then return "t"  .. s:sub(2)
+	elseif c1 == "t" and s:sub(1,2) ~= "th" then return "th" .. s:sub(2)
+	elseif c1 == "g" then return "k"  .. s:sub(2)
+	elseif c1 == "k" and s:sub(1,2) ~= "kh" then return "kh" .. s:sub(2)
+	elseif c1 == "j" then return "z"  .. s:sub(2)
+	end
+	return s
+end
+
+-- TL/POJ 調符（NFC 預合字）→ TLPA 數值調號
+local TL_DIAC_BASE = {
+	["\195\161"]="a",["\195\169"]="e",["\195\173"]="i",["\195\179"]="o",["\195\186"]="u", -- áéíóú
+	["\195\160"]="a",["\195\168"]="e",["\195\172"]="i",["\195\178"]="o",["\195\185"]="u", -- àèìòù
+	["\195\162"]="a",["\195\170"]="e",["\195\174"]="i",["\195\180"]="o",["\195\187"]="u", -- âêîôû
+	["\196\129"]="a",["\196\147"]="e",["\196\171"]="i",["\197\141"]="o",["\197\171"]="u", -- āēīōū
+	["\199\146"]="o",  -- ǒ (U+01D2, POJ o͘ tone-5)
+}
+local TL_DIAC_TONE = {
+	["\195\161"]="2",["\195\169"]="2",["\195\173"]="2",["\195\179"]="2",["\195\186"]="2",
+	["\195\160"]="3",["\195\168"]="3",["\195\172"]="3",["\195\178"]="3",["\195\185"]="3",
+	["\195\162"]="5",["\195\170"]="5",["\195\174"]="5",["\195\180"]="5",["\195\187"]="5",
+	["\196\129"]="7",["\196\147"]="7",["\196\171"]="7",["\197\141"]="7",["\197\171"]="7",
+	["\199\146"]="5",
+}
+
+local function tl_diac_to_tlpa(s)
+	if type(s) ~= "string" or s == "" then return s end
+	local tone = "1"
+	-- 調 8 組合符號 U+030D ("\204\141") → tone 8
+	local has8 = s:find("\204\141", 1, true)
+	if has8 then s = s:gsub("\204\141", ""); tone = "8" end
+	-- 替換調符元音
+	for diac, base in pairs(TL_DIAC_BASE) do
+		if s:find(diac, 1, true) then
+			s = s:gsub(diac, base)
+			if not has8 then tone = TL_DIAC_TONE[diac] end
+		end
+	end
+	-- ⁿ (U+207F = "\226\129\191") → nn
+	s = s:gsub("\226\129\191", "nn")
+	-- 無調符且非入聲 → 調 1；有塞尾音 → 調 4
+	if tone == "1" and s:match("[ptk]$") then tone = "4" end
+	s = s:gsub("[1-8]$", "")
+	return s .. tone
+end
+
+local function poj_diac_to_tlpa(s)
+	if type(s) ~= "string" or s == "" then return s end
+	-- o + U+0358 (COMBINING DOT ABOVE RIGHT = "\205\152") → oo
+	s = s:gsub("o\205\152", "oo")
+	-- 調符剝離
+	local result = tl_diac_to_tlpa(s)
+	-- 分離 base 和 tone
+	local tone = result:match("([1-8])$") or "1"
+	local base = tone ~= "" and result:sub(1, -(#tone + 1)) or result
+	-- POJ 韻母 → TLPA 韻母
+	base = base:gsub("eng", "ing"):gsub("ek$", "ik")
+	base = base:gsub("oa", "ua"):gsub("oe", "ue")
+	base = base:gsub("ao", "au")
+	-- POJ 聲母 → TLPA 聲母（longest-match first）
+	base = base:gsub("^chh", "tsh"):gsub("^ch", "ts")
+	return base .. tone
+end
+
+-- BP 調號（TLPA 重映射後）→ BP 原始調號（供 IPA 直接引用）
+-- 此為 BP_SUPER_TO_TLPA_TIAU 的逆映射
+local TLPA_TO_BP_TIAU = {
+	["1"]="1", ["5"]="2", ["2"]="3", ["6"]="4",
+	["3"]="5", ["7"]="6", ["4"]="7", ["8"]="8",
+}
+
+------------------------------------------------------------------------------------------
+-- aux_commit：切換輸入方案【輸出】之【漢字標音】格式
+-- Space → 漢字
+-- Enter → 漢字標音（格式依選項而定）
+------------------------------------------------------------------------------------------
+
+function aux_commit(key, env)
+	log.info("[debug] aux_commit triggered by key: " .. key:repr())
+	local ctx = env.engine.context
+	local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
+
+	if r == "return" or r == "kp_enter" then
+		if not ctx:has_menu() then
+			log.info("[aux_commit] has_menu=false, returning kNoop")
+			return 2
+		end
+
+		-- 使用與 jump_select 相同的穩定 API 取得當前候選
+		local comp = ctx.composition
+		if comp:empty() then
+			log.info("[aux_commit] composition empty, returning kNoop")
+			return 2
+		end
+		local seg = comp:back()
+		if not seg or not seg.menu then
+			log.info("[aux_commit] no seg/menu, returning kNoop")
+			return 2
+		end
+		local selected_index = seg.selected_index
+		local cand = seg.menu:get_candidate_at(selected_index)
+		if not cand then
+			log.info("[aux_commit] get_candidate_at returned nil, returning kNoop")
+			return 2
+		end
+
+		local gen_comm = cand.comment or ""
+		if gen_comm == "" then
+			-- 嘗試從 genuine 取得（filter 前原始候選）
+			local ok, gc = pcall(function() return cand:get_genuine().comment or "" end)
+			if ok then gen_comm = gc end
+		end
+		log.info("[aux_commit] cand.text=" .. (cand.text or "?") .. " comment=[" .. gen_comm .. "]")
+
+		-- 依方案決定標音來源及格式：
+		--   huan_ciat_*：【十五音(SNI)】〔台語音標/方音符號〕  → 從【】取 SNI
+		--   zu_im_*    ：【注音符號】〔TLPA/BPM2〕             → 從〔〕取 TLPA（直接可用）
+		--   其他方案    ：〔十五音(SNI)〕【TPS/其他】          → 從〔〕取 SNI
+		local schema_id = env.engine.schema.schema_id
+		local source_list = {}  -- 存放「已正規化之 TLPA」或「SNI」
+		local is_tlpa = false   -- true 時 source_list 內容已是 TLPA，跳過 SNI→TLPA 轉換
+
+		if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+			-- comment_format 輸出 SNI 為 聲+韻+調 順序（如：柳君二）；
+			-- reformat_comment_filter 顯示前倒裝成 韻+調+聲（如：君二柳）。
+			-- ctx:get_selected_candidate() 可能回傳過濾前（聲+韻+調）或後（韻+調+聲），
+			-- 兩種情況都需能正確轉換，故先嘗試直接轉換，失敗則執行倒裝後再轉換。
+			for v in gen_comm:gmatch("【(.-)】") do
+				local chars = {}
+				for uchar in v:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+					table.insert(chars, uchar)
+				end
+				if #chars == 3 and not convert_sni_to_tlpa(v) then
+					-- 聲+韻+調 → 韻+調+聲 倒裝（過濾前的 comment_format 輸出）
+					local inv = chars[2] .. chars[3] .. chars[1]
+					table.insert(source_list, convert_sni_to_tlpa(inv) and inv or v)
+				else
+					table.insert(source_list, v)  -- 已是 韻+調+聲（過濾後）或無法識別
+				end
+			end
+
+		elseif schema_id:match("^zu_im_")
+		    or schema_id == "phing_im_tlpa"
+		    or schema_id == "phing_im_bpm2" then
+			-- 注音/拼音輸入法（數值調號系列）：〔〕 含 TLPA 數值調（或 BPM2）
+			-- → 正規化為 TLPA，後續直接進 conv.convert
+			is_tlpa = true
+			local is_bpm2 = (schema_id == "zu_im_bpm2" or schema_id == "phing_im_bpm2")
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				local tlpa
+				if is_bpm2 then
+					tlpa = bpm2_to_tlpa(v)
+				else
+					-- 上標調號（hong⁵）→ 數值調號（hong5）
+					tlpa = normalize_supers(v)
+				end
+				table.insert(source_list, tlpa)
+				log.info("[aux_commit] tlpa_schema raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
+			end
+
+		elseif schema_id == "phing_im_tl" then
+			-- 〔〕 含 TL 調符拼音（如 hông）→ 剝離調符還原為 TLPA 數值調
+			is_tlpa = true
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				local tlpa = tl_diac_to_tlpa(v)
+				table.insert(source_list, tlpa)
+				log.info("[aux_commit] phing_im_tl raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
+			end
+
+		elseif schema_id == "phing_im_poj" then
+			-- 〔〕 含 POJ 調符拼音（如 hông）→ 剝離調符並轉換 POJ→TLPA
+			is_tlpa = true
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				local tlpa = poj_diac_to_tlpa(v)
+				table.insert(source_list, tlpa)
+				log.info("[aux_commit] phing_im_poj raw=[" .. v .. "] tlpa=[" .. tlpa .. "]")
+			end
+
+		elseif schema_id == "phing_im_bp" then
+			-- 〔〕 含 BP 調符拼音（如 hóng），【】 含 TPS + BP 上標調號（如 ㄏㆲ²）
+			-- 從兩欄重建 TLPA：去調符字母 + BP 上標 → TLPA 調號
+			is_tlpa = true
+			local bp_items, tps_items = {}, {}
+			for v in gen_comm:gmatch("〔(.-)〕") do table.insert(bp_items, v) end
+			for v in gen_comm:gmatch("【(.-)】") do table.insert(tps_items, v) end
+			for i = 1, #bp_items do
+				local base  = bp_base_to_tlpa(strip_bp_tones(bp_items[i]))
+				local tiau  = bp_super_to_tlpa_tiau(tps_items[i] or "") or "1"
+				local tlpa  = base .. tiau
+				table.insert(source_list, tlpa)
+				log.info("[aux_commit] phing_im_bp bp=[" .. bp_items[i] .. "] tps=[" .. (tps_items[i] or "") .. "] → tlpa=[" .. tlpa .. "]")
+			end
+
+		else
+			-- 其他方案：〔〕 含 SNI 十五音或其他格式
+			-- to_target 的 fallback 路徑會將無法轉換的字串原樣回傳
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				table.insert(source_list, v)
+			end
+		end
+
+		log.info("[aux_commit] schema_id=" .. schema_id .. " source_list count=" .. #source_list .. " is_tlpa=" .. tostring(is_tlpa))
+		for i, v in ipairs(source_list) do
+			log.info("[aux_commit] source_list[" .. i .. "]=[" .. v .. "]")
+		end
+
+		if #source_list == 0 then
+			log.info("[aux_commit] source_list is empty, returning kNoop")
+			return 2
+		end
+
+		-- 取得轉換模組（使用 module-level 預載的版本）
+		local conv     = _tlpa_conv
+		local bpm2conv = _bpm2_conv
+		if not conv then
+			log.error("[aux_commit] tlpa_converter 模組未載入，無法執行標音轉換")
+			return 2
+		end
+
+		-- 輔助函數：TLPA or SNI → 目標標音系統
+		local function to_target(src, target)
+			if is_tlpa then
+				return conv.convert(src, target)
+			end
+			local tlpa = convert_sni_to_tlpa(src)
+			if not tlpa then return src end
+			return conv.convert(tlpa, target)
+		end
+
+		-- [DBG] 確認目前 switch 狀態
+		log.info("[aux_commit] key_in_piau_im_tps="  .. tostring(ctx:get_option("key_in_piau_im_tps")))
+		log.info("[aux_commit] key_in_piau_im_tlpa=" .. tostring(ctx:get_option("key_in_piau_im_tlpa")))
+		log.info("[aux_commit] key_in_piau_im_tl="   .. tostring(ctx:get_option("key_in_piau_im_tl")))
+		log.info("[aux_commit] key_in_piau_im_poj="  .. tostring(ctx:get_option("key_in_piau_im_poj")))
+		log.info("[aux_commit] key_in_piau_im_bp="   .. tostring(ctx:get_option("key_in_piau_im_bp")))
+		log.info("[aux_commit] key_in_piau_im_bpm2=" .. tostring(ctx:get_option("key_in_piau_im_bpm2")))
+		log.info("[aux_commit] key_in_piau_im_ipa="  .. tostring(ctx:get_option("key_in_piau_im_ipa")))
+		log.info("[aux_commit] key_in_piau_im_sni="  .. tostring(ctx:get_option("key_in_piau_im_sni")))
+
+		-- key_in_piau_im_* 決定 Enter 鍵輸出格式（310.md §輸入編輯列之漢字標音格式）
+		local out_list = {}
+
+		if ctx:get_option("key_in_piau_im_tps") then
+			-- 方音符號：TLPA/SNI → 方音符號
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "方音符號")
+			end
+
+		elseif ctx:get_option("key_in_piau_im_tlpa") then
+			-- 台語音標（數字調號）：TLPA/SNI → TLPA
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "台語音標")
+			end
+
+		elseif ctx:get_option("key_in_piau_im_tl") then
+			-- 台羅拼音（調符）：TLPA/SNI → 台羅
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "台羅拼音")
+			end
+
+		elseif ctx:get_option("key_in_piau_im_poj") then
+			-- 白話字（調符）：TLPA/SNI → POJ
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "白話字")
+			end
+
+		elseif ctx:get_option("key_in_piau_im_bp") then
+			-- 閩拼方案（調符）：TLPA/SNI → BP
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "閩拼方案")
+			end
+
+		elseif ctx:get_option("key_in_piau_im_bpm2") then
+			-- 台語注音二式（數字調號）
+			if schema_id == "zu_im_bpm2" or schema_id == "phing_im_bpm2" then
+				-- BPM2 字典：〔〕欄已是 BPM2 音碼（如 hor5），直接輸出，不做 round-trip 轉換
+				for v in gen_comm:gmatch("〔(.-)〕") do
+					table.insert(out_list, v)
+				end
+			else
+				-- 非 BPM2 字典：TLPA/SNI → BPM2
+				-- 使用 tlpa_to_bpm2（內建 fallback，不依賴 require 是否成功）
+				for i, v in ipairs(source_list) do
+					if is_tlpa then
+						out_list[i] = tlpa_to_bpm2(v)
+					else
+						local tlpa = convert_sni_to_tlpa(v)
+						out_list[i] = tlpa and tlpa_to_bpm2(tlpa) or v
+					end
+				end
+			end
+
+		elseif ctx:get_option("key_in_piau_im_ipa") then
+			-- 國際音標：TLPA/SNI → IPA
+			-- phing_im_bp 特殊處理：調號直接引用 BP 原始調號（不做 BP→TLPA 重映射）
+			-- 因 BP 系統調號與其他系統不同，IPA 上標數字應顯示 BP 調號
+			for i, v in ipairs(source_list) do
+				if schema_id == "phing_im_bp" then
+					-- 從 source_list 的 TLPA 調號（已 BP→TLPA 重映射）反推回 BP 調號
+					local tlpa_tone = v:match("([1-8])$") or "1"
+					local bp_tone   = TLPA_TO_BP_TIAU[tlpa_tone] or tlpa_tone
+					local base      = v:gsub("[1-8]$", "")
+					out_list[i] = to_target(base .. bp_tone, "國際音標")
+				else
+					out_list[i] = to_target(v, "國際音標")
+				end
+			end
+
+		elseif ctx:get_option("key_in_piau_im_tlpa_tps") then
+			-- 台語注音符號（TPS + 上標調號）：直接從候選 comment 的【】欄取得
+			-- （zu_im_tlpa 的 comment_format 已將注音符號帶上標調號放入【】欄，
+			--   如 【ㄏㄛㄥ⁵】，無需再經 conv.convert 轉換）
+			local tps_items = {}
+			for z in gen_comm:gmatch("【(.-)】") do
+				table.insert(tps_items, z)
+			end
+			if #tps_items > 0 then
+				for i, v in ipairs(tps_items) do
+					out_list[i] = v
+				end
+			else
+				-- fallback：無 【】 欄時用 TPS 方音符號格式
+				for i, v in ipairs(source_list) do
+					out_list[i] = to_target(v, "方音符號")
+				end
+			end
+
+		else
+			-- 預設（key_in_piau_im_sni）：十五音（韻+調+聲）
+			for i, v in ipairs(source_list) do
+				out_list[i] = to_target(v, "十五音")
+			end
+		end
+
+		local out_str = table.concat(out_list, " ")
+		if #out_str > 0 then
+			env.engine:commit_text(out_str)
+			ctx:clear()
+			return 1
+		end
+		return 2
+	end
+	return 2
+end
+
+--------------------------------------------------------------------------
+-- reformat_comment_filter：重排候選註解中的羅馬拼音與注音符號
+--------------------------------------------------------------------------
+-- 為處理【連續輸入】時，【候選字清單】中漢字的【羅馬拼音字母】、【注音符號】亦能正確顯示。
+-- 輸入法自【拼音/注音輸入列】接收：羅馬拼音字母/注音符號後，在【候選字清單】的顯示，格式為：
+-- 〔羅馬字母1〕 【注音符號1】  〔羅馬字母2〕 【注音符號2】 …
+-- 透過 Lua filter: reformat_comment_filter 重排成：
+-- 〔羅馬字母1〕 〔羅馬字母2〕 …  【注音符號1】 【注音符號2】 …
+--------------------------------------------------------------------------
+
+
+local function convert_tl_to_tlpa(tl_str)
+	if type(tl_str) ~= "string" or tl_str == "" then return "" end
+	-- 處理聲母：台羅 (ts/tsh) => 台語音標 (z/c)
+	local result = tl_str
+	if result:match("^tsh") then
+		result = result:gsub("^tsh", "c", 1)
+	elseif result:match("^ts") then
+		result = result:gsub("^ts", "z", 1)
+	end
+	return result
+end
+
+local function convert_tlpa_to_tps(tlpa_str)
+	if type(tlpa_str) ~= "string" or tlpa_str == "" then return "" end
+	local tones = { ["1"]="", ["2"]="ˋ", ["3"]="˪", ["4"]="", ["5"]="ˊ", ["6"]="ˋ", ["7"]="˫", ["8"]="˙", ["9"]="", ["0"]="" }
+	local initials = { ["ph"]="ㄆ", ["kh"]="ㄎ", ["th"]="ㄊ", ["ng"]="ㄫ", ["p"]="ㄅ", ["b"]="ㆠ", ["m"]="ㄇ", ["t"]="ㄉ", ["n"]="ㄋ", ["l"]="ㄌ", ["k"]="ㄍ", ["g"]="ㆣ", ["h"]="ㄏ", ["s"]="ㄙ", ["j"]="ㆡ", ["z"]="ㄗ", ["c"]="ㄘ" }
+	local finals = { ["aunn"]="ㆯ", ["ainn"]="ㆮ", ["iann"]="ㄧㆩ", ["iunn"]="ㄧㆫ", ["uann"]="ㄨㆩ", ["uenn"]="ㄨㆥ", ["oonn"]="ㆧ", ["ann"]="ㆩ", ["inn"]="ㆪ", ["unn"]="ㆫ", ["enn"]="ㆥ", ["onn"]="ㆧ", ["iong"]="ㄧㆲ", ["iang"]="ㄧㄤ", ["uang"]="ㄨㄤ", ["ong"]="ㆲ", ["ang"]="ㄤ", ["iam"]="ㄧㆰ", ["am"]="ㆰ", ["om"]="ㆱ", ["ian"]="ㄧㄢ", ["uan"]="ㄨㄢ", ["an"]="ㄢ", ["ing"]="ㄧㄥ", ["in"]="ㄧㄣ", ["un"]="ㄨㄣ", ["iai"]="ㄧㄞ", ["iau"]="ㄧㄠ", ["uai"]="ㄨㄞ", ["ai"]="ㄞ", ["au"]="ㄠ", ["ia"]="ㄧㄚ", ["io"]="ㄧㄜ", ["iu"]="ㄧㄨ", ["ua"]="ㄨㄚ", ["ue"]="ㄨㆤ", ["ui"]="ㄨㄧ", ["uainn"]="ㄨㆮ", ["uinn"]="ㄨㆪ", ["iaunn"]="ㄧㆯ", ["ioo"]="ㄧㆦ", ["ng"]="ㆭ", ["m"]="ㆬ", ["n"]="ㄣ", ["oo"]="ㆦ", ["a"]="ㄚ", ["i"]="ㄧ", ["u"]="ㄨ", ["e"]="ㆤ", ["o"]="ㄜ", ["ir"]="ㆨ" }
+	local codas = { ["p"]="ㆴ", ["t"]="ㆵ", ["k"]="ㆻ", ["h"]="ㆷ" }
+
+	local tone_num = tlpa_str:match("%d$")
+	local s = tlpa_str:gsub("%d$", "")
+
+	local coda_char = s:match("[ptkh]$")
+	local initial_str = ""
+	for _, len in ipairs({3, 2, 1}) do
+		local pre = s:sub(1, len)
+		if initials[pre] then
+			if (pre == "ng" or pre == "m" or pre == "n") and s:len() == len then break end
+			if (pre == "ng" or pre == "m" or pre == "n") and coda_char == "h" and s:len() == len + 1 then break end
+			initial_str = initials[pre]
+			s = s:sub(len + 1)
+			break
+		end
+	end
+
+	local coda_str = ""
+	if coda_char and #s > 0 then
+        local base = s:sub(1, -2)
+        if base ~= "" and finals[base] then
+            coda_str = codas[coda_char]
+            s = base
+        elseif base == "i" or base == "e" or base == "o" or base == "a" or base == "u" then
+            coda_str = codas[coda_char]
+            s = base
+        end
+	end
+
+	if s:sub(1, 1) == "i" then
+		if initial_str == "ㆡ" then initial_str = "ㆢ" end
+		if initial_str == "ㄗ" then initial_str = "ㄐ" end
+		if initial_str == "ㄘ" then initial_str = "ㄑ" end
+		if initial_str == "ㄙ" then initial_str = "ㄒ" end
+	end
+
+	local final_str = finals[s] or s
+	local tone_str = tone_num and tones[tone_num] or ""
+	return initial_str .. final_str .. coda_str .. tone_str
+end
+
+local function convert_bpm2_to_tps(bpm2_str)
+	if type(bpm2_str) ~= "string" or bpm2_str == "" then return "" end
+	local tones = { ["1"]="", ["2"]="ˋ", ["3"]="˪", ["4"]="", ["5"]="ˊ", ["6"]="ˋ", ["7"]="˫", ["8"]="˙", ["9"]="", ["0"]="" }
+	local initials = { ["ch"]="ㄑ", ["sh"]="ㄒ", ["jj"]="ㆢ", ["bb"]="ㆠ", ["gg"]="ㆣ", ["zz"]="ㆡ", ["ng"]="ㄫ", ["p"]="ㄆ", ["b"]="ㄅ", ["m"]="ㄇ", ["t"]="ㄊ", ["d"]="ㄉ", ["n"]="ㄋ", ["l"]="ㄌ", ["k"]="ㄎ", ["g"]="ㄍ", ["h"]="ㄏ", ["c"]="ㄘ", ["z"]="ㄗ", ["s"]="ㄙ", ["j"]="ㄐ" }
+	local finals = { ["aunn"]="ㆯ", ["ainn"]="ㆮ", ["iann"]="ㄧㆩ", ["iunn"]="ㄧㆫ", ["uann"]="ㄨㆩ", ["uenn"]="ㄨㆥ", ["oonn"]="ㆧ", ["ann"]="ㆩ", ["inn"]="ㆪ", ["unn"]="ㆫ", ["enn"]="ㆥ", ["iong"]="ㄧㆲ", ["iang"]="ㄧㄤ", ["uang"]="ㄨㄤ", ["ong"]="ㆲ", ["ang"]="ㄤ", ["iam"]="ㄧㆰ", ["oom"]="ㆱ", ["am"]="ㆰ", ["ian"]="ㄧㄢ", ["uan"]="ㄨㄢ", ["an"]="ㄢ", ["ing"]="ㄧㄥ", ["iek"]="ㄧㆻ", ["in"]="ㄧㄣ", ["un"]="ㄨㄣ", ["iai"]="ㄧㄞ", ["iau"]="ㄧㄠ", ["uai"]="ㄨㄞ", ["ai"]="ㄞ", ["au"]="ㄠ", ["ia"]="ㄧㄚ", ["io"]="ㄧㄜ", ["iu"]="ㄧㄨ", ["ua"]="ㄨㄚ", ["ue"]="ㄨㆤ", ["ui"]="ㄨㄧ", ["uainn"]="ㄨㆮ", ["uinn"]="ㄨㆪ", ["iaunn"]="ㄧㆯ", ["ioo"]="ㄧㆦ", ["ng"]="ㆭ", ["m"]="ㆬ", ["n"]="ㄣ", ["oo"]="ㆦ", ["or"]="ㄜ", ["a"]="ㄚ", ["i"]="ㄧ", ["u"]="ㄨ", ["e"]="ㆤ", ["o"]="ㄜ", ["ir"]="ㆨ" }
+	local codas = { ["p"]="ㆴ", ["t"]="ㆵ", ["k"]="ㆻ", ["h"]="ㆷ" }
+
+	local tone_num = bpm2_str:match("%d$")
+	local s = bpm2_str:gsub("%d$", "")
+
+	local coda_char = s:match("[ptkh]$")
+	local initial_str = ""
+	for _, len in ipairs({2, 1}) do
+		local pre = s:sub(1, len)
+		if initials[pre] then
+			if (pre == "ng" or pre == "m" or pre == "n") and s:len() == len then break end
+			if (pre == "ng" or pre == "m" or pre == "n") and coda_char == "h" and s:len() == len + 1 then break end
+			initial_str = initials[pre]
+			s = s:sub(len + 1)
+			break
+		end
+	end
+
+	local coda_str = ""
+	if coda_char and #s > 0 then
+		local base = s:sub(1, -2)
+		if base ~= "" and finals[base] then
+			coda_str = codas[coda_char]
+			s = base
+		elseif base == "i" or base == "e" or base == "o" or base == "a" or base == "u" then
+			coda_str = codas[coda_char]
+			s = base
+		end
+	end
+
+	local final_str = finals[s] or s
+	local tone_str = tone_num and tones[tone_num] or ""
+	return initial_str .. final_str .. coda_str .. tone_str
+end
+
+local function convert_tl_to_tps(tl_str)
+	if type(tl_str) ~= "string" or tl_str == "" then return "" end
+	local tlpa_str = convert_tl_to_tlpa(tl_str)
+	return convert_tlpa_to_tps(tlpa_str)
+end
+
+-- 重排配對（不做轉換）：〔A〕【a】〔B〕【b〕 → 〔A〕〔B〕  【a】【b】
+local function regroup_pairs_safe(s)
+	if type(s) ~= "string" or s == "" then return s end
+	local tlpa, zh = {}, {}
+	for t in s:gmatch("〔(.-)〕") do table.insert(tlpa, t) end
+	for z in s:gmatch("【(.-)】") do table.insert(zh, z) end
+	if #tlpa >= 2 and #tlpa == #zh then
+		return "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+		       .. "  "
+		       .. "【" .. table.concat(zh, "】 【") .. "】"
+	end
+	return s
+end
+
+-- regroup_zu_im_comment：zu_im_* 方案多欄整理
+-- 確保【注音符號】永遠排左欄、〔拼音字母〕排右欄（含單音節對調）
+local function regroup_zu_im_comment(s)
+	if type(s) ~= "string" or s == "" then return s end
+	local zh, tlpa = {}, {}
+	for z in s:gmatch("【(.-)】") do table.insert(zh, z) end
+	for t in s:gmatch("〔(.-)〕") do table.insert(tlpa, t) end
+	if #zh == 0 or #tlpa == 0 or #zh ~= #tlpa then return s end
+	local zh_str   = "【" .. table.concat(zh,   "】 【") .. "】"
+	local tlpa_str = "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+	return zh_str .. (#zh >= 2 and "  " or "") .. tlpa_str
+end
+
+-- regroup_pairs_zh_first：多音節詞時將 【】 排左欄、〔〕 排右欄
+-- 用於 huan_ciat 系列方案（【十五音】〔字典音標〕 格式）
+local function regroup_pairs_two_columns(s)
+	if type(s) ~= "string" or s == "" then return s end
+	local zh, tlpa = {}, {}
+	for z in s:gmatch("【(.-)】") do table.insert(zh, z) end
+	for t in s:gmatch("〔(.-)〕") do table.insert(tlpa, t) end
+	if #zh >= 2 and #zh == #tlpa then
+		return "【" .. table.concat(zh, "】 【") .. "】"
+		       .. "  "
+		       .. "〔" .. table.concat(tlpa, "〕 〔") .. "〕"
+	end
+	return s
+end
+
+local function format_comment(comment_string, mode, schema_id)
+        if type(comment_string) ~= "string" or comment_string == "" then
+                return comment_string
+        end
+
+        local is_sni = schema_id and (schema_id:match("hau_suan") or schema_id:match("huan_ciat"))
+
+        -- 對於非十五音（如 tps, tlpa），完全由 yaml 控制左右欄，直接回傳
+        if not is_sni then
+                return comment_string
+        end
+
+        -- 針對十五音（反切/校算）方案進行內部漢字倒裝（聲韻調 -> 韻調聲）
+        -- 尋找字串內的〔...〕或【...】
+        local new_comment = comment_string:gsub("〔(.-)〕", function(s)
+                local chars = {}
+                for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+                        table.insert(chars, uchar)
+                end
+
+                -- 當括號內恰好為 3 個字元（聲+韻+調）時進行調換
+                if #chars == 3 then
+                        return "〔" .. chars[2] .. chars[3] .. chars[1] .. "〕"
+                else
+                        return "〔" .. s .. "〕"
+                end
+        end)
+
+        new_comment = new_comment:gsub("【(.-)】", function(s)
+                local chars = {}
+                for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+                        table.insert(chars, uchar)
+                end
+
+                if #chars == 3 then
+                        return "【" .. chars[2] .. chars[3] .. chars[1] .. "】"
+                else
+                        return "【" .. s .. "】"
+                end
+        end)
+
+        return new_comment
+end
+
+local function utf8_chars(s)
+	local chars = {}
+	if type(s) ~= "string" then
+		return chars
+	end
+	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+		table.insert(chars, uchar)
+	end
+	return chars
+end
+
+local function normalize_sni_syllable(s)
+	local chars = utf8_chars(s)
+	if #chars ~= 3 then
+		return s
+	end
+
+	-- 候選左欄可能來自 comment_format 的「聲韻調」，也可能已是傳統「韻調聲」。
+	-- convert_sni_to_tlpa() 只接受傳統十五音，因此用它判斷是否需要倒裝。
+	if convert_sni_to_tlpa(s) then
+		return s
+	end
+
+	local reordered = chars[2] .. chars[3] .. chars[1]
+	if convert_sni_to_tlpa(reordered) then
+		return reordered
+	end
+
+	return s
+end
+
+local function render_huan_ciat_comment(comment_string)
+	if type(comment_string) ~= "string" or comment_string == "" then
+		return comment_string
+	end
+
+	local sni_items = {}
+	local raw_right_items = {}
+	for sni in comment_string:gmatch("【(.-)】") do
+		table.insert(sni_items, normalize_sni_syllable(sni))
+	end
+	for right in comment_string:gmatch("〔(.-)〕") do
+		table.insert(raw_right_items, right)
+	end
+	if #sni_items == 0 then
+		return comment_string
+	end
+
+	local left = "【" .. table.concat(sni_items, "】 【") .. "】"
+	if #raw_right_items == 0 then
+		return left
+	end
+	local right = "〔" .. table.concat(raw_right_items, "〕 〔") .. "〕"
+	if #sni_items == 1 then
+		return left .. right
+	end
+	return left .. "  " .. right
+end
+
+function reformat_comment_filter(input, env)
+	local schema_id = env.engine.schema.schema_id
+
+	-- 反切方案依 310.md 顯示：【傳統十五音】〔YAML 產出的右欄標音〕。
+	-- Lua 只校正左欄十五音順序，並在多音節時整理成雙欄排列。
+	if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+		for cand in input:iter() do
+			local old = cand.comment or ""
+			local new = render_huan_ciat_comment(old)
+			if new ~= old then
+				local c = cand:get_genuine()
+				local nc = Candidate(c.type, c.start, c._end, c.text, new)
+				nc.preedit = cand.preedit
+				nc.quality = cand.quality
+				yield(nc)
+			else
+				yield(cand)
+			end
+		end
+		return
+	end
+
+	-- 其他既有方案沿用原本的雙欄整理，不在此處改變標音內容。
+	for cand in input:iter() do
+		local old = cand.comment or ""
+		local new
+		if SKIP_CONVERT_SCHEMAS[schema_id] then
+			if schema_id:match("^zu_im_") then
+				new = regroup_zu_im_comment(old)
+			else
+				new = regroup_pairs_safe(old)
+			end
+		else
+			new = old
+		end
+		if new ~= old then
+			local c = cand:get_genuine()
+			local nc = Candidate(c.type, c.start, c._end, c.text, new)
+			nc.preedit = cand.preedit
+			nc.quality = cand.quality
+			yield(nc)
+		else
+			yield(cand)
+		end
+	end
+end
+
+-----------------------------------------------------------------------------------------
+-- jump_select：【候選字清單】每一頁可顯示：5個選項。為求選字的操作便利性。
+-- 能在【候選字清單】中，以快捷鍵移動【選擇游標】，能將選擇游標，快速移到：
+-- 頂端（第1個選項）/中間（第3個選項）/底端（第5個選項）三種快捷鍵。
+-----------------------------------------------------------------------------------------
+-- 邏輯：從目前 selected_index 相對移動到目標 index（用 Up/Down），
+--       不使用 Page_Up（RIME 的 Page_Up 是「翻到上一頁」而非「回本頁頁首」）。
+-- 快捷鍵（由右至左）：
+-- （1）Ctrl+M（頂端 1st）
+-- （2）Ctrl+,（中間 3rd）
+-- （3）Ctrl+.（底端 5th）
+-----------------------------------------------------------------------------------------
+function jump_select(key, env)
+	local ctx = env.engine.context
+	if not ctx:has_menu() then
+		return 2
+	end -- kNoop
+
+	local r = key:repr()
+	if r:sub(1, 8) == "Release+" then
+		return 2
+	end
+
+	local offset = -1
+	local auto_commit = false
+
+	-- 【直接選用】(Move and Commit)
+	if r == "Control+1" then
+		offset = 0
+		auto_commit = true
+	elseif r == "Control+2" then
+		offset = 1
+		auto_commit = true
+	elseif r == "Control+3" then
+		offset = 2
+		auto_commit = true
+	elseif r == "Control+4" then
+		offset = 3
+		auto_commit = true
+	elseif r == "Control+5" then
+		offset = 4
+		auto_commit = true
+
+	-- 【移動選擇游標】(Move only) - 調整為右到左順序
+	elseif r == "Control+m" then
+		-- 移到第3個 (Ctrl + M) -> 中間
+		offset = 2
+	elseif r == "Control+comma" or r == "Control+less" or r == "Control+<" then
+		-- 移到第1個 (Ctrl + ,) -> 頂端
+		offset = 0
+	elseif r == "Control+period" or r == "Control+greater" or r == "Control+>" or r == "Control+." then
+		-- 移到第5個 (Ctrl + .) -> 底端
+		offset = 4
+	end
+
+	if offset == -1 then
+		return 2
+	end
+
+	local comp = ctx.composition
+	if comp:empty() then
+		return 1
+	end
+	local seg = comp:back()
+	if not seg.menu then
+		return 1
+	end
+
+	local page_size = env.engine.schema.page_size
+	local selected_index = seg.selected_index
+	local page_start = math.floor(selected_index / page_size) * page_size
+	local target_index = page_start + offset
+
+	local available = seg.menu:prepare(target_index + 1)
+	if target_index >= available then
+		target_index = available - 1
+	end
+
+	-- 從目前位置相對移動到目標位置（不使用 Page_Up，避免翻頁副作用）
+	local delta = target_index - selected_index
+	if delta > 0 then
+		for i = 1, delta do
+			env.engine:process_key(KeyEvent("Down"))
+		end
+	elseif delta < 0 then
+		for i = 1, -delta do
+			env.engine:process_key(KeyEvent("Up"))
+		end
+	end
+
+	if auto_commit then
+		env.engine:process_key(KeyEvent("space"))
+	end
+
+	return 1 -- kAccepted
+end
+
+-----------------------------------------------------------------------
+-- 疑似已棄用之程式碼
+-----------------------------------------------------------------------
+
+local function press_key_n(env, key_name, n)
+	for _ = 1, n do
+		env.engine:process_key(KeyEvent(key_name))
+	end
+end
+
+local function norm(r)
+	if r:sub(1, 8) == "Release+" then
+		return r:sub(9)
+	end
+	return r
+end
+
+-----------------------------------------------------------------------
+-- filter Debug Tools
+-----------------------------------------------------------------------
+-- 驗證 FILTER　的觸發能被 RIME 攔截：不管候選內容是什麼，前面一律加上 [LUA] 標記
+function force_mark_filter(input, env)
+	for cand in input:iter() do
+		local old = cand.comment or ""
+		local nc = Candidate(cand.type, cand.start, cand._end, cand.text, "[LUA] " .. old)
+		nc.quality = cand.quality
+		yield(nc)
+	end
+end
+
+-- 最小測試：僅在 comment 後面加 " [OK]"，不重排不改 text
+-- 預期：
+-- (1)注音輸入列仍是【ㄅ'ㄙ】
+-- (2)候選照常彈出
+-- (3)註解末尾出現 [OK]
+function append_ok_filter(input, env)
+	for cand in input:iter() do
+		local old = cand.comment or ""
+		local nc = cand:clone() -- 關鍵：clone 保留 preedit/屬性
+		nc.comment = old .. " [OK]"
+		yield(nc)
+	end
+end
+
+-- ========= 解析候選註解 / inline 的多音節工具 =========
+
+-- 從候選註解抓所有 〔...〕 與 【...】（相容你重排後的「雙欄」與原始「配對」）
+local function parse_comment_all(comment)
+	if not comment or comment == "" then
+		return {}, {}
+	end
+	local tlpa, zh = {}, {}
+	-- 抓所有 TLPA
+	for t in comment:gmatch("〔(.-)〕") do
+		table.insert(tlpa, t)
+	end
+	-- 抓所有注音
+	for z in comment:gmatch("【(.-)】") do
+		table.insert(zh, z)
+	end
+	-- 若抓不到，再試「一對一對」的樣式
+	if #tlpa == 0 or #zh == 0 then
+		for L, R in comment:gmatch("〔(.-)〕%s*【(.-)】") do
+			table.insert(tlpa, L)
+			table.insert(zh, R)
+		end
+	end
+	return tlpa, zh
+end
+
+-- 從 inline 抓多音節：TLPA 用 ' 拆；注音用 ' 或空白拆，並去掉多餘分隔
+local function split_inline(ctx)
+	local tl = ctx.input or ""
+	local bp = (ctx.get_script_text and ctx:get_script_text()) or ""
+	local tl_list, bp_list = {}, {}
+
+	if tl ~= "" then
+		for seg in tl:gmatch("[^']+") do
+			table.insert(tl_list, seg)
+		end
+	end
+
+	if bp ~= "" then
+		bp = bp:gsub("'", " ") -- 將連續輸入分隔符號轉空白
+		for seg in bp:gmatch("%S+") do
+			seg = seg:gsub("'", "")
+			table.insert(bp_list, seg)
+		end
+		-- 若仍只得到一段但原始含 '，再保底拆
+		if #bp_list <= 1 and bp:find("'", 1, true) then
+			for seg in bp:gmatch("[^']+") do
+				seg = seg:gsub("%s+", "")
+				if #seg > 0 then
+					table.insert(bp_list, seg)
+				end
+			end
+		end
+	end
+	return tl_list, bp_list
+end
+
+-----------------------------------------------------------------------
+-- 可能已棄用之漢字標音轉換處理函數
+-----------------------------------------------------------------------
+local TPS_TIAU_HU = "[ˊˋ˪˫˙]"
+local function strip_bpmf_marks_one(s)
+	return s and s:gsub(TPS_TIAU_HU, "") or s
+end
+
+local function tlpa_with_supers(tl)
+	if not tl then
+		return tl
+	end
+	local stem, tone = tl:match("^(.-)([1-8])$")
+	return stem and (stem .. (supers_digit[tone] or "")) or tl
+end
+
+-- 依 supers_tone 選擇 TLPA 的呈現（上標或數字）
+local function tlpa_render_by_option(tl, use_supers)
+	if use_supers then
+		return tlpa_with_supers(tl)
+	else
+		return tl -- 保持數字結尾
+	end
+end
+
+-- 由 TLPA 取調號（最後一碼 1-8）
+local function tone_from_tlpa(tl)
+	return tl and tl:match("([1-8])$") or nil
+end
+
+-- 注音 + TLPA 調號 → 上標數字調
+local function tps_with_supers_by_tl(bpmf, tlpa)
+	if not bpmf then
+		return nil
+	end
+	local base = strip_bpmf_marks_one(bpmf)
+	local t = tone_from_tlpa(tlpa)
+	return t and (base .. (supers_digit[t] or "")) or base
+end
+
+-- 注音 + TLPA 調號 → 尾隨數字調
+local function tps_with_digit_by_tl(bpmf, tlpa)
+	if not bpmf then
+		return nil
+	end
+	local base = strip_bpmf_marks_one(bpmf)
+	local t = tone_from_tlpa(tlpa)
+	return t and (base .. t) or base
+end
+
+-- 對列表逐一套函數，再用空白接回
+local function map_join(list, f) -- f(elem, idx) -> string
+	local out = {}
+	for i, v in ipairs(list) do
+		out[i] = f(v, i) or ""
+	end
+	return table.concat(out, " ")
+end
+
+-- 從「候選」拿多音節；失敗就退回 inline
+local function get_multiforms(env)
+	local ctx = env.engine.context
+	local tl_list, bp_list = {}, {}
+
+	if ctx:has_menu() then
+		local cand = ctx:get_selected_candidate()
+		if cand then
+			tl_list, bp_list = parse_comment_all(cand.comment or "")
+		end
+	end
+	if #tl_list == 0 and #bp_list == 0 then
+		tl_list, bp_list = split_inline(ctx)
+	end
+	return tl_list, bp_list
+end
+
+-- 定義按受處理的快捷鍵：使用【正規表示式】判斷
+local function norm_repr(r)
+	-- -- 能截獲的按鍵：Alt+Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
+	-- r = r:gsub("^Release%+", "")
+	--      :gsub("ISO_Enter$", "Return")
+	--      :gsub("Alt%+ISO_Enter$", "Alt+Return")
+	-- 能截獲的按鍵：Enter、Ctrl+Enter、Shift+Enter、Ctrl+Shift+Enter
+	r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
+	return r:lower()
+end
+
+------------------------------------------------------------------------------------------
+-- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
+------------------------------------------------------------------------------------------
+function supers_indicator(input, env)
+	local on = env.engine.context:get_option("supers_tone")
+	local tag = on and "〔上標〕 " or "〔一般〕 "
+	for cand in input:iter() do
+		-- 生成新的候選（不改動 text / segment）
+		local c = cand:get_genuine()
+		local new = Candidate(cand.type, cand.start, cand._end, cand.text, tag .. (cand.comment or ""))
+		-- 保留原本的屬性
+		new.preedit = cand.preedit
+		yield(new)
+	end
+end

@@ -1,0 +1,292 @@
+# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+
+schema:
+  schema_id: phing_im_bpm2
+  name: 拼音輸入法【台語注音二式】
+  version: "v0.1.1"
+  author:
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    【輸入類型】：拼音輸入法
+    【拼音系統】：台語注音二式（BPM2）【吳守禮方音符號延伸】
+    【字典編碼】：台語注音二式音標
+    【注音輸入】：台語注音二式音標字母（寶島【bor2】【dor2】）
+    【侯選清單】：〔siaⁿ¹〕【ㄙㄧㄚ¹】
+    【聲調標示】：台語四聲八調，以數值標示
+    #------------------------------------------------------
+    # 定義使用者按下鍵盤時，輸入法能接受的按鍵
+    #------------------------------------------------------
+    # 1 ==> 【;】: 陰平調（高音調）
+    # 7 ==> 【-】: 陽去調（中音調）
+    # 3 ==> 【_】: 陰去調（低音調）
+    # 2 ==> 【\】: 上聲調（高降調）
+    # 5 ==> 【/】: 陽平調（低升調）
+    #------------------------------------------------------
+    # 4 ==> 【[】: 陰入調（低促調）
+    # 8 ==> 【]】: 陽入調（高促調）
+    #------------------------------------------------------
+    # 0 ==> 【.】: 入聲調 [48]=0
+    # 9 ==> 【7】: 輕聲調
+    #------------------------------------------------------
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+  # 【輸入編輯列】漢字標音格式（310.md §輸入編輯列之漢字標音格式）
+  - options:
+      [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
+        key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
+        key_in_piau_im_bpm2, key_in_piau_im_ipa ]
+    reset: 6
+    states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
+
+engine:
+  processors:
+    - lua_processor@aux_commit    # 選擇【輸入法】的輸出：【羅馬拼音字母】、【方音符號】、【用調號呈現之方音符號】
+    - lua_processor@jump_select   # 在【候選字清單】移動【選擇游標】
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - echo_translator
+    - punct_translator
+    - script_translator
+    - reverse_lookup_translator
+  filters:
+    - simplifier
+    - uniquifier
+    - lua_filter@reformat_comment_filter
+
+speller:
+  alphabet: abcdefghijklmnopqrstuvwxyzN=;-_\/[]7.
+  initials: abcdefghijklmnopqrstuvwxyzN=
+  finals: ;-_\/[]7.
+  delimiter: "'"
+  use_space: true
+  algebra:
+    #==========================================================================
+    # 【按鍵編碼】：將【字典】使用之【漢字標音系統】編碼，使之與【鍵盤按鍵】對映
+    #==========================================================================
+
+    #--------------------------------------------------------------------------
+    # 【聲調】
+    #--------------------------------------------------------------------------
+    - xform/6/7/ # 聲調 6 改為 7
+
+    #--------------------------------------------------------------------------
+    # 【韻母】
+    #--------------------------------------------------------------------------
+    # - derive/iek/ik/
+    # 與白話字相容
+    # - derive/e(ng|k)/i$1/
+    # - xform/ao(\d)$/au$1/
+    # 與漳州腔相容
+    # - derive/ou/oo/
+    # - derive/ei/e/
+    # - xform/oo/oo/              # oo(ㆦ) → oo
+    # - xform/om/oom/             # om(ㆱ) → oom
+    # - xform/onn/oonn/           # onn(ㆧ) → oonn
+    # - xform/ong/ong/            # ong(ㆲ) → ong
+    # - derive/iok/iook/
+    # - xform/o/or/               # o(ㄜ) → or
+    #------------------------------------------------------
+    # 鼻音韻母轉換：ann ==> nna ==> Na ==> Nㄚ ==> ㆩ
+    - derive/([iu]?(ai|au|oo|[aiueo]))nn/N$1/
+
+    #--------------------------------------------------------------------------
+    # 【聲母】
+    #--------------------------------------------------------------------------
+    # jji, zzi, chi, shi
+    # zz,  z,   c,   s
+    # - derive/jji/ji/    # jji (ㆢㄧ) = zz(ㆡ) + i(ㄧ)
+    # - derive/zzi/zi/    # zzi (ㆡㄧ) = z(ㄗ)  + i(ㄧ)
+    # - derive/chi/ci/    # chi (ㄑㄧ) = c(ㄘ)  + i(ㄧ)
+    # - derive/shi/si/    # shi (ㄒㄧ) = s(ㄙ)  + i(ㄧ)
+
+    #==========================================================================
+    # 【變調處理】
+    #==========================================================================
+
+    #--------------------------------------------------------------------------
+    # 舒聲變調規則 (17325)
+    #--------------------------------------------------------------------------
+    - derive/1/7/  # 第一調 → 第七調 (kim1 → kim7)
+    - derive/7/3/  # 第七調 → 第三調
+    - derive/3/2/  # 第三調 → 第二調
+    - derive/2/1/  # 第二調 → 第一調
+    - derive/5/7/  # 第五調 → 第七調
+
+    #--------------------------------------------------------------------------
+    # 入聲變調處理 (48)
+    #--------------------------------------------------------------------------
+    # 入聲尾韻為 h 的變調
+    - derive/(?<![ptk])4/2/      # -h 第四調 → 第二調
+    - derive/(?<![ptk])8/3/      # -h 第八調 → 第三調
+    #--------------------------------------------------------------------------
+    # 入聲尾韻為 p/t/k 的變調
+    #--------------------------------------------------------------------------
+    - derive/[ptk]4/8/  # -p/-t/-k 第四調 → 第八調
+    - derive/[ptk]8/4/  # -p/-t/-k 第八調 → 第四調
+
+    #==========================================================================
+    # 【入聲韻尾處理作業】
+    # 鼻音韻尾：am an ang im in ing un ong iam ian iang iong uan uang
+    # -m  ==> -p
+    # -n  ==> -t
+    # -ng ==> -k
+    #--------------------------------------------------------------------------
+    # ng: iang, iong, uang, ang, ing, ong
+    # - derive/((ia|io|ua|[aio]))(ng)[17325]/${1}k0/
+    # m: iam am im
+    # - derive/((ia|[ai]))m[17325]/${1}p0/
+    # n: ian uan an in un
+    # - derive/((ia|ua|[au]))n[17325]/${1}t0/
+    #==========================================================================
+    # - derive/([ptkh])[48]$/${1}9/     # 暫不實作【輕聲調】，以【入聲調】代用
+    - derive/([ptkh])[48]$/${1}0/
+    - abbrev/([ptkh])[48]$/&/     # 【字典編碼】：【&】，代表所有【入聲韻】
+
+    #=======================================================================
+    # 簡化輸入設定
+    #=======================================================================
+    # 無調號輸入
+    - derive/^([a-zLMN]+)\d$/$1/
+    # 只輸入【聲母】
+    # - derive/^(bb|ng|gg|zz|jj|ch|sh|[mbpnldtgkzcsh]).*$/$1/
+    - abbrev/^(bb|ng|gg|zz|jj|ch|sh|[mbpnldtgkzcsh]).*$/$1/
+    # 只輸入【聲母】與【調號】
+    # - derive/^((bb|ng|gg|zz|jj|ch|sh|[mbpnldtgkzcsh]).+)(\d)$/$1$2/
+    - abbrev/^((bb|ng|gg|zz|jj|ch|sh|[mbpnldtgkzcsh]).+)(\d)$/$1$2/
+    # 鼻算韻母以 L 代
+    - abbrev/([iu]?(ai|au|oo|[aiueo]))nn/L/
+
+    #=======================================================================
+    # 定義聲調的「調號」與「按鍵」的對映規則
+    #--------------------------------------------------------------------------
+    # 【字典編碼】：【0】，【按鍵】：【.】，【鍵符】：【ʔ】，所有【入聲韻母】
+    # 【字典編碼】：【&】，【按鍵】：【7】，【鍵符】：【入】，所有【入聲韻尾】：-h/-p/-t/-k [48]
+    # 【字典編碼】：【L】，【按鍵】：【N】，【鍵符】：【ⁿ】，所有【鼻化韻母】
+    #=======================================================================
+    - xlit|17325480&L|;-_\/[].7N|
+
+translator:
+  dictionary: ji_khoo_bpm2
+  prism: phing_im_bpm2
+  # spelling_hints: 20
+  spelling_hints: 5
+  always_show_comments: true
+  initial_quality: 0.75
+  preedit_format:
+    #==========================================================================
+    # 輸入編輯列
+    #==========================================================================
+    # 分隔符號
+    - xform/'/ /
+    #==========================================================================
+    # 按鍵與鍵符對映
+    #--------------------------------------------------------------------------
+    # 【字典編碼】：【0】，【按鍵】：【.】，【鍵符】：【ʔ】，所有【入聲韻母】
+    # 【字典編碼】：【&】，【按鍵】：【7】，【鍵符】：【入】，所有【入聲韻尾】：-h/-p/-t/-k [48]
+    # 【字典編碼】：【L】，【按鍵】：【N】，【鍵符】：【ⁿ】，所有【鼻化韻母】
+    #==========================================================================
+    - xlit|;-_\/[].7N|1732548ʔ入ⁿ|
+    #------------------------------------------------------
+    # 聲母校調
+    #------------------------------------------------------
+    # - xform/ji/jji/
+    # - xform/zi/ji/
+    # - xform/ci/chi/
+    # - xform/si/shi/
+    #------------------------------------------------------
+    # 聲調校調
+    #------------------------------------------------------
+    # 第 1 調（陰平）、第 4 調（陰入）略去不寫
+    - xform/[14]//
+  comment_format:
+    __patch:
+      # 【候選清單】使用【單欄】：【閩拼方案】
+      - lib_comment_bpm2:/hau_suan_tuann
+
+key_binder:
+  import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore }
+    #---------------------------------------------------
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus }
+    #---------------------------------------------------
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
+    #---------------------------------------------------
+    # 翻頁
+    # - { accept: comma, send: Page_Up, when: has_menu }         # 選下一個字
+    # - { accept: period, send: Page_Down, when: has_menu }      # 選上一個字
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+
+editor:
+  bindings:
+    Return: commit_composition              # 【漢字標音輸出】選項設定
+    Control+Return: commit_raw_input        # 【鍵盤按鍵】（未經 preedit_format 轉換的原始輸入）
+    Shift+Return: commit_script_text        # 【輸入編輯列】（經 preedit_format 轉換後的結構）
+    Control+Shift+Return: commit_comment    # 【候選字清單】選擇項目
+
+recognizer:
+  import_preset: default
+  patterns:
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+    punct: '`[^\s]$'
+    reverse_lookup: "`[a-z]*$"
+
+menu:
+  alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
+  alternative_select_keys: "12345"
+  page_size: 5 #選單每䈎顯示個數
+
+style:
+  horizontal: false
+  font_face: "霞鶩文楷 TC, 新細明體"
+  comment_font_face: "Cascadia Next TC Medium, 霞鶩文楷 TC, BopomofoRuby1909-v1, 新細明體"
+  comment_font_size: 18
+
+punctuator:
+  import_preset: keymap_piau_tian
+
+# reverse_lookup:
+#   dictionary: luna_pinyin
+#   prefix: "`"
+#   tips: 〔拼音〕
+#   preedit_format:
+#     - xform/([nljqxy])v/$1ü/
