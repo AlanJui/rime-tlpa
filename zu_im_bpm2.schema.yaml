@@ -169,13 +169,7 @@ speller:
     - xform/^bb/B/ # ㆠ[ bb ]
     # - xform/^b/b/ # ㄅ[ b ]
     # - xform/^p/p/ # ㄆ[ p ]
-    # - xform/^m(?!\d)/m/ # ㄇ[ m ]
-    #--------------------------------------------------------------------------
-    # 舌尖前音（齒齦音）: z[j], c[ch], zz[jj], s[sh]
-    - xform/^zz/Z/ # ㆡ[ zz ]
-    # - xform/^z/z/ # ㄗ[ z ]
-    # - xform/^c/c/ # ㄘ[ c ]
-    # - xform/^s/s/ # ㄙ[ s ]
+    - xform/^m(?!\d)/m/ # ㄇ[ m ]
     #--------------------------------------------------------------------------
     # 舌尖前音（齦顎音）: z[j], c[ch], zz[jj], s[sh]
     - xform/^jj/J/ # ㆢ[ jj ]
@@ -183,10 +177,11 @@ speller:
     - xform/^ch/C/ # ㄑ[ ch ]
     - xform/^sh/S/ # ㄒ[ sh ]
     #--------------------------------------------------------------------------
-    # - derive/^Zi/Ji/ # ㆢ[ jj ]
-    # - derive/^z/zi/  # ㄐ[ j ]
-    # - derive/^ci/Ci/ # ㄑ[ ch ]
-    # - derive/^si/Si/ # ㄒ[ sh ]
+    # 舌尖前音（齒齦音）: z[j], c[ch], zz[jj], s[sh]
+    - xform/^zz/Z/ # ㆡ[ zz ]
+    # - xform/^z/z/ # ㄗ[ z ]
+    # - xform/^c/c/ # ㄘ[ c ]
+    # - xform/^s/s/ # ㄙ[ s ]
     #--------------------------------------------------------------------------
     - xform/^gg/Ğ/ # ㆣ[ gg ] ==> Ğ（U+011E，G 加短音符）
     # ng 可為聲母，亦可為韻母
@@ -208,21 +203,21 @@ speller:
     #--------------------------------------------------------------------------
     # 地方腔韻母
     #--------------------------------------------------------------------------
-    - derive/ere/ue/
-    - derive/er(ng|k)/i$1/
-    - derive/er(n|t)/u$1/
-    - derive/er/e/
-    # 泉州腔
-    - derive/ir(ng|k)/i$1/
-    - derive/ir(n|t)/u$1/
-    - derive/ire/ue/
-    - derive/ir/e/
-    # 漳州腔
-    - derive/ou/O/
-    - derive/ei/e/
-    - derive/ee/e/ # 漳州/泉州腔
-    # 廈門腔
-    - derive/ur/u/
+    # - derive/ere/ue/
+    # - derive/er(ng|k)/i$1/
+    # - derive/er(n|t)/u$1/
+    # - derive/er/e/
+    # # 泉州腔
+    # - derive/ir(ng|k)/i$1/
+    # - derive/ir(n|t)/u$1/
+    # - derive/ire/ue/
+    # - derive/ir/e/
+    # # 漳州腔
+    # - derive/ou/O/
+    # - derive/ei/e/
+    # - derive/ee/e/ # 漳州/泉州腔
+    # # 廈門腔
+    # - derive/ur/u/
     #==========================================================================
     # 鼻音韻尾（m/ng/n）
     #==========================================================================
@@ -289,16 +284,18 @@ speller:
     # abbreviation:
     # 台語音標之拼音字母輸入【簡化規則】（abbreviation：縮寫詞）
     #=======================================================================
+    # 注音輸入，可以只用【聲母】
+    # - abbrev/^([BbpmdtnlĞgkŋhZzcsJjCS]).+$/$1/
+    - derive/^([BbpmdtnlĞgkŋhZzcsJjCS]).+$/$1/
     # 注音輸入，可只輸入：【聲母】+【韻母】，【調號】則可略去；但只適用於【舒聲調】（平、上、去聲）。
     # 注意：ə（ㄜ）/ Ø（零聲母）不在 [A-Za-z] 內，必須寫進字元集，否則 dor7→də7 無法衍生無調碼 2k，
     # 造成無候選（kVoid）時 preedit_format 不生效，輸入編輯列會原樣顯示 2k。
-    - derive/^([A-Za-zĞŋəØ]+)\d$/$1/
+    # - derive/^([A-Za-zĞŋəØ]+)\d$/$1/
+    # - derive/^([A-Za-zĞŋəØ@]+)\d$/$1/
     # 舒聲略調（\D 可含 ə 等非 ASCII 韻母編碼）：də7 → də → xlit → 2k
-    - abbrev/^(\D+)([12357])$/$1/
-    # 注音輸入，可以只用【聲母】
-    - abbrev/^([BbpmdtnlĞgkŋhZzcsJjCS]).+$/$1/
+    # - abbrev/^(\D+)([12357])$/$1/
     # 可只用【聲母】+【調號】輸入
-    - abbrev/^([BbpmdtnlĞgkŋhZzcsJjCS]).+([17325480])$/$1$2/
+    # - abbrev/^([BbpmdtnlĞgkŋhZzcsJjCS]).+([17325480])$/$1$2/
     #==========================================================================
     # 字典編碼轉換按鍵
     # 按下【鍵盤按鍵】後，RIME 輸出之【字碼】的對映關聯。
@@ -311,7 +308,9 @@ speller:
     #--------------------------------------------------------------------------
     # BbpmdtnlĞgkŋhZzcsJjCSaiwueOəIUDfqrvxyMGNY@AWHRFQVØL173254806
     # !1qa2wsxEedNcYyhnRrfv8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz=-"5346[].7
+    # - xlit|BbpmdtnlĞgkŋhZzcsJjCSaiwueOəIUDfqrvxyMGNY@AWHRFQVØL173254806|!1qa2wsxEedNcYyhnRrfv8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz=-"5346[].7|
     - xlit|BbpmdtnlĞgkŋhZzcsJjCSaiwueOəIUDfqrvxyMGNY@AWHRFQVØL173254806|!1qa2wsxEedNcYyhnRrfv8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz=-"5346[].7|
+
 
 translator:
   dictionary: ji_khoo_bpm2
@@ -330,6 +329,7 @@ translator:
     # 例：韻母 ㄜ 字典編碼是 ə、按鍵是 k；此處寫 k→ㄜ，不可把 ə 寫進左側。
     # !1qa2wsxEedNcYyhnRrfv8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz=-"5346[].7
     # ㆠㄅㄆㄇㄉㄊㄋㄌㆣㄍㄎㄫㄏㆡㄗㄘㄙㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㆭㄣㆰㄢㄤㆱㆲㆴㆵㆻㆷØㄥ一七三二五四八輕ʔ
+    # - xlit|!1qa2wsxEedNcYyhnRrfv8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz=-"5346[].7|ㆠㄅㄆㄇㄉㄊㄋㄌㆣㄍㄎㄫㄏㆡㄗㄘㄙㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㆭㄣㆰㄢㄤㆱㆲㆴㆵㆻㆷØㄥ一七三二五四八輕ʔ|
     - xlit|!1qa2wsxEedNcYyhnRrfv8uKj,ik9l*UJ<I(Lm/pM0;Oobtgz=-"5346[].7|ㆠㄅㄆㄇㄉㄊㄋㄌㆣㄍㄎㄫㄏㆡㄗㄘㄙㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㄞㄠㆩㆪㆫㆥㆧㆮㆯㆬㆭㄣㆰㄢㄤㆱㆲㆴㆵㆻㆷØㄥ一七三二五四八輕ʔ|
     #--------------------------------------------------------------------------
     # （2）【調號按鍵】

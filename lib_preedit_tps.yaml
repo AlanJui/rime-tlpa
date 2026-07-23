@@ -197,13 +197,14 @@ mapping_dict_to_key_code:
     # abbreviation:
     # 台語音標之拼音字母輸入【簡化規則】（abbreviation：縮寫詞）
     #=======================================================================
-    # 注音輸入，可只輸入：【聲母】+【韻母】，【調號】則可略去；但只適用於【舒聲調】（平、上、去聲）。
-    # - derive/^([bpPmntTlgkKŋhjzcshJZCS]+)\d$/$1/
-    - derive/^([a-zA-Z]+)\d$/$1/
     # 注音輸入，可以只用【聲母】
-    - abbrev/^([bpPmntTlgkKŋhjzcsJZCS]).+$/$1/
+    # - abbrev/^([bpPmtTnlgkKŋhjzcsJZCS]).+$/$1/
+    - derive/^([bpPmtTnlgkKŋhjzcsJZCS]).+$/$1/
+    # 注音輸入，可只輸入：【聲母】+【韻母】，【調號】則可略去；但只適用於【舒聲調】（平、上、去聲）。
+    # - derive/^([a-zA-Zəŋ]+)\d$/$1/
+    # - derive/^([bpPmtTnlgkKŋhjzcsJZCS]+)\d$/$1/
     # 可只用【聲母】+【調號】輸入
-    - abbrev/^([bpPmntTlgkKŋhjhzcsJZCS]).+(\d)$/$1$2/
+    # - abbrev/^([bpPmntTlgkKŋhjhzcsJZCS]).+(\d)$/$1$2/
     #==========================================================================
     # 【字典編碼】與【鍵盤按鍵】對映
     #==========================================================================
