@@ -1,3 +1,19 @@
+"""
+
+【功能摘要】：當開發中之輸入法，遇到「按鍵與輸入編輯列、候選字清單，不符合預期」之狀況發生時，
+使用此程式，可在終端機模擬測試，經 rime.dll 解釋之【模擬測試結果】。
+
+(.venv) PS C:\Users\AlanJui\work\rime-tlpa> py -3 .\_rime_test\rime_harness.py zu_im_tps "a8nuo"
+schema=zu_im_tps keys=a8nuo
+preedit=[ㄇㄚ ㄒㄧㆲ]
+candidates=5
+  1. 馬上       【ㄇㄚˋ】 【ㄒㄧㆲ˫】  〔ma2〕 〔siong7〕
+  2. 嘛是       ma si
+  3. 嗎 【ㄇㄚˋ】〔ma2〕
+  4. 媽 【ㄇㄚˋ】〔ma2〕
+  5. 瑪 【ㄇㄚˋ】〔ma2〕
+(.venv) PS C:\Users\AlanJui\work\rime-tlpa>
+"""
 # -*- coding: utf-8 -*-
 """librime 測試工具：用 Weasel 的 rime.dll 在隔離目錄模擬按鍵，列出候選。"""
 import ctypes
