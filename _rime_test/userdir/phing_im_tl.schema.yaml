@@ -163,13 +163,17 @@ speller:
     # 簡化輸入設定
     #=======================================================================
     # 無調號輸入
-    - derive/^([a-zLMN]+)\d$/$1/
+    # - derive/^([a-zLMN]+)\d$/$1/
+    - derive/^([a-zN]+)\d$/$1/
     # 只輸入【聲母】
+    # - abbrev/^(thsi|tsi|tsh|ts|ph|th|kh|ch|sh|ji|si|[mptnlhj]).*$/$1/
     # - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).*$/$1/
-    - derive/^(thsi|tsi|tsh|ts|ph|th|kh|ch|sh|ji|si|[mptnlhj]).*$/$1/
+    # （.+：聲母後至少須有一個字元，縮寫才有意義）
+    - abbrev/^([pbmtnlkgzcjsh]g?s?h?).+$/$1/
     # 只輸入【聲母】與【調號】
+    # - derive/^((thsi|tsi|tsh|ts|ph|th|kh|ch|sh|ji|si|[mptnlhj]).+)(\d)$/$1$2/
     # - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
-    - derive/^((thsi|tsi|tsh|ts|ph|th|kh|ch|sh|ji|si|[mptnlhj]).+)(\d)$/$1$2/
+    - abbrev/^([pbmtnlkgzcjsh]g?s?h?).+(\d)$/$1$2/
     # 鼻算韻母以 L 代
     - abbrev/([iu]?(ai|au|oo|[aiueo]))nn/L/
 

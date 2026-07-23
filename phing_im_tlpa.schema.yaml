@@ -160,11 +160,14 @@ speller:
     # 簡化輸入設定
     #=======================================================================
     # 無調號輸入
-    - derive/^([a-zLMN]+)\d$/$1/
+    # - derive/^([a-zLMN]+)\d$/$1/
+    - derive/^([a-zN]+)\d$/$1/
     # 只輸入【聲母】
-    - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).*$/$1/
+    # TLPA 聲母：p/ph/b/m、t/th/n/l、k/kh/g/ng、h、z/c/j/s
+    # 【註】雙字母聲母（ph/th/kh/ng）須置於單字母字元集之前，才能優先匹配
+    - abbrev/^(ph|th|kh|ng|[pbmtnlkgzcjsh]).+$/$1/
     # 只輸入【聲母】與【調號】
-    - abbrev/^([pbmtnlkgzcjsh]g?s?h?h?).+(\d)$/$1$2/
+    - abbrev/^(ph|th|kh|ng|[pbmtnlkgzcjsh]).+(\d)$/$1$2/
     # 鼻算韻母以 N 代
     # - abbrev/N([iu]?(ai|au|oo|[aiueo]))/L/
     - abbrev/([iu]?(ai|au|oo|[aiueo]))nn/L/

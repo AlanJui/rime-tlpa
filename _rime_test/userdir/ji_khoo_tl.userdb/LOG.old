@@ -1,3 +1,7 @@
-2026/07/23-14:24:33.565000 38064 Recovering log #28
-2026/07/23-14:24:33.591000 38064 Delete type=0 #28
-2026/07/23-14:24:33.591000 38064 Delete type=3 #27
+2026/07/23-23:24:08.876000 73012 Log #120: 0 ops saved to Table #123 OK
+2026/07/23-23:24:08.877000 73012 Archiving C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb/000120.log: OK
+2026/07/23-23:24:08.878000 73012 Log #122: 0 ops saved to Table #124 OK
+2026/07/23-23:24:08.879000 73012 Archiving C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb/000122.log: OK
+2026/07/23-23:24:08.879000 73012 Table #5: 7 entries OK
+2026/07/23-23:24:08.884000 73012 Archiving C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb/MANIFEST-000119: OK
+2026/07/23-23:24:08.895000 73012 **** Repaired leveldb C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb; recovered 1 files; 296 bytes. Some data may have been lost. ****
