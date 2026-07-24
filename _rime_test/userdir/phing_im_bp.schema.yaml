@@ -273,11 +273,15 @@ speller:
     # 縮寫輸入
     #==========================================================================
     # 無調號輸入
-    - derive/^([a-zLMN]+)\d$/$1/
+    # - derive/^([a-zLMN]+)\d$/$1/
+    - derive/^([a-zN]+)\d$/$1/
     # 聲母縮寫輸入（只打聲母）
-    - abbrev/^(bbn|bb|ln|ggn|gg|zz|[bpdtlgkhzcsjyw]).+$/$1/
+    # y: 零聲母；w:泉州腔韻母　/ir/
+    - abbrev/^(bbn|bb|ln|ggn|gg|zz|[bpdtlgkhzcs]).+$/$1/
+    # 只輸入【聲母】與【調號】
+    - abbrev/^(bbn|bb|ln|ggn|gg|zz|[bpdtlgkhzcs]).+(\d)$/$1$2/
     # 鼻算韻母以 L 代
-    - abbrev/([iu]?(ai|au|oo|[aiueo]))nn/L/
+    - abbrev/([iu]?(ai|ao|oo|[aiueo]))nn/L/
 
     #=======================================================================
     # 定義聲調的「調號」與「按鍵」的對映規則
