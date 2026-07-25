@@ -622,36 +622,21 @@ key_binder:
     - { when: has_menu, accept: "Control+k", send: Up }
     - { when: has_menu, accept: "Control+j", send: Down }
     #---------------------------------------------------
-    # 【候選字清單】展開時（即 has_menu 為 true 時）
+    # 選擇游標快速移動（jump_select）
     #---------------------------------------------------
-    # 註：先前曾使用 F20/F24 作為代理鍵，但目前的 rime.lua (v.0.2)
-    # 已改為由 Lua 直接發送 Page_Up 與 Down 原生鍵，故以下代理鍵轉發已不再需要。
-    # - { when: has_menu, accept: F20, send: Home }
-    # - { when: has_menu, accept: F24, send: Down }
-
-    # 以下為 jump_select 實際截獲的快捷鍵定義（由右至左順序）：
-    # Ctrl+/ (頂端) | Ctrl+. (中間) | Ctrl+, (底端)
-    - { when: has_menu, accept: "Control+slash", send: "Control+slash" }
-    - { when: has_menu, accept: "Control+period", send: "Control+period" }
-    - { when: has_menu, accept: "Control+comma", send: "Control+comma" }
-    #---------------------------------------------------
-    # 切換第3欄為：方音符號/台語音標 (羅馬拼音)
-    #---------------------------------------------------
+    # 候選字清單中央（m=middle）
     - { when: always, accept: "Control+m", toggle: dict_mode }
-    #---------------------------------------------------
-    # 切換【帶調號值的方音符號】，其【調值】使用【一般格式】/【上標格式】
-    #---------------------------------------------------
-    # - { when: always, accept: "Control+grave", toggle: supers_tone }
-    # - { when: has_menu, accept: "Control+grave", toggle: supers_tone }
-    # 空白鍵選字：由 speller 的 use_space: true 自然處理，勿用 send: Return（會觸發 commit_composition）
-    # - { when: has_menu, accept: space, send: Return }  # 空白鍵選字（有候選清單時）
+    # 候選字清單頂端（<）
+    - { when: has_menu, accept: "Control+period", send: "Control+period" }
+    # 候選字清單底端（>）
+    - { when: has_menu, accept: "Control+comma", send: "Control+comma" }
 
 editor:
   bindings:
     Return: commit_composition              # 【漢字標音輸出】選項設定
     Control+Return: commit_raw_input        # 【鍵盤按鍵】（未經 preedit_format 轉換的原始輸入）
     Shift+Return: commit_script_text        # 【輸入編輯列】（經 preedit_format 轉換後的結構）
-    Control+Shift+Return: commit_comment    # 【候選字清單】選擇項目
+    # Control+Shift+Return 由 lua_processor@aux_commit 攔截：輸出【漢字附帶標音】（如：啥物〔siann2-mih4〕）
 
 menu:
   page_size: 5 #選單每䈎顯示個數

@@ -81,6 +81,10 @@ class RimeContext(Structure):
     ]
 
 
+class RimeCommit(Structure):
+    _fields_ = [("data_size", c_int), ("text", c_char_p)]
+
+
 def prepare_userdir(fresh: bool) -> None:
     if fresh and os.path.exists(TEST_ROOT):
         shutil.rmtree(TEST_ROOT)
@@ -107,7 +111,10 @@ def main():
     schema = sys.argv[1] if len(sys.argv) > 1 else "zu_im_tps"
     keys = sys.argv[2] if len(sys.argv) > 2 else "a8{space}nuo"
     fresh = "--fresh" in sys.argv
-    overrides = [a for a in sys.argv[3:] if a.endswith((".yaml", ".lua"))]
+    overrides = [a for a in sys.argv[3:]
+                 if a.endswith((".yaml", ".lua")) and not a.startswith("--")]
+    # --opt:NAME 於送出按鍵前，將 RIME 選項 NAME 設為 true（模擬 F4 方案選單切換）
+    options = [a[len("--opt:"):] for a in sys.argv[3:] if a.startswith("--opt:")]
 
     prepare_userdir(fresh)
     if overrides:
@@ -121,6 +128,8 @@ def main():
     rime.RimeSimulateKeySequence.argtypes = [c_uint64, c_char_p]
     rime.RimeSelectSchema.argtypes = [c_uint64, c_char_p]
     rime.RimeGetContext.argtypes = [c_uint64, POINTER(RimeContext)]
+    rime.RimeGetCommit.argtypes = [c_uint64, POINTER(RimeCommit)]
+    rime.RimeSetOption.argtypes = [c_uint64, c_char_p, c_int]
     rime.RimeDestroySession.argtypes = [c_uint64]
 
     traits = RimeTraits()
@@ -142,8 +151,18 @@ def main():
     sid = rime.RimeCreateSession()
     if not rime.RimeSelectSchema(sid, schema.encode()):
         print("!! select schema failed:", schema)
+    for opt in options:
+        rime.RimeSetOption(sid, opt.encode(), 1)
+        print(f"option[{opt}]=1")
     if not rime.RimeSimulateKeySequence(sid, keys.encode()):
         print("!! simulate failed:", keys)
+
+    commit = RimeCommit()
+    commit.data_size = sizeof(RimeCommit) - sizeof(c_int)
+    if rime.RimeGetCommit(sid, ctypes.byref(commit)):
+        commit_text = (commit.text or b"").decode("utf-8", "replace")
+        print(f"commit=[{commit_text}]")
+        rime.RimeFreeCommit(ctypes.byref(commit))
 
     ctx = RimeContext()
     ctx.data_size = sizeof(RimeContext) - sizeof(c_int)

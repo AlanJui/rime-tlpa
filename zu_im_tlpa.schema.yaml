@@ -28,7 +28,7 @@ switches:
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
         key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
-        key_in_piau_im_bpm2, key_in_piau_im_ipa, key_in_piau_im_tlpa_tps ]
+        key_in_piau_im_bpm2, key_in_piau_im_ipa, key_in_piau_im_tlpa_zu_im ]
     reset: 8
     states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標, 台語注音符號 ]
 
@@ -710,7 +710,7 @@ editor:
     Return: commit_composition              # 【漢字標音輸出】選項設定
     Control+Return: commit_raw_input        # 【鍵盤按鍵】（未經 preedit_format 轉換的原始輸入）
     Shift+Return: commit_script_text        # 【輸入編輯列】（經 preedit_format 轉換後的結構）
-    Control+Shift+Return: commit_comment    # 【候選字清單】選擇項目
+    # Control+Shift+Return 由 lua_processor@aux_commit 攔截：輸出【漢字附帶標音】（如：啥物〔siann2-mih4〕）
 
 menu:
   page_size: 5 #選單每䈎顯示個數

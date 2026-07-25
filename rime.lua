@@ -14,6 +14,12 @@ end
 if not _bpm2_conv_ok then
 	_bpm2_conv = nil
 end
+-- 【漢字附帶標音】設定檔（lua/rime_env.lua）：
+-- 各方案之預設標音系統（schema_id 表）與分隔/串接符號（han_ji_piau_im_hu_ho 表）
+local _rime_env_ok, _rime_env = pcall(require, "rime_env")
+if not _rime_env_ok or type(_rime_env) ~= "table" then
+	_rime_env = nil
+end
 
 -- === DICTIONARIES ===
 
@@ -153,6 +159,19 @@ local SKIP_CONVERT_SCHEMAS = {
 	["zu_im_bpm2"]     = true,
 	["huan_ciat_tps"]  = true,
 	["huan_ciat_tlpa"] = true,
+}
+
+-- 《變更【漢字標音選項】》定義之選項名稱（見 320.md §設置輸入方案使用之選項）
+local PIAU_IM_OPTIONS = {
+	"key_in_piau_im_sni",
+	"key_in_piau_im_tps",
+	"key_in_piau_im_tlpa",
+	"key_in_piau_im_tlpa_zu_im",
+	"key_in_piau_im_tl",
+	"key_in_piau_im_poj",
+	"key_in_piau_im_bp",
+	"key_in_piau_im_bpm2",
+	"key_in_piau_im_ipa",
 }
 
 -- === END DICTIONARIES ===
@@ -496,6 +515,7 @@ local TLPA_TO_BP_TIAU = {
 -- aux_commit：切換輸入方案【輸出】之【漢字標音】格式
 -- Space → 漢字
 -- Enter → 漢字標音（格式依選項而定）
+-- Ctrl+Shift+Enter → 漢字附帶標音（如：啥物〔siann2-mih4〕；320.md §五、輸出漢字附帶標音）
 ------------------------------------------------------------------------------------------
 
 function aux_commit(key, env)
@@ -503,7 +523,15 @@ function aux_commit(key, env)
 	local ctx = env.engine.context
 	local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
-	if r == "return" or r == "kp_enter" then
+	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter）
+	-- 【註】KeyEvent:repr() 之修飾鍵順序為 Shift → Control → Alt（實際為 Shift+Control+Return），
+	--       故以「包含」檢查各修飾鍵，不依賴其順序。
+	local fu_piau_im = (r:find("return", 1, true) ~= nil)
+		and (r:find("control+", 1, true) ~= nil)
+		and (r:find("shift+", 1, true) ~= nil)
+		and (r:find("alt+", 1, true) == nil)
+
+	if r == "return" or r == "kp_enter" or fu_piau_im then
 		if not ctx:has_menu() then
 			log.info("[aux_commit] has_menu=false, returning kNoop")
 			return 2
@@ -650,6 +678,31 @@ function aux_commit(key, env)
 			return conv.convert(tlpa, target)
 		end
 
+		-- 決定標音格式之選項：
+		--   Enter / Ctrl+Shift+Enter 皆依【方案選單】目前之 key_in_piau_im_* 選項；
+		--   【漢字附帶標音】模式下，若方案未定義任何 key_in_piau_im_* 選項群，
+		--   則改用設定檔（lua/rime_env.lua）中該方案之預設值。
+		local forced_option = nil
+		if fu_piau_im and _rime_env and type(_rime_env.schema_id) == "table" then
+			local any_on = false
+			for _, name in ipairs(PIAU_IM_OPTIONS) do
+				if ctx:get_option(name) then
+					any_on = true
+					break
+				end
+			end
+			if not any_on then
+				forced_option = _rime_env.schema_id[schema_id]
+				log.info("[aux_commit] no key_in_piau_im_* option on; use rime_env default=" .. tostring(forced_option))
+			end
+		end
+		local function use_opt(name)
+			if forced_option then
+				return forced_option == name
+			end
+			return ctx:get_option(name)
+		end
+
 		-- [DBG] 確認目前 switch 狀態
 		log.info("[aux_commit] key_in_piau_im_tps="  .. tostring(ctx:get_option("key_in_piau_im_tps")))
 		log.info("[aux_commit] key_in_piau_im_tlpa=" .. tostring(ctx:get_option("key_in_piau_im_tlpa")))
@@ -663,37 +716,37 @@ function aux_commit(key, env)
 		-- key_in_piau_im_* 決定 Enter 鍵輸出格式（310.md §輸入編輯列之漢字標音格式）
 		local out_list = {}
 
-		if ctx:get_option("key_in_piau_im_tps") then
+		if use_opt("key_in_piau_im_tps") then
 			-- 方音符號：TLPA/SNI → 方音符號
 			for i, v in ipairs(source_list) do
 				out_list[i] = to_target(v, "方音符號")
 			end
 
-		elseif ctx:get_option("key_in_piau_im_tlpa") then
+		elseif use_opt("key_in_piau_im_tlpa") then
 			-- 台語音標（數字調號）：TLPA/SNI → TLPA
 			for i, v in ipairs(source_list) do
 				out_list[i] = to_target(v, "台語音標")
 			end
 
-		elseif ctx:get_option("key_in_piau_im_tl") then
+		elseif use_opt("key_in_piau_im_tl") then
 			-- 台羅拼音（調符）：TLPA/SNI → 台羅
 			for i, v in ipairs(source_list) do
 				out_list[i] = to_target(v, "台羅拼音")
 			end
 
-		elseif ctx:get_option("key_in_piau_im_poj") then
+		elseif use_opt("key_in_piau_im_poj") then
 			-- 白話字（調符）：TLPA/SNI → POJ
 			for i, v in ipairs(source_list) do
 				out_list[i] = to_target(v, "白話字")
 			end
 
-		elseif ctx:get_option("key_in_piau_im_bp") then
+		elseif use_opt("key_in_piau_im_bp") then
 			-- 閩拼方案（調符）：TLPA/SNI → BP
 			for i, v in ipairs(source_list) do
 				out_list[i] = to_target(v, "閩拼方案")
 			end
 
-		elseif ctx:get_option("key_in_piau_im_bpm2") then
+		elseif use_opt("key_in_piau_im_bpm2") then
 			-- 台語注音二式（數字調號）
 			if schema_id == "zu_im_bpm2" or schema_id == "phing_im_bpm2" then
 				-- BPM2 字典：〔〕欄已是 BPM2 音碼（如 hor5），直接輸出，不做 round-trip 轉換
@@ -713,7 +766,7 @@ function aux_commit(key, env)
 				end
 			end
 
-		elseif ctx:get_option("key_in_piau_im_ipa") then
+		elseif use_opt("key_in_piau_im_ipa") then
 			-- 國際音標：TLPA/SNI → IPA
 			-- phing_im_bp 特殊處理：調號直接引用 BP 原始調號（不做 BP→TLPA 重映射）
 			-- 因 BP 系統調號與其他系統不同，IPA 上標數字應顯示 BP 調號
@@ -729,8 +782,8 @@ function aux_commit(key, env)
 				end
 			end
 
-		elseif ctx:get_option("key_in_piau_im_tlpa_tps") then
-			-- 台語注音符號（TPS + 上標調號）：直接從候選 comment 的【】欄取得
+		elseif use_opt("key_in_piau_im_tlpa_zu_im") then
+			-- 台語音標注音（TPS + 上標調號）：直接從候選 comment 的【】欄取得
 			-- （zu_im_tlpa 的 comment_format 已將注音符號帶上標調號放入【】欄，
 			--   如 【ㄏㄛㄥ⁵】，無需再經 conv.convert 轉換）
 			local tps_items = {}
@@ -755,7 +808,22 @@ function aux_commit(key, env)
 			end
 		end
 
-		local out_str = table.concat(out_list, " ")
+		local out_str
+		if fu_piau_im then
+			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以 im_zat 串接）+ 右分隔符號
+			-- 如：啥物〔siann2-mih4〕。符號由設定檔 han_ji_piau_im_hu_ho 定義。
+			-- 【註】無調號詞彙（如 ji_khoo_ban_lam 簡拼詞條）之 comment 無【】〔〕結構，
+			--       source_list 為空時已於前方 return kNoop（目前限制：忽略不處理）。
+			local hu_ho = (_rime_env and type(_rime_env.han_ji_piau_im_hu_ho) == "table")
+				and _rime_env.han_ji_piau_im_hu_ho
+				or {}
+			out_str = (cand.text or "")
+				.. (hu_ho.left or "〔")
+				.. table.concat(out_list, hu_ho.im_zat or "-")
+				.. (hu_ho.right or "〕")
+		else
+			out_str = table.concat(out_list, " ")
+		end
 		if #out_str > 0 then
 			env.engine:commit_text(out_str)
 			ctx:clear()
