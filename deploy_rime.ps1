@@ -53,6 +53,7 @@ $files = @(
 
     # --- 輸入方案插件函式庫 ---
     "rime.lua"
+    "lua\rime_env.lua"
     "lua\tlpa_converter.lua"
     "lua\bpm2_converter.lua"
 

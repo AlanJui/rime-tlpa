@@ -161,6 +161,14 @@ local SKIP_CONVERT_SCHEMAS = {
 	["huan_ciat_tlpa"] = true,
 }
 
+-- 取得【漢字附帶標音】之分隔/串接符號（設定檔未載入時回傳空表，由呼叫端套預設值）
+local function get_hu_ho()
+	if _rime_env and type(_rime_env.han_ji_piau_im_hu_ho) == "table" then
+		return _rime_env.han_ji_piau_im_hu_ho
+	end
+	return {}
+end
+
 -- 《變更【漢字標音選項】》定義之選項名稱（見 320.md §設置輸入方案使用之選項）
 local PIAU_IM_OPTIONS = {
 	"key_in_piau_im_sni",
@@ -656,6 +664,27 @@ function aux_commit(key, env)
 		end
 
 		if #source_list == 0 then
+			-- 【漢字附帶標音】遇【無調號詞彙】（如 ji_khoo_ban_lam 簡拼詞條）：
+			-- comment 無【】〔〕結構，僅有原樣拼音（如：siann mih）。
+			-- 調號從缺（可忽略不管），無法轉換至其他標音系統，
+			-- 但輸出格式仍須維持，以原樣拼音輸出：啥物〔siann-mih〕
+			if fu_piau_im and gen_comm ~= "" and gen_comm:match("^[%w%s'%-]+$") then
+				local syls = {}
+				for syl in gen_comm:gmatch("[^%s'%-]+") do
+					table.insert(syls, syl)
+				end
+				if #syls > 0 then
+					local hu_ho = get_hu_ho()
+					local out_str = (cand.text or "")
+						.. (hu_ho.left or "〔")
+						.. table.concat(syls, hu_ho.im_zat or "-")
+						.. (hu_ho.right or "〕")
+					log.info("[aux_commit] toneless phrase fallback: " .. out_str)
+					env.engine:commit_text(out_str)
+					ctx:clear()
+					return 1
+				end
+			end
 			log.info("[aux_commit] source_list is empty, returning kNoop")
 			return 2
 		end
@@ -812,11 +841,7 @@ function aux_commit(key, env)
 		if fu_piau_im then
 			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以 im_zat 串接）+ 右分隔符號
 			-- 如：啥物〔siann2-mih4〕。符號由設定檔 han_ji_piau_im_hu_ho 定義。
-			-- 【註】無調號詞彙（如 ji_khoo_ban_lam 簡拼詞條）之 comment 無【】〔〕結構，
-			--       source_list 為空時已於前方 return kNoop（目前限制：忽略不處理）。
-			local hu_ho = (_rime_env and type(_rime_env.han_ji_piau_im_hu_ho) == "table")
-				and _rime_env.han_ji_piau_im_hu_ho
-				or {}
+			local hu_ho = get_hu_ho()
 			out_str = (cand.text or "")
 				.. (hu_ho.left or "〔")
 				.. table.concat(out_list, hu_ho.im_zat or "-")
