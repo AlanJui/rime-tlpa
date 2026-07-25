@@ -545,31 +545,59 @@ function aux_commit(key, env)
 			return 2
 		end
 
-		-- 使用與 jump_select 相同的穩定 API 取得當前候選
+		-- 收集組字區內【所有音節段】之選中候選。
+		-- 多音節輸入時，使用者可能已確認部分段落（如：閃│門伽 求檜，「閃」已確認、
+		-- 其餘仍在組字），只讀最後一段會漏掉已確認之漢字與標音，
+		-- 故仿 librime Context::GetCommitText 之作法，逐段取 get_selected_candidate。
 		local comp = ctx.composition
 		if comp:empty() then
 			log.info("[aux_commit] composition empty, returning kNoop")
 			return 2
 		end
-		local seg = comp:back()
-		if not seg or not seg.menu then
-			log.info("[aux_commit] no seg/menu, returning kNoop")
-			return 2
+		local cand_list = {}
+		local ok_segs, segs = pcall(function()
+			return comp:toSegmentation():get_segments()
+		end)
+		if ok_segs and type(segs) == "table" and #segs > 0 then
+			for _, s in ipairs(segs) do
+				local ok_c, c = pcall(function() return s:get_selected_candidate() end)
+				if ok_c and c then
+					table.insert(cand_list, c)
+				end
+			end
 		end
-		local selected_index = seg.selected_index
-		local cand = seg.menu:get_candidate_at(selected_index)
-		if not cand then
-			log.info("[aux_commit] get_candidate_at returned nil, returning kNoop")
-			return 2
+		if #cand_list == 0 then
+			-- 舊路徑（librime-lua 無 get_segments 時之備援）：只取最後一段之當前候選
+			local seg = comp:back()
+			if not seg or not seg.menu then
+				log.info("[aux_commit] no seg/menu, returning kNoop")
+				return 2
+			end
+			local c = seg.menu:get_candidate_at(seg.selected_index)
+			if not c then
+				log.info("[aux_commit] get_candidate_at returned nil, returning kNoop")
+				return 2
+			end
+			cand_list = { c }
 		end
 
-		local gen_comm = cand.comment or ""
-		if gen_comm == "" then
-			-- 嘗試從 genuine 取得（filter 前原始候選）
-			local ok, gc = pcall(function() return cand:get_genuine().comment or "" end)
-			if ok then gen_comm = gc end
+		-- 逐段串接漢字與 comment（漢字直接相連；comment 以空白相接供後續擷取）
+		local text_parts, comm_parts = {}, {}
+		for _, c in ipairs(cand_list) do
+			local cm = c.comment or ""
+			if cm == "" then
+				-- 嘗試從 genuine 取得（filter 前原始候選）
+				local ok, gc = pcall(function() return c:get_genuine().comment or "" end)
+				if ok then cm = gc end
+			end
+			table.insert(text_parts, c.text or "")
+			if cm ~= "" then
+				table.insert(comm_parts, cm)
+			end
 		end
-		log.info("[aux_commit] cand.text=" .. (cand.text or "?") .. " comment=[" .. gen_comm .. "]")
+		local cand_text = table.concat(text_parts, "")
+		local gen_comm = table.concat(comm_parts, " ")
+		log.info("[aux_commit] segments=" .. #cand_list .. " text=" .. cand_text .. " comment=[" .. gen_comm .. "]")
 
 		-- 依方案決定標音來源及格式：
 		--   huan_ciat_*：【十五音(SNI)】〔台語音標/方音符號〕  → 從【】取 SNI
@@ -675,7 +703,7 @@ function aux_commit(key, env)
 				end
 				if #syls > 0 then
 					local hu_ho = get_hu_ho()
-					local out_str = (cand.text or "")
+					local out_str = cand_text
 						.. (hu_ho.left or "〔")
 						.. table.concat(syls, hu_ho.im_zat or "-")
 						.. (hu_ho.right or "〕")
@@ -842,7 +870,7 @@ function aux_commit(key, env)
 			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以 im_zat 串接）+ 右分隔符號
 			-- 如：啥物〔siann2-mih4〕。符號由設定檔 han_ji_piau_im_hu_ho 定義。
 			local hu_ho = get_hu_ho()
-			out_str = (cand.text or "")
+			out_str = cand_text
 				.. (hu_ho.left or "〔")
 				.. table.concat(out_list, hu_ho.im_zat or "-")
 				.. (hu_ho.right or "〕")
