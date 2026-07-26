@@ -161,6 +161,16 @@ local SKIP_CONVERT_SCHEMAS = {
 	["huan_ciat_tlpa"] = true,
 }
 
+-- 去除方音符號之調符（ˊˋ˪˫˙），供【台語音標注音】（TPS + 上標數字調號）使用。
+-- 【註】不可用字元集 [ˊˋ˪˫˙]（Lua 以位元組比對，會誤刪 ㆪ/ㆫ 等符號之組成位元組），
+--       須以完整字串逐一替換。
+local function strip_tps_tone_marks(s)
+	if type(s) ~= "string" then
+		return s
+	end
+	return (s:gsub("ˊ", ""):gsub("ˋ", ""):gsub("˪", ""):gsub("˫", ""):gsub("˙", ""))
+end
+
 -- 取得【漢字附帶標音】之分隔/串接符號（設定檔未載入時回傳空表，由呼叫端套預設值）
 local function get_hu_ho()
 	if _rime_env and type(_rime_env.han_ji_piau_im_hu_ho) == "table" then
@@ -946,21 +956,25 @@ local function aux_commit_func(key, env)
 			end
 
 		elseif use_opt("key_in_piau_im_tlpa_zu_im") then
-			-- 台語音標注音（TPS + 上標調號）：直接從候選 comment 的【】欄取得
-			-- （zu_im_tlpa 的 comment_format 已將注音符號帶上標調號放入【】欄，
-			--   如 【ㄏㄛㄥ⁵】，無需再經 conv.convert 轉換）
-			local tps_items = {}
-			for z in gen_comm:gmatch("【(.-)】") do
-				table.insert(tps_items, z)
-			end
-			if #tps_items > 0 then
-				for i, v in ipairs(tps_items) do
-					out_list[i] = v
+			-- 台語音標注音（TPS 符號 + 上標數字調號，如：ㄒㄧㆩ²）
+			if schema_id == "zu_im_tlpa" then
+				-- zu_im_tlpa 之 comment【】欄已是 TPS+上標調號（如 【ㄏㄛㄥ⁵】），直接取用
+				for z in gen_comm:gmatch("【(.-)】") do
+					table.insert(out_list, z)
 				end
-			else
-				-- fallback：無 【】 欄時用 TPS 方音符號格式
+			end
+			if #out_list == 0 then
+				-- 其他方案（huan_ciat_* 之【】欄為十五音，不可直接取用）：
+				-- TLPA/SNI → 方音符號（去調符）＋ 上標數字調號
 				for i, v in ipairs(source_list) do
-					out_list[i] = to_target(v, "方音符號")
+					local tlpa = is_tlpa and v or convert_sni_to_tlpa(v)
+					local tps = to_target(v, "方音符號")
+					local tone = tlpa and tlpa:match("([1-8])$") or nil
+					if tone then
+						out_list[i] = strip_tps_tone_marks(tps) .. (supers_digit[tone] or "")
+					else
+						out_list[i] = tps
+					end
 				end
 			end
 

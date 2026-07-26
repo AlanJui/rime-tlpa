@@ -98,7 +98,13 @@ def prepare_userdir(fresh: bool) -> None:
                     or os.path.getmtime(src) > os.path.getmtime(dst)):
                 shutil.copy2(src, dst)
         elif os.path.isdir(src) and name == "lua":
-            shutil.copytree(src, os.path.join(TEST_ROOT, name), dirs_exist_ok=True)
+            # 排除 rime_env_state.lua：這是使用者真實環境之【漢字標音選項】持久化
+            # 狀態檔，帶進測試目錄會讓還原機制蓋掉 --opt: 指定的選項
+            shutil.copytree(src, os.path.join(TEST_ROOT, name), dirs_exist_ok=True,
+                            ignore=shutil.ignore_patterns("rime_env_state.lua"))
+            state = os.path.join(TEST_ROOT, name, "rime_env_state.lua")
+            if os.path.exists(state):
+                os.remove(state)
 
 
 def override(files):

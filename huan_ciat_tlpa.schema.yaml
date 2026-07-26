@@ -28,12 +28,13 @@ switches:
     states: [半形, 全形]
   # 指定輸出之【漢字標音】（參考：310.md）
   # reset: 0（預設選項） → 十五音
+  # 【註】options 與 states 依「位置序號」一一對應，兩列表之項目數與排序必須一致
   - options:
       [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
-        key_in_piau_im_tl, key_in_piau_im_poj, key_in_piau_im_bp,
-        key_in_piau_im_bpm2, key_in_piau_im_ipa ]
+        key_in_piau_im_tlpa_zu_im, key_in_piau_im_tl, key_in_piau_im_poj,
+        key_in_piau_im_bp, key_in_piau_im_bpm2, key_in_piau_im_ipa ]
     reset: 0
-    states: [ 十五音, 方音符號, 台語音標, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
+    states: [ 十五音, 方音符號, 台語音標, 台語音標注音, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
   # # 切換【候選清單】右欄使用之【漢字標音】（暫不實作）
   # # reset: 0 (預設選項) → 台語音標
   # - options: [ hau_suan_piau_im_tps, hau_suan_piau_im_tlpa ]
