@@ -182,6 +182,109 @@ local PIAU_IM_OPTIONS = {
 	"key_in_piau_im_ipa",
 }
 
+------------------------------------------------------------------------------------------
+-- 【漢字標音選項】持久化
+-- 問題：切換至其他 Windows 輸入法再回來會建立新 session，schema 之 reset 值
+--       會將 key_in_piau_im_* 選項重設回預設（十五音），使用者先前之選擇遺失。
+-- 作法：F4 切換選項時（option_update_notifier），將選擇寫入狀態檔
+--       lua/rime_env_state.lua（自動產生，勿手動編輯）；
+--       新 session 首次處理按鍵前，自狀態檔還原該方案之選項，
+--       使 Enter / Ctrl+Shift+Enter 之上屏標音格式維持使用者先前之選擇。
+--       （lua/rime_env.lua 為手工維護之預設值，不由程式覆寫）
+------------------------------------------------------------------------------------------
+local function piau_im_state_path()
+	return rime_api.get_user_data_dir() .. "/lua/rime_env_state.lua"
+end
+
+local function load_piau_im_state()
+	local chunk = loadfile(piau_im_state_path())
+	if not chunk then
+		return {}
+	end
+	local ok, data = pcall(chunk)
+	if ok and type(data) == "table" then
+		return data
+	end
+	return {}
+end
+
+-- 各方案最後選擇之選項（schema_id → key_in_piau_im_*），模組載入時自狀態檔讀入
+local _piau_im_state = load_piau_im_state()
+
+local function save_piau_im_choice(schema_id, option_name)
+	if _piau_im_state[schema_id] == option_name then
+		return
+	end
+	_piau_im_state[schema_id] = option_name
+	local f = io.open(piau_im_state_path(), "w")
+	if not f then
+		log.error("[piau_im_state] 無法寫入狀態檔：" .. piau_im_state_path())
+		return
+	end
+	f:write("-- 各輸入方案【漢字標音選項】之最後選擇（由 rime.lua 自動產生，勿手動編輯）\n")
+	f:write("return {\n")
+	for sid, opt in pairs(_piau_im_state) do
+		f:write(string.format("    %s = %q,\n", sid, opt))
+	end
+	f:write("}\n")
+	f:close()
+	log.info("[piau_im_state] saved: " .. schema_id .. " = " .. option_name)
+end
+
+-- 讀取 schema 中 key_in_piau_im_* 選項群之 reset 預設選項
+-- （各方案不同：反切＝十五音、zu_im_tps＝方音符號、zu_im_tlpa＝台語音標注音…）
+local function get_default_piau_im_option(config)
+	for i = 0, 19 do
+		local first = config:get_string("switches/@" .. i .. "/options/@0")
+		if first and first:find("^key_in_piau_im_") then
+			local reset = config:get_int("switches/@" .. i .. "/reset") or 0
+			return config:get_string("switches/@" .. i .. "/options/@" .. reset) or first
+		end
+		-- name 型 switch（如 ascii_mode）無 options，須繼續往後找；
+		-- 兩者皆無時表示已無更多 switch
+		if not first and not config:get_string("switches/@" .. i .. "/name") then
+			break
+		end
+	end
+	return nil
+end
+
+-- 新 session 首次處理按鍵前呼叫：
+--   1. 若使用者已在按鍵前用 F4 改過選項（作用中選項 ≠ schema 預設）→ 尊重並持久化；
+--   2. 否則以狀態檔記錄之選擇，覆蓋 schema reset 所套用之預設值。
+local function restore_piau_im_choice(env)
+	if env.piau_im_restored then
+		return
+	end
+	env.piau_im_restored = true
+	local ctx = env.engine.context
+	local sid = env.engine.schema.schema_id
+	local saved = _piau_im_state[sid]
+
+	local active = nil
+	for _, name in ipairs(PIAU_IM_OPTIONS) do
+		if ctx:get_option(name) then
+			active = name
+			break
+		end
+	end
+
+	local default_opt = get_default_piau_im_option(env.engine.schema.config)
+	if active and default_opt and active ~= default_opt then
+		-- 選項已非預設值：session 建立後、首次按鍵前已被使用者變更
+		save_piau_im_choice(sid, active)
+		return
+	end
+	if not saved or saved == active then
+		return
+	end
+	if active then
+		ctx:set_option(active, false)
+	end
+	ctx:set_option(saved, true)
+	log.info("[piau_im_state] restored: " .. sid .. " = " .. saved)
+end
+
 -- === END DICTIONARIES ===
 
 local function convert_sni_to_tlpa(s)
@@ -526,9 +629,12 @@ local TLPA_TO_BP_TIAU = {
 -- Ctrl+Shift+Enter → 漢字附帶標音（如：啥物〔siann2-mih4〕；320.md §五、輸出漢字附帶標音）
 ------------------------------------------------------------------------------------------
 
-function aux_commit(key, env)
+local function aux_commit_func(key, env)
 	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
+
+	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】
+	restore_piau_im_choice(env)
 	local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
 	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter）
@@ -886,6 +992,33 @@ function aux_commit(key, env)
 	end
 	return 2
 end
+
+-- aux_commit 處理器：
+--   init：連接選項變更通知——F4 切換【漢字標音選項】時，即刻寫入狀態檔持久化
+--   func：處理 Enter / Ctrl+Shift+Enter 上屏輸出（含首次按鍵時之選項還原）
+aux_commit = {
+	init = function(env)
+		local ctx = env.engine.context
+		env.piau_im_notifier = ctx.option_update_notifier:connect(function(c, name)
+			-- session 建立階段 schema 套用 reset 預設值也會發出通知，
+			-- 須待首次按鍵（restore_piau_im_choice 執行過）後才開始記錄，
+			-- 避免將 reset 預設值誤存為使用者之選擇。
+			if not env.piau_im_restored then
+				return
+			end
+			-- 僅記錄 key_in_piau_im_* 且值為 true（radio 群組被選中）之變更
+			if type(name) == "string" and name:find("^key_in_piau_im_") and c:get_option(name) then
+				save_piau_im_choice(env.engine.schema.schema_id, name)
+			end
+		end)
+	end,
+	fini = function(env)
+		if env.piau_im_notifier then
+			env.piau_im_notifier:disconnect()
+		end
+	end,
+	func = aux_commit_func,
+}
 
 --------------------------------------------------------------------------
 -- reformat_comment_filter：重排候選註解中的羅馬拼音與注音符號

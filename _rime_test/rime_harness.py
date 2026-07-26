@@ -115,6 +115,9 @@ def main():
                  if a.endswith((".yaml", ".lua")) and not a.startswith("--")]
     # --opt:NAME 於送出按鍵前，將 RIME 選項 NAME 設為 true（模擬 F4 方案選單切換）
     options = [a[len("--opt:"):] for a in sys.argv[3:] if a.startswith("--opt:")]
+    # --opt-after:NAME 於送出按鍵後才設定選項（模擬打字途中以 F4 切換選項）
+    options_after = [a[len("--opt-after:"):] for a in sys.argv[3:]
+                     if a.startswith("--opt-after:")]
 
     prepare_userdir(fresh)
     if overrides:
@@ -156,6 +159,9 @@ def main():
         print(f"option[{opt}]=1")
     if not rime.RimeSimulateKeySequence(sid, keys.encode()):
         print("!! simulate failed:", keys)
+    for opt in options_after:
+        rime.RimeSetOption(sid, opt.encode(), 1)
+        print(f"option-after[{opt}]=1")
 
     commit = RimeCommit()
     commit.data_size = sizeof(RimeCommit) - sizeof(c_int)
