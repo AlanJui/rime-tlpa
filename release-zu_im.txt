@@ -7,16 +7,13 @@ lua\rime_env.lua
 lua\tlpa_converter.lua
 lua\bpm2_converter.lua
 
-# --- 輸入方案用字典 ---
+# --- 輸入方案用字典（僅含 dictionary / import_tables 實際引用者）---
 ji_khoo_ban_lam.dict.yaml
 ji_khoo_ban_lam_bpm2.dict.yaml
 ji_khoo_bpm2.dict.yaml
-ji_khoo_kam_ji_tian.dict.yaml
 ji_khoo_su_lui.dict.yaml
 ji_khoo_su_lui_bpm2.dict.yaml
 ji_khoo_tl.dict.yaml
-ji_khoo_tl_orgin.dict.yaml
-ji_khoo_tl_peh_ue.dict.yaml
 ji_khoo_ziann_ji.dict.yaml
 ji_khoo_ziann_ji_bpm2.dict.yaml
 

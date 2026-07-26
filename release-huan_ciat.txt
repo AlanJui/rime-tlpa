@@ -7,18 +7,11 @@ lua\rime_env.lua
 lua\tlpa_converter.lua
 lua\bpm2_converter.lua
 
-# --- 輸入方案用字典 ---
+# --- 輸入方案用字典（反切方案 dictionary: ji_khoo_tl 及其 import_tables）---
 ji_khoo_ban_lam.dict.yaml
-ji_khoo_ban_lam_bpm2.dict.yaml
-ji_khoo_bpm2.dict.yaml
-ji_khoo_kam_ji_tian.dict.yaml
 ji_khoo_su_lui.dict.yaml
-ji_khoo_su_lui_bpm2.dict.yaml
 ji_khoo_tl.dict.yaml
-ji_khoo_tl_orgin.dict.yaml
-ji_khoo_tl_peh_ue.dict.yaml
 ji_khoo_ziann_ji.dict.yaml
-ji_khoo_ziann_ji_bpm2.dict.yaml
 
 # --- 按鍵輔助工具 ---
 kb_hong_im.schema.yaml
@@ -30,4 +23,3 @@ huan_ciat_tlpa.schema.yaml
 huan_ciat_tps.schema.yaml
 # -----------------
 lib_comment_sni_and_tps.yaml
-
