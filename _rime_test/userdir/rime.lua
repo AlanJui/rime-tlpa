@@ -171,6 +171,61 @@ local function strip_tps_tone_marks(s)
 	return (s:gsub("ˊ", ""):gsub("ˋ", ""):gsub("˪", ""):gsub("˫", ""):gsub("˙", ""))
 end
 
+-- 【方音符號】→【台語音標注音】（台語注音）符號對映（docs/090 §2.6）
+-- 台語注音與方音符號近似，但有差異：b/g/j 聲母、鼻化韻（前置 ⁰）、
+-- ㆤ/ㆦ/ㆰ/ㆱ/ㆲ/ㆬ/ㆭ 等韻母、入聲韻尾（ㆴㆵㆻㆷ → ㄅㄉㄍㄏ）。
+-- 【註】規則次序有意義：
+--   1) ㄫ→⁰ㄫ（聲母 ng）須排在 ㆣ→ㄫ（聲母 g）之前，否則 g 轉出之 ㄫ 會被誤加 ⁰；
+--   2) 組合鼻化韻（ㄧㆩ 等）須排在單符鼻化韻（ㆩ 等）之前，⁰ 才會置於韻母之首
+--      （如 iann：ㄧㆩ → ⁰ㄧㄚ，而非 ㄧ⁰ㄚ）。
+local TPS_TO_TLPA_ZU_IM = {
+	-- 聲母
+	{ "ㆠ", "ㄪ" }, -- b
+	{ "ㄫ", "⁰ㄫ" }, -- ng（聲母）
+	{ "ㆣ", "ㄫ" }, -- g
+	{ "ㆡ", "ㄖ" }, -- j
+	{ "ㆢ", "ㄖ" }, -- j+i
+	-- 鼻化韻母（組合，先行）
+	{ "ㄧㆩ", "⁰ㄧㄚ" }, -- iann
+	{ "ㄧㆧ", "⁰ㄧㄛ" }, -- ionn
+	{ "ㄧㆫ", "⁰ㄧㄨ" }, -- iunn
+	{ "ㄧㆯ", "⁰ㄧㄠ" }, -- iaunn
+	{ "ㄨㆩ", "⁰ㄨㄚ" }, -- uann
+	{ "ㄨㆪ", "⁰ㄨㄧ" }, -- uinn
+	{ "ㄨㆮ", "⁰ㄨㄞ" }, -- uainn
+	-- 鼻化韻母（單符）
+	{ "ㆪ", "⁰ㄧ" }, -- inn
+	{ "ㆫ", "⁰ㄨ" }, -- unn
+	{ "ㆩ", "⁰ㄚ" }, -- ann
+	{ "ㆧ", "⁰ㄛ" }, -- onn
+	{ "ㆥ", "⁰ㄝ" }, -- enn
+	{ "ㆮ", "⁰ㄞ" }, -- ainn
+	{ "ㆯ", "⁰ㄠ" }, -- aunn
+	-- 韻母
+	{ "ㆤ", "ㄝ" }, -- e
+	{ "ㆦ", "ㄛ" }, -- oo
+	{ "ㆰ", "ㄚㄇ" }, -- am
+	{ "ㆱ", "ㄛㄇ" }, -- om
+	{ "ㆲ", "ㄛㄥ" }, -- ong
+	{ "ㆬ", "ㄇ" }, -- m / -m
+	{ "ㆭ", "ㄥ" }, -- ng / -ng
+	-- 入聲韻尾
+	{ "ㆴ", "ㄅ" }, -- -p
+	{ "ㆵ", "ㄉ" }, -- -t
+	{ "ㆻ", "ㄍ" }, -- -k
+	{ "ㆷ", "ㄏ" }, -- -h
+}
+
+local function tps_to_tlpa_zu_im(s)
+	if type(s) ~= "string" then
+		return s
+	end
+	for _, rule in ipairs(TPS_TO_TLPA_ZU_IM) do
+		s = s:gsub(rule[1], rule[2])
+	end
+	return s
+end
+
 -- 取得【漢字附帶標音】之分隔/串接符號（設定檔未載入時回傳空表，由呼叫端套預設值）
 local function get_hu_ho()
 	if _rime_env and type(_rime_env.han_ji_piau_im_hu_ho) == "table" then
@@ -965,15 +1020,15 @@ local function aux_commit_func(key, env)
 			end
 			if #out_list == 0 then
 				-- 其他方案（huan_ciat_* 之【】欄為十五音，不可直接取用）：
-				-- TLPA/SNI → 方音符號（去調符）＋ 上標數字調號
+				-- TLPA/SNI → 方音符號（去調符）→ 台語注音符號 ＋ 上標數字調號
 				for i, v in ipairs(source_list) do
 					local tlpa = is_tlpa and v or convert_sni_to_tlpa(v)
-					local tps = to_target(v, "方音符號")
+					local zu_im = tps_to_tlpa_zu_im(strip_tps_tone_marks(to_target(v, "方音符號")))
 					local tone = tlpa and tlpa:match("([1-8])$") or nil
 					if tone then
-						out_list[i] = strip_tps_tone_marks(tps) .. (supers_digit[tone] or "")
+						out_list[i] = zu_im .. (supers_digit[tone] or "")
 					else
-						out_list[i] = tps
+						out_list[i] = zu_im
 					end
 				end
 			end
