@@ -96,6 +96,7 @@ $files = @(
     # --- 反切輸入法 ---
     "huan_ciat_tlpa.schema.yaml"
     "huan_ciat_tps.schema.yaml"
+    "huan_ciat_tps.custom.yaml"
     # -----------------
     "lib_comment_sni_and_tps.yaml"
 

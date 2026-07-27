@@ -247,6 +247,26 @@ local PIAU_IM_OPTIONS = {
 	"key_in_piau_im_ipa",
 }
 
+-- 《變更【音節連接符】》定義之選項名稱：Enter/Ctrl+Shift+Enter 上屏詞彙（2 個以上
+-- 音節）之標音時，音節與音節之間所使用的連接符號（三態：連字號／空白／撇號）
+local IM_ZAT_OPTIONS = {
+	"im_zat_hyphen",
+	"im_zat_space",
+	"im_zat_apos",
+}
+-- 選項名稱 → 實際連接符號字元
+local IM_ZAT_CHAR = {
+	im_zat_hyphen = "-",
+	im_zat_space  = " ",
+	im_zat_apos   = "'",
+}
+-- 連接符號字元 → 選項名稱（還原狀態檔之選擇用）
+local IM_ZAT_OPTION_OF_CHAR = {
+	["-"] = "im_zat_hyphen",
+	[" "] = "im_zat_space",
+	["'"] = "im_zat_apos",
+}
+
 ------------------------------------------------------------------------------------------
 -- 【漢字標音選項】持久化
 -- 問題：切換至其他 Windows 輸入法再回來會建立新 session，schema 之 reset 值
@@ -273,35 +293,59 @@ local function load_piau_im_state()
 	return {}
 end
 
--- 各方案最後選擇之選項（schema_id → key_in_piau_im_*），模組載入時自狀態檔讀入
+-- 各方案最後選擇之選項（schema_id → key_in_piau_im_*，另有 im_zat 子表存放
+-- schema_id → 音節連接符字元），模組載入時自狀態檔讀入
 local _piau_im_state = load_piau_im_state()
+
+-- 將 _piau_im_state 完整寫回狀態檔（piau_im 選擇與 im_zat 子表共用同一檔案）
+local function save_piau_im_state_file()
+	local f = io.open(piau_im_state_path(), "w")
+	if not f then
+		log.error("[piau_im_state] 無法寫入狀態檔：" .. piau_im_state_path())
+		return
+	end
+	f:write("-- 各輸入方案【漢字標音選項】／【音節連接符】之最後選擇（由 rime.lua 自動產生，勿手動編輯）\n")
+	f:write("return {\n")
+	for sid, opt in pairs(_piau_im_state) do
+		if sid ~= "im_zat" then
+			f:write(string.format("    %s = %q,\n", sid, opt))
+		end
+	end
+	if type(_piau_im_state.im_zat) == "table" then
+		f:write("    im_zat = {\n")
+		for sid, sep in pairs(_piau_im_state.im_zat) do
+			f:write(string.format("        %s = %q,\n", sid, sep))
+		end
+		f:write("    },\n")
+	end
+	f:write("}\n")
+	f:close()
+end
 
 local function save_piau_im_choice(schema_id, option_name)
 	if _piau_im_state[schema_id] == option_name then
 		return
 	end
 	_piau_im_state[schema_id] = option_name
-	local f = io.open(piau_im_state_path(), "w")
-	if not f then
-		log.error("[piau_im_state] 無法寫入狀態檔：" .. piau_im_state_path())
-		return
-	end
-	f:write("-- 各輸入方案【漢字標音選項】之最後選擇（由 rime.lua 自動產生，勿手動編輯）\n")
-	f:write("return {\n")
-	for sid, opt in pairs(_piau_im_state) do
-		f:write(string.format("    %s = %q,\n", sid, opt))
-	end
-	f:write("}\n")
-	f:close()
+	save_piau_im_state_file()
 	log.info("[piau_im_state] saved: " .. schema_id .. " = " .. option_name)
 end
 
--- 讀取 schema 中 key_in_piau_im_* 選項群之 reset 預設選項
--- （各方案不同：反切＝十五音、zu_im_tps＝方音符號、zu_im_tlpa＝台語音標注音…）
-local function get_default_piau_im_option(config)
+local function save_im_zat_choice(schema_id, separator)
+	_piau_im_state.im_zat = _piau_im_state.im_zat or {}
+	if _piau_im_state.im_zat[schema_id] == separator then
+		return
+	end
+	_piau_im_state.im_zat[schema_id] = separator
+	save_piau_im_state_file()
+	log.info("[im_zat_state] saved: " .. schema_id .. " = " .. separator)
+end
+
+-- 讀取 schema 中指定字首（prefix）之選項群，其 reset 所指向之預設選項名稱
+local function get_default_option_by_prefix(config, prefix)
 	for i = 0, 19 do
 		local first = config:get_string("switches/@" .. i .. "/options/@0")
-		if first and first:find("^key_in_piau_im_") then
+		if first and first:find("^" .. prefix) then
 			local reset = config:get_int("switches/@" .. i .. "/reset") or 0
 			return config:get_string("switches/@" .. i .. "/options/@" .. reset) or first
 		end
@@ -312,6 +356,17 @@ local function get_default_piau_im_option(config)
 		end
 	end
 	return nil
+end
+
+-- 讀取 schema 中 key_in_piau_im_* 選項群之 reset 預設選項
+-- （各方案不同：反切＝十五音、zu_im_tps＝方音符號、zu_im_tlpa＝台語音標注音…）
+local function get_default_piau_im_option(config)
+	return get_default_option_by_prefix(config, "key_in_piau_im_")
+end
+
+-- 讀取 schema 中 im_zat_* 選項群之 reset 預設選項（回傳選項名稱，如 im_zat_space）
+local function get_default_im_zat_option(config)
+	return get_default_option_by_prefix(config, "im_zat_")
 end
 
 -- 新 session 首次處理按鍵前呼叫：
@@ -348,6 +403,59 @@ local function restore_piau_im_choice(env)
 	end
 	ctx:set_option(saved, true)
 	log.info("[piau_im_state] restored: " .. sid .. " = " .. saved)
+end
+
+-- 新 session 首次處理按鍵前呼叫（邏輯與 restore_piau_im_choice 相同，
+-- 僅選項群、狀態檔子表換成 im_zat）：
+--   1. 若使用者已在按鍵前用 F4 改過選項（作用中選項 ≠ schema 預設）→ 尊重並持久化；
+--   2. 否則以狀態檔記錄之選擇，覆蓋 schema reset 所套用之預設值。
+local function restore_im_zat_choice(env)
+	if env.im_zat_restored then
+		return
+	end
+	env.im_zat_restored = true
+	local ctx = env.engine.context
+	local sid = env.engine.schema.schema_id
+	local saved_char = (_piau_im_state.im_zat or {})[sid]
+
+	local active = nil
+	for _, name in ipairs(IM_ZAT_OPTIONS) do
+		if ctx:get_option(name) then
+			active = name
+			break
+		end
+	end
+
+	local default_opt = get_default_im_zat_option(env.engine.schema.config)
+	if active and default_opt and active ~= default_opt then
+		-- 選項已非預設值：session 建立後、首次按鍵前已被使用者變更
+		save_im_zat_choice(sid, IM_ZAT_CHAR[active] or "-")
+		return
+	end
+	if not saved_char then
+		return
+	end
+	local saved_opt = IM_ZAT_OPTION_OF_CHAR[saved_char]
+	if not saved_opt or saved_opt == active then
+		return
+	end
+	if active then
+		ctx:set_option(active, false)
+	end
+	ctx:set_option(saved_opt, true)
+	log.info("[im_zat_state] restored: " .. sid .. " = " .. saved_char)
+end
+
+-- 取得目前 session 生效之【音節連接符】字元：優先讀取 im_zat_* switch 之即時狀態，
+-- 若該 schema 未定義此開關群，退回 rime_env.lua 之靜態設定值（han_ji_piau_im_hu_ho.im_zat）
+local function get_im_zat(ctx)
+	for _, name in ipairs(IM_ZAT_OPTIONS) do
+		if ctx:get_option(name) then
+			return IM_ZAT_CHAR[name]
+		end
+	end
+	local hu_ho = get_hu_ho()
+	return hu_ho.im_zat or "-"
 end
 
 -- === END DICTIONARIES ===
@@ -872,8 +980,9 @@ local function aux_commit_func(key, env)
 	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
 
-	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】
+	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】／【音節連接符】
 	restore_piau_im_choice(env)
+	restore_im_zat_choice(env)
 	local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
 	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter）
@@ -1050,7 +1159,7 @@ local function aux_commit_func(key, env)
 					local hu_ho = get_hu_ho()
 					local out_str = cand_text
 						.. (hu_ho.left or "〔")
-						.. table.concat(syls, hu_ho.im_zat or "-")
+						.. table.concat(syls, get_im_zat(ctx))
 						.. (hu_ho.right or "〕")
 					log.info("[aux_commit] toneless phrase fallback: " .. out_str)
 					memorize_aux_candidates(env, cand_list)
@@ -1216,16 +1325,18 @@ local function aux_commit_func(key, env)
 		end
 
 		local out_str
+		local im_zat = get_im_zat(ctx)
 		if fu_piau_im then
-			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以 im_zat 串接）+ 右分隔符號
-			-- 如：啥物〔siann2-mih4〕。符號由設定檔 han_ji_piau_im_hu_ho 定義。
+			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以【音節連接符】開關串接）+ 右分隔符號
+			-- 如：啥物〔siann2-mih4〕。左右分隔符號由設定檔 han_ji_piau_im_hu_ho 定義。
 			local hu_ho = get_hu_ho()
 			out_str = cand_text
 				.. (hu_ho.left or "〔")
-				.. table.concat(out_list, hu_ho.im_zat or "-")
+				.. table.concat(out_list, im_zat)
 				.. (hu_ho.right or "〕")
 		else
-			out_str = table.concat(out_list, " ")
+			-- 【漢字標音上屏】（Enter）：2 個以上音節（詞彙）時，以【音節連接符】開關決定之符號串接
+			out_str = table.concat(out_list, im_zat)
 		end
 		if #out_str > 0 then
 			memorize_aux_candidates(env, cand_list)
@@ -1256,15 +1367,20 @@ aux_commit = {
 			log.error("[aux_commit] failed to initialize Memory: " .. tostring(memory))
 		end
 		env.piau_im_notifier = ctx.option_update_notifier:connect(function(c, name)
-			-- session 建立階段 schema 套用 reset 預設值也會發出通知，
-			-- 須待首次按鍵（restore_piau_im_choice 執行過）後才開始記錄，
-			-- 避免將 reset 預設值誤存為使用者之選擇。
-			if not env.piau_im_restored then
+			if type(name) ~= "string" or not c:get_option(name) then
 				return
 			end
-			-- 僅記錄 key_in_piau_im_* 且值為 true（radio 群組被選中）之變更
-			if type(name) == "string" and name:find("^key_in_piau_im_") and c:get_option(name) then
-				save_piau_im_choice(env.engine.schema.schema_id, name)
+			-- 僅記錄值為 true（radio 群組被選中）之變更；
+			-- session 建立階段 schema 套用 reset 預設值也會發出通知，須待對應之
+			-- restore_*_choice 執行過後才開始記錄，避免將 reset 預設值誤存為使用者之選擇。
+			if name:find("^key_in_piau_im_") then
+				if env.piau_im_restored then
+					save_piau_im_choice(env.engine.schema.schema_id, name)
+				end
+			elseif name:find("^im_zat_") then
+				if env.im_zat_restored then
+					save_im_zat_choice(env.engine.schema.schema_id, IM_ZAT_CHAR[name] or "-")
+				end
 			end
 		end)
 	end,

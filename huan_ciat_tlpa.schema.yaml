@@ -35,6 +35,11 @@ switches:
         key_in_piau_im_bp, key_in_piau_im_bpm2, key_in_piau_im_ipa ]
     reset: 0
     states: [ 十五音, 方音符號, 台語音標, 台語音標注音, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
+  # 【音節連接符】控制輸出按鍵 [Enter] 與 [Ctrl+Shift+Enter] 上屏時，
+  # 詞彙（2 個以上音節）之標音，音節與音節之間所使用的連接符號。
+  - options: [ im_zat_hyphen, im_zat_space, im_zat_apos ]
+    reset: 1
+    states: [ 連字號, 空白, 撇號 ]
 
 engine:
   processors:

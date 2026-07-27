@@ -1,4 +1,5 @@
-switches/options: [key_in_piau_im_tl, key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa_zu_im,
-        key_in_piau_im_tlpa, key_in_piau_im_tlpa_plus,
-        key_in_piau_im_poj, key_in_piau_im_bp, key_in_piau_im_bpm2,
-        key_in_piau_im_ipa ]
+patch:
+  # switches 清單第 3 個項目（索引 2，從 0 起算：0=ascii_mode, 1=full_shape, 2=漢字標音選項）
+  # options/states 對應索引：0=十五音, 1=方音符號, 2=台語音標, 3=台語音標注音,
+  #                          4=台羅拼音, 5=白話字, 6=閩拼方案, 7=台語注音二式, 8=國際音標
+  "switches/@2/reset": 4
