@@ -694,6 +694,35 @@ local TLPA_TO_BP_TIAU = {
 -- Ctrl+Shift+Enter → 漢字附帶標音（如：啥物〔siann2-mih4〕；320.md §五、輸出漢字附帶標音）
 ------------------------------------------------------------------------------------------
 
+-- aux_commit 以 engine:commit_text() 輸出自訂字串，未經 Rime 原生 editor/selector
+-- 的提交流程，因此 translator 不會自動將所選候選寫入用戶詞典。
+-- 在真正上屏前，以同一 translator namespace 的 Memory 主動記錄候選，
+-- 令 Enter / Ctrl+Shift+Enter 與 Space 具有相同的詞頻學習效果。
+local function memorize_aux_candidates(env, cand_list)
+	local memory = env.aux_commit_memory
+	if not memory then
+		log.warning("[aux_commit] Memory unavailable; skip user dictionary update")
+		return false
+	end
+
+	local updated_count = 0
+	for _, cand in ipairs(cand_list) do
+		local ok, updated = pcall(function()
+			-- librime-lua Memory:update_candidate 會解開 Shadow/UniquifiedCandidate，
+			-- 並以原始 Phrase/Sentence 的 DictEntry（漢字＋編碼）更新 userdb。
+			return memory:update_candidate(cand, 1)
+		end)
+		if ok and updated then
+			updated_count = updated_count + 1
+		elseif not ok then
+			log.error("[aux_commit] user dictionary update failed: " .. tostring(updated))
+		end
+	end
+
+	log.info("[aux_commit] user dictionary updated candidates=" .. updated_count .. "/" .. #cand_list)
+	return updated_count > 0
+end
+
 local function aux_commit_func(key, env)
 	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
@@ -879,6 +908,7 @@ local function aux_commit_func(key, env)
 						.. table.concat(syls, hu_ho.im_zat or "-")
 						.. (hu_ho.right or "〕")
 					log.info("[aux_commit] toneless phrase fallback: " .. out_str)
+					memorize_aux_candidates(env, cand_list)
 					env.engine:commit_text(out_str)
 					ctx:clear()
 					return 1
@@ -1053,6 +1083,7 @@ local function aux_commit_func(key, env)
 			out_str = table.concat(out_list, " ")
 		end
 		if #out_str > 0 then
+			memorize_aux_candidates(env, cand_list)
 			env.engine:commit_text(out_str)
 			ctx:clear()
 			return 1
@@ -1068,6 +1099,17 @@ end
 aux_commit = {
 	init = function(env)
 		local ctx = env.engine.context
+		-- 另建一個指向 translator 字典的 Memory，僅供 aux_commit 在自訂上屏前
+		-- 補做 Rime 原生 selector 本會觸發的用戶詞典學習。
+		local ok_memory, memory = pcall(function()
+			return Memory(env.engine, env.engine.schema)
+		end)
+		if ok_memory and memory then
+			env.aux_commit_memory = memory
+		else
+			env.aux_commit_memory = nil
+			log.error("[aux_commit] failed to initialize Memory: " .. tostring(memory))
+		end
 		env.piau_im_notifier = ctx.option_update_notifier:connect(function(c, name)
 			-- session 建立階段 schema 套用 reset 預設值也會發出通知，
 			-- 須待首次按鍵（restore_piau_im_choice 執行過）後才開始記錄，
@@ -1084,6 +1126,10 @@ aux_commit = {
 	fini = function(env)
 		if env.piau_im_notifier then
 			env.piau_im_notifier:disconnect()
+		end
+		if env.aux_commit_memory then
+			pcall(function() env.aux_commit_memory:disconnect() end)
+			env.aux_commit_memory = nil
 		end
 	end,
 	func = aux_commit_func,
