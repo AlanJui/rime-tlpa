@@ -694,10 +694,75 @@ local TLPA_TO_BP_TIAU = {
 -- Ctrl+Shift+Enter → 漢字附帶標音（如：啥物〔siann2-mih4〕；320.md §五、輸出漢字附帶標音）
 ------------------------------------------------------------------------------------------
 
+local function utf8_chars(s)
+	local chars = {}
+	if type(s) ~= "string" then
+		return chars
+	end
+	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+		table.insert(chars, uchar)
+	end
+	return chars
+end
+
 -- aux_commit 以 engine:commit_text() 輸出自訂字串，未經 Rime 原生 editor/selector
 -- 的提交流程，因此 translator 不會自動將所選候選寫入用戶詞典。
 -- 在真正上屏前，以同一 translator namespace 的 Memory 主動記錄候選，
 -- 令 Enter / Ctrl+Shift+Enter 與 Space 具有相同的詞頻學習效果。
+--
+-- 【注意】reformat_comment_filter 若以 Candidate() 取代 Phrase/Sentence，
+-- update_candidate 會失敗（只認 Phrase/Sentence）；須用 ShadowCandidate 保留原體。
+-- 另：逐字確認後再整詞上屏時，還須補記「整詞」條目，否則下次連續輸入
+-- 仍可能被辭典裡權重較高的同碼詞（如 黄音）壓過（只抬升了末字單字權重）。
+local function dict_entry_code_str(memory, entry)
+	if type(entry) ~= "userdata" and type(entry) ~= "table" then
+		return nil
+	end
+	local custom = nil
+	pcall(function() custom = entry.custom_code end)
+	if type(custom) == "string" and custom:match("%S") then
+		return (custom:gsub("%s+$", ""))
+	end
+	local ok, syllables = pcall(function() return memory:decode(entry.code) end)
+	if ok and type(syllables) == "table" and #syllables > 0 then
+		return table.concat(syllables, " ")
+	end
+	return nil
+end
+
+local function make_userdict_entry(text, code)
+	local entry = DictEntry()
+	entry.text = text
+	-- LevelDB 用戶詞典 key 格式要求 custom_code 末尾保留空白
+	local c = (code or ""):gsub("^%s+", ""):gsub("%s+$", "")
+	if c ~= "" then
+		entry.custom_code = c .. " "
+	end
+	return entry
+end
+
+local function codes_from_comment_brackets(comment)
+	local codes = {}
+	if type(comment) ~= "string" then
+		return codes
+	end
+	for t in comment:gmatch("〔(.-)〕") do
+		local code = normalize_supers(t)
+		code = code:gsub("%s+", "")
+		-- 去掉 TL/POJ 調符，盡量還原成字典用的數值調編碼
+		if code:match("[%z\1-\127]*[\128-\255]") or code:find("[\195-\244]") then
+			local ok, tlpa = pcall(tl_diac_to_tlpa, code)
+			if ok and type(tlpa) == "string" and tlpa ~= "" then
+				code = tlpa
+			end
+		end
+		if code ~= "" then
+			table.insert(codes, code)
+		end
+	end
+	return codes
+end
+
 local function memorize_aux_candidates(env, cand_list)
 	local memory = env.aux_commit_memory
 	if not memory then
@@ -706,20 +771,100 @@ local function memorize_aux_candidates(env, cand_list)
 	end
 
 	local updated_count = 0
+	local phrase_texts = {}
+	local phrase_codes = {}
+
 	for _, cand in ipairs(cand_list) do
-		local ok, updated = pcall(function()
-			-- librime-lua Memory:update_candidate 會解開 Shadow/UniquifiedCandidate，
-			-- 並以原始 Phrase/Sentence 的 DictEntry（漢字＋編碼）更新 userdb。
-			return memory:update_candidate(cand, 1)
+		local genuine = cand
+		pcall(function()
+			genuine = cand:get_genuine() or cand
 		end)
-		if ok and updated then
+
+		local updated = false
+		local ok_upd, upd_res = pcall(function()
+			return memory:update_candidate(genuine, 1)
+		end)
+		if ok_upd and upd_res then
+			updated = true
 			updated_count = updated_count + 1
-		elseif not ok then
-			log.error("[aux_commit] user dictionary update failed: " .. tostring(updated))
+		elseif not ok_upd then
+			log.error("[aux_commit] update_candidate failed: " .. tostring(upd_res))
+		end
+
+		local text = cand.text or ""
+		local code_str = nil
+		local ok_entry, entry = pcall(function() return genuine.entry end)
+		if ok_entry and entry then
+			code_str = dict_entry_code_str(memory, entry)
+			-- update_candidate 失敗時，直接用 Phrase.entry 補寫
+			if not updated and text ~= "" then
+				local ok2, res2 = pcall(function()
+					return memory:update_userdict(entry, 1, "")
+				end)
+				if ok2 and res2 then
+					updated = true
+					updated_count = updated_count + 1
+				end
+			end
+		end
+
+		local comment_codes = codes_from_comment_brackets(cand.comment)
+		if #comment_codes == 0 then
+			comment_codes = codes_from_comment_brackets(genuine.comment)
+		end
+
+		local chars = utf8_chars(text)
+		if #chars > 0 then
+			table.insert(phrase_texts, text)
+		end
+
+		if code_str and code_str ~= "" then
+			-- Phrase/Sentence 自帶完整編碼（可能含多音節，以空白分隔）
+			for syl in code_str:gmatch("%S+") do
+				table.insert(phrase_codes, syl)
+			end
+		elseif #comment_codes > 0 then
+			for _, syl in ipairs(comment_codes) do
+				table.insert(phrase_codes, syl)
+			end
+			-- update_candidate 失敗時，依 comment 編碼補記單字／詞
+			if not updated then
+				if #chars == #comment_codes then
+					for i, ch in ipairs(chars) do
+						pcall(function()
+							memory:update_userdict(make_userdict_entry(ch, comment_codes[i]), 1, "")
+						end)
+					end
+					updated_count = updated_count + 1
+				elseif text ~= "" then
+					pcall(function()
+						memory:update_userdict(
+							make_userdict_entry(text, table.concat(comment_codes, " ")), 1, "")
+					end)
+					updated_count = updated_count + 1
+				end
+			end
 		end
 	end
 
-	log.info("[aux_commit] user dictionary updated candidates=" .. updated_count .. "/" .. #cand_list)
+	-- 多音節組字：補記整詞（如 方音 ← hong1 im1），讓下次連續輸入整詞可排到前面
+	local full_text = table.concat(phrase_texts, "")
+	local full_chars = utf8_chars(full_text)
+	if #full_chars >= 2 and #phrase_codes == #full_chars then
+		local full_code = table.concat(phrase_codes, " ")
+		local ok_p, res_p = pcall(function()
+			return memory:update_userdict(make_userdict_entry(full_text, full_code), 1, "")
+		end)
+		if ok_p and res_p then
+			updated_count = updated_count + 1
+			log.info("[aux_commit] phrase learned: " .. full_text .. " / " .. full_code)
+		elseif not ok_p then
+			log.error("[aux_commit] phrase update failed: " .. tostring(res_p))
+		end
+	end
+
+	log.info("[aux_commit] user dictionary updated count=" .. updated_count
+		.. " segments=" .. #cand_list)
 	return updated_count > 0
 end
 
@@ -1337,17 +1482,6 @@ local function format_comment(comment_string, mode, schema_id)
         return new_comment
 end
 
-local function utf8_chars(s)
-	local chars = {}
-	if type(s) ~= "string" then
-		return chars
-	end
-	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
-		table.insert(chars, uchar)
-	end
-	return chars
-end
-
 local function normalize_sni_syllable(s)
 	local chars = utf8_chars(s)
 	if #chars ~= 3 then
@@ -1406,11 +1540,19 @@ function reformat_comment_filter(input, env)
 			local old = cand.comment or ""
 			local new = render_huan_ciat_comment(old)
 			if new ~= old then
-				local c = cand:get_genuine()
-				local nc = Candidate(c.type, c.start, c._end, c.text, new)
-				nc.preedit = cand.preedit
-				nc.quality = cand.quality
-				yield(nc)
+				-- ShadowCandidate 保留底層 Phrase/Sentence，用戶詞典才能調頻
+				local ok_sc, nc = pcall(function()
+					return ShadowCandidate(cand, cand.type, cand.text, new, false)
+				end)
+				if ok_sc and nc then
+					yield(nc)
+				else
+					local c = cand:get_genuine()
+					local plain = Candidate(c.type, c.start, c._end, c.text, new)
+					plain.preedit = cand.preedit
+					plain.quality = cand.quality
+					yield(plain)
+				end
 			else
 				yield(cand)
 			end
@@ -1432,11 +1574,19 @@ function reformat_comment_filter(input, env)
 			new = old
 		end
 		if new ~= old then
-			local c = cand:get_genuine()
-			local nc = Candidate(c.type, c.start, c._end, c.text, new)
-			nc.preedit = cand.preedit
-			nc.quality = cand.quality
-			yield(nc)
+			-- ShadowCandidate 保留底層 Phrase/Sentence，用戶詞典才能調頻
+			local ok_sc, nc = pcall(function()
+				return ShadowCandidate(cand, cand.type, cand.text, new, false)
+			end)
+			if ok_sc and nc then
+				yield(nc)
+			else
+				local c = cand:get_genuine()
+				local plain = Candidate(c.type, c.start, c._end, c.text, new)
+				plain.preedit = cand.preedit
+				plain.quality = cand.quality
+				yield(plain)
+			end
 		else
 			yield(cand)
 		end
