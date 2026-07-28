@@ -59,6 +59,7 @@ $files = @(
 
     # --- 【台羅拼音】輸入方案用字典 ---
     "ji_khoo_tl.dict.yaml"
+    "ji_khoo_tl_BanLam_TanJi.dict.yaml"
 
     # --- 【台羅拼音】輸入方案用辭庫 ---
     "ji_khoo_su_lui.dict.yaml"
