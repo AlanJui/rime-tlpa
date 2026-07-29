@@ -333,7 +333,8 @@ speller:
     - xlit|bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxyLØ1732584&|!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-="5346][7|
 
 translator:
-  dictionary: ji_khoo_tl
+  # dictionary: ji_khoo_tl
+  dictionary: ji_khoo_tl_KamJiTian
   prism: huan_ciat_tps
   spelling_hints: 20
   always_show_comments: true

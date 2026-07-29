@@ -27,7 +27,7 @@
 #
 
 ---
-name: banlam_bpm2
+name: bpm2_BanLam
 version: "1.6"
 sort: by_weight
 use_preset_votsabulary: false

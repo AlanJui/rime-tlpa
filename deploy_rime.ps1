@@ -59,20 +59,21 @@ $files = @(
 
     # --- 【台羅拼音】輸入方案用字典 ---
     "ji_khoo_tl.dict.yaml"
-    "ji_khoo_tl_BanLam_TanJi.dict.yaml"
+    "ji_khoo_tl_ziann_ji.dict.yaml"
+    "ji_khoo_tl_KamJiTian.dict.yaml"
 
     # --- 【台羅拼音】輸入方案用辭庫 ---
-    "ji_khoo_su_lui.dict.yaml"
-    "ji_khoo_ban_lam.dict.yaml"
-    "ji_khoo_ziann_ji.dict.yaml"
+    "ji_khoo_tl_su_lui.dict.yaml"
+    "ji_khoo_tl_BanLam_TanJi.dict.yaml"
 
     # --- 【台語注音二式】輸入方案用字典 ---
     "ji_khoo_bpm2.dict.yaml"
+    "ji_khoo_bpm2_ziann_ji.dict.yaml"
+    "ji_khoo_bpm2_KamJiTian.dict.yaml"
 
     # --- 【台語注音二式】輸入方案用辭庫 ---
-    "ji_khoo_su_lui_bpm2.dict.yaml"
-    "ji_khoo_ban_lam_bpm2.dict.yaml"
-    "ji_khoo_ziann_ji_bpm2.dict.yaml"
+    "ji_khoo_bpm2_su_lui.dict.yaml"
+    "ji_khoo_bpm2_BanLam.dict.yaml"
 
     # --- 拼音輸入法 ---
     "phing_im_bp.schema.yaml"

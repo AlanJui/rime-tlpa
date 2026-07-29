@@ -1,27 +1,23 @@
 # Rime dictionary
 # encoding: utf-8
 #
-# Ho_Lok_Ue.db/漢字庫資料表轉製成中州韻輸入方案字典檔
-# 此字典檔專供「台語注音二式」輸入方案使用，其羅馬拼音系統採用「台語注音二式」。
+# 《甘字典》台語注音二式（BPM2）
+#
 ---
-name: ji_khoo_bpm2
+name: bpm2_KamJiTian
 version: "v0.1.0"
 sort: by_weight
 use_preset_vocabulary: false
 columns:
   - text    # 漢字
-  - code    # 台語注音二式（BPM2）拼音
+  - code    # 漢字讀音標音
   - weight  # 常用度（優先顯示度）
   - stem    # 用法舉例
   - create  # 建立時間
 import_tables:
-  - bpm2_ziann_ji
-  - bpm2_su_lui
-  # - bpm2_KamJiTian
-  # - bpm2_PehUe
-  # - bpm2_BanLam
+  - ji_khoo_bpm2_ziann_ji
+  - ji_khoo_bpm2_su_lui
 ...
-
 ㄏ	e3	0.8	【3754】字母 對 (丿Phiat) 出, 拖 ê 意思.	2026-07-05 21:19:00
 ㄙ	bboo2	0.8	【770】物 總 稱呼 ê 字, 親像 某物; 也是 斡角 ê 意思.	2026-07-05 21:19:00
 ㄙ	su1	0.8	【20081】歪 m̄直 ê 意思, 公平 ê 對反, 就是 無 公平, 偏私.	2026-07-05 21:19:00

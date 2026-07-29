@@ -4,7 +4,7 @@
 # 閩南語白話音漢字正字
 #
 ---
-name: ji_khoo_ziann_ji
+name: tl_ziann_ji
 version: "v0.1.0"
 sort: by_weight
 use_preset_vocabulary: false

@@ -177,7 +177,8 @@ speller:
     - xlit|12357480|;\_/-[].|
 
 translator:
-  dictionary: ji_khoo_tl
+  # dictionary: ji_khoo_tl
+  dictionary: ji_khoo_tl_KamJiTian
   prism: huan_ciat_tlpa
   spelling_hints: 20
   always_show_comments: true

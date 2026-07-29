@@ -5,7 +5,7 @@
 # 《1956台灣白話基礎語句》
 #
 ---
-name: ji_khoo_su_lui
+name: tl_su_lui
 version: "v0.1.0"
 sort: by_weight
 use_preset_vocabulary: false

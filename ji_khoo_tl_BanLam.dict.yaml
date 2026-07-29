@@ -27,7 +27,7 @@
 #
 
 ---
-name: banlam
+name: tl_BanLam
 version: "1.6"
 sort: by_weight
 use_preset_votsabulary: false
