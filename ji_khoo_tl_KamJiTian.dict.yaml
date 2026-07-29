@@ -15,8 +15,8 @@ columns:
   - stem    # 用法舉例
   - create  # 建立時間
 import_tables:
-  - ji_khoo_ziann_ji
-  - ji_khoo_su_lui
+  - ji_khoo_tl_ziann_ji
+  - ji_khoo_tl_su_lui
 ...
 ㄏ	e3	0.80	【3754】字母 對 (丿Phiat) 出, 拖 ê 意思.	2026-07-05 21:19
 ㄙ	boo2	0.80	【770】物 總 稱呼 ê 字, 親像 某物; 也是 斡角 ê 意思.	2026-07-05 21:19
@@ -1687,7 +1687,7 @@ import_tables:
 印	in3	0.80	【7972】官府 所 the̍h ê 憑據, 憑准; 好 兆頭, 因為; 崁印, 印冊, 印鑑.	2026-07-05 21:19
 危	gui5	0.80	【4629】tī 懸裡 teh 行, 懸, 無 四正, 倒壞, 緊緊, 惶險, 危急.	2026-07-05 21:19
 卲	siau7	0.80	【19128】就是 懸懸 ê 意思; 好 德行.	2026-07-05 21:19
-即	ckik4	0.80	【2250】chit-ê, chit霎, chit步, chit時.	2026-07-05 21:19
+即	tsik4	0.80	【2250】chit-ê, chit霎, chit步, chit時.	2026-07-05 21:19
 即	tsiah4	0.60	【1669】chiah-ê, chiah 遠, chiah 細, chiah 久, tú-á chiah.	2026-07-05 21:19
 即	tsik4	0.80	【2316】chiùⁿ爿, chiùⁿ ê昏, chiùⁿ 早起.	2026-07-05 21:19
 即	tsit4	0.60	【2250】chit-ê, chit霎, chit步, chit時.	2026-07-05 21:19
