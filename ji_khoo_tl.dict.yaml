@@ -10,16 +10,18 @@ sort: by_weight
 use_preset_vocabulary: false
 columns:
   - text    # 漢字
-  - code    # 台灣音標（TLPA）拼音
+  - code    # 漢字讀音標音
   - weight  # 常用度（優先顯示度）
   - stem    # 用法舉例
   - create  # 建立時間
 import_tables:
   - tl_ziann_ji
   - tl_su_lui
-  - tl_BanLam_TanJi
+  # - tl_KamJiTian
+  # - tl_PehUe
+  # - tl_BanLam_TanJi
+  # - tl_BanLam_SuLui
 ...
-黄河遠上白雲間	hong5 ho5 uan2 siong7 pik4 hun5 kan1	0.80 		2026-06-28 21:14
 愛讀冊
 有文才
 都無
@@ -31,3 +33,4 @@ import_tables:
 正手爿
 或是	a2 si2	0.60 	a2:或、或是、還是	2026-06-28 21:14
 阿祖	a0 tsoo2	0.60 	a:阿	2026-06-28 21:14
+黄河遠上白雲間	hong5 ho5 uan2 siong7 pik4 hun5 kan1	0.80 		2026-06-28 21:14
