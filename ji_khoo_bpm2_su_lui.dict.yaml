@@ -4,7 +4,7 @@
 # 台語白話音日常辭庫
 #
 ---
-name: bpm2_su_lui
+name: ji_khoo_bpm2_su_lui
 version: "v0.1.0"
 sort: by_weight
 use_preset_vocabulary: false

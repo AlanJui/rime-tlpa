@@ -4,7 +4,7 @@
 # 《甘字典》台語注音二式（BPM2）
 #
 ---
-name: bpm2_KamJiTian
+name: ji_khoo_bpm2_KamJiTian
 version: "v0.1.0"
 sort: by_weight
 use_preset_vocabulary: false

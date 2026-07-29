@@ -15,12 +15,12 @@ columns:
   - stem    # 用法舉例
   - create  # 建立時間
 import_tables:
-  - tl_ziann_ji
-  - tl_su_lui
-  # - tl_KamJiTian
-  # - tl_PehUe
-  # - tl_BanLam_TanJi
-  # - tl_BanLam_SuLui
+  - ji_khoo_tl_ziann_ji
+  - ji_khoo_tl_su_lui
+  # - ji_khoo_tl_KamJiTian
+  # - ji_khoo_tl_PehUe
+  # - ji_khoo_tl_BanLam_TanJi
+  # - ji_khoo_tl_BanLam_SuLui
 ...
 愛讀冊
 有文才

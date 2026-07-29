@@ -4,7 +4,7 @@
 # 《甘字典》台羅拼音（TL）
 #
 ---
-name: tl_KamJiTian
+name: ji_khoo_tl_KamJiTian
 version: "v0.1.0"
 sort: by_weight
 use_preset_vocabulary: false
