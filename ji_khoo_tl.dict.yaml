@@ -19,7 +19,7 @@ import_tables:
   - ji_khoo_tl_su_lui
   # - ji_khoo_tl_KamJiTian
   # - ji_khoo_tl_PehUe
-  # - ji_khoo_tl_BanLam_TanJi
+  - ji_khoo_tl_BanLam_TanJi
   # - ji_khoo_tl_BanLam_SuLui
 ...
 愛讀冊
