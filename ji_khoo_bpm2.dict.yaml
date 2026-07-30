@@ -15,9 +15,10 @@ columns:
   - stem    # 用法舉例
   - create  # 建立時間
 import_tables:
+  - ji_khoo_bpm2_CIN_IM
   - ji_khoo_bpm2_ziann_ji
   - ji_khoo_bpm2_su_lui
-  - ji_khoo_bpm2_BanLam
+  # - ji_khoo_bpm2_BanLam
   # - ji_khoo_bpm2_KamJiTian
   # - ji_khoo_bpm2_PehUe
 ...

@@ -60,6 +60,7 @@ $files = @(
     # --- 【台羅拼音】輸入方案用字典 ---
     "ji_khoo_tl.dict.yaml"
     "ji_khoo_tl_BanLam_TanJi.dict.yaml"
+    "ji_khoo_tl_CIN_IM.dict.yaml"
     "ji_khoo_tl_HanJi.dict.yaml"
     "ji_khoo_tl_KamJiTian.dict.yaml"
     "ji_khoo_tl_ziann_ji.dict.yaml"
@@ -70,6 +71,7 @@ $files = @(
     # --- 【台語注音二式】輸入方案用字典 ---
     "ji_khoo_bpm2.dict.yaml"
     "ji_khoo_bpm2_BanLam_TanJi.dict.yaml"
+    "ji_khoo_bpm2_CIN_IM.dict.yaml"
     "ji_khoo_bpm2_HanJi.dict.yaml"
     "ji_khoo_bpm2_KamJiTian.dict.yaml"
     "ji_khoo_bpm2_ziann_ji.dict.yaml"
