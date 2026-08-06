@@ -30,3 +30,6 @@ wiki/
 temp.csv
 tmp.csv
 tmp*.txt
+
+# Exceeds GitHub 100MB limit; keep local only
+docs/NCL-26128_*.pdf

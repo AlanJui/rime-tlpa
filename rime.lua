@@ -159,6 +159,9 @@ local SKIP_CONVERT_SCHEMAS = {
 	["zu_im_bpm2"]     = true,
 	["huan_ciat_tps"]  = true,
 	["huan_ciat_tlpa"] = true,
+	["huan_ciat_ZapGooIm"] = true,
+	["huan_ciat_ZapGooIm_tps"] = true,
+	["huan_ciat_ZapGooIm_bpm2"] = true,
 }
 
 -- 去除方音符號之調符（ˊˋ˪˫˙），供【台語音標注音】（TPS + 上標數字調號）使用。
@@ -1061,9 +1064,13 @@ local function aux_commit_func(key, env)
 		local source_list = {}  -- 存放「已正規化之 TLPA」或「SNI」
 		local is_tlpa = false   -- true 時 source_list 內容已是 TLPA，跳過 SNI→TLPA 轉換
 
-		if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+		if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps"
+		    or schema_id == "huan_ciat_ZapGooIm"
+		    or schema_id == "huan_ciat_ZapGooIm_tps"
+		    or schema_id == "huan_ciat_ZapGooIm_bpm2" then
 			-- comment_format 輸出 SNI 為 聲+韻+調 順序（如：柳君二）；
 			-- reformat_comment_filter 顯示前倒裝成 韻+調+聲（如：君二柳）。
+			-- ZapGooIm* 的 comment_format 已直接輸出 韻+調+聲。
 			-- ctx:get_selected_candidate() 可能回傳過濾前（聲+韻+調）或後（韻+調+聲），
 			-- 兩種情況都需能正確轉換，故先嘗試直接轉換，失敗則執行倒裝後再轉換。
 			for v in gen_comm:gmatch("【(.-)】") do
@@ -1651,7 +1658,10 @@ function reformat_comment_filter(input, env)
 
 	-- 反切方案依 310.md 顯示：【傳統十五音】〔YAML 產出的右欄標音〕。
 	-- Lua 只校正左欄十五音順序，並在多音節時整理成雙欄排列。
-	if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+	if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps"
+	    or schema_id == "huan_ciat_ZapGooIm"
+	    or schema_id == "huan_ciat_ZapGooIm_tps"
+	    or schema_id == "huan_ciat_ZapGooIm_bpm2" then
 		for cand in input:iter() do
 			local old = cand.comment or ""
 			local new = render_huan_ciat_comment(old)

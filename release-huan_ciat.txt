@@ -38,6 +38,11 @@ kb_lo_ma_ji.schema.yaml
 
 # --- 反切輸入法 ---
 huan_ciat_tlpa.schema.yaml
+huan_ciat_ZapGooIm.schema.yaml
+huan_ciat_ZapGooIm_bpm2.schema.yaml
 huan_ciat_tps.schema.yaml
+huan_ciat_ZapGooIm_tps.schema.yaml
+ji_khoo_ZapGooIm.dict.yaml
+ji_khoo_sni_bpm2.dict.yaml
 # -----------------
 lib_comment_sni_and_tps.yaml

@@ -106,6 +106,13 @@ $files = @(
     # -----------------
     "lib_comment_sni_and_tps.yaml"
 
+    # --- 十五音輸入法 ---
+    "huan_ciat_ZapGooIm_tlpa.schema.yaml"
+    "huan_ciat_ZapGooIm_tps.schema.yaml"
+    "huan_ciat_ZapGooIm_bpm2.schema.yaml"
+    "ji_khoo_sni_tl.dict.yaml"
+    "ji_khoo_sni_bpm2.dict.yaml"
+
     # --- 按鍵輔助工具 ---
     "kb_hong_im.schema.yaml"
     "kb_ipa.schema.yaml"
