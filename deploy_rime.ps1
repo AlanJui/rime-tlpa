@@ -114,6 +114,7 @@ $files = @(
     "ji_khoo_sni_KamJiTian_tl.dict.yaml"
     "ji_khoo_sni_bpm2.dict.yaml"
     "ji_khoo_sni_KamJiTian_bpm2.dict.yaml"
+    "ji_khoo_sni_TaiGi_PehUeSu.dict.yaml"
 
     # --- 按鍵輔助工具 ---
     "kb_hong_im.schema.yaml"

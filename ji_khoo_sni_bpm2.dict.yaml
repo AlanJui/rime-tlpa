@@ -17,13 +17,10 @@ columns:
   # - create  # 建立時間
 import_tables:
   - ji_khoo_sni_KamJiTian_bpm2
-#   - ji_khoo_ziann_ji_bpm2
+  - ji_khoo_sni_TaiGi_PehUeSu
 #   - ji_khoo_ban_lam_bpm2
 #   - ji_khoo_su_lui_bpm2
 ...
-# 破	or3p	0.60
-# 而	i5zz	0.60
-# 弊	e7b	0.60
 丫	a1q	0.60
 亞	a1q	0.60
 押	a1q	0.60

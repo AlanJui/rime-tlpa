@@ -17,7 +17,7 @@ columns:
   # - create  # 建立時間
 import_tables:
   - ji_khoo_sni_KamJiTian_tl
-#   - ji_khoo_ziann_ji_bpm2
+  - ji_khoo_sni_TaiGi_PehUeSu
 #   - ji_khoo_ban_lam_bpm2
 #   - ji_khoo_su_lui_bpm2
 ...
