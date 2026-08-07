@@ -36,13 +36,23 @@ kb_hong_im.schema.yaml
 kb_ipa.schema.yaml
 kb_lo_ma_ji.schema.yaml
 
-# --- 反切輸入法 ---
-huan_ciat_tlpa.schema.yaml
-huan_ciat_ZapGooIm.schema.yaml
-huan_ciat_ZapGooIm_bpm2.schema.yaml
-huan_ciat_tps.schema.yaml
-huan_ciat_ZapGooIm_tps.schema.yaml
-ji_khoo_ZapGooIm.dict.yaml
+## --- 反切輸入法 ---
+#huan_ciat_tlpa.schema.yaml
+#huan_ciat_ZapGooIm.schema.yaml
+#huan_ciat_ZapGooIm_bpm2.schema.yaml
+#huan_ciat_tps.schema.yaml
+#huan_ciat_ZapGooIm_tps.schema.yaml
+#ji_khoo_ZapGooIm.dict.yaml
+#ji_khoo_sni_bpm2.dict.yaml
+## -----------------
+#lib_comment_sni_and_tps.yaml
+
+# --- 十五音輸入法 ---
+sip_ngoo_im_tlpa.schema.yaml
+sip_ngoo_im_tps.schema.yaml
+sip_ngoo_im_bpm2.schema.yaml
+ji_khoo_sni_tl.dict.yaml
+ji_khoo_sni_KamJiTian_tl.dict.yaml
 ji_khoo_sni_bpm2.dict.yaml
-# -----------------
-lib_comment_sni_and_tps.yaml
+ji_khoo_sni_KamJiTian_bpm2.dict.yaml
+ji_khoo_sni_TaiGi_PehUeSu.dict.yaml
