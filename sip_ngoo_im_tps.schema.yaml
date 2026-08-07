@@ -4,7 +4,7 @@
 # v0.1.0 (2026/8/6)：依 huan_ciat_tps 改寫，字典編碼為【韻+調+聲】。
 
 schema:
-  schema_id: huan_ciat_ZapGooIm_tps
+  schema_id: sip_ngoo_im_tps
   name: 十五音輸入法【方音符號】
   version: "v0.1.0"
   author:
@@ -371,7 +371,7 @@ speller:
 
 translator:
   dictionary: ji_khoo_sni_tl
-  prism: huan_ciat_ZapGooIm_tps
+  prism: sip_ngoo_im_tps
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
