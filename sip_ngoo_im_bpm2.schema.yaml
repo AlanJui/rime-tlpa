@@ -88,7 +88,9 @@ speller:
   # BPM2 聲母：bb/gg/zz/jj/ch/sh/ng 及單字母 mbpnldtgkzcjsh
   #------------------------------------------------------
   alphabet: "abcdefghijklmnopqrstuvwxyzN=;\\_/-[].?&7"
-  # 音節以韻母字母起頭；調號在中間，故不設 finals
+  # 音節以韻母字母起頭；調號在音節中間，故不設 finals。
+  # 【註】不可把 n/g/m… 設成 finals：ing／ang 等韻尾字母與聲母重疊，
+  # 會讓「ing」被當成音節已結束，無法再接 7 / ? / ] 等調號。
   initials: abcdefghijklmnopqrstuvwxyzN=
   delimiter: "'"
   use_space: true
@@ -165,8 +167,8 @@ speller:
     - derive/er/e/
     - derive/er(ng|k)/i$1/
     #--------------------------------------------------------------------------
-    # 與白話字相容
-    - derive/e(ng|k)/i$1/
+    # 與白話字相容（不可寫 e(ng|k)，否則 iek→iik，力／厄等全壞）
+    - derive/(?<![i])e(ng|k)/i$1/
     - xform/ao/au/
     # 與漳州腔相容
     - derive/ee/e/	  # 漳州腔
@@ -348,7 +350,8 @@ translator:
     - xform/ere/ue/
     - xform/er/e/
     - xform/er(ng|k)/i$1/
-    - xform/e(ng|k)/i$1/
+    # 不可寫 e(ng|k)：舒聲顯示 ing→iek 後會被誤改成 iik
+    - xform/(?<![i])e(ng|k)/i$1/
     - xform/ao/au/
     - xform/ee/e/
     - xform/ei/e/
@@ -569,7 +572,8 @@ translator:
     - xform/ere/ue/
     - xform/er/e/
     - xform/er(ng|k)/i$1/
-    - xform/e(ng|k)/i$1/
+    # 不可寫 e(ng|k)：會把字典 iek4q 改成 iik4q → 候選顯示【iik四英】〔iik4〕
+    - xform/(?<![i])e(ng|k)/i$1/
     - xform/ao/au/
     - xform/ee/e/
     - xform/ei/e/
