@@ -1243,13 +1243,13 @@ import_tables:
 在	i7t	0.60
 在	ai7ts	0.80
 在	ai7ts	0.80
-圩[?]	u1q	0.80
+圩	u1q	0.80
 圬	u1q	0.80
 圭	e1k	0.80
 圭	ui1k	0.80
 圮	oo2h	0.80
 圮	i2k	0.80
-圯[圮]	i5q	0.80
+圯	i5q	0.80
 地	e3t	0.60
 地	e7t	0.80
 地	e7t	0.80
@@ -1429,7 +1429,6 @@ import_tables:
 朴	ok4ph	0.80
 朵	o5t	0.60
 朵	o2t	0.80
-朵[呆]	o2t	0.80
 朶	o2t	0.80
 朹	iu5k	0.80
 朹	iu7k	0.80
@@ -3778,7 +3777,7 @@ import_tables:
 玩	uan2g	0.80
 玩	uan2q	0.60
 玩	uan2g	0.80
-玫[玟]	ui5m	0.80
+玫	ui5m	0.80
 画	ua7h	0.80
 甽	ian2kh	0.80
 甾	u1ts	0.80
@@ -13609,7 +13608,7 @@ import_tables:
 箄	i1p	0.80
 箄	in2p	0.60
 箄	i1p	0.80
-箅[箄]	i3p	0.80
+箅	i3p	0.80
 箆	i3p	0.80
 箇	o3k	0.80
 箋	ian1ts	0.80

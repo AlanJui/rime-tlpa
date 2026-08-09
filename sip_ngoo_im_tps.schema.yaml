@@ -55,8 +55,8 @@ engine:
     - punctuator
     - selector
     - navigator
-    - fluid_editor
-    # - express_editor
+    - express_editor
+    # - fluid_editor
   segmentors:
     - ascii_segmentor
     - matcher
@@ -78,11 +78,13 @@ speller:
   # 輸入順序：【韻】方音鍵 → 【調】鍵 → 【聲】方音鍵（零聲母 =）
   # 聲母鍵設為 finals，避免「韻+調」已匹配時，下一個聲母被當成新音節起頭
   # （例：uo7 之後的 x＝柳 必須接成 uo7x，不能拆成 uo7 | x）
+  # 【注意】按鍵 8＝ㄚ（韻母），不可列入 finals；否則 u8（迦）會被當成音節已結束，
+  # 接著的調號 5／? 會被 selector／標點吃掉（上屏選字或殘留 ?）。
   # ? = 【韻 ? 聲】任意調萬用字元（* 鍵已用作 ㆩ，故不用作萬用調）
   # 亦可直接【韻+聲】省略調號（不必打 ?）
   alphabet: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-=\"5346][7.?"
   initials: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-="
-  finals: "!1qas2wxEedNYyhncRrfv8="
+  finals: "!1qas2wxEedNYyhncRrfv="
   delimiter: "'"
   use_space: true
   #=============================================================================
@@ -693,11 +695,34 @@ key_binder:
     - { when: composing, accept: period, send: period }
     - { when: has_menu, accept: period, send: period }
     #---------------------------------------------------
+    # 調號鍵：有候選清單時不可當「選字第 N 個」（尤其 3/4/5/6）
+    # 【"】一 【5】七 【3】三 【4】二 【6】五 【[】四 【]】八 【7】促 【?】任意調
+    - { when: composing, accept: "\"", send: "\"" }
+    - { when: has_menu, accept: "\"", send: "\"" }
+    - { when: composing, accept: "5", send: "5" }
+    - { when: has_menu, accept: "5", send: "5" }
+    - { when: composing, accept: "3", send: "3" }
+    - { when: has_menu, accept: "3", send: "3" }
+    - { when: composing, accept: "4", send: "4" }
+    - { when: has_menu, accept: "4", send: "4" }
+    - { when: composing, accept: "6", send: "6" }
+    - { when: has_menu, accept: "6", send: "6" }
+    - { when: composing, accept: "[", send: "[" }
+    - { when: has_menu, accept: "[", send: "[" }
+    - { when: composing, accept: "]", send: "]" }
+    - { when: has_menu, accept: "]", send: "]" }
+    #---------------------------------------------------
     # 使用【7】鍵，輸入【入聲調不確定】：字典 &（4 或 8）
     - { when: composing, accept: "7", send: "7" }
     - { when: has_menu, accept: "7", send: "7" }
     - { when: composing, accept: "Shift+7", send: "7" }
     - { when: has_menu, accept: "Shift+7", send: "7" }
+    #---------------------------------------------------
+    # 使用【?】鍵，輸入【任意調】萬用字元（韻 ? 聲）
+    - { when: composing, accept: "?", send: "?" }
+    - { when: has_menu, accept: "?", send: "?" }
+    - { when: composing, accept: "Shift+slash", send: "?" }
+    - { when: has_menu, accept: "Shift+slash", send: "?" }
     #---------------------------------------------------
     # 【候選字清單】翻頁快捷鍵設定
     #---------------------------------------------------
