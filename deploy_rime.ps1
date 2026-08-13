@@ -107,7 +107,7 @@ $files = @(
     "lib_comment_sni_and_tps.yaml"
 
     # --- 十五音輸入法 ---
-    "sip_ngoo_im_tlpa.schema.yaml"
+    "sip_ngoo_im_tl.schema.yaml"
     "sip_ngoo_im_tps.schema.yaml"
     "sip_ngoo_im_bpm2.schema.yaml"
     "ji_khoo_sni_tl.dict.yaml"

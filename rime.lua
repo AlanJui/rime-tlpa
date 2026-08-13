@@ -163,7 +163,8 @@ local SKIP_CONVERT_SCHEMAS = {
 	["huan_ciat_ZapGooIm"] = true,
 	["huan_ciat_ZapGooIm_tps"] = true,
 	["huan_ciat_ZapGooIm_bpm2"] = true,
-	["sip_ngoo_im_tlpa"] = true,
+	-- ["sip_ngoo_im_tlpa"] = true, -- 舊 schema_id（已更名為 sip_ngoo_im_tl）
+	["sip_ngoo_im_tl"] = true,
 	["sip_ngoo_im_tps"] = true,
 	["sip_ngoo_im_bpm2"] = true,
 }
@@ -1082,7 +1083,16 @@ local function aux_commit_func(key, env)
 		local source_list = {}  -- 存放「已正規化之 TLPA」或「SNI」
 		local is_tlpa = false   -- true 時 source_list 內容已是 TLPA，跳過 SNI→TLPA 轉換
 
-		if is_sni_huan_ciat_schema(schema_id) then
+		if schema_id == "sip_ngoo_im_tl" or schema_id == "sip_ngoo_im_tlpa" then
+			-- 右欄〔〕已是台羅字母+調號（例：床 = tshong5），直接當 TLPA 轉換。
+			-- 若走【】十五音，曾／出一旦對調，台羅會變成 tsông（誤）而非 tshông。
+			is_tlpa = true
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				table.insert(source_list, v)
+				log.info("[aux_commit] sip_ngoo_im_tl raw=[" .. v .. "]")
+			end
+
+		elseif is_sni_huan_ciat_schema(schema_id) then
 			-- comment_format 輸出 SNI 為 聲+韻+調 順序（如：柳君二）；
 			-- reformat_comment_filter 顯示前倒裝成 韻+調+聲（如：君二柳）。
 			-- sip_ngoo_im_*／ZapGooIm* 的 comment_format 已直接輸出 韻+調+聲。

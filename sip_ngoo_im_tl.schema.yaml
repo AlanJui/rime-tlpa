@@ -4,7 +4,7 @@
 # v0.1.0 (2026/8/6)：依 huan_ciat_tlpa 改寫，字典編碼為【韻+調+聲】。
 
 schema:
-  schema_id: sip_ngoo_im_tlpa
+  schema_id: sip_ngoo_im_tl
   name: 十五音輸入法【台羅拼音】
   version: "v0.1.0"
   author:
@@ -103,8 +103,10 @@ speller:
     # --------------------------------------------------------------------------
     # 【舌尖前音】在聲母位置（調號之後）：tsh/ts → c/z
     # --------------------------------------------------------------------------
-    - xform/(\d)tsh/$1c/
-    - xform/(\d)ts/$1z/
+    # - xform/(\d)tsh/$1c/
+    # - xform/(\d)ts/$1z/
+    - derive/(\d)tsh/$1c/
+    - derive/(\d)ts/$1z/
     # --------------------------------------------------------------------------
     # 【零聲母】字典用 q；亦允許省略 q（只打到調號）
     # --------------------------------------------------------------------------
@@ -233,7 +235,7 @@ speller:
 
 translator:
   dictionary: ji_khoo_sni_tl
-  prism: sip_ngoo_im_tlpa
+  prism: sip_ngoo_im_tl
   spelling_hints: 20
   always_show_comments: true
   initial_quality: 0.75
@@ -465,6 +467,8 @@ translator:
     - xform/l/柳/
     - xform/k/求/
     - xform/g/語/
+    - xform/tsh/出/   # 台羅 tsh = 十五音「出」（勿與 ts／曾 對調）
+    - xform/ts/曾/    # 台羅 ts = 十五音「曾」
     - xform/z/曾/
     - xform/c/出/
     - xform/s/時/
@@ -483,8 +487,8 @@ translator:
     - xform/6/7/
     #------------------------------------------------------
     # 聲母位置之 ts/tsh
-    - xform/(\d)tsh/$1c/
-    - xform/(\d)ts/$1z/
+    # - xform/(\d)tsh/$1c/
+    # - xform/(\d)ts/$1z/
     #------------------------------------------------------
     - xform/er(ng|k)/i$1/
     - xform/er(n|t)/u$1/
@@ -504,7 +508,8 @@ translator:
     # 例：un1k → 【》un》1》k】〔〉kun1〕
     #     un1q → 【》un》1》q】〔〉un1〕（右欄去掉零聲母 q）
     #==========================================================================
-    - xform/\b([a-z]+)(\d)((?:ph|th|kh|ng|[pbmtnlkgzcjshq])?)\b/【》$1》$2》$3】〔〉$3$1$2〕/
+    # - xform/\b([a-z]+)(\d)((?:ph|th|kh|ng|[pbmtnlkgzcjshq])?)\b/【》$1》$2》$3】〔〉$3$1$2〕/
+    - xform/\b([a-z]+)(\d)((?:tsh|ts|ph|th|kh|ng|[pbmtnlkgjshqcz])?)\b/【》$1》$2》$3】〔〉$3$1$2〕/
     - xform/〔〉q/〔〉/
     - xform/〔〉/〔/
 
@@ -624,8 +629,10 @@ translator:
     - xform/》l】/》柳】/
     - xform/》k】/》求】/
     - xform/》g】/》語】/
+    - xform/》tsh】/》出】/   # 台羅 tsh = 出
+    - xform/》ts】/》曾】/    # 台羅 ts = 曾
+    - xform/》c】/》出】/     # TLPA 相容（algebra 可能 derive tsh→c）
     - xform/》z】/》曾】/
-    - xform/》c】/》出】/
     - xform/》s】/》時】/
     - xform/》j】/》入】/
     - xform/》h】/》喜】/
