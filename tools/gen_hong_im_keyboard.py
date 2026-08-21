@@ -23,6 +23,7 @@ KEYS_DIR = OUT_DIR / "keys"
 CREAM = (236, 224, 196)
 CREAM_DIM = (186, 176, 154)
 CREAM_WARM = (232, 168, 150)
+WHITE = (255, 255, 255)
 DESK = (232, 232, 236)
 # 鍵帽接近方形；英文字母與鍵面邊緣固定 6px。
 CORNER_RATIO = 0.04
@@ -81,9 +82,9 @@ KEYS = [
     dict(id="0", label="0", shift=")", bg="peach", kind="single",
          top=("ㄢ", "an")),
     dict(id="minus", label="-", shift="_", bg="peach", kind="single",
-         top=("ñ", "*nn")),
+         top=("ㄥ", "aⁿ")),
     dict(id="equal", label="=", shift="+", bg="peach", kind="single",
-         top=("ㄥ", "*a")),
+         top=("Ø", "")),
     dict(id="q", label="Q", shift="", bg="blue", kind="single",
          top=("ㄆ", "ph")),
     dict(id="w", label="W", shift="", bg="blue", kind="single",
@@ -243,16 +244,16 @@ def draw_legend(draw: ImageDraw.ImageDraw, box, spec, scale: float) -> None:
     kind = spec["kind"]
     inset = LABEL_INSET_PX
 
-    f_lbl = face_font(max(20, int(24 * scale)))
+    f_lbl = face_font(max(22, int(24 * scale) + 2))
     f_big = face_font(max(32, int(42 * scale)))
     f_sym = face_font(max(24, int(30 * scale)))
     f_rom = face_font(max(14, int(17 * scale)))
     f_tone = face_font(max(20, int(24 * scale)))
     f_mark = face_font(max(24, int(30 * scale)))
 
-    draw.text((x0 + inset, y0 + inset), spec["label"], font=f_lbl, fill=CREAM, anchor="lt")
+    draw.text((x0 + inset, y0 + inset), spec["label"], font=f_lbl, fill=WHITE, anchor="lt")
     if spec.get("shift"):
-        draw.text((x1 - inset, y0 + inset), spec["shift"], font=f_lbl, fill=CREAM_DIM, anchor="rt")
+        draw.text((x1 - inset, y0 + inset), spec["shift"], font=f_lbl, fill=WHITE, anchor="rt")
 
     cx, rx = x0 + w * 0.38, x0 + w * 0.78
     top_y, bot_y, mid_y = y0 + h * 0.48, y0 + h * 0.80, y0 + h * 0.58
@@ -280,7 +281,8 @@ def draw_legend(draw: ImageDraw.ImageDraw, box, spec, scale: float) -> None:
     ts, tr = spec["top"]
     color = CREAM_WARM if kind == "coda" else CREAM
     draw.text((cx, mid_y), ts, font=f_big, fill=color, anchor="mm")
-    draw.text((rx, mid_y), tr, font=f_rom, fill=CREAM_DIM, anchor="mm")
+    if tr:
+        draw.text((rx, mid_y), tr, font=f_rom, fill=CREAM_DIM, anchor="mm")
 
 
 def render_key_image(spec: dict, width: int, height: int, scale: float) -> Image.Image:
@@ -365,11 +367,11 @@ def render_svg(key_w=168, key_h=148, gap=16, pad=40) -> str:
             f'fill="url(#g-{spec["bg"]})"/>'
         )
         parts.append(
-            f'<text x="{face_x + LABEL_INSET_PX}" y="{face_y + LABEL_INSET_PX + 14}" font-size="15" fill="#bab09a">{svg_escape(spec["label"])}</text>'
+            f'<text x="{face_x + LABEL_INSET_PX}" y="{face_y + LABEL_INSET_PX + 16}" font-size="17" fill="#ffffff">{svg_escape(spec["label"])}</text>'
         )
         if spec.get("shift"):
             parts.append(
-                f'<text x="{x1 - 4 - LABEL_INSET_PX}" y="{face_y + LABEL_INSET_PX + 14}" font-size="15" fill="#bab09a" text-anchor="end">'
+                f'<text x="{x1 - 4 - LABEL_INSET_PX}" y="{face_y + LABEL_INSET_PX + 16}" font-size="17" fill="#ffffff" text-anchor="end">'
                 f'{svg_escape(spec["shift"])}</text>'
             )
         cx, rx_t = x0 + w * 0.36, x0 + w * 0.76
@@ -407,9 +409,10 @@ def render_svg(key_w=168, key_h=148, gap=16, pad=40) -> str:
             parts.append(
                 f'<text x="{cx}" y="{y0 + h * 0.62}" font-size="32" text-anchor="middle" fill="{fill_c}">{svg_escape(ts)}</text>'
             )
-            parts.append(
-                f'<text x="{rx_t}" y="{y0 + h * 0.62}" font-size="15" text-anchor="middle" fill="#bab09a">{svg_escape(tr)}</text>'
-            )
+            if tr:
+                parts.append(
+                    f'<text x="{rx_t}" y="{y0 + h * 0.62}" font-size="15" text-anchor="middle" fill="#bab09a">{svg_escape(tr)}</text>'
+                )
     parts.append("</svg>")
     return "\n".join(parts)
 
