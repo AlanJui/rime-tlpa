@@ -12,6 +12,7 @@ Outputs:
 from __future__ import annotations
 
 from pathlib import Path
+import shutil
 
 from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
@@ -60,7 +61,7 @@ def face_font(size: int) -> ImageFont.FreeTypeFont:
 # bg: blue=聲母, yellow=調號, peach=韻母
 KEYS = [
     dict(id="1", label="1", shift="!", bg="blue", kind="pair",
-         top=("ㆠ", "b"), bottom=("ㄅ", "p")),
+         top=("ㄅ", "p"), bottom=("ㆠ", "b")),
     dict(id="2", label="2", shift="@", bg="blue", kind="single",
          top=("ㄉ", "t")),
     dict(id="3", label="3", shift="#", bg="yellow", kind="tone",
@@ -68,15 +69,15 @@ KEYS = [
     dict(id="4", label="4", shift="$", bg="yellow", kind="tone",
          name="上声", mark="ˋ"),
     dict(id="5", label="5", shift="%", bg="yellow", kind="tone",
-         name="陽去", mark="´"),
+         name="陽去", mark="˫"),
     dict(id="6", label="6", shift="^", bg="yellow", kind="tone",
-         name="陽平", mark="·"),
+         name="陽平", mark="ˊ"),
     dict(id="7", label="7", shift="&", bg="yellow", kind="tone",
          name="入声", mark="˙"),
     dict(id="8", label="8", shift="*", bg="peach", kind="pair",
-         top=("ㆩ", "ann"), bottom=("ㄚ", "a")),
+         top=("ㄚ", "a"), bottom=("ㆩ", "ann")),
     dict(id="9", label="9", shift="(", bg="peach", kind="pair",
-         top=("ㆮ", "ainn"), bottom=("ㄞ", "ai")),
+         top=("ㄞ", "ai"), bottom=("ㆮ", "ainn")),
     dict(id="0", label="0", shift=")", bg="peach", kind="single",
          top=("ㄢ", "an")),
     dict(id="minus", label="-", shift="_", bg="peach", kind="single",
@@ -88,23 +89,25 @@ KEYS = [
     dict(id="w", label="W", shift="", bg="blue", kind="single",
          top=("ㄊ", "th")),
     dict(id="e", label="E", shift="", bg="blue", kind="pair",
-         top=("ㆣ", "g"), bottom=("ㄍ", "k")),
+         top=("ㄍ", "k"), bottom=("ㆣ", "g")),
     dict(id="r", label="R", shift="", bg="blue", kind="pair",
-         top=("ㆢ", "j"), bottom=("ㄐ", "z")),
+         top=("ㄐ", "z"), bottom=("ㆢ", "j")),
     dict(id="t", label="T", shift="", bg="blue", kind="single",
          top=("ㆵ", "t0")),
     dict(id="y", label="Y", shift="", bg="blue", kind="pair",
-         top=("ㆡ", "j"), bottom=("ㄗ", "z")),
+         top=("ㄗ", "z"), bottom=("ㆡ", "j")),
     dict(id="u", label="U", shift="", bg="peach", kind="pair",
-         top=("ㆪ", "inn"), bottom=("ㄧ", "i")),
+         top=("ㄧ", "i"), bottom=("ㆪ", "inn")),
     dict(id="i", label="I", shift="", bg="peach", kind="pair",
-         top=("ㆧ", "onn"), bottom=("ㆦ", "oo")),
+         top=("ㆦ", "oo"), bottom=("ㆧ", "onn")),
     dict(id="o", label="O", shift="", bg="peach", kind="pair",
-         top=("ㆱ", "om"), bottom=("ㆲ", "ong")),
+         top=("ㆲ", "ong"), bottom=("ㆱ", "om")),
     dict(id="p", label="P", shift="", bg="peach", kind="single",
          top=("ㄣ", "-n")),
-    dict(id="lbracket", label="[", shift="{", bg="peach", kind="empty"),
-    dict(id="rbracket", label="]", shift="}", bg="peach", kind="empty"),
+    dict(id="lbracket", label="[", shift="{", bg="yellow", kind="tone",
+         name="陰入", mark=""),
+    dict(id="rbracket", label="]", shift="}", bg="yellow", kind="tone",
+         name="陽入", mark="˙"),
     dict(id="backslash", label="\\", shift="|", bg="peach", kind="empty"),
     dict(id="a", label="A", shift="", bg="blue", kind="single",
          top=("ㄇ", "m")),
@@ -115,19 +118,19 @@ KEYS = [
     dict(id="f", label="F", shift="", bg="blue", kind="single",
          top=("ㄑ", "c")),
     dict(id="g", label="G", shift="", bg="blue", kind="single",
-         top=("ㆶ", "k0")),
+         top=("ㆻ", "k0")),
     dict(id="h", label="H", shift="", bg="blue", kind="single",
          top=("ㄘ", "c")),
     dict(id="j", label="J", shift="", bg="peach", kind="pair",
-         top=("ㆫ", "unn"), bottom=("ㄨ", "u")),
+         top=("ㄨ", "u"), bottom=("ㆫ", "unn")),
     dict(id="k", label="K", shift="", bg="peach", kind="pair",
-         top=("ㆨ", "ir"), bottom=("ㄜ", "or")),
+         top=("ㄜ", "or"), bottom=("ㆨ", "ir")),
     dict(id="l", label="L", shift="", bg="peach", kind="pair",
-         top=("ㆯ", "aunn"), bottom=("ㄠ", "au")),
+         top=("ㄠ", "au"), bottom=("ㆯ", "aunn")),
     dict(id="semicolon", label=";", shift=":", bg="peach", kind="single",
          top=("ㄤ", "ang")),
-    dict(id="quote", label="'", shift='"', bg="peach", kind="coda",
-         top=("入", "ptkh")),
+    dict(id="quote", label="'", shift='"', bg="yellow", kind="tone",
+         name="陰平", mark=""),
     dict(id="z", label="Z", shift="", bg="blue", kind="single",
          top=("ㆷ", "h0")),
     dict(id="x", label="X", shift="", bg="blue", kind="single",
@@ -139,11 +142,11 @@ KEYS = [
     dict(id="b", label="B", shift="", bg="blue", kind="single",
          top=("ㆴ", "p0")),
     dict(id="n", label="N", shift="", bg="blue", kind="pair",
-         top=("ㄫ", "ng"), bottom=("ㄙ", "s")),
+         top=("ㄙ", "s"), bottom=("ㄫ", "ng")),
     dict(id="m", label="M", shift="", bg="peach", kind="pair",
-         top=("ㆰ", "am"), bottom=("ㆬ", "-m")),
+         top=("ㆬ", "-m"), bottom=("ㆰ", "am")),
     dict(id="comma", label=",", shift="<", bg="peach", kind="pair",
-         top=("ㆥ", "enn"), bottom=("ㆤ", "e")),
+         top=("ㆤ", "e"), bottom=("ㆥ", "enn")),
     dict(id="period", label=".", shift=">", bg="peach", kind="coda",
          top=("入", "ptkh")),
     dict(id="slash", label="/", shift="?", bg="peach", kind="single",
@@ -257,8 +260,13 @@ def draw_legend(draw: ImageDraw.ImageDraw, box, spec, scale: float) -> None:
     if kind == "empty":
         return
     if kind == "tone":
-        draw.text((x0 + w * 0.5, y0 + h * 0.52), spec["name"], font=f_tone, fill=CREAM, anchor="mm")
-        draw.text((x0 + w * 0.5, y0 + h * 0.80), spec["mark"], font=f_mark, fill=CREAM, anchor="mm")
+        mark = spec.get("mark") or ""
+        if mark:
+            draw.text((x0 + w * 0.5, y0 + h * 0.52), spec["name"], font=f_tone, fill=CREAM, anchor="mm")
+            draw.text((x0 + w * 0.5, y0 + h * 0.80), mark, font=f_mark, fill=CREAM, anchor="mm")
+        else:
+            f_yinping = face_font(max(24, int(28 * scale)))
+            draw.text((x0 + w * 0.5, y0 + h * 0.58), spec["name"], font=f_yinping, fill=CREAM, anchor="mm")
         return
     if kind == "pair":
         ts, tr = spec["top"]
@@ -366,12 +374,18 @@ def render_svg(key_w=168, key_h=148, gap=16, pad=40) -> str:
             )
         cx, rx_t = x0 + w * 0.36, x0 + w * 0.76
         if spec["kind"] == "tone":
-            parts.append(
-                f'<text x="{x0 + w / 2}" y="{y0 + h * 0.55}" font-size="20" text-anchor="middle" fill="#ece0c4">{spec["name"]}</text>'
-            )
-            parts.append(
-                f'<text x="{x0 + w / 2}" y="{y0 + h * 0.80}" font-size="24" text-anchor="middle" fill="#ece0c4">{spec["mark"]}</text>'
-            )
+            mark = spec.get("mark") or ""
+            if mark:
+                parts.append(
+                    f'<text x="{x0 + w / 2}" y="{y0 + h * 0.55}" font-size="20" text-anchor="middle" fill="#ece0c4">{spec["name"]}</text>'
+                )
+                parts.append(
+                    f'<text x="{x0 + w / 2}" y="{y0 + h * 0.80}" font-size="24" text-anchor="middle" fill="#ece0c4">{svg_escape(mark)}</text>'
+                )
+            else:
+                parts.append(
+                    f'<text x="{x0 + w / 2}" y="{y0 + h * 0.62}" font-size="28" text-anchor="middle" fill="#ece0c4">{spec["name"]}</text>'
+                )
         elif spec["kind"] == "pair":
             ts, tr = spec["top"]
             bs, br = spec["bottom"]
@@ -403,6 +417,8 @@ def render_svg(key_w=168, key_h=148, gap=16, pad=40) -> str:
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     KEYS_DIR.mkdir(parents=True, exist_ok=True)
+    guide_dir = ROOT / "docs" / "guide" / "Keyboard"
+    guide_dir.mkdir(parents=True, exist_ok=True)
 
     board = render_board(scale=1.25)
     board_path = OUT_DIR / "hong_im_gian_buann.png"
@@ -413,12 +429,15 @@ def main() -> None:
 
     for spec in KEYS:
         img = render_key_image(spec, 320, 320, scale=2.0)
-        img.save(KEYS_DIR / f"key_{spec['id']}.png", "PNG", optimize=True)
+        name = f"key_{spec['id']}.png"
+        img.save(KEYS_DIR / name, "PNG", optimize=True)
+        shutil.copy2(KEYS_DIR / name, guide_dir / name)
 
     print(f"font:  {CJK_FONT_PATH}")
     print(f"board: {board_path} {board.size}")
     print(f"svg:   {svg_path}")
     print(f"keys:  {KEYS_DIR} ({len(KEYS)} files)")
+    print(f"guide: {guide_dir}")
 
 
 if __name__ == "__main__":

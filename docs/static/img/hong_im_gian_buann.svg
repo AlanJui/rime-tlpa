@@ -11,10 +11,10 @@
 <rect x="44" y="44" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="50" y="64" font-size="15" fill="#bab09a">1</text>
 <text x="198" y="64" font-size="15" fill="#bab09a" text-anchor="end">!</text>
-<text x="100.47999999999999" y="114.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆠ</text>
-<text x="167.68" y="114.0" font-size="15" text-anchor="middle" fill="#bab09a">b</text>
-<text x="100.47999999999999" y="158.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄅ</text>
-<text x="167.68" y="158.4" font-size="15" text-anchor="middle" fill="#bab09a">p</text>
+<text x="100.47999999999999" y="114.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄅ</text>
+<text x="167.68" y="114.0" font-size="15" text-anchor="middle" fill="#bab09a">p</text>
+<text x="100.47999999999999" y="158.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆠ</text>
+<text x="167.68" y="158.4" font-size="15" text-anchor="middle" fill="#bab09a">b</text>
 <rect x="224" y="40" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="228" y="44" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="234" y="64" font-size="15" fill="#bab09a">2</text>
@@ -38,13 +38,13 @@
 <text x="786" y="64" font-size="15" fill="#bab09a">5</text>
 <text x="934" y="64" font-size="15" fill="#bab09a" text-anchor="end">%</text>
 <text x="860.0" y="121.4" font-size="20" text-anchor="middle" fill="#ece0c4">陽去</text>
-<text x="860.0" y="158.4" font-size="24" text-anchor="middle" fill="#ece0c4">´</text>
+<text x="860.0" y="158.4" font-size="24" text-anchor="middle" fill="#ece0c4">˫</text>
 <rect x="960" y="40" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="964" y="44" width="160" height="136" rx="4" fill="url(#g-yellow)"/>
 <text x="970" y="64" font-size="15" fill="#bab09a">6</text>
 <text x="1118" y="64" font-size="15" fill="#bab09a" text-anchor="end">^</text>
 <text x="1044.0" y="121.4" font-size="20" text-anchor="middle" fill="#ece0c4">陽平</text>
-<text x="1044.0" y="158.4" font-size="24" text-anchor="middle" fill="#ece0c4">·</text>
+<text x="1044.0" y="158.4" font-size="24" text-anchor="middle" fill="#ece0c4">ˊ</text>
 <rect x="1144" y="40" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1148" y="44" width="160" height="136" rx="4" fill="url(#g-yellow)"/>
 <text x="1154" y="64" font-size="15" fill="#bab09a">7</text>
@@ -55,18 +55,18 @@
 <rect x="1332" y="44" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1338" y="64" font-size="15" fill="#bab09a">8</text>
 <text x="1486" y="64" font-size="15" fill="#bab09a" text-anchor="end">*</text>
-<text x="1388.48" y="114.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆩ</text>
-<text x="1455.68" y="114.0" font-size="15" text-anchor="middle" fill="#bab09a">ann</text>
-<text x="1388.48" y="158.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄚ</text>
-<text x="1455.68" y="158.4" font-size="15" text-anchor="middle" fill="#bab09a">a</text>
+<text x="1388.48" y="114.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄚ</text>
+<text x="1455.68" y="114.0" font-size="15" text-anchor="middle" fill="#bab09a">a</text>
+<text x="1388.48" y="158.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆩ</text>
+<text x="1455.68" y="158.4" font-size="15" text-anchor="middle" fill="#bab09a">ann</text>
 <rect x="1512" y="40" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1516" y="44" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1522" y="64" font-size="15" fill="#bab09a">9</text>
 <text x="1670" y="64" font-size="15" fill="#bab09a" text-anchor="end">(</text>
-<text x="1572.48" y="114.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆮ</text>
-<text x="1639.68" y="114.0" font-size="15" text-anchor="middle" fill="#bab09a">ainn</text>
-<text x="1572.48" y="158.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄞ</text>
-<text x="1639.68" y="158.4" font-size="15" text-anchor="middle" fill="#bab09a">ai</text>
+<text x="1572.48" y="114.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄞ</text>
+<text x="1639.68" y="114.0" font-size="15" text-anchor="middle" fill="#bab09a">ai</text>
+<text x="1572.48" y="158.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆮ</text>
+<text x="1639.68" y="158.4" font-size="15" text-anchor="middle" fill="#bab09a">ainn</text>
 <rect x="1696" y="40" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1700" y="44" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1706" y="64" font-size="15" fill="#bab09a">0</text>
@@ -98,17 +98,17 @@
 <rect x="455" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="459" y="208" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="465" y="228" font-size="15" fill="#bab09a">E</text>
-<text x="515.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆣ</text>
-<text x="582.6800000000001" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">g</text>
-<text x="515.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄍ</text>
-<text x="582.6800000000001" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">k</text>
+<text x="515.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄍ</text>
+<text x="582.6800000000001" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">k</text>
+<text x="515.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆣ</text>
+<text x="582.6800000000001" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">g</text>
 <rect x="639" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="643" y="208" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="649" y="228" font-size="15" fill="#bab09a">R</text>
-<text x="699.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆢ</text>
-<text x="766.6800000000001" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">j</text>
-<text x="699.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄐ</text>
-<text x="766.6800000000001" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">z</text>
+<text x="699.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄐ</text>
+<text x="766.6800000000001" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">z</text>
+<text x="699.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆢ</text>
+<text x="766.6800000000001" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">j</text>
 <rect x="823" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="827" y="208" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="833" y="228" font-size="15" fill="#bab09a">T</text>
@@ -117,44 +117,47 @@
 <rect x="1007" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1011" y="208" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="1017" y="228" font-size="15" fill="#bab09a">Y</text>
-<text x="1067.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆡ</text>
-<text x="1134.68" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">j</text>
-<text x="1067.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄗ</text>
-<text x="1134.68" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">z</text>
+<text x="1067.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄗ</text>
+<text x="1134.68" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">z</text>
+<text x="1067.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆡ</text>
+<text x="1134.68" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">j</text>
 <rect x="1191" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1195" y="208" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1201" y="228" font-size="15" fill="#bab09a">U</text>
-<text x="1251.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆪ</text>
-<text x="1318.68" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">inn</text>
-<text x="1251.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄧ</text>
-<text x="1318.68" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">i</text>
+<text x="1251.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄧ</text>
+<text x="1318.68" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">i</text>
+<text x="1251.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆪ</text>
+<text x="1318.68" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">inn</text>
 <rect x="1375" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1379" y="208" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1385" y="228" font-size="15" fill="#bab09a">I</text>
-<text x="1435.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆧ</text>
-<text x="1502.68" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">onn</text>
-<text x="1435.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆦ</text>
-<text x="1502.68" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">oo</text>
+<text x="1435.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆦ</text>
+<text x="1502.68" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">oo</text>
+<text x="1435.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆧ</text>
+<text x="1502.68" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">onn</text>
 <rect x="1559" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1563" y="208" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1569" y="228" font-size="15" fill="#bab09a">O</text>
-<text x="1619.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆱ</text>
-<text x="1686.68" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">om</text>
-<text x="1619.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆲ</text>
-<text x="1686.68" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">ong</text>
+<text x="1619.48" y="278.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆲ</text>
+<text x="1686.68" y="278.0" font-size="15" text-anchor="middle" fill="#bab09a">ong</text>
+<text x="1619.48" y="322.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆱ</text>
+<text x="1686.68" y="322.4" font-size="15" text-anchor="middle" fill="#bab09a">om</text>
 <rect x="1743" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1747" y="208" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1753" y="228" font-size="15" fill="#bab09a">P</text>
 <text x="1803.48" y="295.76" font-size="32" text-anchor="middle" fill="#ece0c4">ㄣ</text>
 <text x="1870.68" y="295.76" font-size="15" text-anchor="middle" fill="#bab09a">-n</text>
 <rect x="1927" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
-<rect x="1931" y="208" width="160" height="136" rx="4" fill="url(#g-peach)"/>
+<rect x="1931" y="208" width="160" height="136" rx="4" fill="url(#g-yellow)"/>
 <text x="1937" y="228" font-size="15" fill="#bab09a">[</text>
 <text x="2085" y="228" font-size="15" fill="#bab09a" text-anchor="end">{</text>
+<text x="2011.0" y="295.76" font-size="28" text-anchor="middle" fill="#ece0c4">陰入</text>
 <rect x="2111" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
-<rect x="2115" y="208" width="160" height="136" rx="4" fill="url(#g-peach)"/>
+<rect x="2115" y="208" width="160" height="136" rx="4" fill="url(#g-yellow)"/>
 <text x="2121" y="228" font-size="15" fill="#bab09a">]</text>
 <text x="2269" y="228" font-size="15" fill="#bab09a" text-anchor="end">}</text>
+<text x="2195.0" y="285.4" font-size="20" text-anchor="middle" fill="#ece0c4">陽入</text>
+<text x="2195.0" y="322.4" font-size="24" text-anchor="middle" fill="#ece0c4">˙</text>
 <rect x="2295" y="204" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="2299" y="208" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="2305" y="228" font-size="15" fill="#bab09a">\</text>
@@ -182,7 +185,7 @@
 <rect x="856" y="368" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="860" y="372" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="866" y="392" font-size="15" fill="#bab09a">G</text>
-<text x="916.48" y="459.76" font-size="32" text-anchor="middle" fill="#ece0c4">ㆶ</text>
+<text x="916.48" y="459.76" font-size="32" text-anchor="middle" fill="#ece0c4">ㆻ</text>
 <text x="983.6800000000001" y="459.76" font-size="15" text-anchor="middle" fill="#bab09a">k0</text>
 <rect x="1040" y="368" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1044" y="372" width="160" height="136" rx="4" fill="url(#g-blue)"/>
@@ -192,24 +195,24 @@
 <rect x="1224" y="368" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1228" y="372" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1234" y="392" font-size="15" fill="#bab09a">J</text>
-<text x="1284.48" y="442.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆫ</text>
-<text x="1351.68" y="442.0" font-size="15" text-anchor="middle" fill="#bab09a">unn</text>
-<text x="1284.48" y="486.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄨ</text>
-<text x="1351.68" y="486.4" font-size="15" text-anchor="middle" fill="#bab09a">u</text>
+<text x="1284.48" y="442.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄨ</text>
+<text x="1351.68" y="442.0" font-size="15" text-anchor="middle" fill="#bab09a">u</text>
+<text x="1284.48" y="486.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆫ</text>
+<text x="1351.68" y="486.4" font-size="15" text-anchor="middle" fill="#bab09a">unn</text>
 <rect x="1408" y="368" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1412" y="372" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1418" y="392" font-size="15" fill="#bab09a">K</text>
-<text x="1468.48" y="442.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆨ</text>
-<text x="1535.68" y="442.0" font-size="15" text-anchor="middle" fill="#bab09a">ir</text>
-<text x="1468.48" y="486.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄜ</text>
-<text x="1535.68" y="486.4" font-size="15" text-anchor="middle" fill="#bab09a">or</text>
+<text x="1468.48" y="442.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄜ</text>
+<text x="1535.68" y="442.0" font-size="15" text-anchor="middle" fill="#bab09a">or</text>
+<text x="1468.48" y="486.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆨ</text>
+<text x="1535.68" y="486.4" font-size="15" text-anchor="middle" fill="#bab09a">ir</text>
 <rect x="1592" y="368" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1596" y="372" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1602" y="392" font-size="15" fill="#bab09a">L</text>
-<text x="1652.48" y="442.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆯ</text>
-<text x="1719.68" y="442.0" font-size="15" text-anchor="middle" fill="#bab09a">aunn</text>
-<text x="1652.48" y="486.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄠ</text>
-<text x="1719.68" y="486.4" font-size="15" text-anchor="middle" fill="#bab09a">au</text>
+<text x="1652.48" y="442.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄠ</text>
+<text x="1719.68" y="442.0" font-size="15" text-anchor="middle" fill="#bab09a">au</text>
+<text x="1652.48" y="486.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆯ</text>
+<text x="1719.68" y="486.4" font-size="15" text-anchor="middle" fill="#bab09a">aunn</text>
 <rect x="1776" y="368" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1780" y="372" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1786" y="392" font-size="15" fill="#bab09a">;</text>
@@ -217,11 +220,10 @@
 <text x="1836.48" y="459.76" font-size="32" text-anchor="middle" fill="#ece0c4">ㄤ</text>
 <text x="1903.68" y="459.76" font-size="15" text-anchor="middle" fill="#bab09a">ang</text>
 <rect x="1960" y="368" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
-<rect x="1964" y="372" width="160" height="136" rx="4" fill="url(#g-peach)"/>
+<rect x="1964" y="372" width="160" height="136" rx="4" fill="url(#g-yellow)"/>
 <text x="1970" y="392" font-size="15" fill="#bab09a">'</text>
 <text x="2118" y="392" font-size="15" fill="#bab09a" text-anchor="end">&quot;</text>
-<text x="2020.48" y="459.76" font-size="32" text-anchor="middle" fill="#e8a896">入</text>
-<text x="2087.68" y="459.76" font-size="15" text-anchor="middle" fill="#bab09a">ptkh</text>
+<text x="2044.0" y="459.76" font-size="28" text-anchor="middle" fill="#ece0c4">陰平</text>
 <rect x="160" y="532" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="164" y="536" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="170" y="556" font-size="15" fill="#bab09a">Z</text>
@@ -250,25 +252,25 @@
 <rect x="1080" y="532" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1084" y="536" width="160" height="136" rx="4" fill="url(#g-blue)"/>
 <text x="1090" y="556" font-size="15" fill="#bab09a">N</text>
-<text x="1140.48" y="606.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄫ</text>
-<text x="1207.68" y="606.0" font-size="15" text-anchor="middle" fill="#bab09a">ng</text>
-<text x="1140.48" y="650.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄙ</text>
-<text x="1207.68" y="650.4" font-size="15" text-anchor="middle" fill="#bab09a">s</text>
+<text x="1140.48" y="606.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㄙ</text>
+<text x="1207.68" y="606.0" font-size="15" text-anchor="middle" fill="#bab09a">s</text>
+<text x="1140.48" y="650.4" font-size="24" text-anchor="middle" fill="#e8a896">ㄫ</text>
+<text x="1207.68" y="650.4" font-size="15" text-anchor="middle" fill="#bab09a">ng</text>
 <rect x="1264" y="532" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1268" y="536" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1274" y="556" font-size="15" fill="#bab09a">M</text>
-<text x="1324.48" y="606.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆰ</text>
-<text x="1391.68" y="606.0" font-size="15" text-anchor="middle" fill="#bab09a">am</text>
-<text x="1324.48" y="650.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆬ</text>
-<text x="1391.68" y="650.4" font-size="15" text-anchor="middle" fill="#bab09a">-m</text>
+<text x="1324.48" y="606.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆬ</text>
+<text x="1391.68" y="606.0" font-size="15" text-anchor="middle" fill="#bab09a">-m</text>
+<text x="1324.48" y="650.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆰ</text>
+<text x="1391.68" y="650.4" font-size="15" text-anchor="middle" fill="#bab09a">am</text>
 <rect x="1448" y="532" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1452" y="536" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1458" y="556" font-size="15" fill="#bab09a">,</text>
 <text x="1606" y="556" font-size="15" fill="#bab09a" text-anchor="end">&lt;</text>
-<text x="1508.48" y="606.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆥ</text>
-<text x="1575.68" y="606.0" font-size="15" text-anchor="middle" fill="#bab09a">enn</text>
-<text x="1508.48" y="650.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆤ</text>
-<text x="1575.68" y="650.4" font-size="15" text-anchor="middle" fill="#bab09a">e</text>
+<text x="1508.48" y="606.0" font-size="32" text-anchor="middle" fill="#ece0c4">ㆤ</text>
+<text x="1575.68" y="606.0" font-size="15" text-anchor="middle" fill="#bab09a">e</text>
+<text x="1508.48" y="650.4" font-size="24" text-anchor="middle" fill="#e8a896">ㆥ</text>
+<text x="1575.68" y="650.4" font-size="15" text-anchor="middle" fill="#bab09a">enn</text>
 <rect x="1632" y="532" width="168" height="148" rx="6" fill="#0c0e1e" filter="url(#keyShadow)"/>
 <rect x="1636" y="536" width="160" height="136" rx="4" fill="url(#g-peach)"/>
 <text x="1642" y="556" font-size="15" fill="#bab09a">.</text>
