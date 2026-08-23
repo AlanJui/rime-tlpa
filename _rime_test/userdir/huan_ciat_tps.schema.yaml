@@ -43,6 +43,11 @@ switches:
         key_in_piau_im_bp, key_in_piau_im_bpm2, key_in_piau_im_ipa ]
     reset: 0
     states: [ 十五音, 方音符號, 台語音標, 台語音標注音, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
+  # 【音節連接符】控制輸出按鍵 [Enter] 與 [Ctrl+Shift+Enter] 上屏時，
+  # 詞彙（2 個以上音節）之標音，音節與音節之間所使用的連接符號。
+  - options: [ im_zat_hyphen, im_zat_space, im_zat_apos ]
+    reset: 1
+    states: [ 連字號, 空白, 撇號 ]
 
 engine:
   processors:
@@ -75,7 +80,7 @@ engine:
     - lua_filter@reformat_comment_filter
 
 speller:
-  alphabet: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-=\"5346][7"
+  alphabet: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-=\"5346][7."
   initials: "!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-="
   finals: "\"5346][7."
   delimiter: "'"
@@ -289,7 +294,8 @@ speller:
     #--------------------------------------------------------------------------
     # 【所有入聲韻尾】 ==》【字典編碼】：【6】，【鍵盤按鍵】：【7】
     - derive/([RFQV])[48]/${1}6/
-    - abbrev/[RFQV]6/6/
+    # - abbrev/[RFQV]6/6/
+    - abbrev/[RFQV]6/&/
 
     #==========================================================================
     # 【零聲母處理】字典編碼：【Ø】，十五音聲母：【英】，鍵盤按鍵：[=]
@@ -320,7 +326,7 @@ speller:
     # 【5】==>【6】==>【ˊ】   # 按鍵【6】輸入：第5調（陽平調）的【低升調】符號
     # 【4】==>【[】==>【ˉ】   # 按鍵【[】輸入：第4調（陰入調）的【低促聲調】符號
     # 【8】==>【]】==>【˙】   # 按鍵【]】輸入：第4調（陽入調）的【高促聲調】符號
-    # 【0】==>【7】==>【˙】   # 按鍵【7】輸入：第4/8調，所有入声調
+    # 【&】==>【7】==>【˙】   # 按鍵【7】輸入：第4/8調，所有入声調
     #--------------------------------------------------------------------------
     # 【L】==>【-】==>【ㄥ】  # 按鍵【N】輸入：ㄥ【鼻化韻母前綴符號】
     #--------------------------------------------------------------------------
@@ -328,7 +334,8 @@ speller:
     - xlit|bpPmntTlgkKŋjzcshJZCSaiwueOəMNGRFQVIUY@AWHdfqrvxyLØ1732584&|!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-="5346][7|
 
 translator:
-  dictionary: ji_khoo_tl
+  # dictionary: ji_khoo_tl
+  dictionary: ji_khoo_tl_KamJiTian
   prism: huan_ciat_tps
   spelling_hints: 20
   always_show_comments: true
@@ -342,7 +349,7 @@ translator:
     # 全對映：（1）【注音符號按鍵】；（2）【調號按鍵】；（3）【功能按鍵】
     #==========================================================================
     # （1）【注音符號按鍵】
-    - xlit|!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-="5346][7|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯㄥØ一七三二五八四入|
+    - xlit|!1qas2wxEedNYyhncRrfv8uKj,ikmp/btgz9lM0;Oo*UJ<I(L-="5346][7|ㆠㄅㄆㄇㄋㄉㄊㄌㆣㄍㄎㄫㆡㄗㄘㄙㄏㆢㄐㄑㄒㄚㄧㆨㄨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯㄥØ一七三二五八四ʔ|
     #--------------------------------------------------------------------------
     # （2）【調號按鍵】
     #     -【"】高音調（陰平）： 一

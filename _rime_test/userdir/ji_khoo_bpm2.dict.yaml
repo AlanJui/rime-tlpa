@@ -15,9 +15,12 @@ columns:
   - stem    # 用法舉例
   - create  # 建立時間
 import_tables:
-  - ji_khoo_ziann_ji_bpm2
-  # - ji_khoo_su_lui_bpm2
-  # - ji_khoo_ban_lam_bpm2
+  - ji_khoo_bpm2_CIN_IM
+  - ji_khoo_bpm2_ziann_ji
+  - ji_khoo_bpm2_su_lui
+  # - ji_khoo_bpm2_BanLam
+  # - ji_khoo_bpm2_KamJiTian
+  # - ji_khoo_bpm2_PehUe
 ...
 
 ㄏ	e3	0.8	【3754】字母 對 (丿Phiat) 出, 拖 ê 意思.	2026-07-05 21:19:00

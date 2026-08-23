@@ -159,7 +159,29 @@ local SKIP_CONVERT_SCHEMAS = {
 	["zu_im_bpm2"]     = true,
 	["huan_ciat_tps"]  = true,
 	["huan_ciat_tlpa"] = true,
+	-- 舊名 ZapGooIm*；現行十五音【韻+調+聲】為 sip_ngoo_im_*
+	["huan_ciat_ZapGooIm"] = true,
+	["huan_ciat_ZapGooIm_tps"] = true,
+	["huan_ciat_ZapGooIm_bpm2"] = true,
+	-- ["sip_ngoo_im_tlpa"] = true, -- 舊 schema_id（已更名為 sip_ngoo_im_tl）
+	["sip_ngoo_im_tl"] = true,
+	["sip_ngoo_im_tps"] = true,
+	["sip_ngoo_im_bpm2"] = true,
 }
+
+-- 反切／十五音：comment 為【十五音】〔字典音標〕（含韻+調+聲之 sip_ngoo_im_*）
+local function is_sni_huan_ciat_schema(schema_id)
+	if type(schema_id) ~= "string" then
+		return false
+	end
+	if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+		return true
+	end
+	if schema_id:match("^huan_ciat_ZapGooIm") or schema_id:match("^sip_ngoo_im_") then
+		return true
+	end
+	return false
+end
 
 -- 去除方音符號之調符（ˊˋ˪˫˙），供【台語音標注音】（TPS + 上標數字調號）使用。
 -- 【註】不可用字元集 [ˊˋ˪˫˙]（Lua 以位元組比對，會誤刪 ㆪ/ㆫ 等符號之組成位元組），
@@ -247,6 +269,26 @@ local PIAU_IM_OPTIONS = {
 	"key_in_piau_im_ipa",
 }
 
+-- 《變更【音節連接符】》定義之選項名稱：Enter/Ctrl+Shift+Enter 上屏詞彙（2 個以上
+-- 音節）之標音時，音節與音節之間所使用的連接符號（三態：連字號／空白／撇號）
+local IM_ZAT_OPTIONS = {
+	"im_zat_hyphen",
+	"im_zat_space",
+	"im_zat_apos",
+}
+-- 選項名稱 → 實際連接符號字元
+local IM_ZAT_CHAR = {
+	im_zat_hyphen = "-",
+	im_zat_space  = " ",
+	im_zat_apos   = "'",
+}
+-- 連接符號字元 → 選項名稱（還原狀態檔之選擇用）
+local IM_ZAT_OPTION_OF_CHAR = {
+	["-"] = "im_zat_hyphen",
+	[" "] = "im_zat_space",
+	["'"] = "im_zat_apos",
+}
+
 ------------------------------------------------------------------------------------------
 -- 【漢字標音選項】持久化
 -- 問題：切換至其他 Windows 輸入法再回來會建立新 session，schema 之 reset 值
@@ -273,35 +315,59 @@ local function load_piau_im_state()
 	return {}
 end
 
--- 各方案最後選擇之選項（schema_id → key_in_piau_im_*），模組載入時自狀態檔讀入
+-- 各方案最後選擇之選項（schema_id → key_in_piau_im_*，另有 im_zat 子表存放
+-- schema_id → 音節連接符字元），模組載入時自狀態檔讀入
 local _piau_im_state = load_piau_im_state()
+
+-- 將 _piau_im_state 完整寫回狀態檔（piau_im 選擇與 im_zat 子表共用同一檔案）
+local function save_piau_im_state_file()
+	local f = io.open(piau_im_state_path(), "w")
+	if not f then
+		log.error("[piau_im_state] 無法寫入狀態檔：" .. piau_im_state_path())
+		return
+	end
+	f:write("-- 各輸入方案【漢字標音選項】／【音節連接符】之最後選擇（由 rime.lua 自動產生，勿手動編輯）\n")
+	f:write("return {\n")
+	for sid, opt in pairs(_piau_im_state) do
+		if sid ~= "im_zat" then
+			f:write(string.format("    %s = %q,\n", sid, opt))
+		end
+	end
+	if type(_piau_im_state.im_zat) == "table" then
+		f:write("    im_zat = {\n")
+		for sid, sep in pairs(_piau_im_state.im_zat) do
+			f:write(string.format("        %s = %q,\n", sid, sep))
+		end
+		f:write("    },\n")
+	end
+	f:write("}\n")
+	f:close()
+end
 
 local function save_piau_im_choice(schema_id, option_name)
 	if _piau_im_state[schema_id] == option_name then
 		return
 	end
 	_piau_im_state[schema_id] = option_name
-	local f = io.open(piau_im_state_path(), "w")
-	if not f then
-		log.error("[piau_im_state] 無法寫入狀態檔：" .. piau_im_state_path())
-		return
-	end
-	f:write("-- 各輸入方案【漢字標音選項】之最後選擇（由 rime.lua 自動產生，勿手動編輯）\n")
-	f:write("return {\n")
-	for sid, opt in pairs(_piau_im_state) do
-		f:write(string.format("    %s = %q,\n", sid, opt))
-	end
-	f:write("}\n")
-	f:close()
+	save_piau_im_state_file()
 	log.info("[piau_im_state] saved: " .. schema_id .. " = " .. option_name)
 end
 
--- 讀取 schema 中 key_in_piau_im_* 選項群之 reset 預設選項
--- （各方案不同：反切＝十五音、zu_im_tps＝方音符號、zu_im_tlpa＝台語音標注音…）
-local function get_default_piau_im_option(config)
+local function save_im_zat_choice(schema_id, separator)
+	_piau_im_state.im_zat = _piau_im_state.im_zat or {}
+	if _piau_im_state.im_zat[schema_id] == separator then
+		return
+	end
+	_piau_im_state.im_zat[schema_id] = separator
+	save_piau_im_state_file()
+	log.info("[im_zat_state] saved: " .. schema_id .. " = " .. separator)
+end
+
+-- 讀取 schema 中指定字首（prefix）之選項群，其 reset 所指向之預設選項名稱
+local function get_default_option_by_prefix(config, prefix)
 	for i = 0, 19 do
 		local first = config:get_string("switches/@" .. i .. "/options/@0")
-		if first and first:find("^key_in_piau_im_") then
+		if first and first:find("^" .. prefix) then
 			local reset = config:get_int("switches/@" .. i .. "/reset") or 0
 			return config:get_string("switches/@" .. i .. "/options/@" .. reset) or first
 		end
@@ -312,6 +378,17 @@ local function get_default_piau_im_option(config)
 		end
 	end
 	return nil
+end
+
+-- 讀取 schema 中 key_in_piau_im_* 選項群之 reset 預設選項
+-- （各方案不同：反切＝十五音、zu_im_tps＝方音符號、zu_im_tlpa＝台語音標注音…）
+local function get_default_piau_im_option(config)
+	return get_default_option_by_prefix(config, "key_in_piau_im_")
+end
+
+-- 讀取 schema 中 im_zat_* 選項群之 reset 預設選項（回傳選項名稱，如 im_zat_space）
+local function get_default_im_zat_option(config)
+	return get_default_option_by_prefix(config, "im_zat_")
 end
 
 -- 新 session 首次處理按鍵前呼叫：
@@ -348,6 +425,59 @@ local function restore_piau_im_choice(env)
 	end
 	ctx:set_option(saved, true)
 	log.info("[piau_im_state] restored: " .. sid .. " = " .. saved)
+end
+
+-- 新 session 首次處理按鍵前呼叫（邏輯與 restore_piau_im_choice 相同，
+-- 僅選項群、狀態檔子表換成 im_zat）：
+--   1. 若使用者已在按鍵前用 F4 改過選項（作用中選項 ≠ schema 預設）→ 尊重並持久化；
+--   2. 否則以狀態檔記錄之選擇，覆蓋 schema reset 所套用之預設值。
+local function restore_im_zat_choice(env)
+	if env.im_zat_restored then
+		return
+	end
+	env.im_zat_restored = true
+	local ctx = env.engine.context
+	local sid = env.engine.schema.schema_id
+	local saved_char = (_piau_im_state.im_zat or {})[sid]
+
+	local active = nil
+	for _, name in ipairs(IM_ZAT_OPTIONS) do
+		if ctx:get_option(name) then
+			active = name
+			break
+		end
+	end
+
+	local default_opt = get_default_im_zat_option(env.engine.schema.config)
+	if active and default_opt and active ~= default_opt then
+		-- 選項已非預設值：session 建立後、首次按鍵前已被使用者變更
+		save_im_zat_choice(sid, IM_ZAT_CHAR[active] or "-")
+		return
+	end
+	if not saved_char then
+		return
+	end
+	local saved_opt = IM_ZAT_OPTION_OF_CHAR[saved_char]
+	if not saved_opt or saved_opt == active then
+		return
+	end
+	if active then
+		ctx:set_option(active, false)
+	end
+	ctx:set_option(saved_opt, true)
+	log.info("[im_zat_state] restored: " .. sid .. " = " .. saved_char)
+end
+
+-- 取得目前 session 生效之【音節連接符】字元：優先讀取 im_zat_* switch 之即時狀態，
+-- 若該 schema 未定義此開關群，退回 rime_env.lua 之靜態設定值（han_ji_piau_im_hu_ho.im_zat）
+local function get_im_zat(ctx)
+	for _, name in ipairs(IM_ZAT_OPTIONS) do
+		if ctx:get_option(name) then
+			return IM_ZAT_CHAR[name]
+		end
+	end
+	local hu_ho = get_hu_ho()
+	return hu_ho.im_zat or "-"
 end
 
 -- === END DICTIONARIES ===
@@ -694,10 +824,75 @@ local TLPA_TO_BP_TIAU = {
 -- Ctrl+Shift+Enter → 漢字附帶標音（如：啥物〔siann2-mih4〕；320.md §五、輸出漢字附帶標音）
 ------------------------------------------------------------------------------------------
 
+local function utf8_chars(s)
+	local chars = {}
+	if type(s) ~= "string" then
+		return chars
+	end
+	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+		table.insert(chars, uchar)
+	end
+	return chars
+end
+
 -- aux_commit 以 engine:commit_text() 輸出自訂字串，未經 Rime 原生 editor/selector
 -- 的提交流程，因此 translator 不會自動將所選候選寫入用戶詞典。
 -- 在真正上屏前，以同一 translator namespace 的 Memory 主動記錄候選，
 -- 令 Enter / Ctrl+Shift+Enter 與 Space 具有相同的詞頻學習效果。
+--
+-- 【注意】reformat_comment_filter 若以 Candidate() 取代 Phrase/Sentence，
+-- update_candidate 會失敗（只認 Phrase/Sentence）；須用 ShadowCandidate 保留原體。
+-- 另：逐字確認後再整詞上屏時，還須補記「整詞」條目，否則下次連續輸入
+-- 仍可能被辭典裡權重較高的同碼詞（如 黄音）壓過（只抬升了末字單字權重）。
+local function dict_entry_code_str(memory, entry)
+	if type(entry) ~= "userdata" and type(entry) ~= "table" then
+		return nil
+	end
+	local custom = nil
+	pcall(function() custom = entry.custom_code end)
+	if type(custom) == "string" and custom:match("%S") then
+		return (custom:gsub("%s+$", ""))
+	end
+	local ok, syllables = pcall(function() return memory:decode(entry.code) end)
+	if ok and type(syllables) == "table" and #syllables > 0 then
+		return table.concat(syllables, " ")
+	end
+	return nil
+end
+
+local function make_userdict_entry(text, code)
+	local entry = DictEntry()
+	entry.text = text
+	-- LevelDB 用戶詞典 key 格式要求 custom_code 末尾保留空白
+	local c = (code or ""):gsub("^%s+", ""):gsub("%s+$", "")
+	if c ~= "" then
+		entry.custom_code = c .. " "
+	end
+	return entry
+end
+
+local function codes_from_comment_brackets(comment)
+	local codes = {}
+	if type(comment) ~= "string" then
+		return codes
+	end
+	for t in comment:gmatch("〔(.-)〕") do
+		local code = normalize_supers(t)
+		code = code:gsub("%s+", "")
+		-- 去掉 TL/POJ 調符，盡量還原成字典用的數值調編碼
+		if code:match("[%z\1-\127]*[\128-\255]") or code:find("[\195-\244]") then
+			local ok, tlpa = pcall(tl_diac_to_tlpa, code)
+			if ok and type(tlpa) == "string" and tlpa ~= "" then
+				code = tlpa
+			end
+		end
+		if code ~= "" then
+			table.insert(codes, code)
+		end
+	end
+	return codes
+end
+
 local function memorize_aux_candidates(env, cand_list)
 	local memory = env.aux_commit_memory
 	if not memory then
@@ -706,20 +901,100 @@ local function memorize_aux_candidates(env, cand_list)
 	end
 
 	local updated_count = 0
+	local phrase_texts = {}
+	local phrase_codes = {}
+
 	for _, cand in ipairs(cand_list) do
-		local ok, updated = pcall(function()
-			-- librime-lua Memory:update_candidate 會解開 Shadow/UniquifiedCandidate，
-			-- 並以原始 Phrase/Sentence 的 DictEntry（漢字＋編碼）更新 userdb。
-			return memory:update_candidate(cand, 1)
+		local genuine = cand
+		pcall(function()
+			genuine = cand:get_genuine() or cand
 		end)
-		if ok and updated then
+
+		local updated = false
+		local ok_upd, upd_res = pcall(function()
+			return memory:update_candidate(genuine, 1)
+		end)
+		if ok_upd and upd_res then
+			updated = true
 			updated_count = updated_count + 1
-		elseif not ok then
-			log.error("[aux_commit] user dictionary update failed: " .. tostring(updated))
+		elseif not ok_upd then
+			log.error("[aux_commit] update_candidate failed: " .. tostring(upd_res))
+		end
+
+		local text = cand.text or ""
+		local code_str = nil
+		local ok_entry, entry = pcall(function() return genuine.entry end)
+		if ok_entry and entry then
+			code_str = dict_entry_code_str(memory, entry)
+			-- update_candidate 失敗時，直接用 Phrase.entry 補寫
+			if not updated and text ~= "" then
+				local ok2, res2 = pcall(function()
+					return memory:update_userdict(entry, 1, "")
+				end)
+				if ok2 and res2 then
+					updated = true
+					updated_count = updated_count + 1
+				end
+			end
+		end
+
+		local comment_codes = codes_from_comment_brackets(cand.comment)
+		if #comment_codes == 0 then
+			comment_codes = codes_from_comment_brackets(genuine.comment)
+		end
+
+		local chars = utf8_chars(text)
+		if #chars > 0 then
+			table.insert(phrase_texts, text)
+		end
+
+		if code_str and code_str ~= "" then
+			-- Phrase/Sentence 自帶完整編碼（可能含多音節，以空白分隔）
+			for syl in code_str:gmatch("%S+") do
+				table.insert(phrase_codes, syl)
+			end
+		elseif #comment_codes > 0 then
+			for _, syl in ipairs(comment_codes) do
+				table.insert(phrase_codes, syl)
+			end
+			-- update_candidate 失敗時，依 comment 編碼補記單字／詞
+			if not updated then
+				if #chars == #comment_codes then
+					for i, ch in ipairs(chars) do
+						pcall(function()
+							memory:update_userdict(make_userdict_entry(ch, comment_codes[i]), 1, "")
+						end)
+					end
+					updated_count = updated_count + 1
+				elseif text ~= "" then
+					pcall(function()
+						memory:update_userdict(
+							make_userdict_entry(text, table.concat(comment_codes, " ")), 1, "")
+					end)
+					updated_count = updated_count + 1
+				end
+			end
 		end
 	end
 
-	log.info("[aux_commit] user dictionary updated candidates=" .. updated_count .. "/" .. #cand_list)
+	-- 多音節組字：補記整詞（如 方音 ← hong1 im1），讓下次連續輸入整詞可排到前面
+	local full_text = table.concat(phrase_texts, "")
+	local full_chars = utf8_chars(full_text)
+	if #full_chars >= 2 and #phrase_codes == #full_chars then
+		local full_code = table.concat(phrase_codes, " ")
+		local ok_p, res_p = pcall(function()
+			return memory:update_userdict(make_userdict_entry(full_text, full_code), 1, "")
+		end)
+		if ok_p and res_p then
+			updated_count = updated_count + 1
+			log.info("[aux_commit] phrase learned: " .. full_text .. " / " .. full_code)
+		elseif not ok_p then
+			log.error("[aux_commit] phrase update failed: " .. tostring(res_p))
+		end
+	end
+
+	log.info("[aux_commit] user dictionary updated count=" .. updated_count
+		.. " segments=" .. #cand_list)
 	return updated_count > 0
 end
 
@@ -727,8 +1002,9 @@ local function aux_commit_func(key, env)
 	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
 
-	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】
+	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】／【音節連接符】
 	restore_piau_im_choice(env)
+	restore_im_zat_choice(env)
 	local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
 	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter）
@@ -807,9 +1083,19 @@ local function aux_commit_func(key, env)
 		local source_list = {}  -- 存放「已正規化之 TLPA」或「SNI」
 		local is_tlpa = false   -- true 時 source_list 內容已是 TLPA，跳過 SNI→TLPA 轉換
 
-		if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+		if schema_id == "sip_ngoo_im_tl" or schema_id == "sip_ngoo_im_tlpa" then
+			-- 右欄〔〕已是台羅字母+調號（例：床 = tshong5），直接當 TLPA 轉換。
+			-- 若走【】十五音，曾／出一旦對調，台羅會變成 tsông（誤）而非 tshông。
+			is_tlpa = true
+			for v in gen_comm:gmatch("〔(.-)〕") do
+				table.insert(source_list, v)
+				log.info("[aux_commit] sip_ngoo_im_tl raw=[" .. v .. "]")
+			end
+
+		elseif is_sni_huan_ciat_schema(schema_id) then
 			-- comment_format 輸出 SNI 為 聲+韻+調 順序（如：柳君二）；
 			-- reformat_comment_filter 顯示前倒裝成 韻+調+聲（如：君二柳）。
+			-- sip_ngoo_im_*／ZapGooIm* 的 comment_format 已直接輸出 韻+調+聲。
 			-- ctx:get_selected_candidate() 可能回傳過濾前（聲+韻+調）或後（韻+調+聲），
 			-- 兩種情況都需能正確轉換，故先嘗試直接轉換，失敗則執行倒裝後再轉換。
 			for v in gen_comm:gmatch("【(.-)】") do
@@ -905,7 +1191,7 @@ local function aux_commit_func(key, env)
 					local hu_ho = get_hu_ho()
 					local out_str = cand_text
 						.. (hu_ho.left or "〔")
-						.. table.concat(syls, hu_ho.im_zat or "-")
+						.. table.concat(syls, get_im_zat(ctx))
 						.. (hu_ho.right or "〕")
 					log.info("[aux_commit] toneless phrase fallback: " .. out_str)
 					memorize_aux_candidates(env, cand_list)
@@ -1071,16 +1357,18 @@ local function aux_commit_func(key, env)
 		end
 
 		local out_str
+		local im_zat = get_im_zat(ctx)
 		if fu_piau_im then
-			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以 im_zat 串接）+ 右分隔符號
-			-- 如：啥物〔siann2-mih4〕。符號由設定檔 han_ji_piau_im_hu_ho 定義。
+			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以【音節連接符】開關串接）+ 右分隔符號
+			-- 如：啥物〔siann2-mih4〕。左右分隔符號由設定檔 han_ji_piau_im_hu_ho 定義。
 			local hu_ho = get_hu_ho()
 			out_str = cand_text
 				.. (hu_ho.left or "〔")
-				.. table.concat(out_list, hu_ho.im_zat or "-")
+				.. table.concat(out_list, im_zat)
 				.. (hu_ho.right or "〕")
 		else
-			out_str = table.concat(out_list, " ")
+			-- 【漢字標音上屏】（Enter）：2 個以上音節（詞彙）時，以【音節連接符】開關決定之符號串接
+			out_str = table.concat(out_list, im_zat)
 		end
 		if #out_str > 0 then
 			memorize_aux_candidates(env, cand_list)
@@ -1111,15 +1399,20 @@ aux_commit = {
 			log.error("[aux_commit] failed to initialize Memory: " .. tostring(memory))
 		end
 		env.piau_im_notifier = ctx.option_update_notifier:connect(function(c, name)
-			-- session 建立階段 schema 套用 reset 預設值也會發出通知，
-			-- 須待首次按鍵（restore_piau_im_choice 執行過）後才開始記錄，
-			-- 避免將 reset 預設值誤存為使用者之選擇。
-			if not env.piau_im_restored then
+			if type(name) ~= "string" or not c:get_option(name) then
 				return
 			end
-			-- 僅記錄 key_in_piau_im_* 且值為 true（radio 群組被選中）之變更
-			if type(name) == "string" and name:find("^key_in_piau_im_") and c:get_option(name) then
-				save_piau_im_choice(env.engine.schema.schema_id, name)
+			-- 僅記錄值為 true（radio 群組被選中）之變更；
+			-- session 建立階段 schema 套用 reset 預設值也會發出通知，須待對應之
+			-- restore_*_choice 執行過後才開始記錄，避免將 reset 預設值誤存為使用者之選擇。
+			if name:find("^key_in_piau_im_") then
+				if env.piau_im_restored then
+					save_piau_im_choice(env.engine.schema.schema_id, name)
+				end
+			elseif name:find("^im_zat_") then
+				if env.im_zat_restored then
+					save_im_zat_choice(env.engine.schema.schema_id, IM_ZAT_CHAR[name] or "-")
+				end
 			end
 		end)
 	end,
@@ -1298,7 +1591,11 @@ local function format_comment(comment_string, mode, schema_id)
                 return comment_string
         end
 
-        local is_sni = schema_id and (schema_id:match("hau_suan") or schema_id:match("huan_ciat"))
+        local is_sni = schema_id and (
+                schema_id:match("hau_suan")
+                or schema_id:match("huan_ciat")
+                or schema_id:match("^sip_ngoo_im_")
+        )
 
         -- 對於非十五音（如 tps, tlpa），完全由 yaml 控制左右欄，直接回傳
         if not is_sni then
@@ -1335,17 +1632,6 @@ local function format_comment(comment_string, mode, schema_id)
         end)
 
         return new_comment
-end
-
-local function utf8_chars(s)
-	local chars = {}
-	if type(s) ~= "string" then
-		return chars
-	end
-	for uchar in s:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
-		table.insert(chars, uchar)
-	end
-	return chars
 end
 
 local function normalize_sni_syllable(s)
@@ -1399,18 +1685,27 @@ end
 function reformat_comment_filter(input, env)
 	local schema_id = env.engine.schema.schema_id
 
-	-- 反切方案依 310.md 顯示：【傳統十五音】〔YAML 產出的右欄標音〕。
+	-- 反切／十五音方案：【傳統十五音】〔YAML 產出的右欄標音〕。
 	-- Lua 只校正左欄十五音順序，並在多音節時整理成雙欄排列。
-	if schema_id == "huan_ciat_tlpa" or schema_id == "huan_ciat_tps" then
+	-- 【註】須包含 sip_ngoo_im_*（韻+調+聲）；漏列則多音節會交錯顯示且 aux_commit 失能。
+	if is_sni_huan_ciat_schema(schema_id) then
 		for cand in input:iter() do
 			local old = cand.comment or ""
 			local new = render_huan_ciat_comment(old)
 			if new ~= old then
-				local c = cand:get_genuine()
-				local nc = Candidate(c.type, c.start, c._end, c.text, new)
-				nc.preedit = cand.preedit
-				nc.quality = cand.quality
-				yield(nc)
+				-- ShadowCandidate 保留底層 Phrase/Sentence，用戶詞典才能調頻
+				local ok_sc, nc = pcall(function()
+					return ShadowCandidate(cand, cand.type, cand.text, new, false)
+				end)
+				if ok_sc and nc then
+					yield(nc)
+				else
+					local c = cand:get_genuine()
+					local plain = Candidate(c.type, c.start, c._end, c.text, new)
+					plain.preedit = cand.preedit
+					plain.quality = cand.quality
+					yield(plain)
+				end
 			else
 				yield(cand)
 			end
@@ -1432,11 +1727,19 @@ function reformat_comment_filter(input, env)
 			new = old
 		end
 		if new ~= old then
-			local c = cand:get_genuine()
-			local nc = Candidate(c.type, c.start, c._end, c.text, new)
-			nc.preedit = cand.preedit
-			nc.quality = cand.quality
-			yield(nc)
+			-- ShadowCandidate 保留底層 Phrase/Sentence，用戶詞典才能調頻
+			local ok_sc, nc = pcall(function()
+				return ShadowCandidate(cand, cand.type, cand.text, new, false)
+			end)
+			if ok_sc and nc then
+				yield(nc)
+			else
+				local c = cand:get_genuine()
+				local plain = Candidate(c.type, c.start, c._end, c.text, new)
+				plain.preedit = cand.preedit
+				plain.quality = cand.quality
+				yield(plain)
+			end
 		else
 			yield(cand)
 		end

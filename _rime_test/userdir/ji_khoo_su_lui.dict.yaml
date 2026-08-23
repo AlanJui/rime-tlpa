@@ -2,6 +2,7 @@
 # encoding: utf-8
 #
 # 台語白話音日常辭庫
+# 《1956台灣白話基礎語句》
 #
 ---
 name: ji_khoo_su_lui
@@ -15,17 +16,6 @@ columns:
   - stem    # 用法舉例
   - create  # 建立時間
 ...
-愛讀冊
-有文才
-都無
-知縣
-致蔭
-封官
-東南爿
-倒手爿
-正手爿
-或是	a2 si2	0.60 	a2:或、或是、還是	2026-06-28 21:14
-阿祖	a0 tsoo2	0.60 	a:阿	2026-06-28 21:14
 一元半	khoo1 puann3	0.60 	khoo puann3:一元半	2026-06-29 16:44
 一公升汽油	tsit8 kong1 tsin1 khi3 iu5	0.60 	tsit8 kong-tsin khi3-iu5:一公升汽油	2026-06-29 16:44
 一切	it4 tshe3	0.60 	it-tshe3:一切	2026-06-29 16:44

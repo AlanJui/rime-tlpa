@@ -1,0 +1,705 @@
+# Rime schema
+# vim: set sw=2 sts=2 et:
+# encoding: utf-8
+# v0.1.0 (2026/8/6)：依 huan_ciat_tlpa 改寫，字典編碼為【韻+調+聲】。
+
+schema:
+  schema_id: sip_ngoo_im_tlpa
+  name: 十五音輸入法【台羅拼音】
+  version: "v0.1.0"
+  author:
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    【輸入類型】：反切輸入法，依《彙集雅俗通十五音》【韻+調+聲】順序輸入。
+    【拼音系統】：十五音（TLPA 改良用途）
+    【字典編碼】：韻母 + 調號 + 聲母（例：君 = un1k；溫 = un1q）
+    【輸入順序】：先韻母字母，再調號鍵，後聲母字母（零聲母用 q）
+    【候選清單】：左欄十五音（韻+調+聲），右欄 TLPA（聲+韻+調）。
+    【特性】包括：
+      1. 支持15音調映射
+      2. 多樣化拼音兼容性配置（方音與兩岸著重特徵）。
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [漢文, ABC]
+  - name: full_shape
+    reset: 0
+    states: [半形, 全形]
+  # 【漢字標音選項】控制輸出按鍵 [Enter] 與 [Ctrl+Shift+Enter] 在上屏時，
+  # 【漢字標音】應以何種【注音/拼音系統】標示漢字之讀音。
+  # 【註】options 與 states 依「位置序號」一一對應，兩列表之項目數與排序必須一致。
+  - options:
+      [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
+        key_in_piau_im_tlpa_zu_im, key_in_piau_im_tl, key_in_piau_im_poj,
+        key_in_piau_im_bp, key_in_piau_im_bpm2, key_in_piau_im_ipa ]
+    reset: 0
+    states: [ 十五音, 方音符號, 台語音標, 台語音標注音, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
+  # 【音節連接符】控制輸出按鍵 [Enter] 與 [Ctrl+Shift+Enter] 上屏時，
+  # 詞彙（2 個以上音節）之標音，音節與音節之間所使用的連接符號。
+  - options: [ im_zat_hyphen, im_zat_space, im_zat_apos ]
+    reset: 1
+    states: [ 連字號, 空白, 撇號 ]
+
+engine:
+  processors:
+    - lua_processor@aux_commit # 控制【輸入方案】輸出之【漢字格音】格式
+    - lua_processor@jump_select
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+  filters:
+    - simplifier
+    - uniquifier
+    - lua_filter@reformat_comment_filter  # 控制【候選清單】顯示之【漢字標音】
+
+speller:
+  #------------------------------------------------------
+  # 輸入順序：【韻】字母 → 【調】鍵 → 【聲】字母
+  #------------------------------------------------------
+  # 舒聲 [12357]
+  # 1: ;
+  # 2: \
+  # 3: _ （劃底線符號）
+  # 5: /
+  # 6: [N/A]
+  # 7: -
+  # 4: [
+  # 8: ]
+  # 輕聲及入聲 [48] = 0
+  # 0: .
+  # 零聲母：q（例：溫 un1q）
+  # 入聲調不確定 4/8：字典 & → 按鍵 7（與 ZapGooIm_tps 相同）
+  #------------------------------------------------------
+  alphabet: "abcdefghijklmnopqrstuvwxyzN=;\\_/-[].?&7"
+  # 音節以韻母字母起頭；調號在中間，故不設 finals
+  initials: abcdefghijklmnopqrstuvwxyzN=
+  delimiter: "'"
+  use_space: true
+  algebra:
+    #===========================================================================
+    # 字典編碼：【韻+調+聲】（例：un1k、un1kh、un1q、ann2m）
+    # 捕捉式：^([a-z]+)(\d)([a-z]*)$  →  $1=韻  $2=調  $3=聲
+    #===========================================================================
+    - xform/6/7/
+    # --------------------------------------------------------------------------
+    # 【鼻化韻母】：ann1k → Na1k（相容 N 前綴輸入）
+    # --------------------------------------------------------------------------
+    - derive/([iu]?(?:ai|au|oo|[aiueo]))nn/N$1/
+    # --------------------------------------------------------------------------
+    # 【舌尖前音】在聲母位置（調號之後）：tsh/ts → c/z
+    # --------------------------------------------------------------------------
+    # - xform/(\d)tsh/$1c/
+    # - xform/(\d)ts/$1z/
+    - derive/(\d)tsh/$1c/
+    - derive/(\d)ts/$1z/
+    # --------------------------------------------------------------------------
+    # 【零聲母】字典用 q；亦允許省略 q（只打到調號）
+    # --------------------------------------------------------------------------
+    - derive/^([a-zN]+\d)q$/$1/
+
+    #==========================================================================
+    # 變調（調號在音節中間；音節僅一數字，規則可沿用）
+    #==========================================================================
+    # # 舒聲變調（1 2 3 5 7）
+    # - derive/2/1/ # 第二調 → 第一調：高降取高
+    # - derive/5/7/ # 第五調 → 第七調：低升取升
+    # - derive/1/7/ # 第一調 → 第七調：高變中
+    # - derive/7/3/ # 第七調 → 第三調：中變低
+    # - derive/3/2/ # 第三調 → 第二調：低變高降
+    # # 入聲變調（4 8）：韻尾 p/t/k/h 仍緊貼調號前（例：ut4k）
+    # - derive/(?<![ptkh])4/8/ # -ㆷ 第四調 → 第八調
+    # - derive/(?<![ptkh])8/4/ # -ㆷ 第八調 → 第四調
+
+    #==========================================================================
+    # 定義【地方腔】與【優勢腔】相容之處理規則
+    #==========================================================================
+    - derive/er(ng|k)/i$1/
+    - derive/er(n|t)/u$1/
+    - derive/ere/ue/
+    - derive/er/e/
+    - derive/er(ng|k)/i$1/
+    #--------------------------------------------------------------------------
+    # 與白話字相容
+    - derive/e(ng|k)/i$1/
+    - xform/ao/au/
+    # 與漳州腔相容
+    - derive/ee/e/	  # 漳州腔
+    - derive/ei/e/	  # 漳州腔
+    - derive/ou/oo/   # 漳州腔
+    # 其它相容性處理
+    - derive/ur/u/	  # 廈門腔
+    - derive/iek/ik/
+
+    #==========================================================================
+    # 入聲韻尾轉換（韻尾在調號前：ap4k → ap0k）
+    #==========================================================================
+    - derive/p[48]/p0/	    # ㆴ
+    - derive/t[48]/t0/	    # ㆵ
+    - derive/k[48]/k0/	    # ㆻ
+    - derive/h[48]/h0/	    # ㆷ
+
+    #==========================================================================
+    # 【舒聲韻偷懶打入聲】
+    # 字典為促聲韻+入聲調（例：六 iok8l），允許輸入對應舒聲韻：
+    #   1) iong ] l  （陽入 8）
+    #   2) iong 7 l  （不確定 4/8；字典 & → 按鍵 7）
+    #   3) iong ? l  （不確定調號；配合下方「任意調」derive）
+    # 【註】必須寫在 algebra（查字），不可只寫在 preedit_format（僅顯示）。
+    #==========================================================================
+    # 鼻音／複合（最長優先）
+    - derive/uainnh([48])/uainn$1/   # 閂
+    - derive/uaihnn([48])/uainn$1/
+    - derive/iauhnn([48])/iaunn$1/   # 嘄
+    - derive/iannh([48])/iann$1/     # 驚
+    - derive/iunnh([48])/iunn$1/     # 牛
+    - derive/ainnh([48])/ainn$1/     # 閒
+    - derive/uinnh([48])/uinn$1/     # 褌
+    - derive/auhnn([48])/aunn$1/
+    - derive/annh([48])/ann$1/       # 監
+    - derive/ennh([48])/enn$1/       # 更
+    - derive/ahnn([48])/ann$1/
+    - derive/ehnn([48])/enn$1/
+    - derive/ihnn([48])/inn$1/       # 梔
+    # 塞音／喉塞尾
+    - derive/uaih([48])/uai$1/       # 乖
+    - derive/iauh([48])/iau$1/       # 嬌
+    - derive/iok([48])/iong$1/       # 恭
+    - derive/iak([48])/iang$1/       # 姜
+    - derive/iat([48])/ian$1/        # 堅
+    - derive/iap([48])/iam$1/        # 兼
+    - derive/uat([48])/uan$1/        # 觀
+    - derive/uak([48])/uang$1/       # 光
+    - derive/auh([48])/au$1/         # 交
+    - derive/iah([48])/ia$1/         # 迦
+    - derive/uah([48])/ua$1/         # 瓜
+    - derive/ueh([48])/ue$1/         # 檜
+    - derive/uih([48])/ui$1/         # 規／褌促
+    - derive/ioh([48])/io$1/         # 茄
+    - derive/ooh([48])/oo$1/         # 沽
+    - derive/ngh([48])/ng$1/         # 鋼
+    - derive/ok([48])/ong$1/         # 公
+    - derive/ak([48])/ang$1/         # 江
+    - derive/ik([48])/ing$1/         # 經
+    - derive/ut([48])/un$1/          # 君
+    - derive/ip([48])/im$1/          # 金
+    - derive/it([48])/in$1/          # 巾
+    - derive/ap([48])/am$1/          # 甘
+    - derive/at([48])/an$1/          # 干
+    - derive/op([48])/om$1/          # 箴
+    - derive/oh([48])/o$1/           # 高
+    - derive/uh([48])/u$1/           # 艍
+    - derive/ah([48])/a$1/           # 膠
+    - derive/ih([48])/i$1/           # 居
+    - derive/eh([48])/e$1/           # 伽
+    - derive/mh([48])/m$1/           # 姆
+    # 入聲調不確定 4/8：字典編碼 & → 按鍵 7（見下方 xlit）
+    - derive/4/&/
+    - derive/8/&/
+
+    #==========================================================================
+    # 【輸入簡化】編碼：韻+調+聲
+    #==========================================================================
+    # 無調號：un1k → unk
+    - derive/^([a-zN]+)\d([a-z]*)$/$1$2/
+    # 任意調：韻 + ? + 聲（含上列舒聲韻偷懶後之 iong8l → iong?l）
+    - derive/^([a-zN]+)(?:\d|&)([a-z]+)$/$1?$2/
+    # 只輸入【韻】
+    - abbrev/^([a-zN]+)\d[a-z]*$/$1/
+    # 只輸入【韻+調】
+    - abbrev/^([a-zN]+(?:\d|&))[a-z]*$/$1/
+    # 只輸入【聲】（調號後）
+    - abbrev/^[a-zN]+(?:\d|&)((?:ph|th|kh|ng|[pbmtnlkgzcjshq]))$/$1/
+
+    #==========================================================================
+    # 定義聲調的「調號」與「按鍵」的對映規則
+    # 【1】→【;】【2】→【\】【3】→【_】【5】→【/】【7】→【-】
+    # 【4】→【[】【8】→【]】【0】→【.】
+    # 【&】→【7】  # 不確定陰入／陽入（4 或 8）
+    #==========================================================================
+    - xlit|12357480&|;\_/-[].7|
+
+translator:
+  dictionary: ji_khoo_sni_tl
+  prism: sip_ngoo_im_tlpa
+  spelling_hints: 20
+  always_show_comments: true
+  initial_quality: 0.75
+  preedit_format:
+    #======================================================
+    # 【輸入編輯列】輸入順序：韻 → 調 → 聲
+    #======================================================
+    - xform/'/ /
+    #------------------------------------------------------
+    # 先轉調號鍵（含 7＝&／?），避免後續規則需匹配 ] [ 等特殊字元
+    #------------------------------------------------------
+    - xlit|;\_/-[].|一二三五七四八入|
+    - xform/7/促/   # 按鍵 7＝字典 &（不確定入聲 4/8）
+    - xform/&/促/   # 相容直接輸入 &
+    - xform/\?/？/
+    #======================================================
+    # 【舒聲韻偷懶打入聲】顯示：舒聲韻 + 四/八/促/？ → 促聲韻
+    # （查字在 algebra；此處只影響輸入框）
+    #======================================================
+    - xform/uainn(四|八|促|？)/uainnh$1/   # 閂
+    - xform/iaunn(四|八|促|？)/iauhnn$1/   # 嘄
+    - xform/iong(四|八|促|？)/iok$1/       # 恭
+    - xform/iang(四|八|促|？)/iak$1/       # 姜
+    - xform/uinn(四|八|促|？)/uinnh$1/     # 褌
+    - xform/iann(四|八|促|？)/iannh$1/     # 驚
+    - xform/ainn(四|八|促|？)/ainnh$1/     # 閒
+    - xform/uang(四|八|促|？)/uak$1/       # 光
+    - xform/iunn(四|八|促|？)/iunnh$1/     # 牛
+    - xform/ian(四|八|促|？)/iat$1/        # 堅
+    - xform/ong(四|八|促|？)/ok$1/         # 公
+    - xform/uai(四|八|促|？)/uaih$1/       # 乖
+    - xform/ing(四|八|促|？)/ik$1/         # 經
+    - xform/uan(四|八|促|？)/uat$1/        # 觀
+    - xform/iau(四|八|促|？)/iauh$1/       # 嬌
+    - xform/ang(四|八|促|？)/ak$1/         # 江
+    - xform/iam(四|八|促|？)/iap$1/        # 兼
+    - xform/ann(四|八|促|？)/annh$1/       # 監
+    - xform/enn(四|八|促|？)/ennh$1/       # 更
+    - xform/inn(四|八|促|？)/ihnn$1/       # 梔
+    - xform/un(四|八|促|？)/ut$1/          # 君
+    - xform/im(四|八|促|？)/ip$1/          # 金
+    - xform/ui(四|八|促|？)/uih$1/         # 規
+    - xform/an(四|八|促|？)/at$1/          # 干
+    - xform/oo(四|八|促|？)/ooh$1/         # 沽
+    - xform/ai(四|八|促|？)/aih$1/         # 皆
+    - xform/in(四|八|促|？)/it$1/          # 巾
+    - xform/am(四|八|促|？)/ap$1/          # 甘
+    - xform/ua(四|八|促|？)/uah$1/         # 瓜
+    - xform/au(四|八|促|？)/auh$1/         # 交
+    - xform/ia(四|八|促|？)/iah$1/         # 迦
+    - xform/ue(四|八|促|？)/ueh$1/         # 檜
+    - xform/iu(四|八|促|？)/iuh$1/         # 丩
+    - xform/io(四|八|促|？)/ioh$1/         # 茄
+    - xform/ng(四|八|促|？)/ngh$1/         # 鋼
+    - xform/om(四|八|促|？)/op$1/          # 箴
+    - xform/o(四|八|促|？)/oh$1/           # 高
+    - xform/u(四|八|促|？)/uh$1/           # 艍
+    - xform/a(四|八|促|？)/ah$1/           # 膠
+    - xform/i(四|八|促|？)/ih$1/           # 居
+    - xform/e(四|八|促|？)/eh$1/           # 伽
+    - xform/m(四|八|促|？)/mh$1/           # 姆
+    #------------------------------------------------------
+    # 聲母位置（調號漢字之後）之 ts/tsh
+    - xform/(一|二|三|五|七|四|八|入|促|？)tsh/$1c/
+    - xform/(一|二|三|五|七|四|八|入|促|？)ts/$1z/
+    #------------------------------------------------------
+    - xform/er(ng|k)/i$1/
+    - xform/er(n|t)/u$1/
+    - xform/ere/ue/
+    - xform/er/e/
+    - xform/er(ng|k)/i$1/
+    - xform/e(ng|k)/i$1/
+    - xform/ao/au/
+    - xform/ee/e/
+    - xform/ei/e/
+    - xform/ou/oo/
+    - xform/ur/u/
+    - xform/iek/ik/
+    #------------------------------------------------------
+    # 先轉【聲】（錨定在調名之後），避免 ng/m 被韻母規則誤吃
+    #------------------------------------------------------
+    - xform/(一|二|三|五|七|四|八|入|促|？)ph/$1頗/
+    - xform/(一|二|三|五|七|四|八|入|促|？)th/$1他/
+    - xform/(一|二|三|五|七|四|八|入|促|？)kh/$1去/
+    - xform/(一|二|三|五|七|四|八|入|促|？)ng/$1雅/
+    - xform/(一|二|三|五|七|四|八|入|促|？)p/$1邊/
+    - xform/(一|二|三|五|七|四|八|入|促|？)b/$1門/
+    - xform/(一|二|三|五|七|四|八|入|促|？)m/$1毛/
+    - xform/(一|二|三|五|七|四|八|入|促|？)t/$1地/
+    - xform/(一|二|三|五|七|四|八|入|促|？)n/$1耐/
+    - xform/(一|二|三|五|七|四|八|入|促|？)l/$1柳/
+    - xform/(一|二|三|五|七|四|八|入|促|？)k/$1求/
+    - xform/(一|二|三|五|七|四|八|入|促|？)g/$1語/
+    - xform/(一|二|三|五|七|四|八|入|促|？)z/$1曾/
+    - xform/(一|二|三|五|七|四|八|入|促|？)c/$1出/
+    - xform/(一|二|三|五|七|四|八|入|促|？)s/$1時/
+    - xform/(一|二|三|五|七|四|八|入|促|？)j/$1入/
+    - xform/(一|二|三|五|七|四|八|入|促|？)h/$1喜/
+    - xform/(一|二|三|五|七|四|八|入|促|？)q/$1英/
+    #======================================================
+    # 再轉【韻】（剩餘拉丁字母）
+    #======================================================
+    # 鼻化韻母前綴 N
+    - xform/Niauh?/嘄/
+    - xform/Nuaih?/閂/
+    - xform/Niah?/迦/
+    - xform/Niuh?/牛/
+    - xform/Nueh?/糜/
+    - xform/Nai/閒/
+    - xform/Nau/爻/
+    - xform/Nia/驚/
+    - xform/Nio/薑/
+    - xform/Noo/姑/
+    - xform/Nui/褌/
+    - xform/Nua/官/
+    - xform/Nah?/監/
+    - xform/Neh?/更/
+    - xform/Nih?/梔/
+    #------------------------------------------------------
+    # 鼻化韻母
+    #------------------------------------------------------
+    - xform/uaihnn/閂/
+    - xform/iahnn/迦/
+    - xform/iaunn/嘄/
+    - xform/iuhnn/牛/
+    - xform/uainn/閂/
+    - xform/ainn/閒/
+    - xform/ahnn/監/
+    - xform/ehnn/更/
+    - xform/iann/驚/
+    - xform/ionn/薑/
+    - xform/iunn/牛/
+    - xform/ohnn/扛/
+    - xform/oonn/姑/
+    - xform/uann/官/
+    - xform/uinn/褌/
+    - xform/ann/監/
+    - xform/enn/更/
+    - xform/inn/梔/
+    - xform/onn/姑/
+    #------------------------------------------------------
+    # 元音/複合韻母
+    #------------------------------------------------------
+    - xform/iang/姜/
+    - xform/iauh/嬌/
+    - xform/iong/恭/
+    - xform/uaih/乖/
+    - xform/uang/光/
+    - xform/aih/皆/
+    - xform/ang/江/
+    - xform/auh/交/
+    - xform/iah/迦/
+    - xform/iak/姜/
+    - xform/iam/兼/
+    - xform/ian/堅/
+    - xform/iap/兼/
+    - xform/iat/堅/
+    - xform/iau/嬌/
+    - xform/ing/經/
+    - xform/ioh/茄/
+    - xform/iok/恭/
+    - xform/ngh/鋼/
+    - xform/ong/公/
+    - xform/ooh/沽/
+    - xform/uah/瓜/
+    - xform/uai/乖/
+    - xform/uan/觀/
+    - xform/uat/觀/
+    - xform/ueh/檜/
+    - xform/uih/褌/
+    - xform/ah/膠/
+    - xform/ai/皆/
+    - xform/ak/江/
+    - xform/am/甘/
+    - xform/an/干/
+    - xform/ap/甘/
+    - xform/at/干/
+    - xform/au/交/
+    - xform/eh/伽/
+    - xform/ia/迦/
+    - xform/ih/居/
+    - xform/ik/經/
+    - xform/im/金/
+    - xform/in/巾/
+    - xform/io/茄/
+    - xform/ip/金/
+    - xform/it/巾/
+    - xform/iu/丩/
+    - xform/mh/姆/
+    - xform/ng/鋼/
+    - xform/oh/高/
+    - xform/ok/公/
+    - xform/om/箴/
+    - xform/oo/沽/
+    - xform/op/箴/
+    - xform/ua/瓜/
+    - xform/ue/檜/
+    - xform/uh/艍/
+    - xform/ui/規/
+    - xform/un/君/
+    - xform/ut/君/
+    - xform/a/膠/
+    - xform/ei/稽/
+    - xform/e/伽/
+    - xform/i/居/
+    - xform/m/姆/
+    - xform/o/高/
+    - xform/u/艍/
+    #------------------------------------------------------
+    # 校調（漸進輸入時韻尾尚未併入之殘段）
+    #------------------------------------------------------
+    - xform/膠雅/江/    # ang
+    - xform/膠居/皆/    # ai
+    - xform/膠艍/交/    # au
+    - xform/艍居/規/    # ui
+    #------------------------------------------------------
+    # 無調／萬用調／多音節：韻轉完後殘留的聲母
+    # 【註】不可只用 $ 錨定詞尾，否則中間音節之聲母不會轉換。
+    #------------------------------------------------------
+    - xform/ph/頗/
+    - xform/th/他/
+    - xform/kh/去/
+    - xform/ng/雅/
+    - xform/p/邊/
+    - xform/b/門/
+    - xform/m/毛/
+    - xform/t/地/
+    - xform/n/耐/
+    - xform/l/柳/
+    - xform/k/求/
+    - xform/g/語/
+    - xform/tsh/曾/
+    - xform/ts/出/
+    - xform/z/曾/
+    - xform/c/出/
+    - xform/s/時/
+    - xform/j/入/
+    - xform/h/喜/
+    - xform/q/英/
+    # 萬用調號／入聲不定調顯示
+    - xform/\?/？/
+
+  comment_format:
+    #==========================================================================
+    # 拼音系統校調
+    #==========================================================================
+    - xform/'/ /
+    - xform/\s+/ /
+    - xform/6/7/
+    #------------------------------------------------------
+    # 聲母位置之 ts/tsh
+    # - xform/(\d)tsh/$1c/
+    # - xform/(\d)ts/$1z/
+    #------------------------------------------------------
+    - xform/er(ng|k)/i$1/
+    - xform/er(n|t)/u$1/
+    - xform/ere/ue/
+    - xform/er/e/
+    - xform/er(ng|k)/i$1/
+    - xform/e(ng|k)/i$1/
+    - xform/ao/au/
+    - xform/ee/e/
+    - xform/ei/e/
+    - xform/ou/oo/
+    - xform/ur/u/
+    - xform/iek/ik/
+
+    #==========================================================================
+    # 切開【韻+調+聲】
+    # 例：un1k → 【》un》1》k】〔〉kun1〕
+    #     un1q → 【》un》1》q】〔〉un1〕（右欄去掉零聲母 q）
+    #==========================================================================
+    # - xform/\b([a-z]+)(\d)((?:ph|th|kh|ng|[pbmtnlkgzcjshq])?)\b/【》$1》$2》$3】〔〉$3$1$2〕/
+    - xform/\b([a-z]+)(\d)((?:tsh|ts|ph|th|kh|ng|[pbmtnlkgjshq])?)\b/【》$1》$2》$3】〔〉$3$1$2〕/
+    - xform/〔〉q/〔〉/
+    - xform/〔〉/〔/
+
+    #==========================================================================
+    # 左欄：韻母 → 十五音漢字
+    #==========================================================================
+    - xform/》uaihnn》/》閂》/
+    - xform/》iahnn》/》迦》/
+    - xform/》iaunn》/》嘄》/
+    - xform/》iuhnn》/》牛》/
+    - xform/》uainn》/》閂》/
+    - xform/》ainn》/》閒》/
+    - xform/》ahnn》/》監》/
+    - xform/》ehnn》/》更》/
+    - xform/》iann》/》驚》/
+    - xform/》ionn》/》薑》/
+    - xform/》iunn》/》牛》/
+    - xform/》ohnn》/》扛》/
+    - xform/》oonn》/》姑》/
+    - xform/》uann》/》官》/
+    - xform/》uinn》/》褌》/
+    - xform/》ann》/》監》/
+    - xform/》enn》/》更》/
+    - xform/》inn》/》梔》/
+    - xform/》onn》/》姑》/
+    #------------------------------------------------------
+    - xform/》iang》/》姜》/
+    - xform/》iauh》/》嬌》/
+    - xform/》iong》/》恭》/
+    - xform/》uaih》/》乖》/
+    - xform/》uang》/》光》/
+    - xform/》aih》/》皆》/
+    - xform/》ang》/》江》/
+    - xform/》auh》/》交》/
+    - xform/》iah》/》迦》/
+    - xform/》iak》/》姜》/
+    - xform/》iam》/》兼》/
+    - xform/》ian》/》堅》/
+    - xform/》iap》/》兼》/
+    - xform/》iat》/》堅》/
+    - xform/》iau》/》嬌》/
+    - xform/》ing》/》經》/
+    - xform/》ioh》/》茄》/
+    - xform/》iok》/》恭》/
+    - xform/》ngh》/》鋼》/
+    - xform/》ong》/》公》/
+    - xform/》ooh》/》沽》/
+    - xform/》uah》/》瓜》/
+    - xform/》uai》/》乖》/
+    - xform/》uan》/》觀》/
+    - xform/》uat》/》觀》/
+    - xform/》ueh》/》檜》/
+    - xform/》uih》/》褌》/
+    - xform/》ah》/》膠》/
+    - xform/》ai》/》皆》/
+    - xform/》ak》/》江》/
+    - xform/》am》/》甘》/
+    - xform/》an》/》干》/
+    - xform/》ap》/》甘》/
+    - xform/》at》/》干》/
+    - xform/》au》/》交》/
+    - xform/》eh》/》伽》/
+    - xform/》ia》/》迦》/
+    - xform/》ih》/》居》/
+    - xform/》ik》/》經》/
+    - xform/》im》/》金》/
+    - xform/》in》/》巾》/
+    - xform/》io》/》茄》/
+    - xform/》ip》/》金》/
+    - xform/》it》/》巾》/
+    - xform/》iu》/》丩》/
+    - xform/》mh》/》姆》/
+    - xform/》ng》/》鋼》/
+    - xform/》oh》/》高》/
+    - xform/》ok》/》公》/
+    - xform/》om》/》箴》/
+    - xform/》oo》/》沽》/
+    - xform/》op》/》箴》/
+    - xform/》ua》/》瓜》/
+    - xform/》ue》/》檜》/
+    - xform/》uh》/》艍》/
+    - xform/》ui》/》規》/
+    - xform/》un》/》君》/
+    - xform/》ut》/》君》/
+    - xform/》a》/》膠》/
+    - xform/》e》/》伽》/
+    - xform/》i》/》居》/
+    - xform/》m》/》姆》/
+    - xform/》o》/》高》/
+    - xform/》u》/》艍》/
+
+    #==========================================================================
+    # 左欄：調號
+    #==========================================================================
+    - xform/》1》/》一》/
+    - xform/》2》/》二》/
+    - xform/》3》/》三》/
+    - xform/》4》/》四》/
+    - xform/》5》/》五》/
+    - xform/》6》/》六》/
+    - xform/》7》/》七》/
+    - xform/》8》/》八》/
+    - xform/》0》/》入》/
+
+    #==========================================================================
+    # 左欄：聲母（在】之前）
+    #==========================================================================
+    - xform/》ph】/》頗】/
+    - xform/》th】/》他】/
+    - xform/》kh】/》去】/
+    - xform/》ng】/》雅】/
+    - xform/》p】/》邊】/
+    - xform/》b】/》門】/
+    - xform/》m】/》毛】/
+    - xform/》t】/》地】/
+    - xform/》n】/》耐】/
+    - xform/》l】/》柳】/
+    - xform/》k】/》求】/
+    - xform/》g】/》語】/
+    - xform/》tsh】/》曾】/
+    - xform/》ts】/》出】/
+    - xform/》s】/》時】/
+    - xform/》j】/》入】/
+    - xform/》h】/》喜】/
+    - xform/》q】/》英】/
+    # 無聲母尾（理論上不應出現；保險）
+    - xform/》】/》英】/
+
+    # 清除分隔標記 → 【君一求】
+    - xform/》//
+
+key_binder:
+  import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 使用【_】鍵，輸入【調號】：3 （低音調）
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore  }
+    #---------------------------------------------------
+    # 使用【-】鍵，輸入【調號】：7 （中音調）
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus  }
+    #---------------------------------------------------
+    # 使用 【.】鍵，輸入【調號】：0（輕聲及入聲調）
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
+    #---------------------------------------------------
+    # 使用【7】鍵，輸入【入聲調不確定】：字典 &（4 或 8）
+    # 【註】陽去調（字典 7）仍用【-】鍵，故【7】可專供 &
+    - { when: composing, accept: "7", send: "7" }
+    - { when: has_menu, accept: "7", send: "7" }
+    - { when: composing, accept: "Shift+7", send: "7" }
+    - { when: has_menu, accept: "Shift+7", send: "7" }
+    - { when: composing, accept: "&", send: "7" }
+    - { when: has_menu, accept: "&", send: "7" }
+    #---------------------------------------------------
+    # 翻頁
+    - { accept: "Control+p", send: Page_Up, when: composing }
+    - { accept: "Control+n", send: Page_Down, when: composing }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+    - { when: always, accept: "Control+m", toggle: dict_mode }
+
+editor:
+  bindings:
+    Return: commit_composition
+    Control+Return: commit_raw_input
+    Shift+Return: commit_script_text
+    # Control+Shift+Return 由 lua_processor@aux_commit 攔截
+
+menu:
+  alternative_select_labels: [ ①, ②, ③, ④, ⑤ ]
+  page_size: 5
+
+style:
+  horizontal: false
+
+recognizer:
+  import_preset: default
+  patterns:
+    punct: '`[^\s]$'
+    email: ^[a-z][-_.0-9a-z]*@.*$
+    uppercase: ^[A-Z][-_+.'0-9A-Za-z]*$
+    url: ^(www[.]|https?:|ftp:|mailto:).*$
+
+punctuator:
+  import_preset: keymap_piau_tian
