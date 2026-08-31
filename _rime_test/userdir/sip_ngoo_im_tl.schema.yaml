@@ -616,10 +616,14 @@ translator:
 
     #==========================================================================
     # 左欄：聲母（在】之前）
+    # 台羅 tsh = 出、ts = 曾。tsh／ts 須在 t／h 之前（最長優先）；
+    # ts 用 (?!h) 以免吃掉 tsh 前綴。
     #==========================================================================
     - xform/》ph】/》頗】/
     - xform/》th】/》他】/
     - xform/》kh】/》去】/
+    - xform/》tsh】/》出】/        # 台羅 tsh = 出
+    - xform/》ts(?!h)】/》曾】/    # 台羅 ts = 曾
     - xform/》ng】/》雅】/
     - xform/》p】/》邊】/
     - xform/》b】/》門】/
@@ -629,9 +633,7 @@ translator:
     - xform/》l】/》柳】/
     - xform/》k】/》求】/
     - xform/》g】/》語】/
-    - xform/》tsh】/》出】/   # 台羅 tsh = 出
-    - xform/》ts】/》曾】/    # 台羅 ts = 曾
-    - xform/》c】/》出】/     # TLPA 相容（algebra 可能 derive tsh→c）
+    - xform/》c】/》出】/          # TLPA 相容（algebra 可能 derive tsh→c）
     - xform/》z】/》曾】/
     - xform/》s】/》時】/
     - xform/》j】/》入】/

@@ -1654,7 +1654,30 @@ local function normalize_sni_syllable(s)
 	return s
 end
 
-local function render_huan_ciat_comment(comment_string)
+-- 由右欄台羅音節（如 tso5、tshong5）回填左欄十五音。
+-- sip_ngoo_im_tl 的 comment_format 曾把 ts／tsh 對調成「出／曾」；
+-- 右欄台羅是對的，故以 tlpa_converter 覆寫左欄。
+local function sni_from_tl_syllable(tl)
+	if not _tlpa_conv or type(tl) ~= "string" or tl == "" then
+		return nil
+	end
+	local syl = tl:match("^%s*([a-z]+%d)%s*$")
+	if not syl then
+		return nil
+	end
+	local ok, sni = pcall(function()
+		return _tlpa_conv.convert(syl, "十五音")
+	end)
+	if not ok or type(sni) ~= "string" or sni == "" then
+		return nil
+	end
+	if #utf8_chars(sni) ~= 3 then
+		return nil
+	end
+	return sni
+end
+
+local function render_huan_ciat_comment(comment_string, schema_id)
 	if type(comment_string) ~= "string" or comment_string == "" then
 		return comment_string
 	end
@@ -1669,6 +1692,17 @@ local function render_huan_ciat_comment(comment_string)
 	end
 	if #sni_items == 0 then
 		return comment_string
+	end
+
+	-- sip_ngoo_im_tl：左欄十五音改由右欄台羅回填，避免 ts／tsh → 曾／出對調
+	if (schema_id == "sip_ngoo_im_tl" or schema_id == "sip_ngoo_im_tlpa")
+		and #sni_items == #raw_right_items then
+		for i, right in ipairs(raw_right_items) do
+			local rebuilt = sni_from_tl_syllable(right)
+			if rebuilt then
+				sni_items[i] = rebuilt
+			end
+		end
 	end
 
 	local left = "【" .. table.concat(sni_items, "】 【") .. "】"
@@ -1691,7 +1725,7 @@ function reformat_comment_filter(input, env)
 	if is_sni_huan_ciat_schema(schema_id) then
 		for cand in input:iter() do
 			local old = cand.comment or ""
-			local new = render_huan_ciat_comment(old)
+			local new = render_huan_ciat_comment(old, schema_id)
 			if new ~= old then
 				-- ShadowCandidate 保留底層 Phrase/Sentence，用戶詞典才能調頻
 				local ok_sc, nc = pcall(function()

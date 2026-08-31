@@ -18,7 +18,7 @@ patch:
     - {schema: zu_im_bpm2}
     - {schema: cangjie5}
     - {schema: sip_ngoo_im_bpm2}
-    - {schema: sip_ngoo_im_tlpa}
+    - {schema: sip_ngoo_im_tl}
     - {schema: sip_ngoo_im_tps}
     - {schema: zu_im_tps}
     - {schema: ngsth_bun}
