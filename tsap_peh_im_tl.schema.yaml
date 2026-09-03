@@ -4,7 +4,7 @@
 schema:
   schema_id: tsap_peh_im_tl
   name: 十八音【台羅拼音】
-  version: "v0.0.2"
+  version: "v0.0.3"
   author:
     - 後學 CCC 整理
   description: |
@@ -72,7 +72,8 @@ engine:
     # - lua_filter@reformat_comment_filter  # 控制【候選清單】顯示之【漢字標音】
 
 speller:
-  alphabet: zyxwvutsrqponmlkjihgfedcba;-_\/[]
+  # 7／&：促聲調通配（陰入 4 或陽入 8）；陽去 7 仍用【-】
+  alphabet: zyxwvutsrqponmlkjihgfedcba;-_\/[]7&
   initials: zyxwvutsrqponmlkjihgfedcba
   # 僅用撇號分音節。空白若當 delimiter，連打 ban 會被切成 b + an，
   # 且 Space 無法用來選字。
@@ -113,8 +114,15 @@ speller:
     # - abbrev/^(ng).+$/$1/
     # - abbrev/^(tsh).+$/$1/
     # - abbrev/^(ts).+$/$1/
+    #--------------------------------------------------------------------------
+    # 【促聲調模糊】入聲韻尾 p/t/k/h + 調號 4 或 8 → 通配 &
+    # 例：俗 siok8、作 tsok4 皆衍生 siok&／tsok&，按鍵【7】一次找出兩調。
+    # （陽去調仍為字典 7 → 按鍵【-】，與【7】不衝突。）
+    #--------------------------------------------------------------------------
+    - derive/([ptkh])[48]$/$1&/
     # 將「調符鍵」轉成對映之「調號」
-    - 'xlit 1732548 ;-_\/[]'
+    # 1;  7-  3_  2\  5/  4[  8]  &7
+    - 'xlit 1732548& ;-_\/[]7'
     # 去掉聲調
     # - derive/[1-8]//
     # 無調號輸入
@@ -126,7 +134,8 @@ translator:
   spelling_hints: 5
   preedit_format:
     # - 'xlit ;-_\/[] 一七三二五四八'
-    - 'xlit ;-_\/[] ¹⁷³²⁵⁴⁸'
+    # 按鍵 7（促聲通配）在輸入框顯示為 &
+    - 'xlit ;-_\/[]7 ¹⁷³²⁵⁴⁸&'
     - xform/c/tsh/
     - xform/z/ts/
     - xform/q/Ø/
@@ -334,15 +343,15 @@ key_binder:
     - { when: has_menu, accept: minus, send: minus }
     - { when: composing, accept: period, send: period }
     - { when: has_menu, accept: period, send: period }
-    # #---------------------------------------------------
-    # # 使用【7】鍵，輸入【入聲調不確定】：字典 &（4 或 8）
-    # # 【註】陽去調（字典 7）仍用【-】鍵，故【7】可專供 &
-    # - { when: composing, accept: "7", send: "7" }
-    # - { when: has_menu, accept: "7", send: "7" }
-    # - { when: composing, accept: "Shift+7", send: "7" }
-    # - { when: has_menu, accept: "Shift+7", send: "7" }
-    # - { when: composing, accept: "&", send: "7" }
-    # - { when: has_menu, accept: "&", send: "7" }
+    #---------------------------------------------------
+    # 【7】／【&】：促聲調通配（4 或 8）。陽去仍用【-】。
+    #---------------------------------------------------
+    - { when: composing, accept: "7", send: "7" }
+    - { when: has_menu, accept: "7", send: "7" }
+    - { when: composing, accept: "Shift+7", send: "7" }
+    - { when: has_menu, accept: "Shift+7", send: "7" }
+    - { when: composing, accept: "&", send: "7" }
+    - { when: has_menu, accept: "&", send: "7" }
     # #---------------------------------------------------
     # # 翻頁
     # - { accept: "Control+p", send: Page_Up, when: composing }
