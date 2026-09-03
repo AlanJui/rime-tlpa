@@ -1,3 +1,7 @@
+# --- 小狼毫作業環境配置設定檔 ---
+config\default.custom.huan_ciat.yaml
+config\weasel.custom.yaml
+
 # --- 輸入方案共用模組 ---
 keymap_piau_tian.yaml
 
