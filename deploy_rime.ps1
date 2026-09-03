@@ -116,6 +116,9 @@ $files = @(
     "ji_khoo_sni_KamJiTian_bpm2.dict.yaml"
     "ji_khoo_sni_TaiGi_PehUeSu.dict.yaml"
 
+    # --- 十八音輸入法（改良式新十五音） ---
+    "tsap_peh_im_tl.schema.yaml"
+
     # --- 按鍵輔助工具 ---
     "kb_hong_im.schema.yaml"
     "kb_ipa.schema.yaml"
