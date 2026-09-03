@@ -4,7 +4,7 @@
 schema:
   schema_id: tsap_peh_im_tl
   name: 十八音【台羅拼音】
-  version: "v0.0.4"
+  version: "v0.0.5"
   author:
     - 後學 CCC 整理
   description: |
@@ -123,11 +123,69 @@ speller:
     #--------------------------------------------------------------------------
     - derive/([^ptkh])[17325]$/$1/
     #--------------------------------------------------------------------------
-    # 【促聲調模糊】入聲韻尾 p/t/k/h + 調號 4 或 8 → 通配 &
-    # 例：俗 siok8、作 tsok4 皆衍生 siok&／tsok&，按鍵【7】一次找出兩調。
-    # （陽去調仍為字典 7 → 按鍵【-】，與【7】不衝突。）
+    # 【舒聲韻偷懶打入聲】字典為促聲韻（如 put4），允許輸入對應舒聲韻＋入聲調
+    # （pun[ ／ pun7）。最長韻母優先。必須在「4/8 → &」與 xlit 之前。
     #--------------------------------------------------------------------------
-    - derive/([ptkh])[48]$/$1&/
+    # 鼻化／複合促聲 → 舒聲
+    - derive/uainnh([48])/uainn$1/   # 閂
+    - derive/uaihnn([48])/uainn$1/
+    - derive/iaunnh([48])/iaunn$1/   # 嘄
+    - derive/iauhnn([48])/iaunn$1/
+    - derive/iannh([48])/iann$1/     # 驚
+    - derive/iunnh([48])/iunn$1/     # 牛
+    - derive/ainnh([48])/ainn$1/     # 閒
+    - derive/uinnh([48])/uinn$1/     # 褌
+    - derive/aunnh([48])/aunn$1/     # 爻
+    - derive/auhnn([48])/aunn$1/
+    - derive/ionnh([48])/ionn$1/     # 薑
+    - derive/uannh([48])/uann$1/     # 官
+    - derive/annh([48])/ann$1/       # 監
+    - derive/ahnn([48])/ann$1/
+    - derive/ennh([48])/enn$1/       # 更
+    - derive/ehnn([48])/enn$1/
+    - derive/innh([48])/inn$1/       # 梔
+    - derive/ihnn([48])/inn$1/
+    - derive/onnh([48])/onn$1/       # 姑／扛
+    # 塞音／喉塞尾
+    - derive/uaih([48])/uai$1/       # 乖
+    - derive/iauh([48])/iau$1/       # 嬌
+    - derive/iok([48])/iong$1/       # 恭
+    - derive/iak([48])/iang$1/       # 姜
+    - derive/iat([48])/ian$1/        # 堅
+    - derive/iap([48])/iam$1/        # 兼
+    - derive/uat([48])/uan$1/        # 觀
+    - derive/uak([48])/uang$1/       # 光（字典 uak，非 uangh）
+    - derive/auh([48])/au$1/         # 交
+    - derive/iah([48])/ia$1/         # 迦
+    - derive/uah([48])/ua$1/         # 瓜
+    - derive/ueh([48])/ue$1/         # 檜／糜
+    - derive/uih([48])/ui$1/         # 規
+    - derive/ioh([48])/io$1/         # 茄
+    - derive/ooh([48])/oo$1/         # 沽
+    - derive/eeh([48])/ee$1/         # 嘉
+    - derive/aih([48])/ai$1/         # 皆
+    - derive/iuh([48])/iu$1/         # 丩
+    - derive/ngh([48])/ng$1/         # 鋼
+    - derive/ok([48])/ong$1/         # 公
+    - derive/ak([48])/ang$1/         # 江
+    - derive/ik([48])/ing$1/         # 經
+    - derive/ut([48])/un$1/          # 君
+    - derive/ip([48])/im$1/          # 金
+    - derive/it([48])/in$1/          # 巾
+    - derive/ap([48])/am$1/          # 甘
+    - derive/at([48])/an$1/          # 干
+    - derive/op([48])/om$1/          # 箴
+    - derive/oh([48])/o$1/           # 高
+    - derive/uh([48])/u$1/           # 艍
+    - derive/ah([48])/a$1/           # 膠
+    - derive/ih([48])/i$1/           # 居
+    - derive/eh([48])/e$1/           # 伽／稽
+    - derive/mh([48])/m$1/           # 姆
+    #--------------------------------------------------------------------------
+    # 【促聲調模糊】入聲調 4 或 8 → 通配 &（含上列「舒聲韻＋入聲調」衍生碼）
+    # 例：俗 siok8、作 tsok4、不 put4／pun4 皆可打 7 得 &。
+    #--------------------------------------------------------------------------
+    - derive/[48]$/&/
     # 將「調符鍵」轉成對映之「調號」
     # 1;  7-  3_  2\  5/  4[  8]  &7
     - 'xlit 1732548& ;-_\/[]7'
@@ -148,6 +206,57 @@ translator:
     - xform/c/tsh/
     - xform/z/ts/
     - xform/q/Ø/
+    #--------------------------------------------------------------------------
+    # 【舒聲韻偷懶打入聲】顯示：舒聲韻 + ⁴／⁸／& → 促聲韻
+    # 例：pun[ → put⁴；pun7 → put&。最長韻母優先。
+    #--------------------------------------------------------------------------
+    - xform/uainn(⁴|⁸|&)/uainnh$1/   # 閂
+    - xform/iaunn(⁴|⁸|&)/iaunnh$1/   # 嘄
+    - xform/iong(⁴|⁸|&)/iok$1/       # 恭
+    - xform/iang(⁴|⁸|&)/iak$1/       # 姜
+    - xform/uang(⁴|⁸|&)/uak$1/       # 光
+    - xform/uinn(⁴|⁸|&)/uinnh$1/     # 褌
+    - xform/iann(⁴|⁸|&)/iannh$1/     # 驚
+    - xform/ainn(⁴|⁸|&)/ainnh$1/     # 閒
+    - xform/iunn(⁴|⁸|&)/iunnh$1/     # 牛
+    - xform/uann(⁴|⁸|&)/uannh$1/     # 官
+    - xform/ionn(⁴|⁸|&)/ionnh$1/     # 薑
+    - xform/aunn(⁴|⁸|&)/aunnh$1/     # 爻
+    - xform/ian(⁴|⁸|&)/iat$1/        # 堅
+    - xform/ong(⁴|⁸|&)/ok$1/         # 公
+    - xform/uai(⁴|⁸|&)/uaih$1/       # 乖
+    - xform/ing(⁴|⁸|&)/ik$1/         # 經
+    - xform/uan(⁴|⁸|&)/uat$1/        # 觀
+    - xform/iau(⁴|⁸|&)/iauh$1/       # 嬌
+    - xform/ang(⁴|⁸|&)/ak$1/         # 江
+    - xform/iam(⁴|⁸|&)/iap$1/        # 兼
+    - xform/ann(⁴|⁸|&)/annh$1/       # 監
+    - xform/enn(⁴|⁸|&)/ennh$1/       # 更
+    - xform/inn(⁴|⁸|&)/innh$1/       # 梔
+    - xform/onn(⁴|⁸|&)/onnh$1/       # 姑／扛
+    - xform/un(⁴|⁸|&)/ut$1/          # 君
+    - xform/im(⁴|⁸|&)/ip$1/          # 金
+    - xform/ui(⁴|⁸|&)/uih$1/         # 規
+    - xform/an(⁴|⁸|&)/at$1/          # 干
+    - xform/oo(⁴|⁸|&)/ooh$1/         # 沽
+    - xform/ee(⁴|⁸|&)/eeh$1/         # 嘉
+    - xform/ai(⁴|⁸|&)/aih$1/         # 皆
+    - xform/in(⁴|⁸|&)/it$1/          # 巾
+    - xform/am(⁴|⁸|&)/ap$1/          # 甘
+    - xform/ua(⁴|⁸|&)/uah$1/         # 瓜
+    - xform/au(⁴|⁸|&)/auh$1/         # 交
+    - xform/ia(⁴|⁸|&)/iah$1/         # 迦
+    - xform/ue(⁴|⁸|&)/ueh$1/         # 檜／糜
+    - xform/iu(⁴|⁸|&)/iuh$1/         # 丩
+    - xform/io(⁴|⁸|&)/ioh$1/         # 茄
+    - xform/ng(⁴|⁸|&)/ngh$1/         # 鋼
+    - xform/om(⁴|⁸|&)/op$1/          # 箴
+    - xform/o(⁴|⁸|&)/oh$1/           # 高
+    - xform/u(⁴|⁸|&)/uh$1/           # 艍
+    - xform/a(⁴|⁸|&)/ah$1/           # 膠
+    - xform/i(⁴|⁸|&)/ih$1/           # 居
+    - xform/e(⁴|⁸|&)/eh$1/           # 伽／稽
+    - xform/m(⁴|⁸|&)/mh$1/           # 姆
   comment_format: &tsap_peh_im_comment_format
     #==========================================================================
     # 為【侯選清單】之【漢字標音】設定【音節】格式 =【聲母】+【韻母】+【聲調】
