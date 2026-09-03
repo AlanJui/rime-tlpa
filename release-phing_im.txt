@@ -48,3 +48,6 @@ lib_comment_bpm2.yaml
 lib_comment_poj.yaml
 lib_comment_tl.yaml
 lib_comment_tlpa.yaml
+
+# --- 十八音輸入法 ---
+tsap_peh_im_tl.schema.yaml
