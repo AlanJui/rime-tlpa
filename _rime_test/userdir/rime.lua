@@ -39,6 +39,7 @@ local siann_bu_dict = {
 	["入"] = "j",
 	["求"] = "k",
 	["去"] = "kh",
+	["氣"] = "kh", -- 十八音用「氣」而非「去」
 	["語"] = "g",
 	["雅"] = "ng",
 	["喜"] = "h",
@@ -893,6 +894,92 @@ local function codes_from_comment_brackets(comment)
 	return codes
 end
 
+-- 字典編碼是否為台羅／TLPA 數值調音節（如 tshong5、siann2）
+local function looks_like_tl_numeric_syllable(s)
+	return type(s) == "string" and s:match("^[a-z]+[1-8]$") ~= nil
+end
+
+-- 從候選之 translator 字典編碼取出台羅數值調音節。
+-- 若混入非拼音碼（倉頡、漢語拼音反查等），整批放棄，改由 comment 解析。
+local function collect_entry_tl_codes(env, cand_list)
+	local codes = {}
+	local memory = env.aux_commit_memory
+	if not memory or type(cand_list) ~= "table" then
+		return codes
+	end
+	for _, cand in ipairs(cand_list) do
+		local genuine = cand
+		pcall(function()
+			genuine = cand:get_genuine() or cand
+		end)
+		local ok_entry, entry = pcall(function()
+			return genuine.entry
+		end)
+		if not ok_entry or not entry then
+			return {}
+		end
+		local code_str = dict_entry_code_str(memory, entry)
+		if type(code_str) ~= "string" or code_str == "" then
+			return {}
+		end
+		for syl in code_str:gmatch("%S+") do
+			if not looks_like_tl_numeric_syllable(syl) then
+				return {}
+			end
+			table.insert(codes, syl)
+		end
+	end
+	return codes
+end
+
+-- tsap_peh_im_tl 候選註解：台羅調符 + 可選之 [聲+韻+調]
+-- 單字例：tshông [出公五]；詞彙可能僅有調符：góa lâng
+local function parse_tsap_peh_im_tl_comment(comment)
+	local result = {}
+	if type(comment) ~= "string" or comment == "" then
+		return result
+	end
+
+	-- 去掉十八音切音括號，剩餘為台羅調符（或仍帶數值調之羅馬字）
+	local roman = comment:gsub("%[.-%]", " ")
+	roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+	if roman ~= "" then
+		for syl in roman:gmatch("%S+") do
+			local tlpa
+			if looks_like_tl_numeric_syllable(syl) then
+				tlpa = syl
+			else
+				local ok, converted = pcall(tl_diac_to_tlpa, syl)
+				if ok and type(converted) == "string" then
+					tlpa = converted
+				end
+			end
+			if type(tlpa) == "string" and tlpa ~= "" then
+				-- comment_format 將更韻 enn 寫成 eenn 以便標調
+				tlpa = tlpa:gsub("eenn", "enn")
+				table.insert(result, tlpa)
+			end
+		end
+		if #result > 0 then
+			return result
+		end
+	end
+
+	-- 後備：從 [聲+韻+調] 還原為 TLPA（十八音「氣」已列入 siann_bu_dict）
+	for sni in comment:gmatch("%[(.-)%]") do
+		local chars = utf8_chars(sni)
+		if #chars == 3 then
+			local as_is = chars[1] .. chars[2] .. chars[3]
+			local reordered = chars[2] .. chars[3] .. chars[1]
+			local tlpa = convert_sni_to_tlpa(reordered) or convert_sni_to_tlpa(as_is)
+			if tlpa then
+				table.insert(result, tlpa)
+			end
+		end
+	end
+	return result
+end
+
 local function memorize_aux_candidates(env, cand_list)
 	local memory = env.aux_commit_memory
 	if not memory then
@@ -1090,6 +1177,24 @@ local function aux_commit_func(key, env)
 			for v in gen_comm:gmatch("〔(.-)〕") do
 				table.insert(source_list, v)
 				log.info("[aux_commit] sip_ngoo_im_tl raw=[" .. v .. "]")
+			end
+
+		elseif schema_id == "tsap_peh_im_tl" then
+			-- 十八音【台羅拼音】：字典為台羅數值調（ji_khoo_tl）。
+			-- 候選註解為「台羅調符 + [聲韻調]」（例：tshông [出公五]），
+			-- 與其他方案的 【】〔〕 結構不同，須獨立解析。
+			is_tlpa = true
+			local from_entry = collect_entry_tl_codes(env, cand_list)
+			if #from_entry > 0 then
+				for _, v in ipairs(from_entry) do
+					table.insert(source_list, v)
+					log.info("[aux_commit] tsap_peh_im_tl entry=[" .. v .. "]")
+				end
+			else
+				for _, v in ipairs(parse_tsap_peh_im_tl_comment(gen_comm)) do
+					table.insert(source_list, v)
+					log.info("[aux_commit] tsap_peh_im_tl comment=[" .. v .. "]")
+				end
 			end
 
 		elseif is_sni_huan_ciat_schema(schema_id) then

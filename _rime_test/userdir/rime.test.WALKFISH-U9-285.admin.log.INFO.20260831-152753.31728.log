@@ -1,5 +1,0 @@
-Log file created at: 2026/08/31 15:27:53
-Running on machine: WALKFISH-U9-285
-Running duration (h:mm:ss): 0:00:07
-Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
-E20260831 15:27:53.425951 30920 level_db.cc:259] Error opening db 'ji_khoo_sni_tl': IO error: C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_sni_tl.userdb/MANIFEST-000023: 檔案名稱、目錄名稱或磁碟區標籤語法錯誤。

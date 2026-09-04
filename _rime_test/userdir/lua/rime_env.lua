@@ -18,6 +18,8 @@ local config = {
         sip_ngoo_im_tl = "key_in_piau_im_tl", -- 台羅拼音（現行 schema_id）
         sip_ngoo_im_tps = "key_in_piau_im_tps", -- 方音符號
         sip_ngoo_im_bpm2 = "key_in_piau_im_bpm2", -- 台語注音二式
+        -- 十八音輸入法（改良式新十五音，台羅拼音）
+        tsap_peh_im_tl = "key_in_piau_im_tl", -- 台羅拼音
         -- 注音輸入法類型
         zu_im_bpm2 = "key_in_piau_im_bpm2", -- 台語注音二式
         zu_im_tlpa = "key_in_piau_im_tlpa_zu_im", -- 台語音標注音
