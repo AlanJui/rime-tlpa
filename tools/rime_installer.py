@@ -9,7 +9,8 @@ RIME TLPA 專用安裝程式（圖形介面版）
   2. 使用者【下載 (Downloads)】資料夾
   3. 目前工作目錄
 若找不到，提示使用者先行下載，或自行以檔案對話框指定。
-各輸入方案類別使用的 default.custom*.yaml（輸入法選單設定）隨 exe 內嵌提供。
+各輸入方案類別使用的 default.custom*.yaml（輸入法選單設定）
+與 weasel.custom.yaml（小狼毫外觀／按鍵）隨 exe 內嵌提供。
 """
 
 import queue
@@ -140,21 +141,43 @@ class RimeTLPAInstaller:
         self._log(f"📦 輸入方案類別: {PACKAGE_LABELS[package_kind]}")
         return True
 
-    def backup_default_custom(self):
-        """備份現有的 default.custom.yaml"""
-        default_custom = self.rime_dir / "default.custom.yaml"
+    def backup_user_config(self):
+        """備份現有的 default.custom.yaml 與 weasel.custom.yaml"""
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        backed_up = False
+        for name in ("default.custom.yaml", "weasel.custom.yaml"):
+            src = self.rime_dir / name
+            if src.exists():
+                backup_name = f"{name}.bak_{timestamp}"
+                shutil.copy2(src, self.rime_dir / backup_name)
+                self._log(f"📋 已備份 {name} 為: {backup_name}")
+                backed_up = True
+            else:
+                self._log(f"📋 {name} 不存在，無需備份")
+        return backed_up
 
-        if default_custom.exists():
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            backup_name = f"default.custom.yaml.bak_{timestamp}"
-            backup_path = self.rime_dir / backup_name
+    @staticmethod
+    def remap_zip_entry(rel_name: str) -> str:
+        """將 zip 內 config\\ 設定檔對應到小狼毫使用者目錄根路徑。
 
-            shutil.copy2(default_custom, backup_path)
-            self._log(f"📋 已備份 default.custom.yaml 為: {backup_name}")
-            return True
-        else:
-            self._log("📋 default.custom.yaml 不存在，無需備份")
-            return False
+        對應規則：
+          config/weasel.custom.yaml              → weasel.custom.yaml
+          config/default.custom.yaml             → default.custom.yaml
+          config/default.custom.huan_ciat.yaml   → default.custom.yaml
+          config/default.custom.phing_im.yaml    → default.custom.yaml
+          config/default.custom.zu_im.yaml       → default.custom.yaml
+        其餘路徑（如 lua/）維持原相對路徑。
+        """
+        normalized = rel_name.replace("\\", "/").lstrip("/")
+        parts = normalized.split("/")
+        if len(parts) >= 2 and parts[0] == "config":
+            basename = parts[-1]
+            if basename == "weasel.custom.yaml":
+                return "weasel.custom.yaml"
+            if basename.startswith("default.custom") and basename.endswith(".yaml"):
+                return "default.custom.yaml"
+            return basename
+        return normalized
 
     def extract_scheme_zip(self):
         """將輸入方案 zip 解壓縮至 RIME 配置目錄（保留 lua/ 等子目錄結構）。"""
@@ -169,8 +192,8 @@ class RimeTLPAInstaller:
                 if info.is_dir():
                     continue
 
-                # 將壓縮檔內路徑（可能含 / 或 \）正規化為相對路徑
-                rel_name = info.filename.replace("\\", "/")
+                # 將壓縮檔內路徑（可能含 / 或 \）正規化，並把 config\\ 設定檔攤平到使用者目錄根
+                rel_name = self.remap_zip_entry(info.filename)
                 dst_file = self.rime_dir / rel_name
 
                 try:
@@ -184,7 +207,10 @@ class RimeTLPAInstaller:
                     dst_file.parent.mkdir(parents=True, exist_ok=True)
                     with zf.open(info) as src, open(dst_file, "wb") as out:
                         shutil.copyfileobj(src, out)
-                    self._log(f"   ✅ 已安裝: {rel_name}")
+                    if rel_name.replace("\\", "/") != info.filename.replace("\\", "/"):
+                        self._log(f"   ✅ 已安裝: {info.filename} → {rel_name}")
+                    else:
+                        self._log(f"   ✅ 已安裝: {rel_name}")
                     copied_count += 1
                 except Exception as e:
                     self._log(f"   ❌ 安裝失敗: {rel_name} - {e}")
@@ -216,6 +242,17 @@ class RimeTLPAInstaller:
             return True
 
         self._log(f"⚠️  找不到內嵌的 {config_name}")
+        return False
+
+    def copy_weasel_custom(self):
+        """複製內嵌之小狼毫外觀／按鍵設定至使用者目錄根路徑。"""
+        config_src = self.bundle_dir / "config" / "weasel.custom.yaml"
+        if config_src.exists():
+            shutil.copy2(config_src, self.rime_dir / "weasel.custom.yaml")
+            self._log("✅ 已複製 weasel.custom.yaml (小狼毫作業環境設定)")
+            return True
+
+        self._log("⚠️  找不到內嵌的 weasel.custom.yaml")
         return False
 
     def deploy_rime(self):
@@ -303,13 +340,14 @@ class RimeTLPAInstaller:
             return False
 
         # 3. 備份現有配置
-        self.backup_default_custom()
+        self.backup_user_config()
 
-        # 4. 解壓並安裝輸入方案檔案
+        # 4. 解壓並安裝輸入方案檔案（config\\ 設定檔攤平到使用者目錄根）
         copied_count, failed_files = self.extract_scheme_zip()
 
-        # 5. 複製新的 default.custom.yaml（內嵌之輸入法選單設定）
+        # 5. 複製新的 default.custom.yaml / weasel.custom.yaml（內嵌設定覆蓋 zip）
         self.copy_default_custom()
+        self.copy_weasel_custom()
 
         # 6. 嘗試重新部署
         self.deploy_rime()

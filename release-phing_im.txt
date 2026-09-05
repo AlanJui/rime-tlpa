@@ -1,14 +1,39 @@
+# --- 小狼毫作業環境配置設定檔 ---
+config\default.custom.phing_im.yaml
+config\weasel.custom.yaml
+
 # --- 輸入方案共用模組 ---
 keymap_piau_tian.yaml
 
 # --- 輸入方案插件函式庫 ---
 rime.lua
+lua\rime_env.lua
 lua\tlpa_converter.lua
 lua\bpm2_converter.lua
 
-# --- 輸入方案用字典 ---
-ji_khoo_bpm2.dict.yaml
+# --- 輸入方案用字典（僅含 dictionary / import_tables 實際引用者）---
+
+# --- 【台羅拼音】輸入方案用字典 ---
 ji_khoo_tl.dict.yaml
+ji_khoo_tl_BanLam_TanJi.dict.yaml
+ji_khoo_tl_CIN_IM.dict.yaml
+ji_khoo_tl_HanJi.dict.yaml
+ji_khoo_tl_KamJiTian.dict.yaml
+ji_khoo_tl_ziann_ji.dict.yaml
+
+# --- 【台羅拼音】輸入方案用辭庫 ---
+ji_khoo_tl_su_lui.dict.yaml
+
+# --- 【台語注音二式】輸入方案用字典 ---
+ji_khoo_bpm2.dict.yaml
+ji_khoo_bpm2_BanLam_TanJi.dict.yaml
+ji_khoo_bpm2_CIN_IM.dict.yaml
+ji_khoo_bpm2_HanJi.dict.yaml
+ji_khoo_bpm2_KamJiTian.dict.yaml
+ji_khoo_bpm2_ziann_ji.dict.yaml
+
+# --- 【台語注音二式】輸入方案用辭庫 ---
+ji_khoo_bpm2_su_lui.dict.yaml
 
 # --- 按鍵輔助工具 ---
 kb_hong_im.schema.yaml
@@ -27,3 +52,6 @@ lib_comment_bpm2.yaml
 lib_comment_poj.yaml
 lib_comment_tl.yaml
 lib_comment_tlpa.yaml
+
+# --- 十八音輸入法 ---
+tsap_peh_im_tl.schema.yaml

@@ -53,12 +53,31 @@ $files = @(
 
     # --- 輸入方案插件函式庫 ---
     "rime.lua"
+    "lua\rime_env.lua"
     "lua\tlpa_converter.lua"
     "lua\bpm2_converter.lua"
 
-    # --- 輸入方案用字典 ---
-    "ji_khoo_bpm2.dict.yaml"
+    # --- 【台羅拼音】輸入方案用字典 ---
     "ji_khoo_tl.dict.yaml"
+    "ji_khoo_tl_BanLam_TanJi.dict.yaml"
+    "ji_khoo_tl_CIN_IM.dict.yaml"
+    "ji_khoo_tl_HanJi.dict.yaml"
+    "ji_khoo_tl_KamJiTian.dict.yaml"
+    "ji_khoo_tl_ziann_ji.dict.yaml"
+
+    # --- 【台羅拼音】輸入方案用辭庫 ---
+    "ji_khoo_tl_su_lui.dict.yaml"
+
+    # --- 【台語注音二式】輸入方案用字典 ---
+    "ji_khoo_bpm2.dict.yaml"
+    "ji_khoo_bpm2_BanLam_TanJi.dict.yaml"
+    "ji_khoo_bpm2_CIN_IM.dict.yaml"
+    "ji_khoo_bpm2_HanJi.dict.yaml"
+    "ji_khoo_bpm2_KamJiTian.dict.yaml"
+    "ji_khoo_bpm2_ziann_ji.dict.yaml"
+
+    # --- 【台語注音二式】輸入方案用辭庫 ---
+    "ji_khoo_bpm2_su_lui.dict.yaml"
 
     # --- 拼音輸入法 ---
     "phing_im_bp.schema.yaml"
@@ -83,8 +102,22 @@ $files = @(
     # --- 反切輸入法 ---
     "huan_ciat_tlpa.schema.yaml"
     "huan_ciat_tps.schema.yaml"
+    "huan_ciat_tps.custom.yaml"
     # -----------------
     "lib_comment_sni_and_tps.yaml"
+
+    # --- 十五音輸入法 ---
+    "sip_ngoo_im_tl.schema.yaml"
+    "sip_ngoo_im_tps.schema.yaml"
+    "sip_ngoo_im_bpm2.schema.yaml"
+    "ji_khoo_sni_tl.dict.yaml"
+    "ji_khoo_sni_KamJiTian_tl.dict.yaml"
+    "ji_khoo_sni_bpm2.dict.yaml"
+    "ji_khoo_sni_KamJiTian_bpm2.dict.yaml"
+    "ji_khoo_sni_TaiGi_PehUeSu.dict.yaml"
+
+    # --- 十八音輸入法（改良式新十五音） ---
+    "tsap_peh_im_tl.schema.yaml"
 
     # --- 按鍵輔助工具 ---
     "kb_hong_im.schema.yaml"
