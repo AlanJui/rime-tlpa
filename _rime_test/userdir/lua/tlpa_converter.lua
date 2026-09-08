@@ -153,8 +153,9 @@ local FINALS = {
     -- 更韻（鼻化）
     enn    = {sni="更", tps="ㆥ",     ipa="\201\155\204\131" }, -- ɛ̃（ɛ + combining tilde）
     ehnn   = {sni="更", tps="ㆥㆷ",   ipa="\201\155\204\131\202\148" }, -- ɛ̃ʔ
-    -- 褌韻（鼻化）
+    -- 褌韻（鼻化）：舒 uinn；促 uinnh
     uinn   = {sni="褌", tps="ㄨㆪ",   ipa="ui\204\131" }, -- uĩ
+    uinnh  = {sni="褌", tps="ㄨㆪㆷ", ipa="ui\204\131\202\148" }, -- uĩʔ
     -- 茄韻
     io     = {sni="茄", tps="ㄧㄜ",   ipa="io"        },
     ioh    = {sni="茄", tps="ㄧㄜㆷ", ipa="io\202\148" }, -- ioʔ
