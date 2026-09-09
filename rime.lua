@@ -820,7 +820,7 @@ local TLPA_TO_BP_TIAU = {
 
 ------------------------------------------------------------------------------------------
 -- aux_commit：切換輸入方案【輸出】之【漢字標音】格式
--- Space → 漢字
+-- Space → 漢字（反查時另將註解中的台羅寫入主方案用戶詞典）
 -- Enter → 漢字標音（格式依選項而定）
 -- Ctrl+Shift+Enter → 漢字附帶標音（如：啥物〔siann2-mih4〕；320.md §五、輸出漢字附帶標音）
 ------------------------------------------------------------------------------------------
@@ -899,6 +899,41 @@ local function looks_like_tl_numeric_syllable(s)
 	return type(s) == "string" and s:match("^[a-z]+[1-8]$") ~= nil
 end
 
+-- 將組字區／註解裡的多音節字串切開。
+-- 連續輸入用 delimiter "'"，上屏標音須改用【音節連接符】（im_zat_*），
+-- 故此處同時切開空白、ASCII 撇號、Unicode 撇號、連字號。
+local function split_syllable_tokens(s)
+	local parts = {}
+	if type(s) ~= "string" or s == "" then
+		return parts
+	end
+	s = s:gsub("\226\128\153", "'") -- U+2019 ’
+	s = s:gsub("\226\128\152", "'") -- U+2018 ‘
+	s = s:gsub("\202\188", "'")     -- U+02BC ʼ
+	for tok in s:gmatch("[^%s'%-]+") do
+		table.insert(parts, tok)
+	end
+	return parts
+end
+
+local function flatten_syllable_list(list)
+	local flat = {}
+	if type(list) ~= "table" then
+		return flat
+	end
+	for _, item in ipairs(list) do
+		local parts = split_syllable_tokens(item)
+		if #parts > 0 then
+			for _, p in ipairs(parts) do
+				table.insert(flat, p)
+			end
+		elseif type(item) == "string" and item ~= "" then
+			table.insert(flat, item)
+		end
+	end
+	return flat
+end
+
 -- 從候選之 translator 字典編碼取出台羅數值調音節。
 -- 若混入非拼音碼（倉頡、漢語拼音反查等），整批放棄，改由 comment 解析。
 local function collect_entry_tl_codes(env, cand_list)
@@ -922,7 +957,7 @@ local function collect_entry_tl_codes(env, cand_list)
 		if type(code_str) ~= "string" or code_str == "" then
 			return {}
 		end
-		for syl in code_str:gmatch("%S+") do
+		for _, syl in ipairs(split_syllable_tokens(code_str)) do
 			if not looks_like_tl_numeric_syllable(syl) then
 				return {}
 			end
@@ -944,7 +979,7 @@ local function parse_tsap_peh_im_tl_comment(comment)
 	local roman = comment:gsub("%[.-%]", " ")
 	roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
 	if roman ~= "" then
-		for syl in roman:gmatch("%S+") do
+		for _, syl in ipairs(split_syllable_tokens(roman)) do
 			local tlpa
 			if looks_like_tl_numeric_syllable(syl) then
 				tlpa = syl
@@ -978,6 +1013,176 @@ local function parse_tsap_peh_im_tl_comment(comment)
 		end
 	end
 	return result
+end
+
+-- 反查上屏（漢語拼音 `／倉頡 C）不會經過主方案 translator，
+-- Space／GHJKL 只把倉頡或漢語拼音寫進反查 userdb。
+-- 此處從候選註解取出台羅數值調，寫入 ji_khoo_tl 用戶詞典；
+-- 連續反查上屏再組成詞（變＋卦 → 變卦／pian3 kua3）。
+local REV_LOOKUP_SELECT_INDEX = { g = 0, h = 1, j = 2, k = 3, l = 4 }
+local REV_LOOKUP_BUF_MAX = 4
+
+local function is_reverse_lookup_composing(ctx)
+	local input = ctx.input or ""
+	if type(input) == "string" and input:match("^[`C]") then
+		return true
+	end
+	local comp = ctx.composition
+	if not comp or comp:empty() then
+		return false
+	end
+	local ok, segs = pcall(function()
+		return comp:toSegmentation():get_segments()
+	end)
+	if ok and type(segs) == "table" then
+		for _, seg in ipairs(segs) do
+			local tagged = false
+			pcall(function()
+				tagged = seg:has_tag("reverse_lookup") or seg:has_tag("cangjie5_lookup")
+			end)
+			if tagged then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+local function get_page_size(env)
+	local n = 5
+	pcall(function()
+		n = env.engine.schema.config:get_int("menu/page_size")
+	end)
+	if type(n) ~= "number" or n < 1 then
+		n = 5
+	end
+	return n
+end
+
+local function get_reverse_lookup_commit_candidate(env, ctx, r)
+	local comp = ctx.composition
+	if not comp or comp:empty() then
+		return nil
+	end
+	local seg = comp:back()
+	if not seg then
+		return nil
+	end
+	local idx = nil
+	local sel = REV_LOOKUP_SELECT_INDEX[r]
+	if r == "space" then
+		idx = seg.selected_index
+	elseif sel ~= nil then
+		local page_size = get_page_size(env)
+		local selected = seg.selected_index or 0
+		local page_start = math.floor(selected / page_size) * page_size
+		idx = page_start + sel
+	else
+		return nil
+	end
+	if type(idx) ~= "number" or idx < 0 then
+		return nil
+	end
+	local cand = nil
+	pcall(function() cand = seg:get_candidate_at(idx) end)
+	if not cand and seg.menu then
+		pcall(function() cand = seg.menu:get_candidate_at(idx) end)
+	end
+	return cand
+end
+
+local function candidate_comment(cand)
+	if not cand then
+		return ""
+	end
+	local cm = cand.comment or ""
+	if cm == "" then
+		pcall(function()
+			local g = cand:get_genuine()
+			if g then
+				cm = g.comment or ""
+			end
+		end)
+	end
+	return cm
+end
+
+local function learn_tl_userdict(env, text, code)
+	local memory = env.aux_commit_memory
+	if not memory or type(text) ~= "string" or text == "" then
+		return false
+	end
+	if type(code) ~= "string" or not code:match("%S") then
+		return false
+	end
+	local ok, res = pcall(function()
+		return memory:update_userdict(make_userdict_entry(text, code), 1, "")
+	end)
+	if ok and res then
+		log.info("[aux_commit] reverse-lookup learned: " .. text .. " / " .. code)
+		return true
+	end
+	if not ok then
+		log.error("[aux_commit] reverse-lookup userdict failed: " .. tostring(res))
+	end
+	return false
+end
+
+local function learn_reverse_lookup_commit(env, ctx, r)
+	local cand = get_reverse_lookup_commit_candidate(env, ctx, r)
+	if not cand then
+		return
+	end
+	local text = cand.text or ""
+	local codes = parse_tsap_peh_im_tl_comment(candidate_comment(cand))
+	local chars = utf8_chars(text)
+	if #chars == 0 or #codes == 0 then
+		return
+	end
+
+	local buf = env.rev_lookup_learn_buf
+	if type(buf) ~= "table" then
+		buf = {}
+		env.rev_lookup_learn_buf = buf
+	end
+
+	if #chars == 1 then
+		for _, code in ipairs(codes) do
+			if looks_like_tl_numeric_syllable(code) then
+				learn_tl_userdict(env, chars[1], code)
+			end
+		end
+		table.insert(buf, { text = chars[1], code = codes[1] })
+	else
+		local n = math.min(#chars, #codes)
+		for i = 1, n do
+			if looks_like_tl_numeric_syllable(codes[i]) then
+				learn_tl_userdict(env, chars[i], codes[i])
+				table.insert(buf, { text = chars[i], code = codes[i] })
+			end
+		end
+	end
+
+	while #buf > REV_LOOKUP_BUF_MAX do
+		table.remove(buf, 1)
+	end
+
+	for len = 2, #buf do
+		local start = #buf - len + 1
+		local texts, syls = {}, {}
+		local ok_all = true
+		for i = start, #buf do
+			table.insert(texts, buf[i].text)
+			if not looks_like_tl_numeric_syllable(buf[i].code) then
+				ok_all = false
+				break
+			end
+			table.insert(syls, buf[i].code)
+		end
+		if ok_all then
+			learn_tl_userdict(env, table.concat(texts), table.concat(syls, " "))
+		end
+	end
 end
 
 local function memorize_aux_candidates(env, cand_list)
@@ -1092,7 +1297,24 @@ local function aux_commit_func(key, env)
 	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】／【音節連接符】
 	restore_piau_im_choice(env)
 	restore_im_zat_choice(env)
-	local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
+	local raw_repr = key:repr()
+	local r = raw_repr:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
+
+	-- 反查（` 漢語拼音／C 倉頡）以 Space 或 GHJKL 上屏：先記台羅常用字／詞，
+	-- 再回傳 kNoop，讓原生 selector 照常把漢字送上屏。
+	-- 略過按鍵釋放，避免上屏後 composition 已清空時重複寫入。
+	if raw_repr:sub(1, 8) ~= "Release+"
+		and ctx:has_menu()
+		and env.engine.schema.schema_id == "tsap_peh_im_tl" then
+		local is_select = (r == "space" or REV_LOOKUP_SELECT_INDEX[r] ~= nil)
+		if is_select then
+			if is_reverse_lookup_composing(ctx) then
+				learn_reverse_lookup_commit(env, ctx, r)
+			else
+				env.rev_lookup_learn_buf = {}
+			end
+		end
+	end
 
 	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter）
 	-- 【註】KeyEvent:repr() 之修飾鍵順序為 Shift → Control → Alt（實際為 Shift+Control+Return），
@@ -1278,6 +1500,7 @@ local function aux_commit_func(key, env)
 		end
 
 		log.info("[aux_commit] schema_id=" .. schema_id .. " source_list count=" .. #source_list .. " is_tlpa=" .. tostring(is_tlpa))
+		source_list = flatten_syllable_list(source_list)
 		for i, v in ipairs(source_list) do
 			log.info("[aux_commit] source_list[" .. i .. "]=[" .. v .. "]")
 		end
@@ -1288,10 +1511,7 @@ local function aux_commit_func(key, env)
 			-- 調號從缺（可忽略不管），無法轉換至其他標音系統，
 			-- 但輸出格式仍須維持，以原樣拼音輸出：啥物〔siann-mih〕
 			if fu_piau_im and gen_comm ~= "" and gen_comm:match("^[%w%s'%-]+$") then
-				local syls = {}
-				for syl in gen_comm:gmatch("[^%s'%-]+") do
-					table.insert(syls, syl)
-				end
+				local syls = split_syllable_tokens(gen_comm)
 				if #syls > 0 then
 					local hu_ho = get_hu_ho()
 					local out_str = cand_text
@@ -1463,6 +1683,7 @@ local function aux_commit_func(key, env)
 
 		local out_str
 		local im_zat = get_im_zat(ctx)
+		out_list = flatten_syllable_list(out_list)
 		if fu_piau_im then
 			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以【音節連接符】開關串接）+ 右分隔符號
 			-- 如：啥物〔siann2-mih4〕。左右分隔符號由設定檔 han_ji_piau_im_hu_ho 定義。
@@ -1503,6 +1724,7 @@ aux_commit = {
 			env.aux_commit_memory = nil
 			log.error("[aux_commit] failed to initialize Memory: " .. tostring(memory))
 		end
+		env.rev_lookup_learn_buf = {}
 		env.piau_im_notifier = ctx.option_update_notifier:connect(function(c, name)
 			if type(name) ~= "string" or not c:get_option(name) then
 				return
@@ -1529,6 +1751,7 @@ aux_commit = {
 			pcall(function() env.aux_commit_memory:disconnect() end)
 			env.aux_commit_memory = nil
 		end
+		env.rev_lookup_learn_buf = nil
 	end,
 	func = aux_commit_func,
 }
