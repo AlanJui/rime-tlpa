@@ -1015,7 +1015,7 @@ local function parse_tsap_peh_im_tl_comment(comment)
 	return result
 end
 
--- 反查上屏（漢語拼音 `／倉頡 C）不會經過主方案 translator，
+-- 反查上屏（漢語拼音 `／倉頡 C／注音 Z）不會經過主方案 translator，
 -- Space／GHJKL 只把倉頡或漢語拼音寫進反查 userdb。
 -- 此處從候選註解取出台羅數值調，寫入 ji_khoo_tl 用戶詞典；
 -- 連續反查上屏再組成詞（變＋卦 → 變卦／pian3 kua3）。
@@ -1024,7 +1024,7 @@ local REV_LOOKUP_BUF_MAX = 4
 
 local function is_reverse_lookup_composing(ctx)
 	local input = ctx.input or ""
-	if type(input) == "string" and input:match("^[`C]") then
+	if type(input) == "string" and input:match("^[`CZ]") then
 		return true
 	end
 	local comp = ctx.composition
@@ -1038,7 +1038,9 @@ local function is_reverse_lookup_composing(ctx)
 		for _, seg in ipairs(segs) do
 			local tagged = false
 			pcall(function()
-				tagged = seg:has_tag("reverse_lookup") or seg:has_tag("cangjie5_lookup")
+				tagged = seg:has_tag("reverse_lookup")
+					or seg:has_tag("cangjie5_lookup")
+					or seg:has_tag("bopomofo_lookup")
 			end)
 			if tagged then
 				return true
@@ -1300,7 +1302,7 @@ local function aux_commit_func(key, env)
 	local raw_repr = key:repr()
 	local r = raw_repr:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
-	-- 反查（` 漢語拼音／C 倉頡）以 Space 或 GHJKL 上屏：先記台羅常用字／詞，
+	-- 反查（` 漢語拼音／C 倉頡／Z 注音）以 Space 或 GHJKL 上屏：先記台羅常用字／詞，
 	-- 再回傳 kNoop，讓原生 selector 照常把漢字送上屏。
 	-- 略過按鍵釋放，避免上屏後 composition 已清空時重複寫入。
 	if raw_repr:sub(1, 8) ~= "Release+"
