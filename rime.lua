@@ -609,10 +609,13 @@ local function bpm2_to_tlpa(bpm2)
 	local tone = bpm2:match("([1-8])$") or ""
 	local s = tone ~= "" and bpm2:sub(1, -2) or bpm2
 	-- BPM2 韻母 → TLPA 韻母（順序：較長的先替換，避免截短）
-	s = s:gsub("iook", "iok")  -- BPM2 iook（恭韻入聲） → TLPA iok
-	s = s:gsub("oom", "om")   -- BPM2 oom（箴韻） → TLPA om
-	s = s:gsub("oop", "op")   -- BPM2 oop（箴韻入聲） → TLPA op
-	s = s:gsub("or", "o")     -- BPM2 or（高韻） → TLPA o（如：hor5 → ho5）
+	s = s:gsub("iook", "iok")   -- BPM2 iook（恭韻入聲） → TLPA iok
+	s = s:gsub("ioonn", "ionn") -- BPM2 ioonn（薑韻） → TLPA ionn
+	s = s:gsub("oonn", "onn")   -- BPM2 oonn（姑韻） → TLPA onn
+	s = s:gsub("oom", "om")     -- BPM2 oom（箴韻） → TLPA om
+	s = s:gsub("oop", "op")     -- BPM2 oop（箴韻入聲） → TLPA op
+	s = s:gsub("iek", "ik")     -- BPM2 iek（經韻入聲） → TLPA ik
+	s = s:gsub("or", "o")       -- BPM2 or（高韻） → TLPA o（如：hor5 → ho5）
 	-- 比對聲母（longest-match）
 	local siann_order = {
 		"ng","bb","gg","zz","jj","ph","th","kh","ch","sh",
@@ -1307,7 +1310,7 @@ local function aux_commit_func(key, env)
 	-- 略過按鍵釋放，避免上屏後 composition 已清空時重複寫入。
 	if raw_repr:sub(1, 8) ~= "Release+"
 		and ctx:has_menu()
-		and env.engine.schema.schema_id == "tsap_peh_im_tl" then
+		and env.engine.schema.schema_id:match("^tsap_peh_im_") then
 		local is_select = (r == "space" or REV_LOOKUP_SELECT_INDEX[r] ~= nil)
 		if is_select then
 			if is_reverse_lookup_composing(ctx) then
@@ -1403,21 +1406,28 @@ local function aux_commit_func(key, env)
 				log.info("[aux_commit] sip_ngoo_im_tl raw=[" .. v .. "]")
 			end
 
-		elseif schema_id == "tsap_peh_im_tl" then
-			-- 十八音【台羅拼音】：字典為台羅數值調（ji_khoo_tl）。
-			-- 候選註解為「台羅調符 + [聲韻調]」（例：tshông [出公五]），
-			-- 與其他方案的 【】〔〕 結構不同，須獨立解析。
+		elseif schema_id == "tsap_peh_im_tl" or schema_id == "tsap_peh_im_bpm2" then
+			-- 十八音：候選註解為「羅馬字 + [聲韻調]」（例：tshông [出公五]、bbor5 [門高五]）。
+			-- tsap_peh_im_tl 字典為台羅；tsap_peh_im_bpm2 字典為 BPM2，左欄數值調須先還原為 TLPA。
+			-- 若左欄缺失、改由 [聲韻調] 還原，結果已是 TLPA，不可再做 BPM2→TLPA。
 			is_tlpa = true
+			local from_bpm2 = (schema_id == "tsap_peh_im_bpm2")
 			local from_entry = collect_entry_tl_codes(env, cand_list)
 			if #from_entry > 0 then
 				for _, v in ipairs(from_entry) do
-					table.insert(source_list, v)
-					log.info("[aux_commit] tsap_peh_im_tl entry=[" .. v .. "]")
+					local tlpa = from_bpm2 and bpm2_to_tlpa(v) or v
+					table.insert(source_list, tlpa)
+					log.info("[aux_commit] " .. schema_id .. " entry=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 				end
 			else
+				local roman = gen_comm:gsub("%[.-%]", " ")
+				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+				local first = split_syllable_tokens(roman)[1]
+				local roman_is_bpm2 = from_bpm2 and looks_like_tl_numeric_syllable(first)
 				for _, v in ipairs(parse_tsap_peh_im_tl_comment(gen_comm)) do
-					table.insert(source_list, v)
-					log.info("[aux_commit] tsap_peh_im_tl comment=[" .. v .. "]")
+					local tlpa = roman_is_bpm2 and bpm2_to_tlpa(v) or v
+					table.insert(source_list, tlpa)
+					log.info("[aux_commit] " .. schema_id .. " comment=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 				end
 			end
 
@@ -1623,6 +1633,20 @@ local function aux_commit_func(key, env)
 				-- BPM2 字典：〔〕欄已是 BPM2 音碼（如 hor5），直接輸出，不做 round-trip 轉換
 				for v in gen_comm:gmatch("〔(.-)〕") do
 					table.insert(out_list, v)
+				end
+			elseif schema_id == "tsap_peh_im_bpm2" then
+				-- 十八音【台語注音二式】：註解左欄已是 BPM2 數值調（如 bbor5 [門高五]）
+				local roman = gen_comm:gsub("%[.-%]", " ")
+				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+				for _, syl in ipairs(split_syllable_tokens(roman)) do
+					if looks_like_tl_numeric_syllable(syl) then
+						table.insert(out_list, syl)
+					end
+				end
+				if #out_list == 0 then
+					for i, v in ipairs(source_list) do
+						out_list[i] = tlpa_to_bpm2(v)
+					end
 				end
 			else
 				-- 非 BPM2 字典：TLPA/SNI → BPM2
@@ -2394,6 +2418,151 @@ local function norm_repr(r)
 	r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
 	return r:lower()
 end
+
+------------------------------------------------------------------------------------------
+-- tsap_peh_im_rev_comment_filter：
+-- 倉頡／注音／漢語拼音反查時，候選註解改從 ji_khoo_bpm2 反查 BPM2，
+-- 避免沿用台羅調符（如 講 → kéng khiáng kóng，應為 gong2 [求公二]）。
+------------------------------------------------------------------------------------------
+local function format_bpm2_tsap_peh_im_comment(code)
+	if type(code) ~= "string" or code == "" then
+		return ""
+	end
+	local tlpa = bpm2_to_tlpa(code)
+	local sni_rts = nil
+	if _tlpa_conv then
+		local ok, s = pcall(function()
+			return _tlpa_conv.convert(tlpa, "十五音")
+		end)
+		if ok then
+			sni_rts = s
+		end
+	end
+	if type(sni_rts) == "string" and sni_rts ~= "" then
+		local chars = utf8_chars(sni_rts)
+		if #chars == 3 then
+			local siann = (chars[3] == "去") and "氣" or chars[3]
+			return code .. " [" .. siann .. chars[1] .. chars[2] .. "]"
+		end
+	end
+	return code
+end
+
+local function collect_unique_bpm2_codes(raw)
+	local codes, seen = {}, {}
+	if type(raw) ~= "string" then
+		return codes
+	end
+	for code in raw:gmatch("[a-z]+[1-8]") do
+		if not seen[code] then
+			seen[code] = true
+			table.insert(codes, code)
+		end
+	end
+	return codes
+end
+
+tsap_peh_im_rev_comment_filter = {
+	init = function(env)
+		env.bpm2_rev = nil
+		if env.engine.schema.schema_id ~= "tsap_peh_im_bpm2" then
+			return
+		end
+		local ok, rev = pcall(function()
+			return ReverseLookup("ji_khoo_bpm2")
+		end)
+		if ok then
+			env.bpm2_rev = rev
+		end
+	end,
+	func = function(input, env)
+		if env.engine.schema.schema_id ~= "tsap_peh_im_bpm2" then
+			for cand in input:iter() do
+				yield(cand)
+			end
+			return
+		end
+
+		local is_rev = false
+		local comp = env.engine.context.composition
+		if comp and not comp:empty() then
+			local seg = comp:back()
+			if seg then
+				pcall(function()
+					is_rev = seg:has_tag("reverse_lookup")
+						or seg:has_tag("cangjie5_lookup")
+						or seg:has_tag("bopomofo_lookup")
+				end)
+			end
+		end
+		if not is_rev then
+			for cand in input:iter() do
+				yield(cand)
+			end
+			return
+		end
+
+		for cand in input:iter() do
+			local codes = {}
+			if env.bpm2_rev then
+				local ok, raw = pcall(function()
+					return env.bpm2_rev:lookup(cand.text or "")
+				end)
+				if ok then
+					codes = collect_unique_bpm2_codes(raw)
+				end
+			end
+			if #codes == 0 then
+				local roman = (cand.comment or ""):gsub("%[.-%]", " ")
+				for _, syl in ipairs(split_syllable_tokens(roman)) do
+					local num
+					if looks_like_tl_numeric_syllable(syl) then
+						num = syl
+					else
+						local ok, converted = pcall(tl_diac_to_tlpa, syl)
+						if ok and type(converted) == "string" then
+							num = converted
+						end
+					end
+					if type(num) == "string" and num ~= "" then
+						-- 反查殘留台羅調符／台羅聲母時，還原為 BPM2
+						if not looks_like_tl_numeric_syllable(syl) or num:match("^tsh")
+							or num:match("^ts") or num:match("^kh") or num:match("^th")
+							or num:match("^ph") then
+							num = tlpa_to_bpm2(num)
+						end
+						table.insert(codes, num)
+					end
+				end
+			end
+
+			local parts = {}
+			for _, code in ipairs(codes) do
+				local formatted = format_bpm2_tsap_peh_im_comment(code)
+				if formatted ~= "" then
+					table.insert(parts, formatted)
+				end
+			end
+			local new = table.concat(parts, " ")
+			if new ~= "" and new ~= (cand.comment or "") then
+				local ok_sc, nc = pcall(function()
+					return ShadowCandidate(cand, cand.type, cand.text, new, false)
+				end)
+				if ok_sc and nc then
+					yield(nc)
+				else
+					local c = cand:get_genuine()
+					local plain = Candidate(c.type, c.start, c._end, c.text, new)
+					plain.preedit = cand.preedit
+					plain.quality = cand.quality
+					yield(plain)
+				end
+			else
+				yield(cand)
+			end
+		end
+	end,
+}
 
 ------------------------------------------------------------------------------------------
 -- 在候選註解前加上模式標籤：〔上標〕或〔一般〕

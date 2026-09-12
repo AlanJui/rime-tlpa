@@ -1,0 +1,6 @@
+Log file created at: 2026/09/12 20:46:51
+Running on machine: WALKFISH-U9-285
+Running duration (h:mm:ss): 0:00:05
+Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
+E20260912 20:46:51.630355 10356 deployment_tasks.cc:372] dictionary 'luna_pinyin' failed to compile.
+E20260912 20:46:53.594923 23652 level_db.cc:259] Error opening db 'ji_khoo_bpm2': IO error: C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_bpm2.userdb/000031.dbtmp: 無法移除要被取代的檔案。

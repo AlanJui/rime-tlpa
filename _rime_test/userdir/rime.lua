@@ -609,10 +609,13 @@ local function bpm2_to_tlpa(bpm2)
 	local tone = bpm2:match("([1-8])$") or ""
 	local s = tone ~= "" and bpm2:sub(1, -2) or bpm2
 	-- BPM2 韻母 → TLPA 韻母（順序：較長的先替換，避免截短）
-	s = s:gsub("iook", "iok")  -- BPM2 iook（恭韻入聲） → TLPA iok
-	s = s:gsub("oom", "om")   -- BPM2 oom（箴韻） → TLPA om
-	s = s:gsub("oop", "op")   -- BPM2 oop（箴韻入聲） → TLPA op
-	s = s:gsub("or", "o")     -- BPM2 or（高韻） → TLPA o（如：hor5 → ho5）
+	s = s:gsub("iook", "iok")   -- BPM2 iook（恭韻入聲） → TLPA iok
+	s = s:gsub("ioonn", "ionn") -- BPM2 ioonn（薑韻） → TLPA ionn
+	s = s:gsub("oonn", "onn")   -- BPM2 oonn（姑韻） → TLPA onn
+	s = s:gsub("oom", "om")     -- BPM2 oom（箴韻） → TLPA om
+	s = s:gsub("oop", "op")     -- BPM2 oop（箴韻入聲） → TLPA op
+	s = s:gsub("iek", "ik")     -- BPM2 iek（經韻入聲） → TLPA ik
+	s = s:gsub("or", "o")       -- BPM2 or（高韻） → TLPA o（如：hor5 → ho5）
 	-- 比對聲母（longest-match）
 	local siann_order = {
 		"ng","bb","gg","zz","jj","ph","th","kh","ch","sh",
@@ -820,7 +823,7 @@ local TLPA_TO_BP_TIAU = {
 
 ------------------------------------------------------------------------------------------
 -- aux_commit：切換輸入方案【輸出】之【漢字標音】格式
--- Space → 漢字
+-- Space → 漢字（反查時另將註解中的台羅寫入主方案用戶詞典）
 -- Enter → 漢字標音（格式依選項而定）
 -- Ctrl+Shift+Enter → 漢字附帶標音（如：啥物〔siann2-mih4〕；320.md §五、輸出漢字附帶標音）
 ------------------------------------------------------------------------------------------
@@ -899,6 +902,41 @@ local function looks_like_tl_numeric_syllable(s)
 	return type(s) == "string" and s:match("^[a-z]+[1-8]$") ~= nil
 end
 
+-- 將組字區／註解裡的多音節字串切開。
+-- 連續輸入用 delimiter "'"，上屏標音須改用【音節連接符】（im_zat_*），
+-- 故此處同時切開空白、ASCII 撇號、Unicode 撇號、連字號。
+local function split_syllable_tokens(s)
+	local parts = {}
+	if type(s) ~= "string" or s == "" then
+		return parts
+	end
+	s = s:gsub("\226\128\153", "'") -- U+2019 ’
+	s = s:gsub("\226\128\152", "'") -- U+2018 ‘
+	s = s:gsub("\202\188", "'")     -- U+02BC ʼ
+	for tok in s:gmatch("[^%s'%-]+") do
+		table.insert(parts, tok)
+	end
+	return parts
+end
+
+local function flatten_syllable_list(list)
+	local flat = {}
+	if type(list) ~= "table" then
+		return flat
+	end
+	for _, item in ipairs(list) do
+		local parts = split_syllable_tokens(item)
+		if #parts > 0 then
+			for _, p in ipairs(parts) do
+				table.insert(flat, p)
+			end
+		elseif type(item) == "string" and item ~= "" then
+			table.insert(flat, item)
+		end
+	end
+	return flat
+end
+
 -- 從候選之 translator 字典編碼取出台羅數值調音節。
 -- 若混入非拼音碼（倉頡、漢語拼音反查等），整批放棄，改由 comment 解析。
 local function collect_entry_tl_codes(env, cand_list)
@@ -922,7 +960,7 @@ local function collect_entry_tl_codes(env, cand_list)
 		if type(code_str) ~= "string" or code_str == "" then
 			return {}
 		end
-		for syl in code_str:gmatch("%S+") do
+		for _, syl in ipairs(split_syllable_tokens(code_str)) do
 			if not looks_like_tl_numeric_syllable(syl) then
 				return {}
 			end
@@ -944,7 +982,7 @@ local function parse_tsap_peh_im_tl_comment(comment)
 	local roman = comment:gsub("%[.-%]", " ")
 	roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
 	if roman ~= "" then
-		for syl in roman:gmatch("%S+") do
+		for _, syl in ipairs(split_syllable_tokens(roman)) do
 			local tlpa
 			if looks_like_tl_numeric_syllable(syl) then
 				tlpa = syl
@@ -978,6 +1016,178 @@ local function parse_tsap_peh_im_tl_comment(comment)
 		end
 	end
 	return result
+end
+
+-- 反查上屏（漢語拼音 `／倉頡 C／注音 Z）不會經過主方案 translator，
+-- Space／GHJKL 只把倉頡或漢語拼音寫進反查 userdb。
+-- 此處從候選註解取出台羅數值調，寫入 ji_khoo_tl 用戶詞典；
+-- 連續反查上屏再組成詞（變＋卦 → 變卦／pian3 kua3）。
+local REV_LOOKUP_SELECT_INDEX = { g = 0, h = 1, j = 2, k = 3, l = 4 }
+local REV_LOOKUP_BUF_MAX = 4
+
+local function is_reverse_lookup_composing(ctx)
+	local input = ctx.input or ""
+	if type(input) == "string" and input:match("^[`CZ]") then
+		return true
+	end
+	local comp = ctx.composition
+	if not comp or comp:empty() then
+		return false
+	end
+	local ok, segs = pcall(function()
+		return comp:toSegmentation():get_segments()
+	end)
+	if ok and type(segs) == "table" then
+		for _, seg in ipairs(segs) do
+			local tagged = false
+			pcall(function()
+				tagged = seg:has_tag("reverse_lookup")
+					or seg:has_tag("cangjie5_lookup")
+					or seg:has_tag("bopomofo_lookup")
+			end)
+			if tagged then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+local function get_page_size(env)
+	local n = 5
+	pcall(function()
+		n = env.engine.schema.config:get_int("menu/page_size")
+	end)
+	if type(n) ~= "number" or n < 1 then
+		n = 5
+	end
+	return n
+end
+
+local function get_reverse_lookup_commit_candidate(env, ctx, r)
+	local comp = ctx.composition
+	if not comp or comp:empty() then
+		return nil
+	end
+	local seg = comp:back()
+	if not seg then
+		return nil
+	end
+	local idx = nil
+	local sel = REV_LOOKUP_SELECT_INDEX[r]
+	if r == "space" then
+		idx = seg.selected_index
+	elseif sel ~= nil then
+		local page_size = get_page_size(env)
+		local selected = seg.selected_index or 0
+		local page_start = math.floor(selected / page_size) * page_size
+		idx = page_start + sel
+	else
+		return nil
+	end
+	if type(idx) ~= "number" or idx < 0 then
+		return nil
+	end
+	local cand = nil
+	pcall(function() cand = seg:get_candidate_at(idx) end)
+	if not cand and seg.menu then
+		pcall(function() cand = seg.menu:get_candidate_at(idx) end)
+	end
+	return cand
+end
+
+local function candidate_comment(cand)
+	if not cand then
+		return ""
+	end
+	local cm = cand.comment or ""
+	if cm == "" then
+		pcall(function()
+			local g = cand:get_genuine()
+			if g then
+				cm = g.comment or ""
+			end
+		end)
+	end
+	return cm
+end
+
+local function learn_tl_userdict(env, text, code)
+	local memory = env.aux_commit_memory
+	if not memory or type(text) ~= "string" or text == "" then
+		return false
+	end
+	if type(code) ~= "string" or not code:match("%S") then
+		return false
+	end
+	local ok, res = pcall(function()
+		return memory:update_userdict(make_userdict_entry(text, code), 1, "")
+	end)
+	if ok and res then
+		log.info("[aux_commit] reverse-lookup learned: " .. text .. " / " .. code)
+		return true
+	end
+	if not ok then
+		log.error("[aux_commit] reverse-lookup userdict failed: " .. tostring(res))
+	end
+	return false
+end
+
+local function learn_reverse_lookup_commit(env, ctx, r)
+	local cand = get_reverse_lookup_commit_candidate(env, ctx, r)
+	if not cand then
+		return
+	end
+	local text = cand.text or ""
+	local codes = parse_tsap_peh_im_tl_comment(candidate_comment(cand))
+	local chars = utf8_chars(text)
+	if #chars == 0 or #codes == 0 then
+		return
+	end
+
+	local buf = env.rev_lookup_learn_buf
+	if type(buf) ~= "table" then
+		buf = {}
+		env.rev_lookup_learn_buf = buf
+	end
+
+	if #chars == 1 then
+		for _, code in ipairs(codes) do
+			if looks_like_tl_numeric_syllable(code) then
+				learn_tl_userdict(env, chars[1], code)
+			end
+		end
+		table.insert(buf, { text = chars[1], code = codes[1] })
+	else
+		local n = math.min(#chars, #codes)
+		for i = 1, n do
+			if looks_like_tl_numeric_syllable(codes[i]) then
+				learn_tl_userdict(env, chars[i], codes[i])
+				table.insert(buf, { text = chars[i], code = codes[i] })
+			end
+		end
+	end
+
+	while #buf > REV_LOOKUP_BUF_MAX do
+		table.remove(buf, 1)
+	end
+
+	for len = 2, #buf do
+		local start = #buf - len + 1
+		local texts, syls = {}, {}
+		local ok_all = true
+		for i = start, #buf do
+			table.insert(texts, buf[i].text)
+			if not looks_like_tl_numeric_syllable(buf[i].code) then
+				ok_all = false
+				break
+			end
+			table.insert(syls, buf[i].code)
+		end
+		if ok_all then
+			learn_tl_userdict(env, table.concat(texts), table.concat(syls, " "))
+		end
+	end
 end
 
 local function memorize_aux_candidates(env, cand_list)
@@ -1092,7 +1302,24 @@ local function aux_commit_func(key, env)
 	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】／【音節連接符】
 	restore_piau_im_choice(env)
 	restore_im_zat_choice(env)
-	local r = key:repr():gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
+	local raw_repr = key:repr()
+	local r = raw_repr:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
+
+	-- 反查（` 漢語拼音／C 倉頡／Z 注音）以 Space 或 GHJKL 上屏：先記台羅常用字／詞，
+	-- 再回傳 kNoop，讓原生 selector 照常把漢字送上屏。
+	-- 略過按鍵釋放，避免上屏後 composition 已清空時重複寫入。
+	if raw_repr:sub(1, 8) ~= "Release+"
+		and ctx:has_menu()
+		and env.engine.schema.schema_id:match("^tsap_peh_im_") then
+		local is_select = (r == "space" or REV_LOOKUP_SELECT_INDEX[r] ~= nil)
+		if is_select then
+			if is_reverse_lookup_composing(ctx) then
+				learn_reverse_lookup_commit(env, ctx, r)
+			else
+				env.rev_lookup_learn_buf = {}
+			end
+		end
+	end
 
 	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter）
 	-- 【註】KeyEvent:repr() 之修飾鍵順序為 Shift → Control → Alt（實際為 Shift+Control+Return），
@@ -1179,21 +1406,28 @@ local function aux_commit_func(key, env)
 				log.info("[aux_commit] sip_ngoo_im_tl raw=[" .. v .. "]")
 			end
 
-		elseif schema_id == "tsap_peh_im_tl" then
-			-- 十八音【台羅拼音】：字典為台羅數值調（ji_khoo_tl）。
-			-- 候選註解為「台羅調符 + [聲韻調]」（例：tshông [出公五]），
-			-- 與其他方案的 【】〔〕 結構不同，須獨立解析。
+		elseif schema_id == "tsap_peh_im_tl" or schema_id == "tsap_peh_im_bpm2" then
+			-- 十八音：候選註解為「羅馬字 + [聲韻調]」（例：tshông [出公五]、bbor5 [門高五]）。
+			-- tsap_peh_im_tl 字典為台羅；tsap_peh_im_bpm2 字典為 BPM2，左欄數值調須先還原為 TLPA。
+			-- 若左欄缺失、改由 [聲韻調] 還原，結果已是 TLPA，不可再做 BPM2→TLPA。
 			is_tlpa = true
+			local from_bpm2 = (schema_id == "tsap_peh_im_bpm2")
 			local from_entry = collect_entry_tl_codes(env, cand_list)
 			if #from_entry > 0 then
 				for _, v in ipairs(from_entry) do
-					table.insert(source_list, v)
-					log.info("[aux_commit] tsap_peh_im_tl entry=[" .. v .. "]")
+					local tlpa = from_bpm2 and bpm2_to_tlpa(v) or v
+					table.insert(source_list, tlpa)
+					log.info("[aux_commit] " .. schema_id .. " entry=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 				end
 			else
+				local roman = gen_comm:gsub("%[.-%]", " ")
+				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+				local first = split_syllable_tokens(roman)[1]
+				local roman_is_bpm2 = from_bpm2 and looks_like_tl_numeric_syllable(first)
 				for _, v in ipairs(parse_tsap_peh_im_tl_comment(gen_comm)) do
-					table.insert(source_list, v)
-					log.info("[aux_commit] tsap_peh_im_tl comment=[" .. v .. "]")
+					local tlpa = roman_is_bpm2 and bpm2_to_tlpa(v) or v
+					table.insert(source_list, tlpa)
+					log.info("[aux_commit] " .. schema_id .. " comment=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 				end
 			end
 
@@ -1278,6 +1512,7 @@ local function aux_commit_func(key, env)
 		end
 
 		log.info("[aux_commit] schema_id=" .. schema_id .. " source_list count=" .. #source_list .. " is_tlpa=" .. tostring(is_tlpa))
+		source_list = flatten_syllable_list(source_list)
 		for i, v in ipairs(source_list) do
 			log.info("[aux_commit] source_list[" .. i .. "]=[" .. v .. "]")
 		end
@@ -1288,10 +1523,7 @@ local function aux_commit_func(key, env)
 			-- 調號從缺（可忽略不管），無法轉換至其他標音系統，
 			-- 但輸出格式仍須維持，以原樣拼音輸出：啥物〔siann-mih〕
 			if fu_piau_im and gen_comm ~= "" and gen_comm:match("^[%w%s'%-]+$") then
-				local syls = {}
-				for syl in gen_comm:gmatch("[^%s'%-]+") do
-					table.insert(syls, syl)
-				end
+				local syls = split_syllable_tokens(gen_comm)
 				if #syls > 0 then
 					local hu_ho = get_hu_ho()
 					local out_str = cand_text
@@ -1402,6 +1634,20 @@ local function aux_commit_func(key, env)
 				for v in gen_comm:gmatch("〔(.-)〕") do
 					table.insert(out_list, v)
 				end
+			elseif schema_id == "tsap_peh_im_bpm2" then
+				-- 十八音【台語注音二式】：註解左欄已是 BPM2 數值調（如 bbor5 [門高五]）
+				local roman = gen_comm:gsub("%[.-%]", " ")
+				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+				for _, syl in ipairs(split_syllable_tokens(roman)) do
+					if looks_like_tl_numeric_syllable(syl) then
+						table.insert(out_list, syl)
+					end
+				end
+				if #out_list == 0 then
+					for i, v in ipairs(source_list) do
+						out_list[i] = tlpa_to_bpm2(v)
+					end
+				end
 			else
 				-- 非 BPM2 字典：TLPA/SNI → BPM2
 				-- 使用 tlpa_to_bpm2（內建 fallback，不依賴 require 是否成功）
@@ -1463,6 +1709,7 @@ local function aux_commit_func(key, env)
 
 		local out_str
 		local im_zat = get_im_zat(ctx)
+		out_list = flatten_syllable_list(out_list)
 		if fu_piau_im then
 			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以【音節連接符】開關串接）+ 右分隔符號
 			-- 如：啥物〔siann2-mih4〕。左右分隔符號由設定檔 han_ji_piau_im_hu_ho 定義。
@@ -1503,6 +1750,7 @@ aux_commit = {
 			env.aux_commit_memory = nil
 			log.error("[aux_commit] failed to initialize Memory: " .. tostring(memory))
 		end
+		env.rev_lookup_learn_buf = {}
 		env.piau_im_notifier = ctx.option_update_notifier:connect(function(c, name)
 			if type(name) ~= "string" or not c:get_option(name) then
 				return
@@ -1529,6 +1777,7 @@ aux_commit = {
 			pcall(function() env.aux_commit_memory:disconnect() end)
 			env.aux_commit_memory = nil
 		end
+		env.rev_lookup_learn_buf = nil
 	end,
 	func = aux_commit_func,
 }
@@ -2169,6 +2418,151 @@ local function norm_repr(r)
 	r = r:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return")
 	return r:lower()
 end
+
+------------------------------------------------------------------------------------------
+-- tsap_peh_im_rev_comment_filter：
+-- 倉頡／注音／漢語拼音反查時，候選註解改從 ji_khoo_bpm2 反查 BPM2，
+-- 避免沿用台羅調符（如 講 → kéng khiáng kóng，應為 gong2 [求公二]）。
+------------------------------------------------------------------------------------------
+local function format_bpm2_tsap_peh_im_comment(code)
+	if type(code) ~= "string" or code == "" then
+		return ""
+	end
+	local tlpa = bpm2_to_tlpa(code)
+	local sni_rts = nil
+	if _tlpa_conv then
+		local ok, s = pcall(function()
+			return _tlpa_conv.convert(tlpa, "十五音")
+		end)
+		if ok then
+			sni_rts = s
+		end
+	end
+	if type(sni_rts) == "string" and sni_rts ~= "" then
+		local chars = utf8_chars(sni_rts)
+		if #chars == 3 then
+			local siann = (chars[3] == "去") and "氣" or chars[3]
+			return code .. " [" .. siann .. chars[1] .. chars[2] .. "]"
+		end
+	end
+	return code
+end
+
+local function collect_unique_bpm2_codes(raw)
+	local codes, seen = {}, {}
+	if type(raw) ~= "string" then
+		return codes
+	end
+	for code in raw:gmatch("[a-z]+[1-8]") do
+		if not seen[code] then
+			seen[code] = true
+			table.insert(codes, code)
+		end
+	end
+	return codes
+end
+
+tsap_peh_im_rev_comment_filter = {
+	init = function(env)
+		env.bpm2_rev = nil
+		if env.engine.schema.schema_id ~= "tsap_peh_im_bpm2" then
+			return
+		end
+		local ok, rev = pcall(function()
+			return ReverseLookup("ji_khoo_bpm2")
+		end)
+		if ok then
+			env.bpm2_rev = rev
+		end
+	end,
+	func = function(input, env)
+		if env.engine.schema.schema_id ~= "tsap_peh_im_bpm2" then
+			for cand in input:iter() do
+				yield(cand)
+			end
+			return
+		end
+
+		local is_rev = false
+		local comp = env.engine.context.composition
+		if comp and not comp:empty() then
+			local seg = comp:back()
+			if seg then
+				pcall(function()
+					is_rev = seg:has_tag("reverse_lookup")
+						or seg:has_tag("cangjie5_lookup")
+						or seg:has_tag("bopomofo_lookup")
+				end)
+			end
+		end
+		if not is_rev then
+			for cand in input:iter() do
+				yield(cand)
+			end
+			return
+		end
+
+		for cand in input:iter() do
+			local codes = {}
+			if env.bpm2_rev then
+				local ok, raw = pcall(function()
+					return env.bpm2_rev:lookup(cand.text or "")
+				end)
+				if ok then
+					codes = collect_unique_bpm2_codes(raw)
+				end
+			end
+			if #codes == 0 then
+				local roman = (cand.comment or ""):gsub("%[.-%]", " ")
+				for _, syl in ipairs(split_syllable_tokens(roman)) do
+					local num
+					if looks_like_tl_numeric_syllable(syl) then
+						num = syl
+					else
+						local ok, converted = pcall(tl_diac_to_tlpa, syl)
+						if ok and type(converted) == "string" then
+							num = converted
+						end
+					end
+					if type(num) == "string" and num ~= "" then
+						-- 反查殘留台羅調符／台羅聲母時，還原為 BPM2
+						if not looks_like_tl_numeric_syllable(syl) or num:match("^tsh")
+							or num:match("^ts") or num:match("^kh") or num:match("^th")
+							or num:match("^ph") then
+							num = tlpa_to_bpm2(num)
+						end
+						table.insert(codes, num)
+					end
+				end
+			end
+
+			local parts = {}
+			for _, code in ipairs(codes) do
+				local formatted = format_bpm2_tsap_peh_im_comment(code)
+				if formatted ~= "" then
+					table.insert(parts, formatted)
+				end
+			end
+			local new = table.concat(parts, " ")
+			if new ~= "" and new ~= (cand.comment or "") then
+				local ok_sc, nc = pcall(function()
+					return ShadowCandidate(cand, cand.type, cand.text, new, false)
+				end)
+				if ok_sc and nc then
+					yield(nc)
+				else
+					local c = cand:get_genuine()
+					local plain = Candidate(c.type, c.start, c._end, c.text, new)
+					plain.preedit = cand.preedit
+					plain.quality = cand.quality
+					yield(plain)
+				end
+			else
+				yield(cand)
+			end
+		end
+	end,
+}
 
 ------------------------------------------------------------------------------------------
 -- 在候選註解前加上模式標籤：〔上標〕或〔一般〕

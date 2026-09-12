@@ -118,6 +118,7 @@ $files = @(
 
     # --- 十八音輸入法（改良式新十五音） ---
     "tsap_peh_im_tl.schema.yaml"
+    "tsap_peh_im_bpm2.schema.yaml"
 
     # --- 按鍵輔助工具 ---
     "kb_hong_im.schema.yaml"
