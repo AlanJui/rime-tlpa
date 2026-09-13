@@ -109,8 +109,17 @@ speller:
     - derive/(^|')chi/$1ci/         # ci  → chi
     - derive/(^|')shi/$1si/         # si  → shi
     - derive/(^|')ji/$1zi/          # zi  → ji（須在 jji 之後）
-    # 鼻化韻：ann → Na（相容 N 前綴輸入）
-    - derive/([iu]?(?:ai|au|oo|[aiueo]))nn/N$1/
+    #--------------------------------------------------------------------------
+    # 【鼻韻母】ann / inn / enn / oonn / ainn / iann / iunn / ioonn /
+    #          uann / uainn / iaunn …（及 TL 形 ionn / onn）
+    # 輸入：後綴 nn、按鍵 N（= nn）、前置 n / nn / N
+    # 例：kiunn = kiuN = kniu = knniu = kNiu
+    #     ann = aN = na = nna = Na
+    #--------------------------------------------------------------------------
+    - derive/([iu]?(?:ai|au|oo|[aiueo]))nn/N$1/    # Na、kNiu
+    - derive/([iu]?(?:ai|au|oo|[aiueo]))nn/n$1/    # na、kniu
+    - derive/([iu]?(?:ai|au|oo|[aiueo]))nn/nn$1/   # nna、knniu
+    - derive/nn/N/                                 # aN、kiuN（N 鍵 = nn）
     # BPM2 韻母亦可打台羅寫法（字典為 BPM2）
     - derive/iook/iok/           # 恭促
     - derive/ioonn/ionn/         # 薑
@@ -289,6 +298,13 @@ translator:
     - xform/i(⁴|⁸|&)/ih$1/           # 居
     - xform/e(⁴|⁸|&)/eh$1/           # 伽／稽
     - xform/m(⁴|⁸|&)/mh$1/           # 姆
+    #--------------------------------------------------------------------------
+    # 【鼻韻母符號】輸入框：nn／N／前置 n → ⁿ。候選清單仍為 BPM2（kiunn1）。
+    # 須在促聲 nnh 規則之後，以免 ann⁴ 被先收成 an⁴。
+    #--------------------------------------------------------------------------
+    - xform/N/ⁿ/
+    - xform/nn/ⁿ/
+    - xform/(bb|gg|zz|jj|ch|sh|ng|[bpmgdtkljczsh])n([aiueo])/$1ⁿ$2/
   comment_format: &tsap_peh_im_comment_format
     #==========================================================================
     # 為【侯選清單】之【漢字標音】設定【音節】格式 =【聲母】+【韻母】+【聲調】
