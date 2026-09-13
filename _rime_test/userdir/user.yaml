@@ -1,6 +1,9 @@
 var:
-  last_build_time: 1789223960
-  previously_selected_schema: tsap_peh_im_bpm2
+  last_build_time: 1789267601
+  option:
+    ascii_punct: false
+    full_shape: false
+  previously_selected_schema: tsap_peh_im_tl
   schema_access_time:
     huan_ciat_ZapGooIm: 1786002934
     huan_ciat_ZapGooIm_bpm2: 1786028315
@@ -22,8 +25,8 @@ var:
     sip_ngoo_im_tlpa: 1788698186
     sip_ngoo_im_tps: 1788267644
     terra_pinyin: 1778639332
-    tsap_peh_im_bpm2: 1789223961
-    tsap_peh_im_tl: 1788965908
+    tsap_peh_im_bpm2: 1789267594
+    tsap_peh_im_tl: 1789267601
     zu_im_bpm2: 1785426346
     zu_im_tlpa: 1784820608
     zu_im_tps: 1788008800

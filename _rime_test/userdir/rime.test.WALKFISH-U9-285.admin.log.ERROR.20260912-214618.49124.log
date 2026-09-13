@@ -1,5 +1,0 @@
-Log file created at: 2026/09/12 21:46:18
-Running on machine: WALKFISH-U9-285
-Running duration (h:mm:ss): 0:00:07
-Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
-E20260912 21:46:18.178665 48152 config_data.cc:78] Error parsing YAML "C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\build\tsap_peh_im_bpm2.schema.yaml" : yaml-cpp: error at line 876, column 14: illegal EOF in scalar

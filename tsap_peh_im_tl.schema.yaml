@@ -491,7 +491,8 @@ menu:
   page_size: 5
 
 punctuator:
-  import_preset: symbols
+  # 基底為 RIME symbols；成對括號見 keymap_symbols.yaml
+  import_preset: keymap_symbols
 
 key_binder:
   import_preset: default

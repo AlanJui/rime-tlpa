@@ -50,6 +50,7 @@ $files = @(
     # --- 輸入方案共用模組 ---
     # lib_phing_im.yaml
     "keymap_piau_tian.yaml"
+    "keymap_symbols.yaml"
 
     # --- 輸入方案插件函式庫 ---
     "rime.lua"

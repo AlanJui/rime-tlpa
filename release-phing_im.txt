@@ -4,6 +4,7 @@ config\weasel.custom.yaml
 
 # --- 輸入方案共用模組 ---
 keymap_piau_tian.yaml
+keymap_symbols.yaml
 
 # --- 輸入方案插件函式庫 ---
 rime.lua

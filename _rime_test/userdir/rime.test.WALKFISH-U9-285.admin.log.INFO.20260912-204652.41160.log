@@ -1,5 +1,0 @@
-Log file created at: 2026/09/12 20:46:52
-Running on machine: WALKFISH-U9-285
-Running duration (h:mm:ss): 0:00:03
-Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
-E20260912 20:46:52.489573 45772 prism.cc:93] invalid metadata.

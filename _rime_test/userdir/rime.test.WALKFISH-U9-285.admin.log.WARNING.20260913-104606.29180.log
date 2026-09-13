@@ -1,0 +1,11 @@
+Log file created at: 2026/09/13 10:46:06
+Running on machine: WALKFISH-U9-285
+Running duration (h:mm:ss): 0:00:06
+Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
+E20260913 10:46:06.417243 32864 config_data.cc:175] copy on write failed; incompatible node type: pair
+E20260913 10:46:06.419672 32864 config_compiler.cc:141] error merging branch pair
+E20260913 10:46:06.419781 32864 config_compiler.cc:141] error merging branch (
+E20260913 10:46:06.419831 32864 config_compiler.cc:141] error merging branch full_shape
+E20260913 10:46:06.420802 32864 config_compiler.cc:72] failed to merge tree: symbols:punctuator
+E20260913 10:46:06.420857 32864 legacy_preset_config_plugin.cc:57] failed to include section symbols:punctuator
+E20260913 10:46:06.420884 32864 config_component.cc:250] error building config: tsap_peh_im_tl.schema
