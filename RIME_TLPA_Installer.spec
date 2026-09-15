@@ -12,6 +12,7 @@ a = Analysis(
         ('config/default.custom.zu_im.yaml', 'config'),  # 注音類輸入方案選單設定
         ('config/default.custom.phing_im.yaml', 'config'),  # 拼音類輸入方案選單設定
         ('config/default.custom.huan_ciat.yaml', 'config'),  # 反切類輸入方案選單設定
+        ('config/weasel.custom.yaml', 'config'),  # 小狼毫外觀／按鍵設定
     ],
     hiddenimports=[],
     hookspath=[],

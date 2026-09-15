@@ -1,0 +1,17 @@
+# Rime dictionary
+# encoding: utf-8
+#
+# BanLam 單字字典
+#
+---
+name: ji_khoo_tl_BanLam_TanJi
+version: "v0.1.0"
+sort: by_weight
+use_preset_vocabulary: false
+columns:
+  - text    # 漢字
+  - code    # 台灣音標（TLPA）拼音
+  - weight  # 常用度（優先顯示度）
+  - stem    # 用法舉例
+  - create  # 建立時間
+...

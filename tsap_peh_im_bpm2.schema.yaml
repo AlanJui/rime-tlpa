@@ -1,0 +1,548 @@
+# Rime schema
+# encoding: UTF-8 w/o BOM
+# 依 tsap_peh_im_tl 改寫，拼音系統改為【台語注音二式】（BPM2）。
+# 字典編碼為【聲+韻+調】（ji_khoo_bpm2）。
+
+schema:
+  schema_id: tsap_peh_im_bpm2
+  name: 十八音【台語注音二式】
+  version: "v0.0.2"
+  author:
+    - 後學 CCC 整理
+    - 居正中 <alanjui.1960@gmail.com>
+  description: |
+    基於《彙集雅俗通十五音》改良之新十五音輸入法
+    【輸入類型】：拼音輸入法（聲+韻+調）
+    【拼音系統】：台語注音二式（BPM2）【吳守禮方音符號延伸】
+    【字典編碼】：台語注音二式音標（例：無 = bbor5；床 = cong5；溫 = un1）
+  dependencies:
+    - luna_pinyin
+    - cangjie5
+    - bopomofo
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [中文, 西文]
+  - name: full_shape
+    states: [半角, 全角]
+  - name: simplification
+    states: [漢字, 汉字]
+  - name: ascii_punct
+    states: [，。, ，．]
+  #-----------------------------------------------------------------------------
+  # 【漢字標音選項】控制輸出按鍵 [Enter] 與 [Ctrl+Shift+Enter] 在上屏時，
+  # 【漢字標音】應以何種【注音/拼音系統】標示漢字之讀音。
+  # 【註】options 與 states 依「位置序號」一一對應，兩列表之項目數與排序必須一致。
+  #-----------------------------------------------------------------------------
+  - options:
+      [ key_in_piau_im_sni, key_in_piau_im_tps, key_in_piau_im_tlpa,
+        key_in_piau_im_tlpa_zu_im, key_in_piau_im_tl, key_in_piau_im_poj,
+        key_in_piau_im_bp, key_in_piau_im_bpm2, key_in_piau_im_ipa ]
+    reset: 7
+    states: [ 十五音, 方音符號, 台語音標, 台語音標注音, 台羅拼音, 白話字, 閩拼方案, 台語注音二式, 國際音標 ]
+  #-----------------------------------------------------------------------------
+  # 【音節連接符】控制輸出按鍵 [Enter] 與 [Ctrl+Shift+Enter] 上屏時，
+  # 詞彙（2 個以上音節）之標音，音節與音節之間所使用的連接符號。
+  #-----------------------------------------------------------------------------
+  - options: [ im_zat_hyphen, im_zat_space, im_zat_apos ]
+    reset: 1
+    states: [ 連字號, 空白, 撇號 ]
+
+engine:
+  processors:
+    - lua_processor@aux_commit # 控制【輸入方案】輸出之【漢字格音】格式
+    - lua_processor@jump_select
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    # 反查 affix 須在 abc 之前，否則 Z／C 後的 u、r 等字母會被主方案拼寫切走
+    - affix_segmentor@cangjie5_lookup
+    - affix_segmentor@bopomofo_lookup
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+    - reverse_lookup_translator
+    - reverse_lookup_translator@cangjie5_lookup
+    - reverse_lookup_translator@bopomofo_lookup
+  filters:
+    - simplifier
+    - uniquifier
+    - lua_filter@tsap_peh_im_rev_comment_filter  # 倉頡／注音／拼音反查：改顯示 BPM2
+
+speller:
+  # 7／&：促聲通配（4 或 8）；*：舒聲通配（1/7/3/2/5）；陽去 7 仍用【-】
+  # N：鼻化韻前綴（ann → Na），相容 phing_im_bpm2
+  alphabet: "zyxwvutsrqponmlkjihgfedcbaN;-_\\/[]7&*"
+  initials: zyxwvutsrqponmlkjihgfedcbaN
+  # 僅用撇號分音節。空白若當 delimiter，連打 ban 會被切成 b + an，
+  # 且 Space 無法用來選字。
+  delimiter: "'"
+  algebra:
+    #--------------------------------------------------------------------------
+    # 【零聲母】特別處理：q + 韻母 + 調號，如：qann1, qi1, ...
+    #--------------------------------------------------------------------------
+    - derive/^([aeiou].*\d)$/q$1/
+    - derive/^((?:m|ng)\d)$/q$1/
+    #--------------------------------------------------------------------------
+    # 聲母／韻母輸入相容
+    #--------------------------------------------------------------------------
+    # 齒音：允許以台羅 ts／tsh 輸入 BPM2 的 z／c（字典為 z／c）
+    # - derive/^c/tsh/
+    # - derive/^z(?!z)/ts/
+    #--------------------------------------------------------------------------
+    # 【顎化相容】台羅 z/c/s/j + i 不變；BPM2 須改 j/ch/sh/jj。
+    # 字典已是 BPM2（ji/chi/shi/jji），允許誤打 zi/ci/si/zzi。
+    #--------------------------------------------------------------------------
+    - derive/(^|')jji/$1zzi/        # zzi → jji
+    - derive/(^|')chi/$1ci/         # ci  → chi
+    - derive/(^|')shi/$1si/         # si  → shi
+    - derive/(^|')ji/$1zi/          # zi  → ji（須在 jji 之後）
+    #--------------------------------------------------------------------------
+    # 【鼻韻母】ann / inn / enn / oonn / ainn / iann / iunn / ioonn /
+    #          uann / uainn / iaunn …（及 TL 形 ionn / onn）
+    # 輸入：後綴 nn、按鍵 N（= nn）、前置 n / nn / N
+    # 例：kiunn = kiuN = kniu = knniu = kNiu
+    #     ann = aN = na = nna = Na
+    #--------------------------------------------------------------------------
+    - derive/([iu]?(?:ai|au|oo|[aiueo]))nn/N$1/    # Na、kNiu
+    - derive/([iu]?(?:ai|au|oo|[aiueo]))nn/n$1/    # na、kniu
+    - derive/([iu]?(?:ai|au|oo|[aiueo]))nn/nn$1/   # nna、knniu
+    - derive/nn/N/                                 # aN、kiuN（N 鍵 = nn）
+    # BPM2 韻母亦可打台羅寫法（字典為 BPM2）
+    - derive/iook/iok/           # 恭促
+    - derive/ioonn/ionn/         # 薑
+    - derive/oonn/onn/           # 姑
+    - derive/oom/om/             # 箴舒
+    - derive/oop/op/             # 箴促
+    - derive/iek/ik/             # 經促
+    - derive/iorh/ioh/           # 茄促
+    - derive/ior/io/             # 茄舒
+    - derive/orh/oh/             # 高促
+    - derive/or/o/               # 高舒
+    #--------------------------------------------------------------------------
+    # 【舒聲調模糊】含元音之舒聲 + 調號 1/7/3/2/5 → 通配 *
+    # 例：無 bbor5 → bbor*，一次找出 bbor1／bbor2／bbor3／bbor5／bbor7。
+    # 獨立成音節之鼻音 m／ng（姆、黃）不衍生，否則 sim 會被切成 si+m。
+    #--------------------------------------------------------------------------
+    - derive/(.*[aeiou].*)[17325]$/$1*/
+    #--------------------------------------------------------------------------
+    # 【聲調略去】：只需鍵入【聲】+【韻】，略去【調】，一樣可以輸出漢字。
+    # 【促聲調輸入模糊化】：【促聲韻】+【促聲調模糊符號】（&）= 【促聲韻】+【調號】（4/8）
+    # 使用【按鍵】輸入：【7】，【輸入框】輸出：【&】。
+    #--------------------------------------------------------------------------
+    - derive/(.*[aeiou].*)[17325]$/$1/
+    - derive/([ptkh])[48]$/$1/
+    - abbrev/^m[17325]$/m/
+    - abbrev/^ng[17325]$/ng/
+    #--------------------------------------------------------------------------
+    # 【促聲韻自動修正】： 【舒聲韻】+【入聲調號】（4/8/&）→ 自動更正成【促聲韻】
+    # 例：漢字【不】，BPM2【but4】。鍵入：【bun[】→ but4；或【bun7】→ but&。
+    # 【註】必須在「4/8 → &」與 xlit 之前。最長韻母優先。
+    #--------------------------------------------------------------------------
+    # 鼻化／複合促聲 → 舒聲
+    - derive/uainnh([48])/uainn$1/   # 閂
+    - derive/uaihnn([48])/uainn$1/
+    - derive/iaunnh([48])/iaunn$1/   # 嘄
+    - derive/iauhnn([48])/iaunn$1/
+    - derive/iannh([48])/iann$1/     # 驚
+    - derive/iunnh([48])/iunn$1/     # 牛
+    - derive/ainnh([48])/ainn$1/     # 閒
+    - derive/uinnh([48])/uinn$1/     # 褌
+    - derive/aunnh([48])/aunn$1/     # 爻
+    - derive/auhnn([48])/aunn$1/
+    - derive/ioonnh([48])/ioonn$1/   # 薑
+    - derive/ionnh([48])/ionn$1/
+    - derive/uannh([48])/uann$1/     # 官
+    - derive/annh([48])/ann$1/       # 監
+    - derive/ahnn([48])/ann$1/
+    - derive/ennh([48])/enn$1/       # 更
+    - derive/ehnn([48])/enn$1/
+    - derive/innh([48])/inn$1/       # 梔
+    - derive/ihnn([48])/inn$1/
+    - derive/oonnh([48])/oonn$1/     # 姑
+    - derive/onnh([48])/onn$1/
+    # 塞音／喉塞尾（BPM2 專用韻母在前）
+    - derive/uaih([48])/uai$1/       # 乖
+    - derive/iauh([48])/iau$1/       # 嬌
+    - derive/iook([48])/iong$1/      # 恭（TL: iok）
+    - derive/iak([48])/iang$1/       # 姜
+    - derive/iat([48])/ian$1/        # 堅
+    - derive/iap([48])/iam$1/        # 兼
+    - derive/uat([48])/uan$1/        # 觀
+    - derive/uak([48])/uang$1/       # 光
+    - derive/auh([48])/au$1/         # 交
+    - derive/iah([48])/ia$1/         # 迦
+    - derive/uah([48])/ua$1/         # 瓜
+    - derive/ueh([48])/ue$1/         # 檜／糜
+    - derive/uih([48])/ui$1/         # 規
+    - derive/iorh([48])/ior$1/       # 茄（TL: ioh）
+    - derive/ioh([48])/io$1/
+    - derive/ooh([48])/oo$1/         # 沽
+    - derive/eeh([48])/ee$1/         # 嘉
+    - derive/aih([48])/ai$1/         # 皆
+    - derive/iuh([48])/iu$1/         # 丩
+    - derive/ngh([48])/ng$1/         # 鋼
+    - derive/ok([48])/ong$1/         # 公
+    - derive/ak([48])/ang$1/         # 江
+    - derive/iek([48])/ing$1/        # 經（TL: ik）
+    - derive/ik([48])/ing$1/
+    - derive/ut([48])/un$1/          # 君
+    - derive/ip([48])/im$1/          # 金
+    - derive/it([48])/in$1/          # 巾
+    - derive/ap([48])/am$1/          # 甘
+    - derive/at([48])/an$1/          # 干
+    - derive/oop([48])/oom$1/        # 箴（TL: op）
+    - derive/op([48])/om$1/
+    - derive/orh([48])/or$1/         # 高（TL: oh）
+    - derive/oh([48])/o$1/
+    - derive/uh([48])/u$1/           # 艍
+    - derive/ah([48])/a$1/           # 膠
+    - derive/ih([48])/i$1/           # 居
+    - derive/eh([48])/e$1/           # 伽／稽
+    - derive/mh([48])/m$1/           # 姆
+    #--------------------------------------------------------------------------
+    # 【促聲調模糊】入聲調 4 或 8 → 通配 &
+    #--------------------------------------------------------------------------
+    - derive/[48]$/&/
+    # 將「調符鍵」轉成對映之「調號」
+    # 1;  7-  3_  2\  5/  4[  8]  &7
+    - 'xlit 1732548& ;-_\/[]7'
+
+translator:
+  dictionary: ji_khoo_bpm2
+  prism: tsap_peh_im_bpm2
+  spelling_hints: 5
+  always_show_comments: true
+  preedit_format:
+    #--------------------------------------------------------------------------
+    # 聲調【按鍵】對映之【調號】
+    # - 調號：&，表：聲調值可能為：4或8，使用【按鍵】：7（促聲通配）
+    # - 調號：*，表：聲調值可能為：1/7/3/2/5，使用【按鍵】：*（舒聲通配）
+    #--------------------------------------------------------------------------
+    - 'xlit ;-_\/[]7 ¹⁷³²⁵⁴⁸&'
+    #--------------------------------------------------------------------------
+    # 聲母轉換：輸入碼顯示
+    #--------------------------------------------------------------------------
+    - xform/q/Ø/
+    # 【顎化自動更正】誤打之台羅形顯示為 BPM2
+    - xform/(^|')zzi/$1jji/
+    - xform/(^|')zi/$1ji/
+    - xform/(^|')ci/$1chi/
+    - xform/(^|')si/$1shi/
+    #--------------------------------------------------------------------------
+    # 【促聲韻自動修正】： 【舒聲韻】+【入聲調號】（⁴/⁸/&）→ 自動更正為【促聲韻】
+    # 例：bun[ → but⁴；bun7 → but&。最長韻母優先。
+    #--------------------------------------------------------------------------
+    - xform/uainn(⁴|⁸|&)/uainnh$1/   # 閂
+    - xform/iaunn(⁴|⁸|&)/iaunnh$1/   # 嘄
+    - xform/iong(⁴|⁸|&)/iook$1/      # 恭（BPM2）
+    - xform/iang(⁴|⁸|&)/iak$1/       # 姜
+    - xform/uang(⁴|⁸|&)/uak$1/       # 光
+    - xform/uinn(⁴|⁸|&)/uinnh$1/     # 褌
+    - xform/iann(⁴|⁸|&)/iannh$1/     # 驚
+    - xform/ainn(⁴|⁸|&)/ainnh$1/     # 閒
+    - xform/iunn(⁴|⁸|&)/iunnh$1/     # 牛
+    - xform/uann(⁴|⁸|&)/uannh$1/     # 官
+    - xform/ioonn(⁴|⁸|&)/ioonnh$1/   # 薑
+    - xform/ionn(⁴|⁸|&)/ionnh$1/
+    - xform/aunn(⁴|⁸|&)/aunnh$1/     # 爻
+    - xform/ian(⁴|⁸|&)/iat$1/        # 堅
+    - xform/ong(⁴|⁸|&)/ok$1/         # 公
+    - xform/uai(⁴|⁸|&)/uaih$1/       # 乖
+    - xform/ing(⁴|⁸|&)/iek$1/        # 經（BPM2）
+    - xform/ik(⁴|⁸|&)/iek$1/
+    - xform/uan(⁴|⁸|&)/uat$1/        # 觀
+    - xform/iau(⁴|⁸|&)/iauh$1/       # 嬌
+    - xform/ang(⁴|⁸|&)/ak$1/         # 江
+    - xform/iam(⁴|⁸|&)/iap$1/        # 兼
+    - xform/ann(⁴|⁸|&)/annh$1/       # 監
+    - xform/enn(⁴|⁸|&)/ennh$1/       # 更
+    - xform/inn(⁴|⁸|&)/innh$1/       # 梔
+    - xform/oonn(⁴|⁸|&)/oonnh$1/     # 姑
+    - xform/onn(⁴|⁸|&)/onnh$1/
+    - xform/un(⁴|⁸|&)/ut$1/          # 君
+    - xform/im(⁴|⁸|&)/ip$1/          # 金
+    - xform/ui(⁴|⁸|&)/uih$1/         # 規
+    - xform/an(⁴|⁸|&)/at$1/          # 干
+    - xform/oo(⁴|⁸|&)/ooh$1/         # 沽
+    - xform/ee(⁴|⁸|&)/eeh$1/         # 嘉
+    - xform/ai(⁴|⁸|&)/aih$1/         # 皆
+    - xform/in(⁴|⁸|&)/it$1/          # 巾
+    - xform/am(⁴|⁸|&)/ap$1/          # 甘
+    - xform/ua(⁴|⁸|&)/uah$1/         # 瓜
+    - xform/au(⁴|⁸|&)/auh$1/         # 交
+    - xform/ia(⁴|⁸|&)/iah$1/         # 迦
+    - xform/ue(⁴|⁸|&)/ueh$1/         # 檜／糜
+    - xform/iu(⁴|⁸|&)/iuh$1/         # 丩
+    - xform/ior(⁴|⁸|&)/iorh$1/       # 茄（BPM2）
+    - xform/io(⁴|⁸|&)/iorh$1/
+    - xform/ng(⁴|⁸|&)/ngh$1/         # 鋼
+    - xform/oom(⁴|⁸|&)/oop$1/        # 箴（BPM2）
+    - xform/om(⁴|⁸|&)/oop$1/
+    - xform/or(⁴|⁸|&)/orh$1/         # 高（BPM2）
+    - xform/o(⁴|⁸|&)/orh$1/
+    - xform/u(⁴|⁸|&)/uh$1/           # 艍
+    - xform/a(⁴|⁸|&)/ah$1/           # 膠
+    - xform/i(⁴|⁸|&)/ih$1/           # 居
+    - xform/e(⁴|⁸|&)/eh$1/           # 伽／稽
+    - xform/m(⁴|⁸|&)/mh$1/           # 姆
+    #--------------------------------------------------------------------------
+    # 【鼻韻母符號】輸入框：nn／N／前置 n → ⁿ。候選清單仍為 BPM2（kiunn1）。
+    # 須在促聲 nnh 規則之後，以免 ann⁴ 被先收成 an⁴。
+    #--------------------------------------------------------------------------
+    - xform/N/ⁿ/
+    - xform/nn/ⁿ/
+    - xform/(bb|gg|zz|jj|ch|sh|ng|[bpmgdtkljczsh])n([aiueo])/$1ⁿ$2/
+  comment_format: &tsap_peh_im_comment_format
+    #==========================================================================
+    # 為【侯選清單】之【漢字標音】設定【音節】格式 =【聲母】+【韻母】+【聲調】
+    # 左：BPM2 數值調；右：[聲+韻+調] 十八音切音
+    #--------------------------------------------------------------------------
+    # 反查／詞彙／連打會一次帶來多個音節（如：ggun2 e7），須用 \b 逐音節包裝。
+    # 零聲母先包 ；Ø，其後「聲母＋韻母」不得再配同一碼，否則 iook8／or1
+    # 會變成「恭八][英恭八]」（左欄缺英、多一個 ]）。
+    #==========================================================================
+    # 連打 delimiter 為撇號，先正規化成空白，候選標音不顯示分節符號。
+    # - xform/'/ /
+    # - xform/\s+/ /
+    #--------------------------------------------------------------------------
+    # 零聲母 + 韻化輔音（m/ng）+ 調號，如：m2, ng5
+    - xform/\b((?:m|ng)\d)\b/$1 ;Ø$1/
+    # 零聲母 + 元音/複合／鼻化韻母 + 調號，如：i1, uan2, or5, iook8, ioonn1
+    - xform/\b([iu]?(?:ai|au|oo|[aiueo])[a-z]*\d)\b/$1 ;Ø$1/
+    # 聲母 + 韻母 + 調號（須以輔音聲母起頭；ng／m 僅在其後還有字母時才當聲母）
+    - xform/\b((?:bb|gg|zz|jj|ch|sh|ng(?!\d)|q|[bpdtgkljczsh]|n(?!g)|m(?!\d))[a-z]*\d)\b/$1 ;$1/
+    #================================================================
+    # 聲母轉換：台語注音二式 →【十五音。切音】
+    #================================================================
+    - xform/;bb/\[門;/
+    - xform/;b/\[邊;/
+    - xform/;p/\[頗;/
+    - xform/;m(?!\d)/\[毛;/
+
+    - xform/;d/\[地;/
+    - xform/;t/\[他;/
+    - xform/;n(?!g)/\[耐;/
+    - xform/;l/\[柳;/
+
+    - xform/;gg/\[語;/
+    - xform/;g/\[求;/
+    - xform/;k/\[氣;/
+    - xform/;ng(?!\d)/\[雅;/
+
+    - xform/;jj/\[入;/
+    - xform/;j/\[曾;/
+    - xform/;ch/\[出;/
+    - xform/;sh/\[時;/
+
+    - xform/;zz/\[入;/
+    - xform/;z/\[曾;/
+    - xform/;c/\[出;/
+    - xform/;s/\[時;/
+
+    - xform/;h/\[喜;/
+    - xform/;Ø/\[英;/
+    - xform/;q/\[英;/
+    #================================================================
+    # 韻母轉換：台語注音二式 →【十五音。字母】（BPM2 專用韻母須在台羅形之前）
+    #================================================================
+    - xform/;u(n|t)(\d)/君;$2/
+    - xform/;ia(n|t)(\d)/堅;$2/
+    - xform/;i(m|p)/金;/
+    - xform/;uinnh/褌;/
+    - xform/;uinn/褌;/
+    - xform/;ui(h?)(\d)/規;$2/
+    - xform/;ee(h?)/嘉;/
+    - xform/;a(n|t)(\d)/干;$2/
+    - xform/;o(ng|k)/公;/
+    - xform/;uainn(h?)/閂;/
+    - xform/;uai(h?)/乖;$2/
+    - xform/;iek/經;/              # BPM2 經促（須在 i(ng|k) 之前）
+    - xform/;i(ng|k)/經;/
+    - xform/;ua(ng|k)(\d)/光;$2/
+    - xform/;ua(n|t)(\d)/觀;$2/
+    - xform/;oo(h?)(\d)/沽;$2/
+    - xform/;ou(h?)(\d)/沽;$2/
+    - xform/;iau(h?)(\d)/嬌;$2/
+    - xform/;ei/稽;/
+    - xform/;ioonn(h?)/薑;/        # BPM2 薑
+    - xform/;ionn(h?)/薑;/
+    - xform/;iook/恭;/             # BPM2 恭促
+    - xform/;io(ng|k)/恭;/
+    - xform/;ior(h?)(\d)/茄;$2/    # BPM2 茄
+    - xform/;io(h?)(\d)/茄;$2/
+    - xform/;or(h?)(\d)/高;$2/     # BPM2 高（須在 o 之前）
+    # - xform/;o(h?)(\d)/高;$2/
+    - xform/;ai(\d)/皆;$1/
+    - xform/;i(n|t)(\d)/巾;$2/
+    - xform/;ia(ng|k)/姜;/
+    - xform/;a(m|p)/甘;/
+    - xform/;ua(h?)(\d)/瓜;$2/
+    - xform/;a(ng|k)/江;/
+    - xform/;ia(m|p)/兼;/
+    - xform/;au(h?)(\d)/交;$2/
+    - xform/;ia(h?)(\d)/迦;$2/
+    - xform/;ue(h?)(\d)/檜;$2/
+    - xform/;ann(h?)/監;/
+    - xform/;u(h?)(\d)/艍;$2/
+    - xform/;a(h?)(\d)/膠;$2/
+    - xform/;i(h?)(\d)/居;$2/
+    - xform/;iu(\d)/丩;$1/
+    - xform/;enn(h?)/更;/
+    - xform/;inn(h?)/梔;/
+    - xform/;iann/驚;/
+    - xform/;uann/官;/
+    - xform/;e(h?)(\d)/伽;$2/
+    - xform/;ainn(h?)/閒;/
+    - xform/;oonn/姑;/             # BPM2 姑
+    - xform/;ounn/姑;/
+    - xform/;uenn/糜;/
+    - xform/;iaunn(h?)/嘄;/
+    - xform/;oom/箴;/              # BPM2 箴舒
+    - xform/;oop/箴;/              # BPM2 箴促
+    - xform/;o(m|p)/箴;/
+    - xform/;aunn/爻;/
+    - xform/;onn(h?)/扛;/
+    - xform/;iunn/牛;/
+    - xform/;m(\d)/姆;$1/
+    - xform/;ng(\d)/鋼;$1/
+    #================================================================
+    # 音調轉換：聲調轉換成【十五音。八音】
+    #================================================================
+    - xform/;1/一\]/   # 上平
+    - xform/;2/二\]/   # 上上
+    - xform/;3/三\]/   # 上去
+    - xform/;4/四\]/   # 上入
+    - xform/;5/五\]/   # 下平
+    - xform/;7/七\]/   # 下去
+    - xform/;8/八\]/   # 下入
+    #================================================================
+    # 其它處理（左欄保留 BPM2 數值調，僅清零聲母 q）
+    #================================================================
+    - xform/q//
+
+# 反查（` 漢語拼音／C 倉頡／Z 注音符號）以 Space 上屏時，由 lua aux_commit
+# 把候選註解中的 BPM2 寫入 ji_khoo_bpm2 用戶詞典（常用字／連續反查成詞）。
+reverse_lookup:
+  dictionary: luna_pinyin
+  prefix: "`"
+  suffix: "'"
+  tips: 〔漢語拼音〕
+  preedit_format:
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+  comment_format:
+    *tsap_peh_im_comment_format
+
+cangjie5_lookup:
+  tag: cangjie5_lookup
+  dictionary: cangjie5
+  enable_completion: true
+  overwrite_comment: false
+  always_show_comments: true
+  prefix: "C"
+  suffix: "'"
+  tips: 〔倉頡五代〕
+  preedit_format:
+    - xlit|abcdefghijklmnopqrstuvwxyz~|日月金木水火土竹戈十大中一弓人心手口尸廿山女田難卜符～|
+  comment_format:
+    *tsap_peh_im_comment_format
+
+bopomofo_lookup:
+  tag: bopomofo_lookup
+  dictionary: terra_pinyin
+  prism: bopomofo
+  enable_completion: true
+  overwrite_comment: false
+  always_show_comments: true
+  prefix: "Z"
+  suffix: "'"
+  tips: 〔注音符號〕
+  preedit_format:
+    - "xlit|1qaz2wsxedcrfv5tgbyhnujm8ik,9ol.0p;/- 6347'|ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˉˊˇˋ˙ |"
+  comment_format:
+    *tsap_peh_im_comment_format
+
+menu:
+  alternative_select_keys: "GHJKL"
+  alternative_select_labels: [ G, H, J, K, L ]
+  page_size: 5
+
+punctuator:
+  # 基底為 RIME symbols；成對括號見 keymap_symbols.yaml
+  # （不可在此直接覆蓋 pair，會與 symbols 型別衝突而部署失敗）
+  import_preset: keymap_symbols
+
+key_binder:
+  import_preset: default
+  bindings:
+    #---------------------------------------------------
+    # 調號鍵必須覆寫 default：has_menu 時 minus 預設為 Page_Up，
+    # 不覆寫則候選一出現就無法輸入第七調【-】。
+    #---------------------------------------------------
+    - { when: composing, accept: underscore, send: underscore }
+    - { when: has_menu, accept: underscore, send: underscore }
+    - { when: composing, accept: minus, send: minus }
+    - { when: has_menu, accept: minus, send: minus }
+    - { when: composing, accept: period, send: period }
+    - { when: has_menu, accept: period, send: period }
+    # 注音反查：逗號為 ㄝ、分號為 ㄤ（否則 has_menu 時可能被當標點／翻頁）
+    - { when: composing, accept: comma, send: comma }
+    - { when: has_menu, accept: comma, send: comma }
+    - { when: composing, accept: semicolon, send: semicolon }
+    - { when: has_menu, accept: semicolon, send: semicolon }
+    #---------------------------------------------------
+    # 【7】／【&】：促聲調通配（4 或 8）。陽去仍用【-】。
+    #---------------------------------------------------
+    - { when: composing, accept: "7", send: "7" }
+    - { when: has_menu, accept: "7", send: "7" }
+    - { when: composing, accept: "Shift+7", send: "7" }
+    - { when: has_menu, accept: "Shift+7", send: "7" }
+    - { when: composing, accept: "&", send: "7" }
+    - { when: has_menu, accept: "&", send: "7" }
+    #---------------------------------------------------
+    # 【*】：舒聲調通配（1/7/3/2/5）。Shift+8 即 asterisk。
+    #---------------------------------------------------
+    - { when: composing, accept: asterisk, send: asterisk }
+    - { when: has_menu, accept: asterisk, send: asterisk }
+    - { when: composing, accept: "Shift+8", send: asterisk }
+    - { when: has_menu, accept: "Shift+8", send: asterisk }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+    #---------------------------------------------------
+    - { when: always, accept: "Control+m", toggle: dict_mode }
+
+editor:
+  bindings:
+    Return: commit_composition
+    Control+Return: commit_raw_input
+    Shift+Return: commit_script_text
+    # Control+Shift+Return 由 lua_processor@aux_commit 攔截
+
+recognizer:
+  import_preset: default
+  patterns:
+    punct: '^/([0-9]0?|[A-Za-z]+)$'
+    reverse_lookup: "`[-/,.;0-9a-z]*'?$"
+    cangjie5_lookup: "C[-/,.;0-9a-z]*'?$"
+    bopomofo_lookup: "Z[-/,.;0-9a-z]*'?$"
+    # 排除 C／Z（反查）與 N（鼻化韻前綴），避免被當成大寫直出
+    uppercase: "^[ABD-MO-Y][-_+.'0-9ABD-MO-Ya-z]*$"

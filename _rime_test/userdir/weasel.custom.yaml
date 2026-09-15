@@ -1,0 +1,59 @@
+customization:
+  distribution_code_name: Weasel
+  distribution_version: 0.16.0
+  generator: "Weasel::UIStyleSettings"
+  modified_time: "Tue May 21 13:16:43 2024"
+  rime_version: 1.11.2
+patch:
+  # 將內嵌編碼關閉，讓輸入編輯列回到 Rime 自己的 UI 面板上顯示，這樣就能完美套用 Rime 自己的字型設定
+  "style/inline_preedit": false
+  # 候選視窗：每頁 5 個（前端設定，會覆蓋 schema 的 menu.page_size）
+  "style/horizontal": false
+  "style/page_size": 5
+  # 字型與外觀
+  "style/display_tray_icon": true  # 顯示托盤圖標
+
+  # 設定 Rime 輸入編輯列及候選字的字型（支援多字型 fallback，首選微軟正黑體）
+  # "style/font_face": "Microsoft JhengHei, Noto Serif TC"
+  "style/font_face": "Noto Serif TC, Microsoft JhengHei"
+  "style/font_point": 28
+  # "style/comment_font_face": "霞鶩文楷 TC"
+  "style/comment_font_face": "Sarasa Fixed TC, 霞鶩文楷 TC"
+  "style/comment_font_size": 18
+  # 若要同時套用配色：
+  # "style/color_scheme": "starcraft"
+  "key_binder/bindings":
+    # 輸入【中音調】，在台羅拼音為聲調 7
+    # - { when: has_menu, accept: minus, send: minus }           # 確保 `-` 鍵用於聲調 7
+    # - { accept: minus, send: minus, when: composing }          # 確保 `-` 鍵用於聲調 7
+    # - { accept: minus, send: minus, when: always }             # 確保 `-` 鍵用於聲調 7
+    - { when: composing, accept: minus,  send: minus }   # 調號 7
+    - { when: has_menu,  accept: minus,  send: minus }
+    # 翻頁（Page_Up=上一頁、Page_Down=下一頁）
+    - { when: has_menu, accept: "Control+p", send: Page_Up }
+    - { when: has_menu, accept: "Control+n", send: Page_Down }
+    #---------------------------------------------------
+    # Vim Mode
+    #---------------------------------------------------
+    - { when: has_menu, accept: "Control+h", send: Page_Up }
+    - { when: has_menu, accept: "Control+l", send: Page_Down }
+    - { when: has_menu, accept: "Control+k", send: Up }
+    - { when: has_menu, accept: "Control+j", send: Down }
+
+  # 切換器熱鍵（示範修正語法與破損的行）
+  "switcher/hotkeys":
+    - "Control+o"
+    - "Control+n"
+    - "Control+grave"
+
+  "preset_color_schemes/starcraft":  # 在配色方案列表裏加入標識爲 starcraft 的新方案
+    name: 星際我爭霸／StarCraft
+    author: Contralisk <contralisk@gmail.com>, original artwork by Blizzard Entertainment
+    text_color: 0xccaa88             # 編碼行文字顏色，24位色值，用十六進制書寫方便些，順序是藍綠紅0xBBGGRR
+    candidate_text_color: 0x30bb55   # 候選項文字顏色，當與文字顏色不同時指定
+    back_color: 0x000000             # 底色
+    border_color: 0x1010a0           # 邊框顏色，與底色相同則爲無邊框的效果
+    hilited_text_color: 0xfecb96     # 高亮文字，即與當前高亮候選對應的那部份輸入碼
+    hilited_back_color: 0x000000     # 設定高亮文字的底色，可起到凸顯高亮部份的作用
+    hilited_candidate_text_color: 0x60ffa8  # 高亮候選項的文字顏色，要醒目！
+    hilited_candidate_back_color: 0x000000  # 高亮候選項的底色，若與背景色不同就會顯出光棒是 Ctrl+` 而是與 IBus 一致的表示法
