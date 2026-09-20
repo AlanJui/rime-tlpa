@@ -65,3 +65,4 @@ ji_khoo_sni_TaiGi_PehUeSu.dict.yaml
 # --- 十八音輸入法 ---
 tsap_peh_im_tl.schema.yaml
 tsap_peh_im_bpm2.schema.yaml
+tsap_peh_im_tps.schema.yaml

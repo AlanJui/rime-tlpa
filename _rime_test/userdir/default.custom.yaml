@@ -25,3 +25,4 @@ patch:
     - {schema: ngst_bbun}
     - {schema: tsap_peh_im_tl}
     - {schema: tsap_peh_im_bpm2}
+    - {schema: tsap_peh_im_tps}

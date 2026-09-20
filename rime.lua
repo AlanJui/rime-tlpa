@@ -983,19 +983,22 @@ local function parse_tsap_peh_im_tl_comment(comment)
 	roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
 	if roman ~= "" then
 		for _, syl in ipairs(split_syllable_tokens(roman)) do
-			local tlpa
-			if looks_like_tl_numeric_syllable(syl) then
-				tlpa = syl
-			else
-				local ok, converted = pcall(tl_diac_to_tlpa, syl)
-				if ok and type(converted) == "string" then
-					tlpa = converted
+			-- 方音符號音節（無拉丁字母）不是台羅，改由 [聲韻調] 還原
+			if syl:match("[A-Za-z]") then
+				local tlpa
+				if looks_like_tl_numeric_syllable(syl) then
+					tlpa = syl
+				else
+					local ok, converted = pcall(tl_diac_to_tlpa, syl)
+					if ok and type(converted) == "string" then
+						tlpa = converted
+					end
 				end
-			end
-			if type(tlpa) == "string" and tlpa ~= "" then
-				-- comment_format 將更韻 enn 寫成 eenn 以便標調
-				tlpa = tlpa:gsub("eenn", "enn")
-				table.insert(result, tlpa)
+				if type(tlpa) == "string" and tlpa ~= "" then
+					-- comment_format 將更韻 enn 寫成 eenn 以便標調
+					tlpa = tlpa:gsub("eenn", "enn")
+					table.insert(result, tlpa)
+				end
 			end
 		end
 		if #result > 0 then
@@ -1406,10 +1409,12 @@ local function aux_commit_func(key, env)
 				log.info("[aux_commit] sip_ngoo_im_tl raw=[" .. v .. "]")
 			end
 
-		elseif schema_id == "tsap_peh_im_tl" or schema_id == "tsap_peh_im_bpm2" then
-			-- 十八音：候選註解為「羅馬字 + [聲韻調]」（例：tshông [出公五]、bbor5 [門高五]）。
-			-- tsap_peh_im_tl 字典為台羅；tsap_peh_im_bpm2 字典為 BPM2，左欄數值調須先還原為 TLPA。
-			-- 若左欄缺失、改由 [聲韻調] 還原，結果已是 TLPA，不可再做 BPM2→TLPA。
+		elseif schema_id == "tsap_peh_im_tl" or schema_id == "tsap_peh_im_bpm2"
+			or schema_id == "tsap_peh_im_tps" then
+			-- 十八音：候選註解為「標音 + [聲韻調]」
+			-- （例：tshông [出公五]、bbor5 [門高五]、ㄌㄤˊ [柳江五]）。
+			-- tsap_peh_im_tl／tps 字典為台羅；tsap_peh_im_bpm2 字典為 BPM2。
+			-- tps 左欄為方音，[聲韻調] 還原結果已是 TLPA。
 			is_tlpa = true
 			local from_bpm2 = (schema_id == "tsap_peh_im_bpm2")
 			local from_entry = collect_entry_tl_codes(env, cand_list)
@@ -2421,34 +2426,53 @@ end
 
 ------------------------------------------------------------------------------------------
 -- tsap_peh_im_rev_comment_filter：
--- 倉頡／注音／漢語拼音反查時，候選註解改從 ji_khoo_bpm2 反查 BPM2，
--- 避免沿用台羅調符（如 講 → kéng khiáng kóng，應為 gong2 [求公二]）。
+-- 倉頡／注音／漢語拼音反查時，候選註解改從主方案字典反查：
+--   tsap_peh_im_bpm2 → ji_khoo_bpm2（BPM2 + [聲韻調]）
+--   tsap_peh_im_tps  → ji_khoo_tl（方音符號 + [聲韻調]）
 ------------------------------------------------------------------------------------------
+local function sni_bracket_from_tlpa(tlpa)
+	if not _tlpa_conv or type(tlpa) ~= "string" or tlpa == "" then
+		return ""
+	end
+	local ok, sni_rts = pcall(function()
+		return _tlpa_conv.convert(tlpa, "十五音")
+	end)
+	if not ok or type(sni_rts) ~= "string" or sni_rts == "" then
+		return ""
+	end
+	local chars = utf8_chars(sni_rts)
+	if #chars == 3 then
+		local siann = (chars[3] == "去") and "氣" or chars[3]
+		return " [" .. siann .. chars[1] .. chars[2] .. "]"
+	end
+	return ""
+end
+
 local function format_bpm2_tsap_peh_im_comment(code)
 	if type(code) ~= "string" or code == "" then
 		return ""
 	end
 	local tlpa = bpm2_to_tlpa(code)
-	local sni_rts = nil
-	if _tlpa_conv then
-		local ok, s = pcall(function()
-			return _tlpa_conv.convert(tlpa, "十五音")
-		end)
-		if ok then
-			sni_rts = s
-		end
-	end
-	if type(sni_rts) == "string" and sni_rts ~= "" then
-		local chars = utf8_chars(sni_rts)
-		if #chars == 3 then
-			local siann = (chars[3] == "去") and "氣" or chars[3]
-			return code .. " [" .. siann .. chars[1] .. chars[2] .. "]"
-		end
+	local sni = sni_bracket_from_tlpa(tlpa)
+	if sni ~= "" then
+		return code .. sni
 	end
 	return code
 end
 
-local function collect_unique_bpm2_codes(raw)
+local function format_tps_tsap_peh_im_comment(code)
+	if type(code) ~= "string" or code == "" then
+		return ""
+	end
+	local tps = convert_tl_to_tps(code)
+	local sni = sni_bracket_from_tlpa(code)
+	if type(tps) == "string" and tps ~= "" then
+		return tps .. sni
+	end
+	return code .. sni
+end
+
+local function collect_unique_numeric_codes(raw)
 	local codes, seen = {}, {}
 	if type(raw) ~= "string" then
 		return codes
@@ -2464,19 +2488,29 @@ end
 
 tsap_peh_im_rev_comment_filter = {
 	init = function(env)
-		env.bpm2_rev = nil
-		if env.engine.schema.schema_id ~= "tsap_peh_im_bpm2" then
-			return
-		end
-		local ok, rev = pcall(function()
-			return ReverseLookup("ji_khoo_bpm2")
-		end)
-		if ok then
-			env.bpm2_rev = rev
+		env.rev_dict = nil
+		env.rev_kind = nil
+		local sid = env.engine.schema.schema_id
+		if sid == "tsap_peh_im_bpm2" then
+			env.rev_kind = "bpm2"
+			local ok, rev = pcall(function()
+				return ReverseLookup("ji_khoo_bpm2")
+			end)
+			if ok then
+				env.rev_dict = rev
+			end
+		elseif sid == "tsap_peh_im_tps" then
+			env.rev_kind = "tps"
+			local ok, rev = pcall(function()
+				return ReverseLookup("ji_khoo_tl")
+			end)
+			if ok then
+				env.rev_dict = rev
+			end
 		end
 	end,
 	func = function(input, env)
-		if env.engine.schema.schema_id ~= "tsap_peh_im_bpm2" then
+		if not env.rev_kind then
 			for cand in input:iter() do
 				yield(cand)
 			end
@@ -2504,12 +2538,12 @@ tsap_peh_im_rev_comment_filter = {
 
 		for cand in input:iter() do
 			local codes = {}
-			if env.bpm2_rev then
+			if env.rev_dict then
 				local ok, raw = pcall(function()
-					return env.bpm2_rev:lookup(cand.text or "")
+					return env.rev_dict:lookup(cand.text or "")
 				end)
 				if ok then
-					codes = collect_unique_bpm2_codes(raw)
+					codes = collect_unique_numeric_codes(raw)
 				end
 			end
 			if #codes == 0 then
@@ -2525,11 +2559,12 @@ tsap_peh_im_rev_comment_filter = {
 						end
 					end
 					if type(num) == "string" and num ~= "" then
-						-- 反查殘留台羅調符／台羅聲母時，還原為 BPM2
-						if not looks_like_tl_numeric_syllable(syl) or num:match("^tsh")
-							or num:match("^ts") or num:match("^kh") or num:match("^th")
-							or num:match("^ph") then
-							num = tlpa_to_bpm2(num)
+						if env.rev_kind == "bpm2" then
+							if not looks_like_tl_numeric_syllable(syl) or num:match("^tsh")
+								or num:match("^ts") or num:match("^kh") or num:match("^th")
+								or num:match("^ph") then
+								num = tlpa_to_bpm2(num)
+							end
 						end
 						table.insert(codes, num)
 					end
@@ -2538,7 +2573,12 @@ tsap_peh_im_rev_comment_filter = {
 
 			local parts = {}
 			for _, code in ipairs(codes) do
-				local formatted = format_bpm2_tsap_peh_im_comment(code)
+				local formatted
+				if env.rev_kind == "tps" then
+					formatted = format_tps_tsap_peh_im_comment(code)
+				else
+					formatted = format_bpm2_tsap_peh_im_comment(code)
+				end
 				if formatted ~= "" then
 					table.insert(parts, formatted)
 				end

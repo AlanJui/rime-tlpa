@@ -1,3 +1,7 @@
-2026/09/13-10:46:41.462000 49568 Recovering log #132
-2026/09/13-10:46:41.485000 49568 Delete type=0 #132
-2026/09/13-10:46:41.485000 49568 Delete type=3 #131
+2026/09/20-20:57:39.175000 28140 Log #201: 0 ops saved to Table #204 OK
+2026/09/20-20:57:39.179000 28140 Archiving c:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb/000201.log: OK
+2026/09/20-20:57:39.179000 28140 Log #203: 0 ops saved to Table #205 OK
+2026/09/20-20:57:39.180000 28140 Archiving c:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb/000203.log: OK
+2026/09/20-20:57:39.180000 28140 Table #5: 5 entries OK
+2026/09/20-20:57:39.183000 28140 Archiving c:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb/MANIFEST-000200: OK
+2026/09/20-20:57:39.197000 28140 **** Repaired leveldb c:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb; recovered 1 files; 252 bytes. Some data may have been lost. ****
