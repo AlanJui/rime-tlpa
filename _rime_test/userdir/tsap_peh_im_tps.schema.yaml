@@ -10,7 +10,7 @@
 schema:
   schema_id: tsap_peh_im_tps
   name: 十八音【方音符號】
-  version: "v0.0.1"
+  version: "v0.0.2"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -247,8 +247,8 @@ translator:
   initial_quality: 0.75
   preedit_format:
     - xform/'/ /
-    # 按鍵 → 方音符號（含調名／入／゜）
-    - xlit|!1qa2wsxeEdNcyYhnrRfv8ujK,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7-|ㆠㄅㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄗㆡㄘㄙㄐㆢㄑㄒㄚㄧㄨㆨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ一七三二五八四入゜|
+    # 按鍵 → 方音符號（含調名／入／゜）；須加引號，否則 YAML 會把 : 當成映射
+    - "xlit|!1qa2wsxeEdNcyYhnrRfv8ujK,ikmp/btgz9lM0;Oo*UJ<I(L:5346][7-|ㆠㄅㄆㄇㄉㄊㄋㄌㄍㆣㄎㄫㄏㄗㆡㄘㄙㄐㆢㄑㄒㄚㄧㄨㆨㆤㆦㄜㆬㄣㆭㆴㆵㆻㆷㄞㄠㆰㄢㄤㆱㆲㆩㆪㆫㆥㆧㆮㆯ一七三二五八四入゜|"
     # 入聲尾亦可用聲母鍵 ㄅ／ㄉ／ㄍ／ㄏ 代替 ㆴ／ㆵ／ㆻ／ㆷ
     - xform/ㄅ(四|八|入)$/ㆴ$1/
     - xform/ㄉ(四|八|入)$/ㆵ$1/
@@ -324,8 +324,8 @@ translator:
     - xform/ㄗ(ㄧ|ㆪ)/ㄐ$1/
     - xform/ㄘ(ㄧ|ㆪ)/ㄑ$1/
     - xform/ㄙ(ㄧ|ㆪ)/ㄒ$1/
-    # 調號：陰平／陰入無標；7＝入 保留「入」
-    - xform/一//
+    # 調號：陰平 ˉ（不可刪「一」，否則 : 看起來像沒打進去）；陰入無標；7＝入 保留「入」
+    - xform/一/ˉ/
     - xform/七/˫/
     - xform/三/˪/
     - xform/二/ˋ/
@@ -613,12 +613,24 @@ bopomofo_lookup:
     *tsap_peh_im_comment_format
 
 menu:
-  alternative_select_keys: "GHJKL"
-  alternative_select_labels: [ G, H, J, K, L ]
+  # alternative_select_keys: "GHJKL"
+  # alternative_select_labels: [ G, H, J, K, L ]
+  alternative_select_labels: [①, ②, ③, ④, ⑤] # 修改候選標籤
   page_size: 5
 
 punctuator:
   import_preset: keymap_symbols
+
+# 陰平鍵是 Shift+;（:）。預設 Shift_L＝inline_ascii 會把 Shift 吃掉，: 進不了拼寫。
+ascii_composer:
+  good_old_caps_lock: true
+  switch_key:
+    Shift_L: noop
+    Shift_R: commit_text
+    Control_L: noop
+    Control_R: noop
+    Caps_Lock: clear
+    Eisu_toggle: clear
 
 key_binder:
   import_preset: default
@@ -627,6 +639,11 @@ key_binder:
     - { when: composing, accept: minus, send: minus }
     - { when: has_menu, accept: minus, send: minus }
     # 調號：: 一／3 三／4 二／5 七／6 五／[ 四／] 八／7 入
+    # Weasel 按 : 常送出 Shift+semicolon，不是 colon；不轉送則會變成韻母鍵 ;＝ㄤ
+    - { when: composing, accept: "Shift+semicolon", send: colon }
+    - { when: has_menu, accept: "Shift+semicolon", send: colon }
+    - { when: composing, accept: "Shift+colon", send: colon }
+    - { when: has_menu, accept: "Shift+colon", send: colon }
     - { when: composing, accept: colon, send: colon }
     - { when: has_menu, accept: colon, send: colon }
     - { when: composing, accept: "3", send: "3" }

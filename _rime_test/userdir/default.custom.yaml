@@ -2,7 +2,7 @@ customization:
   distribution_code_name: Weasel
   distribution_version: 0.17.4
   generator: "Rime::SwitcherSettings"
-  modified_time: "Sat Sep 12 20:49:36 2026"
+  modified_time: "Sun Sep 20 21:08:43 2026"
   rime_version: 1.13.1
 patch:
   "log/level": info
@@ -25,4 +25,7 @@ patch:
     - {schema: ngst_bbun}
     - {schema: tsap_peh_im_tl}
     - {schema: tsap_peh_im_bpm2}
+    - {schema: mps2}
+    - {schema: terra_pinyin_12345}
+    - {schema: sip_ngoo_im_tl}
     - {schema: tsap_peh_im_tps}
