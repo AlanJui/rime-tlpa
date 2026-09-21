@@ -10,7 +10,7 @@
 schema:
   schema_id: tsap_peh_im_tps
   name: 十八音【方音符號】
-  version: "v0.0.3"
+  version: "v0.0.4"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -21,6 +21,7 @@ schema:
     【字典編碼】：台羅拼音（例：人 = lang5；腔 = khiunn1）
     【輸入框】：方音符號（鼻韻前置符 ゜；舒聲韻接入聲調時自動改促聲韻）
     【候選清單】：方音符號 + [聲+韻+調]（例：ㄌㄤˊ [柳江五]）
+    【標點】：` 再按鍵（例：`, → ，）。【反查】：X 漢語拼音／C 倉頡／Z 注音
   dependencies:
     - luna_pinyin
     - cangjie5
@@ -65,7 +66,8 @@ engine:
   segmentors:
     - ascii_segmentor
     - matcher
-    # 反查 affix 須在 abc 之前，否則 C／Z 後的字母會被主方案拼寫切走
+    # 反查 affix 須在 abc 之前，否則 X／C／Z 後的字母會被主方案拼寫切走
+    - affix_segmentor@reverse_lookup
     - affix_segmentor@cangjie5_lookup
     - affix_segmentor@bopomofo_lookup
     - abc_segmentor
@@ -596,11 +598,13 @@ translator:
     - xform/;8/八\]/
 
 reverse_lookup:
+  tag: reverse_lookup
   dictionary: luna_pinyin
-  prefix: "`"
+  prefix: "X"
   suffix: "'"
   tips: 〔漢語拼音〕
   preedit_format:
+    - xform/^X//
     - xform/([nl])v/$1ü/
     - xform/([nl])ue/$1üe/
     - xform/([jqxy])v/$1u/
@@ -643,7 +647,9 @@ menu:
   page_size: 5
 
 punctuator:
-  import_preset: keymap_symbols
+  # 方音鍵佔用 , ; . [ ] 等，無法像拼音方案直接出全形標點。
+  # 與 zu_im_tps 相同：先按 ` 再按標點（`, → ，）。
+  import_preset: keymap_piau_tian
 
 # 陰平鍵是 Shift+;（:）。預設 Shift_L＝inline_ascii 會把 Shift 吃掉，: 進不了拼寫。
 ascii_composer:
@@ -714,13 +720,14 @@ editor:
 recognizer:
   import_preset: default
   patterns:
-    punct: '^/([0-9]0?|[A-Za-z]+)$'
-    reverse_lookup: "`[-/,.;0-9a-z]*'?$"
+    # ` 觸發標點（`, → ，）；/ 為韻母ㆭ，不能再用 /fh
+    punct: '`[^\s]$'
+    reverse_lookup: "X[-/,.;0-9a-z]*'?$"
     cangjie5_lookup: "C[-/,.;0-9a-z]*'?$"
     bopomofo_lookup: "Z[-/,.;0-9a-z]*'?$"
-    # 排除反查前綴 C／Z，以及方音鍵之英文大寫（E N Y R K M O U J I L），
+    # 排除反查前綴 X／C／Z，以及方音鍵之英文大寫（E N Y R K M O U J I L），
     # 否則連打第二音節若以ㆣ／ㆡ／ㄫ…起頭會被當成英文。
-    uppercase: "^[ABDFGHPQSTVWX][-_+.'0-9ABDFGHPQSTVWXa-z]*$"
+    uppercase: "^[ABDFGHPQSTVW][-_+.'0-9ABDFGHPQSTVWa-z]*$"
 
 style:
   horizontal: false
