@@ -10,7 +10,7 @@
 schema:
   schema_id: tsap_peh_im_tps
   name: 十八音【方音符號】
-  version: "v0.0.3"
+  version: "v0.0.4"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>

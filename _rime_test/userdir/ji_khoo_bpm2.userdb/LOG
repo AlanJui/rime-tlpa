@@ -1,3 +1,10 @@
-2026/09/13-11:49:11.683000 47640 Recovering log #240
-2026/09/13-11:49:11.702000 47640 Delete type=0 #240
-2026/09/13-11:49:11.702000 47640 Delete type=3 #239
+2026/09/21-14:25:14.185000 25288 Log #242: 0 ops saved to Table #249 OK
+2026/09/21-14:25:14.187000 25288 Archiving C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_bpm2.userdb/000242.log: OK
+2026/09/21-14:25:14.187000 25288 Log #248: 0 ops saved to Table #250 OK
+2026/09/21-14:25:14.189000 25288 Archiving C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_bpm2.userdb/000248.log: OK
+2026/09/21-14:25:14.191000 25288 Table #127: 8 entries OK
+2026/09/21-14:25:14.201000 25288 Table #131: 2 entries OK
+2026/09/21-14:25:14.202000 25288 Table #136: 2 entries OK
+2026/09/21-14:25:14.205000 25288 Archiving C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_bpm2.userdb/MANIFEST-000241: OK
+2026/09/21-14:25:14.207000 25288 Archiving C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_bpm2.userdb/MANIFEST-000247: OK
+2026/09/21-14:25:14.220000 25288 **** Repaired leveldb C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_bpm2.userdb; recovered 3 files; 639 bytes. Some data may have been lost. ****

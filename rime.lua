@@ -2460,16 +2460,30 @@ local function format_bpm2_tsap_peh_im_comment(code)
 	return code
 end
 
+local function comment_has_latin(s)
+	return type(s) == "string" and s:match("[A-Za-z]") ~= nil
+end
+
 local function format_tps_tsap_peh_im_comment(code)
 	if type(code) ~= "string" or code == "" then
 		return ""
 	end
+	-- 主詞典為台羅；若混入注音二式（如 打 dah4），TL 轉換會留下拉丁字母。
 	local tps = convert_tl_to_tps(code)
-	local sni = sni_bracket_from_tlpa(code)
+	local sni_src = code
+	if comment_has_latin(tps) then
+		tps = convert_bpm2_to_tps(code)
+		sni_src = bpm2_to_tlpa(code)
+	end
+	-- 寧可略過該音節，也不在方音方案露出 BPM2／TL 字母
+	if comment_has_latin(tps) then
+		return ""
+	end
+	local sni = sni_bracket_from_tlpa(sni_src)
 	if type(tps) == "string" and tps ~= "" then
 		return tps .. sni
 	end
-	return code .. sni
+	return sni
 end
 
 local function collect_unique_numeric_codes(raw)
