@@ -10,7 +10,7 @@
 schema:
   schema_id: tsap_peh_im_tps
   name: 十八音【方音符號】
-  version: "v0.0.6"
+  version: "v0.0.7"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -248,6 +248,7 @@ speller:
     #--------------------------------------------------------------------------
     # 地方腔相容
     #--------------------------------------------------------------------------
+    - xform/ere/e/ # 老泉腔 ere [əe] 收成 e，與 e 同鍵（,）
     - derive/er(ng|k)/i$1/
     - derive/er(n|t)/u$1/
     - derive/er/e/
@@ -334,7 +335,9 @@ translator:
     # - xform/ㆫㄚ/ㄨㆩ/
     # - xform/ㆫㄞ/ㄨㆮ/
     # 韻母調整
-    - xform/ㄧㆭ/ㄧㄥ/
+    # 老泉腔 ere：鍵 r 不在方音 xlit，輸入框會留下 r，收成 ㆤ
+    - xform/ㄜr/ㆤ/
+    - xform/ㆤr/ㆤ/
     - xform/ㄚㄧ/ㄞ/
     - xform/ㄚㄣ/ㄢ/
     - xform/ㄚㄨ/ㄠ/
@@ -405,6 +408,10 @@ translator:
     - xform/'/ /
     - xform/\s+/ /
     - xform/6/7/
+    # 老泉腔 ere → e，須在音節包裝之前，否則 tere7 會被拆成 te + re
+    - xform/ereh/eh/
+    - xform/ere/e/
+    - xform/er(\d)/e$1/ # 老泉腔殘段 er3 → e3，須在音節包裝之前
     # 零聲母 + 韻化輔音 m／ng（十八音側保留 ;Ø → 英）
     - xform/\b((?:m|ng)\d)\b/【》Ø$1】 ;Ø$1/
     # 零聲母 + 元音／複合／鼻化韻
@@ -525,6 +532,8 @@ translator:
     - xform/》oo/ㆦ》/
     - xform/》eeh/ㄝㆷ》/
     - xform/》ee/ㄝ》/
+    - xform/》ereh/ㆤㆷ》/
+    - xform/》ere/ㆤ》/
     - xform/》eh/ㆤㆷ》/
     - xform/》ei/ㆤ》/
     - xform/》oh/ㄜㆷ》/
