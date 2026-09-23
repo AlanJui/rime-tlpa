@@ -10,7 +10,7 @@
 schema:
   schema_id: tsap_peh_im_tps
   name: 十八音【方音符號】
-  version: "v0.0.7"
+  version: "v0.0.8"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -82,6 +82,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
+    - lua_filter@tsap_peh_im_citation_tone_filter
     - lua_filter@tsap_peh_im_rev_comment_filter
 
 speller:
@@ -102,6 +103,7 @@ speller:
     # 不可寫成連續 derive/1/7/、/7/3/…：後一條會吃到前一條的衍生，
     # 變成 1→7→3→2→1 全通，末字打第 2 調會冒出第 1 調（晏子／置）。
     # 先把本調標成暫記，只從暫記衍生一層，再還原。
+    # 變調與本調同鍵時的排序，見 lua_filter@tsap_peh_im_citation_tone_filter。
     #==========================================================================
     - xform/1$/①/
     - xform/7$/⑦/
@@ -338,21 +340,22 @@ translator:
     # 老泉腔 ere：鍵 r 不在方音 xlit，輸入框會留下 r，收成 ㆤ
     - xform/ㄜr/ㆤ/
     - xform/ㆤr/ㆤ/
-    # 方音符號複合韻母：陽聲韻尾 ㆬ、ㄣ、ㆭ（ㄧㆭ→ㄧㄥ 須在顎化之前）
-    - xform/ㄧㆭ/ㄧㄥ/  # ing
-    - xform/ㄚㆬ/ㆰ/    # am
-    - xform/ㄚㆭ/ㄤ/    # ang
-    - xform/ㆦㆬ/ㆱ/    # om
-    - xform/ㆦㆭ/ㆲ/    # ong
-    # 國/台語注音符號複合韻母
-    - xform/ㄚㄧ/ㄞ/    # ai
-    - xform/ㄚㄣ/ㄢ/    # an
-    - xform/ㄚㄨ/ㄠ/    # au
-    # 聲母校調：ㄙㄧㄥ → ㄒㄧㄥ（生）
+    # 聲母校調（前綴識別）
     - xform/ㆡ((ㄥ)?(ㄧ|ㆪ))/ㆢ$1/
     - xform/ㄗ((ㄥ)?(ㄧ|ㆪ))/ㄐ$1/
     - xform/ㄘ((ㄥ)?(ㄧ|ㆪ))/ㄑ$1/
     - xform/ㄙ((ㄥ)?(ㄧ|ㆪ))/ㄒ$1/
+    # 國/台語注音符號複合韻母
+    - xform/ㄚㄧ/ㄞ/    # ai
+    - xform/ㄚㄣ/ㄢ/    # an
+    - xform/ㄚㄨ/ㄠ/    # au
+    # 方音符號複合韻母：陽聲韻尾 ㆬ、ㄣ、ㆭ
+    # ㄧㆭ 是方音正寫；輸入框改顯示 ㄧㄥ，遷就注音符號的習慣
+    - xform/ㄧㆭ/ㄧㄥ/
+    - xform/ㄚㆬ/ㆰ/    # am
+    - xform/ㄚㆭ/ㄤ/    # ang
+    - xform/ㆦㆬ/ㆱ/    # om
+    - xform/ㆦㆭ/ㆲ/    # ong
     # 【舒聲韻接入聲調】顯示：ㄅㄨㄣ[ → ㄅㄨㆵ；ㄅㄨㄣ7 → ㄅㄨㆵ入
     - xform/ㄨㆮ(四|八|入)/ㄨㆮㆷ$1/
     - xform/ㄧㆯ(四|八|入)/ㄧㄠㆷ$1/

@@ -16,22 +16,26 @@ def dump(rime, sid, label):
         return
     preedit = (ctx.composition.preedit or b"").decode("utf-8", "replace")
     print(f"{label} preedit=[{preedit}]")
-    if ctx.menu.num_candidates:
-        cand = ctx.menu.candidates[0]
+    for i in range(ctx.menu.num_candidates):
+        cand = ctx.menu.candidates[i]
         text = (cand.text or b"").decode("utf-8", "replace")
         comment = (cand.comment or b"").decode("utf-8", "replace")
-        print(f"  1. {text}\t{comment}")
+        print(f"  {i+1}. {text}\t{comment}")
     rime.RimeFreeContext(ctypes.byref(ctx))
 
 
 def main():
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     h.prepare_userdir(False)
-    h.override([os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                             "tsap_peh_im_tps.schema.yaml")])
+    h.override([
+        os.path.join(root, "tsap_peh_im_tps.schema.yaml"),
+        os.path.join(root, "rime.lua"),
+    ])
     os.add_dll_directory(h.WEASEL)
     rime = ctypes.CDLL(os.path.join(h.WEASEL, "rime.dll"))
     rime.RimeCreateSession.restype = c_uint64
     rime.RimeSimulateKeySequence.argtypes = [c_uint64, c_char_p]
+    rime.RimeProcessKey.argtypes = [c_uint64, c_int, c_int]
     rime.RimeSelectSchema.argtypes = [c_uint64, c_char_p]
     rime.RimeGetContext.argtypes = [c_uint64, POINTER(h.RimeContext)]
     rime.RimeDestroySession.argtypes = [c_uint64]
@@ -52,7 +56,7 @@ def main():
         rime.RimeJoinMaintenanceThread()
     sid = rime.RimeCreateSession()
     rime.RimeSelectSchema(sid, b"tsap_peh_im_tps")
-    for keys in ["nu/:", "1jp[nu/:", "vu/:", "1jp["]:
+    for keys in ["nuo5", "yunuo5", "!k5", "!k5e9:1u03"]:
         rime.RimeClearComposition(sid)
         rime.RimeSimulateKeySequence(sid, keys.encode())
         dump(rime, sid, keys)

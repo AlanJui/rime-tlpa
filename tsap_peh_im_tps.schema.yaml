@@ -10,7 +10,7 @@
 schema:
   schema_id: tsap_peh_im_tps
   name: 十八音【方音符號】
-  version: "v0.0.8"
+  version: "v0.0.9"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -82,6 +82,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
+    - lua_filter@tsap_peh_im_citation_tone_filter
     - lua_filter@tsap_peh_im_rev_comment_filter
 
 speller:
@@ -102,6 +103,7 @@ speller:
     # 不可寫成連續 derive/1/7/、/7/3/…：後一條會吃到前一條的衍生，
     # 變成 1→7→3→2→1 全通，末字打第 2 調會冒出第 1 調（晏子／置）。
     # 先把本調標成暫記，只從暫記衍生一層，再還原。
+    # 變調與本調同鍵時的排序，見 lua_filter@tsap_peh_im_citation_tone_filter。
     #==========================================================================
     - xform/1$/①/
     - xform/7$/⑦/

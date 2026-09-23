@@ -2620,6 +2620,107 @@ tsap_peh_im_rev_comment_filter = {
 }
 
 ------------------------------------------------------------------------------------------
+-- 十八音【方音符號】：末字打的是本調。
+-- 變調規則讓別的本調共用同一調鍵（陽平 5、陰平 1 都落到陽去 7），
+-- 注釋仍寫字典本調，所以打「上」siong7 會先看到「菘」[五]、「相」[一]。
+-- 只把【最後一個音節】本調與調鍵一致的候選排前；前面的音節維持口語變調。
+------------------------------------------------------------------------------------------
+local tsap_peh_im_tone_key = {
+	[":"] = "一",
+	["3"] = "三",
+	["4"] = "二",
+	["5"] = "七",
+	["6"] = "五",
+	["]"] = "八",
+	["["] = "四",
+}
+
+local function tsap_peh_im_last_bracket_tone(comment)
+	local last
+	for inner in (comment or ""):gmatch("%[([^%]]+)%]") do
+		last = nil
+		for _, name in ipairs({ "一", "二", "三", "四", "五", "七", "八" }) do
+			if inner:sub(-#name) == name then
+				last = name
+				break
+			end
+		end
+	end
+	return last
+end
+
+local function tsap_peh_im_is_reverse_lookup(env)
+	local comp = env.engine.context.composition
+	if not comp or comp:empty() then
+		return false
+	end
+	local seg = comp:back()
+	if not seg then
+		return false
+	end
+	local rev = false
+	pcall(function()
+		rev = seg:has_tag("reverse_lookup")
+			or seg:has_tag("cangjie5_lookup")
+			or seg:has_tag("bopomofo_lookup")
+	end)
+	return rev
+end
+
+local function tsap_peh_im_bracket_count(comment)
+	local n = 0
+	for _ in (comment or ""):gmatch("%[") do
+		n = n + 1
+	end
+	return n
+end
+
+function tsap_peh_im_citation_tone_filter(input, env)
+	local ctx = env.engine.context
+	local raw = ctx.input or ""
+	local expect = tsap_peh_im_tone_key[raw:sub(-1)]
+	if not expect or tsap_peh_im_is_reverse_lookup(env) then
+		for cand in input:iter() do
+			yield(cand)
+		end
+		return
+	end
+	-- 詞組候選（兩個以上音節）維持原排序，避免一次取完全部句子而拆壞輸入框。
+	-- 單音節清單才把本調與調鍵一致者提前（上 siong7 先於 菘／相）。
+	local front, back = {}, {}
+	for cand in input:iter() do
+		if tsap_peh_im_bracket_count(cand.comment) >= 2 then
+			for _, c in ipairs(front) do
+				yield(c)
+			end
+			for _, c in ipairs(back) do
+				yield(c)
+			end
+			yield(cand)
+			for rest in input:iter() do
+				yield(rest)
+			end
+			return
+		end
+		local c = cand:get_genuine()
+		local plain = Candidate(c.type, c.start, c._end, c.text, cand.comment or "")
+		plain.preedit = cand.preedit
+		plain.quality = cand.quality
+		if tsap_peh_im_last_bracket_tone(cand.comment) == expect then
+			table.insert(front, plain)
+		else
+			table.insert(back, plain)
+		end
+	end
+	for _, c in ipairs(front) do
+		yield(c)
+	end
+	for _, c in ipairs(back) do
+		yield(c)
+	end
+end
+
+------------------------------------------------------------------------------------------
 -- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
 ------------------------------------------------------------------------------------------
 function supers_indicator(input, env)
