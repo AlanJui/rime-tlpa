@@ -28,7 +28,8 @@ def main():
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     h.prepare_userdir(False)
     h.override([
-        os.path.join(root, "tsap_peh_im_tps.schema.yaml"),
+        os.path.join(root, "tsap_peh_im_tl.schema.yaml"),
+        os.path.join(root, "tsap_peh_im_bpm2.schema.yaml"),
         os.path.join(root, "rime.lua"),
     ])
     os.add_dll_directory(h.WEASEL)
@@ -55,11 +56,35 @@ def main():
     if rime.RimeStartMaintenance(1):
         rime.RimeJoinMaintenanceThread()
     sid = rime.RimeCreateSession()
-    rime.RimeSelectSchema(sid, b"tsap_peh_im_tps")
-    for keys in ["nuo5", "yunuo5", "!k5", "!k5e9:1u03"]:
+    rime.RimeSelectSchema(sid, b"tsap_peh_im_tl")
+    for keys in ["tere", "ter", "tir", "te-"]:
         rime.RimeClearComposition(sid)
         rime.RimeSimulateKeySequence(sid, keys.encode())
         dump(rime, sid, keys)
+        found = False
+        for page in range(6):
+            ctx = h.RimeContext()
+            ctx.data_size = sizeof(h.RimeContext) - sizeof(c_int)
+            if not rime.RimeGetContext(sid, ctypes.byref(ctx)):
+                break
+            hit = None
+            for i in range(ctx.menu.num_candidates):
+                cand = ctx.menu.candidates[i]
+                text = (cand.text or b"").decode("utf-8", "replace")
+                if "白" in text or text == "食":
+                    comment = (cand.comment or b"").decode("utf-8", "replace")
+                    hit = f"  p{page+1}.{i+1} {text}\t{comment}"
+                    found = True
+                    break
+            last = ctx.menu.is_last_page
+            rime.RimeFreeContext(ctypes.byref(ctx))
+            if hit:
+                print(hit)
+            if found or last:
+                break
+            rime.RimeProcessKey(sid, 0xFF56, 0)
+        if not found:
+            print("  (白/食 not in first pages)")
     rime.RimeDestroySession(sid)
     rime.RimeFinalize()
 

@@ -1021,7 +1021,7 @@ local function parse_tsap_peh_im_tl_comment(comment)
 	return result
 end
 
--- 反查上屏（漢語拼音 ` 或 X／倉頡 C／注音 Z）不會經過主方案 translator，
+-- 反查上屏（漢語拼音 X／倉頡 C／注音 Z）不會經過主方案 translator，
 -- Space／GHJKL 只把倉頡或漢語拼音寫進反查 userdb。
 -- 此處從候選註解取出台羅數值調，寫入 ji_khoo_tl 用戶詞典；
 -- 連續反查上屏再組成詞（變＋卦 → 變卦／pian3 kua3）。
@@ -2620,22 +2620,41 @@ tsap_peh_im_rev_comment_filter = {
 }
 
 ------------------------------------------------------------------------------------------
--- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
-------------------------------------------------------------------------------------------
-------------------------------------------------------------------------------------------
--- 十八音【方音符號】：末字打的是本調。
+-- 十八音：末字打的是本調。
 -- 變調規則讓別的本調共用同一調鍵（陽平 5、陰平 1 都落到陽去 7），
--- 注釋仍寫字典本調，所以打「上」siong7 會先看到「菘」[五]、「相」[一]。
+-- 注釋仍寫字典本調，所以打「上」會先看到「菘」[五]、「相」[一]。
 -- 只把【最後一個音節】本調與調鍵一致的候選排前；前面的音節維持口語變調。
+-- 方音調鍵：: 一、5 七、3 三、4 二、6 五、] 八、[ 四
+-- 台羅／注音二式調鍵：; 一、- 七、_ 三、\ 二、/ 五、[ 四、] 八
 ------------------------------------------------------------------------------------------
-local tsap_peh_im_tone_key = {
-	[":"] = "一",
-	["3"] = "三",
-	["4"] = "二",
-	["5"] = "七",
-	["6"] = "五",
-	["]"] = "八",
-	["["] = "四",
+local tsap_peh_im_tone_key_by_schema = {
+	tsap_peh_im_tps = {
+		[":"] = "一",
+		["3"] = "三",
+		["4"] = "二",
+		["5"] = "七",
+		["6"] = "五",
+		["]"] = "八",
+		["["] = "四",
+	},
+	tsap_peh_im_tl = {
+		[";"] = "一",
+		["-"] = "七",
+		["_"] = "三",
+		["\\"] = "二",
+		["/"] = "五",
+		["["] = "四",
+		["]"] = "八",
+	},
+	tsap_peh_im_bpm2 = {
+		[";"] = "一",
+		["-"] = "七",
+		["_"] = "三",
+		["\\"] = "二",
+		["/"] = "五",
+		["["] = "四",
+		["]"] = "八",
+	},
 }
 
 local function tsap_peh_im_last_bracket_tone(comment)
@@ -2680,8 +2699,9 @@ end
 
 function tsap_peh_im_citation_tone_filter(input, env)
 	local ctx = env.engine.context
+	local tone_key = tsap_peh_im_tone_key_by_schema[env.engine.schema.schema_id]
 	local raw = ctx.input or ""
-	local expect = tsap_peh_im_tone_key[raw:sub(-1)]
+	local expect = tone_key and tone_key[raw:sub(-1)]
 	if not expect or tsap_peh_im_is_reverse_lookup(env) then
 		for cand in input:iter() do
 			yield(cand)
@@ -2723,6 +2743,9 @@ function tsap_peh_im_citation_tone_filter(input, env)
 	end
 end
 
+------------------------------------------------------------------------------------------
+-- 在候選註解前加上模式標籤：〔上標〕或〔一般〕
+------------------------------------------------------------------------------------------
 function supers_indicator(input, env)
 	local on = env.engine.context:get_option("supers_tone")
 	local tag = on and "〔上標〕 " or "〔一般〕 "

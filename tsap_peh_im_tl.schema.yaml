@@ -4,7 +4,7 @@
 schema:
   schema_id: tsap_peh_im_tl
   name: 十八音【台羅拼音】
-  version: "v0.0.13"
+  version: "v0.0.16"
   author:
     - 後學 CCC 整理
   description: |
@@ -58,11 +58,13 @@ engine:
   segmentors:
     - ascii_segmentor
     - matcher
+    # 反查 affix 須在 abc 之前，否則 X／C／Z 後的字母會被主方案拼寫切走
+    - affix_segmentor@reverse_lookup
+    - affix_segmentor@cangjie5_lookup
+    - affix_segmentor@bopomofo_lookup
     - abc_segmentor
     - punct_segmentor
     - fallback_segmentor
-    - affix_segmentor@cangjie5_lookup
-    - affix_segmentor@bopomofo_lookup
   translators:
     - punct_translator
     - script_translator
@@ -72,6 +74,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
+    - lua_filter@tsap_peh_im_citation_tone_filter
     # - lua_filter@reformat_comment_filter  # 控制【候選清單】顯示之【漢字標音】
 
 speller:
@@ -82,6 +85,61 @@ speller:
   # 且 Space 無法用來選字。
   delimiter: "'"
   algebra:
+    #==========================================================================
+    # 【閩南話變調規則】
+    # 為字典【本調】多生一層【直接變調】編碼，方便「我手寫我口」。
+    # 不可寫成連續 derive/1/7/、/7/3/…：後一條會吃到前一條的衍生，
+    # 變成 1→7→3→2→1 全通，末字打第 2 調會冒出第 1 調（晏子／置）。
+    # 先把本調標成暫記，只從暫記衍生一層，再還原。
+    # 變調與本調同鍵時的排序，見 lua_filter@tsap_peh_im_citation_tone_filter。
+    # 調鍵：1;  7-  3_  2\  5/  4[  8]
+    #==========================================================================
+    - xform/6/7/
+    - xform/1$/①/
+    - xform/7$/⑦/
+    - xform/3$/③/
+    - xform/2$/②/
+    - xform/5$/⑤/
+    - derive/①$/7/ # 陰平 1 → 變調 7
+    - derive/⑦$/3/ # 陽去 7 → 變調 3
+    - derive/③$/2/ # 陰去 3 → 變調 2
+    - derive/②$/1/ # 陰上 2 → 變調 1
+    - derive/⑤$/7/ # 陽平 5 → 變調 7
+    - xform/①$/1/
+    - xform/⑦$/7/
+    - xform/③$/3/
+    - xform/②$/2/
+    - xform/⑤$/5/
+    #--------------------------------------------------------------------------
+    # 入聲變調規則 (48)：只衍生一層（同舒聲，避免 4↔8 以外再被舒聲規則吃掉）
+    # -h：4→2、8→3（食）、8→4（白，喉塞仍在）；-p/-t/-k：4→8、8→4
+    #--------------------------------------------------------------------------
+    - xform/h4$/h④/
+    - xform/h8$/h⑧/
+    - xform/([ptk])4$/${1}④/
+    - xform/([ptk])8$/${1}⑧/
+    - derive/h④$/h2/          # -h 陰入 4 → 變調 2
+    - derive/h⑧$/h3/          # -h 陽入 8 → 變調 3（食 tsiah3）
+    - derive/h⑧$/h4/          # -h 陽入 8 → 變調 4（白 peh4）
+    - derive/([ptk])④$/${1}8/ # -p/t/k 陰入 4 → 變調 8
+    - derive/([ptk])⑧$/${1}4/ # -p/t/k 陽入 8 → 變調 4
+    - xform/h④$/h4/
+    - xform/h⑧$/h8/
+    - xform/([ptk])④$/${1}4/
+    - xform/([ptk])⑧$/${1}8/
+    #--------------------------------------------------------------------------
+    # 地方腔相容：ere／er／ir 收成優勢腔，原拼法仍可打
+    # ere→e；er→e（-ng/-k→i，-n/-t→u）；ir→e（-ng/-k→i，-n/-t→u，ire→ue）
+    #--------------------------------------------------------------------------
+    - derive/ereh/eh/
+    - derive/ere/e/
+    - derive/er(ng|k)/i$1/
+    - derive/er(n|t)/u$1/
+    - derive/er(?!e)/e/
+    - derive/ir(ng|k)/i$1/
+    - derive/ir(n|t)/u$1/
+    - derive/ire/ue/
+    - derive/ir(?!e)/e/
     #--------------------------------------------------------------------------
     # 【零聲母】特別處理：q + 韻母 + 調號，如：qann1, qi1, ...
     #--------------------------------------------------------------------------
@@ -224,6 +282,16 @@ translator:
     # - 調號：*，表：聲調值可能為：1/7/3/2/5，使用【按鍵】：*（舒聲通配）
     #--------------------------------------------------------------------------
     - 'xlit ;-_\/[]7 ¹⁷³²⁵⁴⁸&'
+    # 地方腔：輸入框把 ere／er／ir 顯示成優勢腔
+    - xform/ereh/eh/
+    - xform/ere/e/
+    - xform/er(ng|k)/i$1/
+    - xform/er(n|t)/u$1/
+    - xform/er(?!e)/e/
+    - xform/ir(ng|k)/i$1/
+    - xform/ir(n|t)/u$1/
+    - xform/ire/ue/
+    - xform/ir(?!e)/e/
     #--------------------------------------------------------------------------
     # 聲母轉換：台羅拼音字母轉換成【十五音。切音】
     #--------------------------------------------------------------------------
@@ -293,6 +361,16 @@ translator:
     #==========================================================================
     - xform/'/ /
     - xform/\s+/ /
+    # 地方腔須在音節包裝之前，否則 tere7 的右欄會停在 [地;ere]
+    - xform/ereh/eh/
+    - xform/ere/e/
+    - xform/er(ng|k)/i$1/
+    - xform/er(n|t)/u$1/
+    - xform/er(?!e)/e/
+    - xform/ir(ng|k)/i$1/
+    - xform/ir(n|t)/u$1/
+    - xform/ire/ue/
+    - xform/ir(?!e)/e/
     # 零聲母 + 韻化輔音（m/ng）+ 調號，如：m2, ng5
     - xform/\b((?:m|ng)\d)\b/$1 ;Ø$1/
     # 零聲母 + 元音/複合／鼻化韻母 + 調號，如：i1, uan2, uann2, iau1
@@ -389,6 +467,7 @@ translator:
     - xform/;3/三\]/   # 上去
     - xform/;4/四\]/   # 上入
     - xform/;5/五\]/   # 下平
+    - xform/;6/七\]/   # 陽上，十八音併入下去
     - xform/;7/七\]/   # 下去
     - xform/;8/八\]/   # 下入
     #================================================================
@@ -443,26 +522,28 @@ translator:
     #   鼻化符號顯示成上標
     - xform/nn(h?)(\d|\>)/ⁿ$1$2/
 
-# 反查（` 漢語拼音／C 倉頡／Z 注音符號）以 Space 上屏時，由 lua aux_commit
+# 反查（X 漢語拼音／C 倉頡／Z 注音符號）以 Space 上屏時，由 lua aux_commit
 # 把候選註解中的台羅寫入 ji_khoo_tl 用戶詞典（常用字／連續反查成詞）。
 reverse_lookup:
+  tag: reverse_lookup
   dictionary: luna_pinyin
-  prefix: "`"
+  prefix: "X"
   suffix: "'"
   tips: 〔漢語拼音〕
   preedit_format:
+    - xform/^X//
     - xform/([nl])v/$1ü/
     - xform/([nl])ue/$1üe/
     - xform/([jqxy])v/$1u/
   comment_format:
     *tsap_peh_im_comment_format
-  extra_tags:
-    - cangjie5_lookup
 
 cangjie5_lookup:
+  tag: cangjie5_lookup
   dictionary: cangjie5
   enable_completion: true
   overwrite_comment: false
+  always_show_comments: true
   prefix: "C"
   suffix: "'"
   tips: 〔倉頡五代〕
@@ -472,11 +553,12 @@ cangjie5_lookup:
     *tsap_peh_im_comment_format
 
 bopomofo_lookup:
-  tag: reverse_lookup
+  tag: bopomofo_lookup
   dictionary: terra_pinyin
   prism: bopomofo
   enable_completion: true
   overwrite_comment: false
+  always_show_comments: true
   prefix: "Z"
   suffix: "'"
   tips: 〔注音符號〕
@@ -554,5 +636,8 @@ recognizer:
   import_preset: default
   patterns:
     punct: '^/([0-9]0?|[A-Za-z]+)$'
-    reverse_lookup: "[`CZ][-/,.;0-9a-z]*'?$"
-    uppercase: "^[ABD-Y][-_+.'0-9ABD-Ya-z]*$"
+    reverse_lookup: "X[-/,.;0-9a-z]*'?$"
+    cangjie5_lookup: "C[-/,.;0-9a-z]*'?$"
+    bopomofo_lookup: "Z[-/,.;0-9a-z]*'?$"
+    # 排除反查前綴 X／C／Z，避免被當成大寫直出
+    uppercase: "^[ABD-WY][-_+.'0-9ABD-WYa-z]*$"

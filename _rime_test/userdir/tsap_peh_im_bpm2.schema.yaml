@@ -6,7 +6,7 @@
 schema:
   schema_id: tsap_peh_im_bpm2
   name: 十八音【台語注音二式】
-  version: "v0.0.2"
+  version: "v0.0.4"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -64,7 +64,8 @@ engine:
   segmentors:
     - ascii_segmentor
     - matcher
-    # 反查 affix 須在 abc 之前，否則 Z／C 後的 u、r 等字母會被主方案拼寫切走
+    # 反查 affix 須在 abc 之前，否則 X／C／Z 後的字母會被主方案拼寫切走
+    - affix_segmentor@reverse_lookup
     - affix_segmentor@cangjie5_lookup
     - affix_segmentor@bopomofo_lookup
     - abc_segmentor
@@ -79,6 +80,7 @@ engine:
   filters:
     - simplifier
     - uniquifier
+    - lua_filter@tsap_peh_im_citation_tone_filter
     - lua_filter@tsap_peh_im_rev_comment_filter  # 倉頡／注音／拼音反查：改顯示 BPM2
 
 speller:
@@ -90,6 +92,48 @@ speller:
   # 且 Space 無法用來選字。
   delimiter: "'"
   algebra:
+    #==========================================================================
+    # 【閩南話變調規則】
+    # 為字典【本調】多生一層【直接變調】編碼，方便「我手寫我口」。
+    # 不可寫成連續 derive/1/7/、/7/3/…：後一條會吃到前一條的衍生，
+    # 變成 1→7→3→2→1 全通，末字打第 2 調會冒出第 1 調（晏子／置）。
+    # 先把本調標成暫記，只從暫記衍生一層，再還原。
+    # 變調與本調同鍵時的排序，見 lua_filter@tsap_peh_im_citation_tone_filter。
+    # 調鍵：1;  7-  3_  2\  5/  4[  8]
+    #==========================================================================
+    - xform/6/7/
+    - xform/1$/①/
+    - xform/7$/⑦/
+    - xform/3$/③/
+    - xform/2$/②/
+    - xform/5$/⑤/
+    - derive/①$/7/ # 陰平 1 → 變調 7
+    - derive/⑦$/3/ # 陽去 7 → 變調 3
+    - derive/③$/2/ # 陰去 3 → 變調 2
+    - derive/②$/1/ # 陰上 2 → 變調 1
+    - derive/⑤$/7/ # 陽平 5 → 變調 7
+    - xform/①$/1/
+    - xform/⑦$/7/
+    - xform/③$/3/
+    - xform/②$/2/
+    - xform/⑤$/5/
+    #--------------------------------------------------------------------------
+    # 入聲變調規則 (48)：只衍生一層（同舒聲，避免 4↔8 以外再被舒聲規則吃掉）
+    # -h：4→2、8→3（食）、8→4（白，喉塞仍在）；-p/-t/-k：4→8、8→4
+    #--------------------------------------------------------------------------
+    - xform/h4$/h④/
+    - xform/h8$/h⑧/
+    - xform/([ptk])4$/${1}④/
+    - xform/([ptk])8$/${1}⑧/
+    - derive/h④$/h2/          # -h 陰入 4 → 變調 2
+    - derive/h⑧$/h3/          # -h 陽入 8 → 變調 3（食 tsiah3）
+    - derive/h⑧$/h4/          # -h 陽入 8 → 變調 4（白 peh4）
+    - derive/([ptk])④$/${1}8/ # -p/t/k 陰入 4 → 變調 8
+    - derive/([ptk])⑧$/${1}4/ # -p/t/k 陽入 8 → 變調 4
+    - xform/h④$/h4/
+    - xform/h⑧$/h8/
+    - xform/([ptk])④$/${1}4/
+    - xform/([ptk])⑧$/${1}8/
     #--------------------------------------------------------------------------
     # 【零聲母】特別處理：q + 韻母 + 調號，如：qann1, qi1, ...
     #--------------------------------------------------------------------------
@@ -433,14 +477,16 @@ translator:
     #================================================================
     - xform/q//
 
-# 反查（` 漢語拼音／C 倉頡／Z 注音符號）以 Space 上屏時，由 lua aux_commit
+# 反查（X 漢語拼音／C 倉頡／Z 注音符號）以 Space 上屏時，由 lua aux_commit
 # 把候選註解中的 BPM2 寫入 ji_khoo_bpm2 用戶詞典（常用字／連續反查成詞）。
 reverse_lookup:
+  tag: reverse_lookup
   dictionary: luna_pinyin
-  prefix: "`"
+  prefix: "X"
   suffix: "'"
   tips: 〔漢語拼音〕
   preedit_format:
+    - xform/^X//
     - xform/([nl])v/$1ü/
     - xform/([nl])ue/$1üe/
     - xform/([jqxy])v/$1u/
@@ -541,8 +587,8 @@ recognizer:
   import_preset: default
   patterns:
     punct: '^/([0-9]0?|[A-Za-z]+)$'
-    reverse_lookup: "`[-/,.;0-9a-z]*'?$"
+    reverse_lookup: "X[-/,.;0-9a-z]*'?$"
     cangjie5_lookup: "C[-/,.;0-9a-z]*'?$"
     bopomofo_lookup: "Z[-/,.;0-9a-z]*'?$"
-    # 排除 C／Z（反查）與 N（鼻化韻前綴），避免被當成大寫直出
-    uppercase: "^[ABD-MO-Y][-_+.'0-9ABD-MO-Ya-z]*$"
+    # 排除反查前綴 X／C／Z，以及 N（鼻化韻前綴），避免被當成大寫直出
+    uppercase: "^[ABD-MO-WY][-_+.'0-9ABD-MO-WYa-z]*$"
