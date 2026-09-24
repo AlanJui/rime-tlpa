@@ -2709,16 +2709,27 @@ function tsap_peh_im_citation_tone_filter(input, env)
 		return
 	end
 	-- 詞組候選（兩個以上音節）維持原排序，避免一次取完全部句子而拆壞輸入框。
-	-- 單音節清單才把本調與調鍵一致者提前（上 siong7 先於 菘／相）。
-	local front, back = {}, {}
+	-- 只重排【吃滿目前這段】的單音節：本調與調鍵一致者提前（上 siong7 先於 菘／相）。
+	-- 只吃到前綴的候選（thian- 裡的 thi→雉）不可提前，否則被選中的 end
+	-- 停在前綴，輸入框會把剩餘碼原樣接上，看起來像音節被切壞。
+	local seg = ctx.composition and not ctx.composition:empty() and ctx.composition:back()
+	local seg_start = seg and seg.start or 0
+	local seg_end = seg and seg._end or #raw
+	local front, back, short = {}, {}, {}
+	local function flush()
+		for _, c in ipairs(front) do
+			yield(c)
+		end
+		for _, c in ipairs(back) do
+			yield(c)
+		end
+		for _, c in ipairs(short) do
+			yield(c)
+		end
+	end
 	for cand in input:iter() do
 		if tsap_peh_im_bracket_count(cand.comment) >= 2 then
-			for _, c in ipairs(front) do
-				yield(c)
-			end
-			for _, c in ipairs(back) do
-				yield(c)
-			end
+			flush()
 			yield(cand)
 			for rest in input:iter() do
 				yield(rest)
@@ -2729,18 +2740,16 @@ function tsap_peh_im_citation_tone_filter(input, env)
 		local plain = Candidate(c.type, c.start, c._end, c.text, cand.comment or "")
 		plain.preedit = cand.preedit
 		plain.quality = cand.quality
-		if tsap_peh_im_last_bracket_tone(cand.comment) == expect then
+		local covers = c.start == seg_start and c._end == seg_end
+		if not covers then
+			table.insert(short, plain)
+		elseif tsap_peh_im_last_bracket_tone(cand.comment) == expect then
 			table.insert(front, plain)
 		else
 			table.insert(back, plain)
 		end
 	end
-	for _, c in ipairs(front) do
-		yield(c)
-	end
-	for _, c in ipairs(back) do
-		yield(c)
-	end
+	flush()
 end
 
 ------------------------------------------------------------------------------------------
