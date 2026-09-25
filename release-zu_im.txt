@@ -42,12 +42,6 @@ zu_im_bpm2.schema.yaml
 # -----------------
 lib_preedit_tps.yaml
 
-## --- 反切輸入法 ---
-#huan_ciat_tlpa.schema.yaml
-#huan_ciat_tps.schema.yaml
-## -----------------
-#lib_comment_sni_and_tps.yaml
-
 # --- 十五音輸入法 ---
 sip_ngoo_im_tps.schema.yaml
 lib_comment_sni_and_tps.yaml
@@ -63,15 +57,3 @@ tsap_peh_im_tps.schema.yaml
 kb_hong_im.schema.yaml
 kb_ipa.schema.yaml
 kb_lo_ma_ji.schema.yaml
-
-# --- 按鍵輔助工具 ---
-kb_hong_im.schema.yaml
-kb_ipa.schema.yaml
-kb_lo_ma_ji.schema.yaml
-
-# --- 注音輸入法 ---
-zu_im_tps.schema.yaml
-zu_im_tlpa.schema.yaml
-zu_im_bpm2.schema.yaml
-# -----------------
-lib_preedit_tps.yaml
