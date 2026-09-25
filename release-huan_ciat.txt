@@ -53,8 +53,10 @@ kb_lo_ma_ji.schema.yaml
 #lib_comment_sni_and_tps.yaml
 
 # --- 十五音輸入法 ---
-sip_ngoo_im_tl.schema.yaml
 sip_ngoo_im_tps.schema.yaml
+lib_comment_sni_and_tps.yaml
+# -------------------
+sip_ngoo_im_tl.schema.yaml
 sip_ngoo_im_bpm2.schema.yaml
 ji_khoo_sni_tl.dict.yaml
 ji_khoo_sni_KamJiTian_tl.dict.yaml

@@ -35,19 +35,6 @@ ji_khoo_bpm2_ziann_ji.dict.yaml
 # --- 【台語注音二式】輸入方案用辭庫 ---
 ji_khoo_bpm2_su_lui.dict.yaml
 
-# --- 拼音輸入法 ---
-phing_im_bp.schema.yaml
-phing_im_bpm2.schema.yaml
-phing_im_poj.schema.yaml
-phing_im_tl.schema.yaml
-phing_im_tlpa.schema.yaml
-# -----------------
-lib_comment_bp.yaml
-lib_comment_bpm2.yaml
-lib_comment_poj.yaml
-lib_comment_tl.yaml
-lib_comment_tlpa.yaml
-
 # --- 注音輸入法 ---
 zu_im_tps.schema.yaml
 zu_im_tlpa.schema.yaml
@@ -55,11 +42,22 @@ zu_im_bpm2.schema.yaml
 # -----------------
 lib_preedit_tps.yaml
 
-# --- 反切輸入法 ---
-huan_ciat_tlpa.schema.yaml
-huan_ciat_tps.schema.yaml
-# -----------------
+## --- 反切輸入法 ---
+#huan_ciat_tlpa.schema.yaml
+#huan_ciat_tps.schema.yaml
+## -----------------
+#lib_comment_sni_and_tps.yaml
+
+# --- 十五音輸入法 ---
+sip_ngoo_im_tps.schema.yaml
 lib_comment_sni_and_tps.yaml
+# -------------------
+ji_khoo_sni_tl.dict.yaml
+ji_khoo_sni_KamJiTian_tl.dict.yaml
+ji_khoo_sni_TaiGi_PehUeSu.dict.yaml
+
+# --- 十八音輸入法 ---
+tsap_peh_im_tps.schema.yaml
 
 # --- 按鍵輔助工具 ---
 kb_hong_im.schema.yaml
