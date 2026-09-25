@@ -9,7 +9,11 @@
       "Bash(python3 -c ' *)",
       "Bash(python tps_to_bpm2.py \"CIN方音符號.xlsx\" \"CIN方音符號_output.xlsx\")",
       "Bash(python tps_to_bpm2.py CIN方音符號.xlsx CIN方音符號_output.xlsx)",
-      "PowerShell(python --version)"
+      "PowerShell(python --version)",
+      "Bash(command -v lua)",
+      "Bash(command -v lua5.1)",
+      "Bash(command -v luajit)",
+      "PowerShell(& \"C:\\\\Users\\\\AlanJui\\\\work\\\\rime-tlpa\\\\deploy_rime.ps1\")"
     ]
   }
 }
