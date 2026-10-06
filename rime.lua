@@ -1143,7 +1143,18 @@ local function learn_reverse_lookup_commit(env, ctx, r)
 		return
 	end
 	local text = cand.text or ""
-	local codes = parse_tsap_peh_im_tl_comment(candidate_comment(cand))
+	local comment = candidate_comment(cand)
+	local sid = env.engine.schema.schema_id
+	-- 閩拼左欄不是字典碼。只取 [聲韻調]，再還原成 BPM2 寫入 ji_khoo_bpm2。
+	if sid == "tsap_peh_im_bp" then
+		comment = comment:gsub("[^%[%]]+", " ")
+	end
+	local codes = parse_tsap_peh_im_tl_comment(comment)
+	if sid == "tsap_peh_im_bp" then
+		for i, c in ipairs(codes) do
+			codes[i] = tlpa_to_bpm2(c)
+		end
+	end
 	local chars = utf8_chars(text)
 	if #chars == 0 or #codes == 0 then
 		return
@@ -1411,13 +1422,13 @@ local function aux_commit_func(key, env)
 			end
 
 		elseif schema_id == "tsap_peh_im_tl" or schema_id == "tsap_peh_im_bpm2"
-			or schema_id == "tsap_peh_im_tps" then
+			or schema_id == "tsap_peh_im_tps" or schema_id == "tsap_peh_im_bp" then
 			-- 十八音：候選註解為「標音 + [聲韻調]」
-			-- （例：tshông [出公五]、bbor5 [門高五]、ㄌㄤˊ [柳江五]）。
-			-- tsap_peh_im_tl／tps 字典為台羅；tsap_peh_im_bpm2 字典為 BPM2。
-			-- tps 左欄為方音，[聲韻調] 還原結果已是 TLPA。
+			-- （例：tshông [出公五]、bbor5 [門高五]、bbo2 [門高五]、ㄌㄤˊ [柳江五]）。
+			-- tsap_peh_im_tl／tps 字典為台羅；bpm2／bp 字典為 BPM2。
+			-- bp 左欄是閩拼，不可當 BPM2；缺字典編碼時只從 [聲韻調] 還原。
 			is_tlpa = true
-			local from_bpm2 = (schema_id == "tsap_peh_im_bpm2")
+			local from_bpm2 = (schema_id == "tsap_peh_im_bpm2" or schema_id == "tsap_peh_im_bp")
 			local from_entry = collect_entry_tl_codes(env, cand_list)
 			if #from_entry > 0 then
 				for _, v in ipairs(from_entry) do
@@ -1426,11 +1437,16 @@ local function aux_commit_func(key, env)
 					log.info("[aux_commit] " .. schema_id .. " entry=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 				end
 			else
-				local roman = gen_comm:gsub("%[.-%]", " ")
+				local comment_for_parse = gen_comm
+				if schema_id == "tsap_peh_im_bp" then
+					comment_for_parse = gen_comm:gsub("[^%[%]]+", " ")
+				end
+				local roman = comment_for_parse:gsub("%[.-%]", " ")
 				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
 				local first = split_syllable_tokens(roman)[1]
-				local roman_is_bpm2 = from_bpm2 and looks_like_tl_numeric_syllable(first)
-				for _, v in ipairs(parse_tsap_peh_im_tl_comment(gen_comm)) do
+				local roman_is_bpm2 = schema_id == "tsap_peh_im_bpm2"
+					and looks_like_tl_numeric_syllable(first)
+				for _, v in ipairs(parse_tsap_peh_im_tl_comment(comment_for_parse)) do
 					local tlpa = roman_is_bpm2 and bpm2_to_tlpa(v) or v
 					table.insert(source_list, tlpa)
 					log.info("[aux_commit] " .. schema_id .. " comment=[" .. v .. "] tlpa=[" .. tlpa .. "]")
@@ -2429,6 +2445,7 @@ end
 -- tsap_peh_im_rev_comment_filter：
 -- 倉頡／注音／漢語拼音反查時，候選註解改從主方案字典反查：
 --   tsap_peh_im_bpm2 → ji_khoo_bpm2（BPM2 + [聲韻調]）
+--   tsap_peh_im_bp   → ji_khoo_bpm2（閩拼調號 + [聲韻調]）
 --   tsap_peh_im_tps  → ji_khoo_tl（方音符號 + [聲韻調]）
 ------------------------------------------------------------------------------------------
 local function sni_bracket_from_tlpa(tlpa)
@@ -2447,6 +2464,97 @@ local function sni_bracket_from_tlpa(tlpa)
 		return " [" .. siann .. chars[1] .. chars[2] .. "]"
 	end
 	return ""
+end
+
+-- 字典 BPM2 數值調 → 閩拼調號（左欄）。與 tsap_peh_im_bp comment_format 對齊。
+local BP_TONE_FROM_BPM2 = {
+	["1"] = "1", ["2"] = "3", ["3"] = "5", ["4"] = "7",
+	["5"] = "2", ["6"] = "6", ["7"] = "6", ["8"] = "8",
+}
+local BP_NN_FORMS = {
+	"uainn", "iaonn", "ioonn", "iann", "iunn", "ainn", "aonn", "oonn",
+	"uann", "uinn", "uenn", "onn", "enn", "inn", "unn", "ann",
+}
+
+local function bpm2_spell_to_bp(code)
+	if type(code) ~= "string" then
+		return ""
+	end
+	local tone = code:match("([1-8])$")
+	if not tone then
+		return ""
+	end
+	local s = code:sub(1, -2)
+	if s ~= "m" and s ~= "mh" and s ~= "n" and s ~= "nh" and s ~= "ng" and s ~= "ngh" then
+		local reps = {
+			{ "jji", "zzi" }, { "ji", "zi" }, { "chi", "ci" }, { "shi", "si" },
+			{ "ng", "ggn" }, { "m", "bbn" }, { "n", "ln" },
+		}
+		for _, pair in ipairs(reps) do
+			if s:sub(1, #pair[1]) == pair[1] then
+				s = pair[2] .. s:sub(#pair[1] + 1)
+				break
+			end
+		end
+	end
+	s = s:gsub("oo([kmp])", "o%1")
+	s = s:gsub("or", "o")
+	s = s:gsub("au", "ao")
+	s = s:gsub("iek", "ik")
+	local zero = {
+		{ "iunn", "ynu" }, { "iann", "yna" }, { "iaonn", "ynao" }, { "ioonn", "ynoo" },
+		{ "inn", "yni" }, { "uainn", "wnai" }, { "uann", "wna" }, { "uinn", "wni" },
+		{ "uenn", "wne" }, { "unn", "wnu" },
+	}
+	local nasal_done = false
+	for _, pair in ipairs(zero) do
+		if s:sub(1, #pair[1]) == pair[1] then
+			s = pair[2] .. s:sub(#pair[1] + 1)
+			nasal_done = true
+			break
+		end
+	end
+	if not nasal_done then
+		for _, v in ipairs(BP_NN_FORMS) do
+			local pos = s:find(v, 1, true)
+			if pos then
+				s = s:sub(1, pos - 1) .. "n" .. v:sub(1, -3) .. s:sub(pos + #v)
+				break
+			end
+		end
+	end
+	local function glide(src, dst)
+		if s:sub(1, #src) == src then
+			s = dst .. s:sub(#src + 1)
+			return true
+		end
+		return false
+	end
+	if not (glide("ia", "ya") or glide("io", "yo") or glide("iu", "yu")
+		or glide("ua", "wa") or glide("ue", "we") or glide("ui", "wi")) then
+		local second = s:sub(2, 2)
+		if s:sub(1, 1) == "i" and not second:match("[aeuo]") then
+			s = "y" .. s
+		elseif s:sub(1, 1) == "u" and not second:match("[aeio]") then
+			s = "w" .. s
+		end
+	end
+	return s .. (BP_TONE_FROM_BPM2[tone] or tone)
+end
+
+local function format_bp_tsap_peh_im_comment(code)
+	if type(code) ~= "string" or code == "" then
+		return ""
+	end
+	local bp = bpm2_spell_to_bp(code)
+	local sni = sni_bracket_from_tlpa(bpm2_to_tlpa(code))
+	if bp ~= "" and sni ~= "" then
+		return bp .. sni
+	end
+	if bp ~= "" then
+		return bp
+	end
+	return sni
 end
 
 local function format_bpm2_tsap_peh_im_comment(code)
@@ -2506,8 +2614,8 @@ tsap_peh_im_rev_comment_filter = {
 		env.rev_dict = nil
 		env.rev_kind = nil
 		local sid = env.engine.schema.schema_id
-		if sid == "tsap_peh_im_bpm2" then
-			env.rev_kind = "bpm2"
+		if sid == "tsap_peh_im_bpm2" or sid == "tsap_peh_im_bp" then
+			env.rev_kind = (sid == "tsap_peh_im_bp") and "bp" or "bpm2"
 			local ok, rev = pcall(function()
 				return ReverseLookup("ji_khoo_bpm2")
 			end)
@@ -2574,7 +2682,7 @@ tsap_peh_im_rev_comment_filter = {
 						end
 					end
 					if type(num) == "string" and num ~= "" then
-						if env.rev_kind == "bpm2" then
+						if env.rev_kind == "bpm2" or env.rev_kind == "bp" then
 							if not looks_like_tl_numeric_syllable(syl) or num:match("^tsh")
 								or num:match("^ts") or num:match("^kh") or num:match("^th")
 								or num:match("^ph") then
@@ -2591,6 +2699,8 @@ tsap_peh_im_rev_comment_filter = {
 				local formatted
 				if env.rev_kind == "tps" then
 					formatted = format_tps_tsap_peh_im_comment(code)
+				elseif env.rev_kind == "bp" then
+					formatted = format_bp_tsap_peh_im_comment(code)
 				else
 					formatted = format_bpm2_tsap_peh_im_comment(code)
 				end
@@ -2625,7 +2735,8 @@ tsap_peh_im_rev_comment_filter = {
 -- 注釋仍寫字典本調，所以打「上」會先看到「菘」[五]、「相」[一]。
 -- 只把【最後一個音節】本調與調鍵一致的候選排前；前面的音節維持口語變調。
 -- 方音調鍵：: 一、5 七、3 三、4 二、6 五、] 八、[ 四
--- 台羅／注音二式調鍵：; 一、- 七、_ 三、\ 二、/ 五、[ 四、] 八
+-- 台羅／注音二式／閩拼調鍵：; 一、- 七、_ 三、\ 二、/ 五、[ 四、] 八
+-- 閩拼輸入框把這些鍵顯示成調號 1／6／5／3／2／7／8，括號內仍是十五音調名。
 ------------------------------------------------------------------------------------------
 local tsap_peh_im_tone_key_by_schema = {
 	tsap_peh_im_tps = {
@@ -2647,6 +2758,15 @@ local tsap_peh_im_tone_key_by_schema = {
 		["]"] = "八",
 	},
 	tsap_peh_im_bpm2 = {
+		[";"] = "一",
+		["-"] = "七",
+		["_"] = "三",
+		["\\"] = "二",
+		["/"] = "五",
+		["["] = "四",
+		["]"] = "八",
+	},
+	tsap_peh_im_bp = {
 		[";"] = "一",
 		["-"] = "七",
 		["_"] = "三",
