@@ -919,6 +919,23 @@ local function split_syllable_tokens(s)
 	return parts
 end
 
+-- 十八音【閩拼方案】候選註解左欄：bbnia2 [毛迦五] → bbnia2。
+-- 右欄 [聲韻調] 是十五音，不可混進上屏的閩拼調號。
+local function bp_left_spellings(comment)
+	local spells = {}
+	if type(comment) ~= "string" or comment == "" then
+		return spells
+	end
+	local roman = comment:gsub("%[.-%]", " ")
+	roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
+	for _, syl in ipairs(split_syllable_tokens(roman)) do
+		if looks_like_tl_numeric_syllable(syl) then
+			table.insert(spells, syl)
+		end
+	end
+	return spells
+end
+
 local function flatten_syllable_list(list)
 	local flat = {}
 	if type(list) ~= "table" then
@@ -1426,7 +1443,8 @@ local function aux_commit_func(key, env)
 			-- 十八音：候選註解為「標音 + [聲韻調]」
 			-- （例：tshông [出公五]、bbor5 [門高五]、bbo2 [門高五]、ㄌㄤˊ [柳江五]）。
 			-- tsap_peh_im_tl／tps 字典為台羅；bpm2／bp 字典為 BPM2。
-			-- bp 左欄是閩拼，不可當 BPM2；缺字典編碼時只從 [聲韻調] 還原。
+			-- bp 左欄是閩拼調號，不可當 BPM2，也不可當台羅。
+			-- 缺字典編碼時只從 [聲韻調] 還原 TLPA；閩拼上屏另取左欄。
 			is_tlpa = true
 			local from_bpm2 = (schema_id == "tsap_peh_im_bpm2" or schema_id == "tsap_peh_im_bp")
 			local from_entry = collect_entry_tl_codes(env, cand_list)
@@ -1439,7 +1457,11 @@ local function aux_commit_func(key, env)
 			else
 				local comment_for_parse = gen_comm
 				if schema_id == "tsap_peh_im_bp" then
-					comment_for_parse = gen_comm:gsub("[^%[%]]+", " ")
+					local pieces = {}
+					for sni in gen_comm:gmatch("%[(.-)%]") do
+						table.insert(pieces, "[" .. sni .. "]")
+					end
+					comment_for_parse = table.concat(pieces, " ")
 				end
 				local roman = comment_for_parse:gsub("%[.-%]", " ")
 				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
@@ -1539,7 +1561,11 @@ local function aux_commit_func(key, env)
 			log.info("[aux_commit] source_list[" .. i .. "]=[" .. v .. "]")
 		end
 
-		if #source_list == 0 then
+		-- 十八音【閩拼方案】左欄已是要上屏的閩拼調號（bbnia2）。
+		-- 本調排序會換成沒有字典編碼的候選，不能再靠 entry；左欄比 TLPA 來回轉換可靠。
+		local bp_left = (schema_id == "tsap_peh_im_bp") and bp_left_spellings(gen_comm) or {}
+
+		if #source_list == 0 and #bp_left == 0 then
 			-- 【漢字附帶標音】遇【無調號詞彙】（如 ji_khoo_ban_lam 簡拼詞條）：
 			-- comment 無【】〔〕結構，僅有原樣拼音（如：siann mih）。
 			-- 調號從缺（可忽略不管），無法轉換至其他標音系統，
@@ -1566,7 +1592,9 @@ local function aux_commit_func(key, env)
 		-- 取得轉換模組（使用 module-level 預載的版本）
 		local conv     = _tlpa_conv
 		local bpm2conv = _bpm2_conv
-		if not conv then
+		local bp_native = (schema_id == "tsap_peh_im_bp" and #bp_left > 0
+			and ctx:get_option("key_in_piau_im_bp"))
+		if not conv and not bp_native then
 			log.error("[aux_commit] tlpa_converter 模組未載入，無法執行標音轉換")
 			return 2
 		end
@@ -1644,9 +1672,16 @@ local function aux_commit_func(key, env)
 			end
 
 		elseif use_opt("key_in_piau_im_bp") then
-			-- 閩拼方案（調符）：TLPA/SNI → BP
-			for i, v in ipairs(source_list) do
-				out_list[i] = to_target(v, "閩拼方案")
+			-- 十八音【閩拼方案】：左欄已是數值調（bbnia2），直接上屏。
+			-- 其他方案的閩拼仍走 TLPA → 調符。
+			if schema_id == "tsap_peh_im_bp" and #bp_left > 0 then
+				for i, syl in ipairs(bp_left) do
+					out_list[i] = syl
+				end
+			elseif conv then
+				for i, v in ipairs(source_list) do
+					out_list[i] = to_target(v, "閩拼方案")
+				end
 			end
 
 		elseif use_opt("key_in_piau_im_bpm2") then
@@ -1733,8 +1768,8 @@ local function aux_commit_func(key, env)
 		local im_zat = get_im_zat(ctx)
 		out_list = flatten_syllable_list(out_list)
 		if fu_piau_im then
-			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以【音節連接符】開關串接）+ 右分隔符號
-			-- 如：啥物〔siann2-mih4〕。左右分隔符號由設定檔 han_ji_piau_im_hu_ho 定義。
+			-- 【漢字附帶標音】：漢字 + 〔標音〕。
+			-- 十八音【台語注音二式】：名〔mia5〕；十八音【閩拼方案】：名〔bbnia2〕。
 			local hu_ho = get_hu_ho()
 			out_str = cand_text
 				.. (hu_ho.left or "〔")
