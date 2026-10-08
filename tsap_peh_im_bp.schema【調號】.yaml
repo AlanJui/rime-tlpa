@@ -13,7 +13,7 @@
 schema:
   schema_id: tsap_peh_im_bp
   name: 十八音【閩拼方案】
-  version: "v0.0.3"
+  version: "v0.0.2"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -23,8 +23,7 @@ schema:
     【拼音系統】：閩拼方案（BP）
     【字典編碼】：台語注音二式（BPM2）
     【輸入框】：閩拼字母＋閩拼調符（例：無 bbo/ → bbó；羊 ynu/ → ynú）
-    【候選清單】：閩拼左欄 + [聲+韻+調]（預設調符，例：lní [耐居五]）
-    【聲調樣式】：調符／上標調號／標準調號。候選左欄、Enter、Shift+Ctrl+Enter 同一寫法
+    【候選清單】：閩拼調號 + [聲+韻+調]（例：bbo2 [門高五]、ynu2 [英牛五]）
     【標點】：` 再按鍵（例：`, → ，）。【反查】：X 漢語拼音／C 倉頡／Z 注音
   dependencies:
     - luna_pinyin
@@ -60,14 +59,6 @@ switches:
   - options: [ im_zat_hyphen, im_zat_space, im_zat_apos ]
     reset: 2
     states: [ 連字號, 空白, 撇號 ]
-  #-----------------------------------------------------------------------------
-  # 【聲調樣式】候選左欄、Enter、Shift+Ctrl+Enter 用同一寫法。
-  # 年：注音二式 ni5 → 閩拼 lni2。調符 lní／年〔lní〕，上標 lni²，標準 lni2。
-  #-----------------------------------------------------------------------------
-  - options:
-      [ siann_tiau_iunn_sik_tiau_hu, siann_tiau_iunn_sik_siong_piau, siann_tiau_iunn_sik_piau_cun ]
-    reset: 0
-    states: [ 調符, 上標調號, 標準調號 ]
 
 engine:
   processors:
@@ -102,7 +93,6 @@ engine:
     - uniquifier
     - lua_filter@tsap_peh_im_citation_tone_filter
     - lua_filter@tsap_peh_im_rev_comment_filter  # 倉頡／注音／拼音反查：改顯示閩拼
-    - lua_filter@tsap_peh_im_bp_tone_style_filter  # 左欄：調符／上標調號／標準調號
 
 speller:
   # ;-_\/[] ＝閩拼調號 1／6／5／3／2／7／8；7＝入聲通配 &；*＝舒聲通配；.＝入聲縮寫
@@ -489,9 +479,10 @@ translator:
     - 'xform/(^| )ui/$1wi/'
     - 'xform/(^| )i(?![aeuo])/$1yi/'
     - 'xform/(^| )u(?![aeio])/$1wu/'
-    # BPM2 調號 → 閩拼標準調號：1 7 3 2 5 4 8 → 1 6 5 3 2 7 8
-    # 左欄的調符／上標由 lua_filter@tsap_peh_im_bp_tone_style_filter 依【聲調樣式】再改。
-    - xlit|1732548|1653278|
+    # BPM2 調號 → 閩拼調號：1 7 3 2 5 4 8 → 1 6 5 3 2 7 8
+    # - xlit|1732548|1653278|
+    # 使用【上標數值】呈現【調號】
+    - xlit|1732548|¹⁶⁵³²⁷⁸|
 
 
 # 反查（X 漢語拼音／C 倉頡／Z 注音符號）以 Space 上屏時，由 lua aux_commit

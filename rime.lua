@@ -919,18 +919,208 @@ local function split_syllable_tokens(s)
 	return parts
 end
 
--- 十八音【閩拼方案】候選註解左欄：bbnia2 [毛迦五] → bbnia2。
--- 右欄 [聲韻調] 是十五音，不可混進上屏的閩拼調號。
+-- 十五音調名（括號末字）→ 閩拼調號。一/七/三/二/五/四/八 對注音二式 1/7/3/2/5/4/8。
+local SNI_TONE_CHAR_TO_BP = {
+	["一"] = "1", ["二"] = "3", ["三"] = "5", ["四"] = "7",
+	["五"] = "2", ["七"] = "6", ["八"] = "8",
+}
+local BP_SUPER_DIGIT = {
+	["¹"] = "1", ["²"] = "2", ["³"] = "3", ["⁵"] = "5",
+	["⁶"] = "6", ["⁷"] = "7", ["⁸"] = "8",
+}
+-- 與 preedit_format 同一套閩拼調符：1／7 長音、2／8 銳音、3 抑揚、5 重音、6 揚音。
+local BP_MARKED_LETTER = {
+	a = { ["1"] = "ā", ["2"] = "á", ["3"] = "ǎ", ["5"] = "à", ["6"] = "â", ["7"] = "ā", ["8"] = "á" },
+	e = { ["1"] = "ē", ["2"] = "é", ["3"] = "ě", ["5"] = "è", ["6"] = "ê", ["7"] = "ē", ["8"] = "é" },
+	i = { ["1"] = "ī", ["2"] = "í", ["3"] = "ǐ", ["5"] = "ì", ["6"] = "î", ["7"] = "ī", ["8"] = "í" },
+	u = { ["1"] = "ū", ["2"] = "ú", ["3"] = "ǔ", ["5"] = "ù", ["6"] = "û", ["7"] = "ū", ["8"] = "ú" },
+	o = { ["1"] = "ō", ["2"] = "ó", ["3"] = "ǒ", ["5"] = "ò", ["6"] = "ô", ["7"] = "ō", ["8"] = "ó" },
+	m = { ["1"] = "m\204\132", ["2"] = "ḿ", ["3"] = "m\204\140", ["5"] = "m\204\128", ["6"] = "m\204\130", ["7"] = "m\204\132", ["8"] = "ḿ" },
+	n = { ["1"] = "n\204\132", ["2"] = "ń", ["3"] = "n\204\140", ["5"] = "n\204\128", ["6"] = "n\204\130", ["7"] = "n\204\132", ["8"] = "ń" },
+}
+local BP_BASE_OF_MARKED = {
+	["ā"] = "a", ["á"] = "a", ["ǎ"] = "a", ["à"] = "a", ["â"] = "a",
+	["ē"] = "e", ["é"] = "e", ["ě"] = "e", ["è"] = "e", ["ê"] = "e",
+	["ī"] = "i", ["í"] = "i", ["ǐ"] = "i", ["ì"] = "i", ["î"] = "i",
+	["ū"] = "u", ["ú"] = "u", ["ǔ"] = "u", ["ù"] = "u", ["û"] = "u",
+	["ō"] = "o", ["ó"] = "o", ["ǒ"] = "o", ["ò"] = "o", ["ô"] = "o",
+	["ḿ"] = "m", ["ń"] = "n",
+}
+local BP_KIND_OF_MARKED = {
+	["ā"] = "macron", ["á"] = "acute", ["ǎ"] = "caron", ["à"] = "grave", ["â"] = "circumflex",
+	["ē"] = "macron", ["é"] = "acute", ["ě"] = "caron", ["è"] = "grave", ["ê"] = "circumflex",
+	["ī"] = "macron", ["í"] = "acute", ["ǐ"] = "caron", ["ì"] = "grave", ["î"] = "circumflex",
+	["ū"] = "macron", ["ú"] = "acute", ["ǔ"] = "caron", ["ù"] = "grave", ["û"] = "circumflex",
+	["ō"] = "macron", ["ó"] = "acute", ["ǒ"] = "caron", ["ò"] = "grave", ["ô"] = "circumflex",
+	["ḿ"] = "acute", ["ń"] = "acute",
+}
+local BP_COMBINING_KIND = {
+	["\204\132"] = "macron",
+	["\204\129"] = "acute",
+	["\204\140"] = "caron",
+	["\204\128"] = "grave",
+	["\204\130"] = "circumflex",
+}
+
+local function bp_apply_tone_mark(spell)
+	local tone = spell:match("([1235678])$")
+	local base = tone and spell:sub(1, -2) or ""
+	if not tone or base == "" then
+		return spell
+	end
+	local s = base .. tone
+	s = s:gsub("([aeiou])(r?m?n*h?g?p?t?k?)([1235678])", "%1%3%2", 1)
+	s = s:gsub("([aeo])([iueo])([1235678])", "%1%3%2", 1)
+	local replaced = false
+	s = s:gsub("oo([1235678])", function(t)
+		replaced = true
+		return (BP_MARKED_LETTER.o[t] or "o") .. "o"
+	end, 1)
+	if replaced then
+		return s
+	end
+	s = s:gsub("([aeiou])([1235678])", function(v, t)
+		local row = BP_MARKED_LETTER[v]
+		return (row and row[t]) or (v .. t)
+	end, 1)
+	if s:match("[1235678]") then
+		s = s:gsub("ngh([1235678])", function(t)
+			local row = BP_MARKED_LETTER.n
+			return (row[t] or "n") .. "gh"
+		end, 1)
+		s = s:gsub("mh([1235678])", function(t)
+			local row = BP_MARKED_LETTER.m
+			return (row[t] or "m") .. "h"
+		end, 1)
+		s = s:gsub("ng([1235678])", function(t)
+			local row = BP_MARKED_LETTER.n
+			return (row[t] or "n") .. "g"
+		end, 1)
+		s = s:gsub("m([1235678])", function(t)
+			local row = BP_MARKED_LETTER.m
+			return row[t] or ("m" .. t)
+		end, 1)
+	end
+	return s
+end
+
+local function bp_spell_with_style(spell, style)
+	local tone = spell:match("([1235678])$")
+	local base = tone and spell:sub(1, -2) or nil
+	if not tone or not base or base == "" then
+		return spell
+	end
+	if style == "super" then
+		local super = { ["1"] = "¹", ["2"] = "²", ["3"] = "³", ["5"] = "⁵", ["6"] = "⁶", ["7"] = "⁷", ["8"] = "⁸" }
+		return base .. (super[tone] or tone)
+	end
+	if style == "mark" then
+		return bp_apply_tone_mark(spell)
+	end
+	return spell
+end
+
+local function bp_tone_style(ctx)
+	if ctx:get_option("siann_tiau_iunn_sik_siong_piau") then
+		return "super"
+	end
+	if ctx:get_option("siann_tiau_iunn_sik_piau_cun") then
+		return "digit"
+	end
+	return "mark"
+end
+
+local function restyle_bp_comment(comment, style)
+	if style == "digit" or type(comment) ~= "string" or comment == "" then
+		return comment
+	end
+	return (comment:gsub("([a-z]+)([1235678])", function(base, tone)
+		return bp_spell_with_style(base .. tone, style)
+	end))
+end
+
+local function bracket_bp_tone(bracket)
+	if type(bracket) ~= "string" or bracket == "" then
+		return nil
+	end
+	local chars = utf8_chars(bracket)
+	return SNI_TONE_CHAR_TO_BP[chars[#chars]]
+end
+
+local function strip_bp_display(spell)
+	local letters = {}
+	local kind, super = nil, nil
+	for _, ch in ipairs(utf8_chars(spell)) do
+		if BP_SUPER_DIGIT[ch] then
+			super = BP_SUPER_DIGIT[ch]
+		elseif BP_COMBINING_KIND[ch] then
+			kind = BP_COMBINING_KIND[ch]
+		elseif BP_BASE_OF_MARKED[ch] then
+			table.insert(letters, BP_BASE_OF_MARKED[ch])
+			kind = BP_KIND_OF_MARKED[ch] or kind
+		elseif ch:match("^[a-z]$") then
+			table.insert(letters, ch)
+		elseif ch:match("^[1-8]$") then
+			super = ch
+		end
+	end
+	return table.concat(letters), kind, super
+end
+
+local function bp_display_to_numeric(spell, bracket)
+	if type(spell) ~= "string" or spell == "" then
+		return nil
+	end
+	if spell:match("^[a-z]+[1-8]$") then
+		return spell
+	end
+	local base, kind, super = strip_bp_display(spell)
+	if base == "" or not base:match("^[a-z]+$") then
+		return nil
+	end
+	local tone = bracket_bp_tone(bracket) or super
+	if not tone and kind then
+		local checked = base:match("[ptkh]$") ~= nil
+		if kind == "macron" then
+			tone = checked and "7" or "1"
+		elseif kind == "acute" then
+			tone = checked and "8" or "2"
+		elseif kind == "caron" then
+			tone = "3"
+		elseif kind == "grave" then
+			tone = "5"
+		elseif kind == "circumflex" then
+			tone = "6"
+		end
+	end
+	if not tone then
+		return nil
+	end
+	return base .. tone
+end
+
+-- 十八音【閩拼方案】候選註解左欄：lní／lni²／lni2 [耐居五] → lni2。
+-- 右欄 [聲韻調] 是十五音，不可混進上屏的閩拼調號。調符分不出 1／7 時，以括號末字為準。
 local function bp_left_spellings(comment)
 	local spells = {}
 	if type(comment) ~= "string" or comment == "" then
 		return spells
 	end
-	local roman = comment:gsub("%[.-%]", " ")
-	roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
-	for _, syl in ipairs(split_syllable_tokens(roman)) do
-		if looks_like_tl_numeric_syllable(syl) then
-			table.insert(spells, syl)
+	local paired = false
+	for spell, bracket in comment:gmatch("(%S+)%s*%[([^%]]*)%]") do
+		paired = true
+		local num = bp_display_to_numeric(spell, bracket)
+		if num then
+			table.insert(spells, num)
+		end
+	end
+	if paired then
+		return spells
+	end
+	for _, syl in ipairs(split_syllable_tokens(comment)) do
+		local num = bp_display_to_numeric(syl, nil)
+		if num then
+			table.insert(spells, num)
 		end
 	end
 	return spells
@@ -1672,7 +1862,7 @@ local function aux_commit_func(key, env)
 			end
 
 		elseif use_opt("key_in_piau_im_bp") then
-			-- 十八音【閩拼方案】：左欄已是數值調（bbnia2），直接上屏。
+			-- 十八音【閩拼方案】：先取標準調號（lni2），稍後依【聲調樣式】改成調符或上標。
 			-- 其他方案的閩拼仍走 TLPA → 調符。
 			if schema_id == "tsap_peh_im_bp" and #bp_left > 0 then
 				for i, syl in ipairs(bp_left) do
@@ -1767,9 +1957,17 @@ local function aux_commit_func(key, env)
 		local out_str
 		local im_zat = get_im_zat(ctx)
 		out_list = flatten_syllable_list(out_list)
+		-- 十八音【閩拼方案】且上屏的是閩拼：跟【聲調樣式】走。
+		-- 調符：Enter＝lní，Shift+Ctrl+Enter＝年〔lní〕。上標、標準調號同此。
+		if schema_id == "tsap_peh_im_bp" and use_opt("key_in_piau_im_bp") then
+			local style = bp_tone_style(ctx)
+			for i, syl in ipairs(out_list) do
+				out_list[i] = bp_spell_with_style(syl, style)
+			end
+		end
 		if fu_piau_im then
 			-- 【漢字附帶標音】：漢字 + 〔標音〕。
-			-- 十八音【台語注音二式】：名〔mia5〕；十八音【閩拼方案】：名〔bbnia2〕。
+			-- 十八音【台語注音二式】：名〔mia5〕；十八音【閩拼方案】調符：年〔lní〕。
 			local hu_ho = get_hu_ho()
 			out_str = cand_text
 				.. (hu_ho.left or "〔")
@@ -2905,6 +3103,40 @@ function tsap_peh_im_citation_tone_filter(input, env)
 		end
 	end
 	flush()
+end
+
+------------------------------------------------------------------------------------------
+-- 十八音【閩拼方案】候選左欄的聲調樣式。
+-- 調符（預設）lní、上標調號 lni²、標準調號 lni2。右欄 [聲韻調] 維持不變。
+------------------------------------------------------------------------------------------
+function tsap_peh_im_bp_tone_style_filter(input, env)
+	if env.engine.schema.schema_id ~= "tsap_peh_im_bp" then
+		for cand in input:iter() do
+			yield(cand)
+		end
+		return
+	end
+	local style = bp_tone_style(env.engine.context)
+	for cand in input:iter() do
+		local comment = cand.comment or ""
+		local new = restyle_bp_comment(comment, style)
+		if new == comment then
+			yield(cand)
+		else
+			local ok_sc, nc = pcall(function()
+				return ShadowCandidate(cand, cand.type, cand.text, new, false)
+			end)
+			if ok_sc and nc then
+				yield(nc)
+			else
+				local c = cand:get_genuine()
+				local plain = Candidate(c.type, c.start, c._end, c.text, new)
+				plain.preedit = cand.preedit
+				plain.quality = cand.quality
+				yield(plain)
+			end
+		end
+	end
 end
 
 ------------------------------------------------------------------------------------------
