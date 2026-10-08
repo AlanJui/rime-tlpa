@@ -13,7 +13,7 @@
 schema:
   schema_id: tsap_peh_im_bp
   name: 十八音【閩拼方案】
-  version: "v0.0.1"
+  version: "v0.0.2"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -480,7 +480,10 @@ translator:
     - 'xform/(^| )i(?![aeuo])/$1yi/'
     - 'xform/(^| )u(?![aeio])/$1wu/'
     # BPM2 調號 → 閩拼調號：1 7 3 2 5 4 8 → 1 6 5 3 2 7 8
-    - xlit|1732548|1653278|
+    # - xlit|1732548|1653278|
+    # 使用【上標數值】呈現【調號】
+    - xlit|1732548|¹⁶⁵³²⁷⁸|
+
 
 # 反查（X 漢語拼音／C 倉頡／Z 注音符號）以 Space 上屏時，由 lua aux_commit
 # 把候選註解中的讀音寫入 ji_khoo_bpm2 用戶詞典（常用字／連續反查成詞）。
