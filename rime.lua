@@ -1579,18 +1579,18 @@ local function aux_commit_func(key, env)
 		end
 	end
 
-	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter，或 Ctrl+Shift+G/H/J/K/L）
-	-- 【註】KeyEvent:repr() 之修飾鍵順序為 Shift → Control → Alt（實際為 Shift+Control+Return），
+	-- fu_piau_im = true：【漢字附帶標音】
+	-- Shift+Ctrl，加上 Enter，或加上本頁 G/H/J/K/L。
+	-- 【註】KeyEvent:repr() 之修飾鍵順序為 Shift → Control → Alt，
 	--       故以「包含」檢查各修飾鍵，不依賴其順序。
 	local has_shift = r:find("shift+", 1, true) ~= nil
 	local has_control = r:find("control+", 1, true) ~= nil
 	local has_alt = r:find("alt+", 1, true) ~= nil
-	local fu_piau_im = (r:find("return", 1, true) ~= nil)
-		and has_control and has_shift and not has_alt
-	-- G/H/J/K/L 直接上屏漢字；Shift+Ctrl+G/H/J/K/L 改上屏該項的漢字帶標音。
+	local fu_chord = has_control and has_shift and not has_alt
+	local fu_piau_im = (r:find("return", 1, true) ~= nil) and fu_chord
+	-- G/H/J/K/L 直接上屏漢字；Shift+Ctrl 再加 G/H/J/K/L 上屏該項的漢字帶標音。
 	local page_letter = r:match("([ghjkl])$")
-	local page_offset = (page_letter and has_shift and has_control and not has_alt)
-		and FU_PIAU_IM_PAGE_INDEX[page_letter] or nil
+	local page_offset = (page_letter and fu_chord) and FU_PIAU_IM_PAGE_INDEX[page_letter] or nil
 	if page_offset ~= nil then
 		fu_piau_im = true
 	end
@@ -1602,10 +1602,10 @@ local function aux_commit_func(key, env)
 		end
 		if page_offset ~= nil then
 			if not select_menu_page_candidate(env, ctx, page_offset) then
-				log.info("[aux_commit] Shift+Ctrl+GHJKL index out of page, key consumed")
+				log.info("[aux_commit] GHJKL fu_piau_im index out of page, key consumed")
 				return 1
 			end
-			log.info("[aux_commit] Shift+Ctrl+GHJKL select offset=" .. page_offset)
+			log.info("[aux_commit] GHJKL fu_piau_im select offset=" .. page_offset)
 		end
 
 		-- 收集組字區內【所有音節段】之選中候選。

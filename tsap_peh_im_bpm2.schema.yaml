@@ -582,7 +582,7 @@ editor:
     Control+Return: commit_raw_input
     Shift+Return: commit_script_text
     # Control+Shift+Return、Control+Shift+G/H/J/K/L 由 lua_processor@aux_commit 攔截
-    # G/H/J/K/L 上屏漢字；Shift+Ctrl+G/H/J/K/L 上屏該項的漢字帶標音
+    # G/H/J/K/L 上屏漢字；Shift+Ctrl 再加 G/H/J/K/L 上屏該項的漢字帶標音
 
 recognizer:
   import_preset: default
