@@ -1517,6 +1517,42 @@ local function memorize_aux_candidates(env, cand_list)
 	return updated_count > 0
 end
 
+-- 候選清單本頁 G/H/J/K/L＝第 1～5 項。與 alternative_select_keys 同一頁、同一順序。
+local FU_PIAU_IM_PAGE_INDEX = { g = 0, h = 1, j = 2, k = 3, l = 4 }
+
+local function select_menu_page_candidate(env, ctx, offset)
+	local comp = ctx.composition
+	if not comp or comp:empty() then
+		return false
+	end
+	local seg = comp:back()
+	if not seg or not seg.menu then
+		return false
+	end
+	local page_size = env.engine.schema.page_size or 5
+	if page_size < 1 then
+		page_size = 5
+	end
+	local selected_index = seg.selected_index or 0
+	local page_start = math.floor(selected_index / page_size) * page_size
+	local target = page_start + offset
+	local available = seg.menu:prepare(target + 1)
+	if not available or target >= available then
+		return false
+	end
+	local delta = target - selected_index
+	if delta > 0 then
+		for _ = 1, delta do
+			env.engine:process_key(KeyEvent("Down"))
+		end
+	elseif delta < 0 then
+		for _ = 1, -delta do
+			env.engine:process_key(KeyEvent("Up"))
+		end
+	end
+	return true
+end
+
 local function aux_commit_func(key, env)
 	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
@@ -1543,18 +1579,33 @@ local function aux_commit_func(key, env)
 		end
 	end
 
-	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter）
+	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter，或 Ctrl+Shift+G/H/J/K/L）
 	-- 【註】KeyEvent:repr() 之修飾鍵順序為 Shift → Control → Alt（實際為 Shift+Control+Return），
 	--       故以「包含」檢查各修飾鍵，不依賴其順序。
+	local has_shift = r:find("shift+", 1, true) ~= nil
+	local has_control = r:find("control+", 1, true) ~= nil
+	local has_alt = r:find("alt+", 1, true) ~= nil
 	local fu_piau_im = (r:find("return", 1, true) ~= nil)
-		and (r:find("control+", 1, true) ~= nil)
-		and (r:find("shift+", 1, true) ~= nil)
-		and (r:find("alt+", 1, true) == nil)
+		and has_control and has_shift and not has_alt
+	-- G/H/J/K/L 直接上屏漢字；Shift+Ctrl+G/H/J/K/L 改上屏該項的漢字帶標音。
+	local page_letter = r:match("([ghjkl])$")
+	local page_offset = (page_letter and has_shift and has_control and not has_alt)
+		and FU_PIAU_IM_PAGE_INDEX[page_letter] or nil
+	if page_offset ~= nil then
+		fu_piau_im = true
+	end
 
 	if r == "return" or r == "kp_enter" or fu_piau_im then
 		if not ctx:has_menu() then
 			log.info("[aux_commit] has_menu=false, returning kNoop")
 			return 2
+		end
+		if page_offset ~= nil then
+			if not select_menu_page_candidate(env, ctx, page_offset) then
+				log.info("[aux_commit] Shift+Ctrl+GHJKL index out of page, key consumed")
+				return 1
+			end
+			log.info("[aux_commit] Shift+Ctrl+GHJKL select offset=" .. page_offset)
 		end
 
 		-- 收集組字區內【所有音節段】之選中候選。

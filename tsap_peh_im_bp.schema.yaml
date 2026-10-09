@@ -13,7 +13,7 @@
 schema:
   schema_id: tsap_peh_im_bp
   name: 十八音【閩拼方案】
-  version: "v0.0.4"
+  version: "v0.0.5"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -604,7 +604,8 @@ editor:
     Return: commit_composition
     Control+Return: commit_raw_input
     Shift+Return: commit_script_text
-    # Control+Shift+Return 由 lua_processor@aux_commit 攔截
+    # Control+Shift+Return、Control+Shift+G/H/J/K/L 由 lua_processor@aux_commit 攔截
+    # G/H/J/K/L 上屏漢字；Shift+Ctrl+G/H/J/K/L 上屏該項的漢字帶標音
 
 recognizer:
   import_preset: default
