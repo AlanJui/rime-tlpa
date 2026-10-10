@@ -1137,12 +1137,46 @@ local function restyle_left_spells(comment, restyle_one)
 	end))
 end
 
+-- 注音二式聲母 → 閩拼。ji/chi/shi/jji → zi/ci/si/zzi。
+-- 鼻化若已把 i 挪走（shinn→shni），shi 對不上，仍要把 sh／ch／jj 收回。
+-- 字典裡 [ʣ] 已寫成 zz。裸 j 接 a/e/o/u 才是 zz；j 接 i 或鼻化後的 n 是 z。
+local function bp_fix_bpm2_initials(spell)
+	if type(spell) ~= "string" or spell == "" then
+		return spell
+	end
+	local tone = spell:match("([1-8])$") or ""
+	local s = (tone ~= "") and spell:sub(1, -2) or spell
+	if not s:match("^[a-z]+$") then
+		return spell
+	end
+	if s:sub(1, 3) == "jji" then
+		s = "zzi" .. s:sub(4)
+	elseif s:sub(1, 2) == "jj" then
+		s = "zz" .. s:sub(3)
+	elseif s:sub(1, 2) == "ji" then
+		s = "zi" .. s:sub(3)
+	elseif s:sub(1, 2) == "jn" then
+		s = "zn" .. s:sub(3)
+	elseif s:sub(1, 1) == "j" then
+		s = "zz" .. s:sub(2)
+	elseif s:sub(1, 2) == "ch" then
+		s = "c" .. s:sub(3)
+	elseif s:sub(1, 2) == "sh" then
+		s = "s" .. s:sub(3)
+	end
+	return s .. tone
+end
+
 local function restyle_bp_comment(comment, style)
-	if style == "digit" or type(comment) ~= "string" or comment == "" then
+	if type(comment) ~= "string" or comment == "" then
 		return comment
 	end
 	return (comment:gsub("([a-z]+)([1235678])", function(base, tone)
-		return bp_spell_with_style(base .. tone, style)
+		local spell = bp_fix_bpm2_initials(base .. tone)
+		if style == "digit" then
+			return spell
+		end
+		return bp_spell_with_style(spell, style)
 	end))
 end
 
@@ -1179,7 +1213,7 @@ local function bp_display_to_numeric(spell, bracket)
 		return nil
 	end
 	if spell:match("^[a-z]+[1-8]$") then
-		return spell
+		return bp_fix_bpm2_initials(spell)
 	end
 	local base, kind, super = strip_bp_display(spell)
 	if base == "" or not base:match("^[a-z]+$") then
@@ -1203,7 +1237,7 @@ local function bp_display_to_numeric(spell, bracket)
 	if not tone then
 		return nil
 	end
-	return base .. tone
+	return bp_fix_bpm2_initials(base .. tone)
 end
 
 -- 十八音【閩拼方案】候選註解左欄：lní／lni²／lni2 [耐居五] → lni2。
@@ -3006,6 +3040,7 @@ local function bpm2_spell_to_bp(code)
 	if s ~= "m" and s ~= "mh" and s ~= "n" and s ~= "nh" and s ~= "ng" and s ~= "ngh" then
 		local reps = {
 			{ "jji", "zzi" }, { "ji", "zi" }, { "chi", "ci" }, { "shi", "si" },
+			{ "j", "zz" },
 			{ "ng", "ggn" }, { "m", "bbn" }, { "n", "ln" },
 		}
 		for _, pair in ipairs(reps) do

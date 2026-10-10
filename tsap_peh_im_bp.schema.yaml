@@ -155,13 +155,16 @@ speller:
     - xform/([ptk])⑧$/${1}8/
     #==========================================================================
     # 字典 BPM2 → 閩拼字母（每個音節都要換，詞條以空白分音節）
-    # 聲母：m→bbn、n→ln、ng→ggn；jji/ji/chi/shi → zzi/zi/ci/si
+    # 聲母：m→bbn、n→ln、ng→ggn
+    # 注音二式在 i 前：jji/ji/chi/shi → zzi/zi/ci/si（韻母可續，如 shinn1→sinn1）
+    # 注音二式 j（[ʣ]）→ zz。jji、ji 先換，裸 j 才不會吃到它們。
     # 韻化 m／ng／n（後接調號或 h）不轉換。
     #==========================================================================
     - 'xform/(^| )jji/$1zzi/'
     - 'xform/(^| )ji/$1zi/'
     - 'xform/(^| )chi/$1ci/'
     - 'xform/(^| )shi/$1si/'
+    - 'xform/(^| )j(?![ji])/$1zz/'
     # - 'xform/(^| )ng(?![0-9h])/$1ggn/'
     # - 'xform/(^| )m(?![0-9h])/$1bbn/'
     # - 'xform/(^| )n(?![g0-9h])/$1ln/'
@@ -199,6 +202,16 @@ speller:
     - 'xform/(^| )unn/$1wnu/'
     # 鼻化韻：nn 後綴改 n 前綴。ann→na、iann→nia、iaunn→niao、oonn→noo
     - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/
+    # 鼻化若先把 i 挪成 n 前綴（shinn→shni），shi 已對不上，h 會留下。
+    # 閩拼聲母沒有 sh／ch／jj。j 在 i 前是 zi；鼻化後的 jn 亦同。j 接其他元音才是 zz（[ʣ]）。
+    - xform/^sh/s/
+    - xform/ sh/ s/
+    - xform/^ch/c/
+    - xform/ ch/ c/
+    - xform/^jj/zz/
+    - xform/ jj/ zz/
+    - xform/^jn/zn/
+    - xform/ jn/ zn/
     # N 只代替這個鼻化 n，後面的韻母繼續鍵入：kniu = kNiu，na = Na。
     # 不可把 n+韻母整段縮成 N。kN 若已是完整音節，再打 i 會被切成下一個零聲母（腔衣）。
     - 'derive/n([iu]?(?:ai|ao|oo|[aiueo]))/N$1/'
@@ -479,6 +492,7 @@ translator:
     - 'xform/(^| )ji/$1zi/'
     - 'xform/(^| )chi/$1ci/'
     - 'xform/(^| )shi/$1si/'
+    - 'xform/(^| )j(?![ji])/$1zz/'
     - 'xform/(^| )ng(?![0-9h])/$1ggn/'
     - 'xform/(^| )m(?![0-9h])/$1bbn/'
     - 'xform/(^| )n(?![g0-9h])/$1ln/'
@@ -497,6 +511,15 @@ translator:
     - 'xform/(^| )uenn/$1wne/'
     - 'xform/(^| )unn/$1wnu/'
     - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/
+    # 同上：shinn→shni 之後補收回 sh／ch／jj。
+    - xform/^sh/s/
+    - xform/ sh/ s/
+    - xform/^ch/c/
+    - xform/ ch/ c/
+    - xform/^jj/zz/
+    - xform/ jj/ zz/
+    - xform/^jn/zn/
+    - xform/ jn/ zn/
     - 'xform/(^| )ia/$1ya/'
     - 'xform/(^| )io/$1yo/'
     - 'xform/(^| )iu/$1yu/'
