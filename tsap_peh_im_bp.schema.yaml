@@ -13,7 +13,7 @@
 schema:
   schema_id: tsap_peh_im_bp
   name: 十八音【閩拼方案】
-  version: "v0.0.5"
+  version: "v0.0.6"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -179,6 +179,9 @@ speller:
     - xform/oo([kmp])/o$1/
     - xform/or/o/
     - xform/au/ao/
+    # 台羅等寫 au。只留 ao 時，連打 lau 會被切成 la + u（零聲母 wu），如 老 → 啦有。
+    # au 與 ao 都對到同一韻；輸入框再把 au 顯示成 ao。
+    - derive/ao/au/
     - xform/iek/ik/
     #--------------------------------------------------------------------------
     # 零聲母鼻化：iunn→ynu、iann→yna、iaunn→ynao、inn→yni、
@@ -253,6 +256,11 @@ translator:
   spelling_hints: 5
   always_show_comments: true
   preedit_format:
+    #--------------------------------------------------------------------------
+    # 台羅韻母 au（老 lau、嬌 iau）改成閩拼 ao、iao。
+    # 須在零聲母 u→wu 之前，否則 lau 先被切成 la + wu。
+    #--------------------------------------------------------------------------
+    - xform/au/ao/
     #--------------------------------------------------------------------------
     # 撇號分節改空白。只有音節開頭的 i／u 才是零聲母，改成 y／w。
     # N 後面的 i／u 是鼻化韻母（kNiu），先黏回，避免顯示成 kⁿ yi。
