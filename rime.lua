@@ -777,6 +777,15 @@ local TL_DIAC_TONE = {
 
 local function tl_diac_to_tlpa(s)
 	if type(s) ~= "string" or s == "" then return s end
+	-- 候選左欄若已改成上標（bbi²），先收回數字。否則會把 ² 留下，再補預設調 1，變成 bbi²1。
+	for digit, super in pairs(supers_digit) do
+		if s:find(super, 1, true) then
+			s = s:gsub(super, digit)
+		end
+	end
+	if s:match("^[a-z]+[1-8]$") then
+		return s
+	end
 	local tone = "1"
 	-- 調 8 組合符號 U+030D ("\204\141") → tone 8
 	local has8 = s:find("\204\141", 1, true)
@@ -842,7 +851,8 @@ end
 -- aux_commit 以 engine:commit_text() 輸出自訂字串，未經 Rime 原生 editor/selector
 -- 的提交流程，因此 translator 不會自動將所選候選寫入用戶詞典。
 -- 在真正上屏前，以同一 translator namespace 的 Memory 主動記錄候選，
--- 令 Enter / Ctrl+Shift+Enter 與 Space 具有相同的詞頻學習效果。
+-- 令 Space、G/H/J/K/L、Enter、Shift+Ctrl+Enter、Shift+Ctrl+G/H/J/K/L
+-- 都把【漢字＋字典讀音】寫進用戶詞典（小狼毫「用戶詞典」）。
 --
 -- 【注意】reformat_comment_filter 若以 Candidate() 取代 Phrase/Sentence，
 -- update_candidate 會失敗（只認 Phrase/Sentence）；須用 ShadowCandidate 保留原體。
@@ -1028,6 +1038,103 @@ local function bp_tone_style(ctx)
 		return "digit"
 	end
 	return "mark"
+end
+
+-- 十五音括號末字（一／二／三／四／五／七／八）→ 台羅、注音二式、方音的調號。
+-- 閩拼調號不同，不可拿這張表去改閩拼左欄。
+local function sni_bracket_tone_digit(bracket)
+	if type(bracket) ~= "string" or bracket == "" then
+		return nil
+	end
+	local chars = utf8_chars(bracket)
+	local n = tiau_ho_map[chars[#chars]]
+	if type(n) == "number" then
+		return tostring(n)
+	end
+	return nil
+end
+
+local function numeric_to_style(numeric, style)
+	local base, tone = numeric:match("^(.-)([1-8])$")
+	if not base or base == "" or not tone then
+		return nil
+	end
+	if style == "super" then
+		return base .. (supers_digit[tone] or tone)
+	end
+	return numeric
+end
+
+-- 台羅調符（或已是數字調）→ 標準調號。括號末字分陰平／陰入（無調符時都像調 1）。
+local function tl_spell_to_numeric(spell, bracket)
+	local numeric
+	if looks_like_tl_numeric_syllable(spell) then
+		numeric = spell
+	else
+		local ok, converted = pcall(tl_diac_to_tlpa, spell)
+		if not ok or type(converted) ~= "string" then
+			return nil
+		end
+		numeric = converted:gsub("eenn", "enn")
+	end
+	local tone = sni_bracket_tone_digit(bracket)
+	if tone then
+		local base = numeric:gsub("[1-8]$", "")
+		if base:match("^[a-z]+$") then
+			numeric = base .. tone
+		end
+	end
+	if not looks_like_tl_numeric_syllable(numeric) then
+		return nil
+	end
+	return numeric
+end
+
+local TPS_TONE_MARK_CHAR = {
+	["ˉ"] = true,
+	["ˊ"] = true,
+	["ˋ"] = true,
+	["˪"] = true,
+	["˫"] = true,
+	["˙"] = true,
+}
+
+local function strip_tps_display_tone(spell)
+	local out = {}
+	for _, ch in ipairs(utf8_chars(spell)) do
+		if not TPS_TONE_MARK_CHAR[ch] then
+			table.insert(out, ch)
+		end
+	end
+	return table.concat(out):gsub("[1-8]$", "")
+end
+
+local function restyle_left_spells(comment, restyle_one)
+	if type(comment) ~= "string" or comment == "" then
+		return comment
+	end
+	local paired = false
+	local new = comment:gsub("(%S+)%s*(%[[^%]]*%])", function(spell, bracket)
+		paired = true
+		local changed = restyle_one(spell, bracket:sub(2, -2))
+		if not changed or changed == spell then
+			return spell .. " " .. bracket
+		end
+		return changed .. " " .. bracket
+	end)
+	if paired then
+		return new
+	end
+	return (comment:gsub("%S+", function(tok)
+		if tok:sub(1, 1) == "[" then
+			return tok
+		end
+		local changed = restyle_one(tok, nil)
+		if not changed or changed == "" then
+			return tok
+		end
+		return changed
+	end))
 end
 
 local function restyle_bp_comment(comment, style)
@@ -1412,6 +1519,40 @@ local function learn_reverse_lookup_commit(env, ctx, r)
 	end
 end
 
+-- 十八音候選註解 → 該方案詞典的數值調編碼，供寫入用戶詞典。
+-- 台羅／方音：ji_khoo_tl（tshong5）。注音二式／閩拼：ji_khoo_bpm2（bbi2）。
+-- 顯示用的調符、上標不入庫；入庫的是下次按鍵能對上的字典碼。
+local function tsap_peh_im_userdict_codes(schema_id, comment)
+	if type(comment) ~= "string" or comment == "" then
+		return {}
+	end
+	if schema_id == "tsap_peh_im_bp" then
+		local pieces = {}
+		for sni in comment:gmatch("%[(.-)%]") do
+			table.insert(pieces, "[" .. sni .. "]")
+		end
+		local codes = {}
+		for _, tlpa in ipairs(parse_tsap_peh_im_tl_comment(table.concat(pieces, " "))) do
+			local bpm2 = tlpa_to_bpm2(tlpa)
+			if looks_like_tl_numeric_syllable(bpm2) then
+				table.insert(codes, bpm2)
+			end
+		end
+		return codes
+	end
+	if schema_id ~= "tsap_peh_im_tl" and schema_id ~= "tsap_peh_im_tps"
+		and schema_id ~= "tsap_peh_im_bpm2" then
+		return {}
+	end
+	local folded = comment
+	for digit, super in pairs(supers_digit) do
+		if folded:find(super, 1, true) then
+			folded = folded:gsub(super, digit)
+		end
+	end
+	return parse_tsap_peh_im_tl_comment(folded)
+end
+
 local function memorize_aux_candidates(env, cand_list)
 	local memory = env.aux_commit_memory
 	if not memory then
@@ -1441,23 +1582,37 @@ local function memorize_aux_candidates(env, cand_list)
 		end
 
 		local text = cand.text or ""
+		local sid = env.engine.schema.schema_id
+		local tsap_codes = {}
+		if type(sid) == "string" and sid:match("^tsap_peh_im_") then
+			tsap_codes = tsap_peh_im_userdict_codes(sid, cand.comment or "")
+			if #tsap_codes == 0 then
+				tsap_codes = tsap_peh_im_userdict_codes(sid, genuine.comment or "")
+			end
+		end
+
 		local code_str = nil
-		local ok_entry, entry = pcall(function() return genuine.entry end)
-		if ok_entry and entry then
-			code_str = dict_entry_code_str(memory, entry)
-			-- update_candidate 失敗時，直接用 Phrase.entry 補寫
-			if not updated and text ~= "" then
-				local ok2, res2 = pcall(function()
-					return memory:update_userdict(entry, 1, "")
-				end)
-				if ok2 and res2 then
-					updated = true
-					updated_count = updated_count + 1
+		if #tsap_codes == 0 then
+			local ok_entry, entry = pcall(function() return genuine.entry end)
+			if ok_entry and entry then
+				code_str = dict_entry_code_str(memory, entry)
+				-- update_candidate 失敗時，直接用 Phrase.entry 補寫
+				if not updated and text ~= "" then
+					local ok2, res2 = pcall(function()
+						return memory:update_userdict(entry, 1, "")
+					end)
+					if ok2 and res2 then
+						updated = true
+						updated_count = updated_count + 1
+					end
 				end
 			end
 		end
 
-		local comment_codes = codes_from_comment_brackets(cand.comment)
+		local comment_codes = tsap_codes
+		if #comment_codes == 0 then
+			comment_codes = codes_from_comment_brackets(cand.comment)
+		end
 		if #comment_codes == 0 then
 			comment_codes = codes_from_comment_brackets(genuine.comment)
 		end
@@ -1553,6 +1708,47 @@ local function select_menu_page_candidate(env, ctx, offset)
 	return true
 end
 
+-- 組字區裡即將上屏的候選。page_offset 有值時，最後一段改取本頁該項（G=0 … L=4）。
+local function collect_menu_candidates(env, ctx, page_offset)
+	local comp = ctx.composition
+	if not comp or comp:empty() then
+		return {}
+	end
+	local ok_segs, segs = pcall(function()
+		return comp:toSegmentation():get_segments()
+	end)
+	if not (ok_segs and type(segs) == "table" and #segs > 0) then
+		local seg = comp:back()
+		if not seg then
+			return {}
+		end
+		segs = { seg }
+	end
+	local cand_list = {}
+	for i, s in ipairs(segs) do
+		local cand = nil
+		local picked = false
+		if page_offset ~= nil and i == #segs and s.menu then
+			picked = true
+			local page_size = get_page_size(env)
+			local selected = s.selected_index or 0
+			local target = math.floor(selected / page_size) * page_size + page_offset
+			pcall(function()
+				s.menu:prepare(target + 1)
+				cand = s.menu:get_candidate_at(target)
+			end)
+		else
+			pcall(function() cand = s:get_selected_candidate() end)
+		end
+		if cand then
+			table.insert(cand_list, cand)
+		elseif picked then
+			return {}
+		end
+	end
+	return cand_list
+end
+
 local function aux_commit_func(key, env)
 	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
@@ -1575,6 +1771,11 @@ local function aux_commit_func(key, env)
 				learn_reverse_lookup_commit(env, ctx, r)
 			else
 				env.rev_lookup_learn_buf = {}
+				local page_offset = (r == "space") and nil or REV_LOOKUP_SELECT_INDEX[r]
+				local learned = collect_menu_candidates(env, ctx, page_offset)
+				if #learned > 0 then
+					memorize_aux_candidates(env, learned)
+				end
 			end
 		end
 	end
@@ -1933,8 +2134,14 @@ local function aux_commit_func(key, env)
 					table.insert(out_list, v)
 				end
 			elseif schema_id == "tsap_peh_im_bpm2" then
-				-- 十八音【台語注音二式】：註解左欄已是 BPM2 數值調（如 bbor5 [門高五]）
+				-- 十八音【台語注音二式】：註解左欄是 BPM2（bbor5 或上標 bbor⁵）。
+				-- 先收回上標，避免 bbi² 被補成 bbi²1。調符與標準調號都輸出數字。
 				local roman = gen_comm:gsub("%[.-%]", " ")
+				for digit, super in pairs(supers_digit) do
+					if roman:find(super, 1, true) then
+						roman = roman:gsub(super, digit)
+					end
+				end
 				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
 				for _, syl in ipairs(split_syllable_tokens(roman)) do
 					if looks_like_tl_numeric_syllable(syl) then
@@ -2008,12 +2215,39 @@ local function aux_commit_func(key, env)
 		local out_str
 		local im_zat = get_im_zat(ctx)
 		out_list = flatten_syllable_list(out_list)
-		-- 十八音【閩拼方案】且上屏的是閩拼：跟【聲調樣式】走。
-		-- 調符：Enter＝lní，Shift+Ctrl+Enter＝年〔lní〕。上標、標準調號同此。
+		-- 十八音【聲調樣式】：上屏的是該方案自己的標音時，跟候選左欄同一寫法。
+		-- 閩拼調符：Enter＝lní，Shift+Ctrl+Enter＝年〔lní〕。上標、標準調號同此。
+		-- 台羅：tshông／tshong⁵／tshong5。注音二式上標：bbor⁵。方音：ㄌㄤˊ／ㄌㄤ⁵／ㄌㄤ5。
+		local tone_style = bp_tone_style(ctx)
 		if schema_id == "tsap_peh_im_bp" and use_opt("key_in_piau_im_bp") then
-			local style = bp_tone_style(ctx)
 			for i, syl in ipairs(out_list) do
-				out_list[i] = bp_spell_with_style(syl, style)
+				out_list[i] = bp_spell_with_style(syl, tone_style)
+			end
+		elseif schema_id == "tsap_peh_im_tl" and use_opt("key_in_piau_im_tl") and tone_style ~= "mark" then
+			for i, syl in ipairs(out_list) do
+				local numeric = source_list[i]
+				if type(numeric) ~= "string" or not looks_like_tl_numeric_syllable(numeric) then
+					numeric = tl_spell_to_numeric(syl, nil)
+				end
+				if numeric then
+					out_list[i] = numeric_to_style(numeric, tone_style) or syl
+				end
+			end
+		elseif schema_id == "tsap_peh_im_bpm2" and use_opt("key_in_piau_im_bpm2") and tone_style == "super" then
+			for i, syl in ipairs(out_list) do
+				if looks_like_tl_numeric_syllable(syl) then
+					out_list[i] = numeric_to_style(syl, "super") or syl
+				end
+			end
+		elseif schema_id == "tsap_peh_im_tps" and use_opt("key_in_piau_im_tps") and tone_style ~= "mark" then
+			for i, syl in ipairs(out_list) do
+				local tone = type(source_list[i]) == "string" and source_list[i]:match("([1-8])$") or nil
+				if tone then
+					local base = strip_tps_display_tone(syl)
+					if base ~= "" then
+						out_list[i] = numeric_to_style(base .. tone, tone_style) or syl
+					end
+				end
 			end
 		end
 		if fu_piau_im then
@@ -3157,38 +3391,98 @@ function tsap_peh_im_citation_tone_filter(input, env)
 end
 
 ------------------------------------------------------------------------------------------
--- 十八音【閩拼方案】候選左欄的聲調樣式。
--- 調符（預設）lní、上標調號 lni²、標準調號 lni2。右欄 [聲韻調] 維持不變。
+-- 十八音候選左欄的聲調樣式。右欄 [聲韻調] 維持不變。
+-- 閩拼：調符 lní、上標 lni²、標準 lni2。
+-- 台羅：調符 tshông、上標 tshong⁵、標準 tshong5。
+-- 注音二式：調符與標準皆為 bbor5，上標 bbor⁵。
+-- 方音：調符 ㄌㄤˊ、上標 ㄌㄤ⁵、標準 ㄌㄤ5。
 ------------------------------------------------------------------------------------------
-function tsap_peh_im_bp_tone_style_filter(input, env)
-	if env.engine.schema.schema_id ~= "tsap_peh_im_bp" then
+local function yield_restyled_comment(cand, new)
+	local comment = cand.comment or ""
+	if new == comment then
+		yield(cand)
+		return
+	end
+	local ok_sc, nc = pcall(function()
+		return ShadowCandidate(cand, cand.type, cand.text, new, false)
+	end)
+	if ok_sc and nc then
+		yield(nc)
+		return
+	end
+	local c = cand:get_genuine()
+	local plain = Candidate(c.type, c.start, c._end, c.text, new)
+	plain.preedit = cand.preedit
+	plain.quality = cand.quality
+	yield(plain)
+end
+
+local function restyle_tsap_peh_im_comment(comment, kind, style)
+	if kind == "bp" then
+		return restyle_bp_comment(comment, style)
+	end
+	if kind == "tl" then
+		return restyle_left_spells(comment, function(spell, bracket)
+			local numeric = tl_spell_to_numeric(spell, bracket)
+			if not numeric then
+				return nil
+			end
+			return numeric_to_style(numeric, style)
+		end)
+	end
+	if kind == "bpm2" then
+		return restyle_left_spells(comment, function(spell, _)
+			if not looks_like_tl_numeric_syllable(spell) then
+				return nil
+			end
+			return numeric_to_style(spell, "super")
+		end)
+	end
+	if kind == "tps" then
+		return restyle_left_spells(comment, function(spell, bracket)
+			local tone = sni_bracket_tone_digit(bracket)
+			if not tone then
+				return nil
+			end
+			local base = strip_tps_display_tone(spell)
+			if base == "" then
+				return nil
+			end
+			return numeric_to_style(base .. tone, style)
+		end)
+	end
+	return comment
+end
+
+function tsap_peh_im_tone_style_filter(input, env)
+	local kind = ({
+		tsap_peh_im_bp = "bp",
+		tsap_peh_im_tl = "tl",
+		tsap_peh_im_bpm2 = "bpm2",
+		tsap_peh_im_tps = "tps",
+	})[env.engine.schema.schema_id]
+	if not kind then
 		for cand in input:iter() do
 			yield(cand)
 		end
 		return
 	end
 	local style = bp_tone_style(env.engine.context)
+	local passthrough = (kind ~= "bp" and style == "mark")
+		or (kind == "bpm2" and style ~= "super")
+	if passthrough then
+		for cand in input:iter() do
+			yield(cand)
+		end
+		return
+	end
 	for cand in input:iter() do
 		local comment = cand.comment or ""
-		local new = restyle_bp_comment(comment, style)
-		if new == comment then
-			yield(cand)
-		else
-			local ok_sc, nc = pcall(function()
-				return ShadowCandidate(cand, cand.type, cand.text, new, false)
-			end)
-			if ok_sc and nc then
-				yield(nc)
-			else
-				local c = cand:get_genuine()
-				local plain = Candidate(c.type, c.start, c._end, c.text, new)
-				plain.preedit = cand.preedit
-				plain.quality = cand.quality
-				yield(plain)
-			end
-		end
+		yield_restyled_comment(cand, restyle_tsap_peh_im_comment(comment, kind, style))
 	end
 end
+
+tsap_peh_im_bp_tone_style_filter = tsap_peh_im_tone_style_filter
 
 ------------------------------------------------------------------------------------------
 -- 在候選註解前加上模式標籤：〔上標〕或〔一般〕

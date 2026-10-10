@@ -4,11 +4,12 @@
 schema:
   schema_id: tsap_peh_im_tl
   name: 十八音【台羅拼音】
-  version: "v0.0.16"
+  version: "v0.0.17"
   author:
     - 後學 CCC 整理
   description: |
     基於《彙集雅俗通十五音》改良之新十五音輸入法
+    【聲調樣式】：調符 tshông／上標調號 tshong⁵／標準調號 tshong5。候選左欄與台羅上屏同一寫法
   dependencies:
     - luna_pinyin
     - cangjie5
@@ -42,6 +43,15 @@ switches:
   - options: [ im_zat_hyphen, im_zat_space, im_zat_apos ]
     reset: 1
     states: [ 連字號, 空白, 撇號 ]
+  #-----------------------------------------------------------------------------
+  # 【聲調樣式】只改候選左欄，以及上屏選【台羅拼音】時的
+  # Enter、Shift+Ctrl+Enter、Shift+Ctrl+G/H/J/K/L。輸入框固定為調符。
+  # 床：調符 tshông／上標 tshong⁵／標準 tshong5。右欄 [聲韻調] 不變。
+  #-----------------------------------------------------------------------------
+  - options:
+      [ siann_tiau_iunn_sik_tiau_hu, siann_tiau_iunn_sik_siong_piau, siann_tiau_iunn_sik_piau_cun ]
+    reset: 0
+    states: [ 調符, 上標調號, 標準調號 ]
 
 engine:
   processors:
@@ -75,6 +85,7 @@ engine:
     - simplifier
     - uniquifier
     - lua_filter@tsap_peh_im_citation_tone_filter
+    - lua_filter@tsap_peh_im_tone_style_filter  # 左欄：調符／上標調號／標準調號
     # - lua_filter@reformat_comment_filter  # 控制【候選清單】顯示之【漢字標音】
 
 speller:
@@ -277,11 +288,12 @@ translator:
   always_show_comments: true
   preedit_format:
     #--------------------------------------------------------------------------
-    # 聲調【按鍵】對映之【調號】
+    # 輸入框固定為台羅【調符】，不隨【聲調樣式】改變。
+    # 聲調樣式只改候選左欄，以及 Enter、Shift+Ctrl+Enter、Shift+Ctrl+G/H/J/K/L。
     # - 調號：&，表：聲調值可能為：4或8，使用【按鍵】：7（促聲通配）
     # - 調號：*，表：聲調值可能為：1/7/3/2/5，使用【按鍵】：*（舒聲通配）
     #--------------------------------------------------------------------------
-    - 'xlit ;-_\/[]7 ¹⁷³²⁵⁴⁸&'
+    - 'xlit ;-_\/[]7 1732548&'
     # 地方腔：輸入框把 ere／er／ir 顯示成優勢腔
     - xform/ereh/eh/
     - xform/ere/e/
@@ -300,55 +312,95 @@ translator:
     - xform/z/ts/
     #--------------------------------------------------------------------------
     # 【促聲韻自動修正】： 【舒聲韻】+【入聲調號】（⁴/⁸/&）→ 自動更正為【促聲韻】
-    # 例：pun[ → put⁴；pun7 → put&。最長韻母優先。
+    # 例：pun[ → put4；pun7 → put&。最長韻母優先。隨後再標成調符。
     #--------------------------------------------------------------------------
-    - xform/uainn(⁴|⁸|&)/uainnh$1/   # 閂
-    - xform/iaunn(⁴|⁸|&)/iaunnh$1/   # 嘄
-    - xform/iong(⁴|⁸|&)/iok$1/       # 恭
-    - xform/iang(⁴|⁸|&)/iak$1/       # 姜
-    - xform/uang(⁴|⁸|&)/uak$1/       # 光
-    - xform/uinn(⁴|⁸|&)/uinnh$1/     # 褌：舒 uinn／促 uinnh
-    - xform/iann(⁴|⁸|&)/iannh$1/     # 驚
-    - xform/ainn(⁴|⁸|&)/ainnh$1/     # 閒
-    - xform/iunn(⁴|⁸|&)/iunnh$1/     # 牛
-    - xform/uann(⁴|⁸|&)/uannh$1/     # 官
-    - xform/ionn(⁴|⁸|&)/ionnh$1/     # 薑
-    - xform/aunn(⁴|⁸|&)/aunnh$1/     # 爻
-    - xform/ian(⁴|⁸|&)/iat$1/        # 堅
-    - xform/ong(⁴|⁸|&)/ok$1/         # 公
-    - xform/uai(⁴|⁸|&)/uaih$1/       # 乖
-    - xform/ing(⁴|⁸|&)/ik$1/         # 經
-    - xform/uan(⁴|⁸|&)/uat$1/        # 觀
-    - xform/iau(⁴|⁸|&)/iauh$1/       # 嬌
-    - xform/ang(⁴|⁸|&)/ak$1/         # 江
-    - xform/iam(⁴|⁸|&)/iap$1/        # 兼
-    - xform/ann(⁴|⁸|&)/annh$1/       # 監
-    - xform/enn(⁴|⁸|&)/ennh$1/       # 更
-    - xform/inn(⁴|⁸|&)/innh$1/       # 梔
-    - xform/onn(⁴|⁸|&)/onnh$1/       # 姑／扛
-    - xform/un(⁴|⁸|&)/ut$1/          # 君
-    - xform/im(⁴|⁸|&)/ip$1/          # 金
-    - xform/ui(⁴|⁸|&)/uih$1/         # 規
-    - xform/an(⁴|⁸|&)/at$1/          # 干
-    - xform/oo(⁴|⁸|&)/ooh$1/         # 沽
-    - xform/ee(⁴|⁸|&)/eeh$1/         # 嘉
-    - xform/ai(⁴|⁸|&)/aih$1/         # 皆
-    - xform/in(⁴|⁸|&)/it$1/          # 巾
-    - xform/am(⁴|⁸|&)/ap$1/          # 甘
-    - xform/ua(⁴|⁸|&)/uah$1/         # 瓜
-    - xform/au(⁴|⁸|&)/auh$1/         # 交
-    - xform/ia(⁴|⁸|&)/iah$1/         # 迦
-    - xform/ue(⁴|⁸|&)/ueh$1/         # 檜／糜
-    - xform/iu(⁴|⁸|&)/iuh$1/         # 丩
-    - xform/io(⁴|⁸|&)/ioh$1/         # 茄
-    - xform/ng(⁴|⁸|&)/ngh$1/         # 鋼
-    - xform/om(⁴|⁸|&)/op$1/          # 箴
-    - xform/o(⁴|⁸|&)/oh$1/           # 高
-    - xform/u(⁴|⁸|&)/uh$1/           # 艍
-    - xform/a(⁴|⁸|&)/ah$1/           # 膠
-    - xform/i(⁴|⁸|&)/ih$1/           # 居
-    - xform/e(⁴|⁸|&)/eh$1/           # 伽／稽
-    - xform/m(⁴|⁸|&)/mh$1/           # 姆
+    - xform/uainn(4|8|&)/uainnh$1/   # 閂
+    - xform/iaunn(4|8|&)/iaunnh$1/   # 嘄
+    - xform/iong(4|8|&)/iok$1/       # 恭
+    - xform/iang(4|8|&)/iak$1/       # 姜
+    - xform/uang(4|8|&)/uak$1/       # 光
+    - xform/uinn(4|8|&)/uinnh$1/     # 褌：舒 uinn／促 uinnh
+    - xform/iann(4|8|&)/iannh$1/     # 驚
+    - xform/ainn(4|8|&)/ainnh$1/     # 閒
+    - xform/iunn(4|8|&)/iunnh$1/     # 牛
+    - xform/uann(4|8|&)/uannh$1/     # 官
+    - xform/ionn(4|8|&)/ionnh$1/     # 薑
+    - xform/aunn(4|8|&)/aunnh$1/     # 爻
+    - xform/ian(4|8|&)/iat$1/        # 堅
+    - xform/ong(4|8|&)/ok$1/         # 公
+    - xform/uai(4|8|&)/uaih$1/       # 乖
+    - xform/ing(4|8|&)/ik$1/         # 經
+    - xform/uan(4|8|&)/uat$1/        # 觀
+    - xform/iau(4|8|&)/iauh$1/       # 嬌
+    - xform/ang(4|8|&)/ak$1/         # 江
+    - xform/iam(4|8|&)/iap$1/        # 兼
+    - xform/ann(4|8|&)/annh$1/       # 監
+    - xform/enn(4|8|&)/ennh$1/       # 更
+    - xform/inn(4|8|&)/innh$1/       # 梔
+    - xform/onn(4|8|&)/onnh$1/       # 姑／扛
+    - xform/un(4|8|&)/ut$1/          # 君
+    - xform/im(4|8|&)/ip$1/          # 金
+    - xform/ui(4|8|&)/uih$1/         # 規
+    - xform/an(4|8|&)/at$1/          # 干
+    - xform/oo(4|8|&)/ooh$1/         # 沽
+    - xform/ee(4|8|&)/eeh$1/         # 嘉
+    - xform/ai(4|8|&)/aih$1/         # 皆
+    - xform/in(4|8|&)/it$1/          # 巾
+    - xform/am(4|8|&)/ap$1/          # 甘
+    - xform/ua(4|8|&)/uah$1/         # 瓜
+    - xform/au(4|8|&)/auh$1/         # 交
+    - xform/ia(4|8|&)/iah$1/         # 迦
+    - xform/ue(4|8|&)/ueh$1/         # 檜／糜
+    - xform/iu(4|8|&)/iuh$1/         # 丩
+    - xform/io(4|8|&)/ioh$1/         # 茄
+    - xform/ng(4|8|&)/ngh$1/         # 鋼
+    - xform/om(4|8|&)/op$1/          # 箴
+    - xform/o(4|8|&)/oh$1/           # 高
+    - xform/u(4|8|&)/uh$1/           # 艍
+    - xform/a(4|8|&)/ah$1/           # 膠
+    - xform/i(4|8|&)/ih$1/           # 居
+    - xform/e(4|8|&)/eh$1/           # 伽／稽
+    - xform/m(4|8|&)/mh$1/           # 姆
+    #--------------------------------------------------------------------------
+    # 調號移到主要元音上，再換成台羅調符。輸入框始終走這一步。
+    #--------------------------------------------------------------------------
+    - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$3$2/
+    - xform/([aeo])([iueo])([1234578])/$1$3$2/
+    - xform/a1/a/
+    - xform/e1/e/
+    - xform/i1/i/
+    - xform/u1/u/
+    - xform/o1/o/
+    - xform/a2/á/
+    - xform/e2/é/
+    - xform/i2/í/
+    - xform/u2/ú/
+    - xform/o2/ó/
+    - xform/a3/à/
+    - xform/e3/è/
+    - xform/i3/ì/
+    - xform/u3/ù/
+    - xform/o3/ò/
+    - xform/a4/a/
+    - xform/e4/e/
+    - xform/i4/i/
+    - xform/u4/u/
+    - xform/o4/o/
+    - xform/a5/â/
+    - xform/e5/ê/
+    - xform/i5/î/
+    - xform/u5/û/
+    - xform/o5/ô/
+    - xform/a7/ā/
+    - xform/e7/ē/
+    - xform/i7/ī/
+    - xform/u7/ū/
+    - xform/o7/ō/
+    - xform/a8/a̍/
+    - xform/e8/e̍/
+    - xform/i8/i̍/
+    - xform/u8/u̍/
+    - xform/o8/o̍/
   comment_format: &tsap_peh_im_comment_format
     #==========================================================================
     # 為【侯選清單】之【漢字標音】設定【音節】格式 =【聲母】+【韻母】+【聲調】

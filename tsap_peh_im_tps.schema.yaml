@@ -10,7 +10,7 @@
 schema:
   schema_id: tsap_peh_im_tps
   name: 十八音【方音符號】
-  version: "v0.0.9"
+  version: "v0.0.10"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -21,6 +21,7 @@ schema:
     【字典編碼】：台羅拼音（例：人 = lang5；腔 = khiunn1）
     【輸入框】：方音符號（鼻韻前置符 ゜；舒聲韻接入聲調時自動改促聲韻）
     【候選清單】：方音符號 + [聲+韻+調]（例：ㄌㄤˊ [柳江五]）
+    【聲調樣式】：調符 ㄌㄤˊ／上標調號 ㄌㄤ⁵／標準調號 ㄌㄤ5。右欄 [聲韻調] 不變
     【標點】：` 再按鍵（例：`, → ，）。【反查】：X 漢語拼音／C 倉頡／Z 注音
   dependencies:
     - luna_pinyin
@@ -50,6 +51,14 @@ switches:
   - options: [ im_zat_hyphen, im_zat_space, im_zat_apos ]
     reset: 1
     states: [ 連字號, 空白, 撇號 ]
+  #-----------------------------------------------------------------------------
+  # 【聲調樣式】候選左欄，以及上屏選【方音符號】時的 Enter、Shift+Ctrl+Enter。
+  # 人：調符 ㄌㄤˊ／上標 ㄌㄤ⁵／標準 ㄌㄤ5。右欄 [聲韻調] 不變。
+  #-----------------------------------------------------------------------------
+  - options:
+      [ siann_tiau_iunn_sik_tiau_hu, siann_tiau_iunn_sik_siong_piau, siann_tiau_iunn_sik_piau_cun ]
+    reset: 0
+    states: [ 調符, 上標調號, 標準調號 ]
 
 engine:
   processors:
@@ -84,6 +93,7 @@ engine:
     - uniquifier
     - lua_filter@tsap_peh_im_citation_tone_filter
     - lua_filter@tsap_peh_im_rev_comment_filter
+    - lua_filter@tsap_peh_im_tone_style_filter  # 左欄：調符／上標調號／標準調號
 
 speller:
   # !1q…＝聲／韻鍵；:5346][7＝調號（7＝入聲通配 &）；-＝鼻韻前置符 ゜

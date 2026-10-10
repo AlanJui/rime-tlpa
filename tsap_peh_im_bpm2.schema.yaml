@@ -6,7 +6,7 @@
 schema:
   schema_id: tsap_peh_im_bpm2
   name: 十八音【台語注音二式】
-  version: "v0.0.4"
+  version: "v0.0.5"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -15,6 +15,7 @@ schema:
     【輸入類型】：拼音輸入法（聲+韻+調）
     【拼音系統】：台語注音二式（BPM2）【吳守禮方音符號延伸】
     【字典編碼】：台語注音二式音標（例：無 = bbor5；床 = cong5；溫 = un1）
+    【聲調樣式】：注音二式以數字標調。調符與標準調號皆為 bbor5，上標調號為 bbor⁵
   dependencies:
     - luna_pinyin
     - cangjie5
@@ -48,6 +49,16 @@ switches:
   - options: [ im_zat_hyphen, im_zat_space, im_zat_apos ]
     reset: 1
     states: [ 連字號, 空白, 撇號 ]
+  #-----------------------------------------------------------------------------
+  # 【聲調樣式】只改候選左欄，以及上屏選【台語注音二式】時的
+  # Enter、Shift+Ctrl+Enter、Shift+Ctrl+G/H/J/K/L。輸入框固定為標準調號。
+  # 注音二式無調符：選【調符】時仍輸出標準調號（米 bbi2）。上標為 bbi²。
+  # 右欄 [聲韻調] 不變。預設標準調號。
+  #-----------------------------------------------------------------------------
+  - options:
+      [ siann_tiau_iunn_sik_tiau_hu, siann_tiau_iunn_sik_siong_piau, siann_tiau_iunn_sik_piau_cun ]
+    reset: 2
+    states: [ 調符, 上標調號, 標準調號 ]
 
 engine:
   processors:
@@ -82,6 +93,7 @@ engine:
     - uniquifier
     - lua_filter@tsap_peh_im_citation_tone_filter
     - lua_filter@tsap_peh_im_rev_comment_filter  # 倉頡／注音／拼音反查：改顯示 BPM2
+    - lua_filter@tsap_peh_im_tone_style_filter  # 左欄：調符／上標調號／標準調號
 
 speller:
   # 7／&：促聲通配（4 或 8）；*：舒聲通配（1/7/3/2/5）；陽去 7 仍用【-】
@@ -271,11 +283,12 @@ translator:
   always_show_comments: true
   preedit_format:
     #--------------------------------------------------------------------------
-    # 聲調【按鍵】對映之【調號】
+    # 輸入框固定為【標準調號】。注音二式無調符，故不隨【聲調樣式】改成上標或調符。
+    # 聲調樣式只改候選左欄，以及 Enter、Shift+Ctrl+Enter、Shift+Ctrl+G/H/J/K/L。
     # - 調號：&，表：聲調值可能為：4或8，使用【按鍵】：7（促聲通配）
     # - 調號：*，表：聲調值可能為：1/7/3/2/5，使用【按鍵】：*（舒聲通配）
     #--------------------------------------------------------------------------
-    - 'xlit ;-_\/[]7 ¹⁷³²⁵⁴⁸&'
+    - 'xlit ;-_\/[]7 1732548&'
     #--------------------------------------------------------------------------
     # 聲母轉換：輸入碼顯示
     #--------------------------------------------------------------------------
@@ -287,64 +300,64 @@ translator:
     - xform/(^|')si/$1shi/
     #--------------------------------------------------------------------------
     # 【促聲韻自動修正】： 【舒聲韻】+【入聲調號】（⁴/⁸/&）→ 自動更正為【促聲韻】
-    # 例：bun[ → but⁴；bun7 → but&。最長韻母優先。
+    # 例：bun[ → but4；bun7 → but&。最長韻母優先。
     #--------------------------------------------------------------------------
-    - xform/uainn(⁴|⁸|&)/uainnh$1/   # 閂
-    - xform/iaunn(⁴|⁸|&)/iaunnh$1/   # 嘄
-    - xform/iong(⁴|⁸|&)/iook$1/      # 恭（BPM2）
-    - xform/iang(⁴|⁸|&)/iak$1/       # 姜
-    - xform/uang(⁴|⁸|&)/uak$1/       # 光
-    - xform/uinn(⁴|⁸|&)/uinnh$1/     # 褌
-    - xform/iann(⁴|⁸|&)/iannh$1/     # 驚
-    - xform/ainn(⁴|⁸|&)/ainnh$1/     # 閒
-    - xform/iunn(⁴|⁸|&)/iunnh$1/     # 牛
-    - xform/uann(⁴|⁸|&)/uannh$1/     # 官
-    - xform/ioonn(⁴|⁸|&)/ioonnh$1/   # 薑
-    - xform/ionn(⁴|⁸|&)/ionnh$1/
-    - xform/aunn(⁴|⁸|&)/aunnh$1/     # 爻
-    - xform/ian(⁴|⁸|&)/iat$1/        # 堅
-    - xform/ong(⁴|⁸|&)/ok$1/         # 公
-    - xform/uai(⁴|⁸|&)/uaih$1/       # 乖
-    - xform/ing(⁴|⁸|&)/iek$1/        # 經（BPM2）
-    - xform/ik(⁴|⁸|&)/iek$1/
-    - xform/uan(⁴|⁸|&)/uat$1/        # 觀
-    - xform/iau(⁴|⁸|&)/iauh$1/       # 嬌
-    - xform/ang(⁴|⁸|&)/ak$1/         # 江
-    - xform/iam(⁴|⁸|&)/iap$1/        # 兼
-    - xform/ann(⁴|⁸|&)/annh$1/       # 監
-    - xform/enn(⁴|⁸|&)/ennh$1/       # 更
-    - xform/inn(⁴|⁸|&)/innh$1/       # 梔
-    - xform/oonn(⁴|⁸|&)/oonnh$1/     # 姑
-    - xform/onn(⁴|⁸|&)/onnh$1/
-    - xform/un(⁴|⁸|&)/ut$1/          # 君
-    - xform/im(⁴|⁸|&)/ip$1/          # 金
-    - xform/ui(⁴|⁸|&)/uih$1/         # 規
-    - xform/an(⁴|⁸|&)/at$1/          # 干
-    - xform/oo(⁴|⁸|&)/ooh$1/         # 沽
-    - xform/ee(⁴|⁸|&)/eeh$1/         # 嘉
-    - xform/ai(⁴|⁸|&)/aih$1/         # 皆
-    - xform/in(⁴|⁸|&)/it$1/          # 巾
-    - xform/am(⁴|⁸|&)/ap$1/          # 甘
-    - xform/ua(⁴|⁸|&)/uah$1/         # 瓜
-    - xform/au(⁴|⁸|&)/auh$1/         # 交
-    - xform/ia(⁴|⁸|&)/iah$1/         # 迦
-    - xform/ue(⁴|⁸|&)/ueh$1/         # 檜／糜
-    - xform/iu(⁴|⁸|&)/iuh$1/         # 丩
-    - xform/ior(⁴|⁸|&)/iorh$1/       # 茄（BPM2）
-    - xform/io(⁴|⁸|&)/iorh$1/
-    - xform/ng(⁴|⁸|&)/ngh$1/         # 鋼
-    - xform/oom(⁴|⁸|&)/oop$1/        # 箴（BPM2）
-    - xform/om(⁴|⁸|&)/oop$1/
-    - xform/or(⁴|⁸|&)/orh$1/         # 高（BPM2）
-    - xform/o(⁴|⁸|&)/orh$1/
-    - xform/u(⁴|⁸|&)/uh$1/           # 艍
-    - xform/a(⁴|⁸|&)/ah$1/           # 膠
-    - xform/i(⁴|⁸|&)/ih$1/           # 居
-    - xform/e(⁴|⁸|&)/eh$1/           # 伽／稽
-    - xform/m(⁴|⁸|&)/mh$1/           # 姆
+    - xform/uainn(4|8|&)/uainnh$1/   # 閂
+    - xform/iaunn(4|8|&)/iaunnh$1/   # 嘄
+    - xform/iong(4|8|&)/iook$1/      # 恭（BPM2）
+    - xform/iang(4|8|&)/iak$1/       # 姜
+    - xform/uang(4|8|&)/uak$1/       # 光
+    - xform/uinn(4|8|&)/uinnh$1/     # 褌
+    - xform/iann(4|8|&)/iannh$1/     # 驚
+    - xform/ainn(4|8|&)/ainnh$1/     # 閒
+    - xform/iunn(4|8|&)/iunnh$1/     # 牛
+    - xform/uann(4|8|&)/uannh$1/     # 官
+    - xform/ioonn(4|8|&)/ioonnh$1/   # 薑
+    - xform/ionn(4|8|&)/ionnh$1/
+    - xform/aunn(4|8|&)/aunnh$1/     # 爻
+    - xform/ian(4|8|&)/iat$1/        # 堅
+    - xform/ong(4|8|&)/ok$1/         # 公
+    - xform/uai(4|8|&)/uaih$1/       # 乖
+    - xform/ing(4|8|&)/iek$1/        # 經（BPM2）
+    - xform/ik(4|8|&)/iek$1/
+    - xform/uan(4|8|&)/uat$1/        # 觀
+    - xform/iau(4|8|&)/iauh$1/       # 嬌
+    - xform/ang(4|8|&)/ak$1/         # 江
+    - xform/iam(4|8|&)/iap$1/        # 兼
+    - xform/ann(4|8|&)/annh$1/       # 監
+    - xform/enn(4|8|&)/ennh$1/       # 更
+    - xform/inn(4|8|&)/innh$1/       # 梔
+    - xform/oonn(4|8|&)/oonnh$1/     # 姑
+    - xform/onn(4|8|&)/onnh$1/
+    - xform/un(4|8|&)/ut$1/          # 君
+    - xform/im(4|8|&)/ip$1/          # 金
+    - xform/ui(4|8|&)/uih$1/         # 規
+    - xform/an(4|8|&)/at$1/          # 干
+    - xform/oo(4|8|&)/ooh$1/         # 沽
+    - xform/ee(4|8|&)/eeh$1/         # 嘉
+    - xform/ai(4|8|&)/aih$1/         # 皆
+    - xform/in(4|8|&)/it$1/          # 巾
+    - xform/am(4|8|&)/ap$1/          # 甘
+    - xform/ua(4|8|&)/uah$1/         # 瓜
+    - xform/au(4|8|&)/auh$1/         # 交
+    - xform/ia(4|8|&)/iah$1/         # 迦
+    - xform/ue(4|8|&)/ueh$1/         # 檜／糜
+    - xform/iu(4|8|&)/iuh$1/         # 丩
+    - xform/ior(4|8|&)/iorh$1/       # 茄（BPM2）
+    - xform/io(4|8|&)/iorh$1/
+    - xform/ng(4|8|&)/ngh$1/         # 鋼
+    - xform/oom(4|8|&)/oop$1/        # 箴（BPM2）
+    - xform/om(4|8|&)/oop$1/
+    - xform/or(4|8|&)/orh$1/         # 高（BPM2）
+    - xform/o(4|8|&)/orh$1/
+    - xform/u(4|8|&)/uh$1/           # 艍
+    - xform/a(4|8|&)/ah$1/           # 膠
+    - xform/i(4|8|&)/ih$1/           # 居
+    - xform/e(4|8|&)/eh$1/           # 伽／稽
+    - xform/m(4|8|&)/mh$1/           # 姆
     #--------------------------------------------------------------------------
     # 【鼻韻母符號】輸入框：nn／N／前置 n → ⁿ。候選清單仍為 BPM2（kiunn1）。
-    # 須在促聲 nnh 規則之後，以免 ann⁴ 被先收成 an⁴。
+    # 須在促聲 nnh 規則之後，以免 ann4 被先收成 an4。
     #--------------------------------------------------------------------------
     - xform/N/ⁿ/
     - xform/nn/ⁿ/
