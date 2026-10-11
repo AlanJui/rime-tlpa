@@ -1068,6 +1068,21 @@ local function bp_sandhi_spell(spell, is_final)
 	return base .. cite .. "⁻" .. (BP_DIGIT_SUPER[changed] or changed)
 end
 
+-- 標變調的上標尾巴接到別的音節本體。sian¹⁻⁶ 配上方音符號 ㄒㄧㄢ → ㄒㄧㄢ¹⁻⁶。
+local function spell_sandhi_on_body(marked, body)
+	if type(body) ~= "string" or body == "" or type(marked) ~= "string" then
+		return marked
+	end
+	if body:match("%a") then
+		return marked
+	end
+	local tail = marked:match("^[A-Za-z]+(.*)$")
+	if not tail then
+		return marked
+	end
+	return body .. tail
+end
+
 local function bp_tone_style(ctx)
 	if ctx:get_option("siann_tiau_iunn_sik_siong_piau") then
 		return "super"
@@ -2151,9 +2166,11 @@ local function aux_commit_func(key, env)
 			return ctx:get_option(name)
 		end
 
-		-- 標變調：不論漢字標音選了哪一套，音節都先收成閩拼調號。
+		-- 標變調：不論漢字標音選了哪一套，音節都先收成閩拼調號（變調數字用這套）。
 		-- 閩拼方案優先用左欄（已是閩拼調號）。其餘方案由台語音標轉閩拼調號。
+		-- 方音符號方案的音節本體改回方音符號，上標尾巴仍跟閩拼（ㄒㄧㄢ¹⁻⁶）。
 		local sandhi_bp = nil
+		local sandhi_body = nil
 		if piau_piann_tiau_on then
 			sandhi_bp = {}
 			if schema_id == "tsap_peh_im_bp" and #bp_left > 0 then
@@ -2161,10 +2178,17 @@ local function aux_commit_func(key, env)
 					sandhi_bp[i] = syl
 				end
 			elseif conv then
+				if schema_id == "tsap_peh_im_tps" then
+					sandhi_body = {}
+				end
 				for _, v in ipairs(source_list) do
 					local bp = to_target(v, "閩拼調號")
 					if type(bp) == "string" and bp ~= "" then
 						sandhi_bp[#sandhi_bp + 1] = bp
+						if sandhi_body then
+							local tps = strip_tps_display_tone(to_target(v, "方音符號") or "")
+							sandhi_body[#sandhi_body + 1] = tps
+						end
 					end
 				end
 			end
@@ -2315,20 +2339,22 @@ local function aux_commit_func(key, env)
 		local tone_style = bp_tone_style(ctx)
 		-- 【標變調】蓋過漢字標音與聲調樣式：聲調一律上標。
 		-- 兩個音節以上為本調⁻變調；單音節亦為上標本調（do¹）。
+		-- 十八音【方音符號】：調號仍是閩拼上標，音節本體用方音符號（ㄒㄧㄢ¹⁻⁶ ㄒㆪ¹）。
 		if sandhi_bp and #sandhi_bp >= 1 then
 			out_list = {}
+			local multi = #sandhi_bp >= 2
 			for i, syl in ipairs(sandhi_bp) do
-				out_list[i] = syl
+				local marked
+				if multi then
+					marked = bp_sandhi_spell(syl, i == #sandhi_bp)
+				else
+					marked = bp_spell_with_style(syl, "super")
+				end
+				local body = sandhi_body and sandhi_body[i] or nil
+				out_list[i] = spell_sandhi_on_body(marked, body)
 			end
-			if #out_list >= 2 then
-				for i, syl in ipairs(out_list) do
-					out_list[i] = bp_sandhi_spell(syl, i == #out_list)
-				end
+			if multi then
 				im_zat = " "
-			else
-				for i, syl in ipairs(out_list) do
-					out_list[i] = bp_spell_with_style(syl, "super")
-				end
 			end
 		elseif schema_id == "tsap_peh_im_bp" and use_opt("key_in_piau_im_bp") then
 			for i, syl in ipairs(out_list) do
