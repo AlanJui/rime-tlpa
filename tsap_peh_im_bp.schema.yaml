@@ -25,6 +25,7 @@ schema:
     【輸入框】：閩拼字母＋閩拼調符（例：無 bbo/ → bbó；羊 ynu/ → ynú）
     【候選清單】：閩拼左欄 + [聲+韻+調]（預設調符，例：lní [耐居五]）
     【聲調樣式】：調符／上標調號／標準調號。候選左欄、Enter、Shift+Ctrl+Enter 同一寫法
+    【變調標示】：無變調／標變調。標變調且連打兩個音節以上時，Enter、Shift+Ctrl+Enter、Shift+Ctrl+G/H/J/K/L 改輸出本調⁻變調（如 do¹⁻⁶ sia⁶）
     【標點】：` 再按鍵（例：`, → ，）。【反查】：X 漢語拼音／C 倉頡／Z 注音
   dependencies:
     - luna_pinyin
@@ -68,6 +69,17 @@ switches:
       [ siann_tiau_iunn_sik_tiau_hu, siann_tiau_iunn_sik_siong_piau, siann_tiau_iunn_sik_piau_cun ]
     reset: 0
     states: [ 調符, 上標調號, 標準調號 ]
+  #-----------------------------------------------------------------------------
+  # 【變調標示】優先於【漢字標音選項】與【聲調樣式】。設為【標變調】時，
+  # Enter、Shift+Ctrl+Enter、Shift+Ctrl+G/H/J/K/L 一律上屏閩拼上標調號。
+  # 兩個音節以上：本調⁻變調，音節以空白分開（do¹⁻⁶ sia⁶）。
+  # 單音節亦為上標（do¹）。調符與標準調號皆不生效。
+  # 無變調時沿用漢字標音與聲調樣式。
+  # get_option("piau_piann_tiau") 在【標變調】時為 true。
+  #-----------------------------------------------------------------------------
+  - name: piau_piann_tiau
+    reset: 0
+    states: [ 無變調, 標變調 ]
 
 engine:
   processors:

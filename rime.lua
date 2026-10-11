@@ -1030,6 +1030,44 @@ local function bp_spell_with_style(spell, style)
 	return spell
 end
 
+local BP_DIGIT_SUPER = { ["1"] = "¹", ["2"] = "²", ["3"] = "³", ["5"] = "⁵", ["6"] = "⁶", ["7"] = "⁷", ["8"] = "⁸" }
+local BP_OPEN_SANDHI = { ["1"] = "6", ["6"] = "5", ["5"] = "3", ["3"] = "1", ["2"] = "6" }
+
+-- 閩拼本調 → 變調。舒聲 1→6→5→3→1，陽平 2→6。
+-- p/t/k：7↔8。-h：陰入 7→3，陽入 8→5。
+local function bp_sandhi_tone(base, tone)
+	local last = base:sub(-1)
+	if last == "p" or last == "t" or last == "k" then
+		if tone == "7" then return "8" end
+		if tone == "8" then return "7" end
+		return nil
+	end
+	if last == "h" then
+		if tone == "7" then return "3" end
+		if tone == "8" then return "5" end
+		return nil
+	end
+	return BP_OPEN_SANDHI[tone]
+end
+
+-- do1、末字 false → do¹⁻⁶；sia6、末字 true → sia⁶。音節之間由呼叫端以空白連接。
+local function bp_sandhi_spell(spell, is_final)
+	local tone = spell:match("([1235678])$")
+	local base = tone and spell:sub(1, -2) or nil
+	if not tone or not base or base == "" then
+		return spell
+	end
+	local cite = BP_DIGIT_SUPER[tone] or tone
+	if is_final then
+		return base .. cite
+	end
+	local changed = bp_sandhi_tone(base, tone)
+	if not changed then
+		return base .. cite
+	end
+	return base .. cite .. "⁻" .. (BP_DIGIT_SUPER[changed] or changed)
+end
+
 local function bp_tone_style(ctx)
 	if ctx:get_option("siann_tiau_iunn_sik_siong_piau") then
 		return "super"
@@ -2068,8 +2106,11 @@ local function aux_commit_func(key, env)
 		-- 取得轉換模組（使用 module-level 預載的版本）
 		local conv     = _tlpa_conv
 		local bpm2conv = _bpm2_conv
+		-- 【標變調】優先於【漢字標音】。十八音系列皆可開，不必先選閩拼。
+		local piau_piann_tiau_on = schema_id:match("^tsap_peh_im_")
+			and ctx:get_option("piau_piann_tiau")
 		local bp_native = (schema_id == "tsap_peh_im_bp" and #bp_left > 0
-			and ctx:get_option("key_in_piau_im_bp"))
+			and (ctx:get_option("key_in_piau_im_bp") or piau_piann_tiau_on))
 		if not conv and not bp_native then
 			log.error("[aux_commit] tlpa_converter 模組未載入，無法執行標音轉換")
 			return 2
@@ -2108,6 +2149,25 @@ local function aux_commit_func(key, env)
 				return forced_option == name
 			end
 			return ctx:get_option(name)
+		end
+
+		-- 標變調：不論漢字標音選了哪一套，音節都先收成閩拼調號。
+		-- 閩拼方案優先用左欄（已是閩拼調號）。其餘方案由台語音標轉閩拼調號。
+		local sandhi_bp = nil
+		if piau_piann_tiau_on then
+			sandhi_bp = {}
+			if schema_id == "tsap_peh_im_bp" and #bp_left > 0 then
+				for i, syl in ipairs(bp_left) do
+					sandhi_bp[i] = syl
+				end
+			elseif conv then
+				for _, v in ipairs(source_list) do
+					local bp = to_target(v, "閩拼調號")
+					if type(bp) == "string" and bp ~= "" then
+						sandhi_bp[#sandhi_bp + 1] = bp
+					end
+				end
+			end
 		end
 
 		-- [DBG] 確認目前 switch 狀態
@@ -2253,7 +2313,24 @@ local function aux_commit_func(key, env)
 		-- 閩拼調符：Enter＝lní，Shift+Ctrl+Enter＝年〔lní〕。上標、標準調號同此。
 		-- 台羅：tshông／tshong⁵／tshong5。注音二式上標：bbor⁵。方音：ㄌㄤˊ／ㄌㄤ⁵／ㄌㄤ5。
 		local tone_style = bp_tone_style(ctx)
-		if schema_id == "tsap_peh_im_bp" and use_opt("key_in_piau_im_bp") then
+		-- 【標變調】蓋過漢字標音與聲調樣式：聲調一律上標。
+		-- 兩個音節以上為本調⁻變調；單音節亦為上標本調（do¹）。
+		if sandhi_bp and #sandhi_bp >= 1 then
+			out_list = {}
+			for i, syl in ipairs(sandhi_bp) do
+				out_list[i] = syl
+			end
+			if #out_list >= 2 then
+				for i, syl in ipairs(out_list) do
+					out_list[i] = bp_sandhi_spell(syl, i == #out_list)
+				end
+				im_zat = " "
+			else
+				for i, syl in ipairs(out_list) do
+					out_list[i] = bp_spell_with_style(syl, "super")
+				end
+			end
+		elseif schema_id == "tsap_peh_im_bp" and use_opt("key_in_piau_im_bp") then
 			for i, syl in ipairs(out_list) do
 				out_list[i] = bp_spell_with_style(syl, tone_style)
 			end
