@@ -200,10 +200,17 @@ speller:
     - 'xform/(^| )uinn/$1wni/'
     - 'xform/(^| )uenn/$1wne/'
     - 'xform/(^| )unn/$1wnu/'
-    # 鼻化韻：nn 後綴改 n 前綴。ann→na、iann→nia、iaunn→niao、oonn→noo
+    # 鼻化韻識別符：後綴(nn) 改前綴(n)。ann→na、iann→nia、iaunn→niao、oonn→noo
     - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/
-    # 鼻化若先把 i 挪成 n 前綴（shinn→shni），shi 已對不上，h 會留下。
-    # 閩拼聲母沒有 sh／ch／jj。j 在 i 前是 zi；鼻化後的 jn 亦同。j 接其他元音才是 zz（[ʣ]）。
+    # 特殊處理：避免【台語注音二式】轉【閩拼方案】後産生問題。如：生【shinn1】轉成【shni1】(正確：sni1)。
+    # 【台語注音二式】的【j】[ʣ] ，在【閩拼】以【zz】表此【聲母】。
+    # 閩拼【聲母】有：zz/z/c/s；其後接【韻母】i 或【鼻化韻母】ni 時，無需進行任何轉換，直接寫成：
+    # zzi/zi/ci/si 及 zzni/zni/cni/sni。
+    # 【台語注音二式】的【聲母】 jj/j/ch/sh 後接【鼻化韻母】 ni (ni = inn) 時，
+    # 則 jji/ji/chi/shi ，轉成【閩拼】應為： zzi/zi/ci/si ，不可出現： .../.../chni/shni 。
+    # 故【台語注音二式】之【鼻化韻母】轉換程序，需嚴格遵守以下程序：
+    # 1. 先轉換【聲母】 jj/j/ch/sh 為 zz/zi/ci/si。
+    # 2. 再轉換【鼻化韻母】 ni 為 zni/cni/sni。
     - xform/^sh/s/
     - xform/ sh/ s/
     - xform/^ch/c/
@@ -214,7 +221,8 @@ speller:
     - xform/ jn/ zn/
     # N 只代替這個鼻化 n，後面的韻母繼續鍵入：kniu = kNiu，na = Na。
     # 不可把 n+韻母整段縮成 N。kN 若已是完整音節，再打 i 會被切成下一個零聲母（腔衣）。
-    - 'derive/n([iu]?(?:ai|ao|oo|[aiueo]))/N$1/'
+    # - 'derive/n([iu]?(?:ai|ao|oo|[aiueo]))/N$1/'
+    - 'derive/n([iu]?(?:ai|ao|oo|[aiue]))/N$1/'
     #--------------------------------------------------------------------------
     # 【促聲韻】亦接受【舒聲韻】+ 入聲調 4／8。
     # 短韻尾即可涵蓋較長韻母：uat→uan、ooh→oo、nah→na、aoh→ao。
