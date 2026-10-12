@@ -487,8 +487,9 @@ local function convert_tlpa(tlpa, target)
         if b_siann == "" then
             if b_un:sub(1,1) == "i" then
                 b_siann = "y"
-                -- i 單獨或後接 n/m/t/p/k/h 時保留 i；其餘去掉前導 i
-                if b_un ~= "i" and not b_un:match("^i[nmtpkh]") then
+                -- i 單獨、iu（友 yiu），或後接 n/m/t/p/k/h 時保留 i。
+                -- ia／io 等介音才去掉前導 i（ya、yo）。
+                if b_un ~= "i" and not b_un:match("^iu") and not b_un:match("^i[nmtpkh]") then
                     b_un = b_un:sub(2)
                 end
             elseif b_un:sub(1,1) == "u" then

@@ -1,0 +1,919 @@
+# Rime user dictionary
+#@/db_name	ji_khoo_bpm2
+#@/db_type	userdb
+#@/rime_version	1.13.1
+#@/tick	1233
+#@/user_id	16e16f14-e808-40d9-a755-fed9870dca25
+a bor 	阿婆	c=1 d=1 t=70
+a dia 	阿爹	c=1 d=1 t=69
+a gau 	阿猴	c=1 d=1 t=71
+a1 	阿	c=1 d=1 t=919
+a2 	也	c=2 d=1.97045 t=1156
+ah a 	鴨仔	c=0 d=0.1 t=66
+ah a lorh4 zui2 shin1 jiu7 pu5 	鴨仔落水身就浮	c=3 d=2.95551 t=72
+ah a tiann lui 	鴨仔聽雷	c=1 d=1 t=74
+ah gim 	押金	c=1 d=1 t=73
+ai3 	愛	c=0 d=0.1 t=76
+ai3 diorh4 	愛着	c=1 d=1 t=318
+ai3 e5 	愛的	c=1 d=1 t=322
+ai3 tak ceh 	愛讀冊	c=1 d=1 t=77
+an1 	安	c=3 d=1.56435 t=733
+an1 bai5 	安排	c=1 d=1 t=765
+an3 	晏	c=2 d=1.25924 t=649
+an3 	案	c=1 d=1 t=268
+an5 bba7 gin2 gin5 hin2 	緊	c=1 d=1 t=959
+ann3 	啊	c=1 d=1 t=1029
+bai2 	囘	c=1 d=1 t=939
+bai2 	回	c=1 d=1 t=933
+bai2 hor2 ngoo2 	回好我	c=6 d=5.88657 t=941
+bai3 	拜	c=2 d=1.9802 t=942
+bai3 hong2 	拜訪	c=1 d=1 t=944
+bang1 	方	c=1 d=1 t=259
+bang1 an3 	方案	c=1 d=1 t=270
+bat4 	八	c=2 d=1.25538 t=771
+bat8 lang5 	別人	c=0 d=0.1 t=322
+bban5 	閩	c=2 d=1.01477 t=1070
+bban5 lam5 ue7 	閩南話	c=1 d=1 t=1073
+bban7 	万	c=1 d=1 t=16
+bban7 	幔	c=1 d=1 t=1069
+bban7 bbut8 	萬物	c=1 d=1 t=310
+bbang5 	茫	c=1 d=1 t=316
+bbang7 	望	c=1 d=1 t=311
+bbang7 diorh4 	望着	c=1 d=1 t=314
+bbe7 	未	c=1 d=1 t=149
+bbe7 shi1 	未輸	c=1 d=1 t=156
+bbe7 shi1 lian5 	未輸年	c=1 d=1 t=160
+bbe7 shi1 lian5 jjip8 	未輸年入	c=1 d=1 t=167
+bbeh4 	欲	c=1 d=1 t=348
+bbi7 	未	c=2 d=1.28083 t=404
+bbi7 ggu7 	未遇	c=3 d=2.08599 t=711
+bbian2 	免	c=2 d=1.99501 t=1137
+bbian2 	勔	c=2 d=1.99501 t=1135
+bbian2 keh4 ki3 	免客氣	c=1 d=1 t=1139
+bbiau7 	妙	c=1 d=1 t=318
+bbin5 	明	c=2 d=1.26054 t=634
+bbin5 	民	c=2 d=1.99501 t=855
+bbin5 	閩	c=1 d=1 t=228
+bbin5 bbin5 	民民	c=1 d=1 t=856
+bbin7 	面	c=2 d=1.26316 t=725
+bbing5 	名	c=3 d=2.91708 t=309
+bbing5 ia2 	名也	c=2 d=1.98511 t=302
+bbing7 	命	c=3 d=1.62454 t=764
+bbing7 ia2 	命也	c=1 d=1 t=836
+bbior2 	母	c=2 d=1.5975 t=311
+bbiu2 	母	c=1 d=1 t=209
+bbong5 	望	c=1 d=1 t=312
+bbong7 	望	c=1 d=1 t=313
+bboo2 	母	c=1 d=1 t=210
+bboo7 	暮	c=1 d=1 t=506
+bboo7 shiook4 	暮宿	c=1 d=1 t=779
+bbor2 	母	c=1 d=1 t=211
+bbor5 	無	c=11 d=3.62852 t=992
+bbor5 in1 	無囙	c=5 d=4.80623 t=1001
+bbor5 ing5 	沒有空閒	c=3 d=2.93678 t=1003
+bbor5 ing5 	無閒	c=2 d=1.95123 t=1004
+bbor5 ing5 hehnn4 	無閒嚇	c=1 d=1 t=1006
+bbor5 it4 jjit8 	無一日	c=2 d=1.26185 t=674
+bbor5 lang5 	無人	c=1 d=1 t=327
+bbor7 	未	c=1 d=1 t=151
+bborh4 	卜	c=1 d=1 t=328
+bborh4 hng7 	卜遠	c=1 d=1 t=339
+bbu2 	武	c=1 d=1 t=375
+bbu2 	母	c=1 d=1 t=212
+bbu2 liook8 	武略	c=1 d=1 t=618
+bbu5 	無	c=4 d=2.56498 t=374
+bbu5 iook8 	無欲	c=1 d=1 t=314
+bbu7 	遇	c=1 d=1 t=176
+bbuan2 	滿	c=1 d=1 t=423
+bbuan2 hok4 	滿腹	c=1 d=1 t=690
+bbue7 	抹	c=1 d=1 t=1082
+bbue7 	未	c=3 d=1.98972 t=1083
+bbue7 hiau2 	未曉	c=1 d=1 t=1085
+bbui7 	未	c=1 d=1 t=153
+bbun zai 	文才	c=1 d=1 t=80
+bbun5 	文	c=1 d=1 t=79
+bbun5 jiong1 	文章	c=4 d=2.1401 t=691
+bbut8 	沒	c=1 d=1 t=320
+bbut8 gang1 	沒江	c=1 d=1 t=322
+benn1 	拼	c=1 d=1 t=229
+benn1 chioonn7 	拼上	c=1 d=1 t=258
+benn1 chioonn7 bang1 	拼上方	c=1 d=1 t=267
+benn1 chioonn7 bang1 an3 	拼上方案	c=1 d=1 t=272
+bian1 	拼	c=1 d=1 t=230
+bian3 	變	c=2 d=1.74826 t=264
+biann3 	拼	c=2 d=1.03255 t=916
+biau1 	標	c=1 d=1 t=228
+biek4 	百	c=5 d=2.53866 t=819
+biek4 jiook4 	百足	c=1 d=1 t=590
+biek8 	白	c=4 d=1.43634 t=425
+biek8 huat4 	白髮	c=1 d=1 t=692
+bin5 	貧	c=7 d=2.7096 t=843
+bing1 	拼	c=1 d=1 t=232
+bing3 	拼	c=1 d=1 t=233
+bing5 	拼	c=1 d=1 t=234
+bing5 	爿	c=0 d=0.1 t=100
+binn1 	拼	c=1 d=1 t=235
+binn1 	邊	c=1 d=1 t=95
+bit4 	必	c=1 d=1 t=470
+bit4 jjian5 	必然	c=1 d=1 t=737
+bng1 	方	c=1 d=1 t=260
+bok1 	卜	c=1 d=1 t=329
+bok4 	卜	c=1 d=1 t=330
+boo2 	補	c=1 d=1 t=226
+boo3 	布	c=1 d=1 t=375
+boo3 i1 	布衣	c=1 d=1 t=645
+borh1 	卜	c=1 d=1 t=331
+borh4 	卜	c=1 d=1 t=332
+buah8 	卜	c=1 d=1 t=333
+buinn1 	方	c=1 d=1 t=261
+bun2 	畚	c=2 d=1.9802 t=905
+but4 	不	c=15 d=5.22183 t=769
+but4 diek4 	不得	c=1 d=0.553503 t=758
+but4 diong3 	不中	c=2 d=1.26316 t=694
+but4 ggu7 	不遇	c=3 d=2.00028 t=731
+but4 gip8 	不及	c=1 d=1 t=591
+but4 gor3 	不過	c=1 d=1.03198 t=594
+but4 iook8 	不欲	c=2 d=1.25666 t=767
+but4 ki3 	不棄	c=1 d=0.355381 t=791
+but4 ki3 ia2 	不棄也	c=1 d=1 t=792
+but4 kor2 	不可	c=9 d=4.61057 t=844
+but4 ling5 	不能	c=5 d=4.17847 t=612
+but4 shing1 	不生	c=1 d=1 t=755
+but4 tong1 	不通	c=1 d=1 t=761
+but4 tuat4 	不脫	c=1 d=1 t=747
+cai5 	才	c=2 d=1.97531 t=262
+cai5 cai5 	才才	c=1 d=1 t=267
+cai5 cai5 e7 	才才會	c=1 d=1 t=275
+cai5 e7 	才會	c=1 d=1 t=274
+cai7 	在	c=1 d=1 t=364
+cai7 se3 	在世	c=3 d=1.57172 t=839
+cau duann 	臭彈	c=1 d=1 t=111
+chi5 	持	c=2 d=1.06687 t=583
+chian1 	千	c=5 d=1.93003 t=815
+chiann2 	請	c=3 d=2.15079 t=1166
+chiau1 	超	c=2 d=1.29671 t=619
+chim1 	深	c=2 d=1.26316 t=700
+ching1 	清	c=2 d=1.02844 t=915
+chinn1 cai3 	青菜	c=1 d=1 t=858
+chiong1 	冲	c=1 d=1 t=602
+chioonn7 	上	c=1 d=1 t=244
+chioonn7 bang1 	上方	c=1 d=1 t=266
+chioonn7 bang1 an3 	上方案	c=1 d=1 t=271
+chior3 chior3 	笑笑	c=1 d=1 t=352
+chiu2 kuan5 	手環	c=1 d=1 t=860
+chiu7 	楊	c=1 d=1 t=337
+chiu7 ggoonn2 	楊我	c=1 d=1 t=350
+chiu7 ggoonn2 ji3 	楊我志	c=1 d=1 t=353
+chiunn5 	楊	c=1 d=1 t=338
+chiunn6 	上	c=1 d=1 t=245
+chiunn7 	上	c=1 d=1 t=246
+ciann2 	抯	c=1 d=1 t=1086
+ciann2 	笡	c=1 d=1 t=1017
+ciann2 li2 	請汝	c=1 d=1 t=1089
+ciann2 lim1 de5 	請啉荼	c=1 d=1 t=1021
+ciann2 ze7 	請坐	c=1 d=1 t=1168
+coo1 bin5 	初貧	c=2 d=1.26316 t=740
+cor2 	草	c=2 d=1.25924 t=657
+cor2 bbok8 	草木	c=1 d=1 t=754
+cu2 	此	c=1 d=1 t=325
+cu2 nai2 	此乃	c=2 d=1.25795 t=832
+cu3 	厝	c=3 d=2.62409 t=927
+cun1 	春	c=1 d=1 t=25
+cut4 	出	c=3 d=1.4247 t=546
+cut4 jiek4 	出則	c=1 d=1 t=820
+da7 	代	c=1 d=1 t=144
+dai5 	台	c=1 d=1 t=217
+dai5 ggi2 	台語	c=1 d=1 t=224
+dai5 ggi2 kip4 	台語泣	c=1 d=1 t=227
+dai5 ggi2 kip4 du3 	台語泣注	c=1 d=1 t=237
+dai7 	代	c=1 d=1 t=145
+dai7 	大	c=1 d=1 t=371
+dai7 hau3 	大孝	c=1 d=1 t=641
+dak hang 	逐項	c=1 d=1 t=112
+dan2 gau3 	等到	c=1 d=1 t=85
+dan3 	旦	c=2 d=1.32142 t=587
+dang lam 	東南	c=1 d=1.07045 t=100
+dang lam bing5 	東南爿	c=2 d=1.99501 t=102
+de5 	茶	c=2 d=1.72979 t=1227
+de5 	荼	c=2 d=1.35345 t=1228
+de5 ga3 	茶教	c=3 d=2.98506 t=1231
+de5 m7 	茶毋	c=3 d=2.98506 t=1177
+de7 	代	c=1 d=1 t=146
+de7 	地	c=0 d=0.1 t=752
+de7 	第	c=1 d=1 t=286
+de7 but4 diek4 shi5 	地不得時	c=1 d=1 t=753
+di im 	致蔭	c=1 d=1 t=86
+di1 guan7 	知縣	c=1 d=1 t=100
+di7 	佇	c=1 d=1 t=952
+di7 	在	c=1 d=1 t=93
+diann5 	呈	c=1 d=1 t=279
+diann5 lior7 	呈路	c=1 d=1 t=285
+diann7 diann7 	常常	c=1 d=1 t=261
+diau1 	朝	c=5 d=2.21344 t=931
+diau3 	釣	c=2 d=1.29671 t=621
+diek4 	德	c=1 d=1 t=284
+diek8 	笛	c=1 d=1 t=19
+din1 	珍	c=2 d=1.25411 t=818
+din5 	陳	c=1 d=1 t=617
+din7 	陳	c=1 d=1 t=373
+ding1 	登	c=2 d=1.26316 t=699
+ding2 	上	c=1 d=1 t=247
+ding5 	呈	c=1 d=1 t=280
+diong1 	張	c=2 d=1.25924 t=643
+diorh4 	着	c=1 d=1 t=257
+dong1 	東	c=1 d=1 t=60
+dong5 	同	c=1 d=1 t=327
+doo5 	途	c=1 d=1 t=319
+doo7 	土	c=1 d=1 t=250
+doo7 	度	c=1 d=1 t=28
+doo7 	道	c=1 d=1 t=280
+doo7 gua3 	土卦	c=1 d=1 t=256
+dor1 	刀	c=1 d=1 t=1022
+dor1 shia7 	多謝	c=3 d=2.46716 t=1171
+dor1 sia7 	多謝	c=3 d=2.46716 t=1172
+dor3 	到	c=1 d=1 t=395
+dor3 lor2 	到老	c=1 d=1 t=664
+dor7 	代	c=1 d=1 t=147
+dor7 	盜	c=1 d=1 t=360
+dor7 	道	c=4 d=3.88304 t=295
+dor7 jiek4 	盜跖	c=1 d=1 t=627
+dorh1 	桌	c=1 d=1 t=914
+dorh4 a2 	桌子	c=1 d=1 t=911
+du3 	注	c=1 d=1 t=228
+du3 im1 	注音	c=1 d=1 t=239
+du3 im1 jji7 	注音貳	c=1 d=1 t=244
+du7 	注	c=1 d=1 t=229
+duann1 	單	c=2 d=1.49907 t=343
+e1 dau3 	下午	c=1 d=1 t=867
+e3 	勩	c=1 d=1 t=1076
+e5 	兮	c=2 d=1.01935 t=871
+e7 	會	c=3 d=1.03183 t=1121
+e7 dau3 	今天下午	c=1 d=1 t=864
+e7 giann1 	會驚	c=2 d=1.60351 t=258
+e7 hiau2 	會曉	c=2 d=1.99501 t=1078
+ga1 	佳	c=1 d=1 t=552
+ga1 	家	c=1 d=1 t=907
+ga1 	甘	c=1 d=1 t=219
+ga1 jjin5 	佳人	c=1 d=1 t=824
+ga2 	叚	c=2 d=1.97045 t=1105
+ga2 	榎	c=1 d=1 t=1122
+ga3 	教	c=2 d=1.97045 t=1107
+ga3 ggu5 	教愚	c=1 d=1 t=1103
+ga3 ggua2 	教我	c=1 d=1 t=1109
+ga3 li2 	教汝	c=3 d=2.98506 t=1125
+gah4 	及	c=2 d=1.9802 t=904
+gai2 diau7 	改調	c=1 d=1 t=88
+gai3 	蓋	c=2 d=1.29523 t=606
+gai3 se3 	蓋世	c=2 d=1.29523 t=614
+gam1 	甘	c=1 d=1 t=220
+gan1 	間	c=3 d=2.74742 t=59
+gang1 	江	c=1 d=1 t=321
+gang2 	講	c=1 d=1 t=122
+gau1 	蛟	c=2 d=1.26316 t=710
+gau2 a2 giann2 	小狗	c=2 d=1.97045 t=1106
+ge3 gau3 	計較	c=1 d=1 t=327
+genn1 	更	c=1 d=1 t=4
+ggan5 	顏	c=2 d=1.29671 t=623
+ggi2 	語	c=1 d=1 t=220
+ggi2 kip4 	語泣	c=1 d=1 t=226
+ggi2 kip4 du3 	語泣注	c=1 d=1 t=236
+ggi2 kip4 du3 im1 	語泣注音	c=1 d=1 t=241
+ggi5 	儀	c=2 d=1.26316 t=723
+ggi7 	語	c=1 d=1 t=221
+ggi7 	遇	c=1 d=1 t=177
+ggiau5 	堯	c=2 d=1.26054 t=633
+ggiook8 	玉	c=1 d=1 t=29
+ggiook8 in3 	玉印	c=2 d=1.26185 t=680
+ggoonn2 	我	c=1 d=1 t=343
+ggoonn2 ji3 	我志	c=1 d=1 t=352
+ggor2 	我	c=1 d=1 t=344
+ggu2 	語	c=1 d=1 t=222
+ggu5 	愚	c=4 d=1.93495 t=1102
+ggu7 	寓	c=2 d=1.25538 t=775
+ggu7 	語	c=1 d=1 t=223
+ggu7 	遇	c=3 d=1.34434 t=677
+ggua2 	我	c=5 d=3.05375 t=1141
+ggua2 leh8 	我咧	c=3 d=2.98506 t=1064
+gguai2 	我	c=1 d=1 t=346
+gguan2 	我	c=1 d=1 t=347
+gguan2 	阮	c=1 d=1 t=321
+gguan5 	原	c=2 d=1.25924 t=644
+ggun2 	我	c=1 d=1 t=348
+ggun2 	阮	c=3 d=2.71285 t=351
+ggun2 e5 zu3 im1 	阮的注音	c=1 d=1 t=356
+ggun2 e7 	阮會	c=1 d=1 t=345
+gi1 	妓	c=3 d=1.5237 t=706
+gi1 	肌	c=2 d=1.26448 t=749
+gi1 chiap4 	妓妾	c=1 d=1 t=704
+gi3 	無	c=1 d=1 t=325
+gi5 	其	c=1 d=1.07531 t=322
+gi5 	示	c=1 d=1 t=194
+giam3 poo2 	劍浦	c=1 d=1 t=90
+gian3 	見	c=1 d=1 t=127
+gian7 	鍵	c=1 d=1 t=183
+giann5 	行	c=4 d=1.04374 t=1152
+giek8 	極	c=1 d=1 t=522
+giek8 pin2 	極品	c=1 d=1 t=796
+gim1 	今	c=2 d=1.25411 t=793
+gin1 	今	c=1 d=1 t=863
+gin1 	均	c=1 d=1 t=961
+gin1 	根	c=3 d=1.48068 t=962
+gin1 a2 	今也	c=2 d=1.99501 t=866
+gin1 a2 lit8 	今也日	c=2 d=1.99501 t=921
+gin2 	囡	c=1 d=1 t=960
+gin2 	緊	c=7 d=4.36087 t=1140
+gin2 lip8 lai5 	緊入來	c=1 d=1 t=967
+gin3 	絹	c=1 d=1 t=957
+gin3 	見	c=1 d=1 t=128
+gin7 	墐	c=1 d=1 t=958
+ging1 	經	c=1 d=1 t=285
+ging3 	竟	c=1 d=1 t=426
+ging3 jjian5 	竟然	c=1 d=1 t=693
+ginn3 	見	c=1 d=1 t=129
+giong1 	宮	c=2 d=1.26316 t=701
+giong2 	拱	c=2 d=1.26316 t=717
+giook4 	鞠	c=2 d=1.25411 t=800
+gior5 	茄	c=1 d=1 t=66
+giorh4 	講	c=1 d=1 t=123
+gip8 	及	c=2 d=1.26185 t=676
+gip8 de7 	及第	c=2 d=1.26316 t=698
+giu3 	見	c=1 d=1 t=130
+gong2 	講	c=1 d=1 t=124
+goo1 	孤	c=2 d=1.19398 t=342
+goo2 	瞽	c=2 d=1.25924 t=638
+goo3 	故	c=1 d=1 t=312
+goo7 	講	c=1 d=1 t=125
+gor1 	高	c=1 d=1 t=65
+gorh4 	復	c=1 d=1 t=902
+gu2 	久	c=1 d=1 t=1041
+gua3 	卦	c=1 d=1 t=254
+guan1 	官	c=2 d=1.25411 t=795
+guan1 	關	c=1 d=1 t=31
+guan7 	縣	c=2 d=1.25924 t=648
+gue3 	會	c=1 d=1 t=269
+gue7 	會	c=1 d=1 t=270
+gui cainn 	幾千	c=1 d=1 t=96
+gui3 	卦	c=1 d=1 t=255
+gun1 	君	c=5 d=2.63681 t=741
+gun1 	軍	c=2 d=1.25924 t=660
+gut4 	骨	c=1 d=1 t=477
+gut4 gok4 	骨骼	c=1 d=1 t=743
+ha2 jjin5 	下人	c=4 d=2.28963 t=827
+hai2 	海	c=4 d=3.19901 t=220
+hai2 hai2 	海海	c=1 d=0.943665 t=282
+hai2 hai2 hai2 hai2 	海海海海	c=1 d=1 t=283
+hak8 	學	c=2 d=1.26316 t=696
+ham1 	甘	c=1 d=1 t=221
+han2 han2 	罕罕	c=3 d=2.2161 t=250
+han3 jji7 	漢字	c=3 d=2.46974 t=227
+han5 	韓	c=1 d=1 t=403
+han5 iau5 	寒窯	c=1 d=1 t=355
+han5 shin3 	韓信	c=1 d=1 t=671
+hang5 	行	c=2 d=1.956 t=303
+hang7 	行	c=2 d=1.956 t=304
+hau5 	好	c=1 d=1 t=286
+hau5 giann5 	好行	c=1 d=1 t=301
+haunn3 	好	c=1 d=1 t=287
+he7 	會	c=1 d=1 t=271
+henn1 	罅	c=1 d=1 t=997
+henn3 	啈	c=2 d=1.9802 t=999
+hennh4 	嚇	c=2 d=1.97531 t=1005
+hennh4 	歇	c=3 d=2.98012 t=998
+hi5 	魚	c=1 d=1 t=446
+hi5 biat4 	魚鱉	c=1 d=1 t=713
+hian2 	顯	c=1 d=1 t=192
+hian2 gi5 	顯示	c=5 d=4.95037 t=201
+hian3 	見	c=1 d=1 t=131
+hian5 	玄	c=1 d=1 t=333
+hian5 ji1 iu7 hian5 	玄之又玄	c=1 d=1 t=334
+hian7 	見	c=1 d=1 t=132
+hiann2 	顯	c=1 d=1 t=193
+hiau2 	曉	c=1 d=1 t=1084
+hiaunn3 	好	c=1 d=1 t=288
+hin2 	行	c=2 d=1.956 t=305
+hing2 	行	c=2 d=1.956 t=306
+hing5 	恒	c=2 d=1.96561 t=301
+hing5 	拼	c=1 d=1 t=236
+hing5 	行	c=2 d=1.956 t=307
+hing7 	行	c=2 d=1.956 t=308
+hing7 but4 gip8 	行不及	c=1 d=1 t=364
+hiong1 	兇	c=2 d=1.26316 t=626
+hiong5 	方	c=1 d=1 t=262
+hiong5 	雄	c=2 d=1.32142 t=592
+hiook4 	旭	c=1 d=1 t=354
+hng1 	方	c=1 d=1 t=263
+hng7 	遠	c=1 d=1 t=335
+hok8 shi2 	復始	c=1 d=1 t=850
+hong1 	封	c=1 d=1 t=382
+hong1 	方	c=1 d=1 t=264
+hong1 	風	c=6 d=2.3925 t=757
+hong1 guann1 	封官	c=1 d=1 t=87
+hong1 hun5 	風雲	c=1 d=1 t=585
+hong1 zok4 	封作	c=1 d=1 t=652
+hong2 	訪	c=1 d=1 t=943
+hong5 	方	c=1 d=1 t=265
+hong5 	黃	c=4 d=3.66555 t=52
+hong5 hor5 	黃河	c=1 d=1 t=1
+hong7 	捧	c=2 d=1.25666 t=825
+hoo2 	好	c=1 d=1 t=289
+hoo7 	後	c=2 d=1.26185 t=687
+hoo7 	禍	c=2 d=1.32142 t=588
+hook8 	復	c=1 d=1 t=39
+hoonn2 	好	c=1 d=1 t=290
+hoonn3 	好	c=1 d=1 t=291
+hor2 	好	c=6 d=2.90261 t=1217
+hor2 giann5 	好行	c=3 d=2.03171 t=971
+hor2 giann5 hu3 	好行富	c=3 d=2.98506 t=974
+hor5 	何	c=1 d=1 t=20
+hor5 	河	c=4 d=3.66555 t=53
+hu1 	夫	c=1 d=1 t=41
+hu1 jjin5 	夫人	c=2 d=1.26316 t=709
+hu3 	富	c=7 d=2.32884 t=969
+hu5 hor7 	符號	c=1 d=1 t=215
+huai5 	懷	c=1 d=1 t=461
+huai5 an1 	懷安	c=1 d=1 t=728
+huan2 	反	c=1 d=1 t=370
+huan2 shing1 	反生	c=1 d=1 t=640
+huan2 ui5 	反為	c=2 d=1.26316 t=703
+huann1 hi2 	歡喜	c=1 d=1 t=346
+huat4 	法	c=1 d=1 t=43
+hue7 	會	c=1 d=1 t=272
+hui1 	非	c=3 d=1.46263 t=603
+hui1 but4 gor3 	非不過	c=1 d=1 t=367
+hui1 ngoo2 	非我	c=4 d=2.28858 t=830
+hui3 	費	c=2 d=1.99501 t=1129
+hui3 sin5 	費神	c=1 d=1 t=1131
+huinn7 	遠	c=1 d=1 t=336
+hun5 	雲	c=3 d=2.74742 t=58
+i1 	衣	c=1 d=1 t=453
+i1 hok8 	衣服	c=1 d=1 t=720
+i2 	已	c=1 d=1 t=314
+i2 a2 	椅子	c=1 d=1 t=912
+i2 guan1 	以觀	c=1 d=1.07045 t=322
+i2 guan1 gi5 	以觀其	c=1 d=1 t=323
+i2 ling7 	已鬆	c=1 d=1 t=318
+i3 	意	c=1 d=1 t=136
+i5 	台	c=1 d=1 t=218
+i7 bbing5 	異名	c=1 d=1 t=330
+ia2 	也	c=4 d=0.455057 t=791
+iang5 	楊	c=1 d=1 t=339
+iann2 pinn2 	影片	c=1 d=1 t=1169
+iau1 	腰	c=2 d=1.26185 t=678
+iek4 	厄	c=2 d=1.29523 t=616
+iek4 	意	c=1 d=1 t=137
+iek4 	益	c=2 d=1.67706 t=142
+im1 	陰	c=2 d=1.26185 t=684
+im1 	音	c=3 d=2.5615 t=278
+im1 jji7 	音貳	c=1 d=1 t=243
+in1 	囙	c=1 d=1 t=1010
+ing2 	永	c=1 d=1 t=327
+ing2 bborh4 	永卜	c=1 d=1 t=334
+ing2 bborh4 hng7 	永卜遠	c=1 d=1 t=340
+ing2 uan2 	永遠	c=1 d=1 t=341
+ing3 	用	c=1 d=1 t=140
+ing3 da7 	用代	c=1 d=1 t=148
+ing3 gai1 	應該	c=1 d=1 t=344
+ing5 	閒	c=3 d=2.29219 t=1097
+ing5 in1 	閒囙	c=3 d=2.98506 t=1013
+ing5 ing5 	閒閒	c=3 d=2.98506 t=1016
+ing7 	用	c=1 d=1 t=141
+iong5 	揚	c=2 d=1.26316 t=738
+iong5 	楊	c=1 d=1 t=340
+iong5 gun1 	楊君	c=1 d=1 t=76
+iong7 	用	c=1 d=1 t=142
+iook8 	欲	c=1 d=1 t=321
+iook8 	育	c=2 d=1.60653 t=136
+ioonn1 	螉	c=1 d=1 t=137
+ioonn5 	楊	c=1 d=1 t=341
+iorh4 	喲	c=1 d=1 t=143
+it4 	一	c=2 d=1.25158 t=288
+it4 dan3 	一旦	c=2 d=1.26185 t=681
+it4 din1 	一珍	c=3 d=2.98506 t=1118
+it4 ding7 	一定	c=2 d=1.99501 t=1120
+it4 jiong1 	一章	c=1 d=1 t=288
+it4 jjin5 	一人	c=2 d=1.25411 t=801
+it4 shing1 	一生	c=2 d=1.26185 t=669
+iu1 chiu5 	憂愁	c=2 d=1.26316 t=726
+iu2 	丣	c=2 d=1.76338 t=279
+iu2 	有	c=9 d=2.17281 t=809
+iu2 shian1 bin5 	有先貧	c=1 d=1 t=686
+iu2 tat4 	有撻	c=1 d=1 t=806
+iunn1 	幼	c=2 d=1.99501 t=3
+iunn5 	楊	c=2 d=1.20291 t=342
+ji1 	之	c=27 d=7.4525 t=830
+ji1 bbun5 	之門	c=1 d=1 t=336
+ji1 gan1 	之間	c=1 d=1 t=714
+ji1 giam3 	之劍	c=1 d=1 t=811
+ji1 ha2 	之下	c=1 d=1 t=719
+ji1 ha3 	之下	c=1 d=1 t=802
+ji1 ling5 ia2 	之能也	c=1 d=1 t=831
+ji1 shi5 	之時	c=1 d=1 t=673
+ji1 shiong7 	之上	c=1 d=1 t=805
+ji1 zai5 	之才	c=1 d=1 t=668
+ji2 	只	c=2 d=1.26316 t=732
+ji3 	志	c=1 d=1 t=351
+ji3 	注	c=1 d=1 t=230
+jia1 	嗟	c=3 d=1.47638 t=1031
+jia1 	嗻	c=2 d=1.96561 t=1037
+jia1 gi5 	遮其	c=2 d=1.25538 t=783
+jiah1 	才	c=2 d=1.97531 t=263
+jiah4 	則	c=1 d=1 t=202
+jiah4 	即	c=2 d=1.99501 t=1040
+jiah4 	才	c=2 d=1.97531 t=264
+jiah4 e7 	才會	c=1 d=1 t=276
+jiah4 nih8 	這麼	c=1 d=1 t=1033
+jiah4 nih8 gu2 	這麼久	c=1 d=1 t=1035
+jiah8 	食	c=5 d=3.32986 t=1038
+jiam5 	潛	c=1 d=1 t=445
+jiam5 sui2 	潛水	c=1 d=1 t=712
+jiek4 	則	c=2 d=1.17907 t=547
+jin su 	進士	c=1 d=1 t=81
+jin1 goo2 	眞古	c=1 d=1 t=159
+jin1 goo2 i3 	眞古意	c=3 d=2.08942 t=260
+jin7 	盡	c=3 d=1.5172 t=842
+jing1 	僧	c=2 d=1.25538 t=778
+jing1 	曾	c=2 d=1.25924 t=647
+jing5 	情	c=1 d=1 t=149
+jing5 ze3 	情債	c=1 d=1 t=325
+jiong1 	章	c=1 d=1 t=289
+jiong3 bbiau7 	眾妙	c=1 d=1 t=335
+jioonn7 	上	c=1 d=1 t=248
+jip4 	執	c=2 d=1.25538 t=822
+jit ma 	這馬	c=2 d=1.86936 t=103
+jit4 	䐈	c=2 d=1.99501 t=1027
+jiu1 	周	c=1 d=1 t=580
+jiu1 jji5 	周而	c=1 d=1 t=849
+jiu7 	就	c=0 d=0.1 t=66
+jiunn6 	上	c=1 d=1 t=249
+jiunn7 	上	c=2 d=1.03439 t=924
+jji5 	而	c=2 d=1.36788 t=529
+jji5 iu2 	而有	c=3 d=2.23052 t=817
+jji5 liat8 jit4 	而列職	c=1 d=1 t=803
+jji7 	貳	c=1 d=1 t=242
+jji7 dian2 	字典	c=1 d=1 t=222
+jjiat8 	熱	c=1 d=1 t=63
+jjim5 	壬	c=1 d=1 t=115
+jjim5 sut4 	壬戌	c=1 d=1 t=116
+jjim7 	仞	c=1 d=1 t=17
+jjin5 	人	c=1 d=0.141172 t=758
+jjin5 but4 diek4 shi5 	人不得時	c=1 d=1 t=759
+jjin5 dor7 	人道	c=3 d=2.07949 t=828
+jjin5 iu2 	人有	c=3 d=2.22594 t=601
+jjin5 jing5 	人情	c=1 d=1 t=258
+jjin5 jjiook8 	人若	c=1 d=1 t=768
+jjin5 shing1 	人生	c=9 d=1.95352 t=838
+jjip8 	入	c=2 d=1.8781 t=187
+jjip8 jiek4 	入則	c=2 d=1.25538 t=823
+jjip8 king1 	入框	c=2 d=1.98511 t=173
+jjip8 king1 bbu7 	入框遇	c=1 d=1 t=180
+jjit8 gguat8 	日月	c=1 d=1 t=751
+ka3 	卡	c=2 d=1.60957 t=251
+keh4 ki3 	客氣	c=1 d=1 t=1138
+ki2 	豈	c=2 d=1.26316 t=629
+ki2 ling5 	豈能	c=2 d=1.25538 t=772
+ki3 	去	c=2 d=1.01666 t=908
+kian1 gua3 	牽掛	c=1 d=1 t=354
+kian3 	見	c=1 d=1 t=133
+kiang1 	羌	c=1 d=1 t=32
+kiang2 	講	c=1 d=1 t=126
+kim1 	欽	c=1 d=1 t=182
+kim1 gian7 	欽鍵	c=1 d=1 t=184
+king1 	框	c=1 d=1 t=168
+king1 bbu7 	框遇	c=1 d=1 t=179
+king1 king1 	輕輕	c=1 d=1 t=329
+kiook4 shing1 	却生	c=2 d=1.26054 t=635
+kip4 	泣	c=1 d=1 t=225
+kip4 du3 	泣注	c=1 d=1 t=235
+kip4 du3 im1 	泣注音	c=1 d=1 t=240
+kip4 du3 im1 jji7 	泣注音貳	c=1 d=1 t=245
+kiunn1 	腔	c=4 d=3.88326 t=218
+kong1 	框	c=1 d=1 t=169
+kong2 	孔	c=1 d=1 t=371
+kong2 bbin5 	孔明	c=2 d=1.25924 t=655
+kong2 zu2 	孔子	c=1 d=1 t=615
+koo3 bbeh8 	褲襪	c=1 d=1 t=861
+kor chi 	考試	c=1 d=1 t=83
+kor2 	可	c=2 d=1.96079 t=298
+kor2 dior2 	考著	c=1 d=1 t=84
+kuainn3 uah8 	快活	c=1 d=1 t=153
+kuann3 pua3 	看破	c=1 d=1 t=279
+kui1 	開	c=1 d=1 t=350
+kuinn3 	快	c=1 d=1 t=252
+kuinn3 uah8 	快活	c=1 d=1 t=253
+la3 	啦	c=1 d=1 t=284
+lah4 	啦	c=1 d=1 t=285
+lai5 	來	c=1 d=1 t=322
+lai7 	來	c=1 d=1 t=968
+lai7 dak8 ni5 	來每年	c=3 d=2.98506 t=1144
+lai7 dng2 	來轉	c=3 d=2.98506 t=1147
+lam5 	南	c=1 d=1 t=1071
+lan2 	嬾	c=2 d=1.97045 t=1225
+lan2 ggor2 ann3 	嬾我啊	c=4 d=3.97017 t=1224
+lang5 	人	c=2 d=1.01128 t=1220
+lang5 gong2 	人講	c=3 d=2.34262 t=280
+lap4 	入	c=2 d=1.8781 t=188
+lau7 su1 	老師	c=2 d=1.99501 t=946
+le1 	絡	c=1 d=1 t=1049
+le2 bai3 	禮拜	c=1 d=1 t=922
+le7 	例	c=1 d=1 t=205
+leh8 	咧	c=2 d=1.72253 t=1050
+leh8 	弱	c=1 d=1 t=980
+li1 	勒	c=1 d=1 t=977
+li1 	展	c=1 d=1 t=982
+li1 	離	c=1 d=1 t=347
+li2 	履	c=1 d=1 t=1132
+li2 	李	c=9 d=4.35544 t=1188
+li2 	汝	c=7 d=3.62912 t=1185
+li2 	里	c=1 d=1 t=97
+li2 leh8 	汝咧	c=1 d=1 t=986
+li2 leh8 	汝弱	c=1 d=1 t=981
+li5 	離	c=1 d=1 t=348
+li7 	例	c=1 d=1 t=206
+li7 	利	c=1 d=1 t=488
+li7 	呂	c=2 d=1.99501 t=976
+li7 	離	c=1 d=1 t=349
+li7 un7 	利運	c=1 d=1 t=760
+lian5 	年	c=2 d=1.86936 t=185
+lian5 diong2 	年長	c=2 d=1.26316 t=628
+lian5 jjip8 	年入	c=2 d=1.8781 t=191
+lian5 jjip8 king1 	年入框	c=2 d=1.98511 t=174
+lian5 jjip8 king1 bbu7 	年入框遇	c=1 d=1 t=181
+liau gai 	了解	c=2 d=1.99501 t=114
+lim1 	啉	c=3 d=2.48176 t=1163
+lim1 de5 	啉茶	c=1 d=1 t=1165
+ling5 	能	c=1 d=1 t=388
+ling5 ia2 	能也	c=1 d=0.35924 t=830
+ling5 zok4 	能作	c=1 d=1 t=658
+ling7 	鬆	c=1 d=1 t=315
+liong2 	兩	c=1 d=1 t=366
+liong2 iek8 	兩翼	c=1 d=1 t=593
+liong2 jia2 	兩者	c=1 d=1 t=326
+lior7 	路	c=1 d=1 t=283
+lip4 	入	c=2 d=1.8781 t=189
+lip8 	入	c=3 d=2.64915 t=216
+lip8 lai5 	入來	c=2 d=1.99501 t=966
+liu2 	柳	c=1 d=1 t=24
+lok8 	洛	c=2 d=1.25538 t=776
+long2 	都	c=1 d=1 t=98
+loo5 	羅	c=1 d=1 t=275
+loo7 	路	c=2 d=1.8311 t=321
+loo7 doo5 	路途	c=1 d=1 t=320
+lor2 	老	c=1 d=1 t=421
+lor2 zong3 	老壯	c=1 d=1 t=688
+lor5 	羅	c=3 d=1.32326 t=814
+lorh4 	落	c=0 d=0.1 t=66
+m2 	母	c=1 d=1 t=213
+m7 	不	c=1 d=1 t=205
+m7 	毋	c=2 d=1.73345 t=923
+m7 tang1 	毋通	c=3 d=2.20813 t=311
+ma shiong 	馬上	c=3 d=2.98506 t=110
+ma2 	馬	c=1 d=1 t=356
+ma7 	嘛	c=1 d=1 t=262
+mai3 	莫	c=1 d=1 t=852
+mia5 	名	c=1 d=1 t=857
+mia7 	命	c=1 d=1 t=853
+mia7 de2 	命短	c=2 d=1.29671 t=624
+mih8 	物	c=2 d=1.39063 t=1057
+mng5 	門	c=2 d=1.01253 t=906
+moo5 	無	c=2 d=1.07244 t=851
+mui2 	每	c=2 d=1.26316 t=727
+ng5 	黃	c=1 d=1 t=862
+ngoo2 	五	c=1 d=1 t=381
+ngoo2 	我	c=5 d=2.3793 t=829
+ngoo2 chiek4 	五尺	c=1 d=1 t=651
+ngoo2 shiek4 	我昔	c=1 d=1 t=774
+ngoo5 	吾	c=1 d=1 t=501
+ngoo5 	蜈	c=2 d=1.32142 t=589
+ngoo7 	卧	c=2 d=1.25924 t=656
+ni5 	年	c=3 d=1.06461 t=859
+ong7 	用	c=1 d=1 t=143
+ooh4 	喔	c=1 d=1 t=956
+oom2 	掩	c=2 d=1.99501 t=140
+oonn1 	掩	c=1 d=1 t=138
+oop4 	喔	c=1 d=1 t=141
+or1 	倭	c=3 d=1.96565 t=1074
+or1 	娿	c=3 d=2.30495 t=1080
+orh4 	难	c=3 d=2.63338 t=185
+orh8 	學	c=4 d=3.83525 t=1081
+pe1 	拼	c=1 d=1 t=237
+penn1 	拼	c=1 d=1 t=238
+pi2 	鄙	c=2 d=1.25538 t=810
+pian1 pian1 	偏偏	c=1 d=1 t=320
+pian3 	片	c=1 d=1 t=13
+piann1 	拼	c=1 d=1 t=239
+ping1 	拼	c=1 d=1 t=240
+ping3 	拼	c=2 d=1.83527 t=277
+ping5 	馮	c=2 d=1.26054 t=666
+pinn1 	拼	c=1 d=1 t=242
+pinn7 	鼻	c=1 d=1 t=209
+poo3 	破	c=1 d=1 t=276
+por3 	破	c=3 d=1.33624 t=780
+pu5 	浮	c=0 d=0.1 t=66
+pua3 	破	c=1 d=1 t=278
+puann7 	伴	c=1 d=1 t=347
+pue1 	拼	c=1 d=1 t=243
+pue3 	配	c=1 d=1 t=441
+pue3 zok4 	配作	c=1 d=1 t=708
+pun1 	賁	c=1 d=1 t=35
+sai2 	史	c=2 d=1.98511 t=280
+sai2 la3 	史啦	c=1 d=1 t=286
+sai2 sai2 	史史	c=1 d=1 t=283
+sai2 sai2 la3 	史史啦	c=1 d=1 t=287
+sam1 	三	c=5 d=2.08074 t=798
+sam1 chiek4 	三尺	c=1 d=1 t=679
+san1 	山	c=1 d=1 t=18
+sang1 	鬆	c=2 d=1.98511 t=319
+sann1 koo3 	衫褲	c=1 d=1 t=860
+sau3 	掃	c=5 d=4.56224 t=917
+sau3 hor2 	掃好	c=2 d=1.99501 t=910
+sau3 sau3 	掃掃	c=2 d=1.86071 t=928
+se1 	栖	c=1 d=1 t=1226
+shi1 	施	c=1 d=1 t=40
+shi1 	輸	c=1 d=1 t=154
+shi1 lian5 	輸年	c=1 d=1 t=159
+shi1 lian5 jjip8 	輸年入	c=1 d=1 t=166
+shi1 lian5 jjip8 king1 	輸年入框	c=2 d=1.98511 t=175
+shi2 	始	c=1 d=1 t=581
+shi2 	是	c=1 d=1.09704 t=328
+shi2 	死	c=2 d=1.26185 t=683
+shi2 bat8 lang5 	是別人	c=1 d=1 t=323
+shi3 	四	c=1 d=1 t=273
+shi3 	示	c=1 d=1 t=195
+shi5 	時	c=6 d=2.80198 t=758
+shi5 ia2 	時也	c=2 d=1.25795 t=833
+shi5 lai5 	時來	c=2 d=1.26316 t=707
+shi7 	是	c=2 d=1.9802 t=929
+shi7 	示	c=1 d=1 t=196
+shia7 	射	c=2 d=1.26054 t=662
+shian1 	仙	c=1 d=1 t=1173
+shian1 	僊	c=1 d=1 t=1170
+shian1 	先	c=3 d=1.0887 t=1174
+shian1 	姍	c=2 d=1.68729 t=1233
+shian1 shinn1 	先生	c=12 d=10.5866 t=1193
+shian3 	善	c=2 d=1.26185 t=631
+shiang2 	上	c=1 d=1 t=251
+shiang6 	上	c=1 d=1 t=252
+shiang7 	上	c=1 d=1 t=253
+shiau lian 	少年	c=4 d=3.97017 t=107
+shiau1 	簫	c=2 d=1.25924 t=646
+shiau2 	小	c=4 d=2.36261 t=746
+shiau2 	少	c=4 d=2.47679 t=697
+shiek4 	式	c=1 d=1 t=246
+shim1 	心	c=2 d=1.2019 t=468
+shim1 jing5 	心情	c=2 d=1.99501 t=249
+shim1 jjiook8 	心若	c=1 d=1 t=735
+shim7 	甚	c=3 d=2.37574 t=1056
+shin1 	身	c=3 d=1.7314 t=799
+shin1 bbor5 	身無	c=1 d=1 t=380
+shing1 	生	c=3 d=1.30886 t=744
+shing5 	乘	c=2 d=1.26185 t=667
+shing5 	城	c=1 d=1 t=15
+shing7 	上	c=1 d=1 t=254
+shiong1 hor2 ann3 	友好啊	c=2 d=1.99501 t=1199
+shiong2 	上	c=4 d=2.01579 t=255
+shiong2 hor2 	上好	c=3 d=2.94575 t=1210
+shiong2 jjin5 	上人	c=2 d=1.82283 t=826
+shiong5 	常	c=2 d=1.97045 t=319
+shiong5 zun5 	常存	c=2 d=1.26316 t=722
+shiong7 	上	c=4 d=2.03314 t=1216
+shiong7 jjin5 	上人	c=1 d=1 t=554
+shiook8 	蜀	c=2 d=1.25924 t=659
+shior1 niu7 	相讓	c=4 d=3.84031 t=1212
+shior2 shior2 e5 	小小兮	c=1 d=1 t=92
+shit4 	失	c=1 d=1 t=449
+shit4 	式	c=1 d=1 t=247
+shit4 shi5 	失時	c=1 d=1 t=716
+shiu2 	守	c=2 d=1.26316 t=734
+shiunn2 	想	c=1 d=1 t=256
+shiunn2 diorh4 	想着	c=1 d=1 t=156
+shiunn7 	上	c=1 d=1 t=257
+sian1 sinn1 	先生	c=12 d=10.5866 t=1194
+sin5 	神	c=1 d=1 t=1130
+sio1 niu7 	相讓	c=4 d=3.84031 t=1213
+siong1 hor2 ann3 	友好啊	c=1 d=1 t=1200
+siong2 	傱	c=2 d=1.97045 t=1209
+siong2 hor2 	上好	c=2 d=1.97531 t=1211
+siong7 	二	c=2 d=1.91851 t=1214
+siong7 hor2 	上好	c=1 d=1 t=1218
+song1 	鬆	c=1 d=1 t=317
+soo2 	所	c=1 d=1 t=38
+soo2 giau3 	所徼	c=1 d=1 t=324
+su1 	思	c=4 d=3.6718 t=543
+su1 	輸	c=1 d=1 t=155
+su1 	須	c=1 d=1 t=21
+su1 i1 	思衣	c=2 d=1.85642 t=812
+su1 iann5 	輸贏	c=1 d=1 t=328
+su1 shit8 	思食	c=2 d=1.85214 t=816
+su2 	史	c=2 d=1.98511 t=281
+su2 	始	c=1 d=1 t=307
+su3 	史	c=2 d=1.98511 t=282
+su3 	四	c=1 d=1 t=274
+su5 	殊	c=1 d=1 t=356
+su7 	殊	c=1 d=1 t=357
+su7 hui1 	殊非	c=2 d=1.26316 t=625
+sua3 	續	c=1 d=1 t=930
+suah1 	煞	c=1 d=1 t=913
+suan2 	選	c=1 d=1 t=202
+sui1 	雖	c=1 d=1 t=454
+sui1 por3 	雖破	c=1 d=1 t=721
+sui2 	水	c=0 d=0.1 t=755
+sui2 but4 diek4 shi5 	水不得時	c=1 d=1 t=756
+sun5 	循	c=2 d=1.26054 t=848
+tai1 	台	c=2 d=1.76338 t=273
+tai3 	太	c=8 d=5.10915 t=893
+tai3 im1 dim5 	太陰沈	c=2 d=1.60653 t=255
+tak ceh 	讀冊	c=0 d=0.1 t=76
+tat4 	撻	c=1 d=1 t=533
+tau5 	道	c=1 d=1 t=282
+tau5 	頭	c=1 d=1 t=311
+teh8 	挓	c=5 d=4.78223 t=891
+teh8 	提	c=8 d=7.1889 t=909
+ti1 	瓻	c=1 d=1 t=932
+tian1 	天	c=1 d=1 t=356
+tian1 but4 diek4 	天不得	c=1 d=0.365803 t=749
+tian1 but4 diek4 shi5 	天不得時	c=1 d=1 t=750
+tian1 de7 	天地	c=3 d=1.32708 t=847
+tian1 jjian5 	天然	c=2 d=1.26448 t=742
+ting1 	聽	c=6 d=4.84659 t=892
+ting2 	呈	c=1 d=1 t=281
+ting5 	呈	c=1 d=1 t=282
+too2 	吐	c=7 d=5.33636 t=894
+too2 	土	c=1 d=1 t=251
+too5 	土	c=2 d=1.03763 t=908
+tor1 	咃	c=1 d=1 t=1232
+tu2 	土	c=1 d=1 t=253
+u1 chian1 bban7 	於千萬	c=1 d=1 t=804
+u7 	有	c=6 d=3.46134 t=1096
+u7 ian5 	有緣	c=1 d=1 t=347
+u7 in1 	有囙	c=7 d=6.50584 t=1113
+u7 ing5 	有閒	c=3 d=2.91353 t=1115
+u7 lang5 	有人	c=4 d=2.96323 t=317
+uan2 	遠	c=4 d=1.67076 t=337
+uan3 	怨	c=2 d=1.85214 t=54
+uan7 	遠	c=1 d=1 t=338
+uann3 	案	c=1 d=1 t=269
+uat8 	越	c=1 d=1 t=310
+uat8 tau5 	越頭	c=2 d=1.99501 t=313
+ue7 	會	c=1 d=1 t=273
+ue7 	衛	c=1 d=1 t=918
+ue7 	話	c=1 d=1 t=1072
+ui5 	為	c=2 d=1.05931 t=773
+ui5 king1 ui5 	為卿為	c=1 d=1 t=500
+ui7 	位	c=2 d=1.25411 t=797
+ui7 	渭	c=2 d=1.29671 t=622
+ui7 	謂	c=1 d=1 t=331
+un5 	勻	c=1 d=1 t=1149
+un5 	緩	c=3 d=2.98506 t=1155
+un5 a2 	勻也	c=1 d=1 t=1151
+un5 un5 a2 	緩緩也	c=1 d=1 t=1157
+un7 	運	c=4 d=2.64463 t=835
+un7 	韵	c=1 d=1 t=210
+un7 bboo2 	韵母	c=1 d=1 t=214
+un7 ia2 	運也	c=1 d=1 t=563
+un7 lui7 	韵傫	c=2 d=1.99501 t=224
+za2 	早	c=3 d=2.62028 t=926
+za3 hu3 	乍富	c=2 d=1.26448 t=745
+zai1 	才	c=2 d=1.97531 t=265
+zai2 	宰	c=2 d=1.25924 t=654
+zai5 	才	c=4 d=1.4944 t=695
+zam7 	塹	c=1 d=1 t=1028
+zam7 ann3 	塹啊	c=2 d=1.99501 t=1046
+zap8 	十	c=1 d=1 t=287
+ze2 	這	c=6 d=4.01747 t=324
+ze3 gi5 	濟其	c=2 d=1.25538 t=786
+ze5 	齊	c=1 d=1 t=383
+ze5 gok4 	齊國	c=1 d=1 t=653
+ze7 	坐	c=1 d=1 t=1167
+zeh4 	作	c=1 d=1 t=341
+zerk4 	則	c=1 d=1 t=204
+zi2 	這	c=1 d=1 t=1044
+zi2 zam7 ann3 	這塹啊	c=1 d=1 t=1047
+ziah4 gu2 	即久	c=1 d=1 t=1042
+ziah4 nih8 	這麼	c=1 d=1 t=1034
+ziah4 nih8 gu2 	這麼久	c=1 d=1 t=1036
+zin1 	眞	c=1 d=1 t=1127
+zin7 	儘	c=1 d=1 t=1126
+zok1 	作	c=1 d=1 t=342
+zok4 	作	c=1 d=1 t=343
+zong3 	壯	c=3 d=1.51462 t=821
+zor3 	作	c=1 d=1 t=344
+zor3 	做	c=2 d=1.8781 t=117
+zor7 	道	c=1 d=1 t=283
+zorh1 	作	c=1 d=1 t=345
+zorh4 	作	c=1 d=1 t=346
+zu1 	注	c=1 d=1 t=231
+zu3 	注	c=3 d=2.26891 t=491
+zu3 hok4 	注福	c=1 d=1 t=762
+zu3 lok8 	注祿	c=1 d=1 t=763
+zu7 	自	c=6 d=2.23671 t=845
+zua7 	行	c=2 d=1.956 t=309
+zuann2 iunn7 	怎樣	c=2 d=1.71534 t=326
+zue3 	做	c=2 d=1.98511 t=1055
+zue3 	啐	c=1 d=1 t=1051
+zue3 sim7 	做甚	c=1 d=1 t=1054
+zue3 sim7 mih8 	做甚物	c=1 d=1 t=1058
+zuh4 	注	c=1 d=1 t=233
+zui2 	水	c=1 d=1.00076 t=1043
+zui3 	最	c=1 d=1 t=1044
+zui3 	注	c=1 d=1 t=234
+zzua7 	偌	c=1 d=1 t=1161

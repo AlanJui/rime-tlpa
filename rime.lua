@@ -3488,7 +3488,7 @@ local function bpm2_spell_to_bp(code)
 		end
 		return false
 	end
-	if not (glide("ia", "ya") or glide("io", "yo") or glide("iu", "yu")
+	if not (glide("ia", "ya") or glide("io", "yo") or glide("iu", "yiu")
 		or glide("ua", "wa") or glide("ue", "we") or glide("ui", "wi")) then
 		local second = s:sub(2, 2)
 		if s:sub(1, 1) == "i" and not second:match("[aeuo]") then

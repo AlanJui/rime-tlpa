@@ -101,12 +101,12 @@ $files = @(
     # -----------------
     "lib_preedit_tps.yaml"
 
-    # --- 反切輸入法 ---
-    "huan_ciat_tlpa.schema.yaml"
-    "huan_ciat_tps.schema.yaml"
-    "huan_ciat_tps.custom.yaml"
-    # -----------------
-    "lib_comment_sni_and_tps.yaml"
+    # # --- 反切輸入法 ---
+    # "huan_ciat_tlpa.schema.yaml"
+    # "huan_ciat_tps.schema.yaml"
+    # "huan_ciat_tps.custom.yaml"
+    # # -----------------
+    # "lib_comment_sni_and_tps.yaml"
 
     # --- 十五音輸入法 ---
     "sip_ngoo_im_tl.schema.yaml"

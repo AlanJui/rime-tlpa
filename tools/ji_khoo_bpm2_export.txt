@@ -1,0 +1,919 @@
+# Rime user dictionary export
+#@/db_name	ji_khoo_bpm2
+#@/db_type	userdb
+#@/rime_version	1.13.1
+#@/tick	1233
+#@/user_id	16e16f14-e808-40d9-a755-fed9870dca25
+阿婆	a bor	1
+阿爹	a dia	1
+阿猴	a gau	1
+阿	a1	1
+也	a2	2
+鴨仔	ah a	0
+鴨仔落水身就浮	ah a lorh4 zui2 shin1 jiu7 pu5	3
+鴨仔聽雷	ah a tiann lui	1
+押金	ah gim	1
+愛	ai3	0
+愛着	ai3 diorh4	1
+愛的	ai3 e5	1
+愛讀冊	ai3 tak ceh	1
+安	an1	3
+安排	an1 bai5	1
+晏	an3	2
+案	an3	1
+緊	an5 bba7 gin2 gin5 hin2	1
+啊	ann3	1
+囘	bai2	1
+回	bai2	1
+回好我	bai2 hor2 ngoo2	6
+拜	bai3	2
+拜訪	bai3 hong2	1
+方	bang1	1
+方案	bang1 an3	1
+八	bat4	2
+別人	bat8 lang5	0
+閩	bban5	2
+閩南話	bban5 lam5 ue7	1
+万	bban7	1
+幔	bban7	1
+萬物	bban7 bbut8	1
+茫	bbang5	1
+望	bbang7	1
+望着	bbang7 diorh4	1
+未	bbe7	1
+未輸	bbe7 shi1	1
+未輸年	bbe7 shi1 lian5	1
+未輸年入	bbe7 shi1 lian5 jjip8	1
+欲	bbeh4	1
+未	bbi7	2
+未遇	bbi7 ggu7	3
+免	bbian2	2
+勔	bbian2	2
+免客氣	bbian2 keh4 ki3	1
+妙	bbiau7	1
+明	bbin5	2
+民	bbin5	2
+閩	bbin5	1
+民民	bbin5 bbin5	1
+面	bbin7	2
+名	bbing5	3
+名也	bbing5 ia2	2
+命	bbing7	3
+命也	bbing7 ia2	1
+母	bbior2	2
+母	bbiu2	1
+望	bbong5	1
+望	bbong7	1
+母	bboo2	1
+暮	bboo7	1
+暮宿	bboo7 shiook4	1
+母	bbor2	1
+無	bbor5	11
+無囙	bbor5 in1	5
+沒有空閒	bbor5 ing5	3
+無閒	bbor5 ing5	2
+無閒嚇	bbor5 ing5 hehnn4	1
+無一日	bbor5 it4 jjit8	2
+無人	bbor5 lang5	1
+未	bbor7	1
+卜	bborh4	1
+卜遠	bborh4 hng7	1
+武	bbu2	1
+母	bbu2	1
+武略	bbu2 liook8	1
+無	bbu5	4
+無欲	bbu5 iook8	1
+遇	bbu7	1
+滿	bbuan2	1
+滿腹	bbuan2 hok4	1
+抹	bbue7	1
+未	bbue7	3
+未曉	bbue7 hiau2	1
+未	bbui7	1
+文才	bbun zai	1
+文	bbun5	1
+文章	bbun5 jiong1	4
+沒	bbut8	1
+沒江	bbut8 gang1	1
+拼	benn1	1
+拼上	benn1 chioonn7	1
+拼上方	benn1 chioonn7 bang1	1
+拼上方案	benn1 chioonn7 bang1 an3	1
+拼	bian1	1
+變	bian3	2
+拼	biann3	2
+標	biau1	1
+百	biek4	5
+百足	biek4 jiook4	1
+白	biek8	4
+白髮	biek8 huat4	1
+貧	bin5	7
+拼	bing1	1
+拼	bing3	1
+拼	bing5	1
+爿	bing5	0
+拼	binn1	1
+邊	binn1	1
+必	bit4	1
+必然	bit4 jjian5	1
+方	bng1	1
+卜	bok1	1
+卜	bok4	1
+補	boo2	1
+布	boo3	1
+布衣	boo3 i1	1
+卜	borh1	1
+卜	borh4	1
+卜	buah8	1
+方	buinn1	1
+畚	bun2	2
+不	but4	15
+不得	but4 diek4	1
+不中	but4 diong3	2
+不遇	but4 ggu7	3
+不及	but4 gip8	1
+不過	but4 gor3	1
+不欲	but4 iook8	2
+不棄	but4 ki3	1
+不棄也	but4 ki3 ia2	1
+不可	but4 kor2	9
+不能	but4 ling5	5
+不生	but4 shing1	1
+不通	but4 tong1	1
+不脫	but4 tuat4	1
+才	cai5	2
+才才	cai5 cai5	1
+才才會	cai5 cai5 e7	1
+才會	cai5 e7	1
+在	cai7	1
+在世	cai7 se3	3
+臭彈	cau duann	1
+持	chi5	2
+千	chian1	5
+請	chiann2	3
+超	chiau1	2
+深	chim1	2
+清	ching1	2
+青菜	chinn1 cai3	1
+冲	chiong1	1
+上	chioonn7	1
+上方	chioonn7 bang1	1
+上方案	chioonn7 bang1 an3	1
+笑笑	chior3 chior3	1
+手環	chiu2 kuan5	1
+楊	chiu7	1
+楊我	chiu7 ggoonn2	1
+楊我志	chiu7 ggoonn2 ji3	1
+楊	chiunn5	1
+上	chiunn6	1
+上	chiunn7	1
+抯	ciann2	1
+笡	ciann2	1
+請汝	ciann2 li2	1
+請啉荼	ciann2 lim1 de5	1
+請坐	ciann2 ze7	1
+初貧	coo1 bin5	2
+草	cor2	2
+草木	cor2 bbok8	1
+此	cu2	1
+此乃	cu2 nai2	2
+厝	cu3	3
+春	cun1	1
+出	cut4	3
+出則	cut4 jiek4	1
+代	da7	1
+台	dai5	1
+台語	dai5 ggi2	1
+台語泣	dai5 ggi2 kip4	1
+台語泣注	dai5 ggi2 kip4 du3	1
+代	dai7	1
+大	dai7	1
+大孝	dai7 hau3	1
+逐項	dak hang	1
+等到	dan2 gau3	1
+旦	dan3	2
+東南	dang lam	1
+東南爿	dang lam bing5	2
+茶	de5	2
+荼	de5	2
+茶教	de5 ga3	3
+茶毋	de5 m7	3
+代	de7	1
+地	de7	0
+第	de7	1
+地不得時	de7 but4 diek4 shi5	1
+致蔭	di im	1
+知縣	di1 guan7	1
+佇	di7	1
+在	di7	1
+呈	diann5	1
+呈路	diann5 lior7	1
+常常	diann7 diann7	1
+朝	diau1	5
+釣	diau3	2
+德	diek4	1
+笛	diek8	1
+珍	din1	2
+陳	din5	1
+陳	din7	1
+登	ding1	2
+上	ding2	1
+呈	ding5	1
+張	diong1	2
+着	diorh4	1
+東	dong1	1
+同	dong5	1
+途	doo5	1
+土	doo7	1
+度	doo7	1
+道	doo7	1
+土卦	doo7 gua3	1
+刀	dor1	1
+多謝	dor1 shia7	3
+多謝	dor1 sia7	3
+到	dor3	1
+到老	dor3 lor2	1
+代	dor7	1
+盜	dor7	1
+道	dor7	4
+盜跖	dor7 jiek4	1
+桌	dorh1	1
+桌子	dorh4 a2	1
+注	du3	1
+注音	du3 im1	1
+注音貳	du3 im1 jji7	1
+注	du7	1
+單	duann1	2
+下午	e1 dau3	1
+勩	e3	1
+兮	e5	2
+會	e7	3
+今天下午	e7 dau3	1
+會驚	e7 giann1	2
+會曉	e7 hiau2	2
+佳	ga1	1
+家	ga1	1
+甘	ga1	1
+佳人	ga1 jjin5	1
+叚	ga2	2
+榎	ga2	1
+教	ga3	2
+教愚	ga3 ggu5	1
+教我	ga3 ggua2	1
+教汝	ga3 li2	3
+及	gah4	2
+改調	gai2 diau7	1
+蓋	gai3	2
+蓋世	gai3 se3	2
+甘	gam1	1
+間	gan1	3
+江	gang1	1
+講	gang2	1
+蛟	gau1	2
+小狗	gau2 a2 giann2	2
+計較	ge3 gau3	1
+更	genn1	1
+顏	ggan5	2
+語	ggi2	1
+語泣	ggi2 kip4	1
+語泣注	ggi2 kip4 du3	1
+語泣注音	ggi2 kip4 du3 im1	1
+儀	ggi5	2
+語	ggi7	1
+遇	ggi7	1
+堯	ggiau5	2
+玉	ggiook8	1
+玉印	ggiook8 in3	2
+我	ggoonn2	1
+我志	ggoonn2 ji3	1
+我	ggor2	1
+語	ggu2	1
+愚	ggu5	4
+寓	ggu7	2
+語	ggu7	1
+遇	ggu7	3
+我	ggua2	5
+我咧	ggua2 leh8	3
+我	gguai2	1
+我	gguan2	1
+阮	gguan2	1
+原	gguan5	2
+我	ggun2	1
+阮	ggun2	3
+阮的注音	ggun2 e5 zu3 im1	1
+阮會	ggun2 e7	1
+妓	gi1	3
+肌	gi1	2
+妓妾	gi1 chiap4	1
+無	gi3	1
+其	gi5	1
+示	gi5	1
+劍浦	giam3 poo2	1
+見	gian3	1
+鍵	gian7	1
+行	giann5	4
+極	giek8	1
+極品	giek8 pin2	1
+今	gim1	2
+今	gin1	1
+均	gin1	1
+根	gin1	3
+今也	gin1 a2	2
+今也日	gin1 a2 lit8	2
+囡	gin2	1
+緊	gin2	7
+緊入來	gin2 lip8 lai5	1
+絹	gin3	1
+見	gin3	1
+墐	gin7	1
+經	ging1	1
+竟	ging3	1
+竟然	ging3 jjian5	1
+見	ginn3	1
+宮	giong1	2
+拱	giong2	2
+鞠	giook4	2
+茄	gior5	1
+講	giorh4	1
+及	gip8	2
+及第	gip8 de7	2
+見	giu3	1
+講	gong2	1
+孤	goo1	2
+瞽	goo2	2
+故	goo3	1
+講	goo7	1
+高	gor1	1
+復	gorh4	1
+久	gu2	1
+卦	gua3	1
+官	guan1	2
+關	guan1	1
+縣	guan7	2
+會	gue3	1
+會	gue7	1
+幾千	gui cainn	1
+卦	gui3	1
+君	gun1	5
+軍	gun1	2
+骨	gut4	1
+骨骼	gut4 gok4	1
+下人	ha2 jjin5	4
+海	hai2	4
+海海	hai2 hai2	1
+海海海海	hai2 hai2 hai2 hai2	1
+學	hak8	2
+甘	ham1	1
+罕罕	han2 han2	3
+漢字	han3 jji7	3
+韓	han5	1
+寒窯	han5 iau5	1
+韓信	han5 shin3	1
+行	hang5	2
+行	hang7	2
+好	hau5	1
+好行	hau5 giann5	1
+好	haunn3	1
+會	he7	1
+罅	henn1	1
+啈	henn3	2
+嚇	hennh4	2
+歇	hennh4	3
+魚	hi5	1
+魚鱉	hi5 biat4	1
+顯	hian2	1
+顯示	hian2 gi5	5
+見	hian3	1
+玄	hian5	1
+玄之又玄	hian5 ji1 iu7 hian5	1
+見	hian7	1
+顯	hiann2	1
+曉	hiau2	1
+好	hiaunn3	1
+行	hin2	2
+行	hing2	2
+恒	hing5	2
+拼	hing5	1
+行	hing5	2
+行	hing7	2
+行不及	hing7 but4 gip8	1
+兇	hiong1	2
+方	hiong5	1
+雄	hiong5	2
+旭	hiook4	1
+方	hng1	1
+遠	hng7	1
+復始	hok8 shi2	1
+封	hong1	1
+方	hong1	1
+風	hong1	6
+封官	hong1 guann1	1
+風雲	hong1 hun5	1
+封作	hong1 zok4	1
+訪	hong2	1
+方	hong5	1
+黃	hong5	4
+黃河	hong5 hor5	1
+捧	hong7	2
+好	hoo2	1
+後	hoo7	2
+禍	hoo7	2
+復	hook8	1
+好	hoonn2	1
+好	hoonn3	1
+好	hor2	6
+好行	hor2 giann5	3
+好行富	hor2 giann5 hu3	3
+何	hor5	1
+河	hor5	4
+夫	hu1	1
+夫人	hu1 jjin5	2
+富	hu3	7
+符號	hu5 hor7	1
+懷	huai5	1
+懷安	huai5 an1	1
+反	huan2	1
+反生	huan2 shing1	1
+反為	huan2 ui5	2
+歡喜	huann1 hi2	1
+法	huat4	1
+會	hue7	1
+非	hui1	3
+非不過	hui1 but4 gor3	1
+非我	hui1 ngoo2	4
+費	hui3	2
+費神	hui3 sin5	1
+遠	huinn7	1
+雲	hun5	3
+衣	i1	1
+衣服	i1 hok8	1
+已	i2	1
+椅子	i2 a2	1
+以觀	i2 guan1	1
+以觀其	i2 guan1 gi5	1
+已鬆	i2 ling7	1
+意	i3	1
+台	i5	1
+異名	i7 bbing5	1
+也	ia2	4
+楊	iang5	1
+影片	iann2 pinn2	1
+腰	iau1	2
+厄	iek4	2
+意	iek4	1
+益	iek4	2
+陰	im1	2
+音	im1	3
+音貳	im1 jji7	1
+囙	in1	1
+永	ing2	1
+永卜	ing2 bborh4	1
+永卜遠	ing2 bborh4 hng7	1
+永遠	ing2 uan2	1
+用	ing3	1
+用代	ing3 da7	1
+應該	ing3 gai1	1
+閒	ing5	3
+閒囙	ing5 in1	3
+閒閒	ing5 ing5	3
+用	ing7	1
+揚	iong5	2
+楊	iong5	1
+楊君	iong5 gun1	1
+用	iong7	1
+欲	iook8	1
+育	iook8	2
+螉	ioonn1	1
+楊	ioonn5	1
+喲	iorh4	1
+一	it4	2
+一旦	it4 dan3	2
+一珍	it4 din1	3
+一定	it4 ding7	2
+一章	it4 jiong1	1
+一人	it4 jjin5	2
+一生	it4 shing1	2
+憂愁	iu1 chiu5	2
+丣	iu2	2
+有	iu2	9
+有先貧	iu2 shian1 bin5	1
+有撻	iu2 tat4	1
+幼	iunn1	2
+楊	iunn5	2
+之	ji1	27
+之門	ji1 bbun5	1
+之間	ji1 gan1	1
+之劍	ji1 giam3	1
+之下	ji1 ha2	1
+之下	ji1 ha3	1
+之能也	ji1 ling5 ia2	1
+之時	ji1 shi5	1
+之上	ji1 shiong7	1
+之才	ji1 zai5	1
+只	ji2	2
+志	ji3	1
+注	ji3	1
+嗟	jia1	3
+嗻	jia1	2
+遮其	jia1 gi5	2
+才	jiah1	2
+則	jiah4	1
+即	jiah4	2
+才	jiah4	2
+才會	jiah4 e7	1
+這麼	jiah4 nih8	1
+這麼久	jiah4 nih8 gu2	1
+食	jiah8	5
+潛	jiam5	1
+潛水	jiam5 sui2	1
+則	jiek4	2
+進士	jin su	1
+眞古	jin1 goo2	1
+眞古意	jin1 goo2 i3	3
+盡	jin7	3
+僧	jing1	2
+曾	jing1	2
+情	jing5	1
+情債	jing5 ze3	1
+章	jiong1	1
+眾妙	jiong3 bbiau7	1
+上	jioonn7	1
+執	jip4	2
+這馬	jit ma	2
+䐈	jit4	2
+周	jiu1	1
+周而	jiu1 jji5	1
+就	jiu7	0
+上	jiunn6	1
+上	jiunn7	2
+而	jji5	2
+而有	jji5 iu2	3
+而列職	jji5 liat8 jit4	1
+貳	jji7	1
+字典	jji7 dian2	1
+熱	jjiat8	1
+壬	jjim5	1
+壬戌	jjim5 sut4	1
+仞	jjim7	1
+人	jjin5	1
+人不得時	jjin5 but4 diek4 shi5	1
+人道	jjin5 dor7	3
+人有	jjin5 iu2	3
+人情	jjin5 jing5	1
+人若	jjin5 jjiook8	1
+人生	jjin5 shing1	9
+入	jjip8	2
+入則	jjip8 jiek4	2
+入框	jjip8 king1	2
+入框遇	jjip8 king1 bbu7	1
+日月	jjit8 gguat8	1
+卡	ka3	2
+客氣	keh4 ki3	1
+豈	ki2	2
+豈能	ki2 ling5	2
+去	ki3	2
+牽掛	kian1 gua3	1
+見	kian3	1
+羌	kiang1	1
+講	kiang2	1
+欽	kim1	1
+欽鍵	kim1 gian7	1
+框	king1	1
+框遇	king1 bbu7	1
+輕輕	king1 king1	1
+却生	kiook4 shing1	2
+泣	kip4	1
+泣注	kip4 du3	1
+泣注音	kip4 du3 im1	1
+泣注音貳	kip4 du3 im1 jji7	1
+腔	kiunn1	4
+框	kong1	1
+孔	kong2	1
+孔明	kong2 bbin5	2
+孔子	kong2 zu2	1
+褲襪	koo3 bbeh8	1
+考試	kor chi	1
+可	kor2	2
+考著	kor2 dior2	1
+快活	kuainn3 uah8	1
+看破	kuann3 pua3	1
+開	kui1	1
+快	kuinn3	1
+快活	kuinn3 uah8	1
+啦	la3	1
+啦	lah4	1
+來	lai5	1
+來	lai7	1
+來每年	lai7 dak8 ni5	3
+來轉	lai7 dng2	3
+南	lam5	1
+嬾	lan2	2
+嬾我啊	lan2 ggor2 ann3	4
+人	lang5	2
+人講	lang5 gong2	3
+入	lap4	2
+老師	lau7 su1	2
+絡	le1	1
+禮拜	le2 bai3	1
+例	le7	1
+咧	leh8	2
+弱	leh8	1
+勒	li1	1
+展	li1	1
+離	li1	1
+履	li2	1
+李	li2	9
+汝	li2	7
+里	li2	1
+汝咧	li2 leh8	1
+汝弱	li2 leh8	1
+離	li5	1
+例	li7	1
+利	li7	1
+呂	li7	2
+離	li7	1
+利運	li7 un7	1
+年	lian5	2
+年長	lian5 diong2	2
+年入	lian5 jjip8	2
+年入框	lian5 jjip8 king1	2
+年入框遇	lian5 jjip8 king1 bbu7	1
+了解	liau gai	2
+啉	lim1	3
+啉茶	lim1 de5	1
+能	ling5	1
+能也	ling5 ia2	1
+能作	ling5 zok4	1
+鬆	ling7	1
+兩	liong2	1
+兩翼	liong2 iek8	1
+兩者	liong2 jia2	1
+路	lior7	1
+入	lip4	2
+入	lip8	3
+入來	lip8 lai5	2
+柳	liu2	1
+洛	lok8	2
+都	long2	1
+羅	loo5	1
+路	loo7	2
+路途	loo7 doo5	1
+老	lor2	1
+老壯	lor2 zong3	1
+羅	lor5	3
+落	lorh4	0
+母	m2	1
+不	m7	1
+毋	m7	2
+毋通	m7 tang1	3
+馬上	ma shiong	3
+馬	ma2	1
+嘛	ma7	1
+莫	mai3	1
+名	mia5	1
+命	mia7	1
+命短	mia7 de2	2
+物	mih8	2
+門	mng5	2
+無	moo5	2
+每	mui2	2
+黃	ng5	1
+五	ngoo2	1
+我	ngoo2	5
+五尺	ngoo2 chiek4	1
+我昔	ngoo2 shiek4	1
+吾	ngoo5	1
+蜈	ngoo5	2
+卧	ngoo7	2
+年	ni5	3
+用	ong7	1
+喔	ooh4	1
+掩	oom2	2
+掩	oonn1	1
+喔	oop4	1
+倭	or1	3
+娿	or1	3
+难	orh4	3
+學	orh8	4
+拼	pe1	1
+拼	penn1	1
+鄙	pi2	2
+偏偏	pian1 pian1	1
+片	pian3	1
+拼	piann1	1
+拼	ping1	1
+拼	ping3	2
+馮	ping5	2
+拼	pinn1	1
+鼻	pinn7	1
+破	poo3	1
+破	por3	3
+浮	pu5	0
+破	pua3	1
+伴	puann7	1
+拼	pue1	1
+配	pue3	1
+配作	pue3 zok4	1
+賁	pun1	1
+史	sai2	2
+史啦	sai2 la3	1
+史史	sai2 sai2	1
+史史啦	sai2 sai2 la3	1
+三	sam1	5
+三尺	sam1 chiek4	1
+山	san1	1
+鬆	sang1	2
+衫褲	sann1 koo3	1
+掃	sau3	5
+掃好	sau3 hor2	2
+掃掃	sau3 sau3	2
+栖	se1	1
+施	shi1	1
+輸	shi1	1
+輸年	shi1 lian5	1
+輸年入	shi1 lian5 jjip8	1
+輸年入框	shi1 lian5 jjip8 king1	2
+始	shi2	1
+是	shi2	1
+死	shi2	2
+是別人	shi2 bat8 lang5	1
+四	shi3	1
+示	shi3	1
+時	shi5	6
+時也	shi5 ia2	2
+時來	shi5 lai5	2
+是	shi7	2
+示	shi7	1
+射	shia7	2
+仙	shian1	1
+僊	shian1	1
+先	shian1	3
+姍	shian1	2
+先生	shian1 shinn1	12
+善	shian3	2
+上	shiang2	1
+上	shiang6	1
+上	shiang7	1
+少年	shiau lian	4
+簫	shiau1	2
+小	shiau2	4
+少	shiau2	4
+式	shiek4	1
+心	shim1	2
+心情	shim1 jing5	2
+心若	shim1 jjiook8	1
+甚	shim7	3
+身	shin1	3
+身無	shin1 bbor5	1
+生	shing1	3
+乘	shing5	2
+城	shing5	1
+上	shing7	1
+友好啊	shiong1 hor2 ann3	2
+上	shiong2	4
+上好	shiong2 hor2	3
+上人	shiong2 jjin5	2
+常	shiong5	2
+常存	shiong5 zun5	2
+上	shiong7	4
+上人	shiong7 jjin5	1
+蜀	shiook8	2
+相讓	shior1 niu7	4
+小小兮	shior2 shior2 e5	1
+失	shit4	1
+式	shit4	1
+失時	shit4 shi5	1
+守	shiu2	2
+想	shiunn2	1
+想着	shiunn2 diorh4	1
+上	shiunn7	1
+先生	sian1 sinn1	12
+神	sin5	1
+相讓	sio1 niu7	4
+友好啊	siong1 hor2 ann3	1
+傱	siong2	2
+上好	siong2 hor2	2
+二	siong7	2
+上好	siong7 hor2	1
+鬆	song1	1
+所	soo2	1
+所徼	soo2 giau3	1
+思	su1	4
+輸	su1	1
+須	su1	1
+思衣	su1 i1	2
+輸贏	su1 iann5	1
+思食	su1 shit8	2
+史	su2	2
+始	su2	1
+史	su3	2
+四	su3	1
+殊	su5	1
+殊	su7	1
+殊非	su7 hui1	2
+續	sua3	1
+煞	suah1	1
+選	suan2	1
+雖	sui1	1
+雖破	sui1 por3	1
+水	sui2	0
+水不得時	sui2 but4 diek4 shi5	1
+循	sun5	2
+台	tai1	2
+太	tai3	8
+太陰沈	tai3 im1 dim5	2
+讀冊	tak ceh	0
+撻	tat4	1
+道	tau5	1
+頭	tau5	1
+挓	teh8	5
+提	teh8	8
+瓻	ti1	1
+天	tian1	1
+天不得	tian1 but4 diek4	1
+天不得時	tian1 but4 diek4 shi5	1
+天地	tian1 de7	3
+天然	tian1 jjian5	2
+聽	ting1	6
+呈	ting2	1
+呈	ting5	1
+吐	too2	7
+土	too2	1
+土	too5	2
+咃	tor1	1
+土	tu2	1
+於千萬	u1 chian1 bban7	1
+有	u7	6
+有緣	u7 ian5	1
+有囙	u7 in1	7
+有閒	u7 ing5	3
+有人	u7 lang5	4
+遠	uan2	4
+怨	uan3	2
+遠	uan7	1
+案	uann3	1
+越	uat8	1
+越頭	uat8 tau5	2
+會	ue7	1
+衛	ue7	1
+話	ue7	1
+為	ui5	2
+為卿為	ui5 king1 ui5	1
+位	ui7	2
+渭	ui7	2
+謂	ui7	1
+勻	un5	1
+緩	un5	3
+勻也	un5 a2	1
+緩緩也	un5 un5 a2	1
+運	un7	4
+韵	un7	1
+韵母	un7 bboo2	1
+運也	un7 ia2	1
+韵傫	un7 lui7	2
+早	za2	3
+乍富	za3 hu3	2
+才	zai1	2
+宰	zai2	2
+才	zai5	4
+塹	zam7	1
+塹啊	zam7 ann3	2
+十	zap8	1
+這	ze2	6
+濟其	ze3 gi5	2
+齊	ze5	1
+齊國	ze5 gok4	1
+坐	ze7	1
+作	zeh4	1
+則	zerk4	1
+這	zi2	1
+這塹啊	zi2 zam7 ann3	1
+即久	ziah4 gu2	1
+這麼	ziah4 nih8	1
+這麼久	ziah4 nih8 gu2	1
+眞	zin1	1
+儘	zin7	1
+作	zok1	1
+作	zok4	1
+壯	zong3	3
+作	zor3	1
+做	zor3	2
+道	zor7	1
+作	zorh1	1
+作	zorh4	1
+注	zu1	1
+注	zu3	3
+注福	zu3 hok4	1
+注祿	zu3 lok8	1
+自	zu7	6
+行	zua7	2
+怎樣	zuann2 iunn7	2
+做	zue3	2
+啐	zue3	1
+做甚	zue3 sim7	1
+做甚物	zue3 sim7 mih8	1
+注	zuh4	1
+水	zui2	1
+最	zui3	1
+注	zui3	1
+偌	zzua7	1
