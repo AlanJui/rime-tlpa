@@ -283,29 +283,80 @@ local IM_ZAT_CHAR = {
 	im_zat_space  = " ",
 	im_zat_apos   = "'",
 }
--- 連接符號字元 → 選項名稱（還原狀態檔之選擇用）
+-- 連接符號字元 → 選項名稱（舊版狀態檔以字元儲存，讀回時還原用）
 local IM_ZAT_OPTION_OF_CHAR = {
 	["-"] = "im_zat_hyphen",
 	[" "] = "im_zat_space",
 	["'"] = "im_zat_apos",
 }
+-- 選項名稱 → F4 選單顯示名稱（與 schema states 一致；狀態檔與此顯示名稱對齊）
+local PIAU_IM_LABEL = {
+	key_in_piau_im_sni = "十五音",
+	key_in_piau_im_tps = "方音符號",
+	key_in_piau_im_tlpa = "台語音標",
+	key_in_piau_im_tlpa_zu_im = "台語音標注音",
+	key_in_piau_im_tl = "台羅拼音",
+	key_in_piau_im_poj = "白話字",
+	key_in_piau_im_bp = "閩拼方案",
+	key_in_piau_im_bpm2 = "台語注音二式",
+	key_in_piau_im_ipa = "國際音標",
+}
+local IM_ZAT_LABEL = {
+	im_zat_hyphen = "連字號",
+	im_zat_space = "空白",
+	im_zat_apos = "撇號",
+}
+local SIANN_TIAU_OPTIONS = {
+	"siann_tiau_iunn_sik_tiau_hu",
+	"siann_tiau_iunn_sik_siong_piau",
+	"siann_tiau_iunn_sik_piau_cun",
+}
+local SIANN_TIAU_LABEL = {
+	siann_tiau_iunn_sik_tiau_hu = "調符",
+	siann_tiau_iunn_sik_siong_piau = "上標調號",
+	siann_tiau_iunn_sik_piau_cun = "標準調號",
+}
+local PIANN_TIAU_OFF = "無變調"
+local PIANN_TIAU_ON = "標變調"
 
 ------------------------------------------------------------------------------------------
--- 【漢字標音選項】持久化
--- 問題：切換至其他 Windows 輸入法再回來會建立新 session，schema 之 reset 值
---       會將 key_in_piau_im_* 選項重設回預設（十五音），使用者先前之選擇遺失。
--- 作法：F4 切換選項時（option_update_notifier），將選擇寫入狀態檔
---       lua/rime_env_state.lua（自動產生，勿手動編輯）；
---       新 session 首次處理按鍵前，自狀態檔還原該方案之選項，
---       使 Enter / Ctrl+Shift+Enter 之上屏標音格式維持使用者先前之選擇。
---       （lua/rime_env.lua 為手工維護之預設值，不由程式覆寫）
+-- 【方案選項】持久化
+-- 問題：切換至其他 Windows 輸入法再回來會建立新 session。librime 在元件
+--       init 之後才依 schema reset 重設開關，使用者先前之選擇遺失。
+-- 作法：
+--   1. 方案啟用、reset 套用完畢時，以 lua/rime_env_state.lua 的前次選擇重設；
+--      該方案尚無紀錄時，改讀 lua/rime_env_state_init.lua。
+--   2. 使用者按 F4 變更【漢字標音選項】／【音節連接符】／【聲調樣式】／
+--      【變調標示】後，把顯示名稱寫入 lua/rime_env_state.lua。
+--      （lua/rime_env.lua、lua/rime_env_state_init.lua 皆為手工維護，不由程式覆寫）
+-- 狀態檔以選單顯示名稱儲存（如「台羅拼音」「連字號」），與初始檔同一格式。
+-- 舊版狀態檔的選項名稱（key_in_piau_im_*）與連接符字元（-／空白／'）仍可讀回。
 ------------------------------------------------------------------------------------------
-local function piau_im_state_path()
+local STATE_GROUPS = { "im_zat", "siann_tiau_iunn_sik", "piau_piann_tiau" }
+local STATE_GROUP_SET = {
+	im_zat = true,
+	siann_tiau_iunn_sik = true,
+	piau_piann_tiau = true,
+}
+
+local function invert_label(label_of_option)
+	local option_of_label = {}
+	for option_name, label in pairs(label_of_option) do
+		option_of_label[label] = option_name
+	end
+	return option_of_label
+end
+
+local PIAU_IM_OPTION_OF_LABEL = invert_label(PIAU_IM_LABEL)
+local IM_ZAT_OPTION_OF_LABEL = invert_label(IM_ZAT_LABEL)
+local SIANN_TIAU_OPTION_OF_LABEL = invert_label(SIANN_TIAU_LABEL)
+
+local function schema_option_state_path()
 	return rime_api.get_user_data_dir() .. "/lua/rime_env_state.lua"
 end
 
-local function load_piau_im_state()
-	local chunk = loadfile(piau_im_state_path())
+local function load_lua_table_file(path)
+	local chunk = loadfile(path)
 	if not chunk then
 		return {}
 	end
@@ -316,57 +367,194 @@ local function load_piau_im_state()
 	return {}
 end
 
--- 各方案最後選擇之選項（schema_id → key_in_piau_im_*，另有 im_zat 子表存放
--- schema_id → 音節連接符字元），模組載入時自狀態檔讀入
-local _piau_im_state = load_piau_im_state()
+local _schema_option_init = {}
+local _schema_option_init_error = nil
+do
+	local ok, data = pcall(require, "rime_env_state_init")
+	if ok and type(data) == "table" then
+		_schema_option_init = data
+	else
+		_schema_option_init = {}
+		_schema_option_init_error = tostring(data)
+	end
+end
 
--- 將 _piau_im_state 完整寫回狀態檔（piau_im 選擇與 im_zat 子表共用同一檔案）
-local function save_piau_im_state_file()
-	local f = io.open(piau_im_state_path(), "w")
+-- 各方案最後選擇。頂層 schema_id →【漢字標音選項】顯示名稱；
+-- im_zat／siann_tiau_iunn_sik／piau_piann_tiau 為各選項群子表。
+local _schema_option_state = load_lua_table_file(schema_option_state_path())
+
+local function lua_quote(s)
+	if type(s) ~= "string" then
+		s = tostring(s)
+	end
+	if not s:find('["\\%z\n\r]') then
+		return '"' .. s .. '"'
+	end
+	return string.format("%q", s)
+end
+
+local function lua_key(s)
+	if type(s) == "string" and s:match("^[%a_][%w_]*$") then
+		return s
+	end
+	return "[" .. lua_quote(s) .. "]"
+end
+
+local function sorted_string_keys(t, accept)
+	local keys = {}
+	for k, v in pairs(t) do
+		if accept(k, v) then
+			keys[#keys + 1] = k
+		end
+	end
+	table.sort(keys)
+	return keys
+end
+
+local function piau_im_option_of(stored)
+	if type(stored) ~= "string" then
+		return nil
+	end
+	return PIAU_IM_OPTION_OF_LABEL[stored] or (PIAU_IM_LABEL[stored] and stored or nil)
+end
+
+local function im_zat_option_of(stored)
+	if type(stored) ~= "string" then
+		return nil
+	end
+	return IM_ZAT_OPTION_OF_LABEL[stored]
+		or (IM_ZAT_LABEL[stored] and stored or nil)
+		or IM_ZAT_OPTION_OF_CHAR[stored]
+end
+
+local function siann_tiau_option_of(stored)
+	if type(stored) ~= "string" then
+		return nil
+	end
+	return SIANN_TIAU_OPTION_OF_LABEL[stored] or (SIANN_TIAU_LABEL[stored] and stored or nil)
+end
+
+local function piann_tiau_on_of(stored)
+	if stored == PIANN_TIAU_ON then
+		return true
+	end
+	if stored == PIANN_TIAU_OFF then
+		return false
+	end
+	return nil
+end
+
+local function canonical_state_label(group, stored)
+	if group == nil then
+		local option_name = piau_im_option_of(stored)
+		return option_name and PIAU_IM_LABEL[option_name] or stored
+	end
+	if group == "im_zat" then
+		local option_name = im_zat_option_of(stored)
+		return option_name and IM_ZAT_LABEL[option_name] or stored
+	end
+	if group == "siann_tiau_iunn_sik" then
+		local option_name = siann_tiau_option_of(stored)
+		return option_name and SIANN_TIAU_LABEL[option_name] or stored
+	end
+	if group == "piau_piann_tiau" then
+		if piann_tiau_on_of(stored) == true then
+			return PIANN_TIAU_ON
+		end
+		if piann_tiau_on_of(stored) == false then
+			return PIANN_TIAU_OFF
+		end
+	end
+	return stored
+end
+
+local function write_schema_option_state()
+	local path = schema_option_state_path()
+	local f = io.open(path, "w")
 	if not f then
-		log.error("[piau_im_state] 無法寫入狀態檔：" .. piau_im_state_path())
+		log.error("[schema_option] 無法寫入狀態檔：" .. path)
 		return
 	end
-	f:write("-- 各輸入方案【漢字標音選項】／【音節連接符】之最後選擇（由 rime.lua 自動產生，勿手動編輯）\n")
+	f:write("-- 各輸入方案【方案選項】之最後選擇（由 rime.lua 在 F4 變更選項後寫入，勿手動編輯）\n")
+	f:write("-- 尚無紀錄的項目，方案啟用時改讀 lua/rime_env_state_init.lua。\n")
 	f:write("return {\n")
-	for sid, opt in pairs(_piau_im_state) do
-		if sid ~= "im_zat" then
-			f:write(string.format("    %s = %q,\n", sid, opt))
-		end
+	local top = sorted_string_keys(_schema_option_state, function(k, v)
+		return type(k) == "string" and type(v) == "string" and not STATE_GROUP_SET[k]
+	end)
+	for _, sid in ipairs(top) do
+		local label = canonical_state_label(nil, _schema_option_state[sid])
+		f:write(string.format("    %s = %s,\n", lua_key(sid), lua_quote(label)))
 	end
-	if type(_piau_im_state.im_zat) == "table" then
-		f:write("    im_zat = {\n")
-		for sid, sep in pairs(_piau_im_state.im_zat) do
-			f:write(string.format("        %s = %q,\n", sid, sep))
+	for _, group in ipairs(STATE_GROUPS) do
+		local bucket = _schema_option_state[group]
+		if type(bucket) == "table" then
+			local ids = sorted_string_keys(bucket, function(k, v)
+				return type(k) == "string" and type(v) == "string"
+			end)
+			if #ids > 0 then
+				f:write("    " .. group .. " = {\n")
+				for _, sid in ipairs(ids) do
+					local label = canonical_state_label(group, bucket[sid])
+					f:write(string.format("        %s = %s,\n", lua_key(sid), lua_quote(label)))
+				end
+				f:write("    },\n")
+			end
 		end
-		f:write("    },\n")
 	end
 	f:write("}\n")
 	f:close()
 end
 
-local function save_piau_im_choice(schema_id, option_name)
-	if _piau_im_state[schema_id] == option_name then
+local function save_schema_option_label(group, schema_id, label)
+	if type(schema_id) ~= "string" or schema_id == "" or STATE_GROUP_SET[schema_id] then
 		return
 	end
-	_piau_im_state[schema_id] = option_name
-	save_piau_im_state_file()
-	log.info("[piau_im_state] saved: " .. schema_id .. " = " .. option_name)
+	if type(label) ~= "string" or label == "" then
+		return
+	end
+	local bucket = _schema_option_state
+	local key = schema_id
+	if group ~= nil then
+		_schema_option_state[group] = _schema_option_state[group] or {}
+		bucket = _schema_option_state[group]
+	end
+	if bucket[key] == label then
+		return
+	end
+	bucket[key] = label
+	write_schema_option_state()
+	local where = group or "piau_im"
+	log.info("[schema_option] saved: " .. where .. " " .. schema_id .. " = " .. label)
 end
 
-local function save_im_zat_choice(schema_id, separator)
-	_piau_im_state.im_zat = _piau_im_state.im_zat or {}
-	if _piau_im_state.im_zat[schema_id] == separator then
-		return
+local function lookup_schema_option_label(group, schema_id)
+	local function from_bucket(bucket)
+		if type(bucket) ~= "table" then
+			return nil
+		end
+		if group == nil then
+			local value = bucket[schema_id]
+			if type(value) == "string" then
+				return value
+			end
+			return nil
+		end
+		local sub = bucket[group]
+		if type(sub) ~= "table" then
+			return nil
+		end
+		local value = sub[schema_id]
+		if type(value) == "string" then
+			return value
+		end
+		return nil
 	end
-	_piau_im_state.im_zat[schema_id] = separator
-	save_piau_im_state_file()
-	log.info("[im_zat_state] saved: " .. schema_id .. " = " .. separator)
+	return from_bucket(_schema_option_state) or from_bucket(_schema_option_init)
 end
 
 -- 讀取 schema 中指定字首（prefix）之選項群，其 reset 所指向之預設選項名稱
 local function get_default_option_by_prefix(config, prefix)
-	for i = 0, 19 do
+	for i = 0, 31 do
 		local first = config:get_string("switches/@" .. i .. "/options/@0")
 		if first and first:find("^" .. prefix) then
 			local reset = config:get_int("switches/@" .. i .. "/reset") or 0
@@ -381,92 +569,199 @@ local function get_default_option_by_prefix(config, prefix)
 	return nil
 end
 
--- 讀取 schema 中 key_in_piau_im_* 選項群之 reset 預設選項
--- （各方案不同：反切＝十五音、zu_im_tps＝方音符號、zu_im_tlpa＝台語音標注音…）
-local function get_default_piau_im_option(config)
-	return get_default_option_by_prefix(config, "key_in_piau_im_")
-end
-
--- 讀取 schema 中 im_zat_* 選項群之 reset 預設選項（回傳選項名稱，如 im_zat_space）
-local function get_default_im_zat_option(config)
-	return get_default_option_by_prefix(config, "im_zat_")
-end
-
--- 新 session 首次處理按鍵前呼叫：
---   1. 若使用者已在按鍵前用 F4 改過選項（作用中選項 ≠ schema 預設）→ 尊重並持久化；
---   2. 否則以狀態檔記錄之選擇，覆蓋 schema reset 所套用之預設值。
-local function restore_piau_im_choice(env)
-	if env.piau_im_restored then
-		return
+local function schema_defines_option(config, option_name)
+	if not config or type(option_name) ~= "string" then
+		return false
 	end
-	env.piau_im_restored = true
-	local ctx = env.engine.context
-	local sid = env.engine.schema.schema_id
-	local saved = _piau_im_state[sid]
-
-	local active = nil
-	for _, name in ipairs(PIAU_IM_OPTIONS) do
-		if ctx:get_option(name) then
-			active = name
+	for i = 0, 31 do
+		local name = config:get_string("switches/@" .. i .. "/name")
+		local first = config:get_string("switches/@" .. i .. "/options/@0")
+		if not name and not first then
 			break
 		end
+		if name == option_name then
+			return true
+		end
+		for j = 0, 15 do
+			local opt = config:get_string("switches/@" .. i .. "/options/@" .. j)
+			if not opt then
+				break
+			end
+			if opt == option_name then
+				return true
+			end
+		end
 	end
+	return false
+end
 
-	local default_opt = get_default_piau_im_option(env.engine.schema.config)
-	if active and default_opt and active ~= default_opt then
-		-- 選項已非預設值：session 建立後、首次按鍵前已被使用者變更
-		save_piau_im_choice(sid, active)
-		return
+-- get_int 在鍵不存在時應為 nil；部分綁定會回 0。reset 為 0 時再確認項目存在。
+local function read_switch_reset(config, index)
+	local path = "switches/@" .. index .. "/reset"
+	local reset = config:get_int(path)
+	if reset == nil then
+		return nil
 	end
-	if not saved or saved == active then
-		return
+	if reset == 0 and type(config.get_item) == "function" and not config:get_item(path) then
+		return nil
+	end
+	return reset
+end
+
+local function named_switch_reset(config, switch_name)
+	for i = 0, 31 do
+		local name = config:get_string("switches/@" .. i .. "/name")
+		local first = config:get_string("switches/@" .. i .. "/options/@0")
+		if not name and not first then
+			break
+		end
+		if name == switch_name then
+			return read_switch_reset(config, i)
+		end
+	end
+	return nil
+end
+
+-- librime 在 processor init 之後才依 reset 呼叫 set_option。
+-- 回傳這批通知的次數，以及最後一個被設定的選項名稱。
+local function schema_reset_tail(config)
+	local count = 0
+	local last_name = nil
+	if not config then
+		return 0, nil
+	end
+	for i = 0, 31 do
+		local name = config:get_string("switches/@" .. i .. "/name")
+		local first = config:get_string("switches/@" .. i .. "/options/@0")
+		if not name and not first then
+			break
+		end
+		if read_switch_reset(config, i) ~= nil then
+			if name and name ~= "" then
+				count = count + 1
+				last_name = name
+			else
+				for j = 0, 15 do
+					local opt = config:get_string("switches/@" .. i .. "/options/@" .. j)
+					if not opt or opt == "" then
+						break
+					end
+					count = count + 1
+					last_name = opt
+				end
+			end
+		end
+	end
+	return count, last_name
+end
+
+local function active_radio(ctx, names)
+	for _, name in ipairs(names) do
+		if ctx:get_option(name) then
+			return name
+		end
+	end
+	return nil
+end
+
+local function apply_radio(ctx, names, wanted)
+	local active = active_radio(ctx, names)
+	if not wanted or active == wanted then
+		return false
 	end
 	if active then
 		ctx:set_option(active, false)
 	end
-	ctx:set_option(saved, true)
-	log.info("[piau_im_state] restored: " .. sid .. " = " .. saved)
+	ctx:set_option(wanted, true)
+	return true
 end
 
--- 新 session 首次處理按鍵前呼叫（邏輯與 restore_piau_im_choice 相同，
--- 僅選項群、狀態檔子表換成 im_zat）：
---   1. 若使用者已在按鍵前用 F4 改過選項（作用中選項 ≠ schema 預設）→ 尊重並持久化；
---   2. 否則以狀態檔記錄之選擇，覆蓋 schema reset 所套用之預設值。
-local function restore_im_zat_choice(env)
-	if env.im_zat_restored then
-		return
-	end
-	env.im_zat_restored = true
+-- 作用中選項若已偏離 schema reset，視為使用者於還原前以 F4 改過，只記檔、不覆蓋。
+-- 否則以狀態檔（沒有則初始檔）覆蓋 reset。
+local function restore_radio_group(env, group, names, label_of, option_of, prefix)
 	local ctx = env.engine.context
+	local config = env.engine.schema.config
 	local sid = env.engine.schema.schema_id
-	local saved_char = (_piau_im_state.im_zat or {})[sid]
-
-	local active = nil
-	for _, name in ipairs(IM_ZAT_OPTIONS) do
-		if ctx:get_option(name) then
-			active = name
-			break
+	local default_opt = get_default_option_by_prefix(config, prefix)
+	if not default_opt then
+		return
+	end
+	local active = active_radio(ctx, names)
+	if active and active ~= default_opt then
+		local label = label_of[active]
+		if label then
+			save_schema_option_label(group, sid, label)
 		end
+		return
 	end
+	local wanted = option_of(lookup_schema_option_label(group, sid))
+	if not wanted or not schema_defines_option(config, wanted) then
+		return
+	end
+	if apply_radio(ctx, names, wanted) then
+		log.info("[schema_option] restored: " .. (group or "piau_im") .. " " .. sid
+			.. " = " .. (label_of[wanted] or wanted))
+	end
+end
 
-	local default_opt = get_default_im_zat_option(env.engine.schema.config)
-	if active and default_opt and active ~= default_opt then
-		-- 選項已非預設值：session 建立後、首次按鍵前已被使用者變更
-		save_im_zat_choice(sid, IM_ZAT_CHAR[active] or "-")
+local function restore_piann_tiau(env)
+	local ctx = env.engine.context
+	local config = env.engine.schema.config
+	local sid = env.engine.schema.schema_id
+	if not schema_defines_option(config, "piau_piann_tiau") then
 		return
 	end
-	if not saved_char then
+	local default_on = named_switch_reset(config, "piau_piann_tiau") == 1
+	local on = ctx:get_option("piau_piann_tiau") and true or false
+	if on ~= default_on then
+		save_schema_option_label("piau_piann_tiau", sid, on and PIANN_TIAU_ON or PIANN_TIAU_OFF)
 		return
 	end
-	local saved_opt = IM_ZAT_OPTION_OF_CHAR[saved_char]
-	if not saved_opt or saved_opt == active then
+	local wanted_on = piann_tiau_on_of(lookup_schema_option_label("piau_piann_tiau", sid))
+	if wanted_on == nil or wanted_on == on then
 		return
 	end
-	if active then
-		ctx:set_option(active, false)
+	ctx:set_option("piau_piann_tiau", wanted_on)
+	log.info("[schema_option] restored: piau_piann_tiau " .. sid
+		.. " = " .. (wanted_on and PIANN_TIAU_ON or PIANN_TIAU_OFF))
+end
+
+local function restore_schema_options(env)
+	if env.schema_options_restored then
+		return
 	end
-	ctx:set_option(saved_opt, true)
-	log.info("[im_zat_state] restored: " .. sid .. " = " .. saved_char)
+	if _schema_option_init_error and log then
+		log.error("[schema_option] 無法載入 rime_env_state_init.lua：" .. _schema_option_init_error)
+		_schema_option_init_error = nil
+	end
+	env.schema_options_applying = true
+	restore_radio_group(env, nil, PIAU_IM_OPTIONS, PIAU_IM_LABEL, piau_im_option_of, "key_in_piau_im_")
+	restore_radio_group(env, "im_zat", IM_ZAT_OPTIONS, IM_ZAT_LABEL, im_zat_option_of, "im_zat_")
+	restore_radio_group(env, "siann_tiau_iunn_sik", SIANN_TIAU_OPTIONS, SIANN_TIAU_LABEL,
+		siann_tiau_option_of, "siann_tiau_iunn_sik_")
+	restore_piann_tiau(env)
+	env.schema_options_restored = true
+	env.schema_options_applying = false
+end
+
+local function save_schema_option_change(env, ctx, name)
+	local sid = env.engine.schema.schema_id
+	if PIAU_IM_LABEL[name] then
+		if ctx:get_option(name) then
+			save_schema_option_label(nil, sid, PIAU_IM_LABEL[name])
+		end
+	elseif IM_ZAT_LABEL[name] then
+		if ctx:get_option(name) then
+			save_schema_option_label("im_zat", sid, IM_ZAT_LABEL[name])
+		end
+	elseif SIANN_TIAU_LABEL[name] then
+		if ctx:get_option(name) then
+			save_schema_option_label("siann_tiau_iunn_sik", sid, SIANN_TIAU_LABEL[name])
+		end
+	elseif name == "piau_piann_tiau" then
+		local on = ctx:get_option(name) and true or false
+		save_schema_option_label("piau_piann_tiau", sid, on and PIANN_TIAU_ON or PIANN_TIAU_OFF)
+	end
 end
 
 -- 取得目前 session 生效之【音節連接符】字元：優先讀取 im_zat_* switch 之即時狀態，
@@ -1840,9 +2135,10 @@ local function aux_commit_func(key, env)
 	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
 
-	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】／【音節連接符】
-	restore_piau_im_choice(env)
-	restore_im_zat_choice(env)
+	-- reset 尾端通知若未趕上，首次按鍵前仍依狀態檔／初始檔重設方案選項
+	if not env.schema_options_restored then
+		restore_schema_options(env)
+	end
 	local raw_repr = key:repr()
 	local r = raw_repr:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
@@ -2411,8 +2707,8 @@ local function aux_commit_func(key, env)
 end
 
 -- aux_commit 處理器：
---   init：連接選項變更通知——F4 切換【漢字標音選項】時，即刻寫入狀態檔持久化
---   func：處理 Enter / Ctrl+Shift+Enter 上屏輸出（含首次按鍵時之選項還原）
+--   init：方案啟用後，等 schema reset 套完即重設方案選項；其後 F4 變更即寫入狀態檔
+--   func：處理 Enter / Ctrl+Shift+Enter 上屏輸出（reset 通知未到時，首次按鍵補還原）
 aux_commit = {
 	init = function(env)
 		local ctx = env.engine.context
@@ -2428,22 +2724,28 @@ aux_commit = {
 			log.error("[aux_commit] failed to initialize Memory: " .. tostring(memory))
 		end
 		env.rev_lookup_learn_buf = {}
+		env.schema_options_restored = false
+		env.schema_options_applying = false
+		local expect, last_name = schema_reset_tail(env.engine.schema.config)
+		env.schema_reset_expect = expect
+		env.schema_reset_last = last_name
+		env.schema_reset_seen = 0
+		-- librime：InitializeComponents（本 init）之後才 InitializeOptions（reset）。
+		-- 收到最後一筆 reset 通知時重設方案選項，讓 F4 選單在按鍵前就顯示前次狀態。
+		-- 這批 reset 通知不得寫入狀態檔；【變調標示】關閉時 get_option 為 false，仍須記檔。
 		env.piau_im_notifier = ctx.option_update_notifier:connect(function(c, name)
-			if type(name) ~= "string" or not c:get_option(name) then
+			if env.schema_options_applying or type(name) ~= "string" then
 				return
 			end
-			-- 僅記錄值為 true（radio 群組被選中）之變更；
-			-- session 建立階段 schema 套用 reset 預設值也會發出通知，須待對應之
-			-- restore_*_choice 執行過後才開始記錄，避免將 reset 預設值誤存為使用者之選擇。
-			if name:find("^key_in_piau_im_") then
-				if env.piau_im_restored then
-					save_piau_im_choice(env.engine.schema.schema_id, name)
+			if not env.schema_options_restored then
+				env.schema_reset_seen = env.schema_reset_seen + 1
+				if env.schema_reset_last and name == env.schema_reset_last
+					and env.schema_reset_seen >= env.schema_reset_expect then
+					restore_schema_options(env)
 				end
-			elseif name:find("^im_zat_") then
-				if env.im_zat_restored then
-					save_im_zat_choice(env.engine.schema.schema_id, IM_ZAT_CHAR[name] or "-")
-				end
+				return
 			end
+			save_schema_option_change(env, c, name)
 		end)
 	end,
 	fini = function(env)

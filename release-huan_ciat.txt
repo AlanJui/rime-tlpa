@@ -9,6 +9,7 @@ keymap_symbols.yaml
 # --- 輸入方案插件函式庫 ---
 rime.lua
 lua\rime_env.lua
+lua\rime_env_state_init.lua
 lua\tlpa_converter.lua
 lua\bpm2_converter.lua
 
