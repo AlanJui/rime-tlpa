@@ -474,8 +474,9 @@ translator:
     - xform/;uann/官;/
     - xform/;e(h?)(\d)/伽;$2/
     - xform/;ainn(h?)/閒;/
-    - xform/;oonn/姑;/             # BPM2 姑
-    - xform/;ounn/姑;/
+    # 姑：舒 oonn、促 oonnh（台羅 onnh）。促聲 h 要吃掉，調號才接得上。
+    - xform/;oonn(h?)/姑;/         # BPM2 姑
+    - xform/;ounn(h?)/姑;/
     - xform/;uenn/糜;/
     - xform/;iaunn(h?)/嘄;/
     - xform/;oom/箴;/              # BPM2 箴舒

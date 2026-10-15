@@ -13,7 +13,7 @@
 schema:
   schema_id: tsap_peh_im_bp
   name: 十八音【閩拼方案】
-  version: "v0.0.8"
+  version: "v0.0.9"
   author:
     - 後學 CCC 整理
     - 居正中 <alanjui.1960@gmail.com>
@@ -213,6 +213,7 @@ speller:
     - 'xform/(^| )uenn/$1wne/'
     - 'xform/(^| )unn/$1wnu/'
     # 鼻化韻識別符：後綴(nn) 改前綴(n)。ann→na、iann→nia、iaunn→niao、oonn→noo
+    # 姑促 oonnh → nooh（h 留在韻腹後）。單 o 的 onnh 不在此列。
     - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/
     # 特殊處理：避免【台語注音二式】轉【閩拼方案】後産生問題。如：生【shinn1】轉成【shni1】(正確：sni1)。
     # 【台語注音二式】的【j】[ʣ] ，在【閩拼】以【zz】表此【聲母】。
@@ -483,8 +484,10 @@ translator:
     - xform/;uann/官;/
     - xform/;e(h?)(\d)/伽;$2/
     - xform/;ainn(h?)/閒;/
-    - xform/;oonn/姑;/
-    - xform/;ounn/姑;/
+    # 姑：舒 oonn、促 oonnh。促聲 h 要吃掉，否則調號停在 [喜姑;h7]。
+    # 台羅／台語音標 onnh＝注音二式 oonnh＝閩拼 nooh。
+    - xform/;oonn(h?)/姑;/
+    - xform/;ounn(h?)/姑;/
     - xform/;uenn/糜;/
     - xform/;iaunn(h?)/嘄;/
     - xform/;oom/箴;/
@@ -535,6 +538,7 @@ translator:
     - "xform/(^|[ '])uinn/$1wni/"
     - "xform/(^|[ '])uenn/$1wne/"
     - "xform/(^|[ '])unn/$1wnu/"
+    # 姑促：注音二式 oonnh → 閩拼 nooh（oo+nn → noo，h 留下）。
     - xform/([iu]?(?:ai|ao|oo|[aiueo]))nn/n$1/
     # 同上：shinn→shni 之後補收回 sh／ch／jj。撇號後的第二音節一併收回。
     - "xform/(^|[ '])sh/$1s/"

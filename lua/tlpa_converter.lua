@@ -175,8 +175,10 @@ local FINALS = {
     eh     = {sni="伽", tps="ㆤㆷ",   ipa="e\202\148" },  -- eʔ
     -- 閒韻（鼻化）
     ainn   = {sni="閒", tps="ㆮ",     ipa="\195\163i" }, -- ãi
-    -- 姑韻（鼻化）
+    -- 姑韻（鼻化）：台羅／台語音標 onn、onnh；注音二式 oonn、oonnh；閩拼 noo、nooh
     oonn   = {sni="姑", tps="ㆧ",     ipa="\195\181u" }, -- õu
+    onnh   = {sni="姑", tps="ㆧㆷ",   ipa="\195\181u\202\148" }, -- õuʔ
+    oonnh  = {sni="姑", tps="ㆧㆷ",   ipa="\195\181u\202\148" }, -- õuʔ
     -- 姆韻（成音節鼻音）
     m      = {sni="姆", tps="ㆬ",     ipa="m\204\169" }, -- m̩（m + combining vertical line below）
     -- 光韻
