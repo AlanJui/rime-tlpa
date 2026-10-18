@@ -65,7 +65,7 @@ local un_bu_dict = {
 	["稽"] = { "ei", "" },
 	["恭"] = { "iong", "iok" },
 	["高"] = { "o", "oh" },
-	["皆"] = { "ai", "" },
+	["皆"] = { "ai", "aih" },
 	["巾"] = { "in", "it" },
 	["姜"] = { "iang", "iak" },
 	["甘"] = { "am", "ap" },
@@ -1635,6 +1635,48 @@ end
 
 -- 從候選之 translator 字典編碼取出台羅數值調音節。
 -- 若混入非拼音碼（倉頡、漢語拼音反查等），整批放棄，改由 comment 解析。
+-- 方音左欄若已寫出喉塞 ㆷ，而 [聲韻調] 還原的台羅仍是舒聲
+-- （皆＋一 與 ai1 同形，促聲 aih1 如「噯」無法從調號 4/8 判斷），
+-- 依左欄把 h 補回該音節。候選的字典 entry 在選單裡常常拿不到。
+local function tps_left_has_h_coda(left)
+	return type(left) == "string" and left:find("ㆷ", 1, true) ~= nil
+end
+
+local function with_h_coda(code)
+	if type(code) ~= "string" then
+		return code
+	end
+	local base, tone = code:match("^(.-)([1-8])$")
+	if not base or base:match("[ptkh]$") then
+		return code
+	end
+	return base .. "h" .. tone
+end
+
+local function apply_tps_h_coda_hint(codes, comment)
+	if type(comment) ~= "string" or #codes == 0 then
+		return
+	end
+	local lefts = {}
+	local rest = comment
+	while true do
+		local left, tail = rest:match("^(.-)%[.-%](.*)$")
+		if not left then
+			break
+		end
+		table.insert(lefts, (left:gsub("^%s+", ""):gsub("%s+$", "")))
+		rest = tail or ""
+	end
+	if #lefts ~= #codes then
+		return
+	end
+	for i, code in ipairs(codes) do
+		if tps_left_has_h_coda(lefts[i]) then
+			codes[i] = with_h_coda(code)
+		end
+	end
+end
+
 local function collect_entry_tl_codes(env, cand_list)
 	local codes = {}
 	local memory = env.aux_commit_memory
@@ -2298,6 +2340,9 @@ local function aux_commit_func(key, env)
 					table.insert(source_list, tlpa)
 					log.info("[aux_commit] " .. schema_id .. " comment=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 				end
+			end
+			if schema_id == "tsap_peh_im_tps" then
+				apply_tps_h_coda_hint(source_list, gen_comm)
 			end
 
 		elseif is_sni_huan_ciat_schema(schema_id) then

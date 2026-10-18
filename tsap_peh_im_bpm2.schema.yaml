@@ -453,7 +453,8 @@ translator:
     - xform/;io(h?)(\d)/茄;$2/
     - xform/;or(h?)(\d)/高;$2/     # BPM2 高（須在 o 之前）
     # - xform/;o(h?)(\d)/高;$2/
-    - xform/;ai(\d)/皆;$1/
+    # 皆：舒 ai、促 aih。喉塞 h 要吃掉，後面的調號才接得上（否則右欄停在 ;aih）。
+    - xform/;ai(h?)(\d)/皆;$2/
     - xform/;i(n|t)(\d)/巾;$2/
     - xform/;ia(ng|k)/姜;/
     - xform/;a(m|p)/甘;/

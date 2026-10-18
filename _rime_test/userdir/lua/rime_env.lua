@@ -9,10 +9,10 @@ local config = {
     -- 【註】此表為「方案未提供 key_in_piau_im_* 選項群」時之預設值；
     --       方案選單（F4）已切換選項者，以選單目前狀態為準。
     schema_id = {
-        -- 反切輸入法類型
-        huan_ciat_tlpa = "key_in_piau_im_tlpa", -- 台語音標
-        huan_ciat_tps = "key_in_piau_im_tlpa", -- 台語音標（預設：方音符號 key_in_piau_im_tps）
-        huan_ciat_ZapGooIm_bpm2 = "key_in_piau_im_bpm2", -- 台語注音二式（舊 schema_id）
+        -- -- 反切輸入法類型
+        -- huan_ciat_tlpa = "key_in_piau_im_tlpa", -- 台語音標
+        -- huan_ciat_tps = "key_in_piau_im_tlpa", -- 台語音標（預設：方音符號 key_in_piau_im_tps）
+        -- huan_ciat_ZapGooIm_bpm2 = "key_in_piau_im_bpm2", -- 台語注音二式（舊 schema_id）
         -- 十五音輸入法【韻+調+聲】（現行 sip_ngoo_im_*）
         -- sip_ngoo_im_tlpa = "key_in_piau_im_tlpa", -- 舊 schema_id（已更名）
         sip_ngoo_im_tl = "key_in_piau_im_tl", -- 台羅拼音（現行 schema_id）
@@ -21,6 +21,7 @@ local config = {
         -- 十八音輸入法（改良式新十五音）
         tsap_peh_im_tl = "key_in_piau_im_tl", -- 台羅拼音
         tsap_peh_im_bpm2 = "key_in_piau_im_bpm2", -- 台語注音二式
+        tsap_peh_im_bp = "key_in_piau_im_bp", -- 閩拼方案
         tsap_peh_im_tps = "key_in_piau_im_tps", -- 方音符號
         -- 注音輸入法類型
         zu_im_bpm2 = "key_in_piau_im_bpm2", -- 台語注音二式

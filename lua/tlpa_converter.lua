@@ -107,8 +107,9 @@ local FINALS = {
     -- 高韻
     o      = {sni="高", tps="ㄜ",     ipa="o"         },
     oh     = {sni="高", tps="ㄜㆷ",   ipa="o\202\148" },  -- oʔ
-    -- 皆韻
+    -- 皆韻（促聲 aih 的調號可以不是 4/8，如 噯 aih1）
     ai     = {sni="皆", tps="ㄞ",     ipa="ai"        },
+    aih    = {sni="皆", tps="ㄞㆷ",   ipa="ai\202\148" }, -- aiʔ
     -- 巾韻
     ["in"] = {sni="巾", tps="ㄧㄣ",   ipa="in"        },
     it     = {sni="巾", tps="ㄧㆵ",   ipa="it".._ua   },

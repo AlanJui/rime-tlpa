@@ -54,8 +54,19 @@ function M.convert(tlpa)
     local parts = conv.split(tlpa)
     if not parts then return tlpa end
     local zero = (parts.siann == "\195\184" or parts.siann == "\195\152")
-    local b2_siann = zero and "" or (BPM2_SIANN[parts.siann] or parts.siann)
-    local b2_un    = BPM2_UN[parts.un] or parts.un
+    local siann = parts.siann
+    local un = parts.un
+    -- 曾／出／入／時 + i 起頭韻母：z／c／j／s → zi／ci／ji／si，再對成 j／ch／jj／sh。
+    -- 誌 TL zi3 應入庫 ji3。若存成 zi3，用戶詞典整詞編碼失敗，事誌不會留下。
+    if not zero and un:sub(1, 1) == "i" then
+        if siann == "z" then siann = "zi"
+        elseif siann == "c" then siann = "ci"
+        elseif siann == "j" then siann = "ji"
+        elseif siann == "s" then siann = "si"
+        end
+    end
+    local b2_siann = zero and "" or (BPM2_SIANN[siann] or siann)
+    local b2_un    = BPM2_UN[un] or un
     return b2_siann .. b2_un .. parts.tiau
 end
 

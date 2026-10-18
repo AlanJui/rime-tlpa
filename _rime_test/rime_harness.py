@@ -108,9 +108,18 @@ def prepare_userdir(fresh: bool) -> None:
 
 
 def override(files):
-    """把工作區的最新檔案蓋進測試目錄。files: list of absolute paths"""
+    """把工作區的最新檔案蓋進測試目錄。files: list of absolute paths。
+
+    lua/ 底下的模組要放回測試目錄的 lua/，不能只依檔名丟在根目錄。
+    """
     for f in files:
-        shutil.copy2(f, os.path.join(TEST_ROOT, os.path.basename(f)))
+        base = os.path.basename(f)
+        if os.path.basename(os.path.dirname(f)).lower() == "lua":
+            dest_dir = os.path.join(TEST_ROOT, "lua")
+            os.makedirs(dest_dir, exist_ok=True)
+            shutil.copy2(f, os.path.join(dest_dir, base))
+        else:
+            shutil.copy2(f, os.path.join(TEST_ROOT, base))
 
 
 def main():
