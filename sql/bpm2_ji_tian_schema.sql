@@ -1,5 +1,5 @@
--- 台語注音二式字典 Schema
--- 參考：docs/510_台語注音二式字典重整.md
+-- 已改名：請改用 sql/ji_tian_schema.sql
+-- 本檔保留相同 DDL，以利舊路徑相容。
 
 CREATE TABLE IF NOT EXISTS 漢字庫 (
     識別號  INTEGER PRIMARY KEY AUTOINCREMENT,

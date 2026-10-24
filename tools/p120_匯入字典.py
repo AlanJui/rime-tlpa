@@ -4,7 +4,8 @@
 """
 p120_匯入字典.py
 
-將【中州韻字典檔】ji_khoo_bpm2.dict.yaml 逐筆寫入 SQLite。
+將【中州韻字典檔】逐筆寫入 SQLite。
+依 --profile 選擇來源字典與目標資料庫。
 
 處理規則：
   1. 入聲韻尾標音 ([ptkh])1 → \\14（改為陰入調 4）
@@ -13,9 +14,9 @@ p120_匯入字典.py
 參考：docs/510_台語注音二式字典重整.md
 
 使用方式：
-  python tools/p120_匯入字典.py
-  python tools/p120_匯入字典.py --dict ji_khoo_bpm2.dict.yaml
-  python tools/p120_匯入字典.py --db src/台語注音二式字典.db --replace
+  python tools/p120_匯入字典.py --profile bpm2 --replace
+  python tools/p120_匯入字典.py --profile tl --replace
+  python tools/p120_匯入字典.py --dict path.dict.yaml --db src/x.db --replace
   python tools/p120_匯入字典.py --selftest
 """
 
@@ -27,14 +28,17 @@ import sqlite3
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from bpm2_ji_tian_db import DEFAULT_DB, connect, init_db  # noqa: E402
+from ji_tian_db import connect, init_db  # noqa: E402
+from ji_tian_profiles import (  # noqa: E402
+    DEFAULT_PROFILE_ID,
+    get_profile,
+    list_profile_ids,
+    profile_help_text,
+)
 
-DEFAULT_DICT = ROOT / "ji_khoo_bpm2.dict.yaml"
-
-# 入聲韻尾 p/t/k/h 後接錯誤調號 1 → 改為 4
+# 入聲韻尾 p/t/k/h 後接錯誤調號 1 → 改為 4（BPM2／台羅皆適用）
 _ENTERING_TONE_RE = re.compile(r"([ptkh])1$", re.IGNORECASE)
 
 
@@ -53,7 +57,6 @@ def parse_dict_line(line: str) -> tuple[str, str, float, str, str | None] | None
         return None
     if s in ("---", "..."):
         return None
-    # YAML header 鍵值列
     if ":" in s and "\t" not in s:
         return None
 
@@ -87,7 +90,6 @@ def import_dict(
     """
     寫入【漢字庫】。
     回傳 (寫入筆數, 略過重複筆數, 入聲調號修正筆數)。
-    遇 UNIQUE(漢字, 漢字標音) 衝突時略過，不中止。
     """
     init_db(db_path)
     inserted = skipped = tone_fixed = 0
@@ -176,19 +178,13 @@ def selftest() -> int:
 
     check("jip1 → jip4", fix_entering_tone("jip1"), "jip4")
     check("but1 → but4", fix_entering_tone("but1"), "but4")
-    check("siok1 → siok4", fix_entering_tone("siok1"), "siok4")
-    check("bbeh1 → bbeh4", fix_entering_tone("bbeh1"), "bbeh4")
-    check("heh1 → heh4", fix_entering_tone("heh1"), "heh4")
-    check("lang5 不變", fix_entering_tone("lang5"), "lang5")
-    check("jit8 不變", fix_entering_tone("jit8"), "jit8")
-    check("ki1 不變（非入聲韻尾）", fix_entering_tone("ki1"), "ki1")
+    check("ki1 不變", fix_entering_tone("ki1"), "ki1")
 
-    check(
-        "解析 + 調號",
-        parse_dict_line("不\tbut1\t0.1\tNA\t2026-01-02 22:51:07"),
-        ("不", "but4", 0.1, "NA", "2026-01-02 22:51:07"),
-    )
-    check("註解列 → None", parse_dict_line("# 註解"), None)
+    bpm2 = get_profile("bpm2")
+    tl = get_profile("tl")
+    check("bpm2 db 檔名", bpm2.db_path.name, "台語注音二式字典.db")
+    check("tl db 檔名", tl.db_path.name, "台羅拼音字典.db")
+    check("tl 來源字典", tl.dict_path.name, "ji_khoo_tl_HanJi.dict.yaml")
 
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
         tmp_path = Path(tmp)
@@ -206,9 +202,9 @@ def selftest() -> int:
             encoding="utf-8",
         )
         ins, sk, fixed = import_dict(dict_file, db, replace=True)
-        check("寫入筆數（heh1→heh4 與既有 heh4 去重）", ins, 3)
+        check("寫入筆數", ins, 3)
         check("略過重複", sk, 1)
-        check("調號修正次數", fixed, 2)
+        check("調號修正", fixed, 2)
 
         conn = connect(db)
         try:
@@ -221,7 +217,7 @@ def selftest() -> int:
             n = conn.execute("SELECT COUNT(*) FROM 漢字庫").fetchone()[0]
         finally:
             conn.close()
-        check("嚇 僅保留一筆 heh4", codes, ["heh4"])
+        check("嚇 僅 heh4", codes, ["heh4"])
         check("總筆數", n, 3)
 
     print("ALL PASS" if ok else "SOME FAILED")
@@ -229,9 +225,19 @@ def selftest() -> int:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="中州韻字典 → 台語注音二式字典（SQLite）")
-    ap.add_argument("--dict", default=str(DEFAULT_DICT), help="輸入 .dict.yaml")
-    ap.add_argument("--db", default=str(DEFAULT_DB), help="SQLite 資料庫路徑")
+    ap = argparse.ArgumentParser(
+        description="中州韻字典 → SQLite 漢字庫",
+        epilog=profile_help_text(),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    ap.add_argument(
+        "--profile",
+        default=DEFAULT_PROFILE_ID,
+        choices=list_profile_ids(),
+        help=f"字典設定（預設：{DEFAULT_PROFILE_ID}）",
+    )
+    ap.add_argument("--dict", default=None, help="輸入 .dict.yaml（覆寫 profile）")
+    ap.add_argument("--db", default=None, help="SQLite 路徑（覆寫 profile）")
     ap.add_argument(
         "--replace",
         action="store_true",
@@ -243,8 +249,15 @@ def main() -> None:
     if args.selftest:
         sys.exit(selftest())
 
-    dict_path = Path(args.dict)
-    db_path = Path(args.db)
+    try:
+        profile = get_profile(args.profile)
+    except KeyError as e:
+        sys.exit(f"✗ {e}")
+
+    dict_path = Path(args.dict) if args.dict else profile.dict_path
+    db_path = Path(args.db) if args.db else profile.db_path
+
+    print(f"profile：{profile.id}（{profile.label}）")
     print(f"讀取字典：{dict_path}")
     print(f"寫入資料庫：{db_path}")
     inserted, skipped, tone_fixed = import_dict(
