@@ -107,8 +107,9 @@ local FINALS = {
     -- 高韻
     o      = {sni="高", tps="ㄜ",     ipa="o"         },
     oh     = {sni="高", tps="ㄜㆷ",   ipa="o\202\148" },  -- oʔ
-    -- 皆韻
+    -- 皆韻（促聲 aih 的調號可以不是 4/8，如 噯 aih1）
     ai     = {sni="皆", tps="ㄞ",     ipa="ai"        },
+    aih    = {sni="皆", tps="ㄞㆷ",   ipa="ai\202\148" }, -- aiʔ
     -- 巾韻
     ["in"] = {sni="巾", tps="ㄧㄣ",   ipa="in"        },
     it     = {sni="巾", tps="ㄧㆵ",   ipa="it".._ua   },
@@ -175,8 +176,10 @@ local FINALS = {
     eh     = {sni="伽", tps="ㆤㆷ",   ipa="e\202\148" },  -- eʔ
     -- 閒韻（鼻化）
     ainn   = {sni="閒", tps="ㆮ",     ipa="\195\163i" }, -- ãi
-    -- 姑韻（鼻化）
+    -- 姑韻（鼻化）：台羅／台語音標 onn、onnh；注音二式 oonn、oonnh；閩拼 noo、nooh
     oonn   = {sni="姑", tps="ㆧ",     ipa="\195\181u" }, -- õu
+    onnh   = {sni="姑", tps="ㆧㆷ",   ipa="\195\181u\202\148" }, -- õuʔ
+    oonnh  = {sni="姑", tps="ㆧㆷ",   ipa="\195\181u\202\148" }, -- õuʔ
     -- 姆韻（成音節鼻音）
     m      = {sni="姆", tps="ㆬ",     ipa="m\204\169" }, -- m̩（m + combining vertical line below）
     -- 光韻
@@ -487,8 +490,9 @@ local function convert_tlpa(tlpa, target)
         if b_siann == "" then
             if b_un:sub(1,1) == "i" then
                 b_siann = "y"
-                -- i 單獨或後接 n/m/t/p/k/h 時保留 i；其餘去掉前導 i
-                if b_un ~= "i" and not b_un:match("^i[nmtpkh]") then
+                -- i 單獨、iu（友 yiu），或後接 n/m/t/p/k/h 時保留 i。
+                -- ia／io 等介音才去掉前導 i（ya、yo）。
+                if b_un ~= "i" and not b_un:match("^iu") and not b_un:match("^i[nmtpkh]") then
                     b_un = b_un:sub(2)
                 end
             elseif b_un:sub(1,1) == "u" then

@@ -1,0 +1,6 @@
+Log file created at: 2026/10/24 21:15:34
+Running on machine: WALKFISH-U9-285
+Running duration (h:mm:ss): 0:00:01
+Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
+E20261024 21:15:34.762440 28232 entry_collector.cc:139] Encode failure: '轉頭̍望'.
+E20261024 21:15:34.764701 28232 entry_collector.cc:139] Encode failure: '計較̀̀輸贏'.

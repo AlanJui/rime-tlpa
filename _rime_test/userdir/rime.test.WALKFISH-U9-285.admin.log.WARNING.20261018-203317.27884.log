@@ -1,5 +1,0 @@
-Log file created at: 2026/10/18 20:33:17
-Running on machine: WALKFISH-U9-285
-Running duration (h:mm:ss): 0:00:10
-Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
-E20261018 20:33:17.473307 32800 level_db.cc:259] Error opening db 'ji_khoo_tl': IO error: C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb/000112.dbtmp: 無法移除要被取代的檔案。

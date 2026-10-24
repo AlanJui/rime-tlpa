@@ -1,7 +1,0 @@
-Log file created at: 2026/10/18 14:39:43
-Running on machine: WALKFISH-U9-285
-Running duration (h:mm:ss): 0:00:01
-Log line format: [IWEF]yyyymmdd hh:mm:ss.uuuuuu threadid file:line] msg
-E20261018 14:39:43.897364  6216 entry_collector.cc:139] Encode failure: '轉頭̍望'.
-E20261018 14:39:43.899845  6216 entry_collector.cc:139] Encode failure: '計較̀̀輸贏'.
-E20261018 14:39:57.818402 29560 level_db.cc:259] Error opening db 'ji_khoo_tl': IO error: C:\Users\AlanJui\work\rime-tlpa\_rime_test\userdir\ji_khoo_tl.userdb/MANIFEST-000067: 檔案名稱、目錄名稱或磁碟區標籤語法錯誤。

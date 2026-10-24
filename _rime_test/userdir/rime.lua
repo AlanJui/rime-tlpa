@@ -65,7 +65,7 @@ local un_bu_dict = {
 	["稽"] = { "ei", "" },
 	["恭"] = { "iong", "iok" },
 	["高"] = { "o", "oh" },
-	["皆"] = { "ai", "" },
+	["皆"] = { "ai", "aih" },
 	["巾"] = { "in", "it" },
 	["姜"] = { "iang", "iak" },
 	["甘"] = { "am", "ap" },
@@ -90,7 +90,7 @@ local un_bu_dict = {
 	["鋼"] = { "ng", "" },
 	["伽"] = { "e", "eh" },
 	["閒"] = { "ainn", "" },
-	["姑"] = { "oonn", "" },
+	["姑"] = { "onn", "onnh" },
 	["姆"] = { "m", "" },
 	["光"] = { "uang", "uak" },
 	["閂"] = { "uainn", "uaihnn" },
@@ -283,29 +283,80 @@ local IM_ZAT_CHAR = {
 	im_zat_space  = " ",
 	im_zat_apos   = "'",
 }
--- 連接符號字元 → 選項名稱（還原狀態檔之選擇用）
+-- 連接符號字元 → 選項名稱（舊版狀態檔以字元儲存，讀回時還原用）
 local IM_ZAT_OPTION_OF_CHAR = {
 	["-"] = "im_zat_hyphen",
 	[" "] = "im_zat_space",
 	["'"] = "im_zat_apos",
 }
+-- 選項名稱 → F4 選單顯示名稱（與 schema states 一致；狀態檔與此顯示名稱對齊）
+local PIAU_IM_LABEL = {
+	key_in_piau_im_sni = "十五音",
+	key_in_piau_im_tps = "方音符號",
+	key_in_piau_im_tlpa = "台語音標",
+	key_in_piau_im_tlpa_zu_im = "台語音標注音",
+	key_in_piau_im_tl = "台羅拼音",
+	key_in_piau_im_poj = "白話字",
+	key_in_piau_im_bp = "閩拼方案",
+	key_in_piau_im_bpm2 = "台語注音二式",
+	key_in_piau_im_ipa = "國際音標",
+}
+local IM_ZAT_LABEL = {
+	im_zat_hyphen = "連字號",
+	im_zat_space = "空白",
+	im_zat_apos = "撇號",
+}
+local SIANN_TIAU_OPTIONS = {
+	"siann_tiau_iunn_sik_tiau_hu",
+	"siann_tiau_iunn_sik_siong_piau",
+	"siann_tiau_iunn_sik_piau_cun",
+}
+local SIANN_TIAU_LABEL = {
+	siann_tiau_iunn_sik_tiau_hu = "調符",
+	siann_tiau_iunn_sik_siong_piau = "上標調號",
+	siann_tiau_iunn_sik_piau_cun = "標準調號",
+}
+local PIANN_TIAU_OFF = "無變調"
+local PIANN_TIAU_ON = "標變調"
 
 ------------------------------------------------------------------------------------------
--- 【漢字標音選項】持久化
--- 問題：切換至其他 Windows 輸入法再回來會建立新 session，schema 之 reset 值
---       會將 key_in_piau_im_* 選項重設回預設（十五音），使用者先前之選擇遺失。
--- 作法：F4 切換選項時（option_update_notifier），將選擇寫入狀態檔
---       lua/rime_env_state.lua（自動產生，勿手動編輯）；
---       新 session 首次處理按鍵前，自狀態檔還原該方案之選項，
---       使 Enter / Ctrl+Shift+Enter 之上屏標音格式維持使用者先前之選擇。
---       （lua/rime_env.lua 為手工維護之預設值，不由程式覆寫）
+-- 【方案選項】持久化
+-- 問題：切換至其他 Windows 輸入法再回來會建立新 session。librime 在元件
+--       init 之後才依 schema reset 重設開關，使用者先前之選擇遺失。
+-- 作法：
+--   1. 方案啟用、reset 套用完畢時，以 lua/rime_env_state.lua 的前次選擇重設；
+--      該方案尚無紀錄時，改讀 lua/rime_env_state_init.lua。
+--   2. 使用者按 F4 變更【漢字標音選項】／【音節連接符】／【聲調樣式】／
+--      【變調標示】後，把顯示名稱寫入 lua/rime_env_state.lua。
+--      （lua/rime_env.lua、lua/rime_env_state_init.lua 皆為手工維護，不由程式覆寫）
+-- 狀態檔以選單顯示名稱儲存（如「台羅拼音」「連字號」），與初始檔同一格式。
+-- 舊版狀態檔的選項名稱（key_in_piau_im_*）與連接符字元（-／空白／'）仍可讀回。
 ------------------------------------------------------------------------------------------
-local function piau_im_state_path()
+local STATE_GROUPS = { "im_zat", "siann_tiau_iunn_sik", "piau_piann_tiau" }
+local STATE_GROUP_SET = {
+	im_zat = true,
+	siann_tiau_iunn_sik = true,
+	piau_piann_tiau = true,
+}
+
+local function invert_label(label_of_option)
+	local option_of_label = {}
+	for option_name, label in pairs(label_of_option) do
+		option_of_label[label] = option_name
+	end
+	return option_of_label
+end
+
+local PIAU_IM_OPTION_OF_LABEL = invert_label(PIAU_IM_LABEL)
+local IM_ZAT_OPTION_OF_LABEL = invert_label(IM_ZAT_LABEL)
+local SIANN_TIAU_OPTION_OF_LABEL = invert_label(SIANN_TIAU_LABEL)
+
+local function schema_option_state_path()
 	return rime_api.get_user_data_dir() .. "/lua/rime_env_state.lua"
 end
 
-local function load_piau_im_state()
-	local chunk = loadfile(piau_im_state_path())
+local function load_lua_table_file(path)
+	local chunk = loadfile(path)
 	if not chunk then
 		return {}
 	end
@@ -316,57 +367,194 @@ local function load_piau_im_state()
 	return {}
 end
 
--- 各方案最後選擇之選項（schema_id → key_in_piau_im_*，另有 im_zat 子表存放
--- schema_id → 音節連接符字元），模組載入時自狀態檔讀入
-local _piau_im_state = load_piau_im_state()
+local _schema_option_init = {}
+local _schema_option_init_error = nil
+do
+	local ok, data = pcall(require, "rime_env_state_init")
+	if ok and type(data) == "table" then
+		_schema_option_init = data
+	else
+		_schema_option_init = {}
+		_schema_option_init_error = tostring(data)
+	end
+end
 
--- 將 _piau_im_state 完整寫回狀態檔（piau_im 選擇與 im_zat 子表共用同一檔案）
-local function save_piau_im_state_file()
-	local f = io.open(piau_im_state_path(), "w")
+-- 各方案最後選擇。頂層 schema_id →【漢字標音選項】顯示名稱；
+-- im_zat／siann_tiau_iunn_sik／piau_piann_tiau 為各選項群子表。
+local _schema_option_state = load_lua_table_file(schema_option_state_path())
+
+local function lua_quote(s)
+	if type(s) ~= "string" then
+		s = tostring(s)
+	end
+	if not s:find('["\\%z\n\r]') then
+		return '"' .. s .. '"'
+	end
+	return string.format("%q", s)
+end
+
+local function lua_key(s)
+	if type(s) == "string" and s:match("^[%a_][%w_]*$") then
+		return s
+	end
+	return "[" .. lua_quote(s) .. "]"
+end
+
+local function sorted_string_keys(t, accept)
+	local keys = {}
+	for k, v in pairs(t) do
+		if accept(k, v) then
+			keys[#keys + 1] = k
+		end
+	end
+	table.sort(keys)
+	return keys
+end
+
+local function piau_im_option_of(stored)
+	if type(stored) ~= "string" then
+		return nil
+	end
+	return PIAU_IM_OPTION_OF_LABEL[stored] or (PIAU_IM_LABEL[stored] and stored or nil)
+end
+
+local function im_zat_option_of(stored)
+	if type(stored) ~= "string" then
+		return nil
+	end
+	return IM_ZAT_OPTION_OF_LABEL[stored]
+		or (IM_ZAT_LABEL[stored] and stored or nil)
+		or IM_ZAT_OPTION_OF_CHAR[stored]
+end
+
+local function siann_tiau_option_of(stored)
+	if type(stored) ~= "string" then
+		return nil
+	end
+	return SIANN_TIAU_OPTION_OF_LABEL[stored] or (SIANN_TIAU_LABEL[stored] and stored or nil)
+end
+
+local function piann_tiau_on_of(stored)
+	if stored == PIANN_TIAU_ON then
+		return true
+	end
+	if stored == PIANN_TIAU_OFF then
+		return false
+	end
+	return nil
+end
+
+local function canonical_state_label(group, stored)
+	if group == nil then
+		local option_name = piau_im_option_of(stored)
+		return option_name and PIAU_IM_LABEL[option_name] or stored
+	end
+	if group == "im_zat" then
+		local option_name = im_zat_option_of(stored)
+		return option_name and IM_ZAT_LABEL[option_name] or stored
+	end
+	if group == "siann_tiau_iunn_sik" then
+		local option_name = siann_tiau_option_of(stored)
+		return option_name and SIANN_TIAU_LABEL[option_name] or stored
+	end
+	if group == "piau_piann_tiau" then
+		if piann_tiau_on_of(stored) == true then
+			return PIANN_TIAU_ON
+		end
+		if piann_tiau_on_of(stored) == false then
+			return PIANN_TIAU_OFF
+		end
+	end
+	return stored
+end
+
+local function write_schema_option_state()
+	local path = schema_option_state_path()
+	local f = io.open(path, "w")
 	if not f then
-		log.error("[piau_im_state] 無法寫入狀態檔：" .. piau_im_state_path())
+		log.error("[schema_option] 無法寫入狀態檔：" .. path)
 		return
 	end
-	f:write("-- 各輸入方案【漢字標音選項】／【音節連接符】之最後選擇（由 rime.lua 自動產生，勿手動編輯）\n")
+	f:write("-- 各輸入方案【方案選項】之最後選擇（由 rime.lua 在 F4 變更選項後寫入，勿手動編輯）\n")
+	f:write("-- 尚無紀錄的項目，方案啟用時改讀 lua/rime_env_state_init.lua。\n")
 	f:write("return {\n")
-	for sid, opt in pairs(_piau_im_state) do
-		if sid ~= "im_zat" then
-			f:write(string.format("    %s = %q,\n", sid, opt))
-		end
+	local top = sorted_string_keys(_schema_option_state, function(k, v)
+		return type(k) == "string" and type(v) == "string" and not STATE_GROUP_SET[k]
+	end)
+	for _, sid in ipairs(top) do
+		local label = canonical_state_label(nil, _schema_option_state[sid])
+		f:write(string.format("    %s = %s,\n", lua_key(sid), lua_quote(label)))
 	end
-	if type(_piau_im_state.im_zat) == "table" then
-		f:write("    im_zat = {\n")
-		for sid, sep in pairs(_piau_im_state.im_zat) do
-			f:write(string.format("        %s = %q,\n", sid, sep))
+	for _, group in ipairs(STATE_GROUPS) do
+		local bucket = _schema_option_state[group]
+		if type(bucket) == "table" then
+			local ids = sorted_string_keys(bucket, function(k, v)
+				return type(k) == "string" and type(v) == "string"
+			end)
+			if #ids > 0 then
+				f:write("    " .. group .. " = {\n")
+				for _, sid in ipairs(ids) do
+					local label = canonical_state_label(group, bucket[sid])
+					f:write(string.format("        %s = %s,\n", lua_key(sid), lua_quote(label)))
+				end
+				f:write("    },\n")
+			end
 		end
-		f:write("    },\n")
 	end
 	f:write("}\n")
 	f:close()
 end
 
-local function save_piau_im_choice(schema_id, option_name)
-	if _piau_im_state[schema_id] == option_name then
+local function save_schema_option_label(group, schema_id, label)
+	if type(schema_id) ~= "string" or schema_id == "" or STATE_GROUP_SET[schema_id] then
 		return
 	end
-	_piau_im_state[schema_id] = option_name
-	save_piau_im_state_file()
-	log.info("[piau_im_state] saved: " .. schema_id .. " = " .. option_name)
+	if type(label) ~= "string" or label == "" then
+		return
+	end
+	local bucket = _schema_option_state
+	local key = schema_id
+	if group ~= nil then
+		_schema_option_state[group] = _schema_option_state[group] or {}
+		bucket = _schema_option_state[group]
+	end
+	if bucket[key] == label then
+		return
+	end
+	bucket[key] = label
+	write_schema_option_state()
+	local where = group or "piau_im"
+	log.info("[schema_option] saved: " .. where .. " " .. schema_id .. " = " .. label)
 end
 
-local function save_im_zat_choice(schema_id, separator)
-	_piau_im_state.im_zat = _piau_im_state.im_zat or {}
-	if _piau_im_state.im_zat[schema_id] == separator then
-		return
+local function lookup_schema_option_label(group, schema_id)
+	local function from_bucket(bucket)
+		if type(bucket) ~= "table" then
+			return nil
+		end
+		if group == nil then
+			local value = bucket[schema_id]
+			if type(value) == "string" then
+				return value
+			end
+			return nil
+		end
+		local sub = bucket[group]
+		if type(sub) ~= "table" then
+			return nil
+		end
+		local value = sub[schema_id]
+		if type(value) == "string" then
+			return value
+		end
+		return nil
 	end
-	_piau_im_state.im_zat[schema_id] = separator
-	save_piau_im_state_file()
-	log.info("[im_zat_state] saved: " .. schema_id .. " = " .. separator)
+	return from_bucket(_schema_option_state) or from_bucket(_schema_option_init)
 end
 
 -- 讀取 schema 中指定字首（prefix）之選項群，其 reset 所指向之預設選項名稱
 local function get_default_option_by_prefix(config, prefix)
-	for i = 0, 19 do
+	for i = 0, 31 do
 		local first = config:get_string("switches/@" .. i .. "/options/@0")
 		if first and first:find("^" .. prefix) then
 			local reset = config:get_int("switches/@" .. i .. "/reset") or 0
@@ -381,92 +569,199 @@ local function get_default_option_by_prefix(config, prefix)
 	return nil
 end
 
--- 讀取 schema 中 key_in_piau_im_* 選項群之 reset 預設選項
--- （各方案不同：反切＝十五音、zu_im_tps＝方音符號、zu_im_tlpa＝台語音標注音…）
-local function get_default_piau_im_option(config)
-	return get_default_option_by_prefix(config, "key_in_piau_im_")
-end
-
--- 讀取 schema 中 im_zat_* 選項群之 reset 預設選項（回傳選項名稱，如 im_zat_space）
-local function get_default_im_zat_option(config)
-	return get_default_option_by_prefix(config, "im_zat_")
-end
-
--- 新 session 首次處理按鍵前呼叫：
---   1. 若使用者已在按鍵前用 F4 改過選項（作用中選項 ≠ schema 預設）→ 尊重並持久化；
---   2. 否則以狀態檔記錄之選擇，覆蓋 schema reset 所套用之預設值。
-local function restore_piau_im_choice(env)
-	if env.piau_im_restored then
-		return
+local function schema_defines_option(config, option_name)
+	if not config or type(option_name) ~= "string" then
+		return false
 	end
-	env.piau_im_restored = true
-	local ctx = env.engine.context
-	local sid = env.engine.schema.schema_id
-	local saved = _piau_im_state[sid]
-
-	local active = nil
-	for _, name in ipairs(PIAU_IM_OPTIONS) do
-		if ctx:get_option(name) then
-			active = name
+	for i = 0, 31 do
+		local name = config:get_string("switches/@" .. i .. "/name")
+		local first = config:get_string("switches/@" .. i .. "/options/@0")
+		if not name and not first then
 			break
 		end
+		if name == option_name then
+			return true
+		end
+		for j = 0, 15 do
+			local opt = config:get_string("switches/@" .. i .. "/options/@" .. j)
+			if not opt then
+				break
+			end
+			if opt == option_name then
+				return true
+			end
+		end
 	end
+	return false
+end
 
-	local default_opt = get_default_piau_im_option(env.engine.schema.config)
-	if active and default_opt and active ~= default_opt then
-		-- 選項已非預設值：session 建立後、首次按鍵前已被使用者變更
-		save_piau_im_choice(sid, active)
-		return
+-- get_int 在鍵不存在時應為 nil；部分綁定會回 0。reset 為 0 時再確認項目存在。
+local function read_switch_reset(config, index)
+	local path = "switches/@" .. index .. "/reset"
+	local reset = config:get_int(path)
+	if reset == nil then
+		return nil
 	end
-	if not saved or saved == active then
-		return
+	if reset == 0 and type(config.get_item) == "function" and not config:get_item(path) then
+		return nil
+	end
+	return reset
+end
+
+local function named_switch_reset(config, switch_name)
+	for i = 0, 31 do
+		local name = config:get_string("switches/@" .. i .. "/name")
+		local first = config:get_string("switches/@" .. i .. "/options/@0")
+		if not name and not first then
+			break
+		end
+		if name == switch_name then
+			return read_switch_reset(config, i)
+		end
+	end
+	return nil
+end
+
+-- librime 在 processor init 之後才依 reset 呼叫 set_option。
+-- 回傳這批通知的次數，以及最後一個被設定的選項名稱。
+local function schema_reset_tail(config)
+	local count = 0
+	local last_name = nil
+	if not config then
+		return 0, nil
+	end
+	for i = 0, 31 do
+		local name = config:get_string("switches/@" .. i .. "/name")
+		local first = config:get_string("switches/@" .. i .. "/options/@0")
+		if not name and not first then
+			break
+		end
+		if read_switch_reset(config, i) ~= nil then
+			if name and name ~= "" then
+				count = count + 1
+				last_name = name
+			else
+				for j = 0, 15 do
+					local opt = config:get_string("switches/@" .. i .. "/options/@" .. j)
+					if not opt or opt == "" then
+						break
+					end
+					count = count + 1
+					last_name = opt
+				end
+			end
+		end
+	end
+	return count, last_name
+end
+
+local function active_radio(ctx, names)
+	for _, name in ipairs(names) do
+		if ctx:get_option(name) then
+			return name
+		end
+	end
+	return nil
+end
+
+local function apply_radio(ctx, names, wanted)
+	local active = active_radio(ctx, names)
+	if not wanted or active == wanted then
+		return false
 	end
 	if active then
 		ctx:set_option(active, false)
 	end
-	ctx:set_option(saved, true)
-	log.info("[piau_im_state] restored: " .. sid .. " = " .. saved)
+	ctx:set_option(wanted, true)
+	return true
 end
 
--- 新 session 首次處理按鍵前呼叫（邏輯與 restore_piau_im_choice 相同，
--- 僅選項群、狀態檔子表換成 im_zat）：
---   1. 若使用者已在按鍵前用 F4 改過選項（作用中選項 ≠ schema 預設）→ 尊重並持久化；
---   2. 否則以狀態檔記錄之選擇，覆蓋 schema reset 所套用之預設值。
-local function restore_im_zat_choice(env)
-	if env.im_zat_restored then
-		return
-	end
-	env.im_zat_restored = true
+-- 作用中選項若已偏離 schema reset，視為使用者於還原前以 F4 改過，只記檔、不覆蓋。
+-- 否則以狀態檔（沒有則初始檔）覆蓋 reset。
+local function restore_radio_group(env, group, names, label_of, option_of, prefix)
 	local ctx = env.engine.context
+	local config = env.engine.schema.config
 	local sid = env.engine.schema.schema_id
-	local saved_char = (_piau_im_state.im_zat or {})[sid]
-
-	local active = nil
-	for _, name in ipairs(IM_ZAT_OPTIONS) do
-		if ctx:get_option(name) then
-			active = name
-			break
+	local default_opt = get_default_option_by_prefix(config, prefix)
+	if not default_opt then
+		return
+	end
+	local active = active_radio(ctx, names)
+	if active and active ~= default_opt then
+		local label = label_of[active]
+		if label then
+			save_schema_option_label(group, sid, label)
 		end
+		return
 	end
+	local wanted = option_of(lookup_schema_option_label(group, sid))
+	if not wanted or not schema_defines_option(config, wanted) then
+		return
+	end
+	if apply_radio(ctx, names, wanted) then
+		log.info("[schema_option] restored: " .. (group or "piau_im") .. " " .. sid
+			.. " = " .. (label_of[wanted] or wanted))
+	end
+end
 
-	local default_opt = get_default_im_zat_option(env.engine.schema.config)
-	if active and default_opt and active ~= default_opt then
-		-- 選項已非預設值：session 建立後、首次按鍵前已被使用者變更
-		save_im_zat_choice(sid, IM_ZAT_CHAR[active] or "-")
+local function restore_piann_tiau(env)
+	local ctx = env.engine.context
+	local config = env.engine.schema.config
+	local sid = env.engine.schema.schema_id
+	if not schema_defines_option(config, "piau_piann_tiau") then
 		return
 	end
-	if not saved_char then
+	local default_on = named_switch_reset(config, "piau_piann_tiau") == 1
+	local on = ctx:get_option("piau_piann_tiau") and true or false
+	if on ~= default_on then
+		save_schema_option_label("piau_piann_tiau", sid, on and PIANN_TIAU_ON or PIANN_TIAU_OFF)
 		return
 	end
-	local saved_opt = IM_ZAT_OPTION_OF_CHAR[saved_char]
-	if not saved_opt or saved_opt == active then
+	local wanted_on = piann_tiau_on_of(lookup_schema_option_label("piau_piann_tiau", sid))
+	if wanted_on == nil or wanted_on == on then
 		return
 	end
-	if active then
-		ctx:set_option(active, false)
+	ctx:set_option("piau_piann_tiau", wanted_on)
+	log.info("[schema_option] restored: piau_piann_tiau " .. sid
+		.. " = " .. (wanted_on and PIANN_TIAU_ON or PIANN_TIAU_OFF))
+end
+
+local function restore_schema_options(env)
+	if env.schema_options_restored then
+		return
 	end
-	ctx:set_option(saved_opt, true)
-	log.info("[im_zat_state] restored: " .. sid .. " = " .. saved_char)
+	if _schema_option_init_error and log then
+		log.error("[schema_option] 無法載入 rime_env_state_init.lua：" .. _schema_option_init_error)
+		_schema_option_init_error = nil
+	end
+	env.schema_options_applying = true
+	restore_radio_group(env, nil, PIAU_IM_OPTIONS, PIAU_IM_LABEL, piau_im_option_of, "key_in_piau_im_")
+	restore_radio_group(env, "im_zat", IM_ZAT_OPTIONS, IM_ZAT_LABEL, im_zat_option_of, "im_zat_")
+	restore_radio_group(env, "siann_tiau_iunn_sik", SIANN_TIAU_OPTIONS, SIANN_TIAU_LABEL,
+		siann_tiau_option_of, "siann_tiau_iunn_sik_")
+	restore_piann_tiau(env)
+	env.schema_options_restored = true
+	env.schema_options_applying = false
+end
+
+local function save_schema_option_change(env, ctx, name)
+	local sid = env.engine.schema.schema_id
+	if PIAU_IM_LABEL[name] then
+		if ctx:get_option(name) then
+			save_schema_option_label(nil, sid, PIAU_IM_LABEL[name])
+		end
+	elseif IM_ZAT_LABEL[name] then
+		if ctx:get_option(name) then
+			save_schema_option_label("im_zat", sid, IM_ZAT_LABEL[name])
+		end
+	elseif SIANN_TIAU_LABEL[name] then
+		if ctx:get_option(name) then
+			save_schema_option_label("siann_tiau_iunn_sik", sid, SIANN_TIAU_LABEL[name])
+		end
+	elseif name == "piau_piann_tiau" then
+		local on = ctx:get_option(name) and true or false
+		save_schema_option_label("piau_piann_tiau", sid, on and PIANN_TIAU_ON or PIANN_TIAU_OFF)
+	end
 end
 
 -- 取得目前 session 生效之【音節連接符】字元：優先讀取 im_zat_* switch 之即時狀態，
@@ -777,6 +1072,15 @@ local TL_DIAC_TONE = {
 
 local function tl_diac_to_tlpa(s)
 	if type(s) ~= "string" or s == "" then return s end
+	-- 候選左欄若已改成上標（bbi²），先收回數字。否則會把 ² 留下，再補預設調 1，變成 bbi²1。
+	for digit, super in pairs(supers_digit) do
+		if s:find(super, 1, true) then
+			s = s:gsub(super, digit)
+		end
+	end
+	if s:match("^[a-z]+[1-8]$") then
+		return s
+	end
 	local tone = "1"
 	-- 調 8 組合符號 U+030D ("\204\141") → tone 8
 	local has8 = s:find("\204\141", 1, true)
@@ -842,7 +1146,8 @@ end
 -- aux_commit 以 engine:commit_text() 輸出自訂字串，未經 Rime 原生 editor/selector
 -- 的提交流程，因此 translator 不會自動將所選候選寫入用戶詞典。
 -- 在真正上屏前，以同一 translator namespace 的 Memory 主動記錄候選，
--- 令 Enter / Ctrl+Shift+Enter 與 Space 具有相同的詞頻學習效果。
+-- 令 Space、G/H/J/K/L、Enter、Shift+Ctrl+Enter、Shift+Ctrl+G/H/J/K/L
+-- 都把【漢字＋字典讀音】寫進用戶詞典（小狼毫「用戶詞典」）。
 --
 -- 【注意】reformat_comment_filter 若以 Candidate() 取代 Phrase/Sentence，
 -- update_candidate 會失敗（只認 Phrase/Sentence）；須用 ShadowCandidate 保留原體。
@@ -919,6 +1224,396 @@ local function split_syllable_tokens(s)
 	return parts
 end
 
+-- 十五音調名（括號末字）→ 閩拼調號。一/七/三/二/五/四/八 對注音二式 1/7/3/2/5/4/8。
+local SNI_TONE_CHAR_TO_BP = {
+	["一"] = "1", ["二"] = "3", ["三"] = "5", ["四"] = "7",
+	["五"] = "2", ["七"] = "6", ["八"] = "8",
+}
+local BP_SUPER_DIGIT = {
+	["¹"] = "1", ["²"] = "2", ["³"] = "3", ["⁵"] = "5",
+	["⁶"] = "6", ["⁷"] = "7", ["⁸"] = "8",
+}
+-- 與 preedit_format 同一套閩拼調符：1／7 長音、2／8 銳音、3 抑揚、5 重音、6 揚音。
+local BP_MARKED_LETTER = {
+	a = { ["1"] = "ā", ["2"] = "á", ["3"] = "ǎ", ["5"] = "à", ["6"] = "â", ["7"] = "ā", ["8"] = "á" },
+	e = { ["1"] = "ē", ["2"] = "é", ["3"] = "ě", ["5"] = "è", ["6"] = "ê", ["7"] = "ē", ["8"] = "é" },
+	i = { ["1"] = "ī", ["2"] = "í", ["3"] = "ǐ", ["5"] = "ì", ["6"] = "î", ["7"] = "ī", ["8"] = "í" },
+	u = { ["1"] = "ū", ["2"] = "ú", ["3"] = "ǔ", ["5"] = "ù", ["6"] = "û", ["7"] = "ū", ["8"] = "ú" },
+	o = { ["1"] = "ō", ["2"] = "ó", ["3"] = "ǒ", ["5"] = "ò", ["6"] = "ô", ["7"] = "ō", ["8"] = "ó" },
+	m = { ["1"] = "m\204\132", ["2"] = "ḿ", ["3"] = "m\204\140", ["5"] = "m\204\128", ["6"] = "m\204\130", ["7"] = "m\204\132", ["8"] = "ḿ" },
+	n = { ["1"] = "n\204\132", ["2"] = "ń", ["3"] = "n\204\140", ["5"] = "n\204\128", ["6"] = "n\204\130", ["7"] = "n\204\132", ["8"] = "ń" },
+}
+local BP_BASE_OF_MARKED = {
+	["ā"] = "a", ["á"] = "a", ["ǎ"] = "a", ["à"] = "a", ["â"] = "a",
+	["ē"] = "e", ["é"] = "e", ["ě"] = "e", ["è"] = "e", ["ê"] = "e",
+	["ī"] = "i", ["í"] = "i", ["ǐ"] = "i", ["ì"] = "i", ["î"] = "i",
+	["ū"] = "u", ["ú"] = "u", ["ǔ"] = "u", ["ù"] = "u", ["û"] = "u",
+	["ō"] = "o", ["ó"] = "o", ["ǒ"] = "o", ["ò"] = "o", ["ô"] = "o",
+	["ḿ"] = "m", ["ń"] = "n",
+}
+local BP_KIND_OF_MARKED = {
+	["ā"] = "macron", ["á"] = "acute", ["ǎ"] = "caron", ["à"] = "grave", ["â"] = "circumflex",
+	["ē"] = "macron", ["é"] = "acute", ["ě"] = "caron", ["è"] = "grave", ["ê"] = "circumflex",
+	["ī"] = "macron", ["í"] = "acute", ["ǐ"] = "caron", ["ì"] = "grave", ["î"] = "circumflex",
+	["ū"] = "macron", ["ú"] = "acute", ["ǔ"] = "caron", ["ù"] = "grave", ["û"] = "circumflex",
+	["ō"] = "macron", ["ó"] = "acute", ["ǒ"] = "caron", ["ò"] = "grave", ["ô"] = "circumflex",
+	["ḿ"] = "acute", ["ń"] = "acute",
+}
+local BP_COMBINING_KIND = {
+	["\204\132"] = "macron",
+	["\204\129"] = "acute",
+	["\204\140"] = "caron",
+	["\204\128"] = "grave",
+	["\204\130"] = "circumflex",
+}
+
+local function bp_apply_tone_mark(spell)
+	local tone = spell:match("([1235678])$")
+	local base = tone and spell:sub(1, -2) or ""
+	if not tone or base == "" then
+		return spell
+	end
+	local s = base .. tone
+	s = s:gsub("([aeiou])(r?m?n*h?g?p?t?k?)([1235678])", "%1%3%2", 1)
+	s = s:gsub("([aeo])([iueo])([1235678])", "%1%3%2", 1)
+	local replaced = false
+	s = s:gsub("oo([1235678])", function(t)
+		replaced = true
+		return (BP_MARKED_LETTER.o[t] or "o") .. "o"
+	end, 1)
+	if replaced then
+		return s
+	end
+	s = s:gsub("([aeiou])([1235678])", function(v, t)
+		local row = BP_MARKED_LETTER[v]
+		return (row and row[t]) or (v .. t)
+	end, 1)
+	if s:match("[1235678]") then
+		s = s:gsub("ngh([1235678])", function(t)
+			local row = BP_MARKED_LETTER.n
+			return (row[t] or "n") .. "gh"
+		end, 1)
+		s = s:gsub("mh([1235678])", function(t)
+			local row = BP_MARKED_LETTER.m
+			return (row[t] or "m") .. "h"
+		end, 1)
+		s = s:gsub("ng([1235678])", function(t)
+			local row = BP_MARKED_LETTER.n
+			return (row[t] or "n") .. "g"
+		end, 1)
+		s = s:gsub("m([1235678])", function(t)
+			local row = BP_MARKED_LETTER.m
+			return row[t] or ("m" .. t)
+		end, 1)
+	end
+	return s
+end
+
+local function bp_spell_with_style(spell, style)
+	local tone = spell:match("([1235678])$")
+	local base = tone and spell:sub(1, -2) or nil
+	if not tone or not base or base == "" then
+		return spell
+	end
+	if style == "super" then
+		local super = { ["1"] = "¹", ["2"] = "²", ["3"] = "³", ["5"] = "⁵", ["6"] = "⁶", ["7"] = "⁷", ["8"] = "⁸" }
+		return base .. (super[tone] or tone)
+	end
+	if style == "mark" then
+		return bp_apply_tone_mark(spell)
+	end
+	return spell
+end
+
+local BP_DIGIT_SUPER = { ["1"] = "¹", ["2"] = "²", ["3"] = "³", ["5"] = "⁵", ["6"] = "⁶", ["7"] = "⁷", ["8"] = "⁸" }
+local BP_OPEN_SANDHI = { ["1"] = "6", ["6"] = "5", ["5"] = "3", ["3"] = "1", ["2"] = "6" }
+
+-- 閩拼本調 → 變調。舒聲 1→6→5→3→1，陽平 2→6。
+-- p/t/k：7↔8。-h：陰入 7→3，陽入 8→5。
+local function bp_sandhi_tone(base, tone)
+	local last = base:sub(-1)
+	if last == "p" or last == "t" or last == "k" then
+		if tone == "7" then return "8" end
+		if tone == "8" then return "7" end
+		return nil
+	end
+	if last == "h" then
+		if tone == "7" then return "3" end
+		if tone == "8" then return "5" end
+		return nil
+	end
+	return BP_OPEN_SANDHI[tone]
+end
+
+-- do1、末字 false → do¹⁻⁶；sia6、末字 true → sia⁶。音節之間由呼叫端以空白連接。
+local function bp_sandhi_spell(spell, is_final)
+	local tone = spell:match("([1235678])$")
+	local base = tone and spell:sub(1, -2) or nil
+	if not tone or not base or base == "" then
+		return spell
+	end
+	local cite = BP_DIGIT_SUPER[tone] or tone
+	if is_final then
+		return base .. cite
+	end
+	local changed = bp_sandhi_tone(base, tone)
+	if not changed then
+		return base .. cite
+	end
+	return base .. cite .. "⁻" .. (BP_DIGIT_SUPER[changed] or changed)
+end
+
+-- 標變調的上標尾巴接到別的音節本體。
+-- 方音：sian¹⁻⁶ 配 ㄒㄧㄢ → ㄒㄧㄢ¹⁻⁶。
+-- 台羅：ding²⁻⁶ 配 ting → ting²⁻⁶（字母留台羅，調號仍用閩拼上標）。
+local function spell_sandhi_on_body(marked, body)
+	if type(body) ~= "string" or body == "" or type(marked) ~= "string" then
+		return marked
+	end
+	local tail = marked:match("^[A-Za-z]+(.*)$")
+	if not tail or tail == "" then
+		return marked
+	end
+	return body .. tail
+end
+
+local function bp_tone_style(ctx)
+	if ctx:get_option("siann_tiau_iunn_sik_siong_piau") then
+		return "super"
+	end
+	if ctx:get_option("siann_tiau_iunn_sik_piau_cun") then
+		return "digit"
+	end
+	return "mark"
+end
+
+-- 十五音括號末字（一／二／三／四／五／七／八）→ 台羅、注音二式、方音的調號。
+-- 閩拼調號不同，不可拿這張表去改閩拼左欄。
+local function sni_bracket_tone_digit(bracket)
+	if type(bracket) ~= "string" or bracket == "" then
+		return nil
+	end
+	local chars = utf8_chars(bracket)
+	local n = tiau_ho_map[chars[#chars]]
+	if type(n) == "number" then
+		return tostring(n)
+	end
+	return nil
+end
+
+local function numeric_to_style(numeric, style)
+	local base, tone = numeric:match("^(.-)([1-8])$")
+	if not base or base == "" or not tone then
+		return nil
+	end
+	if style == "super" then
+		return base .. (supers_digit[tone] or tone)
+	end
+	return numeric
+end
+
+-- 台羅調符（或已是數字調）→ 標準調號。括號末字分陰平／陰入（無調符時都像調 1）。
+local function tl_spell_to_numeric(spell, bracket)
+	local numeric
+	if looks_like_tl_numeric_syllable(spell) then
+		numeric = spell
+	else
+		local ok, converted = pcall(tl_diac_to_tlpa, spell)
+		if not ok or type(converted) ~= "string" then
+			return nil
+		end
+		numeric = converted:gsub("eenn", "enn")
+	end
+	local tone = sni_bracket_tone_digit(bracket)
+	if tone then
+		local base = numeric:gsub("[1-8]$", "")
+		if base:match("^[a-z]+$") then
+			numeric = base .. tone
+		end
+	end
+	if not looks_like_tl_numeric_syllable(numeric) then
+		return nil
+	end
+	return numeric
+end
+
+local TPS_TONE_MARK_CHAR = {
+	["ˉ"] = true,
+	["ˊ"] = true,
+	["ˋ"] = true,
+	["˪"] = true,
+	["˫"] = true,
+	["˙"] = true,
+}
+
+local function strip_tps_display_tone(spell)
+	local out = {}
+	for _, ch in ipairs(utf8_chars(spell)) do
+		if not TPS_TONE_MARK_CHAR[ch] then
+			table.insert(out, ch)
+		end
+	end
+	return table.concat(out):gsub("[1-8]$", "")
+end
+
+local function restyle_left_spells(comment, restyle_one)
+	if type(comment) ~= "string" or comment == "" then
+		return comment
+	end
+	local paired = false
+	local new = comment:gsub("(%S+)%s*(%[[^%]]*%])", function(spell, bracket)
+		paired = true
+		local changed = restyle_one(spell, bracket:sub(2, -2))
+		if not changed or changed == spell then
+			return spell .. " " .. bracket
+		end
+		return changed .. " " .. bracket
+	end)
+	if paired then
+		return new
+	end
+	return (comment:gsub("%S+", function(tok)
+		if tok:sub(1, 1) == "[" then
+			return tok
+		end
+		local changed = restyle_one(tok, nil)
+		if not changed or changed == "" then
+			return tok
+		end
+		return changed
+	end))
+end
+
+-- 注音二式聲母 → 閩拼。ji/chi/shi/jji → zi/ci/si/zzi。
+-- 鼻化若已把 i 挪走（shinn→shni），shi 對不上，仍要把 sh／ch／jj 收回。
+-- 字典裡 [ʣ] 已寫成 zz。裸 j 接 a/e/o/u 才是 zz；j 接 i 或鼻化後的 n 是 z。
+local function bp_fix_bpm2_initials(spell)
+	if type(spell) ~= "string" or spell == "" then
+		return spell
+	end
+	local tone = spell:match("([1-8])$") or ""
+	local s = (tone ~= "") and spell:sub(1, -2) or spell
+	if not s:match("^[a-z]+$") then
+		return spell
+	end
+	if s:sub(1, 3) == "jji" then
+		s = "zzi" .. s:sub(4)
+	elseif s:sub(1, 2) == "jj" then
+		s = "zz" .. s:sub(3)
+	elseif s:sub(1, 2) == "ji" then
+		s = "zi" .. s:sub(3)
+	elseif s:sub(1, 2) == "jn" then
+		s = "zn" .. s:sub(3)
+	elseif s:sub(1, 1) == "j" then
+		s = "zz" .. s:sub(2)
+	elseif s:sub(1, 2) == "ch" then
+		s = "c" .. s:sub(3)
+	elseif s:sub(1, 2) == "sh" then
+		s = "s" .. s:sub(3)
+	end
+	return s .. tone
+end
+
+local function restyle_bp_comment(comment, style)
+	if type(comment) ~= "string" or comment == "" then
+		return comment
+	end
+	return (comment:gsub("([a-z]+)([1235678])", function(base, tone)
+		local spell = bp_fix_bpm2_initials(base .. tone)
+		if style == "digit" then
+			return spell
+		end
+		return bp_spell_with_style(spell, style)
+	end))
+end
+
+local function bracket_bp_tone(bracket)
+	if type(bracket) ~= "string" or bracket == "" then
+		return nil
+	end
+	local chars = utf8_chars(bracket)
+	return SNI_TONE_CHAR_TO_BP[chars[#chars]]
+end
+
+local function strip_bp_display(spell)
+	local letters = {}
+	local kind, super = nil, nil
+	for _, ch in ipairs(utf8_chars(spell)) do
+		if BP_SUPER_DIGIT[ch] then
+			super = BP_SUPER_DIGIT[ch]
+		elseif BP_COMBINING_KIND[ch] then
+			kind = BP_COMBINING_KIND[ch]
+		elseif BP_BASE_OF_MARKED[ch] then
+			table.insert(letters, BP_BASE_OF_MARKED[ch])
+			kind = BP_KIND_OF_MARKED[ch] or kind
+		elseif ch:match("^[a-z]$") then
+			table.insert(letters, ch)
+		elseif ch:match("^[1-8]$") then
+			super = ch
+		end
+	end
+	return table.concat(letters), kind, super
+end
+
+local function bp_display_to_numeric(spell, bracket)
+	if type(spell) ~= "string" or spell == "" then
+		return nil
+	end
+	if spell:match("^[a-z]+[1-8]$") then
+		return bp_fix_bpm2_initials(spell)
+	end
+	local base, kind, super = strip_bp_display(spell)
+	if base == "" or not base:match("^[a-z]+$") then
+		return nil
+	end
+	local tone = bracket_bp_tone(bracket) or super
+	if not tone and kind then
+		local checked = base:match("[ptkh]$") ~= nil
+		if kind == "macron" then
+			tone = checked and "7" or "1"
+		elseif kind == "acute" then
+			tone = checked and "8" or "2"
+		elseif kind == "caron" then
+			tone = "3"
+		elseif kind == "grave" then
+			tone = "5"
+		elseif kind == "circumflex" then
+			tone = "6"
+		end
+	end
+	if not tone then
+		return nil
+	end
+	return bp_fix_bpm2_initials(base .. tone)
+end
+
+-- 十八音【閩拼方案】候選註解左欄：lní／lni²／lni2 [耐居五] → lni2。
+-- 右欄 [聲韻調] 是十五音，不可混進上屏的閩拼調號。調符分不出 1／7 時，以括號末字為準。
+local function bp_left_spellings(comment)
+	local spells = {}
+	if type(comment) ~= "string" or comment == "" then
+		return spells
+	end
+	local paired = false
+	for spell, bracket in comment:gmatch("(%S+)%s*%[([^%]]*)%]") do
+		paired = true
+		local num = bp_display_to_numeric(spell, bracket)
+		if num then
+			table.insert(spells, num)
+		end
+	end
+	if paired then
+		return spells
+	end
+	for _, syl in ipairs(split_syllable_tokens(comment)) do
+		local num = bp_display_to_numeric(syl, nil)
+		if num then
+			table.insert(spells, num)
+		end
+	end
+	return spells
+end
+
 local function flatten_syllable_list(list)
 	local flat = {}
 	if type(list) ~= "table" then
@@ -939,6 +1634,48 @@ end
 
 -- 從候選之 translator 字典編碼取出台羅數值調音節。
 -- 若混入非拼音碼（倉頡、漢語拼音反查等），整批放棄，改由 comment 解析。
+-- 方音左欄若已寫出喉塞 ㆷ，而 [聲韻調] 還原的台羅仍是舒聲
+-- （皆＋一 與 ai1 同形，促聲 aih1 如「噯」無法從調號 4/8 判斷），
+-- 依左欄把 h 補回該音節。候選的字典 entry 在選單裡常常拿不到。
+local function tps_left_has_h_coda(left)
+	return type(left) == "string" and left:find("ㆷ", 1, true) ~= nil
+end
+
+local function with_h_coda(code)
+	if type(code) ~= "string" then
+		return code
+	end
+	local base, tone = code:match("^(.-)([1-8])$")
+	if not base or base:match("[ptkh]$") then
+		return code
+	end
+	return base .. "h" .. tone
+end
+
+local function apply_tps_h_coda_hint(codes, comment)
+	if type(comment) ~= "string" or #codes == 0 then
+		return
+	end
+	local lefts = {}
+	local rest = comment
+	while true do
+		local left, tail = rest:match("^(.-)%[.-%](.*)$")
+		if not left then
+			break
+		end
+		table.insert(lefts, (left:gsub("^%s+", ""):gsub("%s+$", "")))
+		rest = tail or ""
+	end
+	if #lefts ~= #codes then
+		return
+	end
+	for i, code in ipairs(codes) do
+		if tps_left_has_h_coda(lefts[i]) then
+			codes[i] = with_h_coda(code)
+		end
+	end
+end
+
 local function collect_entry_tl_codes(env, cand_list)
 	local codes = {}
 	local memory = env.aux_commit_memory
@@ -1143,7 +1880,18 @@ local function learn_reverse_lookup_commit(env, ctx, r)
 		return
 	end
 	local text = cand.text or ""
-	local codes = parse_tsap_peh_im_tl_comment(candidate_comment(cand))
+	local comment = candidate_comment(cand)
+	local sid = env.engine.schema.schema_id
+	-- 閩拼左欄不是字典碼。只取 [聲韻調]，再還原成 BPM2 寫入 ji_khoo_bpm2。
+	if sid == "tsap_peh_im_bp" then
+		comment = comment:gsub("[^%[%]]+", " ")
+	end
+	local codes = parse_tsap_peh_im_tl_comment(comment)
+	if sid == "tsap_peh_im_bp" then
+		for i, c in ipairs(codes) do
+			codes[i] = tlpa_to_bpm2(c)
+		end
+	end
 	local chars = utf8_chars(text)
 	if #chars == 0 or #codes == 0 then
 		return
@@ -1194,6 +1942,40 @@ local function learn_reverse_lookup_commit(env, ctx, r)
 	end
 end
 
+-- 十八音候選註解 → 該方案詞典的數值調編碼，供寫入用戶詞典。
+-- 台羅／方音：ji_khoo_tl（tshong5）。注音二式／閩拼：ji_khoo_bpm2（bbi2）。
+-- 顯示用的調符、上標不入庫；入庫的是下次按鍵能對上的字典碼。
+local function tsap_peh_im_userdict_codes(schema_id, comment)
+	if type(comment) ~= "string" or comment == "" then
+		return {}
+	end
+	if schema_id == "tsap_peh_im_bp" then
+		local pieces = {}
+		for sni in comment:gmatch("%[(.-)%]") do
+			table.insert(pieces, "[" .. sni .. "]")
+		end
+		local codes = {}
+		for _, tlpa in ipairs(parse_tsap_peh_im_tl_comment(table.concat(pieces, " "))) do
+			local bpm2 = tlpa_to_bpm2(tlpa)
+			if looks_like_tl_numeric_syllable(bpm2) then
+				table.insert(codes, bpm2)
+			end
+		end
+		return codes
+	end
+	if schema_id ~= "tsap_peh_im_tl" and schema_id ~= "tsap_peh_im_tps"
+		and schema_id ~= "tsap_peh_im_bpm2" then
+		return {}
+	end
+	local folded = comment
+	for digit, super in pairs(supers_digit) do
+		if folded:find(super, 1, true) then
+			folded = folded:gsub(super, digit)
+		end
+	end
+	return parse_tsap_peh_im_tl_comment(folded)
+end
+
 local function memorize_aux_candidates(env, cand_list)
 	local memory = env.aux_commit_memory
 	if not memory then
@@ -1223,23 +2005,37 @@ local function memorize_aux_candidates(env, cand_list)
 		end
 
 		local text = cand.text or ""
+		local sid = env.engine.schema.schema_id
+		local tsap_codes = {}
+		if type(sid) == "string" and sid:match("^tsap_peh_im_") then
+			tsap_codes = tsap_peh_im_userdict_codes(sid, cand.comment or "")
+			if #tsap_codes == 0 then
+				tsap_codes = tsap_peh_im_userdict_codes(sid, genuine.comment or "")
+			end
+		end
+
 		local code_str = nil
-		local ok_entry, entry = pcall(function() return genuine.entry end)
-		if ok_entry and entry then
-			code_str = dict_entry_code_str(memory, entry)
-			-- update_candidate 失敗時，直接用 Phrase.entry 補寫
-			if not updated and text ~= "" then
-				local ok2, res2 = pcall(function()
-					return memory:update_userdict(entry, 1, "")
-				end)
-				if ok2 and res2 then
-					updated = true
-					updated_count = updated_count + 1
+		if #tsap_codes == 0 then
+			local ok_entry, entry = pcall(function() return genuine.entry end)
+			if ok_entry and entry then
+				code_str = dict_entry_code_str(memory, entry)
+				-- update_candidate 失敗時，直接用 Phrase.entry 補寫
+				if not updated and text ~= "" then
+					local ok2, res2 = pcall(function()
+						return memory:update_userdict(entry, 1, "")
+					end)
+					if ok2 and res2 then
+						updated = true
+						updated_count = updated_count + 1
+					end
 				end
 			end
 		end
 
-		local comment_codes = codes_from_comment_brackets(cand.comment)
+		local comment_codes = tsap_codes
+		if #comment_codes == 0 then
+			comment_codes = codes_from_comment_brackets(cand.comment)
+		end
 		if #comment_codes == 0 then
 			comment_codes = codes_from_comment_brackets(genuine.comment)
 		end
@@ -1299,13 +2095,91 @@ local function memorize_aux_candidates(env, cand_list)
 	return updated_count > 0
 end
 
+-- 候選清單本頁 G/H/J/K/L＝第 1～5 項。與 alternative_select_keys 同一頁、同一順序。
+local FU_PIAU_IM_PAGE_INDEX = { g = 0, h = 1, j = 2, k = 3, l = 4 }
+
+local function select_menu_page_candidate(env, ctx, offset)
+	local comp = ctx.composition
+	if not comp or comp:empty() then
+		return false
+	end
+	local seg = comp:back()
+	if not seg or not seg.menu then
+		return false
+	end
+	local page_size = env.engine.schema.page_size or 5
+	if page_size < 1 then
+		page_size = 5
+	end
+	local selected_index = seg.selected_index or 0
+	local page_start = math.floor(selected_index / page_size) * page_size
+	local target = page_start + offset
+	local available = seg.menu:prepare(target + 1)
+	if not available or target >= available then
+		return false
+	end
+	local delta = target - selected_index
+	if delta > 0 then
+		for _ = 1, delta do
+			env.engine:process_key(KeyEvent("Down"))
+		end
+	elseif delta < 0 then
+		for _ = 1, -delta do
+			env.engine:process_key(KeyEvent("Up"))
+		end
+	end
+	return true
+end
+
+-- 組字區裡即將上屏的候選。page_offset 有值時，最後一段改取本頁該項（G=0 … L=4）。
+local function collect_menu_candidates(env, ctx, page_offset)
+	local comp = ctx.composition
+	if not comp or comp:empty() then
+		return {}
+	end
+	local ok_segs, segs = pcall(function()
+		return comp:toSegmentation():get_segments()
+	end)
+	if not (ok_segs and type(segs) == "table" and #segs > 0) then
+		local seg = comp:back()
+		if not seg then
+			return {}
+		end
+		segs = { seg }
+	end
+	local cand_list = {}
+	for i, s in ipairs(segs) do
+		local cand = nil
+		local picked = false
+		if page_offset ~= nil and i == #segs and s.menu then
+			picked = true
+			local page_size = get_page_size(env)
+			local selected = s.selected_index or 0
+			local target = math.floor(selected / page_size) * page_size + page_offset
+			pcall(function()
+				s.menu:prepare(target + 1)
+				cand = s.menu:get_candidate_at(target)
+			end)
+		else
+			pcall(function() cand = s:get_selected_candidate() end)
+		end
+		if cand then
+			table.insert(cand_list, cand)
+		elseif picked then
+			return {}
+		end
+	end
+	return cand_list
+end
+
 local function aux_commit_func(key, env)
 	log.info("[debug] aux_commit triggered by key: " .. key:repr())
 	local ctx = env.engine.context
 
-	-- 新 session 首次處理按鍵前，自狀態檔還原此方案之【漢字標音選項】／【音節連接符】
-	restore_piau_im_choice(env)
-	restore_im_zat_choice(env)
+	-- reset 尾端通知若未趕上，首次按鍵前仍依狀態檔／初始檔重設方案選項
+	if not env.schema_options_restored then
+		restore_schema_options(env)
+	end
 	local raw_repr = key:repr()
 	local r = raw_repr:gsub("^Release%+", ""):gsub("^ISO_Enter$", "Return"):lower()
 
@@ -1321,22 +2195,42 @@ local function aux_commit_func(key, env)
 				learn_reverse_lookup_commit(env, ctx, r)
 			else
 				env.rev_lookup_learn_buf = {}
+				local page_offset = (r == "space") and nil or REV_LOOKUP_SELECT_INDEX[r]
+				local learned = collect_menu_candidates(env, ctx, page_offset)
+				if #learned > 0 then
+					memorize_aux_candidates(env, learned)
+				end
 			end
 		end
 	end
 
-	-- fu_piau_im = true：【漢字附帶標音】模式（Ctrl+Shift+Enter）
-	-- 【註】KeyEvent:repr() 之修飾鍵順序為 Shift → Control → Alt（實際為 Shift+Control+Return），
+	-- fu_piau_im = true：【漢字附帶標音】
+	-- Shift+Ctrl，加上 Enter，或加上本頁 G/H/J/K/L。
+	-- 【註】KeyEvent:repr() 之修飾鍵順序為 Shift → Control → Alt，
 	--       故以「包含」檢查各修飾鍵，不依賴其順序。
-	local fu_piau_im = (r:find("return", 1, true) ~= nil)
-		and (r:find("control+", 1, true) ~= nil)
-		and (r:find("shift+", 1, true) ~= nil)
-		and (r:find("alt+", 1, true) == nil)
+	local has_shift = r:find("shift+", 1, true) ~= nil
+	local has_control = r:find("control+", 1, true) ~= nil
+	local has_alt = r:find("alt+", 1, true) ~= nil
+	local fu_chord = has_control and has_shift and not has_alt
+	local fu_piau_im = (r:find("return", 1, true) ~= nil) and fu_chord
+	-- G/H/J/K/L 直接上屏漢字；Shift+Ctrl 再加 G/H/J/K/L 上屏該項的漢字帶標音。
+	local page_letter = r:match("([ghjkl])$")
+	local page_offset = (page_letter and fu_chord) and FU_PIAU_IM_PAGE_INDEX[page_letter] or nil
+	if page_offset ~= nil then
+		fu_piau_im = true
+	end
 
 	if r == "return" or r == "kp_enter" or fu_piau_im then
 		if not ctx:has_menu() then
 			log.info("[aux_commit] has_menu=false, returning kNoop")
 			return 2
+		end
+		if page_offset ~= nil then
+			if not select_menu_page_candidate(env, ctx, page_offset) then
+				log.info("[aux_commit] GHJKL fu_piau_im index out of page, key consumed")
+				return 1
+			end
+			log.info("[aux_commit] GHJKL fu_piau_im select offset=" .. page_offset)
 		end
 
 		-- 收集組字區內【所有音節段】之選中候選。
@@ -1411,13 +2305,14 @@ local function aux_commit_func(key, env)
 			end
 
 		elseif schema_id == "tsap_peh_im_tl" or schema_id == "tsap_peh_im_bpm2"
-			or schema_id == "tsap_peh_im_tps" then
+			or schema_id == "tsap_peh_im_tps" or schema_id == "tsap_peh_im_bp" then
 			-- 十八音：候選註解為「標音 + [聲韻調]」
-			-- （例：tshông [出公五]、bbor5 [門高五]、ㄌㄤˊ [柳江五]）。
-			-- tsap_peh_im_tl／tps 字典為台羅；tsap_peh_im_bpm2 字典為 BPM2。
-			-- tps 左欄為方音，[聲韻調] 還原結果已是 TLPA。
+			-- （例：tshông [出公五]、bbor5 [門高五]、bbo2 [門高五]、ㄌㄤˊ [柳江五]）。
+			-- tsap_peh_im_tl／tps 字典為台羅；bpm2／bp 字典為 BPM2。
+			-- bp 左欄是閩拼調號，不可當 BPM2，也不可當台羅。
+			-- 缺字典編碼時只從 [聲韻調] 還原 TLPA；閩拼上屏另取左欄。
 			is_tlpa = true
-			local from_bpm2 = (schema_id == "tsap_peh_im_bpm2")
+			local from_bpm2 = (schema_id == "tsap_peh_im_bpm2" or schema_id == "tsap_peh_im_bp")
 			local from_entry = collect_entry_tl_codes(env, cand_list)
 			if #from_entry > 0 then
 				for _, v in ipairs(from_entry) do
@@ -1426,15 +2321,27 @@ local function aux_commit_func(key, env)
 					log.info("[aux_commit] " .. schema_id .. " entry=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 				end
 			else
-				local roman = gen_comm:gsub("%[.-%]", " ")
+				local comment_for_parse = gen_comm
+				if schema_id == "tsap_peh_im_bp" then
+					local pieces = {}
+					for sni in gen_comm:gmatch("%[(.-)%]") do
+						table.insert(pieces, "[" .. sni .. "]")
+					end
+					comment_for_parse = table.concat(pieces, " ")
+				end
+				local roman = comment_for_parse:gsub("%[.-%]", " ")
 				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
 				local first = split_syllable_tokens(roman)[1]
-				local roman_is_bpm2 = from_bpm2 and looks_like_tl_numeric_syllable(first)
-				for _, v in ipairs(parse_tsap_peh_im_tl_comment(gen_comm)) do
+				local roman_is_bpm2 = schema_id == "tsap_peh_im_bpm2"
+					and looks_like_tl_numeric_syllable(first)
+				for _, v in ipairs(parse_tsap_peh_im_tl_comment(comment_for_parse)) do
 					local tlpa = roman_is_bpm2 and bpm2_to_tlpa(v) or v
 					table.insert(source_list, tlpa)
 					log.info("[aux_commit] " .. schema_id .. " comment=[" .. v .. "] tlpa=[" .. tlpa .. "]")
 				end
+			end
+			if schema_id == "tsap_peh_im_tps" then
+				apply_tps_h_coda_hint(source_list, gen_comm)
 			end
 
 		elseif is_sni_huan_ciat_schema(schema_id) then
@@ -1523,7 +2430,11 @@ local function aux_commit_func(key, env)
 			log.info("[aux_commit] source_list[" .. i .. "]=[" .. v .. "]")
 		end
 
-		if #source_list == 0 then
+		-- 十八音【閩拼方案】左欄已是要上屏的閩拼調號（bbnia2）。
+		-- 本調排序會換成沒有字典編碼的候選，不能再靠 entry；左欄比 TLPA 來回轉換可靠。
+		local bp_left = (schema_id == "tsap_peh_im_bp") and bp_left_spellings(gen_comm) or {}
+
+		if #source_list == 0 and #bp_left == 0 then
 			-- 【漢字附帶標音】遇【無調號詞彙】（如 ji_khoo_ban_lam 簡拼詞條）：
 			-- comment 無【】〔〕結構，僅有原樣拼音（如：siann mih）。
 			-- 調號從缺（可忽略不管），無法轉換至其他標音系統，
@@ -1550,7 +2461,12 @@ local function aux_commit_func(key, env)
 		-- 取得轉換模組（使用 module-level 預載的版本）
 		local conv     = _tlpa_conv
 		local bpm2conv = _bpm2_conv
-		if not conv then
+		-- 【標變調】優先於【漢字標音】。十八音系列皆可開，不必先選閩拼。
+		local piau_piann_tiau_on = schema_id:match("^tsap_peh_im_")
+			and ctx:get_option("piau_piann_tiau")
+		local bp_native = (schema_id == "tsap_peh_im_bp" and #bp_left > 0
+			and (ctx:get_option("key_in_piau_im_bp") or piau_piann_tiau_on))
+		if not conv and not bp_native then
 			log.error("[aux_commit] tlpa_converter 模組未載入，無法執行標音轉換")
 			return 2
 		end
@@ -1588,6 +2504,40 @@ local function aux_commit_func(key, env)
 				return forced_option == name
 			end
 			return ctx:get_option(name)
+		end
+
+		-- 標變調：變調數字一律用閩拼上標。
+		-- 閩拼方案優先用左欄（已是閩拼調號）。其餘方案由台語音標轉閩拼調號。
+		-- 音節本體跟目前的漢字標音：方音留方音（ㄒㄧㄢ¹⁻⁶），台羅／台語音標留台羅字母（ting²⁻⁶）。
+		local sandhi_bp = nil
+		local sandhi_body = nil
+		local tl_sandhi_body = use_opt("key_in_piau_im_tl") or use_opt("key_in_piau_im_tlpa")
+		if piau_piann_tiau_on then
+			sandhi_bp = {}
+			if schema_id == "tsap_peh_im_bp" and #bp_left > 0 then
+				for i, syl in ipairs(bp_left) do
+					sandhi_bp[i] = syl
+				end
+			elseif conv then
+				if schema_id == "tsap_peh_im_tps" or tl_sandhi_body then
+					sandhi_body = {}
+				end
+				for _, v in ipairs(source_list) do
+					local bp = to_target(v, "閩拼調號")
+					if type(bp) == "string" and bp ~= "" then
+						sandhi_bp[#sandhi_bp + 1] = bp
+						if sandhi_body then
+							if tl_sandhi_body then
+								local base = v:match("^(.-)[1-8]$")
+								sandhi_body[#sandhi_body + 1] = (base and base ~= "") and base or v
+							else
+								local tps = strip_tps_display_tone(to_target(v, "方音符號") or "")
+								sandhi_body[#sandhi_body + 1] = tps
+							end
+						end
+					end
+				end
+			end
 		end
 
 		-- [DBG] 確認目前 switch 狀態
@@ -1628,9 +2578,16 @@ local function aux_commit_func(key, env)
 			end
 
 		elseif use_opt("key_in_piau_im_bp") then
-			-- 閩拼方案（調符）：TLPA/SNI → BP
-			for i, v in ipairs(source_list) do
-				out_list[i] = to_target(v, "閩拼方案")
+			-- 十八音【閩拼方案】：先取標準調號（lni2），稍後依【聲調樣式】改成調符或上標。
+			-- 其他方案的閩拼仍走 TLPA → 調符。
+			if schema_id == "tsap_peh_im_bp" and #bp_left > 0 then
+				for i, syl in ipairs(bp_left) do
+					out_list[i] = syl
+				end
+			elseif conv then
+				for i, v in ipairs(source_list) do
+					out_list[i] = to_target(v, "閩拼方案")
+				end
 			end
 
 		elseif use_opt("key_in_piau_im_bpm2") then
@@ -1641,8 +2598,14 @@ local function aux_commit_func(key, env)
 					table.insert(out_list, v)
 				end
 			elseif schema_id == "tsap_peh_im_bpm2" then
-				-- 十八音【台語注音二式】：註解左欄已是 BPM2 數值調（如 bbor5 [門高五]）
+				-- 十八音【台語注音二式】：註解左欄是 BPM2（bbor5 或上標 bbor⁵）。
+				-- 先收回上標，避免 bbi² 被補成 bbi²1。調符與標準調號都輸出數字。
 				local roman = gen_comm:gsub("%[.-%]", " ")
+				for digit, super in pairs(supers_digit) do
+					if roman:find(super, 1, true) then
+						roman = roman:gsub(super, digit)
+					end
+				end
 				roman = roman:gsub("%s+", " "):gsub("^%s+", ""):gsub("%s+$", "")
 				for _, syl in ipairs(split_syllable_tokens(roman)) do
 					if looks_like_tl_numeric_syllable(syl) then
@@ -1716,9 +2679,63 @@ local function aux_commit_func(key, env)
 		local out_str
 		local im_zat = get_im_zat(ctx)
 		out_list = flatten_syllable_list(out_list)
+		-- 十八音【聲調樣式】：上屏的是該方案自己的標音時，跟候選左欄同一寫法。
+		-- 閩拼調符：Enter＝lní，Shift+Ctrl+Enter＝年〔lní〕。上標、標準調號同此。
+		-- 台羅：tshông／tshong⁵／tshong5。注音二式上標：bbor⁵。方音：ㄌㄤˊ／ㄌㄤ⁵／ㄌㄤ5。
+		local tone_style = bp_tone_style(ctx)
+		-- 【標變調】蓋過漢字標音與聲調樣式：聲調一律上標。
+		-- 兩個音節以上為本調⁻變調；單音節亦為上標本調（do¹）。
+		-- 十八音【方音符號】：調號仍是閩拼上標，音節本體用方音符號（ㄒㄧㄢ¹⁻⁶ ㄒㆪ¹）。
+		if sandhi_bp and #sandhi_bp >= 1 then
+			out_list = {}
+			local multi = #sandhi_bp >= 2
+			for i, syl in ipairs(sandhi_bp) do
+				local marked
+				if multi then
+					marked = bp_sandhi_spell(syl, i == #sandhi_bp)
+				else
+					marked = bp_spell_with_style(syl, "super")
+				end
+				local body = sandhi_body and sandhi_body[i] or nil
+				out_list[i] = spell_sandhi_on_body(marked, body)
+			end
+			if multi then
+				im_zat = " "
+			end
+		elseif schema_id == "tsap_peh_im_bp" and use_opt("key_in_piau_im_bp") then
+			for i, syl in ipairs(out_list) do
+				out_list[i] = bp_spell_with_style(syl, tone_style)
+			end
+		elseif schema_id == "tsap_peh_im_tl" and use_opt("key_in_piau_im_tl") and tone_style ~= "mark" then
+			for i, syl in ipairs(out_list) do
+				local numeric = source_list[i]
+				if type(numeric) ~= "string" or not looks_like_tl_numeric_syllable(numeric) then
+					numeric = tl_spell_to_numeric(syl, nil)
+				end
+				if numeric then
+					out_list[i] = numeric_to_style(numeric, tone_style) or syl
+				end
+			end
+		elseif schema_id == "tsap_peh_im_bpm2" and use_opt("key_in_piau_im_bpm2") and tone_style == "super" then
+			for i, syl in ipairs(out_list) do
+				if looks_like_tl_numeric_syllable(syl) then
+					out_list[i] = numeric_to_style(syl, "super") or syl
+				end
+			end
+		elseif schema_id == "tsap_peh_im_tps" and use_opt("key_in_piau_im_tps") and tone_style ~= "mark" then
+			for i, syl in ipairs(out_list) do
+				local tone = type(source_list[i]) == "string" and source_list[i]:match("([1-8])$") or nil
+				if tone then
+					local base = strip_tps_display_tone(syl)
+					if base ~= "" then
+						out_list[i] = numeric_to_style(base .. tone, tone_style) or syl
+					end
+				end
+			end
+		end
 		if fu_piau_im then
-			-- 【漢字附帶標音】：漢字 + 左分隔符號 + 標音（音節以【音節連接符】開關串接）+ 右分隔符號
-			-- 如：啥物〔siann2-mih4〕。左右分隔符號由設定檔 han_ji_piau_im_hu_ho 定義。
+			-- 【漢字附帶標音】：漢字 + 〔標音〕。
+			-- 十八音【台語注音二式】：名〔mia5〕；十八音【閩拼方案】調符：年〔lní〕。
 			local hu_ho = get_hu_ho()
 			out_str = cand_text
 				.. (hu_ho.left or "〔")
@@ -1740,8 +2757,8 @@ local function aux_commit_func(key, env)
 end
 
 -- aux_commit 處理器：
---   init：連接選項變更通知——F4 切換【漢字標音選項】時，即刻寫入狀態檔持久化
---   func：處理 Enter / Ctrl+Shift+Enter 上屏輸出（含首次按鍵時之選項還原）
+--   init：方案啟用後，等 schema reset 套完即重設方案選項；其後 F4 變更即寫入狀態檔
+--   func：處理 Enter / Ctrl+Shift+Enter 上屏輸出（reset 通知未到時，首次按鍵補還原）
 aux_commit = {
 	init = function(env)
 		local ctx = env.engine.context
@@ -1757,22 +2774,28 @@ aux_commit = {
 			log.error("[aux_commit] failed to initialize Memory: " .. tostring(memory))
 		end
 		env.rev_lookup_learn_buf = {}
+		env.schema_options_restored = false
+		env.schema_options_applying = false
+		local expect, last_name = schema_reset_tail(env.engine.schema.config)
+		env.schema_reset_expect = expect
+		env.schema_reset_last = last_name
+		env.schema_reset_seen = 0
+		-- librime：InitializeComponents（本 init）之後才 InitializeOptions（reset）。
+		-- 收到最後一筆 reset 通知時重設方案選項，讓 F4 選單在按鍵前就顯示前次狀態。
+		-- 這批 reset 通知不得寫入狀態檔；【變調標示】關閉時 get_option 為 false，仍須記檔。
 		env.piau_im_notifier = ctx.option_update_notifier:connect(function(c, name)
-			if type(name) ~= "string" or not c:get_option(name) then
+			if env.schema_options_applying or type(name) ~= "string" then
 				return
 			end
-			-- 僅記錄值為 true（radio 群組被選中）之變更；
-			-- session 建立階段 schema 套用 reset 預設值也會發出通知，須待對應之
-			-- restore_*_choice 執行過後才開始記錄，避免將 reset 預設值誤存為使用者之選擇。
-			if name:find("^key_in_piau_im_") then
-				if env.piau_im_restored then
-					save_piau_im_choice(env.engine.schema.schema_id, name)
+			if not env.schema_options_restored then
+				env.schema_reset_seen = env.schema_reset_seen + 1
+				if env.schema_reset_last and name == env.schema_reset_last
+					and env.schema_reset_seen >= env.schema_reset_expect then
+					restore_schema_options(env)
 				end
-			elseif name:find("^im_zat_") then
-				if env.im_zat_restored then
-					save_im_zat_choice(env.engine.schema.schema_id, IM_ZAT_CHAR[name] or "-")
-				end
+				return
 			end
+			save_schema_option_change(env, c, name)
 		end)
 	end,
 	fini = function(env)
@@ -2429,6 +3452,7 @@ end
 -- tsap_peh_im_rev_comment_filter：
 -- 倉頡／注音／漢語拼音反查時，候選註解改從主方案字典反查：
 --   tsap_peh_im_bpm2 → ji_khoo_bpm2（BPM2 + [聲韻調]）
+--   tsap_peh_im_bp   → ji_khoo_bpm2（閩拼調號 + [聲韻調]）
 --   tsap_peh_im_tps  → ji_khoo_tl（方音符號 + [聲韻調]）
 ------------------------------------------------------------------------------------------
 local function sni_bracket_from_tlpa(tlpa)
@@ -2447,6 +3471,98 @@ local function sni_bracket_from_tlpa(tlpa)
 		return " [" .. siann .. chars[1] .. chars[2] .. "]"
 	end
 	return ""
+end
+
+-- 字典 BPM2 數值調 → 閩拼調號（左欄）。與 tsap_peh_im_bp comment_format 對齊。
+local BP_TONE_FROM_BPM2 = {
+	["1"] = "1", ["2"] = "3", ["3"] = "5", ["4"] = "7",
+	["5"] = "2", ["6"] = "6", ["7"] = "6", ["8"] = "8",
+}
+local BP_NN_FORMS = {
+	"uainn", "iaonn", "ioonn", "iann", "iunn", "ainn", "aonn", "oonn",
+	"uann", "uinn", "uenn", "onn", "enn", "inn", "unn", "ann",
+}
+
+local function bpm2_spell_to_bp(code)
+	if type(code) ~= "string" then
+		return ""
+	end
+	local tone = code:match("([1-8])$")
+	if not tone then
+		return ""
+	end
+	local s = code:sub(1, -2)
+	if s ~= "m" and s ~= "mh" and s ~= "n" and s ~= "nh" and s ~= "ng" and s ~= "ngh" then
+		local reps = {
+			{ "jji", "zzi" }, { "ji", "zi" }, { "chi", "ci" }, { "shi", "si" },
+			{ "j", "zz" },
+			{ "ng", "ggn" }, { "m", "bbn" }, { "n", "ln" },
+		}
+		for _, pair in ipairs(reps) do
+			if s:sub(1, #pair[1]) == pair[1] then
+				s = pair[2] .. s:sub(#pair[1] + 1)
+				break
+			end
+		end
+	end
+	s = s:gsub("oo([kmp])", "o%1")
+	s = s:gsub("or", "o")
+	s = s:gsub("au", "ao")
+	s = s:gsub("iek", "ik")
+	local zero = {
+		{ "iunn", "ynu" }, { "iann", "yna" }, { "iaonn", "ynao" }, { "ioonn", "ynoo" },
+		{ "inn", "yni" }, { "uainn", "wnai" }, { "uann", "wna" }, { "uinn", "wni" },
+		{ "uenn", "wne" }, { "unn", "wnu" },
+	}
+	local nasal_done = false
+	for _, pair in ipairs(zero) do
+		if s:sub(1, #pair[1]) == pair[1] then
+			s = pair[2] .. s:sub(#pair[1] + 1)
+			nasal_done = true
+			break
+		end
+	end
+	if not nasal_done then
+		for _, v in ipairs(BP_NN_FORMS) do
+			local pos = s:find(v, 1, true)
+			if pos then
+				s = s:sub(1, pos - 1) .. "n" .. v:sub(1, -3) .. s:sub(pos + #v)
+				break
+			end
+		end
+	end
+	local function glide(src, dst)
+		if s:sub(1, #src) == src then
+			s = dst .. s:sub(#src + 1)
+			return true
+		end
+		return false
+	end
+	if not (glide("ia", "ya") or glide("io", "yo") or glide("iu", "yiu")
+		or glide("ua", "wa") or glide("ue", "we") or glide("ui", "wi")) then
+		local second = s:sub(2, 2)
+		if s:sub(1, 1) == "i" and not second:match("[aeuo]") then
+			s = "y" .. s
+		elseif s:sub(1, 1) == "u" and not second:match("[aeio]") then
+			s = "w" .. s
+		end
+	end
+	return s .. (BP_TONE_FROM_BPM2[tone] or tone)
+end
+
+local function format_bp_tsap_peh_im_comment(code)
+	if type(code) ~= "string" or code == "" then
+		return ""
+	end
+	local bp = bpm2_spell_to_bp(code)
+	local sni = sni_bracket_from_tlpa(bpm2_to_tlpa(code))
+	if bp ~= "" and sni ~= "" then
+		return bp .. sni
+	end
+	if bp ~= "" then
+		return bp
+	end
+	return sni
 end
 
 local function format_bpm2_tsap_peh_im_comment(code)
@@ -2506,8 +3622,8 @@ tsap_peh_im_rev_comment_filter = {
 		env.rev_dict = nil
 		env.rev_kind = nil
 		local sid = env.engine.schema.schema_id
-		if sid == "tsap_peh_im_bpm2" then
-			env.rev_kind = "bpm2"
+		if sid == "tsap_peh_im_bpm2" or sid == "tsap_peh_im_bp" then
+			env.rev_kind = (sid == "tsap_peh_im_bp") and "bp" or "bpm2"
 			local ok, rev = pcall(function()
 				return ReverseLookup("ji_khoo_bpm2")
 			end)
@@ -2574,7 +3690,7 @@ tsap_peh_im_rev_comment_filter = {
 						end
 					end
 					if type(num) == "string" and num ~= "" then
-						if env.rev_kind == "bpm2" then
+						if env.rev_kind == "bpm2" or env.rev_kind == "bp" then
 							if not looks_like_tl_numeric_syllable(syl) or num:match("^tsh")
 								or num:match("^ts") or num:match("^kh") or num:match("^th")
 								or num:match("^ph") then
@@ -2591,6 +3707,8 @@ tsap_peh_im_rev_comment_filter = {
 				local formatted
 				if env.rev_kind == "tps" then
 					formatted = format_tps_tsap_peh_im_comment(code)
+				elseif env.rev_kind == "bp" then
+					formatted = format_bp_tsap_peh_im_comment(code)
 				else
 					formatted = format_bpm2_tsap_peh_im_comment(code)
 				end
@@ -2625,7 +3743,8 @@ tsap_peh_im_rev_comment_filter = {
 -- 注釋仍寫字典本調，所以打「上」會先看到「菘」[五]、「相」[一]。
 -- 只把【最後一個音節】本調與調鍵一致的候選排前；前面的音節維持口語變調。
 -- 方音調鍵：: 一、5 七、3 三、4 二、6 五、] 八、[ 四
--- 台羅／注音二式調鍵：; 一、- 七、_ 三、\ 二、/ 五、[ 四、] 八
+-- 台羅／注音二式／閩拼調鍵：; 一、- 七、_ 三、\ 二、/ 五、[ 四、] 八
+-- 閩拼輸入框把這些鍵顯示成調號 1／6／5／3／2／7／8，括號內仍是十五音調名。
 ------------------------------------------------------------------------------------------
 local tsap_peh_im_tone_key_by_schema = {
 	tsap_peh_im_tps = {
@@ -2647,6 +3766,15 @@ local tsap_peh_im_tone_key_by_schema = {
 		["]"] = "八",
 	},
 	tsap_peh_im_bpm2 = {
+		[";"] = "一",
+		["-"] = "七",
+		["_"] = "三",
+		["\\"] = "二",
+		["/"] = "五",
+		["["] = "四",
+		["]"] = "八",
+	},
+	tsap_peh_im_bp = {
 		[";"] = "一",
 		["-"] = "七",
 		["_"] = "三",
@@ -2751,6 +3879,100 @@ function tsap_peh_im_citation_tone_filter(input, env)
 	end
 	flush()
 end
+
+------------------------------------------------------------------------------------------
+-- 十八音候選左欄的聲調樣式。右欄 [聲韻調] 維持不變。
+-- 閩拼：調符 lní、上標 lni²、標準 lni2。
+-- 台羅：調符 tshông、上標 tshong⁵、標準 tshong5。
+-- 注音二式：調符與標準皆為 bbor5，上標 bbor⁵。
+-- 方音：調符 ㄌㄤˊ、上標 ㄌㄤ⁵、標準 ㄌㄤ5。
+------------------------------------------------------------------------------------------
+local function yield_restyled_comment(cand, new)
+	local comment = cand.comment or ""
+	if new == comment then
+		yield(cand)
+		return
+	end
+	local ok_sc, nc = pcall(function()
+		return ShadowCandidate(cand, cand.type, cand.text, new, false)
+	end)
+	if ok_sc and nc then
+		yield(nc)
+		return
+	end
+	local c = cand:get_genuine()
+	local plain = Candidate(c.type, c.start, c._end, c.text, new)
+	plain.preedit = cand.preedit
+	plain.quality = cand.quality
+	yield(plain)
+end
+
+local function restyle_tsap_peh_im_comment(comment, kind, style)
+	if kind == "bp" then
+		return restyle_bp_comment(comment, style)
+	end
+	if kind == "tl" then
+		return restyle_left_spells(comment, function(spell, bracket)
+			local numeric = tl_spell_to_numeric(spell, bracket)
+			if not numeric then
+				return nil
+			end
+			return numeric_to_style(numeric, style)
+		end)
+	end
+	if kind == "bpm2" then
+		return restyle_left_spells(comment, function(spell, _)
+			if not looks_like_tl_numeric_syllable(spell) then
+				return nil
+			end
+			return numeric_to_style(spell, "super")
+		end)
+	end
+	if kind == "tps" then
+		return restyle_left_spells(comment, function(spell, bracket)
+			local tone = sni_bracket_tone_digit(bracket)
+			if not tone then
+				return nil
+			end
+			local base = strip_tps_display_tone(spell)
+			if base == "" then
+				return nil
+			end
+			return numeric_to_style(base .. tone, style)
+		end)
+	end
+	return comment
+end
+
+function tsap_peh_im_tone_style_filter(input, env)
+	local kind = ({
+		tsap_peh_im_bp = "bp",
+		tsap_peh_im_tl = "tl",
+		tsap_peh_im_bpm2 = "bpm2",
+		tsap_peh_im_tps = "tps",
+	})[env.engine.schema.schema_id]
+	if not kind then
+		for cand in input:iter() do
+			yield(cand)
+		end
+		return
+	end
+	local style = bp_tone_style(env.engine.context)
+	local passthrough = (kind ~= "bp" and style == "mark")
+		or (kind == "bpm2" and style ~= "super")
+	if passthrough then
+		for cand in input:iter() do
+			yield(cand)
+		end
+		return
+	end
+	for cand in input:iter() do
+		local comment = cand.comment or ""
+		yield_restyled_comment(cand, restyle_tsap_peh_im_comment(comment, kind, style))
+	end
+end
+
+tsap_peh_im_bp_tone_style_filter = tsap_peh_im_tone_style_filter
 
 ------------------------------------------------------------------------------------------
 -- 在候選註解前加上模式標籤：〔上標〕或〔一般〕

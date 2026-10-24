@@ -1363,16 +1363,15 @@ local function bp_sandhi_spell(spell, is_final)
 	return base .. cite .. "⁻" .. (BP_DIGIT_SUPER[changed] or changed)
 end
 
--- 標變調的上標尾巴接到別的音節本體。sian¹⁻⁶ 配上方音符號 ㄒㄧㄢ → ㄒㄧㄢ¹⁻⁶。
+-- 標變調的上標尾巴接到別的音節本體。
+-- 方音：sian¹⁻⁶ 配 ㄒㄧㄢ → ㄒㄧㄢ¹⁻⁶。
+-- 台羅：ding²⁻⁶ 配 ting → ting²⁻⁶（字母留台羅，調號仍用閩拼上標）。
 local function spell_sandhi_on_body(marked, body)
 	if type(body) ~= "string" or body == "" or type(marked) ~= "string" then
 		return marked
 	end
-	if body:match("%a") then
-		return marked
-	end
 	local tail = marked:match("^[A-Za-z]+(.*)$")
-	if not tail then
+	if not tail or tail == "" then
 		return marked
 	end
 	return body .. tail
@@ -2507,11 +2506,12 @@ local function aux_commit_func(key, env)
 			return ctx:get_option(name)
 		end
 
-		-- 標變調：不論漢字標音選了哪一套，音節都先收成閩拼調號（變調數字用這套）。
+		-- 標變調：變調數字一律用閩拼上標。
 		-- 閩拼方案優先用左欄（已是閩拼調號）。其餘方案由台語音標轉閩拼調號。
-		-- 方音符號方案的音節本體改回方音符號，上標尾巴仍跟閩拼（ㄒㄧㄢ¹⁻⁶）。
+		-- 音節本體跟目前的漢字標音：方音留方音（ㄒㄧㄢ¹⁻⁶），台羅／台語音標留台羅字母（ting²⁻⁶）。
 		local sandhi_bp = nil
 		local sandhi_body = nil
+		local tl_sandhi_body = use_opt("key_in_piau_im_tl") or use_opt("key_in_piau_im_tlpa")
 		if piau_piann_tiau_on then
 			sandhi_bp = {}
 			if schema_id == "tsap_peh_im_bp" and #bp_left > 0 then
@@ -2519,7 +2519,7 @@ local function aux_commit_func(key, env)
 					sandhi_bp[i] = syl
 				end
 			elseif conv then
-				if schema_id == "tsap_peh_im_tps" then
+				if schema_id == "tsap_peh_im_tps" or tl_sandhi_body then
 					sandhi_body = {}
 				end
 				for _, v in ipairs(source_list) do
@@ -2527,8 +2527,13 @@ local function aux_commit_func(key, env)
 					if type(bp) == "string" and bp ~= "" then
 						sandhi_bp[#sandhi_bp + 1] = bp
 						if sandhi_body then
-							local tps = strip_tps_display_tone(to_target(v, "方音符號") or "")
-							sandhi_body[#sandhi_body + 1] = tps
+							if tl_sandhi_body then
+								local base = v:match("^(.-)[1-8]$")
+								sandhi_body[#sandhi_body + 1] = (base and base ~= "") and base or v
+							else
+								local tps = strip_tps_display_tone(to_target(v, "方音符號") or "")
+								sandhi_body[#sandhi_body + 1] = tps
+							end
 						end
 					end
 				end
