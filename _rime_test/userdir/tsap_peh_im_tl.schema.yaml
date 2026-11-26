@@ -377,6 +377,11 @@ translator:
     #--------------------------------------------------------------------------
     - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$3$2/
     - xform/([aeo])([iueo])([1234578])/$1$3$2/
+    # 韻化輔音當韻母，調符標在 n／m。須在元音標調之後，避免 ing1 的韻尾 ng 被標調。
+    - xform/ngh([1234578])/n$1gh/
+    - xform/ng([1234578])/n$1g/
+    - xform/mh([1234578])/m$1h/
+    - xform/m([1234578])/m$1/
     - xform/a1/a/
     - xform/e1/e/
     - xform/i1/i/
@@ -412,6 +417,20 @@ translator:
     - xform/i8/i̍/
     - xform/u8/u̍/
     - xform/o8/o̍/
+    - xform/n1/n/
+    - xform/m1/m/
+    - xform/n2/ń/
+    - xform/m2/ḿ/
+    - xform/n3/ǹ/
+    - xform/m3/m̀/
+    - xform/n4/n/
+    - xform/m4/m/
+    - xform/n5/n̂/
+    - xform/m5/m̂/
+    - xform/n7/n̄/
+    - xform/m7/m̄/
+    - xform/n8/n̍/
+    - xform/m8/m̍/
   comment_format: &tsap_peh_im_comment_format
     #==========================================================================
     # 為【侯選清單】之【漢字標音】設定【音節】格式 =【聲母】+【韻母】+【聲調】
@@ -434,13 +453,13 @@ translator:
     - xform/ir(n|t)/u$1/
     - xform/ire/ue/
     - xform/ir(?!e)/e/
-    # 零聲母 + 韻化輔音（m/ng）+ 調號，如：m2, ng5
+    # ^m／^ng 且後面是調號：(m|ng)\d。此為韻母，聲母補英。如 m2、ng5。
     - xform/\b((?:m|ng)\d)\b/$1 ;Ø$1/
     # 零聲母 + 元音/複合／鼻化韻母 + 調號，如：i1, uan2, uann2, iau1
     # 【註】必須排在下方「聲母 + 韻母」通則之前，否則 uan2 會變成 ;uan2，
     #       ;Ø 插不進去，候選只剩「觀二]」（缺 [英）。
     - xform/\b([iu]?(?:ai|au|oo|[aiueo])[a-z]*\d)\b/$1 ;Ø$1/
-    # 聲母 + 韻母 + 調號（須以輔音聲母起頭；ng／m 僅在其後還有字母時才當聲母）
+    # 聲母 + 韻母 + 調號。^ng／^m 後面還有字母才當聲母（nga、mia）；後面直接是調號的已在上一條當韻母。
     - xform/\b((?:tsh|ts|ph|th|kh|ng(?!\d)|q|[bpdtgkljczsh]|n(?!g)|m(?!\d))[a-z]*\d)\b/$1 ;$1/
     #================================================================
     # 聲母轉換：台羅拼音字母轉換成【十五音。切音】
@@ -460,9 +479,14 @@ translator:
     - xform/;s/\[時;/
     - xform/;Ø/\[英;/
     - xform/;q/\[英;/
-    - xform/;ng(?!\d)/\[雅;/
+    # (m|ng) 後接調號 → 韻母。舒聲 (m|ng)[17325]，連同 4／8 寫成 (m|ng)\d。
+    # 入聲 h 仍屬韻母：(m|ng)h\d，如 sngh4。須在 ^ng／^m 聲母與「喜」之前。
+    - xform/;ng(h?)(\d)/鋼;$2/
+    - xform/;m(h?)(\d)/姆;$2/
+    # 音節起頭 ^ng／^m，後面不是調號 → 聲母。如 nga、mia。
+    - xform/;ng/\[雅;/
     - xform/;n(?!g)/\[耐;/
-    - xform/;m(?!\d)/\[毛;/
+    - xform/;m/\[毛;/
     - xform/;b/\[門;/     # 【文】應改【門】
     - xform/;g/\[語;/
     - xform/;h/\[喜;/
@@ -522,8 +546,6 @@ translator:
     - xform/;aunn/爻;/
     - xform/;onn(h?)/扛;/
     - xform/;iunn/牛;/
-    - xform/;m(\d)/姆;$1/
-    - xform/;ng(\d)/鋼;$1/
     #================================================================
     # 音調轉換：台羅拼音聲調轉換成【十五音。八音】
     #================================================================
@@ -549,6 +571,11 @@ translator:
     #   標調
     - xform/([aeiou])(m?n*h?g?p?t?k?)([1234578])/$1$3$2/
     - xform/([aeo])([iueo])([1234578])/$1$3$2/
+    # 韻化輔音當韻母（算 sng、緤 sngh），調符標在 n／m。須在元音標調之後。
+    - xform/ngh([1234578])/n$1gh/
+    - xform/ng([1234578])/n$1g/
+    - xform/mh([1234578])/m$1h/
+    - xform/m([1234578])/m$1/
     - 'xform a1 a'
     - 'xform e1 e'
     - 'xform i1 i'
@@ -584,6 +611,20 @@ translator:
     - 'xform i8 i̍'
     - 'xform u8 u̍'
     - 'xform o8 o̍'
+    - xform/n1/n/
+    - xform/m1/m/
+    - xform/n2/ń/
+    - xform/m2/ḿ/
+    - xform/n3/ǹ/
+    - xform/m3/m̀/
+    - xform/n4/n/
+    - xform/m4/m/
+    - xform/n5/n̂/
+    - xform/m5/m̂/
+    - xform/n7/n̄/
+    - xform/m7/m̄/
+    - xform/n8/n̍/
+    - xform/m8/m̍/
     #   鼻化符號顯示成上標
     - xform/nn(h?)(\d|\>)/ⁿ$1$2/
 
